@@ -16,7 +16,6 @@ const FagsakProfilSakIndex = ({
   saksnummer,
   sakstype,
   fagsakStatus,
-  toggleShowAll,
   annenPartLink,
   alleKodeverk,
   createLink,
@@ -29,7 +28,6 @@ const FagsakProfilSakIndex = ({
       saksnummer={saksnummer}
       sakstype={sakstype}
       fagsakStatus={fagsakStatus}
-      toggleShowAll={toggleShowAll}
       annenPartLink={annenPartLink}
       alleKodeverk={alleKodeverk}
       createLink={createLink}
@@ -44,7 +42,6 @@ FagsakProfilSakIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
-  toggleShowAll: PropTypes.func.isRequired,
   annenPartLink: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,
   createLink: PropTypes.func.isRequired,

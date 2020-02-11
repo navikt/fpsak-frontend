@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -72,6 +72,7 @@ const FagsakProfileIndex = ({
   dekningsgrad,
 }) => {
   const [showAll, setShowAll] = useState(!selectedBehandlingId);
+  const toggleShowAll = useCallback(() => setShowAll(!showAll));
 
   useEffect(() => {
     setShowAll(!selectedBehandlingId);
@@ -100,7 +101,6 @@ const FagsakProfileIndex = ({
               sakstype={sakstype}
               dekningsgrad={dekningsgrad}
               fagsakStatus={fagsakStatus}
-              toggleShowAll={setShowAll}
               createLink={createLink}
               alleKodeverk={alleKodeverk}
               renderBehandlingMeny={() => <BehandlingMenuIndex />}
@@ -111,7 +111,7 @@ const FagsakProfileIndex = ({
                   noExistingBehandlinger={noExistingBehandlinger}
                   behandlingId={selectedBehandlingId}
                   showAll={showAll}
-                  toggleShowAll={setShowAll}
+                  toggleShowAll={toggleShowAll}
                   alleKodeverk={alleKodeverk}
                 />
               )}
