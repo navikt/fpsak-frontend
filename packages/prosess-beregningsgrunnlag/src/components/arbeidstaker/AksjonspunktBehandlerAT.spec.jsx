@@ -59,7 +59,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
       expect(inputField.props().readOnly).to.equal(true);
     });
   });
-  // todo: denne testen må fullføres
+
   it('Skal teste transformValues metode', () => {
     const andeler = [
       mockAndel('Arbeidsgiver 1', 100, 200000, false),
