@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
+import Panel from 'nav-frontend-paneler';
 
-import { BorderBox, DateLabel } from '@fpsak-frontend/shared-components';
+import { DateLabel } from '@fpsak-frontend/shared-components';
 
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 
@@ -20,7 +21,7 @@ describe('<BehandlingPickerItemContent>', () => {
       isSelected={false}
     />);
 
-    expect(wrapper.find(BorderBox)).has.length(1);
+    expect(wrapper.find(Panel)).has.length(1);
     expect(wrapper.find(DateLabel)).has.length(1);
   });
 

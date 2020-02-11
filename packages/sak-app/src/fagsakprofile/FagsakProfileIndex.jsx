@@ -58,7 +58,7 @@ const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
   return pathToBehandlinger(saksnummer);
 };
 
-const FagsakProfileIndex = ({
+export const FagsakProfileIndex = ({
   sakstype,
   selectedBehandlingId,
   behandlingVersjon,
