@@ -47,7 +47,7 @@ export const getEnabledContexts = createSelector(
   (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
 );
 
-const createLink = (link) => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?punkt=uttak`;
+const createLink = (link) => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?fakta=default&punkt=uttak`;
 
 export class FagsakProfileIndex extends Component {
   componentDidMount() {
