@@ -19,7 +19,7 @@ const lagSpesialRaderRad = (visningsObjekt) => {
   if (!visningsObjekt || !visningsObjekt.verdi || visningsObjekt.display === false) return null;
   return (
     <Row key={`SpesialRad_${visningsObjekt.verdi}`}>
-      <Column xs="9">
+      <Column xs="10">
         <Normaltekst>
           {visningsObjekt.ledetekst}
         </Normaltekst>
@@ -36,12 +36,12 @@ const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
   return (
     <React.Fragment key="beregningOppsummeringWrapper">
       <Row key="DagsatsSeparator">
-        <Column xs="11" className={beregningStyles.noPaddingRight}>
+        <Column xs="12">
           <div className={beregningStyles.colDevider} />
         </Column>
       </Row>
       <Row key="beregningOppsummering">
-        <Column xs="8" key="beregningOppsummeringLedetekst">
+        <Column xs="9" key="beregningOppsummeringLedetekst">
           <Normaltekst>
             <span className={beregningStyles.semiBoldText}>
               { !ikkeVurdert && (
@@ -65,7 +65,7 @@ const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
 };
 const lineRad = (key) => (
   <Row key={key || 'separator'}>
-    <Column xs="11" className={beregningStyles.noPaddingRight}>
+    <Column xs="12">
       <div className={beregningStyles.colDevider} />
     </Column>
   </Row>
@@ -87,7 +87,7 @@ const lagForklaringer = (forklaringsListe) => (
 
 const lagAndelerRader = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
   <Row key={`indeAx${index + 1}`}>
-    <Column xs={ikkeVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
+    <Column xs={ikkeVurdert ? '9' : '10'} key={`indexAl2${index + 1}`}>
       <Normaltekst>
         {entry.ledetekst ? entry.ledetekst : '-'}
       </Normaltekst>
@@ -199,7 +199,7 @@ const BeregningsresutatPanel = ({
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   return (
     <Panel className={beregningStyles.panelRight}>
-      <Element>
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
       <VerticalSpacer eightPx />

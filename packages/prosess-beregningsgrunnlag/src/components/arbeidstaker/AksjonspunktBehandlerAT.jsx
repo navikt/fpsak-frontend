@@ -100,8 +100,7 @@ AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndele
 };
 
 AksjonspunktBehandlerAT.transformValuesForAT = (values, alleAndelerIForstePeriode) => {
-  let inntektPrAndelList = null;
-  inntektPrAndelList = finnAndelerSomSkalVisesAT(alleAndelerIForstePeriode)
+  const inntektPrAndelList = finnAndelerSomSkalVisesAT(alleAndelerIForstePeriode)
     .map(({ andelsnr }, index) => {
       const overstyrtInntekt = values[`inntekt${index}`];
       return {

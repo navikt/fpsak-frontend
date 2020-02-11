@@ -1,7 +1,9 @@
 import { expect } from 'chai';
+import React from 'react';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import FastsettSN2, { begrunnelseFieldname, fastsettInntektFieldname } from './FastsettSN_V2';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import FastsettSN2, { FastsettSN2 as UnwrappedForm, begrunnelseFieldname, fastsettInntektFieldname } from './FastsettSN_V2';
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse) => ({
   definisjon: {
@@ -24,6 +26,21 @@ const lagAndel = (status, fastsattBelop) => ({
 });
 
 describe('<FastsettSN2>', () => {
+  it('Skal teste at det rendres riktig antall rader', () => {
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, 'Ok.')];
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      readOnly={false}
+      isAksjonspunktClosed={false}
+      erVarigEndring
+      erNyArbLivet
+      gjeldendeAksjonspunkter={aksjonspunkter}
+      endretTekst={{}}
+      intl={intlMock}
+    />);
+
+    const rows = wrapper.find('Row');
+    expect(rows.length).to.equal(2);
+  });
   it('Skal teste at buildInitialValues bygges korrekt når tidligere fastsatt', () => {
     const andeler = [lagAndel(aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, 300000), lagAndel(aktivitetStatus.ARBEIDSTAKER, 250000)];
     const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, 'Ok.')];

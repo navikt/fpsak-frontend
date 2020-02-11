@@ -32,6 +32,7 @@ import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregnings
 
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 import styles from './graderingUtenBG_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
@@ -97,6 +98,9 @@ export const GraderingUtenBG2 = ({
 
   return (
     <form onSubmit={formProps.handleSubmit} className={styles.graderingForm}>
+
+      <AvsnittSkiller luftOver luftUnder dividerParagraf />
+
       <ElementWrapper>
         { lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
         <VerticalSpacer sixteenPx />

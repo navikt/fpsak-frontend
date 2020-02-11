@@ -17,6 +17,7 @@ import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-comp
 import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 
 const formName = 'BeregningForm';
@@ -192,9 +193,10 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
+      <AvsnittSkiller luftOver luftUnder />
       <FlexRow>
         <FlexColumn>
-          <Element>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           </Element>
         </FlexColumn>

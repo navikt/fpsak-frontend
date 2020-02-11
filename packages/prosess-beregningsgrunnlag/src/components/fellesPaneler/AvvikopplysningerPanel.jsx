@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FlexContainer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
+
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
@@ -54,7 +56,7 @@ const lagRelevantePaneler = (
     return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Besteberegning" /></Normaltekst>);
   }
   return (
-    <>
+    <FlexContainer>
       {
         relevanteStatuser.isArbeidstaker && (
           <AvviksopplysningerAT
@@ -64,11 +66,9 @@ const lagRelevantePaneler = (
           />
         )
       }
-      {
-        relevanteStatuser.isKombinasjonsstatus && (
-          <VerticalSpacer sixteenPx />
-        )
-      }
+      {relevanteStatuser.isFrilanser && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isFrilanser && (
           <AvviksopplysningerFL
@@ -78,20 +78,19 @@ const lagRelevantePaneler = (
           />
         )
       }
-      {
-        relevanteStatuser.isKombinasjonsstatus && (
-          <VerticalSpacer sixteenPx />
-        )
-      }
-      {
-        relevanteStatuser.isSelvstendigNaeringsdrivende && (
-          <AvviksopplysningerSN
-            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-            harAksjonspunkter={harAksjonspunkter}
-            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-          />
-        )
-      }
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus && (
+      <VerticalSpacer sixteenPx />
+      )}
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+      <AvviksopplysningerSN
+        alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+        harAksjonspunkter={harAksjonspunkter}
+        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+      />
+      )}
+      {relevanteStatuser.isAAP && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isAAP && (
           <Row>
@@ -103,6 +102,9 @@ const lagRelevantePaneler = (
           </Row>
         )
       }
+      {relevanteStatuser.isDagpenger && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isDagpenger && (
           <Row>
@@ -114,6 +116,9 @@ const lagRelevantePaneler = (
           </Row>
         )
       }
+      {relevanteStatuser.isMilitaer && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isMilitaer && (
           <Row>
@@ -125,7 +130,7 @@ const lagRelevantePaneler = (
           </Row>
         )
 }
-    </>
+    </FlexContainer>
   );
 };
 
@@ -150,7 +155,8 @@ const AvviksopplysningerPanel = ({
 
   return (
     <Panel className={beregningStyles.panelRight}>
-      <Element>
+      <AvsnittSkiller luftUnder />
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
       </Element>
       <VerticalSpacer eightPx />
