@@ -3,12 +3,18 @@ import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm, FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import styles from './innhentDokOpptjeningUtlandPanel.less';
+
+const OpptjeningIUtlandDokValgType = {
+  DOKUMENTASJON_VIL_BLI_INNHENTET: 'DOKUMENTASJON_VIL_BLI_INNHENTET',
+  DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET: 'DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET',
+};
 
 interface OwnProps {
   behandlingId: number;
@@ -18,6 +24,7 @@ interface OwnProps {
   dirty: boolean;
   submittable: boolean;
   initialValues: { begrunnelse?: string };
+  handleSubmit: () => void;
   form: string;
 }
 
@@ -29,9 +36,10 @@ const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
   dirty,
   submittable,
   initialValues,
+  handleSubmit,
   form,
 }) => (
-  <>
+  <form onSubmit={handleSubmit}>
     <Undertittel>
       <FormattedMessage id="InnhentDokOpptjeningUtlandPanel.OpptjeningUtland" />
     </Undertittel>
@@ -41,9 +49,15 @@ const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
         <FormattedMessage id="InnhentDokOpptjeningUtlandPanel.InnhentelseDok" />
       </Element>
       <VerticalSpacer sixteenPx />
-      <RadioGroupField name="skalInnhenteDokumentasjon" validate={[required]} direction="vertical" readOnly={readOnly}>
-        <RadioOption label={<FormattedMessage id="InnhentDokOpptjeningUtlandPanel.Innhentes" />} value />
-        <RadioOption label={<FormattedHTMLMessage id="InnhentDokOpptjeningUtlandPanel.InnhentesIkke" />} value={false} />
+      <RadioGroupField name="valgType" validate={[required]} direction="vertical" readOnly={readOnly}>
+        <RadioOption
+          label={<FormattedMessage id="InnhentDokOpptjeningUtlandPanel.Innhentes" />}
+          value={OpptjeningIUtlandDokValgType.DOKUMENTASJON_VIL_BLI_INNHENTET}
+        />
+        <RadioOption
+          label={<FormattedHTMLMessage id="InnhentDokOpptjeningUtlandPanel.InnhentesIkke" />}
+          value={OpptjeningIUtlandDokValgType.DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET}
+        />
       </RadioGroupField>
       <FaktaBegrunnelseTextField
         isDirty={dirty}
@@ -52,6 +66,7 @@ const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
         hasBegrunnelse={!!initialValues.begrunnelse}
         labelCode="InnhentDokOpptjeningUtlandPanel.Begrunnelse"
       />
+      <VerticalSpacer sixteenPx />
       <FaktaSubmitButton
         formName={form}
         isSubmittable={submittable}
@@ -61,12 +76,17 @@ const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
         behandlingVersjon={behandlingVersjon}
       />
     </AksjonspunktBox>
-  </>
+  </form>
 );
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitHandler(transformValues(values));
-  return (state, ownProps) => ({
+const transformValues = (values) => ({
+  kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
+  ...values,
+});
+
+const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  return (_state, ownProps) => ({
     onSubmit,
     initialValues: {
       ...FaktaBegrunnelseTextField.buildInitialValues(ownProps.aksjonspunkt),

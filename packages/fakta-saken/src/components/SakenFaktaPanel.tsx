@@ -59,6 +59,7 @@ const SakenFaktaPanel: FunctionComponent<OwnProps> = ({
             harApneAksjonspunkter={harApneAksjonspunkter}
             aksjonspunkt={aksjonspunkter.find((ap) => ap.definisjon.kode === personAksjonspunkter[0])}
             submittable={submittable}
+            submitCallback={submitCallback}
           />
         </Column>
       )}

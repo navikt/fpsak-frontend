@@ -3,12 +3,14 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 import SakenFaktaPanel from './components/SakenFaktaPanel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 interface OwnProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
   submitCallback: (data: {}) => void;
+  submittable: boolean;
+  harApneAksjonspunkter: boolean;
   readOnly: boolean;
 }
 
