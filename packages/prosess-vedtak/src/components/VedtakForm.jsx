@@ -208,7 +208,7 @@ export class VedtakForm extends Component {
                     spinner={formProps.submitting}
                   >
                     {intl.formatMessage({
-                      id: aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                      id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
                         ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
                     })}
                   </Hovedknapp>
