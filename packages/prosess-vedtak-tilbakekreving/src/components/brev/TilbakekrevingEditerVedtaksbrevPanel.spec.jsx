@@ -64,6 +64,7 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+      fritekstOppsummeringPakrevdMenIkkeUtfylt={false}
     />);
 
     const paneler = wrapper.find(Ekspanderbartpanel);
@@ -84,11 +85,12 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-10-10_2019-11-10']}
+      fritekstOppsummeringPakrevdMenIkkeUtfylt
     />);
 
     const paneler = wrapper.find(Ekspanderbartpanel);
     expect(paneler).to.have.length(3);
-    expect(paneler.at(0).prop('apen')).is.false;
+    expect(paneler.at(0).prop('apen')).is.true;
     expect(paneler.at(1).prop('apen')).is.true;
     expect(paneler.at(2).prop('apen')).is.false;
   });
