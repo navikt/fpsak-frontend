@@ -68,6 +68,7 @@ const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL
     />
   );
 };
+
 const AksjonspunktBehandler = ({
   intl,
   readOnly,
@@ -110,7 +111,6 @@ const AksjonspunktBehandler = ({
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
-  // TODO skill ut submitknappen siden den brukes likt begge steder
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
       <div className={readOnly ? '' : styles.aksjonspunktBehandlerContainer}>
