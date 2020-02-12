@@ -29,6 +29,7 @@ export const getBehandlinger = createSelector(
 export const getBehandlingerInfo = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .map((behandling) => ({
     id: behandling.id,
+    uuid: behandling.uuid,
     type: behandling.type,
     status: behandling.status,
     opprettet: behandling.opprettet,
