@@ -146,7 +146,7 @@ const faktaPanelDefinisjoner = [{
   urlCode: faktaPanelCodes.OPPTJENINGSVILKARET,
   textCode: 'OpptjeningInfoPanel.KontrollerFaktaForOpptjening',
   aksjonspunkterCodes: [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING],
-  endpoints: [fpBehandlingApi.OPPTJENING],
+  endpoints: [fpBehandlingApi.OPPTJENING, fpBehandlingApi.UTLAND_DOK_STATUS],
   renderComponent: (props) => <OpptjeningFaktaIndex {...props} />,
   showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET)
       && vilkar.some(
