@@ -15,10 +15,7 @@ import BubbleText from './felles/bubbleText';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const scrollUp = () => {
-  if (window.innerWidth < 13010) {
-    window.scroll(0, 0);
-  }
-  return false;
+  window.scroll(0, 0);
 };
 
 const HistorikkMalType10 = ({
