@@ -8,6 +8,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 
 /**
@@ -19,7 +20,6 @@ import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
  */
 export const GrunnlagForAarsinntektPanelFL2 = ({
   alleAndeler,
-  isKombinasjonsstatus,
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
@@ -27,15 +27,13 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
-      { isKombinasjonsstatus
-      && (
-        <>
-          <Element>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" />
-          </Element>
-          <VerticalSpacer eightPx />
-        </>
-      )}
+      <>
+        <AvsnittSkiller luftOver luftUnder />
+        <Element className={beregningStyles.avsnittOverskrift}>
+          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" />
+        </Element>
+        <VerticalSpacer eightPx />
+      </>
       {startDato && (
       <Row className={beregningStyles.rows}>
         <Column xs="12">
@@ -86,7 +84,6 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
 };
 GrunnlagForAarsinntektPanelFL2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  isKombinasjonsstatus: PropTypes.bool.isRequired,
 };
 
 export default GrunnlagForAarsinntektPanelFL2;

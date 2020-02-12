@@ -14,6 +14,7 @@ import Lesmerpanel2 from '../redesign/LesmerPanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const finnvirksomhetsTypeKode = (naring) => {
   const { virksomhetType } = naring;
@@ -105,9 +106,10 @@ export const NaeringsopplysningsPanel = ({
 
   return (
     <>
+      <AvsnittSkiller luftOver luftUnder />
       <FlexRow key="SNNareingOverskrift">
         <FlexColumn>
-          <Element className={beregningStyles.semiBoldText}>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
           </Element>
         </FlexColumn>
@@ -141,7 +143,7 @@ export const NaeringsopplysningsPanel = ({
                 <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </EtikettLiten>
             </Column>
-            <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
+            <Column xs="2" className={beregningStyles.colAarText}>
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst className={beregningStyles.semiBoldText}>

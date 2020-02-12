@@ -5,7 +5,7 @@ import { themes } from '@storybook/theming';
 import '@fpsak-frontend/assets/styles/global.less';
 
 const withGlobalStyle = (story) => (
-  <div style={{ margin: '40px' }}>
+  <div style={{ margin: '40px'}}>
     { story() }
   </div>
 );

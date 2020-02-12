@@ -9,12 +9,12 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import { BeregningFormImpl2, transformValues, buildInitialValues } from './BeregningForm_V2';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2 from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import Beregningsgrunnlag2 from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
-
 
 const apVurderDekningsgrad = {
   definisjon: {
@@ -179,6 +179,23 @@ describe('<BeregningForm2>', () => {
     expect(avvikPanel.props().relevanteStatuser).to.have.equal(relevanteStatuser);
     const expectedPerioder = lagPeriode();
     expect(avvikPanel.props().allePerioder[0]).to.eql(expectedPerioder);
+  });
+  it('skal teste at AksjonspunktHjelp rendrer fra BeregningFP', () => {
+    const wrapper = shallow(<BeregningFormImpl2
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={lagBeregningsgrunnlag(0, 120000, 100000, 100, [])}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
+    const aksjonspunktHelpTextHTML = wrapper.find(AksjonspunktHelpTextHTML);
+    expect(aksjonspunktHelpTextHTML.length).to.equal(1);
   });
   it('skal teste at SkjeringspunktOgStatusPanel får korrekte props fra BeregningFP', () => {
     const wrapper = shallow(<BeregningFormImpl2
