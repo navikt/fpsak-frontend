@@ -19,6 +19,7 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 
 import styles from './skjeringspunktOgStatusPanel_V2.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 
 export const RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN = 'dekningsgrad';
@@ -53,26 +54,27 @@ export const SkjeringspunktOgStatusPanelImpl2 = ({
   aktivitetStatusList,
   getKodeverknavn,
 }) => (
-  <div className={beregningStyles.panelLeft}>
-    {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
-    <VerticalSpacer sixteenPx />
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn>
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.SkjeringForBeregning" />
-          </Normaltekst>
-        </FlexColumn>
-
-        <FlexColumn>
-          <Normaltekst className={beregningStyles.semiBoldText}>
-            <DateLabel dateString={skjeringstidspunktDato} />
-          </Normaltekst>
-        </FlexColumn>
-
-      </FlexRow>
-    </FlexContainer>
-  </div>
+  <>
+    <AvsnittSkiller luftUnder leftPanel />
+    <div className={beregningStyles.panelLeft}>
+      {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
+      <VerticalSpacer sixteenPx />
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn>
+            <Normaltekst>
+              <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.SkjeringForBeregning" />
+            </Normaltekst>
+          </FlexColumn>
+          <FlexColumn>
+            <Normaltekst className={beregningStyles.semiBoldText}>
+              <DateLabel dateString={skjeringstidspunktDato} />
+            </Normaltekst>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </div>
+  </>
 );
 
 

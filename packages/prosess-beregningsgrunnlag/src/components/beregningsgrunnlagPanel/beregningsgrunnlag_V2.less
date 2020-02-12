@@ -7,9 +7,9 @@
   padding-right: 12px;
 }
 
-.beregningForm {
-  background-color: #fff;
-  padding: 20px 0 20px 0;
+.avsnittOverskrift {
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 
 .aksjonsPunktHjelpeTekst {
@@ -17,14 +17,19 @@
 }
 
 .panelLeft {
-  padding: 0 40px 0 20px;
+  padding: 0 40px 0 0;
+
+  @media (max-width: 992px) {
+    padding: 0;
+  }
 }
 
 .panelRight {
-  padding: 0 20px 0 40px;
+  background-color: transparent;
+  padding: 0 0 0 40px;
 
   @media (max-width: 992px) {
-    padding: 0 40px 0 20px;
+    padding: 0;
   }
 }
 
@@ -33,7 +38,7 @@
 }
 
 .rightAlignElement {
-  padding-right: 0;
+  padding-left: 0;
 
   && p {
     text-align: right;
@@ -45,7 +50,7 @@
 }
 
 .rightAlignElementNoWrap {
-  padding: 0;
+  padding-left: 0;
 
   && p {
     text-align: right;
@@ -90,7 +95,7 @@
 }
 
 .colDevider {
-  border-top: 1px inset @navGra40;
+  border-top: 1px solid @navMorkGra;
   margin-top: 4px;
   min-height: 8px;
 }
@@ -117,6 +122,10 @@
   padding-right: 0;
 }
 
-.aksjonspunkt {
-  margin: 10px 20px 20px 20px;
+.paragrafSkiller {
+  display: none;
+
+  @media (max-width: 990px) {
+    display: inherit;
+  }
 }
