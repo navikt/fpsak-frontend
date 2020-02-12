@@ -216,7 +216,7 @@ export const finnValgtPanel = (
       return undefined;
     }
     const index = prosessStegPaneler.findIndex((i) => i.isAksjonspunktOpen);
-    return index !== -1 ? prosessStegPaneler[index] : prosessStegPaneler[0];
+    return index !== -1 ? prosessStegPaneler[index] : prosessStegPaneler[prosessStegPaneler.length - 1];
   }
   return prosessStegPaneler.find((i) => i.urlCode === valgtProsessStegPanelKode);
 };

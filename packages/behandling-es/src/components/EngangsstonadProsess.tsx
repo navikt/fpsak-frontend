@@ -123,7 +123,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps & WrappedComponentProps> 
     oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside);
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg, behandling,
-    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg);
+    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
   const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
     ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionES'),
