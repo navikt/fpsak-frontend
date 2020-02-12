@@ -16,7 +16,7 @@
     "react-dom": "^16.12.0",
     "react-intl": "^3.12.0",
     "react-visjs-timeline": "^1.6.0",
-    "vis-timeline": "^7.1.0"
+    "vis-timeline": "6.3.5"
   },
   "devDependencies": {}
 }

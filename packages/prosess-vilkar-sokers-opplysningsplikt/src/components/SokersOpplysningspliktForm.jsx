@@ -23,8 +23,6 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 
-import styles from './sokersOpplysningspliktForm.less';
-
 const formName = 'SokersOpplysningspliktForm';
 
 const orgPrefix = 'org_';
@@ -136,15 +134,14 @@ export const SokersOpplysningspliktFormImpl = ({
       </>
     )}
     {readOnly && (
-      <>
-        <div className={styles.radioIE}>
-          <RadioGroupField name="dummy" readOnly={readOnly} isEdited={hasAksjonspunkt && (erVilkarOk !== undefined)}>
-            {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
-          </RadioGroupField>
-          {erVilkarOk === false && behandlingsresultat.avslagsarsak
-        && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>}
-        </div>
-      </>
+      <div>
+        {originalErVilkarOk === false && behandlingsresultat.avslagsarsak && (
+          <>
+            <VerticalSpacer sixteenPx />
+            <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>
+          </>
+        )}
+      </div>
     )}
   </ProsessPanelTemplate>
 );

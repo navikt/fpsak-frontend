@@ -154,6 +154,7 @@ FormkravKlageForm.propTypes = {
       kode: PropTypes.string.isRequired,
     }).isRequired,
     avsluttet: PropTypes.string,
+    uuid: PropTypes.string,
   })).isRequired,
   formProps: PropTypes.shape().isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,

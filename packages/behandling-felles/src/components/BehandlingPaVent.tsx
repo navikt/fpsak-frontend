@@ -1,5 +1,5 @@
 import React, {
-  useState, useMemo, useCallback, FunctionComponent,
+  useState, useMemo, useCallback, FunctionComponent, useEffect,
 } from 'react';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -27,6 +27,10 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
 }) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
+
+  useEffect(() => {
+    setVisModal(behandling.behandlingPaaVent);
+  }, [behandling.versjon]);
 
   const oppdaterPaVentData = useCallback((formData) => settPaVent({
     ...formData, behandlingId: behandling.id, behandlingVersjon: behandling.versjon,

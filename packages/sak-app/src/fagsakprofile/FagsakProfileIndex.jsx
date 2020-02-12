@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -29,7 +29,6 @@ import {
 } from '../fagsak/fagsakSelectors';
 import { getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
-import { getShowAllBehandlinger, resetFagsakProfile, toggleShowAllBehandlinger } from './duck';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 import { getAlleKodeverk } from '../kodeverk/duck';
 
@@ -47,100 +46,89 @@ export const getEnabledContexts = createSelector(
   (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
 );
 
-const createLink = (link) => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?punkt=uttak`;
+const createLink = (link) => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?fakta=default&punkt=uttak`;
 
-export class FagsakProfileIndex extends Component {
-  componentDidMount() {
-    const { selectedBehandlingId, showAll, toggleShowAll } = this.props;
-    if (!selectedBehandlingId && !showAll) {
-      toggleShowAll();
-    }
+const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
+  if (alleBehandlinger.length === 1) {
+    return getLocationWithDefaultBehandlingspunktAndFakta({
+      ...location,
+      pathname: pathToBehandling(saksnummer, alleBehandlinger[0].id),
+    });
   }
+  return pathToBehandlinger(saksnummer);
+};
 
-  componentWillUnmount() {
-    const { reset } = this.props;
-    reset();
-  }
+export const FagsakProfileIndex = ({
+  sakstype,
+  selectedBehandlingId,
+  behandlingVersjon,
+  alleKodeverk,
+  noExistingBehandlinger,
+  fagsakStatus,
+  saksnummer,
+  location,
+  enabledApis,
+  shouldRedirectToBehandlinger,
+  dekningsgrad,
+}) => {
+  const [showAll, setShowAll] = useState(!selectedBehandlingId);
+  const toggleShowAll = useCallback(() => setShowAll(!showAll));
 
-  pathToBehandling = (alleBehandlinger) => {
-    const { saksnummer, location } = this.props;
-    if (alleBehandlinger.length === 1) {
-      return getLocationWithDefaultBehandlingspunktAndFakta({
-        ...location,
-        pathname: pathToBehandling(saksnummer, alleBehandlinger[0].id),
-      });
-    }
-    return pathToBehandlinger(saksnummer);
-  };
+  useEffect(() => {
+    setShowAll(!selectedBehandlingId);
+  }, [selectedBehandlingId]);
 
-  render() {
-    const {
-      sakstype,
-      toggleShowAll,
-      showAll,
-      selectedBehandlingId,
-      behandlingVersjon,
-      alleKodeverk,
-      noExistingBehandlinger,
-      fagsakStatus,
-      saksnummer,
-      enabledApis,
-      shouldRedirectToBehandlinger,
-      dekningsgrad,
-    } = this.props;
-    return (
-      <Panel className={styles.panelPadding}>
-        <DataFetcher
-          behandlingId={selectedBehandlingId}
-          behandlingVersjon={behandlingVersjon}
-          showLoadingIcon
-          behandlingNotRequired
-          endpointParams={{ saksnummer }}
-          keepDataWhenRefetching
-          endpoints={enabledApis}
-          allowErrors
-          render={(props) => {
-            const alleBehandlinger = getEnabledContexts(props);
-            if (shouldRedirectToBehandlinger) {
-              return <Redirect to={this.pathToBehandling(alleBehandlinger)} />;
-            }
-            return (
-              <FagsakProfilSakIndex
-                annenPartLink={props.annenPartBehandling}
-                saksnummer={saksnummer}
-                sakstype={sakstype}
-                dekningsgrad={dekningsgrad}
-                fagsakStatus={fagsakStatus}
-                toggleShowAll={toggleShowAll}
-                createLink={createLink}
-                alleKodeverk={alleKodeverk}
-                renderBehandlingMeny={() => <BehandlingMenuIndex />}
-                renderBehandlingVelger={() => (
-                  <BehandlingVelgerSakIndex
-                    behandlinger={alleBehandlinger}
-                    saksnummer={saksnummer}
-                    noExistingBehandlinger={noExistingBehandlinger}
-                    behandlingId={selectedBehandlingId}
-                    showAll={showAll}
-                    toggleShowAll={toggleShowAll}
-                    alleKodeverk={alleKodeverk}
-                  />
-                )}
-              />
-            );
-          }}
-        />
-        <DataFetcher
-          behandlingId={selectedBehandlingId}
-          behandlingVersjon={behandlingVersjon}
-          showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
-          endpoints={risikoklassifiseringData}
-          render={(props) => <RisikoklassifiseringIndex {...props} />}
-        />
-      </Panel>
-    );
-  }
-}
+  return (
+    <Panel className={styles.panelPadding}>
+      <DataFetcher
+        behandlingId={selectedBehandlingId}
+        behandlingVersjon={behandlingVersjon}
+        showLoadingIcon
+        behandlingNotRequired
+        endpointParams={{ saksnummer }}
+        keepDataWhenRefetching
+        endpoints={enabledApis}
+        allowErrors
+        render={(dataProps) => {
+          const alleBehandlinger = getEnabledContexts(dataProps);
+          if (shouldRedirectToBehandlinger) {
+            return <Redirect to={findPathToBehandling(saksnummer, location, alleBehandlinger)} />;
+          }
+          return (
+            <FagsakProfilSakIndex
+              annenPartLink={dataProps.annenPartBehandling}
+              saksnummer={saksnummer}
+              sakstype={sakstype}
+              dekningsgrad={dekningsgrad}
+              fagsakStatus={fagsakStatus}
+              createLink={createLink}
+              alleKodeverk={alleKodeverk}
+              renderBehandlingMeny={() => <BehandlingMenuIndex />}
+              renderBehandlingVelger={() => (
+                <BehandlingVelgerSakIndex
+                  behandlinger={alleBehandlinger}
+                  saksnummer={saksnummer}
+                  noExistingBehandlinger={noExistingBehandlinger}
+                  behandlingId={selectedBehandlingId}
+                  showAll={showAll}
+                  toggleShowAll={toggleShowAll}
+                  alleKodeverk={alleKodeverk}
+                />
+              )}
+            />
+          );
+        }}
+      />
+      <DataFetcher
+        behandlingId={selectedBehandlingId}
+        behandlingVersjon={behandlingVersjon}
+        showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
+        endpoints={risikoklassifiseringData}
+        render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}
+      />
+    </Panel>
+  );
+};
 
 FagsakProfileIndex.propTypes = {
   enabledApis: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -149,9 +137,6 @@ FagsakProfileIndex.propTypes = {
   fagsakStatus: PropTypes.shape().isRequired,
   selectedBehandlingId: PropTypes.number,
   noExistingBehandlinger: PropTypes.bool.isRequired,
-  showAll: PropTypes.bool.isRequired,
-  toggleShowAll: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingVersjon: PropTypes.number,
   shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
@@ -160,7 +145,7 @@ FagsakProfileIndex.propTypes = {
 };
 
 FagsakProfileIndex.defaultProps = {
-  selectedBehandlingId: null,
+  selectedBehandlingId: undefined,
   behandlingVersjon: null,
 };
 
@@ -177,15 +162,12 @@ const mapStateToProps = (state) => ({
   fagsakStatus: getSelectedFagsakStatus(state),
   selectedBehandlingId: getSelectedBehandlingId(state),
   noExistingBehandlinger: getNoExistingBehandlinger(state),
-  showAll: getShowAllBehandlinger(state),
   alleKodeverk: getAlleKodeverk(state),
   behandlingVersjon: getBehandlingVersjon(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators(
   {
-    toggleShowAll: toggleShowAllBehandlinger,
-    reset: resetFagsakProfile,
   },
   dispatch,
 );

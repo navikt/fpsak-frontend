@@ -75,7 +75,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
       />
       { harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
       <BekreftOgForsettKnapp
-        readOnly={readOnly}
+        readOnly={readOnly || (!hasOpenAksjonspunkter && formProps.pristine)}
         isSubmitting={formProps.submitting}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}

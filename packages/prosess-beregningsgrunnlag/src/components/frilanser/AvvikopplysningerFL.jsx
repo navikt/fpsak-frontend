@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
-import styles from '../fellesPaneler/avvikopplysningerPanel.less';
+import { FlexRow } from '@fpsak-frontend/shared-components';
+import { Column } from 'nav-frontend-grid';
+import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
 
 const AvviksopplysningerFL = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
@@ -16,13 +15,13 @@ const AvviksopplysningerFL = ({
     && relevanteStatuser.isFrilanser;
   if (kombinasjonsstatusFNSN) {
     return (
-      <Row>
+      <FlexRow>
         <Column xs="12">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.FL.KobinasjonsStatusFLSN" />
           </Normaltekst>
         </Column>
-      </Row>
+      </FlexRow>
     );
   }
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
@@ -35,69 +34,25 @@ const AvviksopplysningerFL = ({
   const avvikRoundedFL = avvikFL ? parseFloat((avvikFL.toFixed(1))) : 0;
   const sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagFL;
-  return (
-    <>
-      <Row>
-        <Column className={styles.colLable}>
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Frilans" />
-          </Normaltekst>
-        </Column>
+  const visPaneler = {
+    visAT: false,
+    visFL: true,
+    visSN: false,
+  };
 
-        <Column className={styles.colValue}>
-          <Normaltekst>
-            {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
-          </Normaltekst>
-        </Column>
-      </Row>
-      {sammenligningsgrunnlagSumFL && (
-        <>
-          <Row>
-            <Column className={styles.colLable}>
-              <Normaltekst>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Frilans" />
-              </Normaltekst>
-            </Column>
-
-            <Column className={styles.colValue}>
-              <Normaltekst>
-                {formatCurrencyNoKr(sammenligningsgrunnlagSumFL)}
-              </Normaltekst>
-            </Column>
-            <Column xs="5" />
-
-          </Row>
-          <Row>
-            <Column xs="7" className={styles.colLine} />
-          </Row>
-          <Row>
-            <Column className={styles.colLable}>
-              <Normaltekst className={beregningStyles.semiBoldText}>
-                {!relevanteStatuser.isKombinasjonsstatus && (
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-                )}
-                {relevanteStatuser.isKombinasjonsstatus && (
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.FL" />
-                )}
-              </Normaltekst>
-            </Column>
-            <Column className={styles.colValue}>
-              <Normaltekst>
-                {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
-                  : differanseBeregnet)}
-              </Normaltekst>
-            </Column>
-            <Column className={styles.colAvvik}>
-
-              <Normaltekst className={`${avvikFL > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikRoundedFL }} />
-              </Normaltekst>
-            </Column>
-          </Row>
-        </>
-      )}
-    </>
-  );
+  if (sammenligningsgrunnlagSumFL) {
+    return (
+      <AvvikopplysningerATFL
+        beregnetAarsinntekt={beregnetAarsinntekt}
+        avvikProsentAvrundet={avvikRoundedFL}
+        differanseBeregnet={differanseBeregnet}
+        relevanteStatuser={relevanteStatuser}
+        visPanel={visPaneler}
+        sammenligningsgrunnlagSum={sammenligningsgrunnlagSumFL}
+      />
+    );
+  }
+  return null;
 };
 
 

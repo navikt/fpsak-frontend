@@ -27,6 +27,7 @@ import BeregningsresultatTable2 from '../beregningsresultatPanel/Beregningsresul
 
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
@@ -254,17 +255,20 @@ export const BeregningFormImpl2 = ({
 
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
-      { gjeldendeAksjonspunkter && (
-        <div className={beregningStyles.aksjonspunkt}>
-          { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
-        </div>
-      )}
+      { gjeldendeAksjonspunkter
+        && (
+          <>
+            <VerticalSpacer eightPx />
+            { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
+          </>
+
+        )}
       <Row>
         <Column xs="12" md="6">
           <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
           </Undertittel>
-          <VerticalSpacer thirtyTwoPx />
+          <VerticalSpacer twentyPx />
           <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -275,7 +279,6 @@ export const BeregningFormImpl2 = ({
           />
           { relevanteStatuser.skalViseBeregningsgrunnlag && (
             <>
-              <VerticalSpacer fourtyPx />
               <Beregningsgrunnlag2
                 relevanteStatuser={relevanteStatuser}
                 readOnly={readOnly}
@@ -295,10 +298,14 @@ export const BeregningFormImpl2 = ({
           )}
         </Column>
         <Column xs="12" md="6">
+          <div className={beregningStyles.paragrafSkiller}>
+            <AvsnittSkiller luftOver luftUnder dividerParagraf />
+          </div>
           <Undertittel className={beregningStyles.panelRight}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
           </Undertittel>
-          <VerticalSpacer thirtyTwoPx />
+          <VerticalSpacer twentyPx />
+
           <AvviksopplysningerPanel
             sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
             relevanteStatuser={relevanteStatuser}
@@ -309,7 +316,7 @@ export const BeregningFormImpl2 = ({
           {harAksjonspunkter
           && (
             <>
-              <VerticalSpacer fourtyPx />
+              <AvsnittSkiller luftOver luftUnder rightPanel />
               <AksjonspunktBehandler
                 readOnly={readOnly}
                 readOnlySubmitButton={readOnlySubmitButton}
@@ -325,7 +332,7 @@ export const BeregningFormImpl2 = ({
             </>
           )}
           <>
-            <VerticalSpacer fourtyPx />
+            <AvsnittSkiller luftOver luftUnder rightPanel />
             <BeregningsresultatTable2
               beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
               dekningsgrad={dekningsgrad}
