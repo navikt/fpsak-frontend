@@ -64,7 +64,8 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtak
   opneSokeside) => (aksjonspunktModels) => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some((apModel) => ((apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL
     || apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) && apModel.sendVarsel));
-  const visIverksetterVedtakModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
+  const visIverksetterVedtakModal = aksjonspunktModels[0].isVedtakSubmission
+    && [aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL, aksjonspunktCodes.FATTER_VEDTAK].includes(aksjonspunktModels[0].kode);
   const visFatterVedtakModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
   const isVedtakAp = aksjonspunktModels.some((a) => a.isVedtakSubmission);
 

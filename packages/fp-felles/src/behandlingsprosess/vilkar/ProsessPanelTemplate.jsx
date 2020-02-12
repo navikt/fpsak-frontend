@@ -83,7 +83,7 @@ const ProsessPanelTemplate = ({
       {isAksjonspunktOpen && <VerticalSpacer eightPx />}
       <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={isAksjonspunktOpen}>
         {children}
-        <VerticalSpacer sixteenPx />
+        {!readOnly && <VerticalSpacer sixteenPx />}
         <BehandlingspunktSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}

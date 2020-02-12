@@ -18,6 +18,7 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
 import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import FritekstBrevPanel from './FritekstBrevPanel';
@@ -206,7 +207,10 @@ export class VedtakForm extends Component {
                     disabled={behandlingPaaVent || formProps.submitting}
                     spinner={formProps.submitting}
                   >
-                    {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
+                    {intl.formatMessage({
+                      id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                        ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
+                    })}
                   </Hovedknapp>
                 )}
                 {skalBrukeOverstyrendeFritekstBrev && skalViseLink && (
