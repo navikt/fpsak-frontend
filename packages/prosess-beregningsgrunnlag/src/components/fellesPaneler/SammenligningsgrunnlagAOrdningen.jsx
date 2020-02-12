@@ -13,9 +13,11 @@ import {
 } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const grafFargeAT = '#99bdcd';
 const grafFargeFL = '#c1b5d0';
@@ -105,7 +107,7 @@ const lagRad = (relevanteStatuser, atAndel, flAndel, maksVerdi, aarMaaned) => {
   return (
     <React.Fragment key={`${dato}wrapper`}>
       { maaned === '01' && (
-        <Row>
+        <Row className={styles.aarDeviderRow}>
           <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '12' : '10'} className={styles.aarDevider} />
         </Row>
       )}
@@ -182,9 +184,10 @@ const SammenligningsgrunnlagAOrdningen = ({
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
+      <AvsnittSkiller luftOver luftUnder />
       <FlexRow key="SamenenligningsGrunnlagOverskrift">
         <FlexColumn>
-          <Element className={beregningStyles.semiBoldText}>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
           </Element>
         </FlexColumn>
@@ -192,6 +195,7 @@ const SammenligningsgrunnlagAOrdningen = ({
           <LinkTilEksterntSystem linkText="" userIdent={userIdent} type="AI" />
         </FlexColumn>
       </FlexRow>
+      <VerticalSpacer eightPx />
       <FlexRow>
         <FlexColumn>
           <Normaltekst>

@@ -45,6 +45,7 @@ interface OwnProps {
     type: Kodeverk;
     avsluttet?: string;
     status: Kodeverk;
+    uuid: string;
   }];
 }
 
