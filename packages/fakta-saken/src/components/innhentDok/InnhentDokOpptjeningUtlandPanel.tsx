@@ -28,7 +28,7 @@ interface OwnProps {
   form: string;
 }
 
-const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
+export const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   readOnly,
