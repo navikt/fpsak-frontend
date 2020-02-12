@@ -29,7 +29,6 @@ const VedtakPanels = ({
   behandlingStatus,
   behandlingPaaVent,
   behandlingArsaker,
-  erBehandlingHenlagt,
   tilbakekrevingvalg,
   simuleringResultat,
   resultatstruktur,
@@ -64,7 +63,6 @@ const VedtakPanels = ({
         sendVarselOmRevurdering={sendVarselOmRevurdering}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskapFom={medlemskapFom}
-        erBehandlingHenlagt={erBehandlingHenlagt}
         vilkar={vilkar}
         tilbakekrevingvalg={tilbakekrevingvalg}
         simuleringResultat={simuleringResultat}
@@ -84,7 +82,6 @@ const VedtakPanels = ({
       behandlingStatus={behandlingStatus}
       sprakkode={sprakkode}
       behandlingPaaVent={behandlingPaaVent}
-      erBehandlingHenlagt={erBehandlingHenlagt}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
       resultatstruktur={resultatstruktur}
@@ -107,7 +104,6 @@ VedtakPanels.propTypes = {
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  erBehandlingHenlagt: PropTypes.bool.isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
   resultatstruktur: vedtakBeregningsresultatPropType,
