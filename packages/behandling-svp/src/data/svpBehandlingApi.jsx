@@ -36,6 +36,7 @@ export const SvpBehandlingApiKeys = {
   OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT: 'VERGE_OPPRETT',
   VERGE_FJERN: 'VERGE_FJERN',
+  UTLAND_DOK_STATUS: 'UTLAND_DOK_STATUS',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -62,6 +63,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('opptjening', SvpBehandlingApiKeys.OPPTJENING)
   .withRel('sendt-varsel-om-revurdering', SvpBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
   .withRel('svangerskapspenger-tilrettelegging', SvpBehandlingApiKeys.SVANGERSKAPSPENGER_TILRETTELEGGING)
+  .withRel('utland-dok-status', SvpBehandlingApiKeys.UTLAND_DOK_STATUS)
 
   // operasjoner
   .withRel('bytt-behandlende-enhet', SvpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

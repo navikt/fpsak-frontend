@@ -11,7 +11,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import styles from './innhentDokOpptjeningUtlandPanel.less';
 
-const OpptjeningIUtlandDokValgType = {
+const OpptjeningIUtlandDokStatus = {
   DOKUMENTASJON_VIL_BLI_INNHENTET: 'DOKUMENTASJON_VIL_BLI_INNHENTET',
   DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET: 'DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET',
 };
@@ -49,14 +49,14 @@ const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
         <FormattedMessage id="InnhentDokOpptjeningUtlandPanel.InnhentelseDok" />
       </Element>
       <VerticalSpacer sixteenPx />
-      <RadioGroupField name="valgType" validate={[required]} direction="vertical" readOnly={readOnly}>
+      <RadioGroupField name="dokStatus" validate={[required]} direction="vertical" readOnly={readOnly}>
         <RadioOption
           label={<FormattedMessage id="InnhentDokOpptjeningUtlandPanel.Innhentes" />}
-          value={OpptjeningIUtlandDokValgType.DOKUMENTASJON_VIL_BLI_INNHENTET}
+          value={OpptjeningIUtlandDokStatus.DOKUMENTASJON_VIL_BLI_INNHENTET}
         />
         <RadioOption
           label={<FormattedHTMLMessage id="InnhentDokOpptjeningUtlandPanel.InnhentesIkke" />}
-          value={OpptjeningIUtlandDokValgType.DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET}
+          value={OpptjeningIUtlandDokStatus.DOKUMENTASJON_VIL_IKKE_BLI_INNHENTET}
         />
       </RadioGroupField>
       <FaktaBegrunnelseTextField
@@ -89,6 +89,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   return (_state, ownProps) => ({
     onSubmit,
     initialValues: {
+      dokStatus: ownProps.dokStatus,
       ...FaktaBegrunnelseTextField.buildInitialValues(ownProps.aksjonspunkt),
     },
   });

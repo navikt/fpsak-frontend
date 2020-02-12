@@ -13,6 +13,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   aksjonspunkter: Aksjonspunkt[];
+  dokStatus?: string;
   harApneAksjonspunkter: boolean;
   submitCallback: (data: {}) => void;
   readOnly: boolean;
@@ -26,6 +27,7 @@ const SakenFaktaPanel: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   aksjonspunkter,
+  dokStatus,
   harApneAksjonspunkter,
   submitCallback,
   readOnly,
@@ -55,6 +57,7 @@ const SakenFaktaPanel: FunctionComponent<OwnProps> = ({
           <InnhentDokOpptjeningUtlandPanel
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
+            dokStatus={dokStatus}
             readOnly={readOnly}
             harApneAksjonspunkter={harApneAksjonspunkter}
             aksjonspunkt={aksjonspunkter.find((ap) => ap.definisjon.kode === personAksjonspunkter[0])}

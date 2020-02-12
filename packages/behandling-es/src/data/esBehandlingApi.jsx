@@ -33,6 +33,7 @@ export const EsBehandlingApiKeys = {
   OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT: 'VERGE_OPPRETT',
   VERGE_FJERN: 'VERGE_FJERN',
+  UTLAND_DOK_STATUS: 'UTLAND_DOK_STATUS',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -56,6 +57,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('inntekt-arbeid-ytelse', EsBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', EsBehandlingApiKeys.VERGE)
   .withRel('sendt-varsel-om-revurdering', EsBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withRel('utland-dok-status', EsBehandlingApiKeys.UTLAND_DOK_STATUS)
 
   // operasjoner
   .withRel('bytt-behandlende-enhet', EsBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

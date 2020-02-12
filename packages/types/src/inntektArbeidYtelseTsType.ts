@@ -10,7 +10,7 @@ type InntektArbeidYtelse = Readonly<{
       saksNummer: string;
     }[];
   }[];
-  relatertTilgrensendeYtelserForAnnenForelder: {
+  relatertTilgrensendeYtelserForAnnenForelder?: {
     relatertYtelseType: string;
     tilgrensendeYtelserListe: {
       periodeTilDato: string;

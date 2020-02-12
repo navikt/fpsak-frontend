@@ -42,6 +42,7 @@ export const FpBehandlingApiKeys = {
   OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
   VERGE_OPPRETT: 'VERGE_OPPRETT',
   VERGE_FJERN: 'VERGE_FJERN',
+  UTLAND_DOK_STATUS: 'UTLAND_DOK_STATUS',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -73,6 +74,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttaksresultat-perioder', FpBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
   .withRel('uttak-stonadskontoer', FpBehandlingApiKeys.UTTAK_STONADSKONTOER)
   .withRel('uttak-kontroller-fakta-perioder', FpBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
+  .withRel('utland-dok-status', FpBehandlingApiKeys.UTLAND_DOK_STATUS)
 
   // operasjoner
   .withRel('lagre-stonadskontoer-gitt-uttaksperioder', FpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)

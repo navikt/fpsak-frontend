@@ -27,7 +27,7 @@ const faktaPanelDefinisjoner = [{
   urlCode: faktaPanelCodes.SAKEN,
   textCode: 'SakenFaktaPanel.Title',
   aksjonspunkterCodes: [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, aksjonspunktCodes.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE],
-  endpoints: [],
+  endpoints: [fpBehandlingApi.UTLAND_DOK_STATUS],
   renderComponent: (props) => <SakenFaktaIndex {...props} />,
   showComponent: () => true,
   getData: () => {},

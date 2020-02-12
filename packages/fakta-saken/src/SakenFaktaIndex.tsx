@@ -8,6 +8,9 @@ import messages from '../i18n/nb_NO.json';
 interface OwnProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
+  utlandDokStatus?: {
+    dokStatus: string;
+  };
   submitCallback: (data: {}) => void;
   submittable: boolean;
   harApneAksjonspunkter: boolean;
@@ -24,6 +27,7 @@ const intl = createIntl({
 const SakenFaktaIndex: FunctionComponent<OwnProps> = ({
   behandling,
   aksjonspunkter,
+  utlandDokStatus,
   submitCallback,
   submittable,
   harApneAksjonspunkter,
@@ -34,6 +38,7 @@ const SakenFaktaIndex: FunctionComponent<OwnProps> = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       aksjonspunkter={aksjonspunkter}
+      dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
       harApneAksjonspunkter={harApneAksjonspunkter}
       submitCallback={submitCallback}
       readOnly={readOnly}

@@ -5,6 +5,7 @@ import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import YtelserFaktaIndex from '@fpsak-frontend/fakta-ytelser';
+import SakenFaktaIndex from '@fpsak-frontend/fakta-saken';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
@@ -19,6 +20,14 @@ import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
 import svpBehandlingApi from '../data/svpBehandlingApi';
 
 const faktaPanelDefinisjoner = [{
+  urlCode: faktaPanelCodes.SAKEN,
+  textCode: 'SakenFaktaPanel.Title',
+  aksjonspunkterCodes: [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, aksjonspunktCodes.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE],
+  endpoints: [svpBehandlingApi.UTLAND_DOK_STATUS],
+  renderComponent: (props) => <SakenFaktaIndex {...props} />,
+  showComponent: () => true,
+  getData: () => {},
+}, {
   urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
   textCode: 'ArbeidsforholdInfoPanel.Title',
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD],

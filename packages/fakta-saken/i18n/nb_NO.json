@@ -20,6 +20,8 @@
   "InnhentDokOpptjeningUtlandPanel.InnhentesIkke": "Dokumentasjon vil <b>ikke</b> bli innhentet",
   "InnhentDokOpptjeningUtlandPanel.Begrunnelse": "Begrunnelse",
   
+  "ValidationMessage.NotEmpty": "Feltet må fylles ut",
+  "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",

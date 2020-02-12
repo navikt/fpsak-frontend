@@ -1,5 +1,4 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
@@ -8,8 +7,6 @@ import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeTyp
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
-
-import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
@@ -90,40 +87,22 @@ const fagsakPerson = {
 export default {
   title: 'fakta/fakta-person',
   component: PersonFaktaIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withKnobs],
 };
 
-export const visPanelForBeggeParter = () => {
-  return (
-    <PersonFaktaIndex
-      behandling={object('behandling', behandling)}
-      personopplysninger={object('personopplysninger', personopplysninger)}
-      fagsakPerson={object('fagsakPerson', fagsakPerson)}
-      alleKodeverk={alleKodeverk}
-    />
-  );
-};
+export const visPanelForBeggeParter = () => (
+  <PersonFaktaIndex
+    behandling={object('behandling', behandling)}
+    personopplysninger={object('personopplysninger', personopplysninger)}
+    fagsakPerson={object('fagsakPerson', fagsakPerson)}
+    alleKodeverk={alleKodeverk}
+  />
+);
 
-export const visPanelForGrunnleggendePersoninfo = () => {
-  return (
-    <PersonFaktaIndex
-      behandling={object('behandling', behandling)}
-      fagsakPerson={object('fagsakPerson', fagsakPerson)}
-      alleKodeverk={alleKodeverk}
-    />
-  );
-};
-
-export const visPanelForMarkertUtenlandssak = () => {
-  return (
-    <PersonFaktaIndex
-      behandling={object('behandling', behandling)}
-      fagsakPerson={object('fagsakPerson', {
-        ...fagsakPerson,
-        dodsdato: undefined,
-        erDod: false,
-      })}
-      alleKodeverk={alleKodeverk}
-    />
-  );
-};
+export const visPanelForGrunnleggendePersoninfo = () => (
+  <PersonFaktaIndex
+    behandling={object('behandling', behandling)}
+    fagsakPerson={object('fagsakPerson', fagsakPerson)}
+    alleKodeverk={alleKodeverk}
+  />
+);
