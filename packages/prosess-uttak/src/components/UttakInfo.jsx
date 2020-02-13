@@ -277,7 +277,7 @@ export const UttakInfo = ({
             </Row>
             <Row>
               <Column xs="12">
-                {`${gradertArbforhold(selectedItemData)} `}
+                {gradertArbforhold(selectedItemData)}
               </Column>
             </Row>
             {visGraderingIkkeInnvilget(selectedItemData, readOnly, graderingInnvilget) && (
