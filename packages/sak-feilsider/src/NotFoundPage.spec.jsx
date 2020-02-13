@@ -13,6 +13,6 @@ describe('<NotFoundPage>', () => {
     expect(wrapper.find(FormattedMessage)).to.have.length(1);
     const link = wrapper.find(Link);
     expect(link).to.have.length(1);
-    expect(link.prop('to')).to.eql('/fpsak');
+    expect(link.prop('to')).to.eql('/');
   });
 });
