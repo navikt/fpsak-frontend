@@ -81,6 +81,7 @@ export const FormkravKlageForm = ({
             selectValues={klageBareVedtakOptions}
             bredde="l"
           />
+          <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="4">
               <Undertekst>
@@ -153,6 +154,7 @@ FormkravKlageForm.propTypes = {
       kode: PropTypes.string.isRequired,
     }).isRequired,
     avsluttet: PropTypes.string,
+    uuid: PropTypes.string,
   })).isRequired,
   formProps: PropTypes.shape().isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,

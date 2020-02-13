@@ -40,7 +40,6 @@
   "BeregningInfoPanel.FordelBG.PeriodeFom": "Gjeldende f.o.m. {fom}",
   "BeregningInfoPanel.FordelBG.PeriodeFomOgTom": "Gjeldende {fom} - {tom}",
   "BeregningInfoPanel.FordelBG.Andel": "Aktivitet",
-  "BeregningInfoPanel.FordelBG.Arbeidsperiode": "Arbeidsperiode",
   "BeregningInfoPanel.FordelBG.AndelIArbeid": "Andel i arbeid",
   "BeregningInfoPanel.FordelBG.FordelingForrigeBehandling": "Fordeling forrige behandling",
   "BeregningInfoPanel.FordelBG.Refusjonskrav": "Ref.krav",
@@ -64,7 +63,7 @@
   "BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag": "Totalbeløp for {arbeidsgiver} kan ikke være høyere enn inntekt ({inntekt}).",
   "BeregningInfoPanel.FordelBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag": "Totalbeløp for Arbeidsavklaringspenger og {arbeidsgiver} kan ikke være høyere enn inntekt ({inntekt}).",
   "BeregningInfoPanel.FordelBG.Inntekt": "Inntekt",
-  "BeregningInfoPanel.FordelBG.Beregningsgrunnlag": "Beregningsgrunnlag",
+  "BeregningInfoPanel.FordelBG.Beregningsgrunnlag": "Grunnlag",
   
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",

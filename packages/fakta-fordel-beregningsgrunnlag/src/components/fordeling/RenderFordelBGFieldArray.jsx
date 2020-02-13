@@ -228,16 +228,16 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
     <TableRow key={andelElementFieldId}>
       <TableColumn>
         {arbeidsforholdReadOnlyOrSelect(fields, index, andelElementFieldId, selectVals, (readOnly || periodeUtenAarsak), arbeidsforholdList)}
-      </TableColumn>
-      <TableColumn>
         {!isSelvstendigOrFrilanser(fields.get(index))
         && (
-          <PeriodpickerField
-            names={[`${andelElementFieldId}.arbeidsperiodeFom`, `${andelElementFieldId}.arbeidsperiodeTom`]}
-            readOnly
-            defaultValue={null}
-            renderIfMissingDateOnReadOnly
-          />
+          <div className={styles.wordwrap}>
+            <PeriodpickerField
+              names={[`${andelElementFieldId}.arbeidsperiodeFom`, `${andelElementFieldId}.arbeidsperiodeTom`]}
+              readOnly
+              defaultValue={null}
+              renderIfMissingDateOnReadOnly
+            />
+          </div>
         )}
       </TableColumn>
       {erRevurdering
@@ -342,7 +342,6 @@ const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, s
 const getHeaderTextCodes = (erRevurdering) => {
   const headerCodes = [];
   headerCodes.push('BeregningInfoPanel.FordelBG.Andel');
-  headerCodes.push('BeregningInfoPanel.FordelBG.Arbeidsperiode');
   if (erRevurdering) {
     headerCodes.push('BeregningInfoPanel.FordelBG.FordelingForrigeBehandling');
   }

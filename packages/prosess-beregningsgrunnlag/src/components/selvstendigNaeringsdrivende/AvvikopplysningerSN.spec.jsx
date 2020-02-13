@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from './AvvikopplysningerSN';
 
@@ -44,7 +43,7 @@ describe('<AvviksopplysningerSN>', () => {
       alleAndelerIForstePeriode={forstePeriode}
       harAksjonspunkter
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.NyIArbeidslivet');
@@ -58,7 +57,7 @@ describe('<AvviksopplysningerSN>', () => {
       alleAndelerIForstePeriode={forstePeriode}
       harAksjonspunkter={false}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring');
@@ -72,39 +71,9 @@ describe('<AvviksopplysningerSN>', () => {
       alleAndelerIForstePeriode={forstePeriode}
       harAksjonspunkter={false}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IngenEndring');
-  });
-  it('Skal teste tabellen får korrekte rader med innhold vd SN', () => {
-    forstePeriode[0].erNyIArbeidslivet = false;
-    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_SN');
-    const wrapper = shallowWithIntl(<AvviksopplysningerSN
-      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-      alleAndelerIForstePeriode={forstePeriode}
-      harAksjonspunkter
-    />);
-
-    const rows = wrapper.find('Row');
-    expect(rows).to.have.length(4);
-    const omregnetAarsinntektText = rows.first().find('FormattedMessage');
-    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.PensjonsgivendeInntekt');
-    const omregnetAarsinntektVerdi = rows.first().find('Normaltekst');
-    expect(omregnetAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(forstePeriode[0].pgiSnitt));
-
-    const rapportertAarsinntektText = rows.at(1).find('FormattedMessage');
-    expect(rapportertAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.OppgittAarsinntekt');
-    const rapportertAarsinntektVerdi = rows.at(1).find('Normaltekst');
-    expect(rapportertAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(sammenligningsgrunnlagPrStatus.rapportertPrAar));
-
-    const avvikText = rows.at(3).find('FormattedMessage');
-    expect(avvikText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik');
-    const avvikVerdi = rows.at(3).find('Normaltekst');
-    expect(avvikVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((sammenligningsgrunnlagPrStatus.differanseBeregnet)));
-    const avvikProsentText = rows.at(3).find('FormattedMessage').at(1);
-    const avvikProsentValue = avvikProsentText.first().prop('values');
-    expect(avvikProsentText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AvvikProsent');
-    expect(avvikProsentValue.avvik).to.eql(sammenligningsgrunnlagPrStatus.avvikProsent);
   });
 });

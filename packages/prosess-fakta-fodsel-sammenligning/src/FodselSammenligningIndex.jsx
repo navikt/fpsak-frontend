@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import fodselSammenligningSoknadPropType from './propTypes/fodselSammenligningSoknadPropType';
 import fodselSammenligningFamiliehendelsePropType from './propTypes/fodselSammenligningFamiliehendelsePropType';
 import FodselSammenligningPanel from './components/FodselSammenligningPanel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

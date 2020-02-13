@@ -66,6 +66,7 @@ export const InnsynFormImpl = ({
       <VerticalSpacer twentyPx />
       <DocumentListInnsyn saksNr={saksNr} documents={documents} readOnly={readOnly} />
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+      <VerticalSpacer sixteenPx />
       <RadioGroupField
         name="innsynResultatType"
         validate={[required]}
@@ -127,9 +128,9 @@ InnsynFormImpl.propTypes = {
   documents: PropTypes.arrayOf(PropTypes.shape({
     journalpostId: PropTypes.string.isRequired,
     dokumentId: PropTypes.string.isRequired,
-    tittel: PropTypes.string.isRequired,
+    tittel: PropTypes.string,
     tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
+    kommunikasjonsretning: PropTypes.string,
   })).isRequired,
   vedtaksdokumenter: PropTypes.arrayOf(PropTypes.shape({
     dokumentId: PropTypes.string.isRequired,

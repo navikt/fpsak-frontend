@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

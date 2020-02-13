@@ -14,7 +14,7 @@ import {
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  ElementWrapper, Table, TableColumn, TableRow, VerticalSpacer,
+  Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -22,8 +22,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
-
-import styles from './sokersOpplysningspliktForm.less';
 
 const formName = 'SokersOpplysningspliktForm';
 
@@ -90,7 +88,7 @@ export const SokersOpplysningspliktFormImpl = ({
     originalErVilkarOk={originalErVilkarOk}
   >
     {manglendeVedlegg.length > 0 && (
-      <ElementWrapper>
+      <>
         <VerticalSpacer twentyPx />
         <Normaltekst><FormattedMessage id="SokersOpplysningspliktForm.ManglendeDokumentasjon" /></Normaltekst>
         <VerticalSpacer eightPx />
@@ -111,37 +109,39 @@ export const SokersOpplysningspliktFormImpl = ({
             </Table>
           </Column>
         </Row>
-      </ElementWrapper>
+      </>
     )}
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     {!readOnly && (
-      <Row>
-        <Column xs="6">
-          <RadioGroupField name="erVilkarOk" validate={[required]}>
-            <RadioOption
-              label={(
-                <FormattedHTMLMessage
-                  id={findRadioButtonTextCode(true)}
-                />
+      <>
+        <VerticalSpacer sixteenPx />
+        <Row>
+          <Column xs="6">
+            <RadioGroupField name="erVilkarOk" validate={[required]}>
+              <RadioOption
+                label={(
+                  <FormattedHTMLMessage
+                    id={findRadioButtonTextCode(true)}
+                  />
               )}
-              value
-              disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
-            />
-            <RadioOption label={getLabel(intl)} value={false} />
-          </RadioGroupField>
-        </Column>
-      </Row>
+                value
+                disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
+              />
+              <RadioOption label={getLabel(intl)} value={false} />
+            </RadioGroupField>
+          </Column>
+        </Row>
+      </>
     )}
     {readOnly && (
-      <ElementWrapper>
-        <div className={styles.radioIE}>
-          <RadioGroupField name="dummy" readOnly={readOnly} isEdited={hasAksjonspunkt && (erVilkarOk !== undefined)}>
-            {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
-          </RadioGroupField>
-          {erVilkarOk === false && behandlingsresultat.avslagsarsak
-        && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>}
-        </div>
-      </ElementWrapper>
+      <div>
+        {originalErVilkarOk === false && behandlingsresultat.avslagsarsak && (
+          <>
+            <VerticalSpacer sixteenPx />
+            <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>
+          </>
+        )}
+      </div>
     )}
   </ProsessPanelTemplate>
 );

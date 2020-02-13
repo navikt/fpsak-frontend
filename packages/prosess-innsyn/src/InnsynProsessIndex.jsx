@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import InnsynForm from './components/InnsynForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import innsynBehandlingPropType from './propTypes/innsynBehandlingPropType';
 import innsynAksjonspunkterPropType from './propTypes/innsynAksjonspunkterPropType';
 import innsynPropType from './propTypes/innsynPropType';

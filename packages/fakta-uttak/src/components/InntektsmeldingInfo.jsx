@@ -89,10 +89,10 @@ const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
             </Normaltekst>
           )}
           {isGradering && (
-          <Element>
-            <FormattedMessage id="UttakInfoPanel.Gradering" />
-:
-          </Element>
+            <Element>
+              <FormattedMessage id="UttakInfoPanel.Gradering" />
+              :
+            </Element>
           )}
         </FlexColumn>
         <FlexColumn>
