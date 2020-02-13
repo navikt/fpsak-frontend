@@ -14,7 +14,7 @@ import ErrorPageWrapper from './components/ErrorPageWrapper';
 const ForbiddenPage = () => (
   <ErrorPageWrapper titleCode="ForbiddenPage.Header">
     <br />
-    <a href="/fpsak"><FormattedMessage id="ForbiddenPage.LinkText" /></a>
+    <a href="/"><FormattedMessage id="ForbiddenPage.LinkText" /></a>
     <br />
     <Undertittel />
   </ErrorPageWrapper>
