@@ -22,10 +22,7 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import BubbleText from './felles/bubbleText';
 
 const scrollUp = () => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-  return false;
+  window.scroll(0, 0);
 };
 
 function isGjeldendeFraUtenEndredeFelter(historikkinnslagDel) {

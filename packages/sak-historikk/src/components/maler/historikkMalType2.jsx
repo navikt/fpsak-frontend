@@ -10,10 +10,7 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import { findHendelseText, findResultatText } from './felles/historikkUtils';
 
 const scrollUp = () => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-  return false;
+  window.scroll(0, 0);
 };
 
 const HistorikkMalType2 = ({
