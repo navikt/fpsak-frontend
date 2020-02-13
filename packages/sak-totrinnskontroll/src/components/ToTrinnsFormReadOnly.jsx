@@ -96,7 +96,7 @@ export const ToTrinnsFormReadOnlyImpl = ({ approvalList, getAksjonspunktText }) 
         if (aksjonspunkter.length > 0) {
           return (
             <ElementWrapper key={contextCode}>
-              <NavLink to={skjermlenke}>
+              <NavLink to={skjermlenke} onClick={() => window.scroll(0, 0)}>
                 {skjermlenkeNavn}
               </NavLink>
               {aksjonspunkter.map((aksjonspunkt) => renderAksjonspunkt(aksjonspunkt, getAksjonspunktText))}
