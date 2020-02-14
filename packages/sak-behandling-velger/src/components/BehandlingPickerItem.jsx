@@ -26,18 +26,17 @@ const getContentProps = (behandling, getKodeverknavn) => ({
   behandlingsresultatTypeKode: behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined,
 });
 
-const renderItemContent = (behandling, getKodeverknavn, isSelected = false, withChevronDown = false, withChevronUp = false) => (
+const renderItemContent = (behandling, getKodeverknavn, withChevronDown = false, withChevronUp = false) => (
   <BehandlingPickerItemContent
     withChevronDown={withChevronDown}
     withChevronUp={withChevronUp}
-    isSelected={isSelected}
     {...getContentProps(behandling, getKodeverknavn)}
   />
 );
 
-const renderToggleShowAllButton = (toggleShowAll, behandling, isActive, showAll, getKodeverknavn) => (
+const renderToggleShowAllButton = (toggleShowAll, behandling, showAll, getKodeverknavn) => (
   <button type="button" className={styles.toggleShowAllButton} onClick={toggleShowAll}>
-    {renderItemContent(behandling, getKodeverknavn, isActive, !showAll, showAll)}
+    {renderItemContent(behandling, getKodeverknavn, !showAll, showAll)}
   </button>
 );
 
@@ -47,7 +46,7 @@ const renderLinkToBehandling = (saksnummer, behandling, isActive, toggleShowAll,
     to={getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, behandling.id) })}
     onClick={toggleShowAll}
   >
-    {renderItemContent(behandling, getKodeverknavn, isActive, false, showAll && isActive)}
+    {renderItemContent(behandling, getKodeverknavn, false, showAll && isActive)}
   </NavLink>
 );
 
@@ -62,13 +61,13 @@ const BehandlingPickerItem = ({
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   if (onlyOneBehandling && isActive) {
-    return renderItemContent(behandling, getKodeverknavn, isActive);
+    return renderItemContent(behandling, getKodeverknavn);
   }
   if (onlyOneBehandling || showAll) {
     return renderLinkToBehandling(saksnummer, behandling, isActive, toggleShowAll, showAll, getKodeverknavn);
   }
   if (isActive) {
-    return renderToggleShowAllButton(toggleShowAll, behandling, isActive, showAll, getKodeverknavn);
+    return renderToggleShowAllButton(toggleShowAll, behandling, showAll, getKodeverknavn);
   }
   return null;
 };

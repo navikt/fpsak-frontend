@@ -120,9 +120,9 @@ DocumentListInnsyn.propTypes = {
   documents: PropTypes.arrayOf(PropTypes.shape({
     journalpostId: PropTypes.string.isRequired,
     dokumentId: PropTypes.string.isRequired,
-    tittel: PropTypes.string.isRequired,
+    tittel: PropTypes.string,
     tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
+    kommunikasjonsretning: PropTypes.string,
   }).isRequired).isRequired,
   readOnly: PropTypes.bool,
 };

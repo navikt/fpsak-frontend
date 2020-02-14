@@ -11,10 +11,7 @@ import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningType
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const scrollUp = () => {
-  if (window.innerWidth < 1305) {
-    window.scroll(0, 0);
-  }
-  return false;
+  window.scroll(0, 0);
 };
 
 export const HistorikkMalTypeForeldelse = ({
