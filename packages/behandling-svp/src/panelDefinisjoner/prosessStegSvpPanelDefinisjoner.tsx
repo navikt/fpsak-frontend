@@ -27,6 +27,28 @@ const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefK
   return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;
 };
 
+const harPeriodeMedUtbetaling = (perioder) => {
+  const periode = perioder.find((p) => p.dagsats > 0);
+  return !!periode;
+};
+
+const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
+  if (resultatstruktur && resultatstruktur.perioder.length > 0) {
+    if (!harPeriodeMedUtbetaling(resultatstruktur.perioder)) {
+      return vut.IKKE_VURDERT;
+    }
+    if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
+      const oppfylt = uttaksresultat.perioderSøker.some((p) => (
+        p.periodeResultatType.kode !== prt.AVSLATT
+      ));
+      if (oppfylt) {
+        return vut.OPPFYLT;
+      }
+    }
+  }
+  return vut.IKKE_VURDERT;
+};
+
 const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
   showComponent: ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }) => vilkarForSteg.length > 0
     && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg),
@@ -139,8 +161,9 @@ const prosessStegPanelDefinisjoner = [{
       fagsak, personopplysninger, soknad, beregningresultat: beregningresultatForeldrepenger,
     }),
     showComponent: () => true,
-    overrideStatus: ({ beregningresultatForeldrepenger }) => (beregningresultatForeldrepenger
-    && beregningresultatForeldrepenger.perioder.length > 0 ? vut.OPPFYLT : vut.IKKE_VURDERT),
+    overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) => getStatusFromResultatstruktur(
+      beregningresultatForeldrepenger, uttaksresultatPerioder,
+    ),
   }],
 }, {
   urlCode: bpc.AVREGNING,
