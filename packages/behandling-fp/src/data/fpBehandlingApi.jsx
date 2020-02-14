@@ -17,7 +17,6 @@ export const FpBehandlingApiKeys = {
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
   BEREGNINGRESULTAT_FORELDREPENGER: 'BEREGNINGRESULTAT_FORELDREPENGER',
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
-  BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
@@ -55,7 +54,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilbakekrevingvalg', FpBehandlingApiKeys.TILBAKEKREVINGVALG)
   .withRel('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
   .withRel('beregningsgrunnlag', FpBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withRel('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT)
   .withRel('familiehendelse-v2', FpBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', FpBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', FpBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
