@@ -15,7 +15,6 @@ export const EsBehandlingApiKeys = {
   SIMULERING_RESULTAT: 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
   BEREGNINGRESULTAT_ENGANGSSTONAD: 'BEREGNINGRESULTAT_ENGANGSSTONAD',
-  BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
@@ -45,7 +44,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('simuleringResultat', EsBehandlingApiKeys.SIMULERING_RESULTAT)
   .withRel('tilbakekrevingvalg', EsBehandlingApiKeys.TILBAKEKREVINGVALG)
   .withRel('beregningsresultat-engangsstonad', EsBehandlingApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD)
-  .withRel('beregningsresultat-foreldrepenger', EsBehandlingApiKeys.BEREGNINGRESULTAT)
   .withRel('familiehendelse-v2', EsBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', EsBehandlingApiKeys.SOKNAD)
   .withRel('soknad-original-behandling', EsBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
