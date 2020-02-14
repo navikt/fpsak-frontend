@@ -72,7 +72,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
 
   /* Brev */
-  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
   .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
 
@@ -104,8 +103,9 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
 
-  /* fpformidling/api/brev */
+  .withGet('/fpformidling/api/brev/maler', FpsakApiKeys.BREVMALER)
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
+
   .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-henleggelsesbrev', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE)
 
