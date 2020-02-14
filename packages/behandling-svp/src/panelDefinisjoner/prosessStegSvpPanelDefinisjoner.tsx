@@ -32,18 +32,12 @@ const harPeriodeMedUtbetaling = (perioder) => {
   return !!periode;
 };
 
-const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
+const getStatusFromResultatstruktur = (resultatstruktur) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
     if (!harPeriodeMedUtbetaling(resultatstruktur.perioder)) {
       return vut.IKKE_VURDERT;
-    }
-    if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
-      const oppfylt = uttaksresultat.perioderSøker.some((p) => (
-        p.periodeResultatType.kode !== prt.AVSLATT
-      ));
-      if (oppfylt) {
-        return vut.OPPFYLT;
-      }
+    } else {
+      return vut.OPPFYLT;
     }
   }
   return vut.IKKE_VURDERT;
@@ -161,8 +155,8 @@ const prosessStegPanelDefinisjoner = [{
       fagsak, personopplysninger, soknad, beregningresultat: beregningresultatForeldrepenger,
     }),
     showComponent: () => true,
-    overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) => getStatusFromResultatstruktur(
-      beregningresultatForeldrepenger, uttaksresultatPerioder,
+    overrideStatus: ({ beregningresultatForeldrepenger }) => getStatusFromResultatstruktur(
+      beregningresultatForeldrepenger,
     ),
   }],
 }, {
