@@ -36,9 +36,8 @@ const getStatusFromResultatstruktur = (resultatstruktur) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
     if (!harPeriodeMedUtbetaling(resultatstruktur.perioder)) {
       return vut.IKKE_VURDERT;
-    } else {
-      return vut.OPPFYLT;
     }
+    return vut.OPPFYLT;
   }
   return vut.IKKE_VURDERT;
 };
