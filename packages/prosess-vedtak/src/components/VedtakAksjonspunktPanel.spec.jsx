@@ -14,7 +14,6 @@ describe('<VedtakAksjonspunktPanel>', () => {
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
       readOnly={false}
-      erBehandlingHenlagt
       aksjonspunktKoder={aksjonspunktKoder}
       isBehandlingReadOnly={false}
     />);

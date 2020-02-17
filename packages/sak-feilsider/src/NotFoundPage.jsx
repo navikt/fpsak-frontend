@@ -12,7 +12,7 @@ import ErrorPageWrapper from './components/ErrorPageWrapper';
  */
 const NotFoundPage = () => (
   <ErrorPageWrapper titleCode="NotFoundPage.Header">
-    <Link to="/fpsak"><FormattedMessage id="NotFoundPage.LinkText" /></Link>
+    <Link to="/"><FormattedMessage id="NotFoundPage.LinkText" /></Link>
   </ErrorPageWrapper>
 );
 

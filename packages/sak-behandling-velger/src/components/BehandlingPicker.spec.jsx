@@ -71,7 +71,7 @@ describe('<BehandlingPicker>', () => {
       noExistingBehandlinger={false}
       behandlinger={behandlinger}
       saksnummer={1}
-      showAll={false}
+      showAll
       toggleShowAll={sinon.spy()}
       alleKodeverk={{}}
     />);
@@ -102,7 +102,7 @@ describe('<BehandlingPicker>', () => {
       behandlinger={behandlinger}
       behandlingId={2}
       saksnummer={1}
-      showAll={false}
+      showAll
       toggleShowAll={sinon.spy()}
       alleKodeverk={{}}
     />);

@@ -14,7 +14,7 @@ const NavFieldGroup = ({
 }) => {
   if (!errorMessageName) {
     return (
-      <SkjemaGruppe title={title} className={className} feil={errorMessage ? { feilmelding: errorMessage } : null}>
+      <SkjemaGruppe title={title} className={className} feil={errorMessage}>
         {children}
       </SkjemaGruppe>
     );

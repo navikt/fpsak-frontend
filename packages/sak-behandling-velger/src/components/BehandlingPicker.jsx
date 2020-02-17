@@ -22,6 +22,7 @@ export const sortBehandlinger = (behandlinger) => behandlinger.sort((b1, b2) => 
 
 const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk) => (
   sortBehandlinger(behandlinger)
+    .filter((behandling) => showAll || behandling.id === behandlingId)
     .map((behandling) => (
       <li key={behandling.id}>
         <BehandlingPickerItem

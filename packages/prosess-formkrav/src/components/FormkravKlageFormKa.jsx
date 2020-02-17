@@ -8,9 +8,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
 
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
+import { erTilbakekreving, påklagdTilbakekrevingInfo } from './FormkravKlageFormNfp';
 
 /**
- * FormkravKlageForm
+ * FormkravKlageFormKA
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for formkrav klage (KA).
  */
@@ -51,7 +52,7 @@ FormkravKlageFormKa.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const transformValues = (values) => ({
+export const transformValues = (values, avsluttedeBehandlinger) => ({
   erKlagerPart: values.erKlagerPart,
   erFristOverholdt: values.erFristOverholdt,
   erKonkret: values.erKonkret,
@@ -59,12 +60,14 @@ export const transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
   vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
+  erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
+  tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
 });
 
 const formName = 'FormkravKlageFormKa';
 
 const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering], (klageVurdering) => {
-  const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkavResultatKA : null;
+  const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkravResultatKA : null;
   return {
     vedtak: klageFormkavResultatKa ? getPaKlagdVedtak(klageFormkavResultatKa) : null,
     begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
@@ -76,9 +79,10 @@ const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
+    readOnly: ownProps.readOnly,
     onSubmit,
   });
 };

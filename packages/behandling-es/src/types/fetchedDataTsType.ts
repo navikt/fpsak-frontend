@@ -1,4 +1,3 @@
-} from '@fpsak-frontend/behandling-felles';
 import {
   BeregningsresultatEs, Aksjonspunkt, Vilkar, Personopplysninger, Soknad, InntektArbeidYtelse, SimuleringResultat,
 } from '@fpsak-frontend/types';

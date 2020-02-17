@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import Panel from 'nav-frontend-paneler';
 
 import {
-  FlexContainer, FlexRow, FlexColumn,
-  BorderBox, DateLabel, TimeLabel, Image, VerticalSpacer,
+  FlexContainer, FlexRow, FlexColumn, DateLabel, TimeLabel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
@@ -112,13 +112,12 @@ const BehandlingPickerItemContent = ({
   behandlingsstatus,
   behandlingTypeNavn,
   erGjeldendeVedtak,
-  isSelected,
   behandlingsresultatTypeKode,
   behandlingsresultatTypeNavn,
   førsteÅrsak,
   behandlingTypeKode,
 }) => (
-  <BorderBox className={isSelected ? styles.boxPaddingWithSelected : styles.boxPadding}>
+  <Panel border>
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.arsakPadding}>
@@ -211,7 +210,7 @@ const BehandlingPickerItemContent = ({
       </FlexRow>
     </FlexContainer>
     <VerticalSpacer fourPx />
-  </BorderBox>
+  </Panel>
 );
 
 BehandlingPickerItemContent.propTypes = {
@@ -230,7 +229,6 @@ BehandlingPickerItemContent.propTypes = {
     manueltOpprettet: PropTypes.bool,
   }),
   erGjeldendeVedtak: PropTypes.bool,
-  isSelected: PropTypes.bool.isRequired,
   behandlingsresultatTypeKode: PropTypes.string,
   behandlingsresultatTypeNavn: PropTypes.string,
 };

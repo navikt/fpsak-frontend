@@ -8,6 +8,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import ApprovalField from './ApprovalField';
 
@@ -56,7 +57,7 @@ export const ToTrinnsFormImpl = ({
         if (aksjonspunkter.length > 0) {
           return (
             <div key={contextCode}>
-              <NavLink to={skjermlenke} className={styles.lenke}>
+              <NavLink to={skjermlenke} onClick={() => window.scroll(0, 0)} className={styles.lenke}>
                 {skjermlenkeNavn}
               </NavLink>
               {aksjonspunkter.map((aksjonspunkt, approvalIndex) => (
@@ -96,15 +97,17 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving
-        && (
-        <button
-          type="button"
-          className={styles.buttonLink}
-          onClick={forhandsvisVedtaksbrev}
-        >
-          <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
-        </button>
+        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving && (
+          <>
+            <VerticalSpacer eightPx />
+            <button
+              type="button"
+              className={styles.buttonLink}
+              onClick={forhandsvisVedtaksbrev}
+            >
+              <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
+            </button>
+          </>
         )}
       </div>
     </form>

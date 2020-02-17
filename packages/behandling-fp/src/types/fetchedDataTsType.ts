@@ -1,4 +1,3 @@
-} from '@fpsak-frontend/behandling-felles';
 import {
   BeregningsresultatFp, Aksjonspunkt, Vilkar, Personopplysninger, Ytelsefordeling, Soknad, InntektArbeidYtelse,
   Beregningsgrunnlag, UttakStonadskontoer, UttaksresultatPeriode, SimuleringResultat,

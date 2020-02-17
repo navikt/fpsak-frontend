@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
 
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
 
 /**
@@ -51,7 +52,24 @@ FormkravKlageFormNfpImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-const transformValues = (values) => ({
+const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) => avsluttedeBehandlinger.find((behandling) => behandling.id.toString() === påklagdVedtak);
+
+export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
+  const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
+  return behandling.type.kode === BehandlingType.TILBAKEKREVING || behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING;
+};
+
+export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {
+  const erTilbakekrevingVedtak = erTilbakekreving(avsluttedeBehandlinger, påklagdVedtak);
+  const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
+  return erTilbakekrevingVedtak ? {
+    tilbakekrevingUuid: behandling.uuid,
+    tilbakekrevingVedtakDato: behandling.avsluttet,
+    tilbakekrevingBehandlingType: behandling.type.kode,
+  } : null;
+};
+
+const transformValues = (values, avsluttedeBehandlinger) => ({
   erKlagerPart: values.erKlagerPart,
   erFristOverholdt: values.erFristOverholdt,
   erKonkret: values.erKonkret,
@@ -59,6 +77,8 @@ const transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
   kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
   vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
+  erTilbakekreving: erTilbakekreving(avsluttedeBehandlinger, values.vedtak),
+  tilbakekrevingInfo: påklagdTilbakekrevingInfo(avsluttedeBehandlinger, values.vedtak),
 });
 
 const formName = 'FormkravKlageFormNfp';
@@ -77,7 +97,7 @@ const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering
   });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.avsluttedeBehandlinger)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
     readOnly: ownProps.readOnly,
