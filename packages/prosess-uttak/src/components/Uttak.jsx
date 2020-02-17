@@ -482,7 +482,7 @@ export class UttakImpl extends Component {
                     <FlexColumn>
                       <Hovedknapp
                         mini
-                        disabled={this.isConfirmButtonDisabled()}
+                        disabled={this.isConfirmButtonDisabled() || submitting}
                         spinner={submitting}
                       >
                         <FormattedMessage id="Uttak.Confirm" />

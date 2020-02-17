@@ -216,7 +216,11 @@ export const finnValgtPanel = (
       return undefined;
     }
     const index = prosessStegPaneler.findIndex((i) => i.isAksjonspunktOpen);
-    return index !== -1 ? prosessStegPaneler[index] : prosessStegPaneler[0];
+    if (index !== -1) {
+      return prosessStegPaneler[index];
+    }
+    const sistePanel = prosessStegPaneler[prosessStegPaneler.length - 1];
+    return sistePanel.erStegBehandlet ? sistePanel : undefined;
   }
   return prosessStegPaneler.find((i) => i.urlCode === valgtProsessStegPanelKode);
 };

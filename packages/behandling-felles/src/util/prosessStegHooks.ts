@@ -58,9 +58,14 @@ const useProsessStegVelger = (
   behandling: Behandling,
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void,
   valgtProsessSteg: string,
+  valgtPanel?: ProsessStegData,
 ) => useCallback((index) => {
   const { urlCode } = prosessStegPaneler[index];
-  const nyvalgtProsessSteg = !valgtProsessSteg || urlCode !== valgtProsessSteg ? urlCode : undefined;
+
+  const erNyvalgtPanelDetSammeSomForrige = valgtPanel && valgtPanel.urlCode === urlCode;
+  const erNyvalgtPanelUlikForrige = urlCode !== valgtProsessSteg;
+
+  const nyvalgtProsessSteg = !erNyvalgtPanelDetSammeSomForrige && (!valgtProsessSteg || erNyvalgtPanelUlikForrige) ? urlCode : undefined;
   oppdaterProsessStegOgFaktaPanelIUrl(nyvalgtProsessSteg, valgtFaktaSteg);
 }, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
 
