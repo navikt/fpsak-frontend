@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
 
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
 import supportPanels from './supportPanels';
-import LinkRow from './components/LinkRow';
 import SupportPanelLink from './components/SupportPanelLink';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
@@ -47,10 +47,10 @@ export const BehandlingSupportIndex = ({
   getSupportPanelLocation,
 }) => (
   <BehandlingsupportDataResolver>
-    <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
-      <div className={styles.marginBottom}>
-        <LinkRow>
-          {acccessibleSupportPanels.map((supportPanel) => (
+    <FlexContainer>
+      <FlexRow spaceBetween className={acccessibleSupportPanels.length === 4 ? styles.columnMarginMedGodkjenning : styles.columnMargin}>
+        {acccessibleSupportPanels.map((supportPanel) => (
+          <FlexColumn>
             <SupportPanelLink
               key={supportPanel}
               supportPanel={supportPanel}
@@ -58,12 +58,12 @@ export const BehandlingSupportIndex = ({
               isActive={supportPanel === activeSupportPanel}
               supportPanelLocation={getSupportPanelLocation(supportPanel)}
             />
-          ))}
-        </LinkRow>
-      </div>
-      <div className={(activeSupportPanel === supportPanels.HISTORY ? styles.containerHistorikk : styles.container)}>
-        {renderSupportPanel(activeSupportPanel)}
-      </div>
+          </FlexColumn>
+        ))}
+      </FlexRow>
+    </FlexContainer>
+    <div className={(activeSupportPanel === supportPanels.HISTORY ? styles.containerHistorikk : styles.container)}>
+      {renderSupportPanel(activeSupportPanel)}
     </div>
   </BehandlingsupportDataResolver>
 );
