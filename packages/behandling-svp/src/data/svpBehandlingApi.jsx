@@ -16,7 +16,6 @@ export const SvpBehandlingApiKeys = {
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
   BEREGNINGRESULTAT_FORELDREPENGER: 'BEREGNINGRESULTAT_FORELDREPENGER',
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
-  BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
@@ -49,10 +48,9 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('tilbakekrevingvalg', SvpBehandlingApiKeys.TILBAKEKREVINGVALG)
   .withRel('beregningsresultat-foreldrepenger', SvpBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
   .withRel('beregningsgrunnlag', SvpBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withRel('beregningsresultat-foreldrepenger', SvpBehandlingApiKeys.BEREGNINGRESULTAT)
   .withRel('familiehendelse-v2', SvpBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', SvpBehandlingApiKeys.SOKNAD)
-  .withRel('beregningsresultat-engangsstonad-original-behandling', SvpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
+  .withRel('beregningsresultat-foreldrepenger-original-behandling', SvpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
   .withRel('soeker-medlemskap', SvpBehandlingApiKeys.MEDLEMSKAP)
   .withRel('soeker-medlemskap-v2', SvpBehandlingApiKeys.MEDLEMSKAP_V2)
   .withRel('uttak-periode-grense', SvpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
