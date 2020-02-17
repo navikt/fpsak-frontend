@@ -55,7 +55,10 @@ export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPane
     const index = faktaPaneler.findIndex((i) => i.harApneAksjonspunkter);
     return index !== -1 ? faktaPaneler[index] : faktaPaneler[0];
   }
-  return faktaPaneler.find((i) => i.urlCode === valgtFaktaPanelKode);
+  if (valgtFaktaPanelKode) {
+    return faktaPaneler.find((i) => i.urlCode === valgtFaktaPanelKode);
+  }
+  return faktaPaneler.length > 0 ? faktaPaneler[0] : undefined;
 };
 
 export const formaterPanelerForSidemeny = (intl, faktaPaneler: FaktaPanelUtledet[], valgtFaktaPanelKode: string):

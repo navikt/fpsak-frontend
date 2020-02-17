@@ -38,7 +38,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   behandlingApi,
   dispatch,
 }) => {
-  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtProsessSteg.urlCode === bpc.VEDTAK;
+  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.urlCode === bpc.VEDTAK;
   const bekreftAksjonspunktCallback = prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi, lagringSideeffekterCallback,
     dispatch, valgtProsessSteg);
 
