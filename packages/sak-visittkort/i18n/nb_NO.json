@@ -1,0 +1,13 @@
+{
+  "VisittkortDetaljerPopup.Statsborgerskap.Hjelpetekst": "Statsborgerskap",
+  "VisittkortDetaljerPopup.Personstatus.Hjelpetekst": "Personstatus",
+  "VisittkortDetaljerPopup.Sivilstand.Hjelpetekst": "Sivilstand",
+  "VisittkortDetaljerPopup.Malform.Beskrivelse": "Foretrukket språk",
+  "VisittkortDetaljerPopup.AdressePanel.bostedsadresse": "Bostedsadresse",
+  "VisittkortDetaljerPopup.AdressePanel.midlertidigAdresse": "Midlertidig adresse",
+  "VisittkortDetaljerPopup.AdressePanel.postadresseNorge": "Postadresse i Norge",
+  "VisittkortDetaljerPopup.AdressePanel.postadresseUtland": "Postadresse i utlandet",
+  "Malform.Bokmal": "Bokmål",
+  "Malform.Nynorsk": "Nynorsk",
+  "Malform.Engelsk": "Engelsk"
+}

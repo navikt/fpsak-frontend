@@ -1,15 +1,12 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import {
   FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 import {
   Kodeverk, NavAnsatt, Behandling,
 } from '@fpsak-frontend/types';
-import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 
 import ForeldrepengerProsess from './ForeldrepengerProsess';
 import ForeldrepengerFakta from './ForeldrepengerFakta';
@@ -77,14 +74,6 @@ const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
       />
-      <VerticalSpacer sixteenPx />
-      <PersonFaktaIndex
-        behandling={behandling}
-        fagsakPerson={fagsak.fagsakPerson}
-        personopplysninger={fetchedData.personopplysninger}
-        alleKodeverk={alleKodeverk}
-      />
-      <VerticalSpacer sixteenPx />
       <ForeldrepengerFakta
         behandling={behandling}
         data={fetchedData}

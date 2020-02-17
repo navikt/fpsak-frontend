@@ -104,7 +104,7 @@ export const getBehandlingStatus = createSelector([getBehandling], (behandling =
 export const getBehandlingType = createSelector([getBehandling], (behandling = {}) => behandling.type);
 export const getBehandlingBehandlendeEnhetId = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetId);
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetNavn);
-export const getBehandlingSprak = createSelector([getBehandling], (behandling) => behandling.sprakkode);
+export const getBehandlingSprak = createSelector([getBehandling], (behandling = {}) => behandling.sprakkode);
 export const erBehandlingPaVent = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingPaaVent : false));
 export const erBehandlingKoet = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingKoet : false));
 export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling], (behandling) => (behandling

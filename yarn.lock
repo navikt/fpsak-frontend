@@ -2924,6 +2924,13 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
+"@navikt/nap-clipboard@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-clipboard/-/nap-clipboard-1.0.0.tgz#48c5d80443ac4f5c1629ba6c00c06d6ee3f1727c"
+  integrity sha512-3CH7tSHtfheVx524ODwTmJKaUhmXKIxgRFtbXDmGA2smE+pHbdKDmAVAGopceMNIjYUfsUFnDuGItTHru03htw==
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+
 "@navikt/nap-header@1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.9.tgz#d5f7d23679b56ce916a36e8e68d414c9f12f7a16"
@@ -2936,6 +2943,17 @@
     nav-frontend-typografi "^2.0.16"
     nav-frontend-typografi-style "^1.0.17"
     prop-types "^15.7.2"
+
+"@navikt/nap-person-card@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-person-card/-/nap-person-card-1.0.0.tgz#3781065dbcd262832bbc77254e123ef6b0856bee"
+  integrity sha512-0cOZC2CjU/zchDRDBvkzav9JJg/6QqEOOsuGKJnDHsDCFjQ7ZwNVUEujvVIrHehm6yL7kSuFsAV19uoEvzusNA==
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+    "@navikt/nap-clipboard" "1.0.0"
+    "@navikt/nap-popover" "1.0.4"
+    nav-frontend-typografi "^2.0.17"
+    nav-frontend-typografi-style "^1.0.18"
 
 "@navikt/nap-popover@1.0.4":
   version "1.0.4"
@@ -12360,7 +12378,7 @@ nav-frontend-spinner@1.0.21:
   resolved "https://registry.yarnpkg.com/nav-frontend-spinner/-/nav-frontend-spinner-1.0.21.tgz#bd47723499b385cd2a491f91e329ac8f8f7c238a"
   integrity sha512-H/UV+MHw5Q/GLeRbxRq/xO5E2z7qyJzx5ambsM4OF/jiK5MaBBkmE/yvKJ/xUsgQwwQPaOOgst2gGk+imiP3QQ==
 
-nav-frontend-typografi-style@1.0.18:
+nav-frontend-typografi-style@1.0.18, nav-frontend-typografi-style@^1.0.18:
   version "1.0.18"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi-style/-/nav-frontend-typografi-style-1.0.18.tgz#cf43052d90ba119da80a348210f861aecc4f5ed6"
   integrity sha512-0aQ0oLeJJUg3ObkzfKyjT8EdO4io5Aq04SC0DJqCv1GbwsuUk89C+biWRdQAknMkaSXveR9InZhF9Stu/PstnQ==
@@ -12373,7 +12391,7 @@ nav-frontend-typografi-style@^1.0.17:
   dependencies:
     nav-frontend-core "^4.0.11"
 
-nav-frontend-typografi@2.0.17:
+nav-frontend-typografi@2.0.17, nav-frontend-typografi@^2.0.17:
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/nav-frontend-typografi/-/nav-frontend-typografi-2.0.17.tgz#4830eef48440df26c2bc66a0897c3eda0484ddd9"
   integrity sha512-AXuRbaa1iaJOEbOGrn3hXtkAWMr/Y1eTFd91oc7kUNl9I5mjLHXAUsvEVjQoAdZtAfZ5aGbN4hg6ZGcCjNF5AQ==
