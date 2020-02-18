@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FlexRow } from '@fpsak-frontend/shared-components';
 import { Column } from 'nav-frontend-grid';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
 
 const AvviksopplysningerFL = ({
@@ -25,7 +26,8 @@ const AvviksopplysningerFL = ({
     );
   }
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
-    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_FL')
+    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.FL
+      || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
     : undefined;
   if (!sammenligningsGrunnlagFL) {
     return null;
