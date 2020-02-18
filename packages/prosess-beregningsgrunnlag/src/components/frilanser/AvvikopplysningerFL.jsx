@@ -14,6 +14,9 @@ const AvviksopplysningerFL = ({
     && !relevanteStatuser.isArbeidstaker
     && relevanteStatuser.isSelvstendigNaeringsdrivende
     && relevanteStatuser.isFrilanser;
+  const kombinasjonsstatusATFL = relevanteStatuser.isKombinasjonsstatus
+    && relevanteStatuser.isArbeidstaker
+    && relevanteStatuser.isFrilanser;
   if (kombinasjonsstatusFNSN) {
     return (
       <FlexRow>
@@ -32,7 +35,7 @@ const AvviksopplysningerFL = ({
   if (!sammenligningsGrunnlagFL) {
     return null;
   }
-  if (relevanteStatuser.isKombinasjonsstatus && sammenligningsgrunnlagPrStatus[0].sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN) {
+  if (kombinasjonsstatusATFL && sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)) {
     return null;
   }
   const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
