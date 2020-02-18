@@ -41,39 +41,35 @@ describe('<AvviksopplysningerSN>', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       alleAndelerIForstePeriode={forstePeriode}
-      harAksjonspunkter
     />);
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.NyIArbeidslivet');
   });
-  it('Skal teste komponenten ved !erVarigEndring && !harAksjonspunkter', () => {
+  it('Skal teste komponenten ved !erVarigEndring && !erNyoppstartet', () => {
     forstePeriode[0].erNyIArbeidslivet = false;
     forstePeriode[0].næringer[0].erVarigEndret = false;
+    forstePeriode[0].næringer[0].erNyoppstartet = false;
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_SN');
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       alleAndelerIForstePeriode={forstePeriode}
-      harAksjonspunkter={false}
     />);
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring');
   });
-  it('Skal teste komponenten ved  !harAksjonspunkter', () => {
+  it('Skal teste at komponenten render avvikstabell', () => {
     forstePeriode[0].erNyIArbeidslivet = false;
     forstePeriode[0].næringer[0].erVarigEndret = true;
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_SN');
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       alleAndelerIForstePeriode={forstePeriode}
-      harAksjonspunkter={false}
     />);
-    const rows = wrapper.find('FlexRow');
-    expect(rows).to.have.length(1);
-    const omregnetAarsinntektText = rows.first().find('FormattedMessage');
-    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IngenEndring');
+    const avviksTabell = wrapper.find('AvvikopplysningerATFL');
+    expect(avviksTabell).to.have.length(1);
   });
 });

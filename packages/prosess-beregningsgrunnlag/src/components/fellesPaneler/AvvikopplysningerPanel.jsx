@@ -84,7 +84,6 @@ const lagRelevantePaneler = (
       {relevanteStatuser.isSelvstendigNaeringsdrivende && (
       <AvviksopplysningerSN
         alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-        harAksjonspunkter={harAksjonspunkter}
         sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
       />
       )}
