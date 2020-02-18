@@ -32,6 +32,9 @@ const AvviksopplysningerFL = ({
   if (!sammenligningsGrunnlagFL) {
     return null;
   }
+  if (relevanteStatuser.isKombinasjonsstatus && sammenligningsgrunnlagPrStatus[0].sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN) {
+    return null;
+  }
   const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
   const avvikRoundedFL = avvikFL ? parseFloat((avvikFL.toFixed(1))) : 0;
   const sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
