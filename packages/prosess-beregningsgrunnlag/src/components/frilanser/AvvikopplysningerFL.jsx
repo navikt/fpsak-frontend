@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FlexRow } from '@fpsak-frontend/shared-components';
 import { Column } from 'nav-frontend-grid';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
 
 const AvviksopplysningerFL = ({
@@ -12,6 +13,9 @@ const AvviksopplysningerFL = ({
   const kombinasjonsstatusFNSN = relevanteStatuser.isKombinasjonsstatus
     && !relevanteStatuser.isArbeidstaker
     && relevanteStatuser.isSelvstendigNaeringsdrivende
+    && relevanteStatuser.isFrilanser;
+  const kombinasjonsstatusATFL = relevanteStatuser.isKombinasjonsstatus
+    && relevanteStatuser.isArbeidstaker
     && relevanteStatuser.isFrilanser;
   if (kombinasjonsstatusFNSN) {
     return (
@@ -25,9 +29,13 @@ const AvviksopplysningerFL = ({
     );
   }
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
-    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_FL')
+    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.FL
+      || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
     : undefined;
   if (!sammenligningsGrunnlagFL) {
+    return null;
+  }
+  if (kombinasjonsstatusATFL && sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)) {
     return null;
   }
   const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
