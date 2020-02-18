@@ -920,10 +920,9 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 100299;
-  // const perioder = [lagStandardPeriode(andeler)];
-  const perioder = [lagPeriodeMedDagsats(andeler, 286)];
 
-  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 72194;
+  const perioder = [lagPeriodeMedDagsats(andeler, andeler[0].pgiSnitt / 260)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
 
   const statuser = [lagStatus('AT_SN')];
   const næringer = [{
@@ -1160,6 +1159,648 @@ export const tidsbegrensetArbeidsforholdMedAvvikOrgDesign = () => {
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+
+
+export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6gDekningsgrad80Side18 = () => {
+  const andeler = [
+    lagAndel('SN', 531000, undefined, undefined, false),
+    lagAndel('AT', 472194, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 479318 / 260)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
+  perioder[0].avkortetPrAar = 599148;
+  perioder[0].redusertPrAar = 479318;
+
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6gDekningsgrad80Side19 = () => {
+  const andeler = [
+    lagAndel('SN', 531000, undefined, undefined, false),
+    lagAndel('AT', 814363, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 479318 / 260)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[1].bruttoPrAar;
+  perioder[0].avkortetPrAar = 599148;
+  perioder[0].redusertPrAar = 479318;
+
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = () => {
+  const andeler = [
+    lagAndel('SN', 531000, undefined, undefined, true),
+    lagAndel('AT', 551316, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+
+  const perioder = [lagPeriodeMedDagsats(andeler)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[1].bruttoPrAar;
+
+
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: false,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 900000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  delete bg.dekningsgrad;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerOgSelvstendigNæringsdrivendeSide21 = () => {
+  const andeler = [
+    lagAndel('SN', 531000, undefined, undefined, true),
+    lagAndel('AT', 551316, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+  andeler[0].overstyrtPrAar = 780342;
+  andeler[0].beregnetPrAar = 631129;
+  const perioder = [lagPeriodeMedDagsats(andeler, 1843)];
+
+  perioder[0].redusertPrAar = 479318;
+  perioder[0].beregnetPrAar = 631129;
+  perioder[0].avkortetPrAar = 599148;
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1331658;
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: false,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 900000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  const ap = lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
+  ap[0].begrunnelse = 'Endring eller nyoppstartet begrunnelse';
+  ap[0].status.kode = 'UTFO';
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={ap}
+      submitCallback={action('button-click')}
+      isReadOnly
+      readOnlySubmitButton
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerOgSelvstendigNæringsdrivendeSide22 = () => {
+  const andeler = [
+    lagAndel('SN', 531000, undefined, undefined, true),
+    lagAndel('AT', 851316, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+  andeler[0].overstyrtPrAar = 780342;
+  andeler[0].beregnetPrAar = 631129;
+  const perioder = [lagPeriodeMedDagsats(andeler, 1843)];
+
+  perioder[0].redusertPrAar = 479318;
+  perioder[0].beregnetPrAar = 631129;
+  perioder[0].avkortetPrAar = 599148;
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1331658;
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: false,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 900000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  const ap = lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
+  ap[0].begrunnelse = 'Endring eller nyoppstartet begrunnelse';
+  ap[0].status.kode = 'UTFO';
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={ap}
+      submitCallback={action('button-click')}
+      isReadOnly
+      readOnlySubmitButton
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSide23 = () => {
+  const andeler = [
+    lagAndel('SN', 531000, undefined, undefined, true),
+    lagAndel('AT', 551316, undefined, undefined),
+    lagAndel('FL', 596000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+
+  const perioder = [lagPeriodeMedDagsats(andeler)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[1].bruttoPrAar;
+
+
+  const statuser = [lagStatus('AT_FL_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: false,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 900000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 900000, 29.9, -268871)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  delete bg.dekningsgrad;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const feil = () => {
+  const bg = {
+    skjaeringstidspunktBeregning: '2020-02-04',
+    skjæringstidspunkt: '2020-02-04',
+    aktivitetStatus: [{ kode: 'AT_SN', inntektskategori: { kode: '-', kodeverk: 'INNTEKTSKATEGORI' }, kodeverk: 'AKTIVITET_STATUS' }],
+    beregningsgrunnlagPeriode: [{
+      beregningsgrunnlagPeriodeFom: '2020-02-04',
+      beregningsgrunnlagPeriodeTom: '9999-12-31',
+      beregnetPrAar: 592728.75,
+      bruttoPrAar: 592728.75,
+      bruttoInkludertBortfaltNaturalytelsePrAar: 592728.75,
+      avkortetPrAar: 592728.75,
+      redusertPrAar: 592728.75,
+      periodeAarsaker: [],
+      dagsats: 2280,
+      beregningsgrunnlagPrStatusOgAndel: [{
+        beregningsgrunnlagFom: '2019-11-01',
+        beregningsgrunnlagTom: '2020-01-31',
+        aktivitetStatus: { kode: 'AT', inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' }, kodeverk: 'AKTIVITET_STATUS' },
+        beregningsperiodeFom: '2019-11-01',
+        beregningsperiodeTom: '2020-01-31',
+        beregnetPrAar: 551499.96,
+        fastsattForrigePrAar: null,
+        overstyrtPrAar: null,
+        bruttoPrAar: 551499.96,
+        avkortetPrAar: 551499.96,
+        redusertPrAar: 551499.96,
+        erTidsbegrensetArbeidsforhold: null,
+        erNyIArbeidslivet: null,
+        lonnsendringIBeregningsperioden: null,
+        andelsnr: 1,
+        besteberegningPrAar: null,
+        inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'ØRMELEN SKOLE',
+          arbeidsgiverId: '975294633',
+          startdato: '2012-08-01',
+          opphoersdato: null,
+          arbeidsforholdId: null,
+          arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+          aktørId: null,
+          refusjonPrAar: 551499.96,
+          belopFraInntektsmeldingPrMnd: 45958.33,
+          organisasjonstype: null,
+          naturalytelseBortfaltPrÅr: null,
+          naturalytelseTilkommetPrÅr: null,
+        },
+        fastsattAvSaksbehandler: false,
+        lagtTilAvSaksbehandler: false,
+        belopPrMndEtterAOrdningen: 45958.3300000000,
+        belopPrAarEtterAOrdningen: 551499.960000000000,
+        dagsats: 2121,
+        originalDagsatsFraTilstøtendeYtelse: null,
+        fordeltPrAar: null,
+        erTilkommetAndel: false,
+        skalFastsetteGrunnlag: false,
+      }, {
+        beregningsgrunnlagFom: '2016-01-01',
+        beregningsgrunnlagTom: '2018-12-31',
+        aktivitetStatus: { kode: 'SN', inntektskategori: { kode: 'SELVSTENDIG_NÆRINGSDRIVENDE', kodeverk: 'INNTEKTSKATEGORI' }, kodeverk: 'AKTIVITET_STATUS' },
+        beregningsperiodeFom: '2016-01-01',
+        beregningsperiodeTom: '2018-12-31',
+        beregnetPrAar: 41228.79,
+        fastsattForrigePrAar: null,
+        overstyrtPrAar: null,
+        bruttoPrAar: 41228.79,
+        avkortetPrAar: 41228.79,
+        redusertPrAar: 41228.79,
+        erTidsbegrensetArbeidsforhold: null,
+        erNyIArbeidslivet: null,
+        lonnsendringIBeregningsperioden: null,
+        andelsnr: 2,
+        besteberegningPrAar: null,
+        inntektskategori: { kode: 'JORDBRUKER', kodeverk: 'INNTEKTSKATEGORI' },
+        arbeidsforhold: {
+          arbeidsgiverNavn: null,
+          arbeidsgiverId: null,
+          startdato: null,
+          opphoersdato: null,
+          arbeidsforholdId: null,
+          arbeidsforholdType: { kode: 'NÆRING', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+          aktørId: null,
+          refusjonPrAar: null,
+          belopFraInntektsmeldingPrMnd: null,
+          organisasjonstype: null,
+          naturalytelseBortfaltPrÅr: null,
+          naturalytelseTilkommetPrÅr: null,
+        },
+        fastsattAvSaksbehandler: false,
+        lagtTilAvSaksbehandler: false,
+        belopPrMndEtterAOrdningen: null,
+        belopPrAarEtterAOrdningen: null,
+        dagsats: 159,
+        originalDagsatsFraTilstøtendeYtelse: null,
+        fordeltPrAar: null,
+        erTilkommetAndel: false,
+        skalFastsetteGrunnlag: false,
+        pgiSnitt: 592729,
+        pgiVerdier: [{ beløp: 705517, årstall: 2018 }, { beløp: 591757, årstall: 2017 }, { beløp: 551825, årstall: 2016 }],
+        næringer: [{
+          utenlandskvirksomhetsnavn: null,
+          orgnr: '919705388',
+          erVarigEndret: false,
+          erNyoppstartet: true,
+          virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', inntektskategori: { kode: 'JORDBRUKER', kodeverk: 'INNTEKTSKATEGORI' }, kodeverk: 'VIRKSOMHET_TYPE' },
+          begrunnelse: null,
+          endringsdato: null,
+          oppstartsdato: null,
+          regnskapsførerNavn: 'Vegard Dahl',
+          regnskapsførerTlf: '95968189',
+          kanRegnskapsførerKontaktes: false,
+          erNyIArbeidslivet: false,
+          oppgittInntekt: 123000.00,
+        }],
+      }],
+    }],
+    sammenligningsgrunnlag: {
+      sammenligningsgrunnlagFom: '2018-01-01',
+      sammenligningsgrunnlagTom: '2018-01-01',
+      rapportertPrAar: 674499.96,
+      avvikPromille: 137.9572179,
+      avvikProsent: 13.79572179,
+      sammenligningsgrunnlagType: { kode: 'SAMMENLIGNING_ATFL_SN', kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE' },
+      differanseBeregnet: -81770.96,
+    },
+    sammenligningsgrunnlagPrStatus: [{
+      sammenligningsgrunnlagFom: '2018-01-01',
+      sammenligningsgrunnlagTom: '2018-01-01',
+      rapportertPrAar: 674499.96,
+      avvikPromille: 137.9572179,
+      avvikProsent: 13.79572179,
+      sammenligningsgrunnlagType: { kode: 'SAMMENLIGNING_ATFL_SN', kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE' },
+      differanseBeregnet: -81770.96,
+    }],
+    ledetekstBrutto: 'Brutto beregningsgrunnlag',
+    ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
+    ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
+    halvG: 49929.0,
+    grunnbeløp: 99858,
+    faktaOmBeregning: {
+      kortvarigeArbeidsforhold: null,
+      frilansAndel: null,
+      kunYtelse: null,
+      faktaOmBeregningTilfeller: null,
+      arbeidstakerOgFrilanserISammeOrganisasjonListe: null,
+      arbeidsforholdMedLønnsendringUtenIM: null,
+      besteberegningAndeler: null,
+      vurderMottarYtelse: null,
+      avklarAktiviteter: {
+        aktiviteterTomDatoMapping: [{
+          tom: '2020-02-04',
+          aktiviteter: [{
+            arbeidsgiverNavn: 'ØRMELEN SKOLE',
+            arbeidsgiverId: '975294633',
+            eksternArbeidsforholdId: null,
+            fom: '2012-08-01',
+            tom: '9999-12-31',
+            arbeidsforholdId: null,
+            arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+            aktørIdString: null,
+            skalBrukes: null,
+          }, {
+            arbeidsgiverNavn: null,
+            arbeidsgiverId: null,
+            eksternArbeidsforholdId: null,
+            fom: '2018-01-01',
+            tom: '9999-12-31',
+            arbeidsforholdId: null,
+            arbeidsforholdType: { kode: 'NÆRING', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+            aktørIdString: null,
+            skalBrukes: null,
+          }],
+        }],
+      },
+      vurderBesteberegning: null,
+      andelerForFaktaOmBeregning: [{
+        belopReadOnly: 45958.33,
+        fastsattBelop: 45958.3300000000,
+        inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
+        aktivitetStatus: { kode: 'AT', inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' }, kodeverk: 'AKTIVITET_STATUS' },
+        refusjonskrav: 45958.33,
+        visningsnavn: 'ØRMELEN SKOLE (975294633)',
+        arbeidsforhold: {
+          arbeidsgiverNavn: 'ØRMELEN SKOLE',
+          arbeidsgiverId: '975294633',
+          startdato: '2012-08-01',
+          opphoersdato: null,
+          arbeidsforholdId: null,
+          arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+          aktørId: null,
+          refusjonPrAar: 551499.96,
+          belopFraInntektsmeldingPrMnd: 45958.33,
+          organisasjonstype: null,
+          naturalytelseBortfaltPrÅr: null,
+          naturalytelseTilkommetPrÅr: null,
+        },
+        andelsnr: 1,
+        skalKunneEndreAktivitet: false,
+        lagtTilAvSaksbehandler: false,
+      }, {
+        belopReadOnly: null,
+        fastsattBelop: 3435.7325000000,
+        inntektskategori: { kode: 'JORDBRUKER', kodeverk: 'INNTEKTSKATEGORI' },
+        aktivitetStatus: { kode: 'SN', inntektskategori: { kode: 'SELVSTENDIG_NÆRINGSDRIVENDE', kodeverk: 'INNTEKTSKATEGORI' }, kodeverk: 'AKTIVITET_STATUS' },
+        refusjonskrav: null,
+        visningsnavn: 'Næring',
+        arbeidsforhold: {
+          arbeidsgiverNavn: null,
+          arbeidsgiverId: null,
+          startdato: null,
+          opphoersdato: null,
+          arbeidsforholdId: null,
+          arbeidsforholdType: { kode: 'NÆRING', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+          aktørId: null,
+          refusjonPrAar: null,
+          belopFraInntektsmeldingPrMnd: null,
+          organisasjonstype: null,
+          naturalytelseBortfaltPrÅr: null,
+          naturalytelseTilkommetPrÅr: null,
+        },
+        andelsnr: 2,
+        skalKunneEndreAktivitet: false,
+        lagtTilAvSaksbehandler: false,
+      }],
+      vurderMilitaer: null,
+      refusjonskravSomKommerForSentListe: null,
+    },
+    andelerMedGraderingUtenBG: null,
+    hjemmel: { kode: 'F_14_7_8_41', kodeverk: 'BG_HJEMMEL' },
+    faktaOmFordeling: {
+      fordelBeregningsgrunnlag: {
+        fordelBeregningsgrunnlagPerioder: [{
+          fom: '2020-02-04',
+          tom: null,
+          fordelBeregningsgrunnlagAndeler: [{
+            fordelingForrigeBehandlingPrAar: null,
+            refusjonskravPrAar: 551500,
+            fordeltPrAar: null,
+            belopFraInntektsmeldingPrAar: 551500,
+            refusjonskravFraInntektsmeldingPrAar: 551500,
+            nyttArbeidsforhold: false,
+            arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+            andelsnr: 1,
+            arbeidsforhold: {
+              arbeidsgiverNavn: 'ØRMELEN SKOLE',
+              arbeidsgiverId: '975294633',
+              startdato: '2012-08-01',
+              opphoersdato: null,
+              arbeidsforholdId: null,
+              arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+              aktørId: null,
+              refusjonPrAar: 551499.96,
+              belopFraInntektsmeldingPrMnd: null,
+              organisasjonstype: null,
+              naturalytelseBortfaltPrÅr: null,
+              naturalytelseTilkommetPrÅr: null,
+            },
+            inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' },
+            aktivitetStatus: { kode: 'AT', inntektskategori: { kode: 'ARBEIDSTAKER', kodeverk: 'INNTEKTSKATEGORI' }, kodeverk: 'AKTIVITET_STATUS' },
+            lagtTilAvSaksbehandler: false,
+            fastsattAvSaksbehandler: false,
+            andelIArbeid: [0],
+          }, {
+            fordelingForrigeBehandlingPrAar: null,
+            refusjonskravPrAar: 0,
+            fordeltPrAar: null,
+            belopFraInntektsmeldingPrAar: null,
+            refusjonskravFraInntektsmeldingPrAar: null,
+            nyttArbeidsforhold: false,
+            arbeidsforholdType: { kode: 'NÆRING', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+            andelsnr: 2,
+            arbeidsforhold: {
+              arbeidsgiverNavn: null,
+              arbeidsgiverId: null,
+              startdato: null,
+              opphoersdato: null,
+              arbeidsforholdId: null,
+              arbeidsforholdType: { kode: 'NÆRING', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
+              aktørId: null,
+              refusjonPrAar: null,
+              belopFraInntektsmeldingPrMnd: null,
+              organisasjonstype: null,
+              naturalytelseBortfaltPrÅr: null,
+              naturalytelseTilkommetPrÅr: null,
+            },
+            inntektskategori: { kode: 'JORDBRUKER', kodeverk: 'INNTEKTSKATEGORI' },
+            aktivitetStatus: {
+              kode: 'SN',
+              inntektskategori: { kode: 'SELVSTENDIG_NÆRINGSDRIVENDE', kodeverk: 'INNTEKTSKATEGORI' },
+              kodeverk: 'AKTIVITET_STATUS',
+            },
+            lagtTilAvSaksbehandler: false,
+            fastsattAvSaksbehandler: false,
+            andelIArbeid: [0],
+          }],
+          harPeriodeAarsakGraderingEllerRefusjon: false,
+          skalKunneEndreRefusjon: false,
+        }],
+        arbeidsforholdTilFordeling: [],
+      },
+    },
+    årsinntektVisningstall: 592729,
+    dekningsgrad: 100,
+  };
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesFalse}
     />

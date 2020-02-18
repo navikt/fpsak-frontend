@@ -35,6 +35,19 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnla
   }
   return 'Fastsatt';
 };
+const erVilkaarFastsattForAndel = (vilkarStatus, skalFastsetteGrunnlag) => {
+  if (!vilkarStatus || !vilkarStatus.kode) return true;
+  if (vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
+    return false;
+  }
+  if (vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+    return false;
+  }
+  if (vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+    return false;
+  }
+  return true;
+};
 const hentAndelFraPeriode = (periode, andelType) => {
   if (andelType === aktivitetStatus.ARBEIDSTAKER) {
     return periode.beregningsgrunnlagPrStatusOgAndel
@@ -59,6 +72,7 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   if (!andel) {
     return null;
   }
+  andelElement.ledetekst = 'Beregningsgrunnlag -';
   switch (andelType) {
     case aktivitetStatus.ARBEIDSTAKER:
       skalFastsetteGrunnlag = andel.some((atAndel) => atAndel.skalFastsetteGrunnlag === true);
@@ -71,15 +85,17 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       } else {
         inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
       }
+      // brukes for å sammeligne mot pensjonsgivende inntekt senere senere
+      andelElement.pgiSnitt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
       break;
     default:
       inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
+
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
   }
-
+  andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
   if (inntekt || inntekt === 0) {
     andelElement.verdi = inntekt;
-    andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
     const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
     andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
   }
@@ -91,7 +107,13 @@ const hentVerdiFraAndel = (andel) => {
   }
   return andel.verdi;
 };
-const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter) => {
+const hentPGIFraSNAndel = (andel) => {
+  if (!andel || !andel.pgiSnitt) {
+    return 0;
+  }
+  return andel.pgiSnitt;
+};
+const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus) => {
   const atElement = opprettAndelElement(
     periode,
     aktivitetStatus.ARBEIDSTAKER,
@@ -102,21 +124,24 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
     aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
     vilkarStatus,
   );
-
   // legg til regler for særtilfeller
-  if (hentVerdiFraAndel(atElement) < (hentVerdiFraAndel(snElement) && harAksjonspunkter)) {
+  const erFastsatt = erVilkaarFastsattForAndel(vilkarStatus, atElement.skalFastsetteGrunnlag)
+    || erVilkaarFastsattForAndel(vilkarStatus, snElement.skalFastsetteGrunnlag);
+  if ((hentVerdiFraAndel(atElement) < hentPGIFraSNAndel(snElement)) && !erFastsatt) {
+    // pensjonsgivende inntekt USIKKER på om sdet skal testes for Akjsonspunkt
+    snElement.verdi = snElement.pgiSnitt;
     rowsAndeler.push(snElement);
     return;
   }
-  if (!harAksjonspunkter) {
-    if (hentVerdiFraAndel(atElement) > hentVerdiFraAndel(snElement)) {
-      rowsForklaringer.push(<FormattedMessage
-        id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN"
-      />);
-      rowsAndeler.push(atElement);
-      return;
-    }
+  // if (!harAksjonspunkter) {
+  if (hentVerdiFraAndel(atElement) > hentPGIFraSNAndel(snElement)) {
+    rowsForklaringer.push(<FormattedMessage
+      id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN"
+    />);
+    rowsAndeler.push(atElement);
+    return;
   }
+  // }
   rowsAndeler.push(atElement);
   rowsAndeler.push(snElement);
 };

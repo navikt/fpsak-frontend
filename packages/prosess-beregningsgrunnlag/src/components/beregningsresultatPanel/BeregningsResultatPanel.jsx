@@ -93,19 +93,19 @@ const lagAndelerRader = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entr
       </Normaltekst>
     </Column>
     {!ikkeVurdert && (
-    <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-      <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-    </Column>
+      <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
+        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
+      </Column>
     )}
     {ikkeVurdert && entry.skalFastsetteGrunnlag === true && (
-    <Column xs="3" key={`indexAf2${index + 2}`} className={styles.maaFastsettes}>
-      <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
-    </Column>
+      <Column xs="3" key={`indexAf2${index + 2}`} className={styles.maaFastsettes}>
+        <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
+      </Column>
     )}
     {ikkeVurdert && !entry.skalFastsetteGrunnlag && (
-    <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-      <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-    </Column>
+      <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
+        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
+      </Column>
     )}
   </Row>
 ))
