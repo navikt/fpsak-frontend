@@ -35,6 +35,7 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnla
   }
   return 'Fastsatt';
 };
+/*
 const erVilkaarFastsattForAndel = (vilkarStatus, skalFastsetteGrunnlag) => {
   if (!vilkarStatus || !vilkarStatus.kode) return true;
   if (vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
@@ -47,6 +48,21 @@ const erVilkaarFastsattForAndel = (vilkarStatus, skalFastsetteGrunnlag) => {
     return false;
   }
   return true;
+};
+*/
+const erVilkaarFastsattForEnAvAndelene = (vilkarStatus, andeler) => {
+  if (!vilkarStatus || !vilkarStatus.kode) return true;
+  if (vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+    return false;
+  }
+  if (vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+    return false;
+  }
+  if (vilkarStatus.kode === vilkarUtfallType.OPPFYLT) {
+    const erFastsatt = andeler.find((andel) => (andel.skalFastsetteGrunnlag === true));
+    return !!erFastsatt;
+  }
+  return false;
 };
 const hentAndelFraPeriode = (periode, andelType) => {
   if (andelType === aktivitetStatus.ARBEIDSTAKER) {
@@ -125,8 +141,8 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
     vilkarStatus,
   );
   // legg til regler for særtilfeller
-  const erFastsatt = erVilkaarFastsattForAndel(vilkarStatus, atElement.skalFastsetteGrunnlag)
-    || erVilkaarFastsattForAndel(vilkarStatus, snElement.skalFastsetteGrunnlag);
+  const erFastsatt = erVilkaarFastsattForEnAvAndelene(vilkarStatus, [atElement, snElement]);
+  console.log('erfastsatt ATSN', erFastsatt);
   if ((hentVerdiFraAndel(atElement) < hentPGIFraSNAndel(snElement)) && !erFastsatt) {
     // pensjonsgivende inntekt USIKKER på om sdet skal testes for Akjsonspunkt
     snElement.verdi = snElement.pgiSnitt;
@@ -145,7 +161,7 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
   rowsAndeler.push(atElement);
   rowsAndeler.push(snElement);
 };
-const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter) => {
+const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus) => {
   const atElement = opprettAndelElement(
     periode,
     aktivitetStatus.ARBEIDSTAKER,
@@ -161,21 +177,24 @@ const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
     aktivitetStatus.FRILANSER,
     vilkarStatus,
   );
-  if (!harAksjonspunkter) {
-    if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
-      rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FLoverstigerSN" />);
-      rowsAndeler.push(atElement);
-      rowsAndeler.push(flElement);
-    } else {
-      // setter SN ledetekst til Pensjonsgibevnde årsintekt
-      snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
-      rowsAndeler.push(atElement);
-      rowsAndeler.push(flElement);
-      rowsAndeler.push(snElement);
-    }
-  } else {
+  const erFastsatt = erVilkaarFastsattForEnAvAndelene(vilkarStatus, [atElement, flElement, snElement]);
+  console.log('erfastsatt ATFLSN', erFastsatt);
+  // if (!harAksjonspunkter) {
+  if (!erFastsatt) {
     // setter SN ledetekst til Fastsatt årsintekt
     snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Fastsatt.SN" />;
+    rowsAndeler.push(atElement);
+    rowsAndeler.push(flElement);
+    rowsAndeler.push(snElement);
+    return;
+  }
+  if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FLoverstigerSN" />);
+    rowsAndeler.push(atElement);
+    rowsAndeler.push(flElement);
+  } else {
+    // setter SN ledetekst til Pensjonsgibevnde årsintekt
+    snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
     rowsAndeler.push(atElement);
     rowsAndeler.push(flElement);
     rowsAndeler.push(snElement);
