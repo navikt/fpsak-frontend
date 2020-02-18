@@ -1,5 +1,5 @@
 import React from 'react';
-import PersonCard from '@navikt/nap-person-card';
+import { PersonCard, EmptyPersonCard, Gender } from '@navikt/nap-person-card';
 
 import {
   FlexColumn, FlexContainer, FlexRow,
@@ -7,19 +7,26 @@ import {
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import VisittkortDetaljerPopup from './VisittkortDetaljerPopup';
+import VisittkortLabels from './VisittkortLabels';
 
 import styles from './visittkortPanel.less';
 
-const utledErKvinne = (erKvinne) => (erKvinne ? 'female' : 'male');
+const utledErKvinne = (erKvinne) => (erKvinne ? Gender.female : Gender.male);
 const utledKjonn = (kjonn) => {
   if (kjonn.kode === navBrukerKjonn.KVINNE) {
-    return 'female';
+    return Gender.female;
   }
 
-  return kjonn.kode === navBrukerKjonn.MANN ? 'male' : 'unknown';
+  return kjonn.kode === navBrukerKjonn.MANN ? Gender.male : Gender.unknown;
 };
 
-const getBrukerInfo = (personopplysninger, fagsakPerson = {}) => ({
+interface BrukerInfo {
+  navn: string;
+  fodselsnummer: string;
+  kjonn: Gender;
+}
+
+const getBrukerInfo = (personopplysninger, fagsakPerson = {}): BrukerInfo => ({
   navn: personopplysninger ? personopplysninger.navn : fagsakPerson.navn,
   fodselsnummer: personopplysninger ? personopplysninger.fnr : fagsakPerson.personnummer,
   kjonn: personopplysninger ? utledKjonn(personopplysninger.navBrukerKjonn) : utledErKvinne(fagsakPerson.erKvinne),
@@ -44,8 +51,12 @@ const VisittkortPanel = ({
               gender={hoved.kjonn}
               url="#"
               renderMenuContent={(): JSX.Element => (personopplysninger ? <VisittkortDetaljerPopup personopplysninger={personopplysninger} alleKodeverk={alleKodeverk} sprakkode={sprakkode} /> : null)}
+              renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={personopplysninger} />}
               isActive
             />
+          </FlexColumn>
+          <FlexColumn>
+            <EmptyPersonCard namePlaceholder="test" />
           </FlexColumn>
           {personopplysninger && personopplysninger.annenPart && (
           <FlexColumn>
