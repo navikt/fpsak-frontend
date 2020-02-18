@@ -8,9 +8,6 @@
 .rightColumn {
   float: right;
   width: 33%;
-  border-left-color: #b7b1a9;
-  border-left-style: solid;
-  border-left-width: 1px;
 
   & > div {
     margin-bottom: 16px;
@@ -33,13 +30,21 @@
     max-height: 100%;
     max-width: 100%;
   }
+}
 
-  .profileAndNavigationContent {
-    display: none;
+@media all and (min-width: 1350px) {
+  .rightColumn {
+    border-left-color: @navGra40;
+    border-left-style: solid;
+    border-left-width: 1px;
   }
+}
 
-  .behandlingContent {
-    order: 3;
+@media all and (max-width: 1600px) {
+  .rightColumn {
+    border-top-color: @navGra40;
+    border-top-style: solid;
+    border-top-width: 1px;
   }
 }
 
@@ -47,4 +52,8 @@
   .gridContainer {
     max-width: 640px;
   }
+}
+
+.bottom {
+  flex: 0 1 40px;
 }

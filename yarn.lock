@@ -2924,10 +2924,10 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
-"@navikt/nap-clipboard@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-clipboard/-/nap-clipboard-1.0.0.tgz#48c5d80443ac4f5c1629ba6c00c06d6ee3f1727c"
-  integrity sha512-3CH7tSHtfheVx524ODwTmJKaUhmXKIxgRFtbXDmGA2smE+pHbdKDmAVAGopceMNIjYUfsUFnDuGItTHru03htw==
+"@navikt/nap-clipboard@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-clipboard/-/nap-clipboard-1.0.1.tgz#4972d3c3022f5c2ec9cc99482e699b328c5162fe"
+  integrity sha512-9ggW4JER/Mk1Ek3XxxTWoHF/1vOBoXkfthTZcpSm+KUF/agQQqlI/ruaWdEnR+j9062a3Q1LRGKfFA+zu8jkyg==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
 
@@ -2944,13 +2944,13 @@
     nav-frontend-typografi-style "^1.0.17"
     prop-types "^15.7.2"
 
-"@navikt/nap-person-card@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-person-card/-/nap-person-card-1.0.0.tgz#3781065dbcd262832bbc77254e123ef6b0856bee"
-  integrity sha512-0cOZC2CjU/zchDRDBvkzav9JJg/6QqEOOsuGKJnDHsDCFjQ7ZwNVUEujvVIrHehm6yL7kSuFsAV19uoEvzusNA==
+"@navikt/nap-person-card@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-person-card/-/nap-person-card-1.0.3.tgz#3898f9d8b48ea14c3bebcea6dfd1c91efc1d6825"
+  integrity sha512-0Bezd+5a1ZvwGxaJ/8q6yZKPsVg+EvyhBhU/LNNKQWlOYqlMONelCFSoxzdNZ7ytLmK/FPmsmLpIOFrpOmh1vg==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
-    "@navikt/nap-clipboard" "1.0.0"
+    "@navikt/nap-clipboard" "1.0.1"
     "@navikt/nap-popover" "1.0.4"
     nav-frontend-typografi "^2.0.17"
     nav-frontend-typografi-style "^1.0.18"
@@ -6668,6 +6668,11 @@ css-loader@^3.0.0:
     postcss-value-parser "^4.0.0"
     schema-utils "^2.0.0"
 
+css-mediaquery@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/css-mediaquery/-/css-mediaquery-0.1.2.tgz#6a2c37344928618631c54bd33cedd301da18bea0"
+  integrity sha1-aiw3NEkoYYYxxUvTPO3TAdoYvqA=
+
 css-select-base-adapter@^0.1.1:
   version "0.1.1"
   resolved "https://registry.npmjs.org/css-select-base-adapter/-/css-select-base-adapter-0.1.1.tgz#3b2ff4972cc362ab88561507a95408a1432135d7"
@@ -9528,6 +9533,11 @@ humanize-ms@^1.2.1:
   dependencies:
     ms "^2.0.0"
 
+hyphenate-style-name@^1.0.0:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
+  integrity sha512-EcuixamT82oplpoJ2XU4pDtKGWQ7b00CD9f1ug9IaQ3p1bkHMiKCZ9ut9QDI6qsa6cpUuB+A/I+zLtdNK4n2DQ==
+
 iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4, iconv-lite@~0.4.13:
   version "0.4.24"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
@@ -11672,6 +11682,13 @@ markdown-to-jsx@^6.9.1, markdown-to-jsx@^6.9.3:
   dependencies:
     prop-types "^15.6.2"
     unquote "^1.1.0"
+
+matchmediaquery@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/matchmediaquery/-/matchmediaquery-0.3.1.tgz#8247edc47e499ebb7c58f62a9ff9ccf5b815c6d7"
+  integrity sha512-Hlk20WQHRIm9EE9luN1kjRjYXAQToHOIAHPJn9buxBwuhfTHoKUcX+lXBbxc85DVQfXYbEQ4HcwQdd128E3qHQ==
+  dependencies:
+    css-mediaquery "^0.1.2"
 
 material-colors@^1.2.1:
   version "1.2.6"
@@ -14789,6 +14806,16 @@ react-redux@^7.1.3:
     loose-envify "^1.4.0"
     prop-types "^15.7.2"
     react-is "^16.9.0"
+
+react-responsive@^8.0.3:
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/react-responsive/-/react-responsive-8.0.3.tgz#ceb84205359b6032d306650e51490dc1f63d907b"
+  integrity sha512-F9VXyLao7O8XHXbLjQbIr4+mC6Zr0RDTwNjd7ixTmYEAyKyNanBkLkFchNaMZgszoSK6PgSs/3m/QDWw33/gpg==
+  dependencies:
+    hyphenate-style-name "^1.0.0"
+    matchmediaquery "^0.3.0"
+    prop-types "^15.6.1"
+    shallow-equal "^1.1.0"
 
 react-router-dom@^5.1.2:
   version "5.1.2"
