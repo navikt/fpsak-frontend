@@ -158,10 +158,14 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const onSubmit = (values) => initialOwnProps.submitCallback([{
     kode: MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
     begrunnelse: values.utlandSakstype,
+    gammelVerdi: values.gammelVerdi,
   }]);
 
   return (state, ownProps) => ({
-    initialValues: { utlandSakstype: getUtlandSakstype(ownProps.aksjonspunkter) },
+    initialValues: {
+      utlandSakstype: getUtlandSakstype(ownProps.aksjonspunkter),
+      gammelVerdi: getUtlandSakstype(ownProps.aksjonspunkter),
+    },
     utlandSakstype: behandlingFormValueSelector('UtlandPanel', ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'utlandSakstype'),
     onSubmit,
   });
