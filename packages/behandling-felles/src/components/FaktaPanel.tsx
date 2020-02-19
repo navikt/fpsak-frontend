@@ -26,7 +26,7 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   <div className={styles.container}>
     <FlexContainer>
       <FlexRow>
-        <FlexColumn>
+        <FlexColumn className={styles.sideMenu}>
           <SideMenu
             heading={intl.formatMessage({ id: 'FaktaPanel.FaktaOm' })}
             links={paneler.map((panel) => ({

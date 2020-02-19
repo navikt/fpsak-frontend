@@ -172,7 +172,7 @@ const skjermlenkeCodes = {
   },
   UTLAND: {
     kode: 'UTLAND',
-    faktaNavn: faktaPanelCodes.PERSON,
+    faktaNavn: faktaPanelCodes.SAKEN,
     punktNavn: '',
   },
   FORELDELSE: {

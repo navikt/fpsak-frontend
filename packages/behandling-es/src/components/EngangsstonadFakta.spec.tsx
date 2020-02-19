@@ -85,6 +85,10 @@ describe('<EngangsstonadFakta>', () => {
 
     const panel = wrapper.find(FaktaPanel);
     expect(panel.prop('paneler')).is.eql([{
+      erAktiv: false,
+      harAksjonspunkt: false,
+      tekst: 'Saken',
+    }, {
       erAktiv: true,
       harAksjonspunkt: true,
       tekst: 'Arbeidsforhold',
@@ -119,7 +123,7 @@ describe('<EngangsstonadFakta>', () => {
     const { args } = calls[0];
     expect(args).to.have.length(2);
     expect(args[0]).to.eql('default');
-    expect(args[1]).to.eql('arbeidsforhold');
+    expect(args[1]).to.eql('saken');
   });
 
   it('skal rendre faktapanel korrekt', () => {

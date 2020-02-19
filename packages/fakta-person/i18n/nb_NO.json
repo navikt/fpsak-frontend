@@ -14,14 +14,8 @@
   "Personstatus.Hjelpetekst": "Personstatus",
   "Sivilstand.Hjelpetekst": "Sivilstand",
 
-  "Utland.EndrePerioden": "Endre perioden",
-
   "PersonIndexPanel.Ok": "OK",
-  "UtlandEndretModal.Ok": "OK",
   
-  "PersonInfoPanel.OpptjeningUtland": "Søker har oppgitt informasjon om opptjening i utlandet. Innhent dokumentasjon fra utenlandsk trygdemyndighet ved behov.",
-  "PersonInfoPanel.UtlandEndret": "Utland endret, ved behov flytt saken til riktig enhet.",
-
   "Person.Age": "{age} år",
   "Person.ImageText": "Personinformasjon",
   "Person.Woman": "Kvinne",

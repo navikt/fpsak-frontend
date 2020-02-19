@@ -112,6 +112,8 @@ module.exports = async ({ config, mode }) => {
     filename: 'style.css',
     ignoreOrder: true,
   }));
+  
+  config.resolve.extensions.push('.ts', '.tsx');
 
   // Return the altered config
   return config;

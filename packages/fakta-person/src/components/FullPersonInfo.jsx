@@ -6,7 +6,6 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 
-import { Utland } from './utland/Utland';
 import AdressePanel from './AdressePanel';
 import BarnePanel from './BarnePanel';
 
@@ -29,15 +28,10 @@ export const getBarnFraTPS = (barneListe = []) => barneListe.filter((barn) => ba
 export const FullPersonInfo = ({
   sprakkode,
   personopplysning,
-  utlandSakstype,
-  submitCallback,
   isPrimaryParent,
   personstatusTypes,
   sivilstandTypes,
   getKodeverknavn,
-  behandlingId,
-  behandlingVersjon,
-  readOnly,
 }) => {
   if (!personopplysning) {
     return null;
@@ -63,15 +57,7 @@ export const FullPersonInfo = ({
         isPrimaryParent={isPrimaryParent}
         sivilstandTypes={sivilstandTypes}
         personstatusTypes={personstatusTypes}
-      >
-        <Utland
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          initialValue={utlandSakstype}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-        />
-      </AdressePanel>
+      />
       {harBarnITPSSjekk && (
         <BarnePanel barneListe={barnFraTPS} />
       )}
@@ -87,19 +73,10 @@ FullPersonInfo.propTypes = {
     sivilstand: PropTypes.shape({}),
     region: PropTypes.shape({}),
   }).isRequired,
-  submitCallback: PropTypes.func,
-  utlandSakstype: PropTypes.string.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-};
-
-FullPersonInfo.defaultProps = {
-  submitCallback: undefined,
 };
 
 export default FullPersonInfo;

@@ -5,6 +5,7 @@ import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
 import YtelserFaktaIndex from '@fpsak-frontend/fakta-ytelser';
+import SakenFaktaIndex from '@fpsak-frontend/fakta-saken';
 import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
@@ -16,6 +17,14 @@ import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
 import esBehandlingApi from '../data/esBehandlingApi';
 
 const faktaPanelDefinisjoner = [{
+  urlCode: faktaPanelCodes.SAKEN,
+  textCode: 'SakenFaktaPanel.Title',
+  aksjonspunkterCodes: [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, aksjonspunktCodes.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE],
+  endpoints: [esBehandlingApi.UTLAND_DOK_STATUS],
+  renderComponent: (props) => <SakenFaktaIndex {...props} />,
+  showComponent: () => true,
+  getData: () => {},
+}, {
   urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
   textCode: 'ArbeidsforholdInfoPanel.Title',
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD],

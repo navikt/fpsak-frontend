@@ -3,8 +3,11 @@
   "OpptjeningFaktaForm.EttArbeidKanGodkjennes": "Vurder om aktiviteten kan godkjennes",
   "OpptjeningFaktaForm.FlereArbeidKanGodkjennes": "Vurder om aktivitetene kan godkjennes",
   "OpptjeningFaktaForm.AktivitetenErTimeAvslonnet": "Arbeidet er timeavlønnet. Slå opp i A-ordningen for å vurdere opptjeningen",
+  "OpptjeningFaktaForm.DetErInnhentetDok": "Det er innhentet dokumentasjon på opptjening i utlandet",
+  "OpptjeningFaktaForm.DetErIkkeInnhentetDok": "Det er <b>ikke</b> innhentet dokumentasjon på opptjening i utlandet",
   "OpptjeningFaktaForm.Confirm": "Bekreft og fortsett",
   "OpptjeningFaktaForm.AddActivity": "Legg til aktivitet",
+
   "ActivityPanel.Details": "Detaljer for valgt aktivitet",
   "ActivityPanel.NewActivity": "Legg til aktivitet",
   "ActivityPanel.Period": "Periode",
