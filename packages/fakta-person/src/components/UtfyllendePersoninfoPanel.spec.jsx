@@ -188,7 +188,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
       />,
     );
 
-    wrapper.setProps({ openInfoPanels: [faktaPanelCodes.PERSON] });
+    wrapper.setProps({ openInfoPanels: [faktaPanelCodes.SAKEN] });
 
     expect(wrapper.find(Hovedknapp)).to.have.length(0);
   });
