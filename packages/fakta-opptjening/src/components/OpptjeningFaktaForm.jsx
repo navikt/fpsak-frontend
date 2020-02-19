@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import {
-  AksjonspunktHelpTextTemp, DateLabel, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  AksjonspunktHelpTextTemp, DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 
@@ -45,6 +46,8 @@ const sortByFomDate = (opptjeningPeriods) => opptjeningPeriods
       ? o1.id < o2.id
       : moment(o2.opptjeningFom, ISO_DATE_FORMAT).isBefore(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
   });
+
+const DOKUMENTASJON_VIL_BLI_INNHENTET = 'DOKUMENTASJON_VIL_BLI_INNHENTET';
 
 /**
  * OpptjeningFaktaForm
@@ -193,20 +196,29 @@ export class OpptjeningFaktaFormImpl extends Component {
 
   render() {
     const {
-      hasAksjonspunkt, hasOpenAksjonspunkter, opptjeningActivities, opptjeningAktivitetTypes, opptjeningFomDato,
+      hasAksjonspunkt, hasOpenAksjonspunkter, opptjeningActivities, opptjeningAktivitetTypes, opptjeningFomDato, dokStatus,
       opptjeningTomDato, readOnly, submitting, behandlingId, behandlingVersjon, alleMerknaderFraBeslutter, alleKodeverk,
     } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     return (
       <div className={styles.container}>
-        {hasAksjonspunkt
-        && (
-        <ElementWrapper>
-          <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
-            {getAksjonspunktHelpTexts(opptjeningActivities)}
-          </AksjonspunktHelpTextTemp>
-          <VerticalSpacer twentyPx />
-        </ElementWrapper>
+        {hasAksjonspunkt && (
+          <>
+            <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
+              {getAksjonspunktHelpTexts(opptjeningActivities)}
+            </AksjonspunktHelpTextTemp>
+            <VerticalSpacer twentyPx />
+          </>
+        )}
+        {dokStatus && (
+          <>
+            <AlertStripeInfo className={styles.info}>
+              <FormattedHTMLMessage
+                id={dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET ? 'OpptjeningFaktaForm.DetErInnhentetDok' : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'}
+              />
+            </AlertStripeInfo>
+            <VerticalSpacer twentyPx />
+          </>
         )}
         <Undertekst><FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" /></Undertekst>
         <Normaltekst><DateLabel dateString={findSkjaringstidspunkt(opptjeningTomDato)} /></Normaltekst>
@@ -225,26 +237,26 @@ export class OpptjeningFaktaFormImpl extends Component {
         <VerticalSpacer eightPx />
         {selectedOpptjeningActivity
           && (
-          <ElementWrapper>
-            <ActivityPanel
-              key={selectedOpptjeningActivity.id}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              activity={selectedOpptjeningActivity}
-              readOnly={readOnly}
-              opptjeningAktivitetTypes={opptjeningAktivitetTypes}
-              cancelSelectedOpptjeningActivity={this.cancelSelectedOpptjeningActivity}
-              updateActivity={this.updateActivity}
-              opptjeningFomDato={opptjeningFomDato}
-              opptjeningTomDato={opptjeningTomDato}
-              selectNextPeriod={this.selectNextPeriod}
-              selectPrevPeriod={this.selectPrevPeriod}
-              hasAksjonspunkt={hasAksjonspunkt}
-              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-              alleKodeverk={alleKodeverk}
-            />
-            <VerticalSpacer twentyPx />
-          </ElementWrapper>
+            <>
+              <ActivityPanel
+                key={selectedOpptjeningActivity.id}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                activity={selectedOpptjeningActivity}
+                readOnly={readOnly}
+                opptjeningAktivitetTypes={opptjeningAktivitetTypes}
+                cancelSelectedOpptjeningActivity={this.cancelSelectedOpptjeningActivity}
+                updateActivity={this.updateActivity}
+                opptjeningFomDato={opptjeningFomDato}
+                opptjeningTomDato={opptjeningTomDato}
+                selectNextPeriod={this.selectNextPeriod}
+                selectPrevPeriod={this.selectPrevPeriod}
+                hasAksjonspunkt={hasAksjonspunkt}
+                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+                alleKodeverk={alleKodeverk}
+              />
+              <VerticalSpacer twentyPx />
+            </>
           )}
         {hasAksjonspunkt
         && (
@@ -282,6 +294,7 @@ OpptjeningFaktaFormImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   opptjeningFomDato: PropTypes.string.isRequired,
   opptjeningTomDato: PropTypes.string.isRequired,
+  dokStatus: PropTypes.string,
   readOnly: PropTypes.bool.isRequired,
   opptjeningActivities: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   opptjeningAktivitetTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -295,6 +308,10 @@ OpptjeningFaktaFormImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+};
+
+OpptjeningFaktaFormImpl.defaultProps = {
+  dokStatus: undefined,
 };
 
 const mapStateToProps = (state, ownProps) => ({

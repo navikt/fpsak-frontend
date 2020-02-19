@@ -19,6 +19,7 @@ const OpptjeningFaktaIndex = ({
   behandling,
   opptjening,
   aksjonspunkter,
+  utlandDokStatus,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   harApneAksjonspunkter,
@@ -32,6 +33,7 @@ const OpptjeningFaktaIndex = ({
       behandlingVersjon={behandling.versjon}
       fastsattOpptjening={opptjening ? opptjening.fastsattOpptjening : undefined}
       opptjeningAktiviteter={opptjening ? opptjening.opptjeningAktivitetList : undefined}
+      dokStatus={utlandDokStatus ? utlandDokStatus.dokStatus : undefined}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       readOnly={readOnly}
@@ -48,6 +50,9 @@ OpptjeningFaktaIndex.propTypes = {
   opptjening: opptjeningPropType,
   aksjonspunkter: PropTypes.arrayOf(opptjeningAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
+  utlandDokStatus: PropTypes.shape({
+    dokStatus: PropTypes.string.isRequired,
+  }),
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -57,6 +62,7 @@ OpptjeningFaktaIndex.propTypes = {
 
 OpptjeningFaktaIndex.defaultProps = {
   opptjening: undefined,
+  utlandDokStatus: undefined,
 };
 
 export default OpptjeningFaktaIndex;

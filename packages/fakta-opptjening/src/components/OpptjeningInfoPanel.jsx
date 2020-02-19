@@ -26,6 +26,7 @@ export const OpptjeningInfoPanel = ({
   behandlingId,
   behandlingVersjon,
   fastsattOpptjening,
+  dokStatus,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   ...formProps
@@ -36,6 +37,7 @@ export const OpptjeningInfoPanel = ({
       behandlingVersjon={behandlingVersjon}
       opptjeningFomDato={fastsattOpptjening.opptjeningFom}
       opptjeningTomDato={fastsattOpptjening.opptjeningTom}
+      dokStatus={dokStatus}
       readOnly={readOnly}
       hasOpenAksjonspunkter={hasOpenAksjonspunkter}
       hasAksjonspunkt={aksjonspunkt !== undefined}
@@ -53,12 +55,14 @@ OpptjeningInfoPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkt: aksjonspunktPropType,
   fastsattOpptjening: PropTypes.shape(),
+  dokStatus: PropTypes.string,
   ...formPropTypes,
 };
 
 OpptjeningInfoPanel.defaultProps = {
   aksjonspunkt: undefined,
   fastsattOpptjening: {},
+  dokStatus: undefined,
 };
 
 const addDay = (date) => addDaysToDate(date, 1);
