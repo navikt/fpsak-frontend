@@ -290,7 +290,8 @@ const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringe
     aktivitetStatus.KUN_YTELSE,
     vilkarStatus,
   );
-
+  // TODO: verifiser denne
+  if (snElement.pgiSnitt) snElement.verdi = snElement.pgiSnitt;
   if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
   if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
   if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }

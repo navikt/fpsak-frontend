@@ -1173,7 +1173,7 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 631129;
 
-  const perioder = [lagPeriodeMedDagsats(andeler, 479318 / 260)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 599148 / 260)];
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
   perioder[0].avkortetPrAar = 599148;
 
@@ -1216,6 +1216,56 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
   );
 };
 
+export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
+  const andeler = [
+    lagAndel('SN', 531000, undefined, undefined, false),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 631129;
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 599148 / 260)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
+  perioder[0].avkortetPrAar = 599148;
+
+  const statuser = [lagStatus('SN')];
+  const næringer = [{
+    begrunnelse: '',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 100;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
 export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6gDekningsgrad80Side18 = () => {
   const andeler = [
     lagAndel('SN', 531000, undefined, undefined, false),
