@@ -20,6 +20,20 @@
   "VisittkortLabels.Under18Tittel": "Personen er under 18 år",
   "VisittkortLabels.Under18": "Under 18",
 
+  "VisittkortBarnInfoPanel.Dod": "DØD",
+  "VisittkortBarnInfoPanel.DodTittel": "Barnet er dødt",
+  "VisittkortBarnInfoPanel.Termin": "Termin {dato}",
+  "VisittkortBarnInfoPanel.Fodt": "Født {dato}",
+  "VisittkortBarnInfoPanel.Tvillinger": "Tvillinger Født {dato}",
+  "VisittkortBarnInfoPanel.Flerlinger": "Flerlinger Født {dato}",
+  "VisittkortBarnInfoPanel.Ar.Fodt": " ({value} år)",
+  "VisittkortBarnInfoPanel.Maned.Fodt": " ({value} måned)",
+  "VisittkortBarnInfoPanel.Maneder.Fodt": " ({value} måneder)",
+  "VisittkortBarnInfoPanel.Dag.Fodt": " ({value} dag)",
+  "VisittkortBarnInfoPanel.Dager.Fodt": " ({value} dager)",
+
+  "VisittkortPanel.Ukjent": "Ukjent navn, mangler norsk id-nr",
+
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",
   "Malform.Engelsk": "Engelsk"

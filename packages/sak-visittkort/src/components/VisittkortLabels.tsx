@@ -1,16 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, FunctionComponent } from 'react';
 import moment from 'moment';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import {
   EtikettInfo, EtikettAdvarsel, EtikettFokus,
 } from 'nav-frontend-etiketter';
 
+import { Personopplysninger } from '@fpsak-frontend/types';
 import { dateFormat } from '@fpsak-frontend/utils';
 
 import styles from './visittkortLabels.less';
 
-const VisittkortLabels = ({
+interface OwnProps {
+  personopplysninger: Personopplysninger;
+}
+
+const VisittkortLabels: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   personopplysninger,
 }) => {

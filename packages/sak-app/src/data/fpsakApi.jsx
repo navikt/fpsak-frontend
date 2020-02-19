@@ -41,6 +41,7 @@ export const FpsakApiKeys = {
   TOTRINNS_KLAGE_VURDERING: 'TOTRINNS_KLAGE_VURDERING',
   HAR_REVURDERING_SAMME_RESULTAT: 'HAR_REVURDERING_SAMME_RESULTAT',
   BEHANDLING_PERSONOPPLYSNINGER: 'BEHANDLING_PERSONOPPLYSNINGER',
+  BEHANDLING_FAMILIE_HENDELSE: 'BEHANDLING_FAMILIE_HENDELSE',
 };
 
 
@@ -64,6 +65,7 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
 
   .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
+  .withRel('familiehendelse-v2', FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
 
   /* /api/behandling/beregningsresultat */
   .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)

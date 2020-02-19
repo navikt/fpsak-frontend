@@ -8,7 +8,6 @@ import {
 import {
   Kodeverk, NavAnsatt, Behandling,
 } from '@fpsak-frontend/types';
-import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 
 import SvangerskapspengerProsess from './SvangerskapspengerProsess';
 import SvangerskapspengerFakta from './SvangerskapspengerFakta';
@@ -75,13 +74,6 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
         featureToggles={featureToggles}
-      />
-      <VerticalSpacer sixteenPx />
-      <PersonFaktaIndex
-        behandling={behandling}
-        fagsakPerson={fagsak.fagsakPerson}
-        personopplysninger={fetchedData.personopplysninger}
-        alleKodeverk={alleKodeverk}
       />
       <VerticalSpacer sixteenPx />
       <SvangerskapspengerFakta

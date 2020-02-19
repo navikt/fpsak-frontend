@@ -9,7 +9,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 
-import { getFagsakPerson, getSelectedSaksnummer } from './fagsakSelectors';
+import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
@@ -20,6 +20,12 @@ import FagsakGrid from './components/FagsakGrid';
 import { getSelectedBehandlingId, getBehandlingVersjon, getBehandlingSprak } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
+
+const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER, fpsakApi.BEHANDLING_FAMILIE_HENDELSE, fpsakApi.ANNEN_PART_BEHANDLING];
+const ingenEndepunkter = [];
+
+const finnLenkeTilAnnenPart = (annenPartBehandling) => `/fagsak/${annenPartBehandling.saksnr.verdi}/behandling/`
+  + `${annenPartBehandling.behandlingId}/?fakta=default&punkt=uttak`;
 
 /**
  * FagsakIndex
@@ -33,7 +39,7 @@ export const FagsakIndex = ({
   behandlingVersjon,
   alleKodeverk,
   sprakkode,
-  fagsakPerson,
+  fagsak,
 }) => (
   <>
     <FagsakResolver key={selectedSaksnummer}>
@@ -46,13 +52,17 @@ export const FagsakIndex = ({
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             showLoadingIcon
-            endpoints={fpsakApi.BEHANDLING_PERSONOPPLYSNINGER.isEndpointEnabled() ? [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER] : []}
-            render={(props) => (
+            behandlingNotRequired
+            endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
+            endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
+            render={(dataProps) => (
               <VisittkortSakIndex
-                personopplysninger={props.behandlingPersonopplysninger}
+                personopplysninger={dataProps.behandlingPersonopplysninger}
+                familieHendelse={dataProps.behandlingFamilieHendelse}
+                lenkeTilAnnenPart={dataProps.annenPartBehandling ? finnLenkeTilAnnenPart(dataProps.annenPartBehandling) : undefined}
                 alleKodeverk={alleKodeverk}
                 sprakkode={sprakkode}
-                fagsakPerson={fagsakPerson}
+                fagsak={fagsak}
               />
             )}
           />
@@ -64,8 +74,13 @@ export const FagsakIndex = ({
 );
 
 FagsakIndex.propTypes = {
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   selectedSaksnummer: PropTypes.number.isRequired,
   requestPendingMessage: PropTypes.string,
+  alleKodeverk: PropTypes.shape().isRequired,
+  sprakkode: PropTypes.string.isRequired,
+  fagsak: PropTypes.shape().isRequired,
 };
 
 FagsakIndex.defaultProps = {
@@ -79,7 +94,7 @@ const mapStateToProps = (state) => ({
   requestPendingMessage: getRequestPollingMessage(state),
   alleKodeverk: getAlleFpSakKodeverk(state),
   sprakkode: getBehandlingSprak(state),
-  fagsakPerson: getFagsakPerson(state),
+  fagsak: getSelectedFagsak(state),
 });
 
 export default trackRouteParam({

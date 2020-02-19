@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
+import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import styles from './noSelectedBehandling.less';
 
@@ -14,9 +15,11 @@ const getMessage = (numBehandlinger) => (numBehandlinger === 0 ? 'NoSelectedBeha
  */
 const NoSelectedBehandling = ({ numBehandlinger }) => (
   <div className={styles.noSelectedBehandlingPanel}>
-    <Normaltekst>
-      <FormattedMessage id={getMessage(numBehandlinger)} />
-    </Normaltekst>
+    <AlertStripeInfo>
+      <Normaltekst>
+        <FormattedMessage id={getMessage(numBehandlinger)} />
+      </Normaltekst>
+    </AlertStripeInfo>
   </div>
 );
 

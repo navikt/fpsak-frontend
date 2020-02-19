@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+
+import {
+  Kodeverk, Personopplysninger, FamilieHendelseSamling, Fagsak,
+} from '@fpsak-frontend/types';
 
 import VisittkortPanel from './components/VisittkortPanel';
 import messages from '../i18n/nb_NO.json';
@@ -11,16 +15,28 @@ const intl = createIntl({
   messages,
 }, cache);
 
-const VisittkortSakIndex = ({
+interface OwnProps {
+  fagsak: Fagsak;
+  personopplysninger: Personopplysninger;
+  familieHendelse: FamilieHendelseSamling;
+  alleKodeverk?: {[key: string]: [Kodeverk]};
+  sprakkode: string;
+}
+
+const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
+  fagsak,
   personopplysninger,
-  fagsakPerson,
+  familieHendelse,
+  lenkeTilAnnenPart,
   alleKodeverk,
   sprakkode,
 }) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
       personopplysninger={personopplysninger}
-      fagsakPerson={fagsakPerson}
+      familieHendelse={familieHendelse}
+      lenkeTilAnnenPart={lenkeTilAnnenPart}
+      fagsak={fagsak}
       alleKodeverk={alleKodeverk}
       sprakkode={sprakkode}
     />

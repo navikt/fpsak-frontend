@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, FunctionComponent } from 'react';
 import { EtikettInfo } from 'nav-frontend-etiketter';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
+import { Kodeverk, Personopplysninger } from '@fpsak-frontend/types';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -16,7 +17,20 @@ import styles from './visittkortDetaljerPopup.less';
 const borSokerMedBarnet = (adresser, personopplysningerForBarn = []) => personopplysningerForBarn
   .some((barn) => adresser[opplysningAdresseType.BOSTEDSADRESSE] === getAddresses(barn.adresser)[opplysningAdresseType.BOSTEDSADRESSE]);
 
-const VisittkortDetaljerPopup = ({
+const findPersonStatus = (personopplysning) => {
+  if (personopplysning.avklartPersonstatus) {
+    return personopplysning.avklartPersonstatus.overstyrtPersonstatus;
+  }
+  return personopplysning.personstatus ? personopplysning.personstatus : undefined;
+};
+
+interface OwnProps {
+  personopplysninger: Personopplysninger;
+  alleKodeverk?: {[key: string]: [Kodeverk]};
+  sprakkode: string;
+}
+
+const VisittkortDetaljerPopup: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   personopplysninger,
   alleKodeverk,
@@ -24,7 +38,7 @@ const VisittkortDetaljerPopup = ({
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const adresser = useMemo(() => getAddresses(personopplysninger.adresser), [personopplysninger.adresser]);
-  const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barn), [personopplysninger]);
+  const borMedBarnet = useMemo(() => borSokerMedBarnet(adresser, personopplysninger.barnSoktFor), [personopplysninger]);
   const midlertidigAdresse = adresser[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
     ? adresser[opplysningAdresseType.NORSK_NAV_TILLEGGSADRESSE]
     : adresser[opplysningAdresseType.UTENLANDSK_NAV_TILLEGSADRESSE];
@@ -50,7 +64,7 @@ const VisittkortDetaljerPopup = ({
               typo="undertekst"
               title={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Personstatus.Hjelpetekst' })}
             >
-              {getKodeverknavn(personopplysninger.personstatus)}
+              {getKodeverknavn(findPersonStatus(personopplysninger))}
             </EtikettInfo>
           </FlexColumn>
           {personopplysninger.sivilstand && (
