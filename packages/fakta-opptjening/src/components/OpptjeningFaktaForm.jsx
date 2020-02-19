@@ -214,7 +214,7 @@ export class OpptjeningFaktaFormImpl extends Component {
           <>
             <AlertStripeInfo className={styles.info}>
               <FormattedHTMLMessage
-                id={dokStatus !== DOKUMENTASJON_VIL_BLI_INNHENTET ? 'OpptjeningFaktaForm.DetErInnhentetDok' : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'}
+                id={dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET ? 'OpptjeningFaktaForm.DetErInnhentetDok' : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'}
               />
             </AlertStripeInfo>
             <VerticalSpacer twentyPx />
