@@ -39,6 +39,7 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
 import { lagVisningsNavn, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 
 import styles from './uttakNyPeriode.less';
 
@@ -371,7 +372,7 @@ const transformValues = (
     }
     : null;
 
-  const dokumentertePerioder = [
+  const dokumentertePerioder = values.periodeArsak === utsettelseArsakCodes.ARBEID || values.periodeArsak === utsettelseArsakCodes.LOVBESTEMT_FERIE ? null : [
     {
       fom: values.fom,
       tom: values.tom,
