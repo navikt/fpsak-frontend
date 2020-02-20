@@ -1,8 +1,6 @@
-.active {
-  flex: 1;
-}
-
-.inactive {
+.container {
+  margin-left: 3px;
+  margin-right: 3px;
   flex: 1;
 }
 
@@ -14,28 +12,27 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  height: 100%;
   width: 100%;
+  border-bottom: 0.25rem solid white;
+
+  &.active {
+    border-bottom: 0.25rem solid #0067c5;
+  }
 
   &:hover {
+    border-bottom: 0.25rem solid #0067c5;
     background-color: #e7e9e9;
   }
 
   &:focus {
-    border: solid 3px #254b6d;
+    border-bottom: 0.25rem solid #0067c5;
+    box-shadow: 0 0 0 3px #254b6d;
     outline: none;
-  }
-
-  &:selected {
-    background: red;
   }
 
   &:disabled {
     background: white;
+    border-bottom: 0.25rem solid white;
     cursor: default;
   }
-}
-
-.activeButton {
-  border-bottom: 0.25rem solid #0067c5;
 }

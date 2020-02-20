@@ -26,9 +26,9 @@ const TabMeny: FunctionComponent<OwnProps> = ({
   <FlexContainer>
     <FlexRow>
       {tabs.map((tab, index) => (
-        <FlexColumn className={tab.isActive ? styles.active : styles.inactive}>
+        <FlexColumn className={styles.container}>
           <button
-            className={classNames(styles.button, tab.isActive && styles.activeButton)}
+            className={classNames(styles.button, { active: tab.isActive })}
             type="button"
             onClick={() => onClick(index)}
             data-tooltip={tab.tooltip}

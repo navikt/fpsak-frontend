@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
-import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import SupportMenySakIndex from '@fpsak-frontend/sak-support-meny';
 
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
 import supportPanels from './supportPanels';
-import SupportPanelLink from './components/SupportPanelLink';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
@@ -56,26 +54,11 @@ export const BehandlingSupportIndex = ({
 
   return (
     <BehandlingsupportDataResolver>
-      <FlexContainer>
-        <FlexRow spaceBetween className={acccessibleSupportPanels.length === 4 ? styles.columnMarginMedGodkjenning : styles.columnMargin}>
-          {acccessibleSupportPanels.map((supportPanel) => (
-            <FlexColumn>
-              <SupportPanelLink
-                key={supportPanel}
-                supportPanel={supportPanel}
-                isEnabled={enabledSupportPanels.includes(supportPanel)}
-                isActive={supportPanel === activeSupportPanel}
-                supportPanelLocation={getSupportPanelLocation(supportPanel)}
-              />
-            </FlexColumn>
-          ))}
-        </FlexRow>
-      </FlexContainer>
       <div className={styles.meny}>
         <SupportMenySakIndex
           erTilBeslutter={acccessibleSupportPanels.includes(supportPanels.APPROVAL)}
           erFraBeslutter={acccessibleSupportPanels.includes(supportPanels.RETURNED)}
-          erSendMeldingAktiv
+          erSendMeldingAktiv={enabledSupportPanels.includes(activeSupportPanel)}
           valgtIndex={acccessibleSupportPanels.findIndex((p) => p === activeSupportPanel)}
           onClick={changeRouteCallback}
         />
