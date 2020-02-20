@@ -5,7 +5,7 @@ import { expect } from 'chai';
 
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  behandlingReducer, setTempBehandlingId,
+  behandlingReducer, setUrlBehandlingId,
 } from './duck';
 
 const middlewares = [thunk];
@@ -37,7 +37,7 @@ describe('Behandling-reducer', () => {
   it('skal markere i state at behandling er valgt', () => {
     const store = mockStore();
 
-    store.dispatch(setTempBehandlingId(1));
+    store.dispatch(setUrlBehandlingId(1));
 
     expect(store.getActions()).to.have.length(1);
 

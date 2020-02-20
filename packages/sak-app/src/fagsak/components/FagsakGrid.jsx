@@ -17,12 +17,12 @@ const FagsakGrid = ({
 }) => (
   <>
     <MediaQuery maxWidth={1600}>
-      {visittkortContent}
+      {visittkortContent()}
     </MediaQuery>
     <div className={styles.gridContainer}>
       <div className={styles.leftColumn}>
         <MediaQuery minWidth={1600}>
-          {visittkortContent}
+          {visittkortContent()}
         </MediaQuery>
         <div className={styles.behandlingContent}>
           {behandlingContent}

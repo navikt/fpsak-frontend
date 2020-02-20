@@ -17,7 +17,9 @@ import { setSelectedSaksnummer } from './duck';
 
 import FagsakResolver from './FagsakResolver';
 import FagsakGrid from './components/FagsakGrid';
-import { getSelectedBehandlingId, getBehandlingVersjon, getBehandlingSprak } from '../behandling/duck';
+import {
+  getSelectedBehandlingId, getBehandlingVersjon, getBehandlingSprak, getUrlBehandlingId,
+} from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 
@@ -33,6 +35,7 @@ const finnLenkeTilAnnenPart = (annenPartBehandling) => `/fagsak/${annenPartBehan
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 export const FagsakIndex = ({
+  harValgtBehandling,
   selectedSaksnummer,
   requestPendingMessage,
   behandlingId,
@@ -47,26 +50,32 @@ export const FagsakIndex = ({
         behandlingContent={<Route strict path={behandlingerPath} component={BehandlingerIndex} />}
         profileAndNavigationContent={<FagsakProfileIndex />}
         supportContent={<BehandlingSupportIndex />}
-        visittkortContent={(
-          <DataFetcher
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            showLoadingIcon
-            behandlingNotRequired
-            endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
-            endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
-            render={(dataProps) => (
-              <VisittkortSakIndex
-                personopplysninger={dataProps.behandlingPersonopplysninger}
-                familieHendelse={dataProps.behandlingFamilieHendelse}
-                lenkeTilAnnenPart={dataProps.annenPartBehandling ? finnLenkeTilAnnenPart(dataProps.annenPartBehandling) : undefined}
-                alleKodeverk={alleKodeverk}
-                sprakkode={sprakkode}
-                fagsak={fagsak}
-              />
-            )}
-          />
-        )}
+        visittkortContent={() => {
+          if (harValgtBehandling && !behandlingId) {
+            return null;
+          }
+
+          return (
+            <DataFetcher
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              showLoadingIcon
+              behandlingNotRequired
+              endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
+              endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
+              render={(dataProps) => (
+                <VisittkortSakIndex
+                  personopplysninger={dataProps.behandlingPersonopplysninger}
+                  familieHendelse={dataProps.behandlingFamilieHendelse}
+                  lenkeTilAnnenPart={dataProps.annenPartBehandling ? finnLenkeTilAnnenPart(dataProps.annenPartBehandling) : undefined}
+                  alleKodeverk={alleKodeverk}
+                  sprakkode={sprakkode}
+                  fagsak={fagsak}
+                />
+              )}
+            />
+          );
+        }}
       />
     </FagsakResolver>
     {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
@@ -74,6 +83,7 @@ export const FagsakIndex = ({
 );
 
 FagsakIndex.propTypes = {
+  harValgtBehandling: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   selectedSaksnummer: PropTypes.number.isRequired,
@@ -88,6 +98,7 @@ FagsakIndex.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
+  harValgtBehandling: !!getUrlBehandlingId(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
   selectedSaksnummer: getSelectedSaksnummer(state),

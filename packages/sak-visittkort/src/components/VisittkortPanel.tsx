@@ -28,16 +28,17 @@ interface OwnProps {
   fagsak: Fagsak;
   personopplysninger: Personopplysninger;
   familieHendelse: FamilieHendelseSamling;
+  lenkeTilAnnenPart?: string;
   alleKodeverk?: {[key: string]: [Kodeverk]};
   sprakkode: string;
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
+  fagsak,
   personopplysninger,
   familieHendelse,
   lenkeTilAnnenPart,
-  fagsak,
   alleKodeverk,
   sprakkode,
 }) => {
@@ -54,10 +55,10 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     );
   }
 
-  const erMor = fagsak.relasjonsRolleType === relasjonsRolleType.MOR;
+  const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
 
   const soker = erMor || !personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
-  const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : undefined;
+  const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
 
   return (
     <div className={styles.container}>
