@@ -1,6 +1,11 @@
 .container {
   margin-left: 3px;
   margin-right: 3px;
+}
+
+.column {
+  padding-left: 2px;
+  padding-right: 2px;
   flex: 1;
 }
 
@@ -12,11 +17,18 @@
   background: transparent;
   border: none;
   cursor: pointer;
+  padding-top: 10px;
   width: 100%;
-  border-bottom: 0.25rem solid white;
+  border-bottom: 0.25rem solid gray;
 
   &.active {
     border-bottom: 0.25rem solid #0067c5;
+    cursor: default;
+
+    &:hover {
+      border-bottom: 0.25rem solid #0067c5;
+      background-color: white;
+    }
   }
 
   &:hover {
@@ -32,7 +44,7 @@
 
   &:disabled {
     background: white;
-    border-bottom: 0.25rem solid white;
+    border-bottom: 0.25rem solid gray;
     cursor: default;
   }
 }
