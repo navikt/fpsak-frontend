@@ -115,7 +115,7 @@ describe('<DataFetcher>', () => {
       render={sinon.spy()}
       FETCH_HENT_KODEVERK={fetchKodeverk}
       keepDataWhenRefetching
-      endpointParams={{ saksnummer: 1 }}
+      endpointParams={{ [endpoints[0].name]: { saksnummer: 1 } }}
     />);
 
     expect(fetchKodeverk.called).is.true;

@@ -41,7 +41,7 @@ export class DataFetcher extends Component {
     showLoadingIcon: false,
     valueThatWillTriggerRefetchWhenChanged: undefined,
     keepDataWhenRefetching: false,
-    endpointParams: {},
+    endpointParams: undefined,
     allowErrors: false,
   }
 
@@ -60,9 +60,9 @@ export class DataFetcher extends Component {
     return cacheParams && cacheParams.behandlingId === behandlingId && cacheParams.behandlingVersjon === behandlingVersjon;
   }
 
-  fetchData = (endpointParams, keepDataWhenRefetching) => {
+  fetchData = () => {
     const {
-      endpoints, behandlingId, behandlingVersjon, allowErrors,
+      endpoints, behandlingId, behandlingVersjon, allowErrors, endpointParams, keepDataWhenRefetching,
     } = this.props;
     if (endpoints.length === 0) {
       return;
@@ -73,9 +73,10 @@ export class DataFetcher extends Component {
     };
 
     const requests = endpoints.filter((endpoint) => !this.hasFetchedLatestData(endpoint)).map((endpoint) => {
+      const params = endpointParams ? endpointParams[endpoint.name] : {};
       // eslint-disable-next-line react/destructuring-assignment
       const request = this.props[`${FETCH_PREFIX}${endpoint.name}`];
-      return () => request(endpointParams, meta);
+      return () => request(params, meta);
     });
 
     if (allowErrors) {
@@ -90,12 +91,12 @@ export class DataFetcher extends Component {
 
   componentDidMount = () => {
     const {
-      showComponent, behandlingNotRequired, behandlingId, behandlingVersjon, endpointParams, keepDataWhenRefetching,
+      showComponent, behandlingNotRequired, behandlingId, behandlingVersjon,
     } = this.props;
 
     const hasRequiredInput = behandlingNotRequired || (!!behandlingId && !!behandlingVersjon);
     if (showComponent && hasRequiredInput) {
-      this.fetchData(endpointParams, keepDataWhenRefetching);
+      this.fetchData();
     }
   }
 
@@ -108,14 +109,14 @@ export class DataFetcher extends Component {
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired,
+      showComponent, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired,
     } = this.props;
 
     const forcedRefresh = valueThatWillTriggerRefetchWhenChanged !== prevProps.valueThatWillTriggerRefetchWhenChanged;
     const shouldRefetchData = behandlingNotRequired ? this.hasBehandlingsdataChanged(prevProps) : true;
 
     if (showComponent && (forcedRefresh || shouldRefetchData)) {
-      this.fetchData(endpointParams, keepDataWhenRefetching);
+      this.fetchData();
     }
   }
 
