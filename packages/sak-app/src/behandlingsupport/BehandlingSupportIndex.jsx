@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
-
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
+import SupportMenySakIndex from '@fpsak-frontend/sak-support-meny';
+
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
@@ -45,28 +47,45 @@ export const BehandlingSupportIndex = ({
   acccessibleSupportPanels,
   enabledSupportPanels,
   getSupportPanelLocation,
-}) => (
-  <BehandlingsupportDataResolver>
-    <FlexContainer>
-      <FlexRow spaceBetween className={acccessibleSupportPanels.length === 4 ? styles.columnMarginMedGodkjenning : styles.columnMargin}>
-        {acccessibleSupportPanels.map((supportPanel) => (
-          <FlexColumn>
-            <SupportPanelLink
-              key={supportPanel}
-              supportPanel={supportPanel}
-              isEnabled={enabledSupportPanels.includes(supportPanel)}
-              isActive={supportPanel === activeSupportPanel}
-              supportPanelLocation={getSupportPanelLocation(supportPanel)}
-            />
-          </FlexColumn>
-        ))}
-      </FlexRow>
-    </FlexContainer>
-    <div className={(activeSupportPanel === supportPanels.HISTORY ? styles.containerHistorikk : styles.container)}>
-      {renderSupportPanel(activeSupportPanel)}
-    </div>
-  </BehandlingsupportDataResolver>
-);
+}) => {
+  const history = useHistory();
+  const changeRouteCallback = useCallback((index) => {
+    const supportPanel = acccessibleSupportPanels[index];
+    history.push(getSupportPanelLocation(supportPanel));
+  }, [history, acccessibleSupportPanels]);
+
+  return (
+    <BehandlingsupportDataResolver>
+      <FlexContainer>
+        <FlexRow spaceBetween className={acccessibleSupportPanels.length === 4 ? styles.columnMarginMedGodkjenning : styles.columnMargin}>
+          {acccessibleSupportPanels.map((supportPanel) => (
+            <FlexColumn>
+              <SupportPanelLink
+                key={supportPanel}
+                supportPanel={supportPanel}
+                isEnabled={enabledSupportPanels.includes(supportPanel)}
+                isActive={supportPanel === activeSupportPanel}
+                supportPanelLocation={getSupportPanelLocation(supportPanel)}
+              />
+            </FlexColumn>
+          ))}
+        </FlexRow>
+      </FlexContainer>
+      <div className={styles.meny}>
+        <SupportMenySakIndex
+          erTilBeslutter={acccessibleSupportPanels.includes(supportPanels.APPROVAL)}
+          erFraBeslutter={acccessibleSupportPanels.includes(supportPanels.RETURNED)}
+          erSendMeldingAktiv
+          valgtIndex={acccessibleSupportPanels.findIndex((p) => p === activeSupportPanel)}
+          onClick={changeRouteCallback}
+        />
+      </div>
+      <div className={(activeSupportPanel === supportPanels.HISTORY ? styles.containerHistorikk : styles.container)}>
+        {renderSupportPanel(activeSupportPanel)}
+      </div>
+    </BehandlingsupportDataResolver>
+  );
+};
 
 BehandlingSupportIndex.propTypes = {
   acccessibleSupportPanels: PropTypes.arrayOf(PropTypes.string).isRequired,

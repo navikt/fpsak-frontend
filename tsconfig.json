@@ -27,6 +27,7 @@
 		"packages/fakta-ytelser",
 		"packages/fakta-saken",
 		"packages/sak-visittkort",
+		"packages/sak-support-meny",
 		"packages/types",
 		"@types"
 	],

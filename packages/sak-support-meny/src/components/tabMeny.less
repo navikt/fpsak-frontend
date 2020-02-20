@@ -1,0 +1,41 @@
+.active {
+  flex: 1;
+}
+
+.inactive {
+  flex: 1;
+}
+
+.tabImage {
+  margin-bottom: 10px;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+
+  &:hover {
+    background-color: #e7e9e9;
+  }
+
+  &:focus {
+    border: solid 3px #254b6d;
+    outline: none;
+  }
+
+  &:selected {
+    background: red;
+  }
+
+  &:disabled {
+    background: white;
+    cursor: default;
+  }
+}
+
+.activeButton {
+  border-bottom: 0.25rem solid #0067c5;
+}

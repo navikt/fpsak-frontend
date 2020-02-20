@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@navikt/nap-person-card": "1.0.9",
+    "@navikt/nap-person-card": "1.0.10",
     "nav-frontend-typografi": "2.0.17",
     "nav-frontend-typografi-style": "1.0.18",
     "prop-types": "^15.7.2",
