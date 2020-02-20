@@ -51,16 +51,33 @@ const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse, p
 const findAllePerioderMedBortfaltNaturalytelse = (allePerioder) => allePerioder
   .filter((periode) => periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT));
 
+const harBortfalteNaturalytelser = (allePerioder) => {
+  if (!allePerioder || allePerioder.length < 1) {
+    return false;
+  }
+
+  const naturalYtelseAndel = allePerioder.filter((perioder) => perioder.beregningsgrunnlagPrStatusOgAndel
+    .some((andel) => andel.bortfaltNaturalytelse !== undefined
+    && andel.bortfaltNaturalytelse !== null
+    && andel.bortfaltNaturalytelse !== 0));
+  if (!naturalYtelseAndel || naturalYtelseAndel.length < 1) {
+    return false;
+  }
+  return true;
+};
 export const createNaturalytelseTableData = (allePerioder) => {
   if (!allePerioder || allePerioder.length < 1) {
     return undefined;
   }
 
-  const relevantePerioder = findAllePerioderMedBortfaltNaturalytelse(allePerioder);
-  if (relevantePerioder.length === 0 || !relevantePerioder) {
+  let relevantePerioder = findAllePerioderMedBortfaltNaturalytelse(allePerioder);
+
+  if (!harBortfalteNaturalytelser(allePerioder)) {
     return undefined;
   }
-
+  if (!relevantePerioder || relevantePerioder.length < 1) {
+    relevantePerioder = allePerioder;
+  }
   const tempMap = {};
   let antallPerioderMedFrafaltYtelse = 0;
   relevantePerioder.forEach((periode) => {
