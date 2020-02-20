@@ -35,7 +35,6 @@ const AvviksopplysningerSN = ({
     visFL: false,
     visSN: true,
   };
-
   if (erNyArbLivet) {
     return (
       <FlexRow>

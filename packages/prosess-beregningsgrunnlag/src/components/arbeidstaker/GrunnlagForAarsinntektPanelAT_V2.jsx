@@ -67,7 +67,8 @@ const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver, 
   if (!arbeidsforhold.arbeidsgiverNavn) {
     return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
   }
-  return harAndelerFraSammeArbeidsgiver ? `${arbeidsforhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsforhold.eksternArbeidsforholdId)})`
+  // TODO skal det brukses arbeidsforholdId eller eksternArbeidsforholdId
+  return harAndelerFraSammeArbeidsgiver ? `${arbeidsforhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsforhold.arbeidsforholdId)})`
     : arbeidsforhold.arbeidsgiverNavn;
 };
 const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {

@@ -52,7 +52,6 @@ const lagIntroTilEndringspanel = (naring) => {
   const {
     oppstartsdato, erVarigEndret, endringsdato,
   } = naring;
-
   const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
   const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
   if (!hendelseDato) {
@@ -139,7 +138,7 @@ export const NaeringsopplysningsPanel = ({
               </Normaltekst>
             </Column>
             <Column xs="4">
-              <EtikettLiten>
+              <EtikettLiten className={styles.naringsType}>
                 <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </EtikettLiten>
             </Column>

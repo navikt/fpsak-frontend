@@ -69,7 +69,7 @@ export const createNaturalytelseTableData = (allePerioder) => {
   if (!allePerioder || allePerioder.length < 1) {
     return undefined;
   }
-
+  debugger;
   let relevantePerioder = findAllePerioderMedBortfaltNaturalytelse(allePerioder);
 
   if (!harBortfalteNaturalytelser(allePerioder)) {

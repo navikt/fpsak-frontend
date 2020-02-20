@@ -181,7 +181,6 @@ const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, 
   const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
   const ikkeOppfylt = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   const ikkeVurdert = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT);
-
   return (
     <React.Fragment key={`Wr${key}`}>
       {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers, periodeIndex)}

@@ -96,25 +96,27 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       break;
     case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
-      if (skalFastsetteGrunnlag) {
+      if (skalFastsetteGrunnlag && vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
         inntekt = andel && (andel.overstyrtPrAar || andel.overstyrtPrAar === 0) ? andel.overstyrtPrAar : undefined;
+      } else if (skalFastsetteGrunnlag && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+        inntekt = 'fastsett';
       } else {
-        inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
+        // inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
+        inntekt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
       }
       // brukes for å sammeligne mot pensjonsgivende inntekt senere senere
       andelElement.pgiSnitt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
       break;
     default:
       inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
-
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
   }
   andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
   if (inntekt || inntekt === 0) {
     andelElement.verdi = inntekt;
-    const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
-    andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
   }
+  const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
+  andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
   return andelElement;
 };
 const hentVerdiFraAndel = (andel) => {
@@ -142,7 +144,6 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
   );
   // legg til regler for særtilfeller
   const erFastsatt = erVilkaarFastsattForEnAvAndelene(vilkarStatus, [atElement, snElement]);
-  console.log('erfastsatt ATSN', erFastsatt);
   if ((hentVerdiFraAndel(atElement) < hentPGIFraSNAndel(snElement)) && !erFastsatt) {
     // pensjonsgivende inntekt USIKKER på om sdet skal testes for Akjsonspunkt
     snElement.verdi = snElement.pgiSnitt;
@@ -178,7 +179,6 @@ const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
     vilkarStatus,
   );
   const erFastsatt = erVilkaarFastsattForEnAvAndelene(vilkarStatus, [atElement, flElement, snElement]);
-  console.log('erfastsatt ATFLSN', erFastsatt);
   // if (!harAksjonspunkter) {
   if (!erFastsatt) {
     // setter SN ledetekst til Fastsatt årsintekt
@@ -290,10 +290,9 @@ const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringe
     aktivitetStatus.KUN_YTELSE,
     vilkarStatus,
   );
-  // TODO: verifiser denne
-  if (snElement.pgiSnitt) snElement.verdi = snElement.pgiSnitt;
+
   if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
-  if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
+  if (atElement && atElement.verdi !== undefined) { rowsAndeler.push({ ...atElement }); }
   if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
   if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
   if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
@@ -379,7 +378,7 @@ export const createBeregningTableData = createSelector(
       }
 
       // sjekk om spesialrader skul vises
-      // IKKE vis avkortet rad vis mindre en 6G
+      // IKKE vis avkortet rad hvis mindre en 6G
       if (removeSpacesFromNumber(bruttoRad.verdi) < seksG) {
         avkortetRad.display = false;
       }
