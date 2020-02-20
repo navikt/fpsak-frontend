@@ -2218,6 +2218,38 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide
     />
   );
 };
+export const ArbeidstagerDagpengerOgSelvstendigNæringsdrivendeATOgDpOverstigerSN = () => {
+  const andeler = [
+    lagAndel('AT', 40824, undefined, undefined),
+    lagAndel('DP', 272304, undefined, undefined),
+    lagAndel('SN', 631129, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[2].pgiVerdier = pgi;
+  andeler[2].pgiSnitt = 112000;
+  const statuser = [lagStatus('AT_SN'), lagStatus('DP')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 313128 / 260)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 313128;
+  perioder[0].beregnetPrAar = 313128;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 57000, 1007.2, -574129)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 100;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      aksjonspunkter={[]}
+      isReadOnly={false}
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
 export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 = () => {
   const andeler = [
     lagAndel('FL', 40824, undefined, undefined),
@@ -2273,8 +2305,10 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
 export const militærOgSiviltjenesteSide33 = () => {
   const andeler = [
     lagAndel('AT', 155232, undefined, false),
-    lagAndel('MS', 299574, undefined, false)];
+    lagAndel('MS', 144342, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 922)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 299574;
+  perioder[0].redusertPrAar = 239659;
   const statuser = [lagStatus('AT'), lagStatus('MS')];
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 30000, 17.2, -574129)];
