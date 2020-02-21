@@ -52,6 +52,8 @@ const lagAPMedKode = (kode) => ([{
     kode: 'OPPR',
   },
   begrunnelse: null,
+  endretAv: 'B123456',
+  endretTidspunkt: '2020-01-20',
 }]);
 
 const vilkarMedUtfall = (kode) => [{
@@ -959,10 +961,11 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
   andeler[1].arbeidsforhold.stillingsNavn = 'Assistent';
   andeler[2].arbeidsforhold.stillingsProsent = '17,5';
   andeler[2].arbeidsforhold.stillingsNavn = 'Assistent';
-  const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1696)];
+  perioder[0].redusertPrAar = 441053;
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 330257, 6.2, -30257)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 16.2, 77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -1330,7 +1333,8 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
 
   const statuser = [lagStatus('SN')];
   const næringer = [{
-    begrunnelse: '',
+    begrunnelse: 'Jeg utvidet virksomheten fra en ren frisørsalong til også å tilby hudpleie.'
+      + ' Jeg jobbet opprinnelig alene men har ansatt to stykker i løpet av det siste året',
     endringsdato: '2019-11-22',
     erNyIArbeidslivet: false,
     erNyoppstartet: false,
@@ -1526,7 +1530,7 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
   }];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 300000, 50.1, -113871)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 350000, 50.1, -113871)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   bg.dekningsgrad = 100;
   const ap = lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
@@ -2041,7 +2045,7 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSi
     />
   );
 };
-export const YtelsefraNav26 = () => {
+export const YtelseFraNav26 = () => {
   const andeler = [
     lagAndel('KUN_YTELSE', 395232, undefined, undefined),
   ];
@@ -2096,6 +2100,7 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
     lagAndel('AT', 107232, undefined, false, true),
     lagAndel('AAP', 272304, undefined, false)];
   andeler[0].overstyrtPrAar = 167000;
+  andeler[0].arbeidsforhold = lagArbeidsforhold('Garslinen transport og Gardiner AS', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');
   const perioder = [lagPeriodeMedDagsats(andeler, 379536 / 260)];
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 379536;
   delete perioder[0].redusertPrAar;

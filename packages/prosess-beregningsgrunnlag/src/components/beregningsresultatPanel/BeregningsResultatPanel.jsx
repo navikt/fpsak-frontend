@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -43,9 +43,9 @@ const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
       <Row key="beregningOppsummering">
         <Column xs="9" key="beregningOppsummeringLedetekst">
           <Normaltekst>
-            <span className={beregningStyles.semiBoldText}>
+            <span>
               { !ikkeVurdert && (
-                <FormattedMessage
+                <FormattedHTMLMessage
                   id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
                   values={{ dagSats: dagsatsRad.grunnlag }}
                 />

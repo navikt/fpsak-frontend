@@ -82,7 +82,7 @@ const lagBeskrivelsePanel = (naringsAndel, intl) => (
       defaultApen
     >
       {naringsAndel.begrunnelse && naringsAndel.begrunnelse !== '' && (
-      <Normaltekst>
+      <Normaltekst className={styles.merTekstBorder}>
         {naringsAndel.begrunnelse}
       </Normaltekst>
       )}

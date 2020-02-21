@@ -79,7 +79,20 @@ const lagPeriodeHeader = (fom, tom) => (
     values={{ fom: moment(fom).format(DDMMYYYY_DATE_FORMAT), tom: tom ? moment(tom).format(DDMMYYYY_DATE_FORMAT) : '' }}
   />
 );
-
+const summertVerdiFraListeProp = (andeler, propNavn, altpropNavn) => {
+  if (!andeler || andeler.length < 1) {
+    return -1;
+  }
+  let sum = 0;
+  andeler.forEach((andel) => {
+    if (!andel[propNavn] && altpropNavn) {
+      sum += andel[altpropNavn] ? andel[altpropNavn] : 0;
+    } else {
+      sum += andel[propNavn] ? andel[propNavn] : 0;
+    }
+  });
+  return sum;
+};
 const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   let inntekt;
   const andelElement = {};
@@ -92,7 +105,14 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   switch (andelType) {
     case aktivitetStatus.ARBEIDSTAKER:
       skalFastsetteGrunnlag = andel.some((atAndel) => atAndel.skalFastsetteGrunnlag === true);
-      inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
+      if (skalFastsetteGrunnlag && vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) { // denne testen kan brukes på alle
+        inntekt = summertVerdiFraListeProp(andel, 'overstyrtPrAar');
+      } else if (skalFastsetteGrunnlag && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+        inntekt = 'fastsett';
+      } else {
+        // inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
+        inntekt = summertVerdiFraListeProp(andel, 'bruttoPrAar');
+      }
       break;
     case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
@@ -112,7 +132,7 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
   }
   andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
-  if (inntekt || inntekt === 0) {
+  if ((inntekt || inntekt === 0) && inntekt !== -1) {
     andelElement.verdi = inntekt;
   }
   const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
