@@ -274,7 +274,7 @@ const finnDagsatsGrunnlag = (bruttoRad, avkortetRad, redusertRad) => {
   return null;
 };
 const sjekkharBortfaltNaturalYtelse = (periode) => {
-  if (!periode || periode.length < 1) {
+  if (!periode) {
     return false;
   }
   return periode.beregningsgrunnlagPrStatusOgAndel.some((andel) => andel.bortfaltNaturalytelse !== undefined
