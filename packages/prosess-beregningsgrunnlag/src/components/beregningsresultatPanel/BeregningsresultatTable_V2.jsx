@@ -273,7 +273,14 @@ const finnDagsatsGrunnlag = (bruttoRad, avkortetRad, redusertRad) => {
   if (bruttoRad.verdi && bruttoRad.display !== false) return bruttoRad.verdi;
   return null;
 };
-
+const sjekkharBortfaltNaturalYtelse = (periode) => {
+  if (!periode) {
+    return false;
+  }
+  return periode.beregningsgrunnlagPrStatusOgAndel.some((andel) => andel.bortfaltNaturalytelse !== undefined
+      && andel.bortfaltNaturalytelse !== null
+      && andel.bortfaltNaturalytelse !== 0);
+};
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
@@ -291,7 +298,7 @@ export const createBeregningTableData = createSelector(
       const avkortetRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Avkortet6g" /> };
       const redusertRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.RedusertProsent" values={{ redusert: dekningsgrad }} /> };
       const dagsatserRad = {};
-      const harBortfallNaturalYtelse = periode.periodeAarsaker.some((aarsaak) => aarsaak.kode === periodeAarsak.NATURALYTELSE_BORTFALT);
+      const harBortfallNaturalYtelse = sjekkharBortfaltNaturalYtelse(periode);
       headers.push(lagPeriodeHeader(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
