@@ -78,15 +78,7 @@ const lagRelevantePaneler = (
           />
         )
       }
-      {relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus && (
-      <VerticalSpacer sixteenPx />
-      )}
-      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-      <AvviksopplysningerSN
-        alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-      />
-      )}
+
       {relevanteStatuser.isAAP && relevanteStatuser.isKombinasjonsstatus && (
         <VerticalSpacer sixteenPx />
       )}
@@ -128,7 +120,16 @@ const lagRelevantePaneler = (
             </Column>
           </Row>
         )
-}
+      }
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+        <AvviksopplysningerSN
+          alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+          sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+        />
+      )}
     </FlexContainer>
   );
 };

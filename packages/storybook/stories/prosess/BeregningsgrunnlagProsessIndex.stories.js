@@ -1448,7 +1448,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
   andeler[0].pgiSnitt = 631129;
   andeler[0].overstyrtPrAar = 522864;
   const perioder = [lagPeriodeMedDagsats(andeler, 522864 / 260)];
-  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].overstyrtPrAar;
   delete perioder[0].redusertPrAar;
   delete perioder[0].avkortetPrAar;
 
@@ -1708,6 +1708,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
     />
   );
 };
+
 export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = () => {
   const andeler = [
     lagAndel('SN', 531000, undefined, undefined, true),
@@ -2167,7 +2168,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
   ];
   const pgi = lagPGIVerdier();
   andeler[2].pgiVerdier = pgi;
-  andeler[2].pgiSnitt = 631129;
+  andeler[2].pgiSnitt = 318001;
   const statuser = [lagStatus('FL_SN'), lagStatus('DP')];
   const perioder = [lagPeriodeMedDagsats(andeler, 479318 / 260)];
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 631129;

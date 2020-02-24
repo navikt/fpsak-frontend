@@ -35,21 +35,7 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnla
   }
   return 'Fastsatt';
 };
-/*
-const erVilkaarFastsattForAndel = (vilkarStatus, skalFastsetteGrunnlag) => {
-  if (!vilkarStatus || !vilkarStatus.kode) return true;
-  if (vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
-    return false;
-  }
-  if (vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
-    return false;
-  }
-  if (vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
-    return false;
-  }
-  return true;
-};
-*/
+
 const erVilkaarFastsattForEnAvAndelene = (vilkarStatus, andeler) => {
   if (!vilkarStatus || !vilkarStatus.kode) return true;
   if (vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
@@ -162,23 +148,23 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
     aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
     vilkarStatus,
   );
-  // legg til regler for særtilfeller
+  // legger til regler for særtilfeller
   const erFastsatt = erVilkaarFastsattForEnAvAndelene(vilkarStatus, [atElement, snElement]);
   if ((hentVerdiFraAndel(atElement) < hentPGIFraSNAndel(snElement)) && !erFastsatt) {
-    // pensjonsgivende inntekt USIKKER på om sdet skal testes for Akjsonspunkt
     snElement.verdi = snElement.pgiSnitt;
     rowsAndeler.push(snElement);
     return;
   }
-  // if (!harAksjonspunkter) {
   if (hentVerdiFraAndel(atElement) > hentPGIFraSNAndel(snElement)) {
     rowsForklaringer.push(<FormattedMessage
       id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN"
     />);
+    if (!erFastsatt) {
+      atElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.AT" />;
+    }
     rowsAndeler.push(atElement);
     return;
   }
-  // }
   rowsAndeler.push(atElement);
   rowsAndeler.push(snElement);
 };
@@ -199,7 +185,6 @@ const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
     vilkarStatus,
   );
   const erFastsatt = erVilkaarFastsattForEnAvAndelene(vilkarStatus, [atElement, flElement, snElement]);
-  // if (!harAksjonspunkter) {
   if (!erFastsatt) {
     // setter SN ledetekst til Fastsatt årsintekt
     snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Fastsatt.SN" />;
