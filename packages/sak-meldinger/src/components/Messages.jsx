@@ -156,7 +156,7 @@ const formName = 'Messages';
 const buildInitalValues = (isKontrollerRevurderingApOpen, recipients, templates) => {
   const initialValues = {
     mottaker: recipients[0] ? recipients[0] : null,
-    brevmalkode: templates[0] ? templates[0].kode : null,
+    brevmalkode: templates && templates[0] ? templates[0].kode : null,
     fritekst: '',
     aarsakskode: null,
   };
