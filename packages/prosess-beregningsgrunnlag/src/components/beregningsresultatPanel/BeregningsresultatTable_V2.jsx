@@ -366,11 +366,11 @@ export const createBeregningTableData = createSelector(
       const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
-          settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
+          settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus);
           break;
         }
         case 'AT_FL_SN': {
-          settVisningsRaderForATFLSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
+          settVisningsRaderForATFLSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus);
           break;
         }
         case 'DP_FL_SN': {
