@@ -50,7 +50,7 @@ export const HistoryIndex = ({
     behandlingVersjon={behandlingVersjon}
     showLoadingIcon
     behandlingNotRequired
-    endpointParams={{ saksnummer }}
+    endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
     keepDataWhenRefetching
     endpoints={enabledContexts}
     allowErrors

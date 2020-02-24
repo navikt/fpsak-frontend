@@ -85,7 +85,11 @@ export const FagsakProfileIndex = ({
         behandlingVersjon={behandlingVersjon}
         showLoadingIcon
         behandlingNotRequired
-        endpointParams={{ saksnummer }}
+        endpointParams={{
+          [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer },
+          [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
+          [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
+        }}
         keepDataWhenRefetching
         endpoints={enabledApis}
         allowErrors

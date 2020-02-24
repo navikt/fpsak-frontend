@@ -47,7 +47,7 @@ MeldingerSakIndex.propTypes = {
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,
     tilgjengelig: PropTypes.bool.isRequired,
-  })).isRequired,
+  })),
   sprakKode: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
@@ -58,6 +58,7 @@ MeldingerSakIndex.propTypes = {
 
 MeldingerSakIndex.defaultProps = {
   isKontrollerRevurderingApOpen: false,
+  templates: [],
 };
 
 export default MeldingerSakIndex;

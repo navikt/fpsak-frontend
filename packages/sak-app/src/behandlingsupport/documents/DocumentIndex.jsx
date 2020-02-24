@@ -48,7 +48,7 @@ export const DocumentIndex = ({
     showLoadingIcon
     endpoints={dokumentData}
     behandlingNotRequired
-    endpointParams={{ saksnummer: saksNr }}
+    endpointParams={{ [fpsakApi.ALL_DOCUMENTS.name]: { saksnummer: saksNr } }}
     keepDataWhenRefetching
     render={(dataProps) => (
       <DokumenterSakIndex
