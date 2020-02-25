@@ -1,11 +1,11 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import arrowReturnImageUrl from '@fpsak-frontend/assets/images/arrow-return.svg';
-import emailSendImageUrl from '@fpsak-frontend/assets/images/email-send-1.svg';
-import folderBigImageUrl from '@fpsak-frontend/assets/images/folder-big.svg';
-import personFavoriteStarImageUrl from '@fpsak-frontend/assets/images/person-favorite-star-2.svg';
-import synchronizeTimerImageUrl from '@fpsak-frontend/assets/images/synchronize-time.svg';
+import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/arrow-return.svg';
+import { ReactComponent as SendMeldingSvg } from '@fpsak-frontend/assets/images/email-send-1.svg';
+import { ReactComponent as DokumenterSvg } from '@fpsak-frontend/assets/images/folder-big.svg';
+import { ReactComponent as TilBeslutterSvg } from '@fpsak-frontend/assets/images/person-favorite-star-2.svg';
+import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
 
 import TabMeny from './components/TabMeny';
 
@@ -18,29 +18,39 @@ const intl = createIntl({
   messages,
 }, cache);
 
+const getStyle = (isActive, isDisabled) => {
+  if (isDisabled) {
+    return { fill: '#c6c2bf' };
+  }
+  if (isActive) {
+    return { fill: '#0067c5' };
+  }
+  return { fill: '#3e3832' };
+};
+
 const TIL_BESLUTTER_TAB = {
-  image: personFavoriteStarImageUrl,
+  getSvg: (isActive, isDisabled, props) => <TilBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
   tooltipTextCode: 'SupportMenySakIndex.Godkjenning',
 };
 const FRA_BESLUTTER_TAB = {
-  image: arrowReturnImageUrl,
+  getSvg: (isActive, isDisabled, props) => <FraBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
   tooltipTextCode: 'SupportMenySakIndex.FraBeslutter',
 };
 const HISTORIKK_TAB = {
-  image: synchronizeTimerImageUrl,
+  getSvg: (isActive, isDisabled, props) => <HistorikkSvg {...props} style={getStyle(isActive, isDisabled)} />,
   tooltipTextCode: 'SupportMenySakIndex.Historikk',
 };
 const SEND_MELDING_TAB = {
-  image: emailSendImageUrl,
+  getSvg: (isActive, isDisabled, props) => <SendMeldingSvg {...props} style={getStyle(isActive, isDisabled)} />,
   tooltipTextCode: 'SupportMenySakIndex.Melding',
 };
 const DOKUMENTER_TAB = {
-  image: folderBigImageUrl,
+  getSvg: (isActive, isDisabled, props) => <DokumenterSvg {...props} style={getStyle(isActive, isDisabled)} />,
   tooltipTextCode: 'SupportMenySakIndex.Dokumenter',
 };
 
 const lagTab = (tab, isDisabled) => ({
-  image: tab.image,
+  getSvg: tab.getSvg,
   tooltip: intl.formatMessage({ id: tab.tooltipTextCode }),
   isDisabled,
 });

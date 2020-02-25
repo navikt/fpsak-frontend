@@ -1,6 +1,8 @@
 .container {
   margin-left: 3px;
   margin-right: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .column {
@@ -18,13 +20,15 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  padding-top: 10px;
+  padding-top: 16px;
   width: 100%;
-  border-bottom: 0.25rem solid gray;
+  border-bottom: 1px solid gray;
+  padding-bottom: 3px;
 
   &.active {
     border-bottom: 0.25rem solid #0067c5;
     cursor: default;
+    padding-bottom: 0px;
 
     &:hover {
       border-bottom: 0.25rem solid #0067c5;
@@ -35,6 +39,7 @@
   &:hover {
     border-bottom: 0.25rem solid #0067c5;
     background-color: #e7e9e9;
+    padding-bottom: 0px;
   }
 
   &:focus {
@@ -46,15 +51,15 @@
 
   &:disabled {
     background: white;
-    border-bottom: 0.25rem solid gray;
+    border-bottom: 1px solid gray;
     cursor: default;
+    padding-bottom: 3px;
   }
 }
 
 .button[data-tooltip]:before {
   position: absolute;
-  bottom: -30px;
-  left: 20px;
+  bottom: -20px;
   content: attr(data-tooltip);
   opacity: 0;
   font-family: 'Source Sans Pro', Arial, sans-serif;

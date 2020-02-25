@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import classnames from 'classnames/bind';
 
 import {
-  Image, FlexContainer, FlexRow, FlexColumn,
+  FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 
 import styles from './tabMeny.less';
@@ -11,7 +11,7 @@ const classNames = classnames.bind(styles);
 
 interface OwnProps {
   tabs: {
-    image: {};
+    getSvg: (isActive: boolean, isDisabled: boolean, props: {}) => React.ReactNode;
     tooltip: string;
     isActive: boolean;
     isDisabled: boolean;
@@ -34,12 +34,11 @@ const TabMeny: FunctionComponent<OwnProps> = ({
             data-tooltip={tab.tooltip}
             disabled={tab.isDisabled}
           >
-            <Image
-              tabIndex="-1"
-              className={styles.tabImage}
-              alt={tab.tooltip}
-              src={tab.image}
-            />
+            {tab.getSvg(tab.isActive, tab.isDisabled, {
+              className: styles.tabImage,
+              tabIndex: '-1',
+              alt: tab.tooltip,
+            })}
           </button>
         </FlexColumn>
       ))}
