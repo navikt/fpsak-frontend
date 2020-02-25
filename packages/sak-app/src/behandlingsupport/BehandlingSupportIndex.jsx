@@ -49,7 +49,7 @@ export const BehandlingSupportIndex = ({
   const changeRouteCallback = useCallback((index) => {
     const supportPanel = acccessibleSupportPanels[index];
     history.push(getSupportPanelLocation(supportPanel));
-  }, [history, acccessibleSupportPanels]);
+  }, [history.location, acccessibleSupportPanels]);
 
   return (
     <BehandlingsupportDataResolver>
