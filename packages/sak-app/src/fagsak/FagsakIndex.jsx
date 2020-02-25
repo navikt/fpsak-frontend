@@ -84,17 +84,21 @@ export const FagsakIndex = ({
 
 FagsakIndex.propTypes = {
   harValgtBehandling: PropTypes.bool.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number,
+  behandlingVersjon: PropTypes.number,
   selectedSaksnummer: PropTypes.number.isRequired,
   requestPendingMessage: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.string.isRequired,
-  fagsak: PropTypes.shape().isRequired,
+  sprakkode: PropTypes.shape(),
+  fagsak: PropTypes.shape(),
 };
 
 FagsakIndex.defaultProps = {
+  behandlingId: undefined,
+  behandlingVersjon: undefined,
   requestPendingMessage: undefined,
+  sprakkode: undefined,
+  fagsak: undefined,
 };
 
 const mapStateToProps = (state) => ({

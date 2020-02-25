@@ -33,7 +33,7 @@ const TabMeny: FunctionComponent<OwnProps> = ({
     <FlexContainer>
       <FlexRow className={styles.container}>
         {tabs.map((tab, index) => (
-          <FlexColumn className={styles.column}>
+          <FlexColumn key={tab.tooltip} className={styles.column}>
             <button
               className={classNames(styles.button, { active: tab.isActive })}
               type="button"

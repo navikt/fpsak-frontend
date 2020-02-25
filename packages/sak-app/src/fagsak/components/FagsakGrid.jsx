@@ -40,7 +40,7 @@ FagsakGrid.propTypes = {
   behandlingContent: PropTypes.node.isRequired,
   profileAndNavigationContent: PropTypes.node.isRequired,
   supportContent: PropTypes.node.isRequired,
-  visittkortContent: PropTypes.node.isRequired,
+  visittkortContent: PropTypes.func.isRequired,
 };
 
 export default FagsakGrid;
