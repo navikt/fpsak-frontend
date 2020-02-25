@@ -10,11 +10,13 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
+import shallowWithIntl from '@fpsak-frontend/prosess-vedtak/i18n/intl-enzyme-test-helper-prosess-vedtak';
 import { BeregningFormImpl2, transformValues, buildInitialValues } from './BeregningForm_V2';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2 from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import Beregningsgrunnlag2 from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
+import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
 
 const apVurderDekningsgrad = {
   definisjon: {
@@ -281,6 +283,30 @@ describe('<BeregningForm2>', () => {
     />);
     const beregningsgrunnlag = wrapper.find(Beregningsgrunnlag2);
     expect(beregningsgrunnlag).to.have.lengthOf(0);
+  });
+
+  it('skal teste at BeregningForm rendrer riktige komponenter', () => {
+    relevanteStatuser.skalViseBeregningsgrunnlag = false;
+    const bg = lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
+    const wrapper = shallowWithIntl(<BeregningFormImpl2
+      readOnly={false}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
+      beregningsgrunnlag={bg}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
+      relevanteStatuser={relevanteStatuser}
+      submitCallback={sinon.spy}
+      readOnlySubmitButton
+      vilkaarBG={getBGVilkar(mockVilkar)}
+      {...reduxFormPropsMock}
+    />);
+    const avvikspanel = wrapper.find('AvviksopplysningerPanel');
+    expect(avvikspanel).to.have.lengthOf(1);
+    const aksjonPunktPanel = wrapper.find(AksjonspunktBehandler);
+    expect(aksjonPunktPanel).to.have.lengthOf(1);
+    const beregningsResultatPanel = wrapper.find(BeregningsresultatTable2);
+    expect(beregningsResultatPanel).to.have.lengthOf(1);
   });
 
 
