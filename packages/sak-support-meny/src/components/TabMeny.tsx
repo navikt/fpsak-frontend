@@ -35,7 +35,7 @@ const TabMeny: FunctionComponent<OwnProps> = ({
             disabled={tab.isDisabled}
           >
             <Image
-              tabIndex="0"
+              tabIndex="-1"
               className={styles.tabImage}
               alt={tab.tooltip}
               src={tab.image}

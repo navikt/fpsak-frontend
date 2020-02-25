@@ -4,12 +4,13 @@
 }
 
 .column {
-  padding-left: 2px;
-  padding-right: 2px;
+  padding-left: 0px;
+  padding-right: 0px;
   flex: 1;
 }
 
 .tabImage {
+  outline: none;
   margin-bottom: 10px;
 }
 
@@ -40,11 +41,48 @@
     border-bottom: 0.25rem solid #0067c5;
     box-shadow: 0 0 0 3px #254b6d;
     outline: none;
+    position: relative;
   }
 
   &:disabled {
     background: white;
     border-bottom: 0.25rem solid gray;
     cursor: default;
+  }
+}
+
+.button[data-tooltip]:before {
+  position: absolute;
+  bottom: -30px;
+  left: 20px;
+  content: attr(data-tooltip);
+  opacity: 0;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  color: #3e3832;
+  background-color: #fff2e0;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 #b7b1a9;
+  padding: 2px 8px;
+  margin: 0 -20px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.button[data-tooltip]:hover:before {
+  animation-name: showTooltip;
+  animation-duration: 0.1s;
+  animation-fill-mode: forwards;
+  animation-delay: 0.4s;
+}
+
+@keyframes showTooltip {
+  from {
+      opacity: 0;
+  }
+
+  to {
+      opacity: 1;
   }
 }
