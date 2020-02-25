@@ -55,7 +55,7 @@ const VisittkortBarnInfoPanel: FunctionComponent<OwnProps & WrappedComponentProp
   intl,
   familieHendelseGjeldende,
 }) => {
-  const { avklartBarn, termindato } = familieHendelseGjeldende;
+  const { avklartBarn = [], termindato } = familieHendelseGjeldende;
   const visDodfodtEtikett = avklartBarn.every((barn) => barn.dodsdato);
   const visFodselsdato = avklartBarn.some((barn) => barn.fodselsdato);
   const forsteFodselsdato = moment.min(avklartBarn.map((barn) => moment(barn.fodselsdato)));
