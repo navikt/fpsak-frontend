@@ -24,25 +24,27 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   children,
 }) => (
   <div className={styles.container}>
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn className={styles.sideMenu}>
-          <SideMenu
-            heading={intl.formatMessage({ id: 'FaktaPanel.FaktaOm' })}
-            links={paneler.map((panel) => ({
-              label: panel.tekst,
-              active: panel.erAktiv,
-              iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
-              iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,
-            }))}
-            onClick={onClick}
-          />
-        </FlexColumn>
-        <FlexColumn className={styles.content}>
-          {children}
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
+    <div className={styles.shadow}>
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn className={styles.sideMenu}>
+            <SideMenu
+              heading={intl.formatMessage({ id: 'FaktaPanel.FaktaOm' })}
+              links={paneler.map((panel) => ({
+                label: panel.tekst,
+                active: panel.erAktiv,
+                iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
+                iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,
+              }))}
+              onClick={onClick}
+            />
+          </FlexColumn>
+          <FlexColumn className={styles.content}>
+            {children}
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </div>
   </div>
 );
 

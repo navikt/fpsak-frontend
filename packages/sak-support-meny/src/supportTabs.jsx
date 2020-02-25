@@ -1,5 +1,4 @@
-/* NOTE: Rekkefølgen styrer visning */
-const supportPanels = {
+const supportTabs = {
   APPROVAL: 'godkjenning',
   RETURNED: 'frabeslutter',
   HISTORY: 'historikk',
@@ -7,4 +6,4 @@ const supportPanels = {
   DOCUMENTS: 'dokumenter',
 };
 
-export default supportPanels;
+export default supportTabs;

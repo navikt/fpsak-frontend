@@ -8,6 +8,7 @@ import { ReactComponent as TilBeslutterSvg } from '@fpsak-frontend/assets/images
 import { ReactComponent as HistorikkSvg } from '@fpsak-frontend/assets/images/synchronize-time.svg';
 
 import TabMeny from './components/TabMeny';
+import supportTabs from './supportTabs';
 
 import messages from '../i18n/nb_NO.json';
 
@@ -22,80 +23,60 @@ const getStyle = (isActive, isDisabled) => {
   if (isDisabled) {
     return { fill: '#c6c2bf' };
   }
-  if (isActive) {
-    return { fill: '#0067c5' };
-  }
-  return { fill: '#3e3832' };
+  return isActive ? { fill: '#0067c5' } : { fill: '#3e3832' };
 };
 
-const TIL_BESLUTTER_TAB = {
-  getSvg: (isActive, isDisabled, props) => <TilBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
-  tooltipTextCode: 'SupportMenySakIndex.Godkjenning',
-};
-const FRA_BESLUTTER_TAB = {
-  getSvg: (isActive, isDisabled, props) => <FraBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
-  tooltipTextCode: 'SupportMenySakIndex.FraBeslutter',
-};
-const HISTORIKK_TAB = {
-  getSvg: (isActive, isDisabled, props) => <HistorikkSvg {...props} style={getStyle(isActive, isDisabled)} />,
-  tooltipTextCode: 'SupportMenySakIndex.Historikk',
-};
-const SEND_MELDING_TAB = {
-  getSvg: (isActive, isDisabled, props) => <SendMeldingSvg {...props} style={getStyle(isActive, isDisabled)} />,
-  tooltipTextCode: 'SupportMenySakIndex.Melding',
-};
-const DOKUMENTER_TAB = {
-  getSvg: (isActive, isDisabled, props) => <DokumenterSvg {...props} style={getStyle(isActive, isDisabled)} />,
-  tooltipTextCode: 'SupportMenySakIndex.Dokumenter',
+const TABS = {
+  [supportTabs.APPROVAL]: {
+    getSvg: (isActive, isDisabled, props) => <TilBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
+    tooltipTextCode: 'SupportMenySakIndex.Godkjenning',
+  },
+  [supportTabs.RETURNED]: {
+    getSvg: (isActive, isDisabled, props) => <FraBeslutterSvg {...props} style={getStyle(isActive, isDisabled)} />,
+    tooltipTextCode: 'SupportMenySakIndex.FraBeslutter',
+  },
+  [supportTabs.HISTORY]: {
+    getSvg: (isActive, isDisabled, props) => <HistorikkSvg {...props} style={getStyle(isActive, isDisabled)} />,
+    tooltipTextCode: 'SupportMenySakIndex.Historikk',
+  },
+  [supportTabs.MESSAGES]: {
+    getSvg: (isActive, isDisabled, props) => <SendMeldingSvg {...props} style={getStyle(isActive, isDisabled)} />,
+    tooltipTextCode: 'SupportMenySakIndex.Melding',
+  },
+  [supportTabs.DOCUMENTS]: {
+    getSvg: (isActive, isDisabled, props) => <DokumenterSvg {...props} style={getStyle(isActive, isDisabled)} />,
+    tooltipTextCode: 'SupportMenySakIndex.Dokumenter',
+  },
 };
 
-const lagTab = (tab, isDisabled) => ({
-  getSvg: tab.getSvg,
-  tooltip: intl.formatMessage({ id: tab.tooltipTextCode }),
-  isDisabled,
-});
-
-const lagTabs = (erTilBeslutter, erFraBeslutter, erSendMeldingAktiv, valgtIndex) => {
-  const tabs = [];
-  if (erTilBeslutter) {
-    tabs.push(lagTab(TIL_BESLUTTER_TAB, false));
-  }
-  if (erFraBeslutter) {
-    tabs.push(lagTab(FRA_BESLUTTER_TAB, false));
-  }
-  tabs.push(lagTab(HISTORIKK_TAB, false));
-  tabs.push(lagTab(SEND_MELDING_TAB, erSendMeldingAktiv));
-  tabs.push(lagTab(DOKUMENTER_TAB, false));
-  return tabs.map((tab, index) => ({
-    ...tab,
+const lagTabs = (tilgjengeligeTabs, valgbareTabs, valgtIndex) => Object.keys(TABS)
+  .filter((key) => tilgjengeligeTabs.includes(key))
+  .map((key, index) => ({
+    getSvg: TABS[key].getSvg,
+    tooltip: intl.formatMessage({ id: TABS[key].tooltipTextCode }),
+    isDisabled: !valgbareTabs.includes(key),
     isActive: index === valgtIndex,
   }));
-};
 
 interface OwnProps {
-  erTilBeslutter: boolean;
-  erFraBeslutter: boolean;
-  erSendMeldingAktiv: boolean;
+  tilgjengeligeTabs: string[];
+  valgbareTabs: string[];
   valgtIndex: number;
   onClick: (index: number) => void;
 }
 
 const SupportMenySakIndex: FunctionComponent<OwnProps> = ({
-  erTilBeslutter,
-  erFraBeslutter,
-  erSendMeldingAktiv,
+  tilgjengeligeTabs,
+  valgbareTabs,
   valgtIndex,
   onClick,
 }) => {
-  const tabs = useMemo(() => lagTabs(erTilBeslutter, erFraBeslutter, erSendMeldingAktiv, valgtIndex),
-    [erTilBeslutter, erFraBeslutter, erSendMeldingAktiv, erSendMeldingAktiv, valgtIndex]);
+  const tabs = useMemo(() => lagTabs(tilgjengeligeTabs, valgbareTabs, valgtIndex),
+    [tilgjengeligeTabs, valgbareTabs, valgtIndex]);
 
   return (
     <RawIntlProvider value={intl}>
-      <TabMeny
-        tabs={tabs}
-        onClick={onClick}
-      />
+      <TabMeny tabs={tabs} onClick={onClick} />
     </RawIntlProvider>
   );
 };
