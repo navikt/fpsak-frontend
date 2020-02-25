@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl'
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { FamilieHendelse } from '@fpsak-frontend/types';
+import { FamilieHendelseSamling } from '@fpsak-frontend/types';
 import {
   FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
@@ -48,14 +48,16 @@ const finnAlderTekstProps = (avklartBarn) => {
 };
 
 interface OwnProps {
-  familieHendelseGjeldende: FamilieHendelse;
+  familieHendelse: FamilieHendelseSamling;
 }
 
 const VisittkortBarnInfoPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
-  familieHendelseGjeldende,
+  familieHendelse,
 }) => {
-  const { avklartBarn = [], termindato } = familieHendelseGjeldende;
+  const { oppgitt, gjeldende } = familieHendelse;
+  const avklartBarn = gjeldende.avklartBarn ? gjeldende.avklartBarn : oppgitt.avklartBarn;
+  const termindato = gjeldende.termindato ? gjeldende.termindato : oppgitt.termindato;
   const visDodfodtEtikett = avklartBarn.every((barn) => barn.dodsdato);
   const visFodselsdato = avklartBarn.some((barn) => barn.fodselsdato);
   const forsteFodselsdato = moment.min(avklartBarn.map((barn) => moment(barn.fodselsdato)));

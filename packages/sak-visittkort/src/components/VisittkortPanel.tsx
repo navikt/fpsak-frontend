@@ -105,7 +105,7 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
             </FlexColumn>
           )}
           <FlexColumn className={styles.pushRight}>
-            <VisittkortBarnInfoPanel familieHendelseGjeldende={familieHendelse.gjeldende} />
+            <VisittkortBarnInfoPanel familieHendelse={familieHendelse} />
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
