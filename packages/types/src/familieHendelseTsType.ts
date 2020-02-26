@@ -1,3 +1,5 @@
+import Kodeverk from './kodeverkTsType';
+
 export type FamilieHendelse = Readonly<{
   skjaringstidspunkt: string;
   avklartBarn: {
@@ -11,6 +13,10 @@ export type FamilieHendelse = Readonly<{
   utstedtdato?: string;
   morForSykVedFodsel?: boolean;
   vedtaksDatoSomSvangerskapsuke?: string;
+  soknadType: Kodeverk;
+  adopsjonFodelsedatoer?: {};
+  omsorgsovertakelseDato?: string;
+  antallBarnTilBeregning?: number;
 }>
 
 export type FamilieHendelseSamling = Readonly<{
