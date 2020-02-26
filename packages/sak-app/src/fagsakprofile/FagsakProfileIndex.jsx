@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router-dom';
-import { Panel } from 'nav-frontend-paneler';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
@@ -77,7 +76,7 @@ export const FagsakProfileIndex = ({
   }, [selectedBehandlingId]);
 
   return (
-    <Panel className={styles.panelPadding}>
+    <div className={styles.panelPadding}>
       <DataFetcher
         behandlingId={selectedBehandlingId}
         behandlingVersjon={behandlingVersjon}
@@ -125,7 +124,7 @@ export const FagsakProfileIndex = ({
         endpoints={risikoklassifiseringData}
         render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}
       />
-    </Panel>
+    </div>
   );
 };
 
