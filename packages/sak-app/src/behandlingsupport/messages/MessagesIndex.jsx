@@ -30,9 +30,7 @@ import {
 } from './duck';
 
 const revurderingData = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER];
-const revurderingDataTilbakekreving = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER_TILBAKEKREVING];
 const meldingData = [fpsakApi.BREVMALER];
-const meldingDataTilbakekreving = [fpsakApi.BREVMALER_TILBAKEKREVING];
 
 /**
  * MessagesIndex
@@ -100,8 +98,9 @@ export class MessagesIndex extends Component {
 
   previewCallback(mottaker, dokumentMal, fritekst, aarsakskode) {
     const {
-      behandlingUuid, fagsakYtelseType, fetchPreview, erTilbakekreving, behandlingIdentifier,
+      behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode, behandlingIdentifier,
     } = this.props;
+    const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
     const data = erTilbakekreving ? {
       behandlingId: behandlingIdentifier.behandlingId,
       fritekst: fritekst || ' ',
@@ -141,17 +140,8 @@ export class MessagesIndex extends Component {
       behandlingIdentifier,
       selectedBehandlingVersjon,
       revurderingVarslingArsak,
-      behandlingUuid,
-      erTilbakekreving,
     } = this.props;
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
-
-    const endpointParams = erTilbakekreving
-      ? { [fpsakApi.BREVMALER_TILBAKEKREVING.name]: { behandlingId: behandlingIdentifier.behandlingId } }
-      : { [fpsakApi.BREVMALER.name]: { uuid: behandlingUuid } };
-    const valgtRevuderingData = erTilbakekreving ? revurderingDataTilbakekreving : revurderingData;
-    const valgtMeldingData = erTilbakekreving ? meldingDataTilbakekreving : meldingData;
-
 
     return (
       <>
@@ -164,8 +154,7 @@ export class MessagesIndex extends Component {
           behandlingVersjon={selectedBehandlingVersjon}
           valueThatWillTriggerRefetchWhenChanged={submitCounter}
           showLoadingIcon
-          endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? valgtRevuderingData : valgtMeldingData}
-          endpointParams={endpointParams}
+          endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
           render={(props) => (
             <MeldingerSakIndex
               submitCallback={this.submitCallback}
@@ -211,7 +200,7 @@ MessagesIndex.propTypes = {
   resetSubmitMessage: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   ventearsaker: PropTypes.arrayOf(kodeverkObjektPropType),
-  erTilbakekreving: PropTypes.bool.isRequired,
+  behandlingTypeKode: PropTypes.string.isRequired,
   revurderingVarslingArsak: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
 };
 
@@ -224,9 +213,6 @@ MessagesIndex.defaultProps = {
   recipients: ['Søker'],
 };
 
-const erTilbakekreving = (behandlingTypeKode) => behandlingTypeKode === BehandlingType.TILBAKEKREVING
-  || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
-
 const mapStateToProps = (state) => ({
   submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
@@ -235,7 +221,7 @@ const mapStateToProps = (state) => ({
   ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
   revurderingVarslingArsak: getKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK)(state),
   behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
-  erTilbakekreving: erTilbakekreving(getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId]),
+  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId],
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 

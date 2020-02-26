@@ -29,7 +29,6 @@ export const FpsakApiKeys = {
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY: 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
   BREVMALER: 'BREVMALER',
-  BREVMALER_TILBAKEKREVING: 'BREVMALER_TILBAKEKREVING',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
   PREVIEW_MESSAGE_FORMIDLING: 'PREVIEW_MESSAGE_FORMIDLING',
@@ -73,6 +72,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
 
   /* Brev */
+  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
   .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
 
@@ -103,11 +103,8 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/aktoer */
   .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
-
-  .withGet('/fpformidling/api/brev/maler', FpsakApiKeys.BREVMALER)
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
 
-  .withGet('/fptilbake/api/brev/maler', FpsakApiKeys.BREVMALER_TILBAKEKREVING)
   .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-henleggelsesbrev', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE)
 
