@@ -140,7 +140,6 @@ export class MessagesIndex extends Component {
       behandlingIdentifier,
       selectedBehandlingVersjon,
       revurderingVarslingArsak,
-      behandlingUuid,
     } = this.props;
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
 
@@ -156,7 +155,6 @@ export class MessagesIndex extends Component {
           valueThatWillTriggerRefetchWhenChanged={submitCounter}
           showLoadingIcon
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
-          endpointParams={{ [fpsakApi.BREVMALER.name]: { uuid: behandlingUuid } }}
           render={(props) => (
             <MeldingerSakIndex
               submitCallback={this.submitCallback}
