@@ -56,7 +56,8 @@ const VisittkortBarnInfoPanel: FunctionComponent<OwnProps & WrappedComponentProp
   familieHendelse,
 }) => {
   const { oppgitt, gjeldende } = familieHendelse;
-  const avklartBarn = gjeldende.avklartBarn ? gjeldende.avklartBarn : oppgitt.avklartBarn;
+  const aBarn = oppgitt.avklartBarn ? oppgitt.avklartBarn : [];
+  const avklartBarn = gjeldende.avklartBarn ? gjeldende.avklartBarn : aBarn;
   const termindato = gjeldende.termindato ? gjeldende.termindato : oppgitt.termindato;
   const visDodfodtEtikett = avklartBarn.length > 0 && avklartBarn.every((barn) => barn.dodsdato);
   const visFodselsdato = avklartBarn.some((barn) => barn.fodselsdato);
@@ -77,7 +78,7 @@ const VisittkortBarnInfoPanel: FunctionComponent<OwnProps & WrappedComponentProp
                   <FormattedMessage {...finnAlderTekstProps(avklartBarn)} />
                 </>
               )}
-              {!visFodselsdato && <FormattedMessage id="VisittkortBarnInfoPanel.Termin" values={{ dato: dateFormat(termindato) }} />}
+              {!visFodselsdato && termindato && <FormattedMessage id="VisittkortBarnInfoPanel.Termin" values={{ dato: dateFormat(termindato) }} />}
             </Normaltekst>
           </FlexColumn>
           {visDodfodtEtikett && (

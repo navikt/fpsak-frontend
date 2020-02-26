@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
@@ -75,7 +74,6 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         dispatch={dispatch}
         featureToggles={featureToggles}
       />
-      <VerticalSpacer sixteenPx />
       <SvangerskapspengerFakta
         behandling={behandling}
         data={fetchedData}

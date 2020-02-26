@@ -3,13 +3,12 @@ import React, {
 } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
-import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FagsakInfo, ProsessStegPanel, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal,
+  FagsakInfo, ProsessStegPanel, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
 import {
   Kodeverk, NavAnsatt, Behandling,
@@ -140,18 +139,22 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
         lukkModal={useCallback(() => { toggleFatterVedtakModal(false); opneSokeside(); }, [])}
         tekstkode={fatterVedtakTextCode}
       />
-      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={velgProsessStegPanelCallback} />
-      <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
-        fagsak={fagsak}
-        behandling={behandling}
-        alleKodeverk={alleKodeverk}
-        apentFaktaPanelInfo={apentFaktaPanelInfo}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        lagringSideeffekterCallback={lagringSideeffekterCallback}
-        behandlingApi={svpBehandlingApi}
-        dispatch={dispatch}
-      />
+      <ProsessStegContainer
+        formaterteProsessStegPaneler={formaterteProsessStegPaneler}
+        velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+      >
+        <ProsessStegPanel
+          valgtProsessSteg={valgtPanel}
+          fagsak={fagsak}
+          behandling={behandling}
+          alleKodeverk={alleKodeverk}
+          apentFaktaPanelInfo={apentFaktaPanelInfo}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          lagringSideeffekterCallback={lagringSideeffekterCallback}
+          behandlingApi={svpBehandlingApi}
+          dispatch={dispatch}
+        />
+      </ProsessStegContainer>
     </>
   );
 };
