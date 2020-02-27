@@ -32,8 +32,10 @@
   "VisittkortBarnInfoFodselPanel.Dag.Fodt": " ({value} dag)",
   "VisittkortBarnInfoFodselPanel.Dager.Fodt": " ({value} dager)",
 
-  "VisittkortBarnInfoOmsorgPanel.Foreldreansvar": "Foreldreansvar({antall}) {dato}",
-  "VisittkortBarnInfoOmsorgPanel.Adopsjon": "Adopsjon({antall}) {dato}",
+  "VisittkortBarnInfoOmsorgPanel.Foreldreansvar": "Foreldreansvar {dato}",
+  "VisittkortBarnInfoOmsorgPanel.Adopsjon": "Adopsjon {dato}",
+  "VisittkortBarnInfoOmsorgPanel.ForeldreansvarAntallBarn": "Foreldreansvar({antall} barn) {dato}",
+  "VisittkortBarnInfoOmsorgPanel.AdopsjonAntallBarn": "Adopsjon({antall} barn) {dato}",
 
   "VisittkortPanel.Ukjent": "Ukjent navn, mangler norsk id-nr",
 

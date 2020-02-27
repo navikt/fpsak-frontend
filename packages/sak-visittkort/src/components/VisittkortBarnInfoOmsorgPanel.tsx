@@ -27,11 +27,14 @@ const VisittkortBarnInfoOmsorgPanel: FunctionComponent<OwnProps> = ({
     antall = gjeldende.adopsjonFodelsedatoer ? Object.keys(gjeldende.adopsjonFodelsedatoer).length : Object.keys(oppgitt.adopsjonFodelsedatoer).length;
   }
 
+  const foreldreansvarTekstkode = antall === 1 ? 'VisittkortBarnInfoOmsorgPanel.Foreldreansvar' : 'VisittkortBarnInfoOmsorgPanel.ForeldreansvarAntallBarn';
+  const adopsjonTekstkode = antall === 1 ? 'VisittkortBarnInfoOmsorgPanel.Adopsjon' : 'VisittkortBarnInfoOmsorgPanel.AdopsjonAntallBarn';
+
   return (
     <FlexColumn className={styles.text}>
       <Normaltekst>
         <FormattedMessage
-          id={erForeldreansvar ? 'VisittkortBarnInfoOmsorgPanel.Foreldreansvar' : 'VisittkortBarnInfoOmsorgPanel.Adopsjon'}
+          id={erForeldreansvar ? foreldreansvarTekstkode : adopsjonTekstkode}
           values={{ antall, dato: moment(omsorgovertakelseDato).format(DDMMYYYY_DATE_FORMAT) }}
         />
       </Normaltekst>
