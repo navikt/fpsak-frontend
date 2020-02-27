@@ -12,6 +12,18 @@ export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
     : aktivitet.arbeidsgiverNavn;
 };
 
+export const harDuplikateArbeidsforholdFraSammeArbeidsgiver = (Andeler) => {
+  const seen = new Set();
+  return Andeler.some((currentObject) => seen.size === seen.add(currentObject.arbeidsforhold.arbeidsgiverNavn).size);
+};
+export const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver, getKodeverknavn) => {
+  if (!arbeidsforhold.arbeidsgiverNavn) {
+    return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
+  }
+  return harAndelerFraSammeArbeidsgiver ? `${arbeidsforhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsforhold.eksternArbeidsforholdId)})`
+    : arbeidsforhold.arbeidsgiverNavn;
+};
+
 
 // vanlig arbeidsgivernavn (orgnr)...arbeidsforholdid
 // privatperson - KLANG...(18.08.1980)

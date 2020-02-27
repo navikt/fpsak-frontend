@@ -261,7 +261,7 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
           {
             erTidsbegrenset: true,
             isEditable: false,
-            tabellInnhold: 'arbeidsgiver (123)...5678',
+            tabellInnhold: 'arbeidsgiver (...5678)',
             inputfieldKey: '',
           },
           {
@@ -287,7 +287,7 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
           {
             erTidsbegrenset: true,
             isEditable: false,
-            tabellInnhold: 'arbeidsgiver (456)...7890',
+            tabellInnhold: 'arbeidsgiver (...7890)',
             inputfieldKey: '',
           },
           {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
@@ -8,7 +8,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 import styles from './avvikopplysningerPanel.less';
 
 
-const AvvikopplysningerATFL = ({
+const AvvikopplysningerATFLSN = ({
   relevanteStatuser,
   beregnetAarsinntekt,
   sammenligningsgrunnlagSum,
@@ -17,16 +17,22 @@ const AvvikopplysningerATFL = ({
   differanseBeregnet,
 }) => (
   <>
+    {relevanteStatuser.isKombinasjonsstatus && (
+      <VerticalSpacer sixteenPx />
+    )}
     <FlexRow>
       <FlexColumn className={styles.colLable}>
         <Normaltekst>
-          {visPanel && visPanel.visAT && (
+          {!relevanteStatuser.isKombinasjonsstatus && (
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt" />
+          )}
+          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid" />
           )}
-          {visPanel && visPanel.visFL && (
+          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Frilans" />
           )}
-          {visPanel && visPanel.visSN && (
+          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.PensjonsgivendeInntekt" />
           )}
         </Normaltekst>
@@ -43,14 +49,17 @@ const AvvikopplysningerATFL = ({
     <FlexRow>
       <FlexColumn className={styles.colLable}>
         <Normaltekst>
-          {visPanel && visPanel.visAT && (
+          {!relevanteStatuser.isKombinasjonsstatus && (
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt" />
+          )}
+          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
           )}
-          {visPanel && visPanel.visFL && (
+          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Frilans" />
           )}
-          {visPanel && visPanel.visSN && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OppgittAarsinntekt" />
+          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
+          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt" />
           )}
         </Normaltekst>
       </FlexColumn>
@@ -68,17 +77,17 @@ const AvvikopplysningerATFL = ({
     <FlexRow>
       <FlexColumn className={styles.colLable}>
         <Normaltekst className={beregningStyles.semiBoldText}>
-          {!relevanteStatuser.isKombinasjonsstatus && ((visPanel && visPanel.visAT) || (visPanel && visPanel.visSN)) && (
+          {!relevanteStatuser.isKombinasjonsstatus && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
           )}
           {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
           )}
-          {!relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-          )}
           {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.FL" />
+          )}
+          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
           )}
         </Normaltekst>
       </FlexColumn>
@@ -96,7 +105,7 @@ const AvvikopplysningerATFL = ({
     </FlexRow>
   </>
 );
-AvvikopplysningerATFL.propTypes = {
+AvvikopplysningerATFLSN.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   relevanteStatuser: PropTypes.shape().isRequired,
   differanseBeregnet: PropTypes.number.isRequired,
@@ -105,7 +114,7 @@ AvvikopplysningerATFL.propTypes = {
   visPanel: PropTypes.shape().isRequired,
 };
 
-AvvikopplysningerATFL.defaultProps = {
+AvvikopplysningerATFLSN.defaultProps = {
   beregnetAarsinntekt: undefined,
 };
-export default AvvikopplysningerATFL;
+export default AvvikopplysningerATFLSN;

@@ -22,7 +22,10 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { InputField } from '@fpsak-frontend/form';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
-import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
+import {
+  harDuplikateArbeidsforholdFraSammeArbeidsgiver,
+  createArbeidsGiverNavn,
+} from '../util/visningsnavnHelper';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
@@ -96,10 +99,11 @@ const initializeMap = (perioder, getKodeverknavn) => {
   const inntektMap = createBeregnetInntektForAlleAndeler(perioder);
   const alleAndeler = findArbeidstakerAndeler(perioder[0]);
   const mapMedAndeler = {};
+  const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(alleAndeler);
   alleAndeler.forEach((andel) => {
     const andelMapNavn = createArbeidsforholdMapKey(andel.arbeidsforhold);
     const mapValueMedAndelNavn = createMapValueObject();
-    mapValueMedAndelNavn.tabellInnhold = createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
+    mapValueMedAndelNavn.tabellInnhold = createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr, getKodeverknavn);
     mapValueMedAndelNavn.erTidsbegrenset = andel.erTidsbegrensetArbeidsforhold !== undefined ? andel.erTidsbegrensetArbeidsforhold : false;
 
     const mapValueMedBeregnetForstePeriode = createMapValueObject();

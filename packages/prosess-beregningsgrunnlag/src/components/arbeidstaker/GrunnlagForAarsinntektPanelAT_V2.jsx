@@ -18,6 +18,7 @@ import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
+import { createArbeidsGiverNavn, harDuplikateArbeidsforholdFraSammeArbeidsgiver } from '../util/visningsnavnHelper';
 
 
 const formName = 'BeregningForm';
@@ -58,19 +59,8 @@ const createArbeidsPeriodeText = (arbeidsforhold) => {
   }
   return periodeArr.join(' ');
 };
-const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
-const harDuplikateArbeidsforholdFraSammeArbeidsgiver = (Andeler) => {
-  const seen = new Set();
-  return Andeler.some((currentObject) => seen.size === seen.add(currentObject.arbeidsforhold.arbeidsgiverNavn).size);
-};
-const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver, getKodeverknavn) => {
-  if (!arbeidsforhold.arbeidsgiverNavn) {
-    return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
-  }
-  // TODO skal det brukses arbeidsforholdId eller eksternArbeidsforholdId
-  return harAndelerFraSammeArbeidsgiver ? `${arbeidsforhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsforhold.arbeidsforholdId)})`
-    : arbeidsforhold.arbeidsgiverNavn;
-};
+
+
 const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   // TODO: her må stillingsnavn og stillingsprosent hentes når vi får disse dataene fra backend
   const stillingArr = [''];

@@ -5,11 +5,10 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Column } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { FlexRow } from '@fpsak-frontend/shared-components';
-
-import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
+import AvvikopplysningerATFLSN from '../fellesPaneler/AvvikopplysningerATFLSN';
 
 const AvviksopplysningerSN = ({
-  sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode,
+  sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode, relevanteStatuser,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   const { pgiSnitt } = snAndel;
@@ -59,11 +58,11 @@ const AvviksopplysningerSN = ({
   }
   if (sammenligningsgrunnlagSumSN) {
     return (
-      <AvvikopplysningerATFL
+      <AvvikopplysningerATFLSN
         beregnetAarsinntekt={pgiSnitt}
         avvikProsentAvrundet={avvikRoundedSN}
         differanseBeregnet={differanseBeregnet}
-        relevanteStatuser={{}}
+        relevanteStatuser={relevanteStatuser}
         visPanel={visPaneler}
         sammenligningsgrunnlagSum={sammenligningsgrunnlagSumSN}
       />
@@ -76,6 +75,7 @@ const AvviksopplysningerSN = ({
 AvviksopplysningerSN.propTypes = {
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  relevanteStatuser: PropTypes.shape().isRequired,
 };
 
 
