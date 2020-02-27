@@ -8,6 +8,25 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 import styles from './avvikopplysningerPanel.less';
 
 
+const lagFormatertetekster = (kriterie, visPanel, relevanteStatuser, isBold) => (
+  <FlexColumn className={styles.colLable}>
+    <Normaltekst className={isBold ? beregningStyles.semiBoldText : ''}>
+      {!relevanteStatuser.isKombinasjonsstatus && (
+        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}`} />
+      )}
+      {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
+        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}.Arbeid`} />
+      )}
+      {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
+        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}.Frilans`} />
+      )}
+      {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
+        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}.Naring`} />
+      )}
+    </Normaltekst>
+  </FlexColumn>
+);
+
 const AvvikopplysningerATFLSN = ({
   relevanteStatuser,
   beregnetAarsinntekt,
@@ -21,23 +40,7 @@ const AvvikopplysningerATFLSN = ({
       <VerticalSpacer sixteenPx />
     )}
     <FlexRow>
-      <FlexColumn className={styles.colLable}>
-        <Normaltekst>
-          {!relevanteStatuser.isKombinasjonsstatus && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Frilans" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.PensjonsgivendeInntekt" />
-          )}
-        </Normaltekst>
-      </FlexColumn>
-
+      {lagFormatertetekster('OmregnetAarsinntekt', visPanel, relevanteStatuser, false)}
       <FlexColumn className={styles.colValue}>
         <Normaltekst>
           {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
@@ -47,23 +50,7 @@ const AvvikopplysningerATFLSN = ({
     </FlexRow>
 
     <FlexRow>
-      <FlexColumn className={styles.colLable}>
-        <Normaltekst>
-          {!relevanteStatuser.isKombinasjonsstatus && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Frilans" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt" />
-          )}
-        </Normaltekst>
-      </FlexColumn>
-
+      {lagFormatertetekster('RapportertAarsinntekt', visPanel, relevanteStatuser, false)}
       <FlexColumn className={styles.colValue}>
         <Normaltekst>
           {formatCurrencyNoKr(sammenligningsgrunnlagSum)}
@@ -75,22 +62,7 @@ const AvvikopplysningerATFLSN = ({
       <FlexColumn className={`${styles.colLine} ${styles.colBorderTop}`} />
     </FlexRow>
     <FlexRow>
-      <FlexColumn className={styles.colLable}>
-        <Normaltekst className={beregningStyles.semiBoldText}>
-          {!relevanteStatuser.isKombinasjonsstatus && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.FL" />
-          )}
-          {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-          )}
-        </Normaltekst>
-      </FlexColumn>
+      {lagFormatertetekster('BeregnetAvvik', visPanel, relevanteStatuser, true)}
       <FlexColumn className={styles.colValue}>
         <Normaltekst>
           {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
