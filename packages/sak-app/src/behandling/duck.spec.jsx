@@ -30,7 +30,7 @@ describe('Behandling-reducer', () => {
     expect(behandlingReducer(undefined, {})).to.eql({
       behandlingId: undefined,
       behandlingVersjon: undefined,
-      tempBehandlingId: undefined,
+      urlBehandlingId: undefined,
     });
   });
 
@@ -42,7 +42,7 @@ describe('Behandling-reducer', () => {
     expect(store.getActions()).to.have.length(1);
 
     expect(behandlingReducer(undefined, store.getActions()[0])).to.eql({
-      tempBehandlingId: 1,
+      urlBehandlingId: 1,
       behandlingId: undefined,
       behandlingVersjon: undefined,
     });

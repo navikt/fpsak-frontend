@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { NavLink } from 'react-router-dom';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
@@ -65,10 +64,6 @@ describe('<FagsakProfile>', () => {
     const normaltekst = wrapper.find(Normaltekst);
     expect(normaltekst).to.have.length(1);
     expect(normaltekst.childAt(0).text()).is.eql('12345 - Opprettet');
-
-    const lenke = wrapper.find(NavLink);
-    expect(lenke).to.have.length(1);
-    expect(lenke.prop('to')).is.eql('lenke');
   });
 
   it('skal vise dekningsgrad for foreldrepenger om den eksisterer', () => {
@@ -110,10 +105,6 @@ describe('<FagsakProfile>', () => {
     const etikettinfo = wrapper.find(EtikettInfo);
     expect(etikettinfo).to.have.length(1);
     expect(etikettinfo.prop('title')).is.eql('Dekningsgraden er 100%');
-
-    const lenke = wrapper.find(NavLink);
-    expect(lenke).to.have.length(1);
-    expect(lenke.prop('to')).is.eql('lenke');
   });
 
   it('skal ikke vise dekningsgrad for foreldrepenger om den ikke eksisterer', () => {
@@ -153,10 +144,6 @@ describe('<FagsakProfile>', () => {
 
     const etikettinfo = wrapper.find(EtikettInfo);
     expect(etikettinfo).to.have.length(0);
-
-    const lenke = wrapper.find(NavLink);
-    expect(lenke).to.have.length(1);
-    expect(lenke.prop('to')).is.eql('lenke');
   });
 
   it('skal ikke vise ugyldig dekningsgrad for foreldrepenger', () => {
@@ -197,9 +184,5 @@ describe('<FagsakProfile>', () => {
 
     const etikettinfo = wrapper.find(EtikettInfo);
     expect(etikettinfo).to.have.length(0);
-
-    const lenke = wrapper.find(NavLink);
-    expect(lenke).to.have.length(1);
-    expect(lenke.prop('to')).is.eql('lenke');
   });
 });

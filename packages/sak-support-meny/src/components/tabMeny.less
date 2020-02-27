@@ -9,8 +9,8 @@
 
 .column {
   flex: 1;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .tabImage {
@@ -23,15 +23,15 @@
   border: none;
   border-bottom: 1px solid @navGra20;
   cursor: pointer;
-  padding-top: 16px;
   padding-bottom: 3px;
+  padding-top: 16px;
   position: relative;
   width: 100%;
 
   &.active {
     border-bottom: 0.25rem solid @navBla;
     cursor: default;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 
     &:hover {
       background-color: white;
@@ -42,14 +42,14 @@
   &:hover {
     background-color: @navLysGra;
     border-bottom: 0.25rem solid @navBla;
-    padding-bottom: 0px;
+    padding-bottom: 0;
   }
 
   &:focus {
     border-bottom: 0.25rem solid @navBla;
     box-shadow: 0 0 0 3px @fokusFarge;
     outline: none;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     z-index: 2;
   }
 
@@ -88,10 +88,10 @@
 
 @keyframes showTooltip {
   from {
-      opacity: 0;
+    opacity: 0;
   }
 
   to {
-      opacity: 1;
+    opacity: 1;
   }
 }
