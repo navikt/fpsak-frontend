@@ -29,8 +29,7 @@ const finnAlderTekstProps = (avklartBarn) => {
   if (ar > 0) {
     tekstkode = 'VisittkortBarnInfoFodselPanel.Ar.Fodt';
   } else if (maneder > 0) {
-    if (maneder === 1) { tekstkode = 'VisittkortBarnInfoFodselPanel.Maned.Fodt'; }
-    if (maneder > 1) { tekstkode = 'VisittkortBarnInfoFodselPanel.Maneder.Fodt'; }
+    tekstkode = 'VisittkortBarnInfoFodselPanel.Maned.Fodt';
   } else if (dager > 0) {
     if (dager === 1) { tekstkode = 'VisittkortBarnInfoFodselPanel.Dag.Fodt'; }
     if (dager > 1) { tekstkode = 'VisittkortBarnInfoFodselPanel.Dager.Fodt'; }

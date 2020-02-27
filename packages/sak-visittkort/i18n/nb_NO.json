@@ -27,8 +27,7 @@
   "VisittkortBarnInfoFodselPanel.Tvillinger": "Tvillinger Født {dato}",
   "VisittkortBarnInfoFodselPanel.Flerlinger": "Flerlinger Født {dato}",
   "VisittkortBarnInfoFodselPanel.Ar.Fodt": " ({value} år)",
-  "VisittkortBarnInfoFodselPanel.Maned.Fodt": " ({value} måned)",
-  "VisittkortBarnInfoFodselPanel.Maneder.Fodt": " ({value} måneder)",
+  "VisittkortBarnInfoFodselPanel.Maned.Fodt": " ({value} mnd)",
   "VisittkortBarnInfoFodselPanel.Dag.Fodt": " ({value} dag)",
   "VisittkortBarnInfoFodselPanel.Dager.Fodt": " ({value} dager)",
 

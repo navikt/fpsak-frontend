@@ -24,9 +24,7 @@ const FagsakGrid = ({
         <MediaQuery minWidth={1600}>
           {visittkortContent()}
         </MediaQuery>
-        <div className={styles.behandlingContent}>
-          {behandlingContent}
-        </div>
+        {behandlingContent}
       </div>
       <div className={styles.rightColumn}>
         <div>{profileAndNavigationContent}</div>
