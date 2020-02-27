@@ -1,7 +1,7 @@
 import React from 'react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-import SupportMenySakIndex from '@fpsak-frontend/sak-support-meny';
+import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
 
 export default {
   title: 'sak/sak-support-meny',
@@ -11,9 +11,9 @@ export default {
 
 export const vis = () => (
   <SupportMenySakIndex
-    erTilBeslutter
-    erFraBeslutter={false}
-    erSendMeldingAktiv
+    tilgjengeligeTabs={[supportTabs.APPROVAL, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+    valgbareTabs={[supportTabs.APPROVAL, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+    valgtIndex={1}
     onClick={() => undefined}
   />
 );
