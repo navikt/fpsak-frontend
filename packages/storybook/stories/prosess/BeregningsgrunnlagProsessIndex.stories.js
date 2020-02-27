@@ -19,9 +19,7 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const standardFom = '2019-09-16';
 const standardTom = undefined;
-const togglesFalse = {
-  'fpsak.redesign.beregningsgrunnlag': false,
-};
+
 const togglesTrue = {
   'fpsak.redesign.beregningsgrunnlag': true,
 };

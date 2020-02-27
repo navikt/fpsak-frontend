@@ -6,10 +6,9 @@ import { InputField } from '@fpsak-frontend/form';
 import { parseCurrencyInput, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
 

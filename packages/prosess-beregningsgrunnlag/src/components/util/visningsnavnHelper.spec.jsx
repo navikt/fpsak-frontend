@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { createVisningsnavnForAktivitet, lagVisningsNavn } from './visningsnavnHelper';
+import { harDuplikateArbeidsforholdFraSammeArbeidsgiver, createArbeidsGiverNavn } from './visningsnavnHelper';
 
 const andelUtenNavn = {
   arbeidsforholdType: {
@@ -8,14 +8,6 @@ const andelUtenNavn = {
   arbeidsforholdId: '123',
   arbeidsgiverId: '321',
   eksternArbeidsforholdId: '09876',
-};
-
-const andelUtenArbeidsforholdId = {
-  arbeidsforholdType: {
-    kode: 'A',
-  },
-  arbeidsgiverNavn: 'Andeby bank',
-  arbeidsgiverId: '321',
 };
 
 const andelMedAlt = {
@@ -32,39 +24,34 @@ const getKodeverknavn = (kodeverk) => (kodeverk.kode === 'A' ? 'Arbeidstaker' : 
 
 describe('visningsnavnHelper..', () => {
   it('skal lage visningsnavnForAktivitet når vi mangler navn på bedrift', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenNavn, getKodeverknavn);
+    const arbeidsgiverNavnOrgnr = createArbeidsGiverNavn(andelUtenNavn, false, getKodeverknavn);
     expect(arbeidsgiverNavnOrgnr).to.equal('Arbeidstaker');
   });
 
-  it('skal lage visningsnavnForAktivitet når vi mangler arbeidsforholdId', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelUtenArbeidsforholdId, getKodeverknavn);
-    expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321)');
-  });
 
   it('skal lage visningsnavnForAktivitet når vi ikke mangler noe', () => {
-    const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelMedAlt, getKodeverknavn);
-    expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321)...6789');
+    const arbeidsgiverNavnOrgnr = createArbeidsGiverNavn(andelMedAlt, false, getKodeverknavn);
+    expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank');
+  });
+  it('skal lage visningsnavnForAktivitet når vi ikke mangler noe og har duplikate arbeidsforehold', () => {
+    const arbeidsgiverNavnOrgnr = createArbeidsGiverNavn(andelMedAlt, true, getKodeverknavn);
+    expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (...6789)');
   });
 
-  it('skal lage visningsnavn når vi ikke mangler noe', () => {
-    const mockProps = {
-      navn: 'Navnet',
-      fødselsdato: '1980-01-01',
-      virksomhet: 'Virksomhet',
-      identifikator: 'id',
-    };
-
-    const visningsNavn = lagVisningsNavn(mockProps, 'arbId');
-    expect(visningsNavn).to.equal('Navnet (id)...rbId');
-  });
-  it('skal lage visningsnavn uten virksomhet', () => {
-    const mockProps = {
-      navn: 'Navnet',
-      fødselsdato: '1980-01-01',
-      virksomhet: undefined,
-      identifikator: 'id',
-    };
-    const visningsNavn = lagVisningsNavn(mockProps, 'arbId');
-    expect(visningsNavn).to.equal('Navne...(01.01.1980)');
+  it('skal sjekke om duplikate arbeidsforholdl', () => {
+    const mockAndeler = [
+      {
+        beregningsperiodeFom: '2019-06-01',
+        beregningsperiodeTom: '2019-08-31',
+        arbeidsforhold: andelMedAlt,
+      },
+      {
+        beregningsperiodeFom: '2019-06-01',
+        beregningsperiodeTom: '2019-08-31',
+        arbeidsforhold: andelMedAlt,
+      },
+    ];
+    const harduplikate = harDuplikateArbeidsforholdFraSammeArbeidsgiver(mockAndeler);
+    expect(harduplikate).to.equal(true);
   });
 });
