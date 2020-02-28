@@ -2,7 +2,7 @@ import Kodeverk from './kodeverkTsType';
 
 export type FamilieHendelse = Readonly<{
   skjaringstidspunkt: string;
-  avklartBarn: {
+  avklartBarn?: {
     fodselsdato: string;
     dodsdato?: string;
   }[];
