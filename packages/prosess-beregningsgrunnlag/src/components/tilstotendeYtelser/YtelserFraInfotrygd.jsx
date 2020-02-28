@@ -14,7 +14,7 @@ import AvsnittSkiller from '../redesign/AvsnittSkiller';
  *
  * Presentasjonskomponent. Viser navn og sum på alle andeler som er tilstøttende ytelser fra infotrygd
  */
-const YtelserFraInfotrygd2 = ({
+const YtelserFraInfotrygd = ({
   bruttoPrAar,
 }) => (
   <>
@@ -63,8 +63,8 @@ const YtelserFraInfotrygd2 = ({
   </>
 );
 
-YtelserFraInfotrygd2.propTypes = {
+YtelserFraInfotrygd.propTypes = {
   bruttoPrAar: PropTypes.number.isRequired,
 };
 
-export default YtelserFraInfotrygd2;
+export default YtelserFraInfotrygd;

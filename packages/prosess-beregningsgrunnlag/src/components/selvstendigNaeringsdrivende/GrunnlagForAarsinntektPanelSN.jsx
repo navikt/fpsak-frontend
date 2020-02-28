@@ -105,7 +105,7 @@ export const GrunnlagForAarsinntektPanelSN = ({
         </Column>
       </Row>
       <VerticalSpacer fourPx />
-      {createHeaderRow(pgiVerdier)}
+      {createHeaderRow()}
       {createInntektRows(pgiVerdier)}
       {createSumRow(pgiSnitt)}
 
