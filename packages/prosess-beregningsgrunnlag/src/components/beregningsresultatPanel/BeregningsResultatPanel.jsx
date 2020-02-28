@@ -9,8 +9,8 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import avslaatIkonUrl from '@fpsak-frontend/assets/images/avslaatt_mini.svg';
 import Panel from 'nav-frontend-paneler';
-import styles from './beregningsresultatTable_V2.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import styles from './beregningsresultatTable.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 

@@ -65,7 +65,7 @@ const vilkarMedUtfall = (kode) => [{
   },
 }];
 
-const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId, eksternArbeidsforholdId, opphoersdato) => ({
+const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId, eksternArbeidsforholdId, opphoersdato, stillingsNavn, stillingsProsent) => ({
   arbeidsgiverNavn,
   arbeidsgiverId,
   startdato: '2018-10-09',
@@ -85,6 +85,8 @@ const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId, e
   },
   naturalytelseBortfaltPrÅr: null,
   naturalytelseTilkommetPrÅr: null,
+  stillingsNavn,
+  stillingsProsent,
 });
 
 const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegrensetArbeidsforhold, skalFastsetteGrunnlag) => ({
@@ -517,7 +519,7 @@ export const arbeidstakerFrilansMedAvvikMedGradering = () => {
   );
 };
 
-export const militærr = () => {
+export const militær = () => {
   const andeler = [
     lagAndel('AT', 110232, undefined, false),
     lagAndel('MS', 300000, undefined, false)];
@@ -986,9 +988,15 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
 
 export const arbeidstakerAvslagHalvGSide4 = () => {
   const andeler = [
-    lagAndel('AT', 32232, undefined, undefined, false),
+    lagAndel('AT', 32232, undefined, false, false),
   ];
-
+  andeler[0].arbeidsforhold = lagArbeidsforhold('Gardslien transport og Gardiner',
+    '123456789',
+    'sdefsef-swdefsdf-sdf-sdfdsf-98das',
+    '324243533',
+    '',
+    'Butikkkmedarbeider',
+    '75');
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
 
@@ -1006,8 +1014,7 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
       aksjonspunkter={[]}
       readOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -1017,6 +1024,13 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
 
 export const arbeidstakerMedAksjonspunktSide5 = () => {
   const andeler = [lagAndel('AT', 348576, undefined, false, true)];
+  andeler[0].arbeidsforhold = lagArbeidsforhold('Bedriften & Sønn AS',
+    '123456789',
+    'sdefsef-swdefsdf-sdf-sdfdsf-98das',
+    null,
+    null,
+    'Fabrikkmedarbeider',
+    75);
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [
@@ -1176,13 +1190,11 @@ export const FrilansSide8 = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -1202,13 +1214,11 @@ export const FrilansMedAksjonspunktSide9 = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
