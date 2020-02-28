@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
+
 import { DateLabel } from '@fpsak-frontend/shared-components';
 
 import styles from './aldervisning.less';

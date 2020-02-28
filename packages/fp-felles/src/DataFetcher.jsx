@@ -104,7 +104,7 @@ export class DataFetcher extends Component {
     const { behandlingId, behandlingVersjon } = this.props;
     const hasPreviousBehandlingdata = !!prevProps.behandlingId && !!prevProps.behandlingVersjon;
     const hasBehandlingdataChanged = prevProps.behandlingId !== behandlingId || prevProps.behandlingVersjon !== behandlingVersjon;
-    return hasPreviousBehandlingdata && hasBehandlingdataChanged;
+    return hasPreviousBehandlingdata || hasBehandlingdataChanged;
   }
 
   componentDidUpdate = (prevProps) => {

@@ -4,7 +4,6 @@ import { Container } from 'nav-frontend-grid';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { PersonIndex } from '@fpsak-frontend/person-info';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import EngangsstonadPapirsoknadIndex from '@fpsak-frontend/papirsoknad-es';
@@ -38,7 +37,6 @@ const RegistrerPapirsoknadPanel: FunctionComponent<OwnProps> = ({
   lagreFullstendig,
 }) => (
   <>
-    <PersonIndex medPanel person={fagsak.fagsakPerson} />
     <Panel className={styles.panelWithActionNeeded}>
       <Container fluid>
         <Undertittel><FormattedMessage id="Registrering.RegistrereSoknad" /></Undertittel>

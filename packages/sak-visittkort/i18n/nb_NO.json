@@ -1,0 +1,44 @@
+{
+  "VisittkortDetaljerPopup.Statsborgerskap.Hjelpetekst": "Statsborgerskap",
+  "VisittkortDetaljerPopup.Personstatus.Hjelpetekst": "Personstatus",
+  "VisittkortDetaljerPopup.Sivilstand.Hjelpetekst": "Sivilstand",
+  "VisittkortDetaljerPopup.Malform.Beskrivelse": "Foretrukket språk",
+  "VisittkortDetaljerPopup.BorMedBarnet": "Bor med barnet",
+  "VisittkortDetaljerPopup.AdressePanel.bostedsadresse": "Bostedsadresse",
+  "VisittkortDetaljerPopup.AdressePanel.midlertidigAdresse": "Midlertidig adresse",
+  "VisittkortDetaljerPopup.AdressePanel.postadresseNorge": "Postadresse i Norge",
+  "VisittkortDetaljerPopup.AdressePanel.postadresseUtland": "Postadresse i utlandet",
+
+  "VisittkortLabels.Dod": "DØD {dato}",
+  "VisittkortLabels.DodTittel": "Personen er død",
+  "VisittkortLabels.Diskresjon6": "Kode 6",
+  "VisittkortLabels.Diskresjon6Tittel": "Personen har diskresjonsmerking kode 6",
+  "VisittkortLabels.Diskresjon7": "Kode 7",
+  "VisittkortLabels.Diskresjon7Tittel": "Personen har diskresjonsmerking kode 7",
+  "VisittkortLabels.Verge": "Verge",
+  "VisittkortLabels.VergeTittel": "Personen har verge",
+  "VisittkortLabels.Under18Tittel": "Personen er under 18 år",
+  "VisittkortLabels.Under18": "Under 18",
+
+  "VisittkortBarnInfoFodselPanel.Dod": "DØD",
+  "VisittkortBarnInfoFodselPanel.DodTittel": "Barnet er dødt",
+  "VisittkortBarnInfoFodselPanel.Termin": "Termin {dato}",
+  "VisittkortBarnInfoFodselPanel.Fodt": "Født {dato}",
+  "VisittkortBarnInfoFodselPanel.Tvillinger": "Tvillinger Født {dato}",
+  "VisittkortBarnInfoFodselPanel.Flerlinger": "Flerlinger Født {dato}",
+  "VisittkortBarnInfoFodselPanel.Ar.Fodt": " ({value} år)",
+  "VisittkortBarnInfoFodselPanel.Maned.Fodt": " ({value} mnd)",
+  "VisittkortBarnInfoFodselPanel.Dag.Fodt": " ({value} dag)",
+  "VisittkortBarnInfoFodselPanel.Dager.Fodt": " ({value} dager)",
+
+  "VisittkortBarnInfoOmsorgPanel.Foreldreansvar": "Foreldreansvar {dato}",
+  "VisittkortBarnInfoOmsorgPanel.Adopsjon": "Adopsjon {dato}",
+  "VisittkortBarnInfoOmsorgPanel.ForeldreansvarAntallBarn": "Foreldreansvar({antall} barn) {dato}",
+  "VisittkortBarnInfoOmsorgPanel.AdopsjonAntallBarn": "Adopsjon({antall} barn) {dato}",
+
+  "VisittkortPanel.Ukjent": "Ukjent navn, mangler norsk id-nr",
+
+  "Malform.Bokmal": "Bokmål",
+  "Malform.Nynorsk": "Nynorsk",
+  "Malform.Engelsk": "Engelsk"
+}

@@ -1,12 +1,20 @@
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
+html {
+  height: 100%;
+}
+
 body {
-  background-color: @navLysGra;
+  background-color: @white;
   color: @navMorkGra;
   height: 100%;
   line-height: 1.42857143;
   margin: 0;
+}
+
+:global(#app) {
+  height: 100%;
 }
 
 /*

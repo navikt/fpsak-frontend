@@ -208,6 +208,8 @@ class KlageProsess extends Component<Props, KlageProsessState> {
     } = this.props;
     const { visFatterVedtakModal, visModalKlageBehandling } = this.state;
 
+    // TODO (TOR) Skriv denne på samme måte som ForeldrepengerProsess.
+
     const alleSteg = finnKlageSteg({
       behandling, aksjonspunkter, vilkar,
     });
@@ -245,48 +247,52 @@ class KlageProsess extends Component<Props, KlageProsessState> {
           tekstkode={skalViseTilBeslutterTekst
             ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'}
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {valgtStegKode && (
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
+              onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {valgtStegKode && (
           <MargMarkering
             behandlingStatus={behandling.status}
             aksjonspunkter={valgtSteg.aksjonspunkter}
             isReadOnly={valgtSteg.isReadOnly}
           >
             {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (
-              <FormkravProsessIndex
-                readOnlySubmitButton={readOnlySubmitButton}
-                apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
-                avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
-                {...fellesProps}
-              />
+            <FormkravProsessIndex
+              readOnlySubmitButton={readOnlySubmitButton}
+              apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
+              avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
+              {...fellesProps}
+            />
             )}
             {(valgtStegKode === bpc.KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.KLAGE_NAV_KLAGEINSTANS) && (
-              <KlagevurderingProsessIndex
-                saveKlage={this.saveKlageText}
-                previewCallback={this.previewCallback}
-                readOnlySubmitButton={readOnlySubmitButton}
-                apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
-                {...fellesProps}
-              />
+            <KlagevurderingProsessIndex
+              saveKlage={this.saveKlageText}
+              previewCallback={this.previewCallback}
+              readOnlySubmitButton={readOnlySubmitButton}
+              apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
+              {...fellesProps}
+            />
             )}
             {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0) && (
-              <VedtakKlageProsessIndex
-                aksjonspunkter={valgtSteg.aksjonspunkter}
-                previewVedtakCallback={this.previewCallback}
-                {...fellesProps}
-              />
+            <VedtakKlageProsessIndex
+              aksjonspunkter={valgtSteg.aksjonspunkter}
+              previewVedtakCallback={this.previewCallback}
+              {...fellesProps}
+            />
             )}
           </MargMarkering>
-        )}
-        {(vedtakStegVises && behandling.behandlingHenlagt) && (
+          )}
+          {(vedtakStegVises && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
-        )}
-        {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
+          )}
+          {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
-        )}
+          )}
+        </div>
       </>
     );
   }

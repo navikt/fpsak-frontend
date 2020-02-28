@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
 
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
-import supportPanels from './supportPanels';
-import LinkRow from './components/LinkRow';
-import SupportPanelLink from './components/SupportPanelLink';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
@@ -19,14 +18,14 @@ import styles from './behandlingSupportIndex.less';
 
 const renderSupportPanel = (supportPanel) => {
   switch (supportPanel) {
-    case supportPanels.APPROVAL:
-    case supportPanels.RETURNED:
+    case supportTabs.APPROVAL:
+    case supportTabs.RETURNED:
       return (<ApprovalIndex />);
-    case supportPanels.HISTORY:
+    case supportTabs.HISTORY:
       return (<HistoryIndex />);
-    case supportPanels.MESSAGES:
+    case supportTabs.MESSAGES:
       return (<MessagesIndex />);
-    case supportPanels.DOCUMENTS:
+    case supportTabs.DOCUMENTS:
       return (<DocumentIndex />);
     default:
       return null;
@@ -45,28 +44,29 @@ export const BehandlingSupportIndex = ({
   acccessibleSupportPanels,
   enabledSupportPanels,
   getSupportPanelLocation,
-}) => (
-  <BehandlingsupportDataResolver>
-    <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
-      <div className={styles.marginBottom}>
-        <LinkRow>
-          {acccessibleSupportPanels.map((supportPanel) => (
-            <SupportPanelLink
-              key={supportPanel}
-              supportPanel={supportPanel}
-              isEnabled={enabledSupportPanels.includes(supportPanel)}
-              isActive={supportPanel === activeSupportPanel}
-              supportPanelLocation={getSupportPanelLocation(supportPanel)}
-            />
-          ))}
-        </LinkRow>
+}) => {
+  const history = useHistory();
+  const changeRouteCallback = useCallback((index) => {
+    const supportPanel = acccessibleSupportPanels[index];
+    history.push(getSupportPanelLocation(supportPanel));
+  }, [history.location, acccessibleSupportPanels]);
+
+  return (
+    <BehandlingsupportDataResolver>
+      <div className={styles.meny}>
+        <SupportMenySakIndex
+          tilgjengeligeTabs={acccessibleSupportPanels}
+          valgbareTabs={enabledSupportPanels}
+          valgtIndex={acccessibleSupportPanels.findIndex((p) => p === activeSupportPanel)}
+          onClick={changeRouteCallback}
+        />
       </div>
-      <div className={(activeSupportPanel === supportPanels.HISTORY ? styles.containerHistorikk : styles.container)}>
+      <div className={(activeSupportPanel === supportTabs.HISTORY ? styles.containerHistorikk : styles.container)}>
         {renderSupportPanel(activeSupportPanel)}
       </div>
-    </div>
-  </BehandlingsupportDataResolver>
-);
+    </BehandlingsupportDataResolver>
+  );
+};
 
 BehandlingSupportIndex.propTypes = {
   acccessibleSupportPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -76,7 +76,7 @@ BehandlingSupportIndex.propTypes = {
 };
 
 const getDefaultSupportPanel = (enabledSupportPanels) => (
-  enabledSupportPanels.find(() => true) || supportPanels.HISTORY
+  enabledSupportPanels.find(() => true) || supportTabs.HISTORY
 );
 
 const mapStateToProps = (state) => {
