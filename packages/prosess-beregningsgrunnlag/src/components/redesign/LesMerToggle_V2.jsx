@@ -21,7 +21,7 @@ const LesMerToggle2 = (props) => {
         {...other}
       >
 
-        <div className={styles.lesMerPanel__toggleTekst} id="linkTekst">
+        <div className={styles.lesMerPanel__toggleTekst}>
           {erApen ? lukkTekst : apneTekst}
           <Chevron type={erApen ? 'opp' : 'ned'} className={styles.lesMerPanel__toggleChevron} />
         </div>

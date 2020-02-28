@@ -44,14 +44,14 @@ describe('<AvviksopplysningerAT>', () => {
     const infoText = rows.first().find('FormattedMessage');
     expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN');
   });
-  it('Skal teste at avvikoplysningerATFL rendres', () => {
+  it('Skal teste at avvikoplysningerATFLSN rendres', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_AT');
     const wrapper = shallowWithIntl(<AvviksopplysningerAT
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
-    const panel = wrapper.find('AvvikopplysningerATFL');
+    const panel = wrapper.find('AvvikopplysningerATFLSN');
     expect(panel.length).to.be.equal(1);
     const expectedProps = {
       beregnetAarsinntekt,

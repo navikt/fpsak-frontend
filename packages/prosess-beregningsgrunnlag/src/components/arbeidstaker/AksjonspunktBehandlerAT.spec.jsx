@@ -9,7 +9,7 @@ const alleKodeverk = {
   test: 'test',
 };
 
-const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar) => ({
+const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, skalFastsetteGrunnlag) => ({
   aktivitetStatus: {
     kode: aktivitetStatus.ARBEIDSTAKER,
   },
@@ -22,10 +22,11 @@ const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar) => ({
   },
   beregnetPrAar,
   overstyrtPrAar,
+  skalFastsetteGrunnlag,
 });
 describe('<AksjonspunktBehandlerAT>', () => {
   it('Skal teste tabellen får korrekte rader readonly=false', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false), mockAndel('Arbeidsgiver 2', 100, 200000, false)];
+    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, true), mockAndel('Arbeidsgiver 2', 100, 200000, true)];
     const wrapper = shallowWithIntl(<AksjonspunktBehandlerAT
       readOnly={false}
       alleAndelerIForstePeriode={andeler}
@@ -43,7 +44,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
   });
 
   it('Skal teste tabellen får korrekte rader readonly=true', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false), mockAndel('Arbeidsgiver 2', 100, 200000, false)];
+    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, true), mockAndel('Arbeidsgiver 2', 100, 200000, true)];
     const wrapper = shallowWithIntl(<AksjonspunktBehandlerAT
       readOnly
       alleAndelerIForstePeriode={andeler}
@@ -62,7 +63,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
 
   it('Skal teste transformValues metode', () => {
     const andeler = [
-      mockAndel('Arbeidsgiver 1', 100, 200000, false),
+      mockAndel('Arbeidsgiver 1', 100, 200000, true),
     ];
     const relevanteStatuser = {
       isArbeidstaker: true,
@@ -89,7 +90,7 @@ describe('<AksjonspunktBehandlerAT>', () => {
   });
   it('Skal teste transformValuesATFlhver for seg metode', () => {
     const andeler = [
-      mockAndel('Arbeidsgiver 1', 100, 200000, false),
+      mockAndel('Arbeidsgiver 1', 100, 200000, true),
     ];
     const values = {
       ATFLVurdering: 'Vurdering',
