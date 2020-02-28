@@ -55,41 +55,11 @@ const lagRelevantePaneler = (
   if (gjelderBesteberegning) {
     return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Besteberegning" /></Normaltekst>);
   }
+  if (relevanteStatuser.isMilitaer) {
+    return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" /></Normaltekst>);
+  }
   return (
     <FlexContainer>
-      {
-        relevanteStatuser.isArbeidstaker && (
-          <AvviksopplysningerAT
-            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
-            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-            relevanteStatuser={relevanteStatuser}
-          />
-        )
-      }
-      {relevanteStatuser.isFrilanser && relevanteStatuser.isKombinasjonsstatus && (
-        <VerticalSpacer sixteenPx />
-      )}
-      {
-        relevanteStatuser.isFrilanser && (
-          <AvviksopplysningerFL
-            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
-            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-            relevanteStatuser={relevanteStatuser}
-          />
-        )
-      }
-      {relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus && (
-      <VerticalSpacer sixteenPx />
-      )}
-      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-      <AvviksopplysningerSN
-        alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-      />
-      )}
-      {relevanteStatuser.isAAP && relevanteStatuser.isKombinasjonsstatus && (
-        <VerticalSpacer sixteenPx />
-      )}
       {
         relevanteStatuser.isAAP && (
           <Row>
@@ -101,9 +71,6 @@ const lagRelevantePaneler = (
           </Row>
         )
       }
-      {relevanteStatuser.isDagpenger && relevanteStatuser.isKombinasjonsstatus && (
-        <VerticalSpacer sixteenPx />
-      )}
       {
         relevanteStatuser.isDagpenger && (
           <Row>
@@ -115,20 +82,31 @@ const lagRelevantePaneler = (
           </Row>
         )
       }
-      {relevanteStatuser.isMilitaer && relevanteStatuser.isKombinasjonsstatus && (
-        <VerticalSpacer sixteenPx />
-      )}
       {
-        relevanteStatuser.isMilitaer && (
-          <Row>
-            <Column xs="12">
-              <Normaltekst>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" />
-              </Normaltekst>
-            </Column>
-          </Row>
+        relevanteStatuser.isArbeidstaker && (
+          <AvviksopplysningerAT
+            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+            relevanteStatuser={relevanteStatuser}
+          />
         )
-}
+      }
+      {
+        relevanteStatuser.isFrilanser && (
+          <AvviksopplysningerFL
+            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+            relevanteStatuser={relevanteStatuser}
+          />
+        )
+      }
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+        <AvviksopplysningerSN
+          alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+          sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+          relevanteStatuser={relevanteStatuser}
+        />
+      )}
     </FlexContainer>
   );
 };

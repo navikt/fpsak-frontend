@@ -41,6 +41,7 @@ describe('<AvviksopplysningerSN>', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       alleAndelerIForstePeriode={forstePeriode}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
@@ -55,6 +56,7 @@ describe('<AvviksopplysningerSN>', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       alleAndelerIForstePeriode={forstePeriode}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
@@ -68,8 +70,9 @@ describe('<AvviksopplysningerSN>', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       alleAndelerIForstePeriode={forstePeriode}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
-    const avviksTabell = wrapper.find('AvvikopplysningerATFL');
+    const avviksTabell = wrapper.find('AvvikopplysningerATFLSN');
     expect(avviksTabell).to.have.length(1);
   });
 });

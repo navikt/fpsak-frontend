@@ -35,6 +35,23 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnla
   }
   return 'Fastsatt';
 };
+
+const erVilkaarOppfyltForEnAvAndelene = (vilkarStatus, andeler) => {
+  if (!vilkarStatus || !vilkarStatus.kode) return false;
+  if (vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+    return false;
+  }
+  if (vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+    return false;
+  }
+  if (vilkarStatus.kode === vilkarUtfallType.OPPFYLT) {
+    const harOverstyrt = andeler.find((andel) => (andel.overstyrtPrAar !== true));
+    if (harOverstyrt) {
+      return true;
+    }
+  }
+  return false;
+};
 const hentAndelFraPeriode = (periode, andelType) => {
   if (andelType === aktivitetStatus.ARBEIDSTAKER) {
     return periode.beregningsgrunnlagPrStatusOgAndel
@@ -50,7 +67,20 @@ const lagPeriodeHeader = (fom, tom) => (
     values={{ fom: moment(fom).format(DDMMYYYY_DATE_FORMAT), tom: tom ? moment(tom).format(DDMMYYYY_DATE_FORMAT) : '' }}
   />
 );
-
+const summertVerdiFraListeProp = (andeler, propNavn, altpropNavn) => {
+  if (!andeler || andeler.length < 1) {
+    return -1;
+  }
+  let sum = 0;
+  andeler.forEach((andel) => {
+    if (!andel[propNavn] && altpropNavn) {
+      sum += andel[altpropNavn] ? andel[altpropNavn] : 0;
+    } else {
+      sum += andel[propNavn] ? andel[propNavn] : 0;
+    }
+  });
+  return sum;
+};
 const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   let inntekt;
   const andelElement = {};
@@ -59,30 +89,63 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   if (!andel) {
     return null;
   }
+  andelElement.ledetekst = 'Beregningsgrunnlag -';
+  andelElement.erOverstyrt = false;
   switch (andelType) {
     case aktivitetStatus.ARBEIDSTAKER:
       skalFastsetteGrunnlag = andel.some((atAndel) => atAndel.skalFastsetteGrunnlag === true);
-      inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
+      if (skalFastsetteGrunnlag && vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) { // denne testen kan brukes på alle
+        const erOverstyrt = andel.some((atAndel) => (atAndel.overstyrtPrAar !== undefined && atAndel.overstyrtPrAar !== null));
+        if (erOverstyrt) {
+          inntekt = summertVerdiFraListeProp(andel, 'overstyrtPrAar');
+          andelElement.erOverstyrt = true;
+        } else {
+          inntekt = summertVerdiFraListeProp(andel, 'beregnetPrAar');
+        }
+      } else if (skalFastsetteGrunnlag && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+        inntekt = 'fastsett';
+      } else {
+        inntekt = summertVerdiFraListeProp(andel, 'bruttoPrAar');
+      }
       break;
     case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
-      if (skalFastsetteGrunnlag) {
-        inntekt = andel && (andel.overstyrtPrAar || andel.overstyrtPrAar === 0) ? andel.overstyrtPrAar : undefined;
+      if (skalFastsetteGrunnlag && vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
+        if (andel.overstyrtPrAar || andel.overstyrtPrAar === 0) {
+          inntekt = andel.overstyrtPrAar;
+          andelElement.erOverstyrt = true;
+        } else {
+          inntekt = andel.beregnetPrAar;
+        }
+      } else if (skalFastsetteGrunnlag && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+        inntekt = 'fastsett';
       } else {
         inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
       }
+      // brukes for å sammeligne mot pensjonsgivende inntekt senere
+      andelElement.pgiSnitt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
       break;
     default:
-      inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
+      if (skalFastsetteGrunnlag && vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT) {
+        if (andel.overstyrtPrAar || andel.overstyrtPrAar === 0) {
+          inntekt = andel.overstyrtPrAar;
+          andelElement.erOverstyrt = true;
+        } else {
+          inntekt = andel.beregnetPrAar;
+        }
+      } else if (skalFastsetteGrunnlag && vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT) {
+        inntekt = 'fastsett';
+      } else {
+        inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
+      }
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
   }
-
-  if (inntekt || inntekt === 0) {
+  andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
+  if ((inntekt || inntekt === 0) && inntekt !== -1) {
     andelElement.verdi = inntekt;
-    andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
-    const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
-    andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
   }
+  const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
+  andelElement.ledetekst = <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.${andelType}`} />;
   return andelElement;
 };
 const hentVerdiFraAndel = (andel) => {
@@ -91,7 +154,14 @@ const hentVerdiFraAndel = (andel) => {
   }
   return andel.verdi;
 };
-const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter) => {
+
+const hentPGIFraSNAndel = (andel) => {
+  if (!andel || !andel.pgiSnitt) {
+    return 0;
+  }
+  return andel.pgiSnitt;
+};
+const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus) => {
   const atElement = opprettAndelElement(
     periode,
     aktivitetStatus.ARBEIDSTAKER,
@@ -102,25 +172,27 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
     aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
     vilkarStatus,
   );
-
-  // legg til regler for særtilfeller
-  if (hentVerdiFraAndel(atElement) < (hentVerdiFraAndel(snElement) && harAksjonspunkter)) {
+  // legger til regler for særtilfeller
+  const erOppfylt = erVilkaarOppfyltForEnAvAndelene(vilkarStatus, [atElement, snElement]);
+  if ((hentVerdiFraAndel(atElement) < hentPGIFraSNAndel(snElement)) && !erOppfylt) {
+    snElement.verdi = snElement.pgiSnitt;
     rowsAndeler.push(snElement);
     return;
   }
-  if (!harAksjonspunkter) {
-    if (hentVerdiFraAndel(atElement) > hentVerdiFraAndel(snElement)) {
-      rowsForklaringer.push(<FormattedMessage
-        id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN"
-      />);
-      rowsAndeler.push(atElement);
-      return;
+  if (hentVerdiFraAndel(atElement) > hentPGIFraSNAndel(snElement)) {
+    rowsForklaringer.push(<FormattedMessage
+      id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN"
+    />);
+    if (!erOppfylt) {
+      atElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.AT" />;
     }
+    rowsAndeler.push(atElement);
+    return;
   }
   rowsAndeler.push(atElement);
   rowsAndeler.push(snElement);
 };
-const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter) => {
+const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus) => {
   const atElement = opprettAndelElement(
     periode,
     aktivitetStatus.ARBEIDSTAKER,
@@ -136,21 +208,19 @@ const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
     aktivitetStatus.FRILANSER,
     vilkarStatus,
   );
-  if (!harAksjonspunkter) {
-    if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
-      rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FLoverstigerSN" />);
-      rowsAndeler.push(atElement);
-      rowsAndeler.push(flElement);
-    } else {
-      // setter SN ledetekst til Pensjonsgibevnde årsintekt
-      snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
-      rowsAndeler.push(atElement);
-      rowsAndeler.push(flElement);
-      rowsAndeler.push(snElement);
-    }
+  const erOppfylt = erVilkaarOppfyltForEnAvAndelene(vilkarStatus, [atElement, flElement, snElement]);
+  if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FLoverstigerSN" />);
+    rowsAndeler.push(atElement);
+    rowsAndeler.push(flElement);
   } else {
-    // setter SN ledetekst til Fastsatt årsintekt
-    snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Fastsatt.SN" />;
+    // setter SN ledetekst til Pensjonsgibevnde årsintekt
+    if (erOppfylt) {
+      // setter SN ledetekst til Fastsatt årsintekt
+      snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Fastsatt.SN" />;
+    } else {
+      snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
+    }
     rowsAndeler.push(atElement);
     rowsAndeler.push(flElement);
     rowsAndeler.push(snElement);
@@ -175,7 +245,10 @@ const settVisningsRaderForDPFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
   if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
     rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FLoverstigerSN" />);
     rowsAndeler.push(flElement);
+    rowsAndeler.push(dpElement);
   } else {
+    rowsAndeler.push(flElement);
+    rowsAndeler.push(dpElement);
     rowsAndeler.push(snElement);
   }
 };
@@ -199,6 +272,7 @@ const settVisningsRaderForATDPSN = (periode, rowsAndeler, rowsForklaringer, vilk
   if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(atElement)) > hentVerdiFraAndel(snElement)) {
     rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DPoverstigerSN" />);
     rowsAndeler.push(atElement);
+    rowsAndeler.push(dpElement);
   } else {
     rowsAndeler.push(atElement);
     rowsAndeler.push(dpElement);
@@ -248,7 +322,7 @@ const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringe
   );
 
   if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
-  if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
+  if (atElement && atElement.verdi !== undefined) { rowsAndeler.push({ ...atElement }); }
   if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
   if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
   if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
@@ -313,11 +387,11 @@ export const createBeregningTableData = createSelector(
       const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
-          settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
+          settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus);
           break;
         }
         case 'AT_FL_SN': {
-          settVisningsRaderForATFLSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
+          settVisningsRaderForATFLSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus);
           break;
         }
         case 'DP_FL_SN': {
@@ -334,7 +408,7 @@ export const createBeregningTableData = createSelector(
       }
 
       // sjekk om spesialrader skul vises
-      // IKKE vis avkortet rad vis mindre en 6G
+      // IKKE vis avkortet rad hvis mindre en 6G
       if (removeSpacesFromNumber(bruttoRad.verdi) < seksG) {
         avkortetRad.display = false;
       }

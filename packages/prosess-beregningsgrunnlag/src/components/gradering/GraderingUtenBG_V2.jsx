@@ -12,6 +12,7 @@ import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
+  createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/fp-felles';
 
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
@@ -29,8 +30,6 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 
-
-import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 import styles from './graderingUtenBG_V2.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 

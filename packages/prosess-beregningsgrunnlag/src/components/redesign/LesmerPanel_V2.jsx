@@ -69,7 +69,7 @@ class Lesmerpanel2 extends Component {
         <div className={styles.lesMerPanel__merContainer}>
           <UnmountClosed isOpened={erApen}>
             <div className={styles.lesMerPanel__mer}>
-              <div className={styles.lesMerPanel__merTekst}>
+              <div>
                 {children}
               </div>
             </div>
@@ -122,6 +122,7 @@ Lesmerpanel2.propTypes = {
    * Hvis komponenten skal brukes på hvit bakgrunn kan denne brukes for å gi den en border
    */
   border: Proptypes.bool,
+
 };
 Lesmerpanel2.defaultProps = {
   defaultApen: false,

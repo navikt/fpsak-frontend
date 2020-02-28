@@ -29,9 +29,9 @@ const createHeaderRow = () => (
     </Column>
   </Row>
 );
-const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
+const createSumRow = (pgiSnitt) => (
   <>
-    {pgiSnitt !== undefined && !erNyIArbeidslivet && (
+    {pgiSnitt !== undefined && (
       <>
         <Row key="grunnlagAarsinntektSNLine">
           <Column xs="12" className={beregningStyles.noPaddingRight}>
@@ -89,7 +89,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
   if (!snAndel) {
     return null;
   }
-  const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
+  const { pgiVerdier, pgiSnitt } = snAndel;
   return (
     <>
       <AvsnittSkiller luftOver luftUnder />
@@ -107,7 +107,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
       <VerticalSpacer fourPx />
       {createHeaderRow(pgiVerdier)}
       {createInntektRows(pgiVerdier)}
-      {createSumRow(pgiSnitt, erNyIArbeidslivet)}
+      {createSumRow(pgiSnitt)}
 
     </>
   );

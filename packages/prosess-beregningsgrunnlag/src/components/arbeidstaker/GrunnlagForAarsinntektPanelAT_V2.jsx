@@ -6,7 +6,7 @@ import {
   Element, Normaltekst, Undertekst, EtikettLiten,
 } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { behandlingFormValueSelector, getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -58,18 +58,8 @@ const createArbeidsPeriodeText = (arbeidsforhold) => {
   }
   return periodeArr.join(' ');
 };
-const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
-const harDuplikateArbeidsforholdFraSammeArbeidsgiver = (Andeler) => {
-  const seen = new Set();
-  return Andeler.some((currentObject) => seen.size === seen.add(currentObject.arbeidsforhold.arbeidsgiverNavn).size);
-};
-const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver, getKodeverknavn) => {
-  if (!arbeidsforhold.arbeidsgiverNavn) {
-    return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
-  }
-  return harAndelerFraSammeArbeidsgiver ? `${arbeidsforhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsforhold.eksternArbeidsforholdId)})`
-    : arbeidsforhold.arbeidsgiverNavn;
-};
+
+
 const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   // TODO: her må stillingsnavn og stillingsprosent hentes når vi får disse dataene fra backend
   const stillingArr = [''];
@@ -88,16 +78,15 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
 const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
-  const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
-      key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}${skalViseArbeidsforholdIdOgOrgNr ? andel.arbeidsforhold.eksternArbeidsforholdId : ''}`}
+      key={`ArbInntektWrapper${createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}${index + 1}`}
     >
       <Row key={`index${index + 1}`}>
         <Column xs="7" key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr, getKodeverknavn)}
+            {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
           </Normaltekst>
         </Column>
 

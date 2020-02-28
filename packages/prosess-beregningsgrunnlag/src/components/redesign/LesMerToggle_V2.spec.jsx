@@ -1,21 +1,24 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import LesMerToggle from './LesMerToggle_V2';
 
 
-describe('LesMerToggle', () => {
+describe('LesMerToggle2', () => {
   it('skal ikke vise lukketekst når er Aapen', () => {
-    const wrapper = shallow(<LesMerToggle erApen lukkTekst="lukketekst" apneTekst="aapnetekst" onClick={() => {}} />);
+    const wrapper = mountWithIntl(<LesMerToggle erApen lukkTekst="lukketekst" apneTekst="aapnetekst" onClick={() => {}} />);
     expect(wrapper.children()).to.have.length(1);
-    const tekst = wrapper.find('#linkTekst');
-    expect(tekst.childAt(0).text()).to.eql('lukketekst');
+    const divs = wrapper.find('div');
+    expect(divs.last().childAt(0).text()).to.eql('lukketekst');
+    const chevron = wrapper.find('NavFrontendChevron');
+    expect(chevron.props().type).to.eql('opp');
   });
   it('skal ikke vise lukketekst når er Lukket', () => {
-    const wrapper = shallow(<LesMerToggle erApen={false} lukkTekst="lukktekst" apneTekst="aapnetekst" onClick={() => {}} />);
+    const wrapper = mountWithIntl(<LesMerToggle erApen={false} lukkTekst="lukktekst" apneTekst="aapnetekst" onClick={() => {}} />);
     expect(wrapper.children()).to.have.length(1);
-    const tekst = wrapper.find('#linkTekst');
-
-    expect(tekst.childAt(0).text()).to.eql('aapnetekst');
+    const divs = wrapper.find('div');
+    expect(divs.last().childAt(0).text()).to.eql('aapnetekst');
+    const chevron = wrapper.find('NavFrontendChevron');
+    expect(chevron.props().type).to.eql('ned');
   });
 });

@@ -7,7 +7,7 @@ import { FlexRow } from '@fpsak-frontend/shared-components';
 import { Column } from 'nav-frontend-grid';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
-import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
+import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFLSN';
 
 const AvviksopplysningerAT = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
