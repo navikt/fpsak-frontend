@@ -1,6 +1,6 @@
 import Kodeverk from './kodeverkTsType';
 
-type Personopplysninger = Readonly<{
+type PersonopplysningerBasic = Readonly<{
   nummer?: number;
   navBrukerKjonn: Kodeverk;
   statsborgerskap: Kodeverk;
@@ -11,7 +11,7 @@ type Personopplysninger = Readonly<{
   personstatus: Kodeverk;
   diskresjonskode: Kodeverk;
   sivilstand: Kodeverk;
-  aktoerId: string;
+  aktoerId?: string;
   navn: string;
   dodsdato?: string;
   fodselsdato?: string;
@@ -27,11 +27,18 @@ type Personopplysninger = Readonly<{
   }[];
   fnr?: string;
   region: Kodeverk;
-  annenPart?: {};
-  barn: {}[];
   harVerge?: boolean;
-  barnSoktFor?: {}[] ;
-  barnFraTpsRelatertTilSoknad?: {}[];
+}>
+
+type Personopplysninger = Readonly<PersonopplysningerBasic & {
+  annenPart?: PersonopplysningerBasic & {
+    barn: PersonopplysningerBasic[];
+    barnSoktFor?: PersonopplysningerBasic[] ;
+    barnFraTpsRelatertTilSoknad?: PersonopplysningerBasic[];
+  };
+  barn: PersonopplysningerBasic[];
+  barnSoktFor?: PersonopplysningerBasic[] ;
+  barnFraTpsRelatertTilSoknad?: PersonopplysningerBasic[];
 }>
 
 export default Personopplysninger;

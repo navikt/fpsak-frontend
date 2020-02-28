@@ -24,7 +24,7 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   children,
 }) => (
   <div className={styles.container}>
-    <FlexContainer>
+    <FlexContainer fullHeight>
       <FlexRow>
         <FlexColumn className={styles.sideMenu}>
           <SideMenu

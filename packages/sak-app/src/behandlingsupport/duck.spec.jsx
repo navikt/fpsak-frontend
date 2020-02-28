@@ -3,8 +3,9 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
+import { supportTabs } from '@fpsak-frontend/sak-support-meny';
+
 import { reduxRestApi } from '../data/fpsakApi';
-import SupportPanels from './supportPanels';
 import {
   behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel,
 } from './duck';
@@ -30,12 +31,12 @@ describe('Behandlingsupport-reducer', () => {
   it('skal markere i state at godkjenningsfanen er valgt', () => {
     const store = mockStore();
 
-    store.dispatch(setSelectedSupportPanel(SupportPanels.APPROVAL));
+    store.dispatch(setSelectedSupportPanel(supportTabs.APPROVAL));
 
     expect(store.getActions()).to.have.length(1);
 
     expect(behandlingSupportReducer(undefined, store.getActions()[0])).to.eql({
-      selectedSupportPanel: SupportPanels.APPROVAL,
+      selectedSupportPanel: supportTabs.APPROVAL,
     });
   });
 
@@ -55,10 +56,10 @@ describe('Behandlingsupport-reducer', () => {
     const state = {
       default: {
         behandlingSupport: {
-          selectedSupportPanel: SupportPanels.APPROVAL,
+          selectedSupportPanel: supportTabs.APPROVAL,
         },
       },
     };
-    expect(getSelectedSupportPanel(state)).is.eql(SupportPanels.APPROVAL);
+    expect(getSelectedSupportPanel(state)).is.eql(supportTabs.APPROVAL);
   });
 });

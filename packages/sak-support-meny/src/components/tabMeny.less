@@ -1,0 +1,97 @@
+@import '@{coreModulePath}nav-frontend-core/less/core';
+
+.container {
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.column {
+  flex: 1;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.tabImage {
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.button {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid @navGra20;
+  cursor: pointer;
+  padding-bottom: 3px;
+  padding-top: 16px;
+  position: relative;
+  width: 100%;
+
+  &.active {
+    border-bottom: 0.25rem solid @navBla;
+    cursor: default;
+    padding-bottom: 0;
+
+    &:hover {
+      background-color: white;
+      border-bottom: 0.25rem solid @navBla;
+    }
+  }
+
+  &:hover {
+    background-color: @navLysGra;
+    border-bottom: 0.25rem solid @navBla;
+    padding-bottom: 0;
+  }
+
+  &:focus {
+    border-bottom: 0.25rem solid @navBla;
+    box-shadow: 0 0 0 3px @fokusFarge;
+    outline: none;
+    padding-bottom: 0;
+    z-index: 2;
+  }
+
+  &:disabled {
+    background: white;
+    border-bottom: 1px solid @navGra20;
+    cursor: default;
+    padding-bottom: 3px;
+  }
+}
+
+.button[data-tooltip]:before {
+  background-color: @orangeFocusLighten80;
+  border-radius: 4px;
+  bottom: -20px;
+  box-shadow: 0 1px 2px 0 @navGra40;
+  color: @navMorkGra;
+  content: attr(data-tooltip);
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin: 0 -20px;
+  opacity: 0;
+  padding: 2px 8px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.button[data-tooltip]:hover:before {
+  animation-delay: 0.4s;
+  animation-duration: 0.1s;
+  animation-fill-mode: forwards;
+  animation-name: showTooltip;
+}
+
+@keyframes showTooltip {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

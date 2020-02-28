@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router-dom';
-import { Panel } from 'nav-frontend-paneler';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
@@ -46,8 +45,6 @@ export const getEnabledContexts = createSelector(
   (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
 );
 
-const createLink = (link) => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?fakta=default&punkt=uttak`;
-
 const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
   if (alleBehandlinger.length === 1) {
     return getLocationWithDefaultBehandlingspunktAndFakta({
@@ -79,14 +76,13 @@ export const FagsakProfileIndex = ({
   }, [selectedBehandlingId]);
 
   return (
-    <Panel className={styles.panelPadding}>
+    <div className={styles.panelPadding}>
       <DataFetcher
         behandlingId={selectedBehandlingId}
         behandlingVersjon={behandlingVersjon}
         showLoadingIcon
         behandlingNotRequired
         endpointParams={{
-          [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer },
           [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
           [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
         }}
@@ -100,12 +96,10 @@ export const FagsakProfileIndex = ({
           }
           return (
             <FagsakProfilSakIndex
-              annenPartLink={dataProps.annenPartBehandling}
               saksnummer={saksnummer}
               sakstype={sakstype}
               dekningsgrad={dekningsgrad}
               fagsakStatus={fagsakStatus}
-              createLink={createLink}
               alleKodeverk={alleKodeverk}
               renderBehandlingMeny={() => <BehandlingMenuIndex />}
               renderBehandlingVelger={() => (
@@ -130,7 +124,7 @@ export const FagsakProfileIndex = ({
         endpoints={risikoklassifiseringData}
         render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}
       />
-    </Panel>
+    </div>
   );
 };
 
@@ -155,7 +149,7 @@ FagsakProfileIndex.defaultProps = {
 
 export const getEnabledApis = createSelector(
   [getEnabledApplicationContexts],
-  (enabledApplicationContexts) => [fpsakApi.ANNEN_PART_BEHANDLING].concat(enabledApplicationContexts.map((c) => behandlingerRestApis[c])),
+  (enabledApplicationContexts) => enabledApplicationContexts.map((c) => behandlingerRestApis[c]),
 );
 
 const mapStateToProps = (state) => ({

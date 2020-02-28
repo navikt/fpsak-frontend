@@ -10,13 +10,13 @@ const reducerName = 'behandling';
 
 /* Action types */
 const actionType = (name) => `${reducerName}/${name}`;
-const SET_TEMP_BEHANDLING_ID = actionType('SET_TEMP_BEHANDLING_ID');
+const SET_URL_BEHANDLING_ID = actionType('SET_URL_BEHANDLING_ID');
 const SET_BEHANDLING_ID_OG_VERSJON = actionType('SET_BEHANDLING_ID_OG_VERSJON');
 const OPPDATER_BEHANDLING_VERSJON = actionType('OPPDATER_BEHANDLING_VERSJON');
 const RESET_BEHANDLING_CONTEXT = actionType('RESET_BEHANDLING_CONTEXT');
 
-export const setTempBehandlingId = (behandlingId) => ({
-  type: SET_TEMP_BEHANDLING_ID,
+export const setUrlBehandlingId = (behandlingId) => ({
+  type: SET_URL_BEHANDLING_ID,
   data: behandlingId,
 });
 
@@ -50,22 +50,22 @@ export const previewMessage = (erTilbakekreving, erHenleggelse, data) => (dispat
 
 /* Reducer */
 const initialState = {
-  tempBehandlingId: undefined,
+  urlBehandlingId: undefined,
   behandlingId: undefined,
   behandlingVersjon: undefined,
 };
 
 export const behandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) {
-    case SET_TEMP_BEHANDLING_ID:
+    case SET_URL_BEHANDLING_ID:
       return {
         ...state,
-        tempBehandlingId: action.data,
+        urlBehandlingId: action.data,
       };
     case SET_BEHANDLING_ID_OG_VERSJON:
       return {
         ...state,
-        behandlingId: state.tempBehandlingId,
+        behandlingId: state.urlBehandlingId,
         behandlingVersjon: action.data,
       };
     case OPPDATER_BEHANDLING_VERSJON:
@@ -84,7 +84,7 @@ reducerRegistry.register(reducerName, behandlingReducer);
 
 // Selectors (Kun de knyttet til reducer)
 const getBehandlingContext = (state) => state.default[reducerName];
-export const getTempBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.tempBehandlingId);
+export const getUrlBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.urlBehandlingId);
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingId);
 export const getBehandlingIdentifier = createSelector(
   [getSelectedBehandlingId, getSelectedSaksnummer],
@@ -96,7 +96,7 @@ export const getBehandlingIdentifier = createSelector(
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
   (behandlinger = [], behandlingId) => behandlinger.find((b) => b.id === behandlingId));
 
-export const getTempBehandlingVersjon = createSelector([getBehandlinger, getTempBehandlingId],
+export const getTempBehandlingVersjon = createSelector([getBehandlinger, getUrlBehandlingId],
   (behandlinger = [], behandlingId) => (behandlinger.some((b) => b.id === behandlingId) ? behandlinger.find((b) => b.id === behandlingId).versjon : undefined));
 export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
 
@@ -104,7 +104,7 @@ export const getBehandlingStatus = createSelector([getBehandling], (behandling =
 export const getBehandlingType = createSelector([getBehandling], (behandling = {}) => behandling.type);
 export const getBehandlingBehandlendeEnhetId = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetId);
 export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetNavn);
-export const getBehandlingSprak = createSelector([getBehandling], (behandling) => behandling.sprakkode);
+export const getBehandlingSprak = createSelector([getBehandling], (behandling = {}) => behandling.sprakkode);
 export const erBehandlingPaVent = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingPaaVent : false));
 export const erBehandlingKoet = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingKoet : false));
 export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling], (behandling) => (behandling

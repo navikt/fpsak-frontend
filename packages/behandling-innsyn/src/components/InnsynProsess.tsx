@@ -146,6 +146,8 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
     } = this.props;
     const { visIverksetterVedtakModal } = this.state;
 
+    // TODO (TOR) Skriv denne på samme måte som ForeldrepengerProsess.
+
     const alleSteg = finnInnsynSteg({
       behandling, aksjonspunkter, vilkar, innsyn,
     });
@@ -172,11 +174,14 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
           lukkModal={this.toggleIverksetterVedtakModal}
           behandlingsresultat={behandling.behandlingsresultat}
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {valgtSteg && (
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
+              onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {valgtSteg && (
           <MargMarkering
             behandlingStatus={behandling.status}
             aksjonspunkter={valgtSteg.aksjonspunkter}
@@ -199,13 +204,14 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
               />
             )}
           </MargMarkering>
-        )}
-        {(vedtakStegVises && behandling.behandlingHenlagt) && (
+          )}
+          {(vedtakStegVises && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
-        )}
-        {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
+          )}
+          {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
-        )}
+          )}
+        </div>
       </>
     );
   }

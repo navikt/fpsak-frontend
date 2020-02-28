@@ -2,8 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import { PersonIndex } from '@fpsak-frontend/person-info';
-
 import NoSelectedBehandling from './components/NoSelectedBehandling';
 import { BehandlingerIndex } from './BehandlingerIndex';
 
@@ -23,8 +21,6 @@ describe('BehandlingerIndex', () => {
       numBehandlinger={1}
       person={person}
     />);
-
-    expect(wrapper.find(PersonIndex)).to.have.length(1);
 
     const noBehandling = wrapper.find(NoSelectedBehandling);
     expect(noBehandling).to.have.length(1);

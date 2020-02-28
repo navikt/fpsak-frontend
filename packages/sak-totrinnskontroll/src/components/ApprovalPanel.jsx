@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
@@ -102,9 +102,12 @@ export class ApprovalPanel extends Component {
                 ? (
                   <div>
                     {!readOnly && (
-                      <AksjonspunktHelpText isAksjonspunktOpen marginBottom>
-                        {[<FormattedMessage key={1} id="HelpText.ToTrinnsKontroll" />]}
-                      </AksjonspunktHelpText>
+                      <>
+                        <AksjonspunktHelpTextHTML>
+                          {[<FormattedMessage key={1} id="HelpText.ToTrinnsKontroll" />]}
+                        </AksjonspunktHelpTextHTML>
+                        <VerticalSpacer sixteenPx />
+                      </>
                     )}
                     <ToTrinnsForm
                       behandlingId={behandlingId}

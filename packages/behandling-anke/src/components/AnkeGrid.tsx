@@ -1,7 +1,5 @@
 import React, { FunctionComponent } from 'react';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
@@ -70,8 +68,6 @@ const AnkeGrid: FunctionComponent<OwnProps> = ({
       opneSokeside={opneSokeside}
       alleBehandlinger={alleBehandlinger}
     />
-    <VerticalSpacer sixteenPx />
-    <PersonIndex medPanel person={fagsak.fagsakPerson} />
   </>
 );
 

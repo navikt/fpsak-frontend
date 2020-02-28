@@ -16,9 +16,7 @@ const FagsakProfilSakIndex = ({
   saksnummer,
   sakstype,
   fagsakStatus,
-  annenPartLink,
   alleKodeverk,
-  createLink,
   renderBehandlingMeny,
   renderBehandlingVelger,
   dekningsgrad,
@@ -28,9 +26,7 @@ const FagsakProfilSakIndex = ({
       saksnummer={saksnummer}
       sakstype={sakstype}
       fagsakStatus={fagsakStatus}
-      annenPartLink={annenPartLink}
       alleKodeverk={alleKodeverk}
-      createLink={createLink}
       renderBehandlingMeny={renderBehandlingMeny}
       renderBehandlingVelger={renderBehandlingVelger}
       dekningsgrad={dekningsgrad}
@@ -42,16 +38,13 @@ FagsakProfilSakIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
-  annenPartLink: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,
-  createLink: PropTypes.func.isRequired,
   renderBehandlingMeny: PropTypes.func.isRequired,
   renderBehandlingVelger: PropTypes.func.isRequired,
   dekningsgrad: PropTypes.number,
 };
 
 FagsakProfilSakIndex.defaultProps = {
-  annenPartLink: undefined,
   dekningsgrad: undefined,
 };
 

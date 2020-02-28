@@ -1,20 +1,22 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.fagsakContainer {
-  margin-left: auto;
-  margin-right: auto;
-  width: 94%;
+.gridContainer {
+  display: flex;
+  flex-flow: row wrap;
+  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .leftColumn {
   float: left;
+  overflow: hidden;
   width: 67%;
 }
 
 .rightColumn {
   float: right;
-  margin-left: 1%;
-  width: 32%;
+  width: 33%;
 
   & > div {
     margin-bottom: 16px;
@@ -30,25 +32,20 @@
     margin-left: 0;
     width: 100%;
   }
+}
 
-  .gridContainer {
-    display: flex;
-    flex-flow: row wrap;
-    max-height: 100%;
-    max-width: 100%;
-  }
-
-  .profileAndNavigationContent {
-    display: none;
-  }
-
-  .behandlingContent {
-    order: 3;
+@media all and (min-width: 1350px) {
+  .rightColumn {
+    border-left-color: @navGra60;
+    border-left-style: solid;
+    border-left-width: 1px;
   }
 }
 
-@media all and (max-width: 800px) {
-  .gridContainer {
-    max-width: 640px;
+@media all and (max-width: 1350px) {
+  .rightColumn {
+    border-top-color: @navGra60;
+    border-top-style: solid;
+    border-top-width: 1px;
   }
 }

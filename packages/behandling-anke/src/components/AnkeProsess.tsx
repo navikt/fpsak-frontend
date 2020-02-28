@@ -203,6 +203,8 @@ class AnkeProsess extends Component<Props, AnkeProsessState> {
     } = this.props;
     const { visIverksetterVedtakModal, visModalAnkeBehandling } = this.state;
 
+    // TODO (TOR) Skriv denne på samme måte som ForeldrepengerProsess.
+
     const alleSteg = finnAnkeSteg({
       behandling, aksjonspunkter, vilkar,
     });
@@ -238,33 +240,37 @@ class AnkeProsess extends Component<Props, AnkeProsessState> {
           visModal={visModalAnkeBehandling}
           lukkModal={this.toggleAnkeModal}
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {valgtStegKode && (
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
+              onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {valgtStegKode && (
           <MargMarkering
             behandlingStatus={behandling.status}
             aksjonspunkter={valgtSteg.aksjonspunkter}
             isReadOnly={valgtSteg.isReadOnly}
           >
             {(valgtStegKode === bpc.ANKEBEHANDLING && valgtSteg.aksjonspunkter.length > 0) && (
-              <AnkeProsessIndex behandlinger={alleBehandlinger} {...fellesProps} />
+            <AnkeProsessIndex behandlinger={alleBehandlinger} {...fellesProps} />
             )}
             {(valgtStegKode === bpc.ANKE_RESULTAT && valgtSteg.aksjonspunkter.length > 0) && (
-              <AnkeResultatProsessIndex {...fellesProps} />
+            <AnkeResultatProsessIndex {...fellesProps} />
             )}
             {(valgtStegKode === bpc.ANKE_MERKNADER && valgtSteg.aksjonspunkter.length > 0) && (
-              <AnkeMerknaderProsessIndex {...fellesProps} />
+            <AnkeMerknaderProsessIndex {...fellesProps} />
             )}
           </MargMarkering>
-        )}
-        {(valgtStegKode === bpc.ANKE_MERKNADER && behandling.behandlingHenlagt) && (
+          )}
+          {(valgtStegKode === bpc.ANKE_MERKNADER && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
-        )}
-        {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
+          )}
+          {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
-        )}
+          )}
+        </div>
       </>
     );
   }
