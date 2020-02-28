@@ -124,6 +124,14 @@ module.exports = async ({ config, mode }) => {
       },
     }],
     include: [IMAGE_DIR],
+  },{
+    test: /\.(svg)$/,
+    loader: 'file-loader',
+    options: {
+      esModule: false,
+      name: '[name]_[hash].[ext]',
+    },
+    include: [CORE_DIR],
   });
 
   config.plugins.push(new MiniCssExtractPlugin({
@@ -131,7 +139,7 @@ module.exports = async ({ config, mode }) => {
     ignoreOrder: true,
   }));
   
-  config.resolve.extensions.push('.ts', '.tsx');
+  config.resolve.extensions.push('.ts', '.tsx', '.less');
 
   // Return the altered config
   return config;

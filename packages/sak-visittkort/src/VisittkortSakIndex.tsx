@@ -17,11 +17,11 @@ const intl = createIntl({
 
 interface OwnProps {
   fagsak: Fagsak;
-  personopplysninger: Personopplysninger;
+  personopplysninger?: Personopplysninger;
   familieHendelse: FamilieHendelseSamling;
   lenkeTilAnnenPart?: string;
   alleKodeverk?: {[key: string]: [Kodeverk]};
-  sprakkode: string;
+  sprakkode: Kodeverk;
 }
 
 const VisittkortSakIndex: FunctionComponent<OwnProps> = ({

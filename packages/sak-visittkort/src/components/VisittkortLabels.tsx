@@ -1,11 +1,11 @@
 import React, { useMemo, FunctionComponent } from 'react';
 import moment from 'moment';
 import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
-import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import {
   EtikettInfo, EtikettAdvarsel, EtikettFokus,
 } from 'nav-frontend-etiketter';
 
+import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import { Personopplysninger } from '@fpsak-frontend/types';
 import { dateFormat } from '@fpsak-frontend/utils';
 

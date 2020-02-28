@@ -26,11 +26,11 @@ const utledKjonn = (kjonn) => {
 
 interface OwnProps {
   fagsak: Fagsak;
-  personopplysninger: Personopplysninger;
+  personopplysninger?: Personopplysninger;
   familieHendelse: FamilieHendelseSamling;
   lenkeTilAnnenPart?: string;
   alleKodeverk?: {[key: string]: [Kodeverk]};
-  sprakkode: string;
+  sprakkode: Kodeverk;
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -104,9 +104,11 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               <EmptyPersonCard namePlaceholder={intl.formatMessage({ id: 'VisittkortPanel.Ukjent' })} />
             </FlexColumn>
           )}
-          <FlexColumn className={styles.pushRight}>
-            <VisittkortBarnInfoPanel familieHendelse={familieHendelse} />
-          </FlexColumn>
+          {familieHendelse && (
+            <FlexColumn className={styles.pushRight}>
+              <VisittkortBarnInfoPanel familieHendelse={familieHendelse} />
+            </FlexColumn>
+          )}
         </FlexRow>
       </FlexContainer>
     </div>

@@ -1,6 +1,6 @@
 import React, { useMemo, FunctionComponent } from 'react';
-import { EtikettInfo } from 'nav-frontend-etiketter';
 import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
+import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 import { Kodeverk, Personopplysninger } from '@fpsak-frontend/types';
@@ -27,7 +27,7 @@ const findPersonStatus = (personopplysning) => {
 interface OwnProps {
   personopplysninger: Personopplysninger;
   alleKodeverk?: {[key: string]: [Kodeverk]};
-  sprakkode: string;
+  sprakkode: Kodeverk;
 }
 
 const VisittkortDetaljerPopup: FunctionComponent<OwnProps & WrappedComponentProps> = ({
