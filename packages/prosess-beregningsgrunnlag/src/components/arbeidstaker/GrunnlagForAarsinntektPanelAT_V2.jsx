@@ -6,7 +6,7 @@ import {
   Element, Normaltekst, Undertekst, EtikettLiten,
 } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { behandlingFormValueSelector, getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -18,7 +18,7 @@ import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
-import { createArbeidsGiverNavn, harDuplikateArbeidsforholdFraSammeArbeidsgiver } from '../util/visningsnavnHelper';
+import { harDuplikateArbeidsforholdFraSammeArbeidsgiver } from '../util/visningsnavnHelper';
 
 
 const formName = 'BeregningForm';
@@ -88,7 +88,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) =
       <Row key={`index${index + 1}`}>
         <Column xs="7" key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr, getKodeverknavn)}
+            {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
           </Normaltekst>
         </Column>
 
