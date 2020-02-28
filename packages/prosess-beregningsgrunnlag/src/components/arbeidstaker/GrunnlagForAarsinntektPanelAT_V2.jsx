@@ -18,7 +18,6 @@ import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
-import { harDuplikateArbeidsforholdFraSammeArbeidsgiver } from '../util/visningsnavnHelper';
 
 
 const formName = 'BeregningForm';
@@ -79,11 +78,10 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
 const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
-  const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
-      key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}${skalViseArbeidsforholdIdOgOrgNr ? andel.arbeidsforhold.eksternArbeidsforholdId : ''}`}
+      key={`ArbInntektWrapper${createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}${index + 1}`}
     >
       <Row key={`index${index + 1}`}>
         <Column xs="7" key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>

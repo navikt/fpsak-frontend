@@ -74,9 +74,11 @@ const AvviksopplysningerSN = ({
 
 AvviksopplysningerSN.propTypes = {
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
-  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
   relevanteStatuser: PropTypes.shape().isRequired,
 };
-
+AvviksopplysningerSN.defaultProps = {
+  sammenligningsgrunnlagPrStatus: undefined,
+};
 
 export default AvviksopplysningerSN;

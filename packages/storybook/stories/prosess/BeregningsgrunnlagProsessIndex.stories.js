@@ -1366,7 +1366,7 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
     kanRegnskapsførerKontaktes: false,
     oppgittInntekt: null,
     oppstartsdato: '2015-11-01',
-    opphoersdato: '201-03-01',
+    opphoersdato: '2010-03-01',
     orgnr: '910909077',
     utenlandskvirksomhetsnavn: null,
     virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
