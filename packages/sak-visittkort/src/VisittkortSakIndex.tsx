@@ -20,7 +20,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   familieHendelse: FamilieHendelseSamling;
   lenkeTilAnnenPart?: string;
-  alleKodeverk?: {[key: string]: [Kodeverk]};
+  alleKodeverk: {[key: string]: [Kodeverk]};
   sprakkode: Kodeverk;
 }
 

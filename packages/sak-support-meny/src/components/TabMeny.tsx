@@ -38,7 +38,9 @@ const TabMeny: FunctionComponent<OwnProps> = ({
               className={classNames(styles.button, { active: tab.isActive })}
               type="button"
               onClick={() => {
-                tabRef.current[index].focus();
+                if (tabRef.current[index]) {
+                  tabRef.current[index].focus();
+                }
                 onClick(index);
               }}
               data-tooltip={tab.tooltip}

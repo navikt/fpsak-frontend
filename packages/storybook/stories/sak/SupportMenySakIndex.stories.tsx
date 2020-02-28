@@ -14,7 +14,7 @@ export const visMenyUtenBeslutterGodkjenningOgTilbakesending = () => {
   return (
     <SupportMenySakIndex
       tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
-      valgbareTabs={[supportTabs.APPROVAL, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
+      valgbareTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
       valgtIndex={valgtPanelIndex}
       onClick={setPanelIndex}
     />
