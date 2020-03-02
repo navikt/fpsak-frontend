@@ -34,6 +34,7 @@ const Dekorator = ({
   errorMessages,
   navAnsattName,
   queryStrings,
+  setSiteHeight,
   removeErrorMessage: removeErrorMsg,
   showDetailedErrorMessages, hideErrorMessages,
 }) => {
@@ -58,6 +59,7 @@ const Dekorator = ({
       removeErrorMessage={removeErrorMsg}
       showDetailedErrorMessages={showDetailedErrorMessages}
       errorMessages={hideErrorMessages ? [] : resolvedErrorMessages}
+      setSiteHeight={setSiteHeight}
     />
   );
 };
@@ -70,6 +72,7 @@ Dekorator.propTypes = {
   showDetailedErrorMessages: PropTypes.bool,
   hideErrorMessages: PropTypes.bool,
   errorMessages: PropTypes.arrayOf(PropTypes.shape()),
+  setSiteHeight: PropTypes.func.isRequired,
 };
 
 Dekorator.defaultProps = {

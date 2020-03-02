@@ -60,9 +60,15 @@ const HeaderWithErrorPanel = ({
   queryStrings,
   showDetailedErrorMessages,
   errorMessages,
+  setSiteHeight,
 }) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
   const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
+
+  const fixedHeaderRef = useRef();
+  useEffect(() => {
+    setSiteHeight(fixedHeaderRef.current.clientHeight);
+  }, [errorMessages.length]);
 
   const lenkerFormatertForBoxedList = useMemo(() => iconLinks.map((link) => ({
     name: link.text,
@@ -89,7 +95,7 @@ const HeaderWithErrorPanel = ({
   ), [erLenkepanelApent]);
 
   return (
-    <header className={styles.container}>
+    <header ref={fixedHeaderRef} className={styles.container}>
       <RawIntlProvider value={intl}>
         <div ref={wrapperRef}>
           <Header title={systemTittel} titleHref="/fpsak">
@@ -128,6 +134,7 @@ HeaderWithErrorPanel.propTypes = {
   removeErrorMessage: PropTypes.func.isRequired,
   showDetailedErrorMessages: PropTypes.bool,
   errorMessages: PropTypes.arrayOf(PropTypes.shape()),
+  setSiteHeight: PropTypes.func.isRequired,
 };
 
 HeaderWithErrorPanel.defaultProps = {

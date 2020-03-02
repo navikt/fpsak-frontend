@@ -28,6 +28,10 @@ import '@fpsak-frontend/assets/styles/global.less';
  * lagre desse i klientens state.
  */
 class AppIndex extends Component {
+  state = {
+    headerHeight: 0,
+  };
+
   componentDidUpdate(prevProps) {
     const { funksjonellTid } = this.props;
     if (prevProps.funksjonellTid !== funksjonellTid) {
@@ -65,10 +69,16 @@ class AppIndex extends Component {
     console.error(error);
   }
 
+  setSiteHeight = (headerHeight) => {
+    document.documentElement.setAttribute('style', `height: calc(100% - ${headerHeight}px)`);
+    this.setState((state) => ({ ...state, headerHeight }));
+  }
+
   render() {
     const {
       location, crashMessage, errorMessages, navAnsattName, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
     } = this.props;
+    const { headerHeight } = this.state;
 
     // todo sjekke om dette er beste stedet å sette dette for sentry
     configureScope((scope) => {
@@ -80,7 +90,6 @@ class AppIndex extends Component {
     const unauthorizedErrors = errorMessages.filter((o) => o.type === EventType.REQUEST_UNAUTHORIZED);
     const hasForbiddenOrUnauthorizedErrors = forbiddenErrors.length > 0 || unauthorizedErrors.length > 0;
     const shouldRenderHome = (!crashMessage && !hasForbiddenOrUnauthorizedErrors);
-    const nrOfErrorMessages = queryStrings.errorcode || queryStrings.errormessage ? 1 : errorMessages.length;
 
     return (
       <AppConfigResolver>
@@ -92,8 +101,9 @@ class AppIndex extends Component {
             queryStrings={queryStrings}
             removeErrorMessage={removeErrorMsg}
             showDetailedErrorMessages={showDetailedErrorMessages}
+            setSiteHeight={this.setSiteHeight}
           />
-          {shouldRenderHome && (<Home nrOfErrorMessages={nrOfErrorMessages} />)}
+          {shouldRenderHome && (<Home headerHeight={headerHeight} />)}
           {forbiddenErrors.length > 0 && (<ForbiddenPage errorMessages={forbiddenErrors} />)}
           {unauthorizedErrors.length > 0 && (<UnauthorizedPage errorMessages={unauthorizedErrors} />)}
         </LanguageProvider>

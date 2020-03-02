@@ -17,9 +17,9 @@ import styles from './home.less';
  * Presentasjonskomponent. Wrapper for sideinnholdet som vises under header.
  */
 const Home = ({
-  nrOfErrorMessages,
+  headerHeight,
 }) => (
-  <div className={styles[`content_${nrOfErrorMessages > 5 ? 5 : nrOfErrorMessages}`]}>
+  <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
     <Switch>
       <Route exact path="/" component={DashboardResolver} />
       <Route strict path={fagsakPath} component={FagsakIndex} />
@@ -30,7 +30,7 @@ const Home = ({
 );
 
 Home.propTypes = {
-  nrOfErrorMessages: PropTypes.number.isRequired,
+  headerHeight: PropTypes.number.isRequired,
 };
 
 export default Home;

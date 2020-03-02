@@ -17,6 +17,7 @@ describe('<Dekorator>', () => {
       navAnsattName={ansattNavn}
       removeErrorMessage={removeErrorMsg}
       showDetailedErrorMessages={false}
+      setSiteHeight={sinon.spy()}
     />);
     const header = wrapper.find(HeaderWithErrorPanel);
     expect(header.length)
