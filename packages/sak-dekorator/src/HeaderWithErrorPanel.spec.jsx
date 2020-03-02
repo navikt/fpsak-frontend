@@ -14,6 +14,7 @@ describe('<HeaderWithErrorPanel>', () => {
       removeErrorMessage={() => undefined}
       queryStrings={{}}
       showDetailedErrorMessages={false}
+      setSiteHeight={() => undefined}
     />);
     const header = wrapper.find(Header);
     expect(header.prop('title')).to.eq('My System');

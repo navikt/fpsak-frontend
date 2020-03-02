@@ -73,7 +73,6 @@ describe('<VisittkortBarnInfoFodselPanel>', () => {
     expect(messages.first().prop('values')).is.eql({
       dato: '02.02.2020',
     });
-    expect(messages.last().prop('id')).is.eql('VisittkortBarnInfoFodselPanel.Dager.Fodt');
   });
 
   it('skal etikett for dødfødt barn', () => {
