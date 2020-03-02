@@ -40,7 +40,7 @@ describe('<BehandlingMenu>', () => {
 
   const behandlingIdentifier = new BehandlingIdentifier(23, 1);
   const type = { kode: behandlingType.FORSTEGANGSSOKNAD };
-  const behandlingData = new MenyBehandlingData(1, '3', 2, type, false, false, 'enhetsid', 'Enhetsnavn', false);
+  const behandlingData = new MenyBehandlingData(1, '3', 2, type, false, false, 'enhetsid', 'Enhetsnavn', false, undefined);
   const kodeverk = new MenyKodeverk();
 
   const rettigheter = new MenyRettigheter({
@@ -59,7 +59,7 @@ describe('<BehandlingMenu>', () => {
   const shelveBehandlingCallback = sinon.spy();
   const previewCallback = sinon.spy();
 
-  it('skal rendre behandlingsmeny med visning av alle valg bortsett fra "fortsett behandling" når behandling ikke er satt på vent', () => {
+  it('ck behandlingsmeny med visning av alle valg bortsett fra "fortsett behandling" når behandling ikke er satt på vent', () => {
     const wrapper = shallow(<BehandlingMenu
       saksnummer={23}
       behandlingData={behandlingData}
@@ -96,12 +96,13 @@ describe('<BehandlingMenu>', () => {
     expect(kanHenleggesMenuItem.prop('shelveBehandling')).is.eql(shelveBehandlingCallback);
     expect(kanHenleggesMenuItem.prop('push')).is.eql(pushCallback);
     expect(kanHenleggesMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
+    expect(kanHenleggesMenuItem.prop('henleggBehandlingEnabled')).is.eq(true);
   });
 
   it('skal vise menyvalg "fortsett behandling" men ikke "Sett på vent" og "Kan henlegges" når behandling er satt på vent', () => {
     const wrapper = shallow(<BehandlingMenu
       saksnummer={23}
-      behandlingData={new MenyBehandlingData(1, '3', 2, type, true, false, 'enhetsid', 'Enhetsnavn', false)}
+      behandlingData={new MenyBehandlingData(1, '3', 2, type, true, false, 'enhetsid', 'Enhetsnavn', false, undefined)}
       menyKodeverk={kodeverk}
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
@@ -191,5 +192,41 @@ describe('<BehandlingMenu>', () => {
     const messages = wrapper.find('FormattedMessage');
     expect(messages).has.length(2);
     expect(messages.last().prop('id')).is.eql('Behandlingsmeny.Open');
+  });
+
+  it('skal vise menyvalg "fortsett behandling" men ikke "Sett på vent" og "Kan henlegges" når tilbakekreving behandling er satt på vent', () => {
+    const wrapper = shallow(<BehandlingMenu
+      saksnummer={23}
+      behandlingData={new MenyBehandlingData(1, '3', 2, { kode: behandlingType.TILBAKEKREVING }, true, false, 'enhetsid', 'Enhetsnavn', false, false)}
+      menyKodeverk={kodeverk}
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      previewHenleggBehandling={previewCallback}
+      rettigheter={rettigheter}
+      resumeBehandling={sinon.spy()}
+      shelveBehandling={shelveBehandlingCallback}
+      nyBehandlendeEnhet={sinon.spy()}
+      createNewBehandling={sinon.spy()}
+      behandlendeEnheter={behandlendeEnheter}
+      erTilbakekrevingAktivert={false}
+      setBehandlingOnHold={behandlingOnHoldCallback}
+      openBehandlingForChanges={sinon.spy()}
+      sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
+      push={pushCallback}
+      navAnsatt={navAnsatt}
+    />);
+
+    expect(wrapper.find('PauseBehandlingMenuItem')).has.length(0);
+
+    const behandlingOnHoldMenuItem = wrapper.find('ResumeBehandlingMenuItem');
+    expect(behandlingOnHoldMenuItem).has.length(1);
+    expect(behandlingOnHoldMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
+    expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
+
+    const kanHenleggesMenuItem = wrapper.find(ShelveBehandlingMenuItem);
+    expect(kanHenleggesMenuItem).has.length(1);
+    expect(kanHenleggesMenuItem.prop('henleggBehandlingEnabled')).is.eq(false);
   });
 });

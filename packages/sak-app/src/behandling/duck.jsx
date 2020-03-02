@@ -113,3 +113,4 @@ export const getBehandlingToTrinnsBehandling = createSelector([getBehandling], (
 export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behandling) => (!!behandling && !!behandling.erAktivPapirsoknad));
 export const getBehandlingsresultat = createSelector([getBehandling], (behandling) => behandling.behandlingsresultat);
 export const getBehandlingArsaker = createSelector([getBehandling], (behandling) => behandling.behandlingArsaker);
+export const getKanHenleggeBehandling = createSelector([getBehandling], (behandling) => (behandling ? behandling.kanHenleggeBehandling : false));
