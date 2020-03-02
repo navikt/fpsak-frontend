@@ -533,6 +533,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
     verdiId: 'HistorikkEndretFelt.AvslagOverforingKvoteSykdomIkkeDok',
   },
+  4077: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.FratrekkPleiepenger',
+  },
   4073: {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
     verdiId: 'HistorikkEndretFelt.IkkeRettTilKvoteFordiMorIkkeHarRettForeldrepenger',
@@ -632,6 +636,10 @@ const historikkEndretFeltVerdiTypeCodes = {
   4099: {
     kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
     verdiId: 'HistorikkEndretFelt.opptjeningsvilkarOpphor',
+  },
+  4100: {
+    kode: 'UTTAK_PERIODE_AVSLAG_ÅRSAK',
+    verdiId: 'HistorikkEndretFelt.UttakForOmsorgovertakelse',
   },
   MØDREKVOTE: {
     kode: 'MØDREKVOTE',
