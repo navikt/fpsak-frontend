@@ -4,7 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import PropTypes from 'prop-types';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import styles from './avvikopplysningerPanel.less';
 
 

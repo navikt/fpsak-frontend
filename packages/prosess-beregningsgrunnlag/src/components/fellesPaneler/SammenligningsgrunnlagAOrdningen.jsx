@@ -16,9 +16,9 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
-import Lesmerpanel2 from '../redesign/LesmerPanel_V2';
+import Lesmerpanel from '../redesign/LesmerPanel';
 
 
 const grafFargeAT = '#99bdcd';
@@ -209,7 +209,7 @@ const SammenligningsgrunnlagAOrdningen = ({
   return (
     <>
       <AvsnittSkiller luftOver luftUnder />
-      <Lesmerpanel2
+      <Lesmerpanel
         className={styles.lesMer}
         intro={lagOverskrift(andelStatus, userIdent)}
         lukkTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SkjulMaaneder' })}
@@ -231,7 +231,7 @@ const SammenligningsgrunnlagAOrdningen = ({
         )}
         {lagRader(andeler, relevanteStatuser, skjeringstidspunktDato)}
 
-      </Lesmerpanel2>
+      </Lesmerpanel>
       {lagSumRad(andeler, relevanteStatuser)}
     </>
   );

@@ -58,8 +58,8 @@ describe('<AksjonspunktBehandler>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -91,8 +91,8 @@ describe('<AksjonspunktBehandler>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -125,8 +125,8 @@ describe('<AksjonspunktBehandler>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -159,8 +159,8 @@ describe('<AksjonspunktBehandler>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find(AksjonspunktBehandlerTB);
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');

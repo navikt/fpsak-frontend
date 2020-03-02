@@ -18,14 +18,14 @@ import {
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import TextAreaField2 from '../redesign/TextAreaField_V2';
+import TextAreaField2 from '../redesign/TextAreaField';
 import styles from './aksjonspunktBehandler.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
-import AksjonspunktBehandlerSN from '../selvstendigNaeringsdrivende/AkjsonspunktsbehandlerSN';
+import AksjonspunktBehandlerSN from '../selvstendigNaeringsdrivende/AksjonspunktsbehandlerSN';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);

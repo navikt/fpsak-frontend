@@ -90,7 +90,7 @@ describe('<BeregningsgrunnlagProsessIndex>', () => {
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
     />);
-    const beregningFp = wrapper.find('BeregningFP2');
+    const beregningFp = wrapper.find('BeregningFP');
     expect(beregningFp.length).to.equal(1);
   });
 });

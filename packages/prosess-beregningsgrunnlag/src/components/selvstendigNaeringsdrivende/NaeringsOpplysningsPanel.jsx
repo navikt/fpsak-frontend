@@ -10,8 +10,8 @@ import {
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import Lesmerpanel2 from '../redesign/LesmerPanel_V2';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import Lesmerpanel from '../redesign/LesmerPanel';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import styles from './naeringsOpplysningsPanel.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
@@ -74,7 +74,7 @@ const erNæringNyoppstartetEllerVarigEndret = (naring) => {
 const lagBeskrivelsePanel = (naringsAndel, intl) => (
   <>
     <VerticalSpacer fourPx />
-    <Lesmerpanel2
+    <Lesmerpanel
       className={styles.lesMer}
       intro={lagIntroTilEndringspanel(naringsAndel)}
       lukkTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.SkjulBegrunnelse' })}
@@ -86,7 +86,7 @@ const lagBeskrivelsePanel = (naringsAndel, intl) => (
         {naringsAndel.begrunnelse}
       </Normaltekst>
       )}
-    </Lesmerpanel2>
+    </Lesmerpanel>
   </>
 );
 

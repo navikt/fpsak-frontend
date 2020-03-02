@@ -52,7 +52,7 @@ describe('NaeringsopplysningsPanel', () => {
     expect(messages).to.be.lengthOf(5);
     expect(messages.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andelerForstePeriode.næringer[0].oppgittInntekt));
     expect(messages.at(2).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].orgnr);
-    const lesMer = wrapper.find('Lesmerpanel2');
+    const lesMer = wrapper.find('Lesmerpanel');
     expect(lesMer.length).to.equal(1);
   });
 });

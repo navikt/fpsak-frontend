@@ -10,7 +10,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
