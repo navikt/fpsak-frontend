@@ -24,7 +24,7 @@ import { InputField } from '@fpsak-frontend/form';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
 
 const formPrefix = 'inntektField';

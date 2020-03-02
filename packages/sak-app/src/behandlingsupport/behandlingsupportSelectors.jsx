@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { supportTabs } from '@fpsak-frontend/sak-support-meny';
 
 import { getNavAnsatt } from '../app/duck';
 import fpsakApi from '../data/fpsakApi';
@@ -9,7 +10,6 @@ import {
 } from '../behandling/duck';
 import { getSelectedSaksnummer } from '../fagsak/duck';
 import { getSelectedFagsakStatus } from '../fagsak/fagsakSelectors';
-import SupportPanel from './supportPanels';
 import allSupportPanelAccessRights from './accessSupport';
 
 const getRettigheter = createSelector([
@@ -38,14 +38,14 @@ export const getAccessibleSupportPanels = createSelector(
     getApprovalIsRelevant,
     getRettigheter,
   ],
-  (returnIsRelevant, approvalIsRelevant, rettigheter) => Object.values(SupportPanel)
+  (returnIsRelevant, approvalIsRelevant, rettigheter) => Object.values(supportTabs)
     .filter((supportPanel) => {
       switch (supportPanel) {
-        case SupportPanel.MESSAGES:
+        case supportTabs.MESSAGES:
           return rettigheter.sendMeldingAccess.employeeHasAccess;
-        case SupportPanel.APPROVAL:
+        case supportTabs.APPROVAL:
           return approvalIsRelevant && rettigheter.godkjenningsFaneAccess.employeeHasAccess;
-        case SupportPanel.RETURNED:
+        case supportTabs.RETURNED:
           return returnIsRelevant && rettigheter.fraBeslutterFaneAccess.employeeHasAccess;
         default:
           return true;
@@ -62,11 +62,11 @@ export const getEnabledSupportPanels = createSelector(
   (accessibleSupportPanels, sendMessageIsRelevant, rettigheter) => accessibleSupportPanels
     .filter((supportPanel) => {
       switch (supportPanel) {
-        case SupportPanel.MESSAGES:
+        case supportTabs.MESSAGES:
           return sendMessageIsRelevant && rettigheter.sendMeldingAccess.isEnabled;
-        case SupportPanel.APPROVAL:
+        case supportTabs.APPROVAL:
           return rettigheter.godkjenningsFaneAccess.isEnabled;
-        case SupportPanel.RETURNED:
+        case supportTabs.RETURNED:
           return rettigheter.fraBeslutterFaneAccess.isEnabled;
         default:
           return true;

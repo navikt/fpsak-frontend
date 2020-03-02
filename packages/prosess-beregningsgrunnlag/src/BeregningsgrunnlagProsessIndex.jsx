@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import beregningsgrunnlagBehandlingPropType from './propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagAksjonspunkterPropType from './propTypes/beregningsgrunnlagAksjonspunkterPropType';
-import BeregningFP2 from './components/BeregningFP_V2';
+import BeregningFP2 from './components/BeregningFP';
 
 import messages from '../i18n/nb_NO.json';
 

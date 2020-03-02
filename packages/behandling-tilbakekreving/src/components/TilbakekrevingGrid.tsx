@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
@@ -72,8 +71,6 @@ const TilbakekrevingGrid: FunctionComponent<OwnProps> = ({
       harApenRevurdering={harApenRevurdering}
       hasFetchError={hasFetchError}
     />
-    <VerticalSpacer sixteenPx />
-    <PersonIndex medPanel person={fagsak.fagsakPerson} />
     <VerticalSpacer sixteenPx />
     <TilbakekrevingFakta
       fagsak={fagsak}

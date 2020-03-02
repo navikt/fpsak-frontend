@@ -168,6 +168,8 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
     } = this.props;
     const { visFatterVedtakModal, visApenRevurderingModal } = this.state;
 
+    // TODO (TOR) Skriv denne på samme måte som ForeldrepengerProsess.
+
     const alleSteg = finnTilbakekrevingSteg({
       behandling, aksjonspunkter, perioderForeldelse, beregningsresultat,
     });
@@ -210,26 +212,29 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
           lukkModal={this.toggleFatterVedtakModal}
           tekstkode="FatterTilbakekrevingVedtakStatusModal.Sendt"
         />
-        <ProcessMenu
-          steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-        />
-        {(erStegBehandlet) && (
+        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
+          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
+            <ProcessMenu
+              steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
+              onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
+            />
+          </div>
+          {(erStegBehandlet) && (
           <MargMarkering
             behandlingStatus={behandling.status}
             aksjonspunkter={valgtSteg.aksjonspunkter}
             isReadOnly={valgtSteg.isReadOnly}
           >
             {valgtStegKode === bpc.FORELDELSE && (
-              <ForeldelseProsessIndex
-                perioderForeldelse={perioderForeldelse}
-                apCodes={apCodes}
-                readOnlySubmitButton={readOnlySubmitButton}
-                navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
-                alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
-                beregnBelop={beregnBelop}
-                {...fellesProps}
-              />
+            <ForeldelseProsessIndex
+              perioderForeldelse={perioderForeldelse}
+              apCodes={apCodes}
+              readOnlySubmitButton={readOnlySubmitButton}
+              navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
+              alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
+              beregnBelop={beregnBelop}
+              {...fellesProps}
+            />
             )}
             <DataFetcherBehandlingData
               behandlingDataCache={this.behandlingDataCache}
@@ -265,13 +270,14 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
               )}
             />
           </MargMarkering>
-        )}
-        {(vedtakStegVises && behandling.behandlingHenlagt) && (
+          )}
+          {(vedtakStegVises && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
-        )}
-        {(valgtStegKode && !erStegBehandlet && !behandling.behandlingHenlagt) && (
+          )}
+          {(valgtStegKode && !erStegBehandlet && !behandling.behandlingHenlagt) && (
           <ProsessStegIkkeBehandletPanel />
-        )}
+          )}
+        </div>
       </>
     );
   }

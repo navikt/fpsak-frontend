@@ -24,7 +24,7 @@ import {
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  setTempBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getTempBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
+  setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
   resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
@@ -318,7 +318,7 @@ export const getFagsakInfo = createSelector([
 
 
 const mapStateToProps = (state) => {
-  const behandlingId = getTempBehandlingId(state);
+  const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
   return {
     behandlingId,
@@ -347,6 +347,6 @@ export default trackRouteParam({
   paramName: 'behandlingId',
   parse: (behandlingFromUrl) => Number.parseInt(behandlingFromUrl, 10),
   paramPropType: PropTypes.number,
-  storeParam: setTempBehandlingId,
-  getParamFromStore: getTempBehandlingId,
+  storeParam: setUrlBehandlingId,
+  getParamFromStore: getUrlBehandlingId,
 })(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));
