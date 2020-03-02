@@ -16,7 +16,7 @@ import {
 import {
   previewMessage, erBehandlingPaVent, getBehandlingVersjon, erBehandlingKoet, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getBehandlingType, getSelectedBehandlingId,
-  getBehandlingStatus, getBehandlingErPapirsoknad,
+  getBehandlingStatus, getBehandlingErPapirsoknad, getKanHenleggeBehandling,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
@@ -166,9 +166,11 @@ const getMenyKodeverk = createSelector([getBehandlingType, getAlleFpSakKodeverk,
     .medFpTilbakeKodeverk(alleFpTilbakeKodeverk));
 
 const getMenyBehandlingData = createSelector([getSelectedBehandlingId, getBehandlingerUuidsMappedById, getBehandlingVersjon, getBehandlingType,
-  erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn, getBehandlingErPapirsoknad],
-(behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn, erPapirsoknad) => (versjon
-  ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued, enhetId, enhetNavn, erPapirsoknad)
+  erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn,
+  getBehandlingErPapirsoknad, getKanHenleggeBehandling],
+(behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn, erPapirsoknad, kanHenleggeBehandling) => (versjon
+  ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued,
+    enhetId, enhetNavn, erPapirsoknad, kanHenleggeBehandling)
   : undefined));
 
 const getTilbakekrevingOpprettes = createSelector([
