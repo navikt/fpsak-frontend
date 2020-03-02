@@ -29,6 +29,7 @@ export {
   pathToBehandlinger,
   pathToBehandling,
   pathToMissingPage,
+  pathToAnnenPart,
 } from './src/paths';
 
 export {
