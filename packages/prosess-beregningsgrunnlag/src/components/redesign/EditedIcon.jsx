@@ -22,7 +22,7 @@ const EditedIcon = ({ className }) => {
       <Image
         src={endretFelt}
         alt={intl.formatMessage({ id: 'Behandling.EditedField' })}
-        title={intl.formatMessage({ id: 'Behandling.EditedField' })}
+        tooltip={intl.formatMessage({ id: 'Behandling.EditedField' })}
       />
     </span>
   );

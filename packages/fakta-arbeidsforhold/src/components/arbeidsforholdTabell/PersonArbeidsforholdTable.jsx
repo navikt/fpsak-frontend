@@ -87,7 +87,7 @@ const PersonArbeidsforholdTable = ({
               className={styles.image}
               src={erIBrukImageUrl}
               alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
-              tooltip={{ header: <Element><FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" /></Element> }}
+              tooltip={<Element><FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" /></Element>}
               tabIndex="0"
             />
             )}

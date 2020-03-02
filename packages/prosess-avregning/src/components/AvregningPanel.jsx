@@ -44,12 +44,11 @@ const simuleringAksjonspunkter = [
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
 
-const createHelptextTooltip = (isForeldrepenger) => ({
-  header: (
-    <Normaltekst>
-      <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
-    </Normaltekst>),
-});
+const createHelptextTooltip = (isForeldrepenger) => (
+  <Normaltekst>
+    <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
+  </Normaltekst>
+);
 
 const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
   if (!simuleringResultat) {

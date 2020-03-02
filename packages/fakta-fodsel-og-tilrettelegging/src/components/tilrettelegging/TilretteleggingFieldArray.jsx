@@ -12,6 +12,7 @@ import {
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 
 import TilretteleggingFieldArrayStillingsprosent from './TilretteleggingFieldArrayStillingsprosent';
+import TilretteleggingFieldArrayUtbetalingsgrad from './TilretteleggingFieldArrayUtbetalingsgrad';
 
 import styles from './tilretteleggingFieldArray.less';
 
@@ -28,6 +29,7 @@ export const TilretteleggingFieldArray = ({
   formSectionName,
   behandlingId,
   behandlingVersjon,
+  erOverstyrt,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -80,11 +82,6 @@ export const TilretteleggingFieldArray = ({
                 />
               </FlexColumn>
               <FlexColumn className={styles.smallColumn}>
-                { index === 0 && (
-                <Normaltekst className={styles.tilretteleggingTittel}>
-                  <FormattedMessage id="TilretteleggingFieldArray.Stillingsprosent" />
-                </Normaltekst>
-                )}
                 <TilretteleggingFieldArrayStillingsprosent
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
@@ -94,6 +91,18 @@ export const TilretteleggingFieldArray = ({
                   formSectionName={formSectionName}
                 />
               </FlexColumn>
+              {erOverstyrt && (
+                <FlexColumn className={styles.smallColumn}>
+                  <TilretteleggingFieldArrayUtbetalingsgrad
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    readOnly={readOnly}
+                    tilretteleggingFieldId={fieldId}
+                    index={index}
+                    formSectionName={formSectionName}
+                  />
+                </FlexColumn>
+              )}
               <FlexColumn>
                 { !readOnly && (
                   <>
@@ -117,6 +126,7 @@ TilretteleggingFieldArray.propTypes = {
   formSectionName: PropTypes.string.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  erOverstyrt: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(TilretteleggingFieldArray);

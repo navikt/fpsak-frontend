@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Tooltip from './Tooltip';
+import styles from './image.less';
 
 /**
  * Image
@@ -41,20 +41,19 @@ class Image extends Component {
 
   render() {
     const {
-      tooltip, onClick, onMouseDown, tabIndex, title, className, src, srcHover, alt,
-      alignTooltipArrowLeft,
+      tooltip, onClick, onMouseDown, tabIndex, className, src, srcHover, alt,
     } = this.props;
     let imgSource = src;
     const { isHovering } = this.state;
     if (srcHover !== null && isHovering) {
       imgSource = srcHover;
     }
+
     const image = (
       <img // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
         className={className}
         src={imgSource}
         alt={alt}
-        title={title}
         tabIndex={tabIndex}
         onMouseOver={this.onFocus}
         onMouseOut={this.onBlur}
@@ -66,14 +65,15 @@ class Image extends Component {
       />
     );
 
-    if (tooltip === null) {
+    if (!tooltip) {
       return image;
     }
 
     return (
-      <Tooltip header={tooltip.header} body={tooltip.body} show={isHovering} alignArrowLeft={alignTooltipArrowLeft}>
+      <div className={styles.tooltip}>
         {image}
-      </Tooltip>
+        <span className={styles.tooltiptext}>{tooltip}</span>
+      </div>
     );
   }
 }
@@ -92,13 +92,11 @@ Image.propTypes = {
   onKeyDown: PropTypes.func,
   onClick: PropTypes.func,
   alt: PropTypes.string,
-  title: PropTypes.string,
   tabIndex: PropTypes.string,
-  tooltip: PropTypes.shape({
-    header: PropTypes.node.isRequired,
-    body: PropTypes.node,
-  }),
-  alignTooltipArrowLeft: PropTypes.bool,
+  tooltip: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.node,
+  ]),
 };
 
 Image.defaultProps = {
@@ -109,10 +107,8 @@ Image.defaultProps = {
   onKeyDown: null,
   onClick: () => undefined,
   tabIndex: '-1',
-  tooltip: null,
-  alignTooltipArrowLeft: false,
+  tooltip: undefined,
   alt: null,
-  title: null,
 };
 
 export default Image;

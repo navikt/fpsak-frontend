@@ -38,7 +38,7 @@ const PersonInfo = ({
         className={styles.icon}
         src={erKvinne ? urlKvinne : urlMann}
         alt={intl.formatMessage({ id: 'Person.ImageText' })}
-        title={intl.formatMessage({ id: erKvinne ? 'Person.Woman' : 'Person.Man' })}
+        tooltip={intl.formatMessage({ id: erKvinne ? 'Person.Woman' : 'Person.Man' })}
       />
       <div className={styles.infoPlaceholder}>
         <div>

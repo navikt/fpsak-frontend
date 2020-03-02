@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -6,9 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
+import { Knapp } from 'nav-frontend-knapper';
 
 import {
-  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, OverstyringKnapp,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -65,6 +66,11 @@ export const FodselOgTilretteleggingFaktaForm = ({
   ...formProps
 }) => {
   const visInfoAlert = useMemo(() => skalViseInfoAlert(iayArbeidsforhold, arbeidsforhold), [behandlingVersjon]);
+  const [erOverstyrt, skalOverstyre] = useState(false);
+  const toggleAv = useCallback(() => {
+    formProps.reset();
+    skalOverstyre(false);
+  });
 
   return (
     <form onSubmit={formProps.handleSubmit}>
@@ -97,6 +103,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
             <Normaltekst className={styles.arbeidsforholdTittel}>
               <FormattedMessage id="FodselOgTilretteleggingFaktaForm.ArbeidsforholdDetErSoktTilretteleggingFor" />
             </Normaltekst>
+            <OverstyringKnapp onClick={skalOverstyre} erOverstyrt={erOverstyrt} />
           </FlexColumn>
         </FlexRow>
         {visInfoAlert && (
@@ -131,6 +138,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
                 readOnly={readOnly}
                 arbeidsforhold={a}
                 formSectionName={utledFormSectionName(a)}
+                erOverstyrt={erOverstyrt}
               />
             ))}
           </FlexColumn>
@@ -150,21 +158,32 @@ export const FodselOgTilretteleggingFaktaForm = ({
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
+      <VerticalSpacer twentyPx />
       <FlexContainer fluid wrap>
         <FlexRow>
           <FlexColumn>
-            <ElementWrapper>
-              <VerticalSpacer twentyPx />
-              <FaktaSubmitButton
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                formName={FODSEL_TILRETTELEGGING_FORM}
-                isSubmittable={submittable && !formProps.error}
-                isReadOnly={readOnly}
-                hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-              />
-            </ElementWrapper>
+            <FaktaSubmitButton
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              formName={FODSEL_TILRETTELEGGING_FORM}
+              isSubmittable={submittable && !formProps.error}
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+            />
           </FlexColumn>
+          {erOverstyrt && (
+            <FlexColumn>
+              <Knapp
+                htmlType="button"
+                spinner={formProps.submitting}
+                disabled={formProps.submitting}
+                onClick={toggleAv}
+                mini
+              >
+                <FormattedMessage id="FodselOgTilretteleggingFaktaForm.Avbryt" />
+              </Knapp>
+            </FlexColumn>
+          )}
         </FlexRow>
       </FlexContainer>
     </form>

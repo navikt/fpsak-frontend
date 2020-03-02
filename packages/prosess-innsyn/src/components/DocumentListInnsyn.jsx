@@ -27,7 +27,7 @@ const getDirectionImage = (document, intl) => {
         className={styles.image}
         src={mottaDokumentImageUrl}
         alt={intl.formatMessage({ id: 'DocumentListInnsyn.Motta' })}
-        title={intl.formatMessage({ id: 'DocumentListInnsyn.Motta' })}
+        tooltip={intl.formatMessage({ id: 'DocumentListInnsyn.Motta' })}
       />
     );
   }
@@ -37,7 +37,7 @@ const getDirectionImage = (document, intl) => {
         className={styles.image}
         src={sendDokumentImageUrl}
         alt={intl.formatMessage({ id: 'DocumentListInnsyn.Send' })}
-        title={intl.formatMessage({ id: 'DocumentListInnsyn.Send' })}
+        tooltip={intl.formatMessage({ id: 'DocumentListInnsyn.Send' })}
       />
     );
   }
@@ -46,7 +46,7 @@ const getDirectionImage = (document, intl) => {
       className={styles.image}
       src={internDokumentImageUrl}
       alt={intl.formatMessage({ id: 'DocumentListInnsyn.Intern' })}
-      title={intl.formatMessage({ id: 'DocumentListInnsyn.Intern' })}
+      tooltip={intl.formatMessage({ id: 'DocumentListInnsyn.Intern' })}
     />
   );
 };
