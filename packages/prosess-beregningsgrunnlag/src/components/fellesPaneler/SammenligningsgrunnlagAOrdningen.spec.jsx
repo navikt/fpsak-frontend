@@ -5,7 +5,7 @@ import moment from 'moment';
 import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import SammenligningsgrunnlagAOrdningen from './SammenligningsgrunnlagAOrdningen';
-import Lesmerpanel2 from '../redesign/LesmerPanel_V2';
+import Lesmerpanel2 from '../redesign/LesmerPanel';
 
 
 const relevanteStatuser = {
