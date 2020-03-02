@@ -205,6 +205,8 @@
   "HistorikkEndretFelt.IkkeRettTilKvoteFordiMorIkkeHarRettForeldrepenger": "Ikke rett til kvote fordi mor ikke har rett til foreldrepenger",
   "HistorikkEndretFelt.AktivitetskravArbeidIkkeDok": "Aktivitetskrav- arbeid ikke dokumentert",
   "HistorikkEndretFelt.AvslagOverforingKvoteSykdomIkkeDok": "Avslag overføring av kvote pga. sykdom/skade/innleggelse er ikke dokumentert",
+  "HistorikkEndretFelt.UttakForOmsorgovertakelse": "Uttak før omsorgsovertakelse",
+  "HistorikkEndretFelt.FratrekkPleiepenger": "Innvilget prematuruker, med fratrekk pleiepenger",
   "HistorikkEndretFelt.AvslagOverforingIkkeAleneomsorg": "Avslag overføring - har ikke aleneomsorg for barnet",
   "HistorikkEndretFelt.AvslagGraderingsavtaleManglerIkkeDok": "Avslag graderingsavtale mangler - ikke dokumentert",
   "HistorikkEndretFelt.AnnenPartOverlappendeUttaksperioder": "Annen part har overlappende uttaksperioder som er innvilget utsettelse",

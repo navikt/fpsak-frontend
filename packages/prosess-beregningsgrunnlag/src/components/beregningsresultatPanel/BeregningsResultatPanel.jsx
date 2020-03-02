@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import avslaatIkonUrl from '@fpsak-frontend/assets/images/avslaatt_mini.svg';
 import Panel from 'nav-frontend-paneler';
-import styles from './beregningsresultatTable_V2.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import styles from './beregningsresultatTable.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 
@@ -43,9 +43,9 @@ const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
       <Row key="beregningOppsummering">
         <Column xs="9" key="beregningOppsummeringLedetekst">
           <Normaltekst>
-            <span className={beregningStyles.semiBoldText}>
+            <span>
               { !ikkeVurdert && (
-                <FormattedMessage
+                <FormattedHTMLMessage
                   id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
                   values={{ dagSats: dagsatsRad.grunnlag }}
                 />
@@ -93,19 +93,19 @@ const lagAndelerRader = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entr
       </Normaltekst>
     </Column>
     {!ikkeVurdert && (
-    <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-      <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-    </Column>
+      <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
+        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
+      </Column>
     )}
     {ikkeVurdert && entry.skalFastsetteGrunnlag === true && (
-    <Column xs="3" key={`indexAf2${index + 2}`} className={styles.maaFastsettes}>
-      <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
-    </Column>
+      <Column xs="3" key={`indexAf2${index + 2}`} className={styles.maaFastsettes}>
+        <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
+      </Column>
     )}
     {ikkeVurdert && !entry.skalFastsetteGrunnlag && (
-    <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-      <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-    </Column>
+      <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
+        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
+      </Column>
     )}
   </Row>
 ))
@@ -181,7 +181,6 @@ const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, 
   const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
   const ikkeOppfylt = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   const ikkeVurdert = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT);
-
   return (
     <React.Fragment key={`Wr${key}`}>
       {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers, periodeIndex)}

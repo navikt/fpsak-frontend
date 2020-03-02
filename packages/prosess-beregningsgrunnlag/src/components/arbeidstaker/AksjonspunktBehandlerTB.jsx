@@ -10,6 +10,7 @@ import {
 import {
   behandlingFormValueSelector,
   getKodeverknavnFn,
+  createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/fp-felles';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -22,8 +23,8 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { InputField } from '@fpsak-frontend/form';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
-import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
 
 const formPrefix = 'inntektField';

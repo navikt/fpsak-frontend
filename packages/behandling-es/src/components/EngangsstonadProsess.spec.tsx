@@ -1,12 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import ProcessMenu from '@navikt/nap-process-menu';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { omit } from '@fpsak-frontend/utils';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { ProsessStegPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/behandling-felles';
+import {
+  ProsessStegPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal, ProsessStegContainer,
+} from '@fpsak-frontend/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -99,8 +100,8 @@ describe('<EngangsstonadProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProcessMenu);
-    expect(meny.prop('steps')).is.eql([{
+    const meny = wrapper.find(ProsessStegContainer);
+    expect(meny.prop('formaterteProsessStegPaneler')).is.eql([{
       isActive: true,
       isDisabled: false,
       isFinished: false,
@@ -148,9 +149,9 @@ describe('<EngangsstonadProsess>', () => {
       />,
     );
 
-    const meny = wrapper.find(ProcessMenu);
+    const meny = wrapper.find(ProsessStegContainer);
 
-    meny.prop('onClick')(3);
+    meny.prop('velgProsessStegPanelCallback')(3);
 
     const opppdaterKall = oppdaterProsessStegOgFaktaPanelIUrl.getCalls();
     expect(opppdaterKall).to.have.length(1);

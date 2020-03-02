@@ -40,6 +40,8 @@ export const FpsakApiKeys = {
   HAR_APENT_KONTROLLER_REVURDERING_AP: 'HAR_APENT_KONTROLLER_REVURDERING_AP',
   TOTRINNS_KLAGE_VURDERING: 'TOTRINNS_KLAGE_VURDERING',
   HAR_REVURDERING_SAMME_RESULTAT: 'HAR_REVURDERING_SAMME_RESULTAT',
+  BEHANDLING_PERSONOPPLYSNINGER: 'BEHANDLING_PERSONOPPLYSNINGER',
+  BEHANDLING_FAMILIE_HENDELSE: 'BEHANDLING_FAMILIE_HENDELSE',
 };
 
 
@@ -62,6 +64,9 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
 
+  .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
+  .withRel('familiehendelse-v2', FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
+
   /* /api/behandling/beregningsresultat */
   .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
 
@@ -72,6 +77,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
 
   /* Brev */
+  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
   .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
   .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
 
@@ -102,8 +108,6 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/aktoer */
   .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
-
-  .withGet('/fpformidling/api/brev/maler', FpsakApiKeys.BREVMALER)
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
 
   .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)

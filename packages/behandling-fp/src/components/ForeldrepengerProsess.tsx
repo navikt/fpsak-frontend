@@ -4,13 +4,12 @@ import React, {
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
-import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal, ProsessStegPanel,
+  FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
 import {
   Kodeverk, NavAnsatt, Behandling,
@@ -144,18 +143,22 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps>
         lukkModal={useCallback(() => { toggleFatterVedtakModal(false); opneSokeside(); }, [])}
         tekstkode={fatterVedtakTextCode}
       />
-      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={velgProsessStegPanelCallback} />
-      <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
-        fagsak={fagsak}
-        behandling={behandling}
-        alleKodeverk={alleKodeverk}
-        apentFaktaPanelInfo={apentFaktaPanelInfo}
-        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        lagringSideeffekterCallback={lagringSideeffekterCallback}
-        behandlingApi={fpBehandlingApi}
-        dispatch={dispatch}
-      />
+      <ProsessStegContainer
+        formaterteProsessStegPaneler={formaterteProsessStegPaneler}
+        velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+      >
+        <ProsessStegPanel
+          valgtProsessSteg={valgtPanel}
+          fagsak={fagsak}
+          behandling={behandling}
+          alleKodeverk={alleKodeverk}
+          apentFaktaPanelInfo={apentFaktaPanelInfo}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          lagringSideeffekterCallback={lagringSideeffekterCallback}
+          behandlingApi={fpBehandlingApi}
+          dispatch={dispatch}
+        />
+      </ProsessStegContainer>
     </>
   );
 };

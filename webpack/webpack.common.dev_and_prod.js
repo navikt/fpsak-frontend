@@ -104,13 +104,39 @@ const config = {
           }],
         include: [CSS_DIR, CORE_DIR],
       }, {
-        test: /\.(jpg|png|svg)$/,
+        test: /\.(svg)$/,
+        issuer: {
+          test: /\.less?$/
+        },
         loader: 'file-loader',
         options: {
           esModule: false,
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
-        include: [CORE_DIR, IMAGE_DIR],
+        include: [IMAGE_DIR],
+      }, {
+        test: /\.(svg)$/,
+        issuer: {
+          test: /\.(jsx|tsx)?$/
+        },
+        use: [{
+          loader: '@svgr/webpack',
+        },{
+          loader: 'file-loader',
+          options: {
+            esModule: false,
+            name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
+          },
+        }],
+        include: [IMAGE_DIR],
+      },{
+        test: /\.(svg)$/,
+        loader: 'file-loader',
+        options: {
+          esModule: false,
+          name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
+        },
+        include: [CORE_DIR],
       }],
   },
 
