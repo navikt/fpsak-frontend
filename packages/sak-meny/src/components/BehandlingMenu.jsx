@@ -140,6 +140,16 @@ class BehandlingMenu extends Component {
       && !this.isBehandlingOnHold();
   }
 
+  hasHenleggBehandlingEnabledForTilbakekreving() {
+    const { behandlingData } = this.props;
+    if ((behandlingData.type.kode === BehandlingType.TILBAKEKREVING
+      || behandlingData.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING)
+      && !behandlingData.kanHenlegge) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     if (this.hasNotAccessOrKanVeilede()) {
       return null;
@@ -201,7 +211,7 @@ class BehandlingMenu extends Component {
                 previewHenleggBehandling={previewHenleggBehandling}
                 shelveBehandling={shelveBehandling}
                 push={push}
-                henleggBehandlingEnabled={rettigheter.henleggBehandlingAccess.isEnabled}
+                henleggBehandlingEnabled={rettigheter.henleggBehandlingAccess.isEnabled && this.hasHenleggBehandlingEnabledForTilbakekreving()}
                 ytelseType={ytelseType}
                 behandlingType={behandlingData.type}
                 behandlingUuid={behandlingData.uuid}

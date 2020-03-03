@@ -46,7 +46,7 @@ describe('<AvviksopplysningerSN>', () => {
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
-    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.NyIArbeidslivet');
+    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avviksopplysninger.SN.NyIArbeidslivet');
   });
   it('Skal teste komponenten ved !erVarigEndring && !erNyoppstartet', () => {
     forstePeriode[0].erNyIArbeidslivet = false;
@@ -61,7 +61,7 @@ describe('<AvviksopplysningerSN>', () => {
     const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
-    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring');
+    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avviksopplysninger.SN.IkkeVarigEndring');
   });
   it('Skal teste at komponenten render avvikstabell', () => {
     forstePeriode[0].erNyIArbeidslivet = false;

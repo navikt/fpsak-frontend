@@ -53,10 +53,10 @@ const lagRelevantePaneler = (
   gjelderBesteberegning,
 ) => {
   if (gjelderBesteberegning) {
-    return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Besteberegning" /></Normaltekst>);
+    return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.Besteberegning" /></Normaltekst>);
   }
   if (relevanteStatuser.isMilitaer) {
-    return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" /></Normaltekst>);
+    return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.Miletar" /></Normaltekst>);
   }
   return (
     <FlexContainer>
@@ -65,7 +65,7 @@ const lagRelevantePaneler = (
           <Row>
             <Column xs="12">
               <Normaltekst>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AAP" />
+                <FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.AAP" />
               </Normaltekst>
             </Column>
           </Row>
@@ -76,7 +76,7 @@ const lagRelevantePaneler = (
           <Row>
             <Column xs="12">
               <Normaltekst>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+                <FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.Dagpenger" />
               </Normaltekst>
             </Column>
           </Row>
@@ -134,7 +134,7 @@ const AvviksopplysningerPanel = ({
     <Panel className={beregningStyles.panelRight}>
       <AvsnittSkiller luftUnder />
       <Element className={beregningStyles.avsnittOverskrift}>
-        <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
+        <FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation" />
       </Element>
       <VerticalSpacer eightPx />
       {
