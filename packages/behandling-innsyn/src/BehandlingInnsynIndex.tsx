@@ -6,25 +6,15 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner, BehandlingDataCache,
+  FagsakInfo, DataFetcherBehandlingDataV2, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Behandling, Kodeverk, NavAnsatt, Aksjonspunkt, Dokument, Vilkar,
-} from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
 
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
-import InnsynGrid from './components/InnsynGrid';
-import Innsyn from './types/innsynTsType';
+import InnsynPaneler from './components/InnsynPaneler';
+import FetchedData from './types/fetchedDataTsType';
 
 const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN, innsynApi.INNSYN_DOKUMENTER];
-
-interface DataProps {
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  innsyn: Innsyn;
-  innsynDokumenter: Dokument[];
-}
 
 interface OwnProps {
   behandlingId: number;
@@ -32,7 +22,7 @@ interface OwnProps {
   kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   location: {};
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -44,6 +34,7 @@ interface OwnProps {
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
 }
 
 interface DispatchProps {
@@ -60,8 +51,6 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingInnsynIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
@@ -75,7 +64,6 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
       henleggBehandling: (params) => henleggBehandling(params),
     });
 
-    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
   }
 
@@ -94,12 +82,13 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl,
+      oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
       hentBehandling,
       opneSokeside,
       behandling,
+      forrigeBehandling,
     } = this.props;
 
     if (!behandling) {
@@ -108,32 +97,27 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
 
     reduxRestApi.injectPaths(behandling.links);
 
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
-    }
-
     return (
-      <DataFetcherBehandlingData
-        behandlingDataCache={this.behandlingDataCache}
+      <DataFetcherBehandlingDataV2
         behandlingVersion={behandling.versjon}
         showOldDataWhenRefetching
         endpoints={innsynData}
         endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
-        render={(dataProps: DataProps) => (
+        render={(dataProps: FetchedData, isFinished) => (
           <>
-            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
-            <InnsynGrid
+            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
+            <InnsynPaneler
+              behandling={isFinished ? behandling : forrigeBehandling}
+              fetchedData={dataProps}
               fagsak={fagsak}
               kodeverk={kodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}
               opneSokeside={opneSokeside}
-              {...dataProps}
             />
           </>
         )}
@@ -144,6 +128,7 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
 
 const mapStateToProps = (state) => ({
   behandling: innsynApi.BEHANDLING_INNSYN.getRestApiData()(state),
+  forrigeBehandling: innsynApi.BEHANDLING_INNSYN.getRestApiPreviousData()(state),
 });
 
 const getResetRestApiContext = () => (dispatch) => {
