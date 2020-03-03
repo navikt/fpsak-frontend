@@ -34,7 +34,8 @@ const OverstyringKnapp = ({
       className={isOverstyrt ? styles.keyWithoutCursor : styles.key}
       src={isOverstyrt ? keyUtgraetImage : keyImage}
       onClick={setOverstyrtFn}
-      tabIndex={0}
+      onKeyDown={setOverstyrtFn}
+      tabIndex="0"
       tooltip={intl.formatMessage({ id: 'OverstyringKnapp.Overstyring' })}
     />
   );
