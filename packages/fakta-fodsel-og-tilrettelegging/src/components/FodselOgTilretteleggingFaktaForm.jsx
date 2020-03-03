@@ -63,6 +63,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
   submittable,
   arbeidsforhold,
   iayArbeidsforhold,
+  erOverstyrer,
   ...formProps
 }) => {
   const visInfoAlert = useMemo(() => skalViseInfoAlert(iayArbeidsforhold, arbeidsforhold), [behandlingVersjon]);
@@ -103,7 +104,9 @@ export const FodselOgTilretteleggingFaktaForm = ({
             <Normaltekst className={styles.arbeidsforholdTittel}>
               <FormattedMessage id="FodselOgTilretteleggingFaktaForm.ArbeidsforholdDetErSoktTilretteleggingFor" />
             </Normaltekst>
-            <OverstyringKnapp onClick={skalOverstyre} erOverstyrt={erOverstyrt} />
+            {erOverstyrer && (
+              <OverstyringKnapp onClick={skalOverstyre} erOverstyrt={readOnly || erOverstyrt} />
+            )}
           </FlexColumn>
         </FlexRow>
         {visInfoAlert && (
@@ -199,6 +202,7 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   submittable: PropTypes.bool.isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
   iayArbeidsforhold: PropTypes.arrayOf(iayArbeidsforholdPropType).isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 FodselOgTilretteleggingFaktaForm.defaultProps = {

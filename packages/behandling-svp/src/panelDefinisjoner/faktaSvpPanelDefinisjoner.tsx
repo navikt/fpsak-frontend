@@ -67,7 +67,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [svpBehandlingApi.SVANGERSKAPSPENGER_TILRETTELEGGING],
   renderComponent: (props) => <FodselOgTilretteleggingFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ inntektArbeidYtelse }) => ({ inntektArbeidYtelse }),
+  getData: ({ rettigheter, inntektArbeidYtelse }) => ({ erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled, inntektArbeidYtelse }),
 }, {
   urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
   textCode: 'MedlemskapInfoPanel.Medlemskap',

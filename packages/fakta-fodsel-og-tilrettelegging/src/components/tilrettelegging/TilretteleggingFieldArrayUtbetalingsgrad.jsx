@@ -58,7 +58,8 @@ const mapStateToProps = (state, ownProps) => {
   const tilretteleggingKode = behandlingFormValueSelector('FodselOgTilretteleggingForm', behandlingId, behandlingVersjon)(state,
     `${formSectionName}.tilretteleggingDatoer[${index}].type.kode`);
   return {
-    showUtbetalingsgrad: tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING,
+    showUtbetalingsgrad: tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING
+      || tilretteleggingKode === tilretteleggingType.INGEN_TILRETTELEGGING,
   };
 };
 
