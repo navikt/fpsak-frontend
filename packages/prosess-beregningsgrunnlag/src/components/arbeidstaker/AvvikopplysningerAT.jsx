@@ -9,12 +9,38 @@ import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFLSN';
 
+const viserIkkeAvviksvurdering = (erKombinasjonsstatusATSN, erKombinasjonsstatusATFLSN) => (
+  <FlexRow>
+    <Column xs="12">
+      <Normaltekst>
+        {erKombinasjonsstatusATSN && (
+          <FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.AT.KobinasjonsStatusATSN" />
+        )}
+        {erKombinasjonsstatusATFLSN && (
+          <FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.AT.KobinasjonsStatusATFLSN" />
+        )}
+      </Normaltekst>
+    </Column>
+  </FlexRow>
+);
+
 const AvviksopplysningerAT = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
 }) => {
+  const erKombinasjonsstatusATSN = relevanteStatuser.isKombinasjonsstatus
+    && relevanteStatuser.isArbeidstaker
+    && relevanteStatuser.isSelvstendigNaeringsdrivende
+    && !relevanteStatuser.isFrilanser;
+  const erKombinasjonsstatusATFLSN = relevanteStatuser.isKombinasjonsstatus
+    && relevanteStatuser.isArbeidstaker
+    && relevanteStatuser.isSelvstendigNaeringsdrivende
+    && relevanteStatuser.isFrilanser;
+  if (erKombinasjonsstatusATSN || erKombinasjonsstatusATFLSN) {
+    return viserIkkeAvviksvurdering(erKombinasjonsstatusATSN, erKombinasjonsstatusATFLSN);
+  }
   const sammenligningsGrunnlagAT = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.AT
-      || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
+    || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
     : undefined;
   if (!sammenligningsGrunnlagAT) {
     return null;
@@ -23,50 +49,21 @@ const AvviksopplysningerAT = ({
   const avvikATRounded = avvikAT ? parseFloat((avvikAT.toFixed(1))) : 0;
   const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagAT;
-  const kombinasjonsstatusATSN = relevanteStatuser.isKombinasjonsstatus
-    && relevanteStatuser.isArbeidstaker
-    && relevanteStatuser.isSelvstendigNaeringsdrivende
-    && !relevanteStatuser.isFrilanser;
-  const kombinasjonsstatusATFLSN = relevanteStatuser.isKombinasjonsstatus
-    && relevanteStatuser.isArbeidstaker
-    && relevanteStatuser.isSelvstendigNaeringsdrivende
-    && relevanteStatuser.isFrilanser;
   const visPaneler = {
     visAT: true,
     visFL: false,
     visSN: false,
   };
-  if (kombinasjonsstatusATSN || kombinasjonsstatusATFLSN) {
-    return (
-      <FlexRow>
-        <Column xs="12">
-          <Normaltekst>
-            {kombinasjonsstatusATSN && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
-            )}
-            {kombinasjonsstatusATFLSN && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" />
-            )}
-          </Normaltekst>
-        </Column>
-      </FlexRow>
-    );
-  }
-
-
-  if (sammenligningsgrunnlagSumAT) {
-    return (
-      <AvvikopplysningerATFL
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        avvikProsentAvrundet={avvikATRounded}
-        differanseBeregnet={differanseBeregnet}
-        relevanteStatuser={relevanteStatuser}
-        visPanel={visPaneler}
-        sammenligningsgrunnlagSum={sammenligningsgrunnlagSumAT}
-      />
-    );
-  }
-  return null;
+  return (
+    <AvvikopplysningerATFL
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      avvikProsentAvrundet={avvikATRounded}
+      differanseBeregnet={differanseBeregnet}
+      relevanteStatuser={relevanteStatuser}
+      visPanel={visPaneler}
+      sammenligningsgrunnlagSum={sammenligningsgrunnlagSumAT}
+    />
+  );
 };
 
 

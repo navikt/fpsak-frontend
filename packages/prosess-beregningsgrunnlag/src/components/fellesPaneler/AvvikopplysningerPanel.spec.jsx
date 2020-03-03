@@ -45,7 +45,7 @@ describe('<Avviksopplysninger>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelAT = wrapper.find('AvviksopplysningerAT');
     expect(avvikPanelAT.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
@@ -62,7 +62,7 @@ describe('<Avviksopplysninger>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelAT = wrapper.find('AvviksopplysningerAT');
     expect(avvikPanelAT.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
@@ -96,7 +96,7 @@ describe('<Avviksopplysninger>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelSN = wrapper.find('AvviksopplysningerSN');
     expect(avvikPanelSN.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
@@ -116,7 +116,7 @@ describe('<Avviksopplysninger>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelFL = wrapper.find('AvviksopplysningerFL');
     expect(avvikPanelFL.props().sammenligningsgrunnlagPrStatus[0]).to.equal(sammenligningsgrunnlagPrStatus);
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
@@ -136,11 +136,11 @@ describe('<Avviksopplysninger>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
     const formatedText = rows.first().find('FormattedMessage');
-    expect(formatedText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AAP');
+    expect(formatedText.first().prop('id')).to.eql('Beregningsgrunnlag.Avviksopplysninger.AAP');
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
@@ -160,11 +160,11 @@ describe('<Avviksopplysninger>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
     const formatedText = rows.first().find('FormattedMessage');
-    expect(formatedText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.Dagpenger');
+    expect(formatedText.first().prop('id')).to.eql('Beregningsgrunnlag.Avviksopplysninger.Dagpenger');
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
@@ -185,8 +185,8 @@ describe('<Avviksopplysninger>', () => {
     const panel = wrapper.find('PanelBase');
     const formatedText = panel.find('FormattedMessage');
     const headerTitle = formatedText.first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
-    expect(formatedText.last().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.Miletar');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
+    expect(formatedText.last().prop('id')).to.eql('Beregningsgrunnlag.Avviksopplysninger.Miletar');
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
@@ -207,8 +207,8 @@ describe('<Avviksopplysninger>', () => {
     const panel = wrapper.find('PanelBase');
     const formatedText = panel.find('FormattedMessage');
     const headerTitle = formatedText.first();
-    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation');
-    expect(formatedText.last().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.Besteberegning');
+    expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
+    expect(formatedText.last().prop('id')).to.eql('Beregningsgrunnlag.Avviksopplysninger.Besteberegning');
     expect(wrapper.find('AvviksopplysningerAT')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
