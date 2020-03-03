@@ -49,11 +49,12 @@ const prosessStegPanelDefinisjoner = [{
     renderComponent: (props) => <VedtakInnsynProsessIndex {...props} />,
     showComponent: () => true,
     getData: ({
-      innsyn, alleDokumenter, fagsak, previewCallback,
+      innsyn, alleDokumenter, fagsak, previewCallback, aksjonspunkter,
     }) => ({
       innsyn,
       alleDokumenter,
       previewCallback,
+      aksjonspunkter,
       saksnummer: fagsak.saksnummer,
     }),
     overrideStatus: ({

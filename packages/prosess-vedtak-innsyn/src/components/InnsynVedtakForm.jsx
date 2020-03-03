@@ -12,7 +12,7 @@ import {
   BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/fp-felles';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -73,73 +73,71 @@ export const InnsynVedtakFormImpl = ({
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
   return (
-    <FadingPanel>
-      <form onSubmit={formProps.handleSubmit}>
-        <Undertittel><FormattedMessage id={readOnly ? 'InnsynVedtakForm.Vedtak' : 'InnsynVedtakForm.ForslagVedtak'} /></Undertittel>
-        <VerticalSpacer eightPx />
-        <Undertekst><FormattedMessage id="InnsynVedtakForm.Resultat" /></Undertekst>
-        <Normaltekst>
-          <FormattedMessage id={findResultTypeMessage(resultat)} />
-        </Normaltekst>
-        <VerticalSpacer eightPx />
-        <Undertekst><FormattedMessage id="InnsynVedtakForm.Vurdering" /></Undertekst>
-        <Normaltekst className={styles.wordwrap}>{decodeHtmlEntity(apBegrunnelse)}</Normaltekst>
-        <VerticalSpacer twentyPx />
-        {(resultat !== innsynResultatType.INNVILGET) && (
-          <Row>
-            <Column xs="8">
-              <TextAreaField
-                name="begrunnelse"
-                label={intl.formatMessage({ id: 'InnsynVedtakForm.Fritekst' })}
-                validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
-                maxLength={1500}
-                readOnly={readOnly}
-                badges={[{
-                  type: 'fokus',
-                  textId: getLanguageCodeFromSprakkode(sprakkode),
-                  title: 'Malform.Beskrivelse',
-                }]}
-              />
-            </Column>
-          </Row>
+    <form onSubmit={formProps.handleSubmit}>
+      <Undertittel><FormattedMessage id={readOnly ? 'InnsynVedtakForm.Vedtak' : 'InnsynVedtakForm.ForslagVedtak'} /></Undertittel>
+      <VerticalSpacer eightPx />
+      <Undertekst><FormattedMessage id="InnsynVedtakForm.Resultat" /></Undertekst>
+      <Normaltekst>
+        <FormattedMessage id={findResultTypeMessage(resultat)} />
+      </Normaltekst>
+      <VerticalSpacer eightPx />
+      <Undertekst><FormattedMessage id="InnsynVedtakForm.Vurdering" /></Undertekst>
+      <Normaltekst className={styles.wordwrap}>{decodeHtmlEntity(apBegrunnelse)}</Normaltekst>
+      <VerticalSpacer twentyPx />
+      {(resultat !== innsynResultatType.INNVILGET) && (
+      <Row>
+        <Column xs="8">
+          <TextAreaField
+            name="begrunnelse"
+            label={intl.formatMessage({ id: 'InnsynVedtakForm.Fritekst' })}
+            validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+            badges={[{
+              type: 'fokus',
+              textId: getLanguageCodeFromSprakkode(sprakkode),
+              title: 'Malform.Beskrivelse',
+            }]}
+          />
+        </Column>
+      </Row>
+      )}
+      <VerticalSpacer twentyPx />
+      {resultat !== innsynResultatType.AVVIST && (
+      <DocumentListVedtakInnsyn saksNr={saksNr} documents={documents.filter((document) => document.fikkInnsyn === true)} readOnly={readOnly} />
+      )}
+      <VerticalSpacer twentyPx />
+      <Row>
+        {!readOnly && (
+        <Column xs="3">
+          <BehandlingspunktSubmitButton
+            textCode="SubmitButton.ConfirmInformation"
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            formName={formProps.form}
+            isReadOnly={readOnly}
+            isSubmittable
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
+        </Column>
         )}
-        <VerticalSpacer twentyPx />
-        {resultat !== innsynResultatType.AVVIST && (
-          <DocumentListVedtakInnsyn saksNr={saksNr} documents={documents.filter((document) => document.fikkInnsyn === true)} readOnly={readOnly} />
-        )}
-        <VerticalSpacer twentyPx />
-        <Row>
-          {!readOnly && (
-            <Column xs="3">
-              <BehandlingspunktSubmitButton
-                textCode="SubmitButton.ConfirmInformation"
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                formName={formProps.form}
-                isReadOnly={readOnly}
-                isSubmittable
-                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-                isBehandlingFormDirty={isBehandlingFormDirty}
-                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-              />
-            </Column>
-          )}
-          <Column xs="4">
-            <a
-              onClick={previewBrev}
-              onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
-              className="lenke lenke--frittstaende"
-              target="_blank"
-              rel="noopener noreferrer"
-              role="link"
-              tabIndex="0"
-            >
-              <FormattedMessage id={readOnly ? 'InnsynVedtakForm.VisVedtaksbrev' : 'InnsynVedtakForm.ForhåndsvisBrev'} />
-            </a>
-          </Column>
-        </Row>
-      </form>
-    </FadingPanel>
+        <Column xs="4">
+          <a
+            onClick={previewBrev}
+            onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
+            className="lenke lenke--frittstaende"
+            target="_blank"
+            rel="noopener noreferrer"
+            role="link"
+            tabIndex="0"
+          >
+            <FormattedMessage id={readOnly ? 'InnsynVedtakForm.VisVedtaksbrev' : 'InnsynVedtakForm.ForhåndsvisBrev'} />
+          </a>
+        </Column>
+      </Row>
+    </form>
   );
 };
 
