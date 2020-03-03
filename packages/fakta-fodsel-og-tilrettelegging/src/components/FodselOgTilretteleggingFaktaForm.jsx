@@ -50,6 +50,8 @@ const skalViseInfoAlert = (iayArbeidsforhold, tilretteleggingArbeidsforhold) => 
   .every((ta) => iayArbeidsforhold.some((ia) => ta.arbeidsgiverIdent === ia.arbeidsgiverIdentifikator
     && erInnenforIntervall(ta.tilretteleggingBehovFom, ia.fomDato, ia.tomDato)));
 
+const harMinstEnOverstyrtUtbetalingsgrad = (arbeidsforhold) => arbeidsforhold.some((a) => a.tilretteleggingDatoer.some((t) => t.overstyrtUtbetalingsgrad));
+
 /**
  * Svangerskapspenger
  * Presentasjonskomponent - viser tillrettlegging før svangerskapspenger
@@ -67,7 +69,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
   ...formProps
 }) => {
   const visInfoAlert = useMemo(() => skalViseInfoAlert(iayArbeidsforhold, arbeidsforhold), [behandlingVersjon]);
-  const [erOverstyrt, skalOverstyre] = useState(false);
+  const [erOverstyrt, skalOverstyre] = useState(harMinstEnOverstyrtUtbetalingsgrad(arbeidsforhold));
   const toggleAv = useCallback(() => {
     formProps.reset();
     skalOverstyre(false);

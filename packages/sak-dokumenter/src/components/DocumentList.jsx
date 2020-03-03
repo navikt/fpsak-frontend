@@ -91,7 +91,7 @@ const DocumentList = ({
               <Image
                 className={styles.image}
                 src={erIBrukImageUrl}
-                tooltip={<Normaltekst><FormattedMessage id="DocumentList.IBruk" /></Normaltekst>}
+                tooltip={<FormattedMessage id="DocumentList.IBruk" />}
                 tabIndex="0"
               />
               )}
