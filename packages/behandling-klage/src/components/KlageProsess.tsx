@@ -78,16 +78,16 @@ const getLagringSideeffekter = (toggleFatterVedtakModal, toggleKlageModal, toggl
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
   return () => {
     if (skalByttTilKlageinstans) {
-      toggleKlageModal(false);
+      toggleKlageModal(true);
     } else if (erVedtakAp) {
-      toggleFatterVedtakModal(false);
+      toggleFatterVedtakModal(true);
     } else {
       oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
     }
   };
 };
 
-const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const KlageProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   data,
   fagsak,
@@ -154,4 +154,4 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   );
 };
 
-export default injectIntl(AnkeProsess);
+export default injectIntl(KlageProsess);
