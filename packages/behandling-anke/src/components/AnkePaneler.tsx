@@ -4,25 +4,19 @@ import { useDispatch } from 'react-redux';
 import {
   FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Behandling, Kodeverk, NavAnsatt, Aksjonspunkt, Vilkar,
-} from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
 
 import AnkeProsess from './AnkeProsess';
-import AnkeVurdering from '../types/ankeVurderingTsType';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   fetchedData: FetchedData;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  ankeVurdering: AnkeVurdering;
   navAnsatt: NavAnsatt;
   alleKodeverk: {[key: string]: Kodeverk[]};
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -41,7 +35,7 @@ const AnkePaneler: FunctionComponent<OwnProps> = ({
   navAnsatt,
   alleKodeverk,
   valgtProsessSteg,
-  oppdaterProsessStegIUrl,
+  oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
@@ -67,7 +61,7 @@ const AnkePaneler: FunctionComponent<OwnProps> = ({
         behandling={behandling}
         navAnsatt={navAnsatt}
         valgtProsessSteg={valgtProsessSteg}
-        oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         alleBehandlinger={alleBehandlinger}

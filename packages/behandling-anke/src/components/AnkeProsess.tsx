@@ -25,14 +25,15 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  valgtFaktaSteg?: string;
-  hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
   opneSokeside: () => void;
-  apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;
+  alleBehandlinger: {
+    id: number;
+    type: Kodeverk;
+    avsluttet?: string;
+  }[];
 }
 
 const saveAnkeText = (dispatch, behandling, aksjonspunkter) => (aksjonspunktModel) => {
@@ -77,9 +78,9 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleAnkeModal, t
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
   return () => {
     if (skalTilMedunderskriver || skalFerdigstilles) {
-      toggleAnkeModal();
+      toggleAnkeModal(true);
     } else if (erManuellVurderingAvAnke) {
-      toggleIverksetterVedtakModal();
+      toggleIverksetterVedtakModal(true);
     } else {
       oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
     }
@@ -93,7 +94,7 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   behandling,
   navAnsatt,
   valgtProsessSteg,
-  oppdaterProsessStegIUrl,
+  oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   opneSokeside,
   alleBehandlinger,
@@ -115,10 +116,10 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visModalAnkeBehandling, toggleAnkeModal] = useState(false);
   const lagringSideeffekterCallback = getLagringSideeffekter(toggleIverksetterVedtakModal, toggleAnkeModal, toggleSkalOppdatereFagsakContext,
-    oppdaterProsessStegIUrl);
+    oppdaterProsessStegOgFaktaPanelIUrl);
 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, 'undefined', behandling,
-    oppdaterProsessStegIUrl, valgtProsessSteg, valgtPanel);
+    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
   return (
     <>

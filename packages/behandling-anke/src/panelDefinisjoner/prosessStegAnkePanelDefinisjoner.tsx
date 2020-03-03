@@ -57,6 +57,14 @@ const prosessStegPanelDefinisjoner = [{
   panels: [{
     aksjonspunkterCodes: [ac.MANUELL_VURDERING_AV_ANKE_MERKNADER, ac.AUTO_VENT_ANKE_MERKNADER_FRA_BRUKER],
     renderComponent: (props) => <AnkeMerknaderProsessIndex {...props} />,
+    getData: ({
+      ankeVurdering, saveAnke, previewCallback,
+    }) => ({
+      previewVedtakCallback: previewCallback,
+      previewCallback,
+      ankeVurdering,
+      saveAnke,
+    }),
     showComponent: () => true,
   }],
 }];
