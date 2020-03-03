@@ -92,13 +92,13 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   data,
   fagsak,
   behandling,
+  alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   opneSokeside,
   alleBehandlinger,
-  alleKodeverk,
   dispatch,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);

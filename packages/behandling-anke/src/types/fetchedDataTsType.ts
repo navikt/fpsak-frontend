@@ -1,4 +1,4 @@
-import {  Aksjonspunkt, Vilkar} from '@fpsak-frontend/types';
+import { Aksjonspunkt, Vilkar } from '@fpsak-frontend/types';
 
 import AnkeVurdering from './ankeVurderingTsType';
 
