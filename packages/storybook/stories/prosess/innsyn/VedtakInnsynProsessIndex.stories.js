@@ -76,7 +76,7 @@ export const visPanelForInnvilgetVedtak = () => (
     }]}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
   />
 );
 
@@ -113,6 +113,6 @@ export const visPanelForAvvistVedtak = () => (
     }]}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
   />
 );

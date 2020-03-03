@@ -56,7 +56,7 @@ export const visPanelForVurderingAvInnsyn = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    isSubmittable={boolean('isSubmittable', true)}
+    isReadOnly={boolean('isReadOnly', false)}
+    readOnlySubmitButton={boolean('isSubmittable', false)}
   />
 );

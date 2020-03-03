@@ -38,7 +38,7 @@ const VedtakInnsynProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       previewCallback={previewCallback}
-      isReadOnly={isReadOnly}
+      readOnly={isReadOnly}
     />
   </RawIntlProvider>
 );
