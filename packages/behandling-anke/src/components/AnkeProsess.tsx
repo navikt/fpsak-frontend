@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useState, useCallback,
+  FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
@@ -121,6 +121,10 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, 'undefined', behandling,
     oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
+  const erFerdigbehandlet = useMemo(() => data.aksjonspunkter
+    .some((ap) => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL && ap.status.kode === aksjonspunktStatus.UTFORT),
+  [behandling.versjon]);
+
   return (
     <>
       <IverksetterVedtakStatusModal
@@ -131,6 +135,7 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       <AnkeBehandlingModal
         visModal={visModalAnkeBehandling}
         lukkModal={useCallback(() => { toggleAnkeModal(false); opneSokeside(); }, [])}
+        erFerdigbehandlet={erFerdigbehandlet}
       />
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}

@@ -121,7 +121,7 @@ const KlageProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, 'undefined', behandling,
     oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
-  const skalViseTilBeslutterTekst = data.klageVurdering && data.klageVurdering.klageVurderingResultatNK
+  const skalViseAtKlagenErFerdigbehandlet = data.klageVurdering && data.klageVurdering.klageVurderingResultatNK
     && data.klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
 
   return (
@@ -133,8 +133,8 @@ const KlageProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal}
         lukkModal={useCallback(() => { toggleFatterVedtakModal(false); opneSokeside(); }, [])}
-        tekstkode={skalViseTilBeslutterTekst
-          ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'}
+        tekstkode={skalViseAtKlagenErFerdigbehandlet
+          ? 'FatterVedtakStatusModal.KlagenErFerdigbehandlet' : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'}
       />
       <ProsessStegContainer
         formaterteProsessStegPaneler={formaterteProsessStegPaneler}

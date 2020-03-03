@@ -241,7 +241,7 @@
   "FatterVedtakStatusModal.IkkeInnvilgetSVP": "Svangerskapspenger er avslått",
   "FatterVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
-  "FatterVedtakStatusModal.SendtKlageResultatTilBeslutter": "Forslag til klageresultat er sendt til beslutter",
+  "FatterVedtakStatusModal.KlagenErFerdigbehandlet": "Klagen er ferdigbehandlet",
   "FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver": "Forslag til klageresultat er sendt til medunderskriver",
   
   "SettBehandlingPaVentModal.ModalDescription": "Behandlingen settes på vent med frist",
@@ -315,6 +315,7 @@
   "KlageVurderingModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "KlageVurderingModal.Ok": "OK",
   "AnkeVurderingModal.VedtakOversendt": "Behandlingen er sendt.",
+  "AnkeVurderingModal.Ferdigbehandlet": "Anken er ferdigbehandlet.",
   "AnkeVurderingModal.ModalDescription": "Vedtaket er stadfestet. Du kommer nå til forsiden",
   "AnkeVurderingModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "AnkeVurderingModal.Ok": "OK",
