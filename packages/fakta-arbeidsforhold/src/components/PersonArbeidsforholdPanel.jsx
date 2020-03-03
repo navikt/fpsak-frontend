@@ -236,7 +236,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       fortsettBehandlingUtenInntektsmelding,
       inntektMedTilBeregningsgrunnlag,
       brukPermisjon,
-      basertPaInntektsmelding: skalKunneLageArbeidsforholdBasertPaInntektsmelding,
+      basertPaInntektsmelding: !!(skalKunneLageArbeidsforholdBasertPaInntektsmelding || selectedArbeidsforhold.kanOppretteNyttArbforFraIM),
     };
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);

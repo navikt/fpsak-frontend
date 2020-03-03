@@ -98,7 +98,11 @@ const utledRadioOptionForArbeidsforholdSomIkkeErAktive = (
   }
   return (
     <RadioOption
-      label={{ id: 'PersonArbeidsforholdDetailForm.FjernArbeidsforholdet' }}
+      label={{
+        id: arbeidsforhold.kanOppretteNyttArbforFraIM
+          ? 'PersonArbeidsforholdDetailForm.IMIkkeRelevant'
+          : 'PersonArbeidsforholdDetailForm.FjernArbeidsforholdet',
+      }}
       value={arbeidsforholdHandling.FJERN_ARBEIDSFORHOLD}
       disabled={isKildeAaRegisteret(arbeidsforhold) || arbeidsforhold.lagtTilAvSaksbehandler === true}
     />
