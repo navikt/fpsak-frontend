@@ -19,7 +19,6 @@ import styles from './behandlingErPaVentModal.less';
  * BehandlingErPaVentModal
  *
  * Presentasjonskomponent. Denne modalen vises når man går inn på en behandling som er satt på vent.
- *
  */
 export const BehandlingErPaVentModal = ({
   showModal,
@@ -31,8 +30,9 @@ export const BehandlingErPaVentModal = ({
   handleOnHoldSubmit,
   hasManualPaVent,
   ventearsaker,
+  isReadOnly,
 }) => {
-  if (behandlingId) {
+  if (behandlingId && !isReadOnly) {
     return (
       <SettBehandlingPaVentForm
         onSubmit={handleOnHoldSubmit}
@@ -99,6 +99,7 @@ BehandlingErPaVentModal.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   })).isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 BehandlingErPaVentModal.defaultProps = {

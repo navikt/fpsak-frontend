@@ -6,7 +6,9 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
-import { Behandling, Aksjonspunkt, Kodeverk } from '@fpsak-frontend/types';
+import {
+  Behandling, Aksjonspunkt, Kodeverk, NavAnsatt,
+} from '@fpsak-frontend/types';
 
 import SettPaVentParams from '../types/settPaVentParamsTsType';
 
@@ -16,6 +18,7 @@ interface BehandlingPaVentProps {
   kodeverk: {[key: string]: Kodeverk[]};
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  navAnsatt: NavAnsatt;
 }
 
 const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
@@ -24,6 +27,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
   kodeverk,
   settPaVent,
   hentBehandling,
+  navAnsatt,
 }) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
@@ -53,6 +57,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
       handleOnHoldSubmit={oppdaterPaVentData}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
+      isReadOnly={navAnsatt.kanVeilede}
     />
   );
 };

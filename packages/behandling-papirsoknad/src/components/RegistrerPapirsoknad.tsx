@@ -83,6 +83,7 @@ export const RegistrerPapirsoknad: FunctionComponent<OwnProps> = ({
         kodeverk={kodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
+        navAnsatt={navAnsatt}
       />
       <SoknadRegistrertModal isOpen={erAksjonspunktLagret} />
       <RegistrerPapirsoknadPanel
