@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Normaltekst, Systemtittel } from 'nav-frontend-typografi';
+import { EtikettInfo } from 'nav-frontend-etiketter';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-
-import { EtikettInfo } from 'nav-frontend-etiketter';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 const visSakDekningsgrad = (saksKode, dekningsgrad) => {
@@ -38,19 +37,23 @@ export const FagsakProfile = ({
   return (
     <>
       <FlexContainer>
-        <FlexRow wrap spaceBetween alignItemsToBaseline>
+        <FlexRow spaceBetween alignItemsToBaseline>
           <FlexColumn>
-            <Systemtittel>
-              {getKodeverknavn(sakstype)}
-            </Systemtittel>
+            <FlexRow wrap>
+              <FlexColumn>
+                <Systemtittel>
+                  {getKodeverknavn(sakstype)}
+                </Systemtittel>
+              </FlexColumn>
+              {visSakDekningsgrad(sakstype.kode, dekningsgrad) && (
+                <FlexColumn>
+                  <EtikettInfo title={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}>
+                    {`${dekningsgrad}%`}
+                  </EtikettInfo>
+                </FlexColumn>
+              )}
+            </FlexRow>
           </FlexColumn>
-          {visSakDekningsgrad(sakstype.kode, dekningsgrad) && (
-            <FlexColumn>
-              <EtikettInfo title={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}>
-                {`${dekningsgrad}%`}
-              </EtikettInfo>
-            </FlexColumn>
-          )}
           <FlexColumn>
             {renderBehandlingMeny()}
           </FlexColumn>
