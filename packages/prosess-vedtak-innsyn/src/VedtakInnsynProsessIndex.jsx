@@ -23,7 +23,7 @@ const VedtakInnsynProsessIndex = ({
   alleDokumenter,
   submitCallback,
   previewCallback,
-  readOnly,
+  isReadOnly,
 }) => (
   <RawIntlProvider value={intl}>
     <InnsynVedtakForm
@@ -38,7 +38,7 @@ const VedtakInnsynProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       previewCallback={previewCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
     />
   </RawIntlProvider>
 );
@@ -51,7 +51,7 @@ VedtakInnsynProsessIndex.propTypes = {
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
 };
 
 export default VedtakInnsynProsessIndex;

@@ -41,13 +41,17 @@ export const visPanelForKlagevurderingMedAksjonspunktNk = () => (
         }],
       },
     })}
-    apCodes={[aksjonspunktCodes.BEHANDLE_KLAGE_NK]}
     saveKlage={action('button-click')}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.BEHANDLE_KLAGE_NK,
+      },
+    }]}
   />
 );
 
@@ -68,12 +72,16 @@ export const visPanelForKlagevurderingMedAksjonspunktNfp = () => (
         }],
       },
     })}
-    apCodes={[aksjonspunktCodes.BEHANDLE_KLAGE_NFP]}
     saveKlage={action('button-click')}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
+      },
+    }]}
   />
 );

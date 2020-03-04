@@ -21,7 +21,7 @@ const AnkeProsessIndex = ({
   behandlinger,
   aksjonspunkter,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   saveAnke,
   previewCallback,
@@ -36,7 +36,7 @@ const AnkeProsessIndex = ({
       behandlinger={behandlinger}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
       saveAnke={saveAnke}
       previewCallback={previewCallback}
@@ -50,7 +50,7 @@ AnkeProsessIndex.propTypes = {
   ankeVurdering: ankeVurderingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(ankeResultatAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   saveAnke: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,

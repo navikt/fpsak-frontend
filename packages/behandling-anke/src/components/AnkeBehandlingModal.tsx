@@ -13,6 +13,7 @@ import styles from './ankeBehandlingModal.less';
 interface OwnProps {
   visModal?: boolean;
   lukkModal: () => void;
+  erFerdigbehandlet: boolean;
 }
 
 /**
@@ -25,6 +26,7 @@ interface OwnProps {
 const AnkeVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   visModal = false,
   lukkModal,
+  erFerdigbehandlet,
   intl,
 }) => (
   <Modal
@@ -41,7 +43,7 @@ const AnkeVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> = 
         <div className={styles.divider} />
       </Column>
       <Column xs="9">
-        <Normaltekst><FormattedMessage id="AnkeVurderingModal.VedtakOversendt" /></Normaltekst>
+        <Normaltekst><FormattedMessage id={erFerdigbehandlet ? 'AnkeVurderingModal.Ferdigbehandlet' : 'AnkeVurderingModal.VedtakOversendt'} /></Normaltekst>
         <Normaltekst><FormattedMessage id="AnkeVurderingModal.GoToSearchPage" /></Normaltekst>
       </Column>
       <Column xs="2">

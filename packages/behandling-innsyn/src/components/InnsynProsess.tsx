@@ -1,231 +1,114 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, {
+  FunctionComponent, useState, useCallback,
+} from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import ProcessMenu from '@navikt/nap-process-menu';
+import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
-  FagsakInfo, MargMarkering, byggProsessmenySteg, BehandlingHenlagtPanel, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel,
+  FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Kodeverk, Dokument, NavAnsatt, Behandling, Aksjonspunkt, Vilkar,
-} from '@fpsak-frontend/types';
+import { Kodeverk, NavAnsatt, Behandling } from '@fpsak-frontend/types';
 
-import innsynApi from '../data/innsynBehandlingApi';
-import finnInnsynSteg from '../definition/innsynStegDefinition';
-import Innsyn from '../types/innsynTsType';
+import innsynBehandlingApi from '../data/innsynBehandlingApi';
+import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
+import FetchedData from '../types/fetchedDataTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
+  data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  innsyn: Innsyn;
-  kodeverk: { [key: string]: Kodeverk[] };
-  alleDokumenter: Dokument[];
+  alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
+  dispatch: Dispatch;
 }
 
-interface StateProps {
-  hasFetchError: boolean;
-}
-
-interface DispatchProps {
-  lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
-  forhandsvisMelding: (brevData: {}) => Promise<any>;
-}
-
-type Props = OwnProps & StateProps & DispatchProps & WrappedComponentProps
-
-interface InnsynProsessState {
-  visIverksetterVedtakModal: boolean;
-}
-
-class InnsynProsess extends Component<Props, InnsynProsessState> {
-  constructor(props) {
-    super(props);
-    this.state = { visIverksetterVedtakModal: false };
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const {
-      behandling, oppdaterBehandlingVersjon,
-    } = this.props;
-    if (behandling.versjon !== prevProps.behandling.versjon) {
-      oppdaterBehandlingVersjon(behandling.versjon);
-    }
-  }
-
-  setSteg = (nyttValg, forrigeSteg) => {
-    const {
-      oppdaterProsessStegIUrl,
-    } = this.props;
-    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
-  }
-
-  toggleIverksetterVedtakModal = () => {
-    const { opneSokeside } = this.props;
-    const { visIverksetterVedtakModal } = this.state;
-
-    if (visIverksetterVedtakModal) {
-      opneSokeside();
-    }
-    this.setState((state) => ({ ...state, visIverksetterVedtakModal: !state.visIverksetterVedtakModal }));
-  }
-
-  submitAksjonspunkter = (aksjonspunktModels) => {
-    const {
-      fagsak,
-      behandling,
-      oppdaterProsessStegIUrl,
-      lagreAksjonspunkt,
-    } = this.props;
-
-    const { id, versjon } = behandling;
-    const models = aksjonspunktModels.map((ap) => ({
-      '@type': ap.kode,
-      ...ap,
-    }));
-
-    const params = {
-      saksnummer: fagsak.saksnummer,
-      behandlingId: id,
-      behandlingVersjon: versjon,
-      bekreftedeAksjonspunktDtoer: models,
-    };
-
-    return lagreAksjonspunkt(params, { keepData: true })
-      .then(() => {
-        const isVedtak = aksjonspunktModels.some((a) => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
-        if (isVedtak) {
-          this.toggleIverksetterVedtakModal();
-        } else {
-          oppdaterProsessStegIUrl('default');
-        }
-      });
+const previewCallback = (dispatch, fagsak, behandling) => (data) => {
+  const brevData = {
+    ...data,
+    behandlingUuid: behandling.uuid,
+    ytelseType: fagsak.fagsakYtelseType,
   };
+  return dispatch(innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+};
 
-  previewCallback = (data) => {
-    const {
-      fagsak,
-      behandling,
-      forhandsvisMelding,
-    } = this.props;
-    const brevData = {
-      ...data,
-      behandlingUuid: behandling.uuid,
-      ytelseType: fagsak.fagsakYtelseType,
-    };
+const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) => (aksjonspunktModels) => {
+  const isVedtak = aksjonspunktModels.some((a) => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
 
-    return forhandsvisMelding(brevData);
+  if (isVedtak) {
+    toggleOppdatereFagsakContext(false);
+  }
+
+  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+  return () => {
+    if (isVedtak) {
+      toggleIverksetterVedtakModal(true);
+    } else {
+      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
+    }
   };
+};
 
-  render() {
-    const {
-      intl,
-      fagsak,
-      behandling,
-      aksjonspunkter,
-      vilkar,
-      innsyn,
-      kodeverk,
-      alleDokumenter,
-      navAnsatt,
-      valgtProsessSteg,
-      hasFetchError,
-    } = this.props;
-    const { visIverksetterVedtakModal } = this.state;
+const InnsynProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
+  data,
+  fagsak,
+  behandling,
+  alleKodeverk,
+  navAnsatt,
+  valgtProsessSteg,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+  oppdaterBehandlingVersjon,
+  opneSokeside,
+  dispatch,
+}) => {
+  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
-    // TODO (TOR) Skriv denne på samme måte som ForeldrepengerProsess.
+  const dataTilUtledingAvFpPaneler = {
+    alleDokumenter: data.innsynDokumenter,
+    innsyn: data.innsyn,
+    previewCallback: useCallback(previewCallback(dispatch, fagsak, behandling), [behandling.versjon]),
+    ...data,
+  };
+  const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
+    dataTilUtledingAvFpPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
 
-    const alleSteg = finnInnsynSteg({
-      behandling, aksjonspunkter, vilkar, innsyn,
-    });
-    const alleProsessMenySteg = byggProsessmenySteg({
-      alleSteg, valgtProsessSteg, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl,
-    });
+  const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
+  const lagringSideeffekterCallback = getLagringSideeffekter(toggleIverksetterVedtakModal, toggleSkalOppdatereFagsakContext,
+    oppdaterProsessStegOgFaktaPanelIUrl);
 
-    const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
-    const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.VEDTAK;
+  const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, 'undefined', behandling,
+    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
-    const fellesProps = {
-      saksnummer: fagsak.saksnummer,
-      submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg && valgtSteg.isReadOnly,
-      alleDokumenter,
-      behandling,
-      innsyn,
-    };
-
-    return (
-      <>
-        <IverksetterVedtakStatusModal
-          visModal={visIverksetterVedtakModal}
-          lukkModal={this.toggleIverksetterVedtakModal}
-          behandlingsresultat={behandling.behandlingsresultat}
+  return (
+    <>
+      <IverksetterVedtakStatusModal
+        visModal={visIverksetterVedtakModal}
+        lukkModal={useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, [])}
+        behandlingsresultat={behandling.behandlingsresultat}
+      />
+      <ProsessStegContainer
+        formaterteProsessStegPaneler={formaterteProsessStegPaneler}
+        velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+      >
+        <ProsessStegPanel
+          valgtProsessSteg={valgtPanel}
+          fagsak={fagsak}
+          behandling={behandling}
+          alleKodeverk={alleKodeverk}
+          lagringSideeffekterCallback={lagringSideeffekterCallback}
+          behandlingApi={innsynBehandlingApi}
+          dispatch={dispatch}
         />
-        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
-          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
-            <ProcessMenu
-              steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-              onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-            />
-          </div>
-          {valgtSteg && (
-          <MargMarkering
-            behandlingStatus={behandling.status}
-            aksjonspunkter={valgtSteg.aksjonspunkter}
-            isReadOnly={valgtSteg.isReadOnly}
-          >
-            {(!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN) && (
-              <InnsynProsessIndex
-                isSubmittable={valgtSteg.isSubmittable}
-                aksjonspunkter={valgtSteg.aksjonspunkter}
-                alleKodeverk={kodeverk}
-                {...fellesProps}
-              />
-            )}
-            {(vedtakStegVises && valgtSteg.aksjonspunkter.length > 0) && (
-              <VedtakInnsynProsessIndex
-                aksjonspunkter={aksjonspunkter}
-                alleDokumenter={alleDokumenter}
-                previewCallback={this.previewCallback}
-                {...fellesProps}
-              />
-            )}
-          </MargMarkering>
-          )}
-          {(vedtakStegVises && behandling.behandlingHenlagt) && (
-          <BehandlingHenlagtPanel />
-          )}
-          {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
-          <ProsessStegIkkeBehandletPanel />
-          )}
-        </div>
-      </>
-    );
-  }
-}
+      </ProsessStegContainer>
+    </>
+  );
+};
 
-const mapStateToProps = (state): StateProps => ({
-  hasFetchError: !!innsynApi.BEHANDLING_INNSYN.getRestApiError()(state),
-});
-
-const mapDispatchToProps = (dispatch): DispatchProps => ({
-  ...bindActionCreators({
-    lagreAksjonspunkt: innsynApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
-    forhandsvisMelding: innsynApi.PREVIEW_MESSAGE.makeRestApiRequest(),
-  }, dispatch),
-});
-
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(InnsynProsess));
+export default injectIntl(InnsynProsess);

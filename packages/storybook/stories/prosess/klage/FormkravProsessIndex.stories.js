@@ -51,11 +51,15 @@ export const visFormkravPanelForAksjonspunktNfp = () => (
       },
     })}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
-    apCodes={[aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP]}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
+      },
+    }]}
   />
 );
 
@@ -77,10 +81,14 @@ export const visFormkravPanelForAksjonspunktKa = () => (
       },
     })}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
     avsluttedeBehandlinger={avsluttedeBehandlinger}
-    apCodes={[aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA]}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
+      },
+    }]}
   />
 );

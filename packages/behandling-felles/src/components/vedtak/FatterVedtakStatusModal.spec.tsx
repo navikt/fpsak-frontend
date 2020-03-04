@@ -15,14 +15,14 @@ describe('<FatterVedtakStatusModal>', () => {
     const wrapper = shallowWithIntl(<FatterVedtakStatusModal.WrappedComponent
       intl={intlMock}
       visModal
-      tekstkode="FatterVedtakStatusModal.SendtKlageResultatTilBeslutter"
+      tekstkode="FatterVedtakStatusModal.KlagenErFerdigbehandlet"
       lukkModal={closeEventCallback}
     />);
 
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Forslag til klageresultat er sendt til beslutter');
+    expect(modal.prop('contentLabel')).is.eql('Klagen er ferdigbehandlet');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);

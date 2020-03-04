@@ -102,12 +102,15 @@ const getModalDescriptionTextCode = createSelector([
   (ownProps) => ownProps.fagsakYtelseType,
   (ownProps) => ownProps.erKlageWithKA,
   (ownProps) => ownProps.behandlingTypeKode],
-(isOpphor, ytelseType, behandlingTypeKode) => {
+(isOpphor, ytelseType, erKlageWithKA, behandlingTypeKode) => {
   if (behandlingTypeKode === BehandlingType.KLAGE) {
     if (erKlageWithKA) {
       return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
     }
     return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
+  }
+  if (behandlingTypeKode === BehandlingType.ANKE) {
+    return 'FatterVedtakApprovalModal.ModalDescriptionAnke';
   }
   if (isOpphor) {
     return 'FatterVedtakApprovalModal.ModalDescriptionOpphort';
@@ -148,6 +151,9 @@ const getInfoTextCode = createSelector(
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
       }
       return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
+    }
+    if (behandlingtypeKode === BehandlingType.ANKE) {
+      return 'FatterVedtakApprovalModal.ModalDescriptionAnke';
     }
     if (harSammeResultatSomOriginalBehandling) {
       return 'FatterVedtakApprovalModal.UendretUtfall';

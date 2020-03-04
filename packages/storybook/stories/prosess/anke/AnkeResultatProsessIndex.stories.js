@@ -53,7 +53,7 @@ export const visPanelForResultatVedStadfestYtelsesvedtak = () => (
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}
@@ -72,7 +72,7 @@ export const visPanelForResultatVedOppheveOgHjemsende = () => (
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}
@@ -93,7 +93,7 @@ export const visPanelForResultatVedOmgjør = () => (
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}
@@ -109,7 +109,7 @@ export const visPanelForResultatVedAvvis = () => (
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}

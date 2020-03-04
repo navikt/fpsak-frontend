@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ElementWrapper, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -44,7 +44,7 @@ export const VedtakKlageFormImpl = ({
 }) => {
   const kodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
-    <FadingPanel>
+    <>
       <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
       <VerticalSpacer twentyPx />
       <ElementWrapper>
@@ -97,7 +97,7 @@ export const VedtakKlageFormImpl = ({
         />
         )}
       </ElementWrapper>
-    </FadingPanel>
+    </>
   );
 };
 

@@ -21,7 +21,7 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   valgtProsessSteg?: ProsessStegData;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;
   lagringSideeffekterCallback: (aksjonspunktModeller: []) => any;
   behandlingApi: {[name: string]: EndpointOperations};
   dispatch: Dispatch;

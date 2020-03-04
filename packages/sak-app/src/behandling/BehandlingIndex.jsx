@@ -189,7 +189,6 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingPapirsoknadIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               {...defaultProps}
             />
           </ErrorBoundary>
@@ -202,7 +201,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingInnsynIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               {...defaultProps}
             />
           </ErrorBoundary>
@@ -215,7 +214,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />
@@ -229,7 +228,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingAnkeIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />

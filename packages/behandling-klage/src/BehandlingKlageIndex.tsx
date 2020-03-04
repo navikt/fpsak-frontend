@@ -6,25 +6,15 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner,
-  BehandlingDataCache,
+  FagsakInfo, DataFetcherBehandlingDataV2, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Behandling, Kodeverk, NavAnsatt, Vilkar, Aksjonspunkt,
-} from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
 
+import FetchedData from './types/fetchedDataTsType';
 import klageApi, { reduxRestApi, KlageBehandlingApiKeys } from './data/klageBehandlingApi';
-import KlageGrid from './components/KlageGrid';
-import KlageVurdering from './types/klageVurderingTsType';
+import KlagePaneler from './components/KlagePaneler';
 
 const klageData = [klageApi.AKSJONSPUNKTER, klageApi.VILKAR, klageApi.KLAGE_VURDERING];
-
-interface DataProps {
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  klageVurdering: KlageVurdering;
-}
 
 interface OwnProps {
   behandlingId: number;
@@ -32,7 +22,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -51,6 +41,7 @@ interface OwnProps {
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
 }
 
 interface DispatchProps {
@@ -67,8 +58,6 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingKlageIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
@@ -82,7 +71,6 @@ class BehandlingKlageIndex extends PureComponent<Props> {
       henleggBehandling: (params) => henleggBehandling(params),
     });
 
-    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
   }
 
@@ -98,11 +86,12 @@ class BehandlingKlageIndex extends PureComponent<Props> {
   render() {
     const {
       behandling,
+      forrigeBehandling,
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl,
+      oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
       hentBehandling,
@@ -116,32 +105,27 @@ class BehandlingKlageIndex extends PureComponent<Props> {
 
     reduxRestApi.injectPaths(behandling.links);
 
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
-    }
-
     return (
-      <DataFetcherBehandlingData
-        behandlingDataCache={this.behandlingDataCache}
+      <DataFetcherBehandlingDataV2
         behandlingVersion={behandling.versjon}
         endpoints={klageData}
         showOldDataWhenRefetching
-        render={(dataProps: DataProps) => (
+        render={(dataProps: FetchedData, isFinished) => (
           <>
-            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
-            <KlageGrid
+            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
+            <KlagePaneler
+              behandling={isFinished ? behandling : forrigeBehandling}
+              fetchedData={dataProps}
               fagsak={fagsak}
               kodeverk={kodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}
               opneSokeside={opneSokeside}
               alleBehandlinger={alleBehandlinger}
-              {...dataProps}
             />
           </>
         )}
@@ -152,6 +136,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
 
 const mapStateToProps = (state) => ({
   behandling: klageApi.BEHANDLING_KLAGE.getRestApiData()(state),
+  forrigeBehandling: klageApi.BEHANDLING_KLAGE.getRestApiPreviousData()(state),
 });
 
 const getResetRestApiContext = () => (dispatch) => {

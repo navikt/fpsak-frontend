@@ -19,7 +19,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -133,54 +133,53 @@ const BehandleAnkeFormImpl = ({
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
-    <FadingPanel>
-      <Undertittel><FormattedMessage id="Ankebehandling.Title" /></Undertittel>
-      <VerticalSpacer fourPx />
-      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
-        {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpTextTemp>
-      <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="7">
-          <SelectField
-            readOnly={readOnly}
-            name="vedtak"
-            selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map((b) => buildOption(b, intl))}
-            className={readOnly ? styles.selectReadOnly : null}
-            label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
-            validate={[required]}
-            bredde="xl"
-          />
-        </Column>
-      </Row>
+    <Undertittel><FormattedMessage id="Ankebehandling.Title" /></Undertittel>
+    <VerticalSpacer fourPx />
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
+      {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
+    </AksjonspunktHelpTextTemp>
+    <VerticalSpacer sixteenPx />
+    <Row>
+      <Column xs="7">
+        <SelectField
+          readOnly={readOnly}
+          name="vedtak"
+          selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map((b) => buildOption(b, intl))}
+          className={readOnly ? styles.selectReadOnly : null}
+          label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
+          validate={[required]}
+          bredde="xl"
+        />
+      </Column>
+    </Row>
 
-      <Normaltekst><FormattedMessage id="Ankebehandling.Resultat" /></Normaltekst>
-      <Row>
-        <Column xs="4">
-          <RadioGroupField
-            name="ankeVurdering"
-            validate={[required]}
-            direction="vertical"
-            readOnly={readOnly}
-          >
-            <RadioOption value={ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK} label={{ id: 'Ankebehandling.Resultat.Stadfest' }} />
-            <RadioOption value={ankeVurdering.ANKE_OMGJOER} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
-          </RadioGroupField>
-        </Column>
-        <Column xs="4">
-          <RadioGroupField
-            name="ankeVurdering"
-            validate={[required]}
-            readOnly={readOnly}
-            className={readOnly ? styles.selectReadOnly : null}
-            direction="vertical"
-          >
-            <RadioOption value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
-            <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
-          </RadioGroupField>
-        </Column>
-      </Row>
-      {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering
+    <Normaltekst><FormattedMessage id="Ankebehandling.Resultat" /></Normaltekst>
+    <Row>
+      <Column xs="4">
+        <RadioGroupField
+          name="ankeVurdering"
+          validate={[required]}
+          direction="vertical"
+          readOnly={readOnly}
+        >
+          <RadioOption value={ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK} label={{ id: 'Ankebehandling.Resultat.Stadfest' }} />
+          <RadioOption value={ankeVurdering.ANKE_OMGJOER} label={{ id: 'Ankebehandling.Resultat.Omgjør' }} />
+        </RadioGroupField>
+      </Column>
+      <Column xs="4">
+        <RadioGroupField
+          name="ankeVurdering"
+          validate={[required]}
+          readOnly={readOnly}
+          className={readOnly ? styles.selectReadOnly : null}
+          direction="vertical"
+        >
+          <RadioOption value={ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE} label={{ id: 'Ankebehandling.Resultat.OpphevHjemsend' }} />
+          <RadioOption value={ankeVurdering.ANKE_AVVIS} label={{ id: 'Ankebehandling.Resultat.Avvis' }} />
+        </RadioGroupField>
+      </Column>
+    </Row>
+    {ankeVurdering.ANKE_AVVIS === formValues.ankeVurdering
       && (
         <Row>
           <Column xs="7">
@@ -205,7 +204,7 @@ const BehandleAnkeFormImpl = ({
           </Column>
         </Row>
       )}
-      {ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering
+    {ankeVurdering.ANKE_OMGJOER === formValues.ankeVurdering
       && (
         <Row>
           <Column xs="7">
@@ -235,52 +234,51 @@ const BehandleAnkeFormImpl = ({
         </Row>
       )}
 
+    <Row>
+      <Column xs="7">
+        <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
+      </Column>
+    </Row>
+
+    <div className={styles.confirmVilkarForm}>
+      <VerticalSpacer sixteenPx />
+      <FritekstBrevTextField
+        sprakkode={sprakkode}
+        readOnly={readOnly}
+        intl={intl}
+      />
+      <VerticalSpacer sixteenPx />
       <Row>
-        <Column xs="7">
-          <TextAreaField label="Begrunnelse" name="begrunnelse" readOnly={readOnly} />
+        <Column xs="8">
+          <BehandlingspunktSubmitButton
+            formName={formProps.form}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnly && canSubmit(formValues)}
+            hasEmptyRequiredFields={false}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
+          <PreviewAnkeLink
+            readOnly={!canPreview(formValues.begrunnelse, formValues.fritekstTilBrev)}
+            previewCallback={previewCallback}
+            fritekstTilBrev={formValues.fritekstTilBrev}
+            ankeVurdering={formValues.ankeVurdering}
+            aksjonspunktCode={aksjonspunktCode}
+          />
+        </Column>
+        <Column xs="2">
+          <TempsaveAnkeButton
+            formValues={formValues}
+            saveAnke={saveAnke}
+            readOnly={readOnly}
+            aksjonspunktCode={aksjonspunktCode}
+          />
         </Column>
       </Row>
-
-      <div className={styles.confirmVilkarForm}>
-        <VerticalSpacer sixteenPx />
-        <FritekstBrevTextField
-          sprakkode={sprakkode}
-          readOnly={readOnly}
-          intl={intl}
-        />
-        <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="8">
-            <BehandlingspunktSubmitButton
-              formName={formProps.form}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isReadOnly={readOnly}
-              isSubmittable={!readOnly && canSubmit(formValues)}
-              hasEmptyRequiredFields={false}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-            <PreviewAnkeLink
-              readOnly={!canPreview(formValues.begrunnelse, formValues.fritekstTilBrev)}
-              previewCallback={previewCallback}
-              fritekstTilBrev={formValues.fritekstTilBrev}
-              ankeVurdering={formValues.ankeVurdering}
-              aksjonspunktCode={aksjonspunktCode}
-            />
-          </Column>
-          <Column xs="2">
-            <TempsaveAnkeButton
-              formValues={formValues}
-              saveAnke={saveAnke}
-              readOnly={readOnly}
-              aksjonspunktCode={aksjonspunktCode}
-            />
-          </Column>
-        </Row>
-      </div>
-    </FadingPanel>
+    </div>
   </form>
 );
 

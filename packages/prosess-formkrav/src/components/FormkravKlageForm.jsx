@@ -11,7 +11,7 @@ import {
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -56,7 +56,7 @@ export const FormkravKlageForm = ({
   const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
 
   return (
-    <FadingPanel>
+    <>
       <Undertittel>{intl.formatMessage({ id: 'Klage.Formkrav.Title' })}</Undertittel>
       <VerticalSpacer fourPx />
       <Undertekst>{intl.formatMessage({ id: getLovHjemmeler(aksjonspunktCode) })}</Undertekst>
@@ -141,7 +141,7 @@ export const FormkravKlageForm = ({
         />
       </div>
 
-    </FadingPanel>
+    </>
   );
 };
 

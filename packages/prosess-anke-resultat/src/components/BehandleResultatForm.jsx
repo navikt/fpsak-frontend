@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
@@ -119,53 +119,51 @@ const AnkeResultatForm = ({
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
-    <FadingPanel>
-      <Undertittel><FormattedMessage id="Ankebehandling.Resultat.Title" /></Undertittel>
-      <VerticalSpacer fourPx />
-      <Row>
-        <Column xs="12">
-          <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
-          <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
-        </Column>
-      </Row>
-      <VerticalSpacer sixteenPx />
-      <Row>
-        <Column xs="12">
-          <BehandlingspunktSubmitButton
-            formName={formProps.form}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-            hasEmptyRequiredFields={false}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            textCode="Ankebehandling.Resultat.SendTilMedunderskriver"
-          />
-          <span>&nbsp;</span>
-          <BehandlingspunktSubmitButton
-            formName={formProps.form}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
-            hasEmptyRequiredFields={false}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            textCode="Ankebehandling.Resultat.FerdigstillAnke"
-          />
-          <span>&nbsp;</span>
-          <PreviewAnkeLink
-            previewCallback={previewCallback}
-            fritekstTilBrev={formValues.fritekstTilBrev}
-            ankeVurdering={formValues.ankeVurdering}
-            aksjonspunktCode={aksjonspunktCode}
-          />
-        </Column>
-      </Row>
-    </FadingPanel>
+    <Undertittel><FormattedMessage id="Ankebehandling.Resultat.Title" /></Undertittel>
+    <VerticalSpacer fourPx />
+    <Row>
+      <Column xs="12">
+        <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
+        <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
+      </Column>
+    </Row>
+    <VerticalSpacer sixteenPx />
+    <Row>
+      <Column xs="12">
+        <BehandlingspunktSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+          hasEmptyRequiredFields={false}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          textCode="Ankebehandling.Resultat.SendTilMedunderskriver"
+        />
+        <span>&nbsp;</span>
+        <BehandlingspunktSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
+          hasEmptyRequiredFields={false}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          textCode="Ankebehandling.Resultat.FerdigstillAnke"
+        />
+        <span>&nbsp;</span>
+        <PreviewAnkeLink
+          previewCallback={previewCallback}
+          fritekstTilBrev={formValues.fritekstTilBrev}
+          ankeVurdering={formValues.ankeVurdering}
+          aksjonspunktCode={aksjonspunktCode}
+        />
+      </Column>
+    </Row>
   </form>
 );
 
