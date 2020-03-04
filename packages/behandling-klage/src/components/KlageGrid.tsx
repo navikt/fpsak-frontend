@@ -56,6 +56,7 @@ const KlageGrid: FunctionComponent<OwnProps> = ({
       kodeverk={kodeverk}
       settPaVent={settPaVent}
       hentBehandling={hentBehandling}
+      navAnsatt={navAnsatt}
     />
     <KlageProsess
       fagsak={fagsak}

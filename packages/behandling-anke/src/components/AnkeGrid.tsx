@@ -54,6 +54,7 @@ const AnkeGrid: FunctionComponent<OwnProps> = ({
       kodeverk={kodeverk}
       settPaVent={settPaVent}
       hentBehandling={hentBehandling}
+      navAnsatt={navAnsatt}
     />
     <AnkeProsess
       fagsak={fagsak}

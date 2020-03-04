@@ -55,6 +55,7 @@ const TilbakekrevingGrid: FunctionComponent<OwnProps> = ({
       kodeverk={kodeverk}
       settPaVent={settPaVent}
       hentBehandling={hentBehandling}
+      navAnsatt={navAnsatt}
     />
     <TilbakekrevingProsess
       fagsak={fagsak}
