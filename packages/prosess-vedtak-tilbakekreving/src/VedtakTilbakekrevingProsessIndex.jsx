@@ -28,7 +28,7 @@ const VedtakTilbakekrevingProsessIndex = ({
   beregningsresultat,
   vedtaksbrev,
   submitCallback,
-  readOnly,
+  isReadOnly,
   isBehandlingHenlagt,
   alleKodeverk,
   fetchPreviewVedtaksbrev,
@@ -44,7 +44,7 @@ const VedtakTilbakekrevingProsessIndex = ({
         resultat={beregningsresultat.vedtakResultatType}
         avsnittsliste={vedtaksbrev.avsnittsliste}
         submitCallback={submitCallback}
-        readOnly={readOnly}
+        readOnly={isReadOnly}
         isBehandlingHenlagt={isBehandlingHenlagt}
         alleKodeverk={alleKodeverk}
         fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
@@ -60,7 +60,7 @@ VedtakTilbakekrevingProsessIndex.propTypes = {
   beregningsresultat: vedtakTilbakekrevingBeregningsresultatPropType.isRequired,
   vedtaksbrev: vedtaksbrevPropType.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   isBehandlingHenlagt: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,

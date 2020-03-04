@@ -140,18 +140,6 @@ export class BehandlingIndex extends Component {
     pushLocation(newLocation);
   };
 
-
-  goToValgtProsessSteg = (prosessId) => {
-    const { push: pushLocation, location } = this.props;
-    if (prosessId === 'default') {
-      pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
-    } else if (prosessId) {
-      pushLocation(getBehandlingspunktLocation(location)(formatName(prosessId)));
-    } else {
-      pushLocation(getBehandlingspunktLocation(location)(null));
-    }
-  };
-
   goToSearchPage = () => {
     const { push: pushLocation } = this.props;
     pushLocation('/');
@@ -242,7 +230,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingTilbakekrevingIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               harApenRevurdering={fagsakBehandlingerInfo
                 .some((b) => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== behandlingStatus.AVSLUTTET)}
               {...defaultProps}

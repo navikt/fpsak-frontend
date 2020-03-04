@@ -6,8 +6,8 @@ const toggles = {
     'fpsak.aksjonspunkt-marker-utenlandssak': false,
     'fpsak.overstyr_beregningsgrunnlag': false,
     'fpsak.simuler-oppdrag-varseltekst': false,
-    'fpsak.aktiver-tilbakekrevingbehandling': false,
-    'fpsak.beslutt-tilbakekreving': false,
+    'fpsak.aktiver-tilbakekrevingbehandling': true,
+    'fpsak.beslutt-tilbakekreving': true,
     'fpsak.redesign.beregningsgrunnlag': false,
   },
 };
