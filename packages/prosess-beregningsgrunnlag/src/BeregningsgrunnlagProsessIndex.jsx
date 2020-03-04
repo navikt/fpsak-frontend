@@ -24,7 +24,6 @@ const BeregningsgrunnlagProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
-
 }) => (
   <RawIntlProvider value={intl}>
     <BeregningFP2
