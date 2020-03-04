@@ -6,7 +6,7 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2,
+  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 import { Kodeverk, NavAnsatt, Behandling } from '@fpsak-frontend/types';
 
@@ -105,7 +105,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingDataV2
+      <DataFetcherBehandlingData
         behandlingVersion={behandling.versjon}
         endpoints={tilbakekrevingData}
         showOldDataWhenRefetching

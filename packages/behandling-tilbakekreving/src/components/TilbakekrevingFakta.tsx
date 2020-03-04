@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, FaktaPanel, DataFetcherBehandlingDataV2, faktaHooks,
+  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import {
   Kodeverk, NavAnsatt, Behandling,
@@ -54,7 +54,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   if (valgtPanel) {
     return (
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
-        <DataFetcherBehandlingDataV2
+        <DataFetcherBehandlingData
           key={valgtPanel.urlCode}
           behandlingVersion={behandling.versjon}
           endpoints={valgtPanel.endpoints}

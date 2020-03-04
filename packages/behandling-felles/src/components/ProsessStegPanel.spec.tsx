@@ -13,7 +13,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
+import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegPanel from './ProsessStegPanel';
@@ -187,7 +187,7 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
 
     expect(wrapper.find(InngangsvilkarPanel)).to.have.length(1);
-    expect(wrapper.find(DataFetcherBehandlingDataV2)).to.have.length(0);
+    expect(wrapper.find(DataFetcherBehandlingData)).to.have.length(0);
   });
 
   it('skal vise kun vise ett panel', () => {
@@ -224,7 +224,7 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(ProsessStegIkkeBehandletPanel)).to.have.length(0);
     expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
 
-    expect(wrapper.find(DataFetcherBehandlingDataV2)).to.have.length(1);
+    expect(wrapper.find(DataFetcherBehandlingData)).to.have.length(1);
     expect(wrapper.find(InngangsvilkarPanel)).to.have.length(0);
   });
 
