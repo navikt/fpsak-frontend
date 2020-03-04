@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs } from '@storybook/addon-knobs';
+import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
@@ -415,16 +415,15 @@ export const arbeidstakerUtenAvvik = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -447,16 +446,15 @@ export const brukersAndelUtenAvvik = () => {
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -472,16 +470,15 @@ export const arbeidstakerMedAvvik = () => {
   delete bg.sammenligningsgrunnlagInntekter;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -505,16 +502,15 @@ export const arbeidstakerFrilansMedAvvikMedGradering = () => {
   aksjonsPunkter1[0].begrunnelse = 'Dette er begrunnelsen';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={aksjonsPunkter1.concat(aksjonsPunkter2)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', aksjonsPunkter2)}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -528,16 +524,15 @@ export const militær = () => {
   const bg = lagBG(perioder, statuser);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
@@ -590,16 +585,16 @@ export const selvstendigNæringsdrivende = () => {
 
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -624,16 +619,16 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -653,16 +648,16 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -719,16 +714,16 @@ export const naturalYtelse = () => {
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -749,16 +744,16 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -780,16 +775,16 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
   bg.andelerMedGraderingUtenBG = andeler;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -830,16 +825,16 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -884,17 +879,16 @@ export const arbeidstakerOgFrilansOgSelvstendigNæringsdrivendeMedAksjonspunktBe
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE))}
       submitCallback={action('button-click')}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -937,16 +931,16 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -972,16 +966,16 @@ export const arbeidstakerMed3Arbeidsforhold2ISammeOrganisasjonSide3 = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1008,16 +1002,16 @@ export const arbeidstakerAvslagHalvGSide4 = () => {
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1039,16 +1033,16 @@ export const arbeidstakerMedAksjonspunktSide5 = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1072,16 +1066,16 @@ export const arbeidstakerMedAksjonspunktBehandletSide6 = () => {
   ap[0].endretTidspunkt = '2020-01-20';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly
-      readOnlySubmitButton
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1105,16 +1099,16 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktkSide7 = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1161,16 +1155,16 @@ export const tidsbegrensetArbeidsforholdMedAksjonspunktBehandletSide7 = () => {
 
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1186,15 +1180,16 @@ export const FrilansSide8 = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
+
     />
   );
 };
@@ -1210,15 +1205,16 @@ export const FrilansMedAksjonspunktSide9 = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
+
     />
   );
 };
@@ -1236,16 +1232,16 @@ export const arbeidstakerFrilansMedAksjonspunktSide10 = () => {
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1271,16 +1267,16 @@ export const arbeidstakerFrilansMedAksjonspunktBehandletSide11 = () => {
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 710316;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly
-      readOnlySubmitButton
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1322,16 +1318,16 @@ export const SelvstendigNæringsdrivendeUtenVarigEndringIkkeNyoppstartetSide12 =
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1390,16 +1386,16 @@ export const SelvstendigNæringsdrivendeMedVarigEndringSide13 = () => {
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1443,16 +1439,16 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1500,16 +1496,16 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
   ap[0].status.kode = 'UTFO';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly
-      readOnlySubmitButton
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1554,16 +1550,16 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
 
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1609,16 +1605,16 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
 
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1660,16 +1656,16 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnStorreEnnAtOgStorreEnn6g
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1712,16 +1708,16 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeSnMindreEnnAtOgStorreEnn6g
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1764,16 +1760,16 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1821,16 +1817,16 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedVarigEndringApBehandlet
   ap[0].status.kode = 'UTFO';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly
-      readOnlySubmitButton
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1878,16 +1874,16 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeAtStorreEnnSNSide22 = () =
   ap[0].status.kode = 'UTFO';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly
-      readOnlySubmitButton
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1930,16 +1926,16 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
   delete bg.dekningsgrad;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -1993,16 +1989,16 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
   ap[0].status.kode = 'UTFO';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly
-      readOnlySubmitButton
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2056,16 +2052,16 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedAPVarigEndringSn
   ap[0].status.kode = 'UTFO';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly
-      readOnlySubmitButton
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', true)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2081,16 +2077,17 @@ export const YtelseFraNavSide26 = () => {
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS))}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
+
     />
   );
 };
@@ -2107,16 +2104,16 @@ export const arbeidstakerOgAAPMedAksjonspunktSide27 = () => {
 
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2139,16 +2136,16 @@ export const arbeidstakerOgAAPMedAksjonspunktOppfyltSide27 = () => {
   ap[0].status.kode = 'UTFO';
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={ap}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2171,16 +2168,16 @@ export const arbeidstakerDagpengerMedBesteberegningSide28 = () => {
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2203,16 +2200,16 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeSide29 = () => {
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2235,16 +2232,16 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeFnOgDpOverstigerSNSide
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2267,16 +2264,16 @@ export const ArbeidstagerDagpengerOgSelvstendigNæringsdrivendeATOgDpOverstigerS
   bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2319,16 +2316,16 @@ export const frilansDagpengerOgSelvstendigNæringsdrivendeMedAksjonspunktSide31 
 
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', ap)}
       submitCallback={action('button-click')}
-      aksjonspunkter={ap}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+
     />
   );
 };
@@ -2346,16 +2343,15 @@ export const militærOgSiviltjenesteSide33 = () => {
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      behandling={object('behandling', behandling)}
+      beregningsgrunnlag={object('beregningsgrunnlag', bg)}
+      aksjonspunkter={object('aksjonspunkter', [])}
       submitCallback={action('button-click')}
-      isReadOnly={false}
-      readOnlySubmitButton={false}
-      isAksjonspunktOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      isReadOnly={boolean('readOnly', false)}
+      readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+      isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
+      vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
     />
   );
 };
