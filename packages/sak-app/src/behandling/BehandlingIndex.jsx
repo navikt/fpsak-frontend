@@ -189,7 +189,6 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingPapirsoknadIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               {...defaultProps}
             />
           </ErrorBoundary>

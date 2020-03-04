@@ -6,7 +6,7 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix, ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData, BehandlingDataCache,
+  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2,
 } from '@fpsak-frontend/behandling-felles';
 import {
   Kodeverk, NavAnsatt, Aksjonspunkt, Behandling,
@@ -36,6 +36,7 @@ interface OwnProps {
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
   erAksjonspunktLagret: boolean;
 }
 
@@ -54,8 +55,6 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingPapirsoknadIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
@@ -69,7 +68,6 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
       henleggBehandling: (params) => henleggBehandling(params),
     });
 
-    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
   }
 
@@ -90,6 +88,7 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
       settPaVent,
       hentBehandling,
       behandling,
+      forrigeBehandling,
       lagreAksjonspunkt,
       erAksjonspunktLagret,
     } = this.props;
@@ -100,21 +99,17 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
 
     reduxRestApi.injectPaths(behandling.links);
 
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
-    }
-
     return (
-      <DataFetcherBehandlingData
-        behandlingDataCache={this.behandlingDataCache}
+      <DataFetcherBehandlingDataV2
         behandlingVersion={behandling.versjon}
         showOldDataWhenRefetching
         endpoints={papirsoknadData}
-        render={(dataProps: DataProps) => (
+        render={(dataProps: DataProps, isFinished) => (
           <>
-            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
             <RegistrerPapirsoknad
+              behandling={isFinished ? behandling : forrigeBehandling}
+              aksjonspunkter={dataProps.aksjonspunkter}
               fagsak={fagsak}
               kodeverk={kodeverk}
               navAnsatt={navAnsatt}
@@ -122,7 +117,6 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
               hentBehandling={hentBehandling}
               lagreAksjonspunkt={lagreAksjonspunkt}
               erAksjonspunktLagret={erAksjonspunktLagret}
-              {...dataProps}
             />
           </>
         )}
@@ -135,6 +129,7 @@ const hasAccessError = (error) => !!(error && error.type === ErrorTypes.MANGLER_
 
 const mapStateToProps = (state) => ({
   behandling: papirsoknadApi.BEHANDLING_PAPIRSOKNAD.getRestApiData()(state),
+  forrigeBehandling: papirsoknadApi.BEHANDLING_PAPIRSOKNAD.getRestApiPreviousData()(state),
   erAksjonspunktLagret: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
   || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
 });
