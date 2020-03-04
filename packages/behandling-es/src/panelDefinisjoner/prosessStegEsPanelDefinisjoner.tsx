@@ -78,7 +78,7 @@ const prosessStegPanelDefinisjoner = [{
     vilkarCodes: [vt.SOKERSOPPLYSNINGSPLIKT],
     showComponent: ({ vilkarForSteg }) => vilkarForSteg.length > 0,
     renderComponent: (props) => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
-    etData: ({ soknad }) => ({ soknad }),
+    getData: ({ soknad }) => ({ soknad }),
   }],
 }, {
   urlCode: bpc.INNGANGSVILKAR,
