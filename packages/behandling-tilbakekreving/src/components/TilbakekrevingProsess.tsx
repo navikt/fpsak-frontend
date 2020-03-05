@@ -79,7 +79,8 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps>
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
     dataTilUtledingAvTilbakekrevingPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, [], hasFetchError, intl, valgtProsessSteg);
 
-  const [visApenRevurderingModal, lukkApenRevurderingModal] = useState(harApenRevurdering);
+  const [visApenRevurderingModal, toggleApenRevurderingModal] = useState(harApenRevurdering);
+  const lukkApenRevurderingModal = useCallback(() => toggleApenRevurderingModal(false), []);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
   const lagringSideeffekterCallback = getLagringSideeffekter(toggleFatterVedtakModal, toggleSkalOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl);
 
