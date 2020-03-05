@@ -56,7 +56,7 @@ const getPåklagdBehandling = (avsluttedeBehandlinger, påklagdVedtak) => avslut
 
 export const erTilbakekreving = (avsluttedeBehandlinger, påklagdVedtak) => {
   const behandling = getPåklagdBehandling(avsluttedeBehandlinger, påklagdVedtak);
-  return behandling.type.kode === BehandlingType.TILBAKEKREVING || behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING;
+  return behandling && (behandling.type.kode === BehandlingType.TILBAKEKREVING || behandling.type.kode === BehandlingType.TILBAKEKREVING_REVURDERING);
 };
 
 export const påklagdTilbakekrevingInfo = (avsluttedeBehandlinger, påklagdVedtak) => {

@@ -9,7 +9,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpTextTemp, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
+  AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe, BehandlingspunktSubmitButton,
@@ -165,45 +165,44 @@ export class ForeldelseForm extends Component {
 
     return (
       <form onSubmit={formProps.handleSubmit}>
-        <FadingPanel>
-          <FaktaGruppe
-            aksjonspunktCode={aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE}
-            merknaderFraBeslutter={merknaderFraBeslutter}
-            withoutBorder
-          >
-            <Undertittel>
-              <FormattedMessage id="ForeldelseForm.Foreldelse" />
-            </Undertittel>
-            <VerticalSpacer twentyPx />
-            {!apCodes[0] && (
-              <div className={styles.bold}>
-                <FlexRow>
-                  <FlexColumn>
-                    <FormattedMessage id="ForeldelseForm.Foreldelsesloven" />
-                  </FlexColumn>
-                </FlexRow>
-                <VerticalSpacer eightPx />
-                <FlexRow>
-                  <FlexColumn>
-                    <FormattedMessage id="ForeldelseForm.AutomatiskVurdert" />
-                  </FlexColumn>
-                </FlexRow>
-              </div>
-            )}
-            {foreldelsesresultatActivity && apCodes[0] && (
-              <>
-                <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
-                  { getApTekst(apCodes[0]) }
-                </AksjonspunktHelpTextTemp>
-                <VerticalSpacer twentyPx />
-                <TilbakekrevingTimelinePanel
-                  perioder={perioderFormatertForTidslinje}
-                  valgtPeriode={valgtPeriodeFormatertForTidslinje}
-                  setPeriode={this.setPeriode}
-                  toggleDetaljevindu={this.togglePeriode}
-                  hjelpetekstKomponent={<ForeldelseTidslinjeHjelpetekster />}
-                  kjonn={navBrukerKjonn}
-                />
+        <FaktaGruppe
+          aksjonspunktCode={aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE}
+          merknaderFraBeslutter={merknaderFraBeslutter}
+          withoutBorder
+        >
+          <Undertittel>
+            <FormattedMessage id="ForeldelseForm.Foreldelse" />
+          </Undertittel>
+          <VerticalSpacer twentyPx />
+          {!apCodes[0] && (
+          <div className={styles.bold}>
+            <FlexRow>
+              <FlexColumn>
+                <FormattedMessage id="ForeldelseForm.Foreldelsesloven" />
+              </FlexColumn>
+            </FlexRow>
+            <VerticalSpacer eightPx />
+            <FlexRow>
+              <FlexColumn>
+                <FormattedMessage id="ForeldelseForm.AutomatiskVurdert" />
+              </FlexColumn>
+            </FlexRow>
+          </div>
+          )}
+          {foreldelsesresultatActivity && apCodes[0] && (
+            <>
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
+                { getApTekst(apCodes[0]) }
+              </AksjonspunktHelpTextTemp>
+              <VerticalSpacer twentyPx />
+              <TilbakekrevingTimelinePanel
+                perioder={perioderFormatertForTidslinje}
+                valgtPeriode={valgtPeriodeFormatertForTidslinje}
+                setPeriode={this.setPeriode}
+                toggleDetaljevindu={this.togglePeriode}
+                hjelpetekstKomponent={<ForeldelseTidslinjeHjelpetekster />}
+                kjonn={navBrukerKjonn}
+              />
                 {valgtPeriode && (
                   <ForeldelsePeriodeForm
                     periode={valgtPeriode}
@@ -220,22 +219,21 @@ export class ForeldelseForm extends Component {
                     beregnBelop={beregnBelop}
                   />
                 )}
-                <VerticalSpacer twentyPx />
-                <BehandlingspunktSubmitButton
-                  formName={FORELDELSE_FORM_NAME}
-                  behandlingId={behandlingId}
-                  behandlingVersjon={behandlingVersjon}
-                  isReadOnly={readOnly}
-                  isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
-                  isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
-                  isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-                  isBehandlingFormDirty={isBehandlingFormDirty}
-                  hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-                />
-              </>
-            )}
-          </FaktaGruppe>
-        </FadingPanel>
+              <VerticalSpacer twentyPx />
+              <BehandlingspunktSubmitButton
+                formName={FORELDELSE_FORM_NAME}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                isReadOnly={readOnly}
+                isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
+                isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
+                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                isBehandlingFormDirty={isBehandlingFormDirty}
+                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+              />
+            </>
+          )}
+        </FaktaGruppe>
       </form>
     );
   }

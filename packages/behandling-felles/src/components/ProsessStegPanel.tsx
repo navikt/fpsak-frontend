@@ -10,7 +10,7 @@ import ProsessStegData from '../types/prosessStegDataTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
-import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
+import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 import prosessStegHooks from '../util/prosessStegHooks';
@@ -21,7 +21,7 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   valgtProsessSteg?: ProsessStegData;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
-  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;
   lagringSideeffekterCallback: (aksjonspunktModeller: []) => any;
   behandlingApi: {[name: string]: EndpointOperations};
   dispatch: Dispatch;
@@ -53,7 +53,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
         >
           {valgtProsessSteg.panelData.length === 1 && (
             <FadingPanel>
-              <DataFetcherBehandlingDataV2
+              <DataFetcherBehandlingData
                 key={valgtProsessSteg.panelData[0].code}
                 behandlingVersion={behandling.versjon}
                 endpoints={valgtProsessSteg.panelData[0].endpoints}

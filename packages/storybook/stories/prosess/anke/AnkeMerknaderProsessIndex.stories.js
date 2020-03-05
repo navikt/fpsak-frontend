@@ -41,7 +41,7 @@ export const visPanelForResultatVedStadfestYtelsesvedtak = () => (
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     saveAnke={action('button-click')}
     previewCallback={action('button-click')}

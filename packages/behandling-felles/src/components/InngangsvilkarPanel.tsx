@@ -7,7 +7,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, Kodeverk } from '@fpsak-frontend/types';
 
 import { ProsessStegPanelData } from '../types/prosessStegDataTsType';
-import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
+import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 
 import styles from './inngangsvilkarPanel.less';
 
@@ -30,7 +30,7 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
 }) => {
   const filteredPanels = prosessStegData.filter((stegData) => stegData.renderComponent);
   const panels = filteredPanels.map((stegData) => (
-    <DataFetcherBehandlingDataV2
+    <DataFetcherBehandlingData
       key={stegData.code}
       behandlingVersion={behandling.versjon}
       endpoints={stegData.endpoints}

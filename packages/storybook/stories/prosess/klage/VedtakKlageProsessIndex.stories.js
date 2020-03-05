@@ -60,7 +60,7 @@ export const visVedtakspanelDerKlageErVurdertAvNk = () => (
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     alleKodeverk={alleKodeverk}
   />
 );
@@ -86,7 +86,7 @@ export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     alleKodeverk={alleKodeverk}
   />
 );

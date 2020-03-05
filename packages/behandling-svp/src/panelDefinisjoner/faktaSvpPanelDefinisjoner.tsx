@@ -26,7 +26,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [svpBehandlingApi.UTLAND_DOK_STATUS],
   renderComponent: (props) => <SakenFaktaIndex {...props} />,
   showComponent: () => true,
-  getData: () => {},
+  getData: () => ({}),
 }, {
   urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
   textCode: 'ArbeidsforholdInfoPanel.Title',

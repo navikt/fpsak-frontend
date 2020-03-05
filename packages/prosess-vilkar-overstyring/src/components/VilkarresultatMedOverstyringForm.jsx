@@ -16,7 +16,7 @@ import {
   FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox, EditedIcon,
 } from '@fpsak-frontend/shared-components';
 import {
-  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, OverstyrBekreftKnappPanel,
+  behandlingForm, behandlingFormValueSelector, VilkarResultPicker,
 } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -27,6 +27,7 @@ import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
+import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
 

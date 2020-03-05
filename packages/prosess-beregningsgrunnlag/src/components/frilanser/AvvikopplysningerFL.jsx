@@ -22,7 +22,7 @@ const AvviksopplysningerFL = ({
       <FlexRow>
         <Column xs="12">
           <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.FL.KobinasjonsStatusFLSN" />
+            <FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.FL.KobinasjonsStatusFLSN" />
           </Normaltekst>
         </Column>
       </FlexRow>
@@ -47,20 +47,16 @@ const AvviksopplysningerFL = ({
     visFL: true,
     visSN: false,
   };
-
-  if (sammenligningsgrunnlagSumFL) {
-    return (
-      <AvvikopplysningerATFL
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        avvikProsentAvrundet={avvikRoundedFL}
-        differanseBeregnet={differanseBeregnet}
-        relevanteStatuser={relevanteStatuser}
-        visPanel={visPaneler}
-        sammenligningsgrunnlagSum={sammenligningsgrunnlagSumFL}
-      />
-    );
-  }
-  return null;
+  return (
+    <AvvikopplysningerATFL
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      avvikProsentAvrundet={avvikRoundedFL}
+      differanseBeregnet={differanseBeregnet}
+      relevanteStatuser={relevanteStatuser}
+      visPanel={visPaneler}
+      sammenligningsgrunnlagSum={sammenligningsgrunnlagSumFL}
+    />
+  );
 };
 
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { getSupportPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
 
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
@@ -13,6 +13,7 @@ import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
 import ApprovalIndex from './approval/ApprovalIndex';
+import trackRouteParam from '../app/trackRouteParam';
 
 import styles from './behandlingSupportIndex.less';
 

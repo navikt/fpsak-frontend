@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import VilkarBegrunnelse from '../VilkarBegrunnelse';
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 /**
  * OverstyrBegrunnelsePanel

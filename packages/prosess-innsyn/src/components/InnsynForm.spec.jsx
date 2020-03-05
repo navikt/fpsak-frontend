@@ -14,7 +14,7 @@ describe('<InnsynForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       readOnly={false}
-      isSubmittable
+      readOnlySubmitButton={false}
       innsynResultatTyper={[{ kode: innsynResultatTyperKV.INNVILGET, navn: 'navnTest' }]}
       innsynResultatType={innsynResultatTyperKV.INNVILGET}
       behandlingTypes={[{ kode: 'kodeTest', navn: 'navnTest' }]}
@@ -33,7 +33,7 @@ describe('<InnsynForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       readOnly={false}
-      isSubmittable
+      readOnlySubmitButton={false}
       innsynResultatTyper={[{ kode: innsynResultatTyperKV.AVVIST, navn: 'navnTest' }]}
       innsynResultatType={innsynResultatTyperKV.AVVIST}
       behandlingTypes={[{ kode: 'kodeTest', navn: 'navnTest' }]}

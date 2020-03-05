@@ -1,6 +1,5 @@
 export { default as reducerRegistry } from './src/ReducerRegistry';
 export { default as requireProps } from './src/requireProps';
-export { default as trackRouteParam } from './src/trackRouteParam';
 export { default as featureToggle } from './src/featureToggle';
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/ErrorTypes';
 export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
@@ -46,10 +45,6 @@ export {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, getBehandlingFormName,
   isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues, getBehandlingFormSyncErrors, getBehandlingFormPrefix,
 } from './src/behandlingForm';
-export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
-export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
-export { default as OverstyrBekreftKnappPanel } from './src/overstyr/OverstyrBekreftKnappPanel';
-export { default as OverstyrVurderingVelger } from './src/overstyr/OverstyrVurderingVelger';
 export { default as FaktaGruppe } from './src/FaktaGruppe';
 export { default as isFieldEdited } from './src/util/isFieldEdited';
 export { default as FaktaSubmitButton } from './src/fakta/FaktaSubmitButton';

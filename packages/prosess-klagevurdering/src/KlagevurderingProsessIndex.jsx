@@ -23,13 +23,13 @@ const KlagevurderingProsessIndex = ({
   alleKodeverk,
   saveKlage,
   submitCallback,
-  readOnly,
+  isReadOnly,
   previewCallback,
   readOnlySubmitButton,
-  apCodes,
+  aksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
-    {apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK) && (
+    {aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK) && (
       <BehandleKlageFormKa
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
@@ -37,13 +37,13 @@ const KlagevurderingProsessIndex = ({
         klageVurdering={klageVurdering}
         saveKlage={saveKlage}
         submitCallback={submitCallback}
-        readOnly={readOnly}
+        readOnly={isReadOnly}
         previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
       />
     )}
-    {apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP) && (
+    {aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP) && (
       <BehandleKlageFormNfp
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
@@ -51,7 +51,7 @@ const KlagevurderingProsessIndex = ({
         klageVurdering={klageVurdering}
         saveKlage={saveKlage}
         submitCallback={submitCallback}
-        readOnly={readOnly}
+        readOnly={isReadOnly}
         previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
         alleKodeverk={alleKodeverk}
@@ -66,10 +66,10 @@ KlagevurderingProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   saveKlage: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default KlagevurderingProsessIndex;

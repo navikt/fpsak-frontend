@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
-import { getRequestPollingMessage, requireProps, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { getRequestPollingMessage, requireProps } from '@fpsak-frontend/fp-felles';
 
 import { getSelectedAktoer, getSelectedAktoerId } from './aktoerSelectors';
 import { setSelectedAktoerId } from './duck';
 import AktoerGrid from './components/AktoerGrid';
 import AktoerResolver from './AktoerResolver';
+import trackRouteParam from '../app/trackRouteParam';
 
 /**
  * AktoerIndex

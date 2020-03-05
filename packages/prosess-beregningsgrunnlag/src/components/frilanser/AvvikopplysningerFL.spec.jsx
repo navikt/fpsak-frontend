@@ -36,7 +36,7 @@ describe('<AvviksopplysningerFL>', () => {
     const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(1);
     const text = rows.first().find('FormattedMessage');
-    expect(text.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.FL.KobinasjonsStatusFLSN');
+    expect(text.first().prop('id')).to.eql('Beregningsgrunnlag.Avviksopplysninger.FL.KobinasjonsStatusFLSN');
   });
 
   it('Skal teste at avvikoplysningerATFL rendres', () => {

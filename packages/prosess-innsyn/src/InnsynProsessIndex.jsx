@@ -22,8 +22,8 @@ const InnsynProsessIndex = ({
   saksnummer,
   aksjonspunkter,
   submitCallback,
-  readOnly,
-  isSubmittable,
+  isReadOnly,
+  readOnlySubmitButton,
   alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
@@ -40,8 +40,8 @@ const InnsynProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      readOnly={readOnly}
-      isSubmittable={isSubmittable}
+      readOnly={isReadOnly}
+      readOnlySubmitButton={readOnlySubmitButton}
     />
   </RawIntlProvider>
 );
@@ -53,8 +53,8 @@ InnsynProsessIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   aksjonspunkter: PropTypes.arrayOf(innsynAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  isSubmittable: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
 

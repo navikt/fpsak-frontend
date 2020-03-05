@@ -72,7 +72,7 @@ export const PersonArbeidsforholdDetailForm = ({
         behandlingVersjon={behandlingVersjon}
       />
     )}
-    { skalKunneLageArbeidsforholdBasertPaInntektsmelding && (
+    { (skalKunneLageArbeidsforholdBasertPaInntektsmelding || arbeidsforhold.kanOppretteNyttArbforFraIM) && (
       <LeggTilArbeidsforholdFelter
         readOnly={readOnly}
         formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}

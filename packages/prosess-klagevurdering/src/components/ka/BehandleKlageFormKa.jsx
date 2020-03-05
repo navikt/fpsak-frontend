@@ -14,7 +14,7 @@ import {
   BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector,
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
 import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
@@ -43,7 +43,7 @@ export const BehandleKlageFormKaImpl = ({
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
-    <FadingPanel>
+    <>
       <Undertittel>{intl.formatMessage({ id: 'Klage.ResolveKlage.Title' })}</Undertittel>
       <VerticalSpacer fourPx />
       <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
@@ -97,7 +97,7 @@ export const BehandleKlageFormKaImpl = ({
           </Column>
         </Row>
       </div>
-    </FadingPanel>
+    </>
   </form>
 );
 

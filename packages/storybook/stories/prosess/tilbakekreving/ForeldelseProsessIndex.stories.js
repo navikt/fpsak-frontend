@@ -2,6 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
@@ -68,8 +69,18 @@ export const visAksjonspunktForForeldelse = () => (
     }}
     perioderForeldelse={object('perioderForeldelse', perioderForeldelse)}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    apCodes={[aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE]}
+    isReadOnly={boolean('isReadOnly', false)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
     readOnlySubmitButton={boolean('readOnly', false)}
     navBrukerKjonn={NavBrukerKjonn.KVINNE}
     alleMerknaderFraBeslutter={{

@@ -12,16 +12,16 @@ const lagFormatertetekster = (kriterie, visPanel, relevanteStatuser, isBold) => 
   <FlexColumn className={styles.colLable}>
     <Normaltekst className={isBold ? beregningStyles.semiBoldText : ''}>
       {!relevanteStatuser.isKombinasjonsstatus && (
-        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}`} />
+        <FormattedMessage id={`Beregningsgrunnlag.Avviksopplysninger.${kriterie}`} />
       )}
       {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visAT && (
-        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}.Arbeid`} />
+        <FormattedMessage id={`Beregningsgrunnlag.Avviksopplysninger.${kriterie}.Arbeid`} />
       )}
       {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visFL && (
-        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}.Frilans`} />
+        <FormattedMessage id={`Beregningsgrunnlag.Avviksopplysninger.${kriterie}.Frilans`} />
       )}
       {relevanteStatuser.isKombinasjonsstatus && visPanel && visPanel.visSN && (
-        <FormattedMessage id={`Beregningsgrunnlag.Avikssopplysninger.${kriterie}.Naring`} />
+        <FormattedMessage id={`Beregningsgrunnlag.Avviksopplysninger.${kriterie}.Naring`} />
       )}
     </Normaltekst>
   </FlexColumn>
@@ -71,7 +71,7 @@ const AvvikopplysningerATFLSN = ({
       </FlexColumn>
       <FlexColumn className={styles.colAvvik}>
         <Normaltekst className={`${avvikProsentAvrundet > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikProsentAvrundet }} />
+          <FormattedMessage id="Beregningsgrunnlag.Avviksopplysninger.AvvikProsent" values={{ avvik: avvikProsentAvrundet }} />
         </Normaltekst>
       </FlexColumn>
     </FlexRow>

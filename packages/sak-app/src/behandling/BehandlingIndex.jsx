@@ -11,7 +11,7 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  requireProps, getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
 } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
@@ -33,6 +33,7 @@ import {
 } from './selectors/behandlingerSelectors';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
+import trackRouteParam from '../app/trackRouteParam';
 
 const BehandlingEngangsstonadIndex = React.lazy(() => import('@fpsak-frontend/behandling-es'));
 const BehandlingForeldrepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-fp'));
@@ -140,18 +141,6 @@ export class BehandlingIndex extends Component {
     pushLocation(newLocation);
   };
 
-
-  goToValgtProsessSteg = (prosessId) => {
-    const { push: pushLocation, location } = this.props;
-    if (prosessId === 'default') {
-      pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
-    } else if (prosessId) {
-      pushLocation(getBehandlingspunktLocation(location)(formatName(prosessId)));
-    } else {
-      pushLocation(getBehandlingspunktLocation(location)(null));
-    }
-  };
-
   goToSearchPage = () => {
     const { push: pushLocation } = this.props;
     pushLocation('/');
@@ -189,7 +178,6 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingPapirsoknadIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               {...defaultProps}
             />
           </ErrorBoundary>
@@ -202,7 +190,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingInnsynIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               {...defaultProps}
             />
           </ErrorBoundary>
@@ -215,7 +203,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />
@@ -229,7 +217,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingAnkeIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />
@@ -243,7 +231,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingTilbakekrevingIndex
-              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               harApenRevurdering={fagsakBehandlingerInfo
                 .some((b) => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== behandlingStatus.AVSLUTTET)}
               {...defaultProps}
