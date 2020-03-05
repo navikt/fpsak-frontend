@@ -20,25 +20,26 @@ const FeilutbetalingFaktaIndex = ({
   behandling,
   feilutbetalingFakta,
   feilutbetalingAarsak,
+  fagsakYtelseTypeKode,
   aksjonspunkter,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   submitCallback,
   readOnly,
-  hasOpenAksjonspunkter,
+  harApneAksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
     <FeilutbetalingInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       feilutbetalingFakta={feilutbetalingFakta.behandlingFakta}
-      feilutbetalingAarsak={feilutbetalingAarsak}
+      feilutbetalingAarsak={feilutbetalingAarsak.find((a) => a.ytelseType.kode === fagsakYtelseTypeKode)}
       aksjonspunkter={aksjonspunkter}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
       readOnly={readOnly}
-      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
     />
   </RawIntlProvider>
 );
@@ -46,13 +47,14 @@ const FeilutbetalingFaktaIndex = ({
 FeilutbetalingFaktaIndex.propTypes = {
   behandling: feilutbetalingBehandlingPropType.isRequired,
   feilutbetalingFakta: feilutbetalingFaktaPropType.isRequired,
-  feilutbetalingAarsak: feilutbetalingAarsakPropType.isRequired,
+  feilutbetalingAarsak: PropTypes.arrayOf(feilutbetalingAarsakPropType).isRequired,
   aksjonspunkter: PropTypes.arrayOf(feilutbetalingAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
+  fagsakYtelseTypeKode: PropTypes.string.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
 };
 
 export default FeilutbetalingFaktaIndex;

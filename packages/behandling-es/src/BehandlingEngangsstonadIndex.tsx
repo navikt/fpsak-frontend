@@ -9,7 +9,7 @@ import {
   Behandling, Kodeverk, NavAnsatt,
 } from '@fpsak-frontend/types';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2,
+  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
@@ -118,7 +118,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingDataV2
+      <DataFetcherBehandlingData
         behandlingVersion={behandling.versjon}
         endpoints={engansstonadData}
         showOldDataWhenRefetching

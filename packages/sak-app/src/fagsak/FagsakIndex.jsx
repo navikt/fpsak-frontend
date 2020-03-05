@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
-  behandlingerPath, getRequestPollingMessage, requireProps, trackRouteParam, DataFetcher, pathToAnnenPart,
+  behandlingerPath, getRequestPollingMessage, requireProps, DataFetcher, pathToAnnenPart,
 } from '@fpsak-frontend/fp-felles';
 import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
 
@@ -22,6 +22,7 @@ import {
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
+import trackRouteParam from '../app/trackRouteParam';
 
 const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER, fpsakApi.BEHANDLING_FAMILIE_HENDELSE, fpsakApi.ANNEN_PART_BEHANDLING];
 const ingenEndepunkter = [];

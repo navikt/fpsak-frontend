@@ -5,7 +5,7 @@ import { Undertittel, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
 import vedtaksbrevAvsnittPropType from '../propTypes/vedtaksbrevAvsnittPropType';
@@ -27,7 +27,7 @@ const TilbakekrevingVedtak = ({
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
-    <FadingPanel>
+    <>
       <Undertittel>
         <FormattedMessage id="TilbakekrevingVedtak.Vedtak" />
       </Undertittel>
@@ -51,7 +51,7 @@ const TilbakekrevingVedtak = ({
         aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
         erRevurderingTilbakekrevingKlage={erRevurderingTilbakekrevingKlage}
       />
-    </FadingPanel>
+    </>
   );
 };
 

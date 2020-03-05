@@ -2,10 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { FaktaPanel, DataFetcherBehandlingData } from '@fpsak-frontend/behandling-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { FaktaPanel } from '@fpsak-frontend/behandling-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -13,9 +13,10 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
-import ForeldrepengerFakta from './ForeldrepengerFakta';
+import TilbakekrevingFakta from './TilbakekrevingFakta';
+import vedtakResultatType from '../kodeverk/vedtakResultatType';
 
-describe('<ForeldrepengerFakta>', () => {
+describe('<TilbakekrevingFakta>', () => {
   const fagsak = {
     saksnummer: 123456,
     fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
@@ -53,63 +54,92 @@ describe('<ForeldrepengerFakta>', () => {
     kanBehandleKodeEgenAnsatt: false,
   };
   const aksjonspunkter = [{
-    definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
+    definisjon: { kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING, kodeverk: 'test' },
     status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'test' },
     kanLoses: true,
     erAktivt: true,
   }];
-  const vilkar = [];
-  const inntektArbeidYtelse = {
-    skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
-    relatertTilgrensendeYtelserForAnnenForelder: [],
+  const perioderForeldelse = {
+    perioder: {
+      fom: '2019-01-01',
+      tom: '2019-04-01',
+      belop: 1212,
+      foreldelseVurderingType: {
+        kode: foreldelseVurderingType.FORELDET,
+        kodeverk: 'FORELDRE_VURDERING_TYPE',
+      },
+    },
+  };
+  const beregningsresultat = {
+    beregningResultatPerioder: [],
+    vedtakResultatType: {
+      kode: vedtakResultatType.INGEN_TILBAKEBETALING,
+      kodeverk: 'VEDTAK_RESULTAT_TYPE',
+    },
+  };
+  const feilutbetalingFakta = {
+    behandlingFakta: {
+      aktuellFeilUtbetaltBeløp: 122,
+      datoForRevurderingsvedtak: '2020-01-01',
+      totalPeriodeFom: '2020-01-01',
+      totalPeriodeTom: '2020-02-01',
+      perioder: [{
+        fom: '2020-01-01',
+        tom: '2020-02-01',
+        belop: 1212,
+      }],
+      behandlingsresultat: {
+        type: {
+          kode: 'TEST',
+          kodeverk: 'BEHANDLINGSRESULTAT',
+        },
+        konsekvenserForYtelsen: [],
+      },
+      behandlingÅrsaker: {
+        behandlingArsakType: [],
+      },
+    },
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <TilbakekrevingFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+        data={{
+          aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
+        }}
         behandling={behandling}
         fagsak={fagsak}
         navAnsatt={navAnsatt}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
         hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
         dispatch={sinon.spy()}
       />,
     );
 
     const panel = wrapper.find(FaktaPanel);
     expect(panel.prop('paneler')).is.eql([{
-      erAktiv: false,
-      harAksjonspunkt: false,
-      tekst: 'Saken',
-    }, {
       erAktiv: true,
       harAksjonspunkt: true,
-      tekst: 'Arbeidsforhold',
+      tekst: 'Feilutbetaling',
     }]);
   });
 
   it('skal oppdatere url ved valg av faktapanel', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
+      <TilbakekrevingFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+        data={{
+          aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
+        }}
         behandling={behandling}
         fagsak={fagsak}
         navAnsatt={navAnsatt}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
         hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
         dispatch={sinon.spy()}
       />,
     );
@@ -123,34 +153,6 @@ describe('<ForeldrepengerFakta>', () => {
     const { args } = calls[0];
     expect(args).to.have.length(2);
     expect(args[0]).to.eql('default');
-    expect(args[1]).to.eql('saken');
-  });
-
-  it('skal rendre faktapanel korrekt', () => {
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerFakta.WrappedComponent
-        intl={intlMock}
-        data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
-        behandling={behandling}
-        fagsak={fagsak}
-        navAnsatt={navAnsatt}
-        alleKodeverk={{}}
-        oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
-        valgtFaktaSteg="default"
-        valgtProsessSteg="default"
-        hasFetchError={false}
-        setApentFaktaPanel={sinon.spy()}
-        dispatch={sinon.spy()}
-      />,
-    );
-
-    const dataFetcher = wrapper.find(DataFetcherBehandlingData);
-    expect(dataFetcher.prop('behandlingVersion')).is.eql(behandling.versjon);
-    expect(dataFetcher.prop('endpoints')).is.eql([]);
-
-    const arbeidsforholdPanel = dataFetcher.renderProp('render')({}).find(ArbeidsforholdFaktaIndex);
-    expect(arbeidsforholdPanel.prop('readOnly')).is.false;
-    expect(arbeidsforholdPanel.prop('submittable')).is.true;
-    expect(arbeidsforholdPanel.prop('harApneAksjonspunkter')).is.true;
+    expect(args[1]).to.eql('feilutbetaling');
   });
 });

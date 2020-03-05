@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import VilkarBegrunnelse from '../VilkarBegrunnelse';
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 import OverstyrBegrunnelsePanel from './OverstyrBegrunnelsePanel';
 
 describe('<OverstyrBegrunnelsePanel>', () => {

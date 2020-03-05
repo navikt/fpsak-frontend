@@ -1,297 +1,124 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, {
+  FunctionComponent, useState, useCallback,
+} from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
-import ProcessMenu from '@navikt/nap-process-menu';
+import { Dispatch } from 'redux';
 
-import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
-import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
-import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, MargMarkering, byggProsessmenySteg, DataFetcherBehandlingData, FatterVedtakStatusModal, BehandlingHenlagtPanel,
-  ProsessStegIkkeBehandletPanel, getAlleMerknaderFraBeslutter, BehandlingDataCache,
+  FagsakInfo, prosessStegHooks, FatterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
 import {
-  Behandling, Aksjonspunkt, Kodeverk, NavAnsatt,
+  Kodeverk, NavAnsatt, Behandling,
 } from '@fpsak-frontend/types';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
-import finnTilbakekrevingSteg from '../definition/tilbakekrevingStegDefinition';
-import PerioderForeldelse from '../types/perioderForeldelseTsType';
-import Beregningsresultat from '../types/beregningsresultatTsType';
+import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
+import FetchedData from '../types/fetchedDataTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
-const tilbakekrevingData = [tilbakekrevingApi.VILKARVURDERINGSPERIODER, tilbakekrevingApi.VILKARVURDERING];
-const vedtakData = [tilbakekrevingApi.VEDTAKSBREV];
-
-
 interface OwnProps {
+  data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  oppdaterBehandlingVersjon: (versjon: number) => void;
-  opneSokeside: () => void;
-  perioderForeldelse?: PerioderForeldelse;
-  beregningsresultat?: Beregningsresultat;
   hasFetchError: boolean;
+  oppdaterBehandlingVersjon: (versjon: number) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
+  opneSokeside: () => void;
+  dispatch: Dispatch;
   harApenRevurdering: boolean;
 }
 
-interface DispatchProps {
-  lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
-  beregnBelop: (params: {}) => Promise<any>;
-  fetchPreviewVedtaksbrev: (params: {}) => Promise<any>;
-}
+const getForhandsvisCallback = (dispatch) => (data) => dispatch(tilbakekrevingApi.PREVIEW_VEDTAKSBREV.makeRestApiRequest()(data));
 
-type Props = OwnProps & DispatchProps & WrappedComponentProps;
+const getBeregnBelopCallback = (dispatch) => (data) => dispatch(tilbakekrevingApi.BEREGNE_BELØP.makeRestApiRequest()(data));
 
-interface KlageProsessState{
-  visFatterVedtakModal: boolean;
-  visApenRevurderingModal: boolean;
-  skalOppdatereFagsakKontekst: boolean;
-}
-
-export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      visApenRevurderingModal: false,
-      visFatterVedtakModal: false,
-      skalOppdatereFagsakKontekst: true,
-    };
+const getLagringSideeffekter = (toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl) => (aksjonspunktModels) => {
+  const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
+  if (isFatterVedtakAp) {
+    toggleOppdatereFagsakContext(false);
   }
 
-  componentDidMount = () => {
-    const { harApenRevurdering, behandling } = this.props;
-    this.setState((state) => ({ ...state, visApenRevurderingModal: harApenRevurdering && !behandling.behandlingPaaVent }));
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const {
-      behandling, oppdaterBehandlingVersjon,
-    } = this.props;
-    const {
-      skalOppdatereFagsakKontekst,
-    } = this.state;
-    if (skalOppdatereFagsakKontekst && behandling.versjon !== prevProps.behandling.versjon) {
-      oppdaterBehandlingVersjon(behandling.versjon);
-    }
-  }
-
-  setSteg = (nyttValg, forrigeSteg) => {
-    const {
-      oppdaterProsessStegIUrl,
-    } = this.props;
-    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
-  }
-
-  toggleFatterVedtakModal = () => {
-    const { opneSokeside } = this.props;
-    const { visFatterVedtakModal } = this.state;
-
-    if (visFatterVedtakModal) {
-      opneSokeside();
-    }
-    this.setState((state) => ({ ...state, visFatterVedtakModal: !state.visFatterVedtakModal }));
-  }
-
-  lukkApenRevurderingModal = () => {
-    this.setState((state) => ({ ...state, visApenRevurderingModal: false }));
-  }
-
-  slaAvOppdateringAvFagsak = () => {
-    this.setState((state) => ({ ...state, skalOppdatereFagsakKontekst: false }));
-  }
-
-  submitAksjonspunkter = (aksjonspunktModels) => {
-    const {
-      fagsak,
-      behandling,
-      lagreAksjonspunkt,
-      oppdaterProsessStegIUrl,
-    } = this.props;
-
-    const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
+  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+  return () => {
     if (isFatterVedtakAp) {
-      this.slaAvOppdateringAvFagsak();
+      toggleFatterVedtakModal(true);
+    } else {
+      oppdaterProsessStegOgFaktaPanelIUrl('default', 'default');
     }
-
-    const { id, versjon } = behandling;
-    const models = aksjonspunktModels.map((ap) => ({
-      '@type': ap.kode,
-      ...ap,
-    }));
-
-    const params = {
-      saksnummer: fagsak.saksnummer,
-      behandlingId: id,
-      behandlingVersjon: versjon,
-      bekreftedeAksjonspunktDtoer: models,
-    };
-
-    return lagreAksjonspunkt(params, { keepData: true })
-      .then(() => {
-        if (isFatterVedtakAp) {
-          this.setState((prevState) => ({ ...prevState, visFatterVedtakModal: true }));
-        } else {
-          oppdaterProsessStegIUrl('default');
-        }
-      });
   };
+};
 
-  render() {
-    const {
-      intl,
-      fagsak,
-      behandling,
-      aksjonspunkter,
-      kodeverk,
-      navAnsatt,
-      valgtProsessSteg,
-      hasFetchError,
-      perioderForeldelse,
-      beregningsresultat,
-      beregnBelop,
-      fetchPreviewVedtaksbrev,
-    } = this.props;
-    const { visFatterVedtakModal, visApenRevurderingModal } = this.state;
+const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
+  data,
+  fagsak,
+  behandling,
+  alleKodeverk,
+  navAnsatt,
+  valgtProsessSteg,
+  hasFetchError,
+  oppdaterBehandlingVersjon,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+  opneSokeside,
+  harApenRevurdering,
+  dispatch,
+}) => {
+  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
-    // TODO (TOR) Skriv denne på samme måte som ForeldrepengerProsess.
+  const dataTilUtledingAvTilbakekrevingPaneler = {
+    beregnBelop: useCallback(getBeregnBelopCallback(dispatch), [behandling.versjon]),
+    fetchPreviewVedtaksbrev: useCallback(getForhandsvisCallback(dispatch), [behandling.versjon]),
+    ...data,
+  };
+  const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
+    dataTilUtledingAvTilbakekrevingPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, [], hasFetchError, intl, valgtProsessSteg);
 
-    const alleSteg = finnTilbakekrevingSteg({
-      behandling, aksjonspunkter, perioderForeldelse, beregningsresultat,
-    });
-    const alleProsessMenySteg = byggProsessmenySteg({
-      alleSteg, valgtProsessSteg, behandling, aksjonspunkter, vilkar: [], navAnsatt, fagsak, hasFetchError, intl,
-    });
+  const [visApenRevurderingModal, toggleApenRevurderingModal] = useState(harApenRevurdering);
+  const lukkApenRevurderingModal = useCallback(() => toggleApenRevurderingModal(false), []);
+  const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
+  const lagringSideeffekterCallback = getLagringSideeffekter(toggleFatterVedtakModal, toggleSkalOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl);
 
-    const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
-    const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
-    const erStegBehandlet = valgtSteg ? valgtSteg.erStegBehandlet : false;
+  const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, 'default', behandling,
+    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
-    const readOnlySubmitButton = valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses));
-
-    const fellesProps = {
-      behandling,
-      submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg && valgtSteg.isReadOnly,
-      alleKodeverk: kodeverk,
-    };
-
-    const vedtakStegVises = valgtStegKode === bpc.VEDTAK;
-    const apCodes = valgtSteg && valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode);
-
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-    }
-
-    return (
-      <>
-        {visApenRevurderingModal && (
-          <AdvarselModal
-            headerTextCode="BehandlingTilbakekrevingIndex.ApenRevurderingHeader"
-            textCode="BehandlingTilbakekrevingIndex.ApenRevurdering"
-            showModal
-            submit={this.lukkApenRevurderingModal}
-          />
-        )}
-        <FatterVedtakStatusModal
-          visModal={visFatterVedtakModal}
-          lukkModal={this.toggleFatterVedtakModal}
-          tekstkode="FatterTilbakekrevingVedtakStatusModal.Sendt"
+  return (
+    <>
+      {visApenRevurderingModal && (
+        <AdvarselModal
+          headerTextCode="BehandlingTilbakekrevingIndex.ApenRevurderingHeader"
+          textCode="BehandlingTilbakekrevingIndex.ApenRevurdering"
+          showModal
+          submit={lukkApenRevurderingModal}
         />
-        <div style={{ borderTopColor: '#78706A', borderTopStyle: 'solid', borderTopWidth: '1px' }}>
-          <div style={{ marginBottom: '23px', marginLeft: '25px', marginRight: '25px' }}>
-            <ProcessMenu
-              steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-              onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
-            />
-          </div>
-          {(erStegBehandlet) && (
-          <MargMarkering
-            behandlingStatus={behandling.status}
-            aksjonspunkter={valgtSteg.aksjonspunkter}
-            isReadOnly={valgtSteg.isReadOnly}
-          >
-            {valgtStegKode === bpc.FORELDELSE && (
-            <ForeldelseProsessIndex
-              perioderForeldelse={perioderForeldelse}
-              apCodes={apCodes}
-              readOnlySubmitButton={readOnlySubmitButton}
-              navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
-              alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
-              beregnBelop={beregnBelop}
-              {...fellesProps}
-            />
-            )}
-            <DataFetcherBehandlingData
-              behandlingDataCache={this.behandlingDataCache}
-              behandlingVersion={behandling.versjon}
-              endpoints={tilbakekrevingData}
-              showComponent={valgtStegKode === bpc.TILBAKEKREVING}
-              render={(dataProps) => (
-                <TilbakekrevingProsessIndex
-                  apCodes={apCodes}
-                  readOnlySubmitButton={readOnlySubmitButton}
-                  navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
-                  alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
-                  beregnBelop={beregnBelop}
-                  perioderForeldelse={perioderForeldelse}
-                  {...dataProps}
-                  {...fellesProps}
-                />
-              )}
-            />
-            <DataFetcherBehandlingData
-              behandlingDataCache={this.behandlingDataCache}
-              behandlingVersion={behandling.versjon}
-              endpoints={vedtakData}
-              showComponent={vedtakStegVises && !behandling.behandlingHenlagt}
-              render={(dataProps) => (
-                <VedtakTilbakekrevingProsessIndex
-                  beregningsresultat={beregningsresultat}
-                  fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
-                  aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
-                  {...dataProps}
-                  {...fellesProps}
-                />
-              )}
-            />
-          </MargMarkering>
-          )}
-          {(vedtakStegVises && behandling.behandlingHenlagt) && (
-          <BehandlingHenlagtPanel />
-          )}
-          {(valgtStegKode && !erStegBehandlet && !behandling.behandlingHenlagt) && (
-          <ProsessStegIkkeBehandletPanel />
-          )}
-        </div>
-      </>
-    );
-  }
-}
+      )}
+      <FatterVedtakStatusModal
+        visModal={visFatterVedtakModal}
+        lukkModal={useCallback(() => { toggleFatterVedtakModal(false); opneSokeside(); }, [])}
+        tekstkode="FatterTilbakekrevingVedtakStatusModal.Sendt"
+      />
+      <ProsessStegContainer
+        formaterteProsessStegPaneler={formaterteProsessStegPaneler}
+        velgProsessStegPanelCallback={velgProsessStegPanelCallback}
+      >
+        <ProsessStegPanel
+          valgtProsessSteg={valgtPanel}
+          fagsak={fagsak}
+          behandling={behandling}
+          alleKodeverk={alleKodeverk}
+          oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+          lagringSideeffekterCallback={lagringSideeffekterCallback}
+          behandlingApi={tilbakekrevingApi}
+          dispatch={dispatch}
+        />
+      </ProsessStegContainer>
+    </>
+  );
+};
 
-const mapStateToProps = () => ({
-});
-
-const mapDispatchToProps = (dispatch): DispatchProps => ({
-  ...bindActionCreators({
-    lagreAksjonspunkt: tilbakekrevingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
-    fetchPreviewVedtaksbrev: tilbakekrevingApi.PREVIEW_VEDTAKSBREV.makeRestApiRequest(),
-    beregnBelop: tilbakekrevingApi.BEREGNE_BELØP.makeRestApiRequest(),
-  }, dispatch),
-});
-
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(TilbakekrevingProsess));
+export default injectIntl(TilbakekrevingProsess);

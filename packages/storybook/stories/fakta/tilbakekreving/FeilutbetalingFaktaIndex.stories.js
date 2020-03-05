@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -63,7 +64,10 @@ const feilutbetalingFakta = {
   },
 };
 
-const feilutbetalingAarsak = {
+const feilutbetalingAarsak = [{
+  ytelseType: {
+    kode: fagsakYtelseType.FORELDREPENGER,
+  },
   hendelseTyper: [{
     hendelseType: {
       kode: 'OPPTJENING',
@@ -89,7 +93,7 @@ const feilutbetalingAarsak = {
       navn: 'Ikke bosatt',
     }],
   }],
-};
+}];
 
 const alleKodeverk = {
   [kodeverkTyper.BEHANDLING_AARSAK]: [{
@@ -150,6 +154,7 @@ export const visAksjonspunktForFeilutbetaling = () => (
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
-    hasOpenAksjonspunkter={boolean('hasOpenAksjonspunkter', true)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    fagsakYtelseTypeKode={fagsakYtelseType.FORELDREPENGER}
   />
 );

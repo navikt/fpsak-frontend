@@ -10,7 +10,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe,
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
@@ -195,30 +195,29 @@ export class TilbakekrevingFormImpl extends Component {
 
     return (
       <form onSubmit={formProps.handleSubmit}>
-        <FadingPanel>
-          <FaktaGruppe
-            aksjonspunktCode={aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING}
-            merknaderFraBeslutter={merknaderFraBeslutter}
-            withoutBorder
-          >
-            <Undertittel>
-              <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
-            </Undertittel>
-            <VerticalSpacer twentyPx />
-            <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
-              {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />] }
-            </AksjonspunktHelpTextTemp>
-            <VerticalSpacer twentyPx />
-            {vilkarsVurdertePerioder && (
-              <>
-                <TilbakekrevingTimelinePanel
-                  perioder={perioderFormatertForTidslinje}
-                  valgtPeriode={valgtPeriodeFormatertForTidslinje}
-                  setPeriode={this.setPeriode}
-                  toggleDetaljevindu={this.togglePeriode}
-                  hjelpetekstKomponent={<TilbakekrevingTidslinjeHjelpetekster />}
-                  kjonn={navBrukerKjonn}
-                />
+        <FaktaGruppe
+          aksjonspunktCode={aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING}
+          merknaderFraBeslutter={merknaderFraBeslutter}
+          withoutBorder
+        >
+          <Undertittel>
+            <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
+          </Undertittel>
+          <VerticalSpacer twentyPx />
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
+            {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />] }
+          </AksjonspunktHelpTextTemp>
+          <VerticalSpacer twentyPx />
+          {vilkarsVurdertePerioder && (
+            <>
+              <TilbakekrevingTimelinePanel
+                perioder={perioderFormatertForTidslinje}
+                valgtPeriode={valgtPeriodeFormatertForTidslinje}
+                setPeriode={this.setPeriode}
+                toggleDetaljevindu={this.togglePeriode}
+                hjelpetekstKomponent={<TilbakekrevingTidslinjeHjelpetekster />}
+                kjonn={navBrukerKjonn}
+              />
                 {valgtPeriode && (
                   <TilbakekrevingPeriodeForm
                     key={valgtPeriodeFormatertForTidslinje.id}
@@ -238,30 +237,29 @@ export class TilbakekrevingFormImpl extends Component {
                     beregnBelop={beregnBelop}
                   />
                 )}
-              </>
-            )}
-            <VerticalSpacer twentyPx />
-            {formProps.error && (
-              <>
-                <AlertStripe type="feil">
-                  <FormattedMessage id={formProps.error} />
-                </AlertStripe>
-                <VerticalSpacer twentyPx />
-              </>
-            )}
-            <BehandlingspunktSubmitButton
-              formName={TILBAKEKREVING_FORM_NAME}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isReadOnly={readOnly}
-              isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
-              isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-          </FaktaGruppe>
-        </FadingPanel>
+            </>
+          )}
+          <VerticalSpacer twentyPx />
+          {formProps.error && (
+            <>
+              <AlertStripe type="feil">
+                <FormattedMessage id={formProps.error} />
+              </AlertStripe>
+              <VerticalSpacer twentyPx />
+            </>
+          )}
+          <BehandlingspunktSubmitButton
+            formName={TILBAKEKREVING_FORM_NAME}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            isReadOnly={readOnly}
+            isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
+            isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
+        </FaktaGruppe>
       </form>
     );
   }

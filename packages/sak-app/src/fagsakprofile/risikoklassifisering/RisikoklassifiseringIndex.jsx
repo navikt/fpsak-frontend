@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { allAccessRights, getRiskPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { allAccessRights, getRiskPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
@@ -20,6 +20,7 @@ import {
 import {
   isRiskPanelOpen, resolveAksjonspunkter, setRiskPanelOpen,
 } from './duck';
+import trackRouteParam from '../../app/trackRouteParam';
 
 /**
  * RisikoklassifiseringIndex

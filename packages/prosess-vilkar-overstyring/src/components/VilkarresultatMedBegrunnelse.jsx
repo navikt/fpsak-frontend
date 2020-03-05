@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import { VilkarResultPicker } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 /**
  * VIlkarresultatMedBegrunnelse

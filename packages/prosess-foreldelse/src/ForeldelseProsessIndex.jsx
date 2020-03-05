@@ -22,9 +22,9 @@ const ForeldelseProsessIndex = ({
   alleKodeverk,
   beregnBelop,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
-  apCodes,
+  aksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
     <ForeldelseForm
@@ -32,8 +32,8 @@ const ForeldelseProsessIndex = ({
       behandlingVersjon={behandling.versjon}
       perioderForeldelse={perioderForeldelse}
       submitCallback={submitCallback}
-      readOnly={readOnly}
-      apCodes={apCodes}
+      readOnly={isReadOnly}
+      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
       readOnlySubmitButton={readOnlySubmitButton}
       navBrukerKjonn={navBrukerKjonn}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -51,9 +51,9 @@ ForeldelseProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   beregnBelop: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default ForeldelseProsessIndex;

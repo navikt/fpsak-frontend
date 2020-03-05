@@ -20,9 +20,6 @@ import alleKodeverk from '../mocks/alleKodeverk.json';
 const standardFom = '2019-09-16';
 const standardTom = undefined;
 
-const togglesTrue = {
-  'fpsak.redesign.beregningsgrunnlag': true,
-};
 const behandling = {
   id: 1,
   versjon: 1,

@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { FaktaPanel, DataFetcherBehandlingDataV2 } from '@fpsak-frontend/behandling-felles';
+import { FaktaPanel, DataFetcherBehandlingData } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -144,7 +144,7 @@ describe('<EngangsstonadFakta>', () => {
       />,
     );
 
-    const dataFetcher = wrapper.find(DataFetcherBehandlingDataV2);
+    const dataFetcher = wrapper.find(DataFetcherBehandlingData);
     expect(dataFetcher.prop('behandlingVersion')).is.eql(behandling.versjon);
     expect(dataFetcher.prop('endpoints')).is.eql([]);
 

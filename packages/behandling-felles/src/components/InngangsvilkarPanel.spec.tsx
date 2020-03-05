@@ -11,7 +11,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 
 import InngangsvilkarPanel from './InngangsvilkarPanel';
-import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
+import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 
 describe('<InngangsvilkarPanel>', () => {
   const behandling = {
@@ -88,9 +88,9 @@ describe('<InngangsvilkarPanel>', () => {
 
     const columns = wrapper.find(Column);
     expect(columns).to.have.length(2);
-    const column1 = columns.first().find(DataFetcherBehandlingDataV2);
+    const column1 = columns.first().find(DataFetcherBehandlingData);
     expect(column1).to.have.length(2);
-    const column2 = columns.last().find(DataFetcherBehandlingDataV2);
+    const column2 = columns.last().find(DataFetcherBehandlingData);
     expect(column2).to.have.length(1);
   });
 
