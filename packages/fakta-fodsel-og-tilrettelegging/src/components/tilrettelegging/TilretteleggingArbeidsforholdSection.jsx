@@ -105,6 +105,7 @@ TilretteleggingArbeidsforholdSection.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
+  changeField: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
