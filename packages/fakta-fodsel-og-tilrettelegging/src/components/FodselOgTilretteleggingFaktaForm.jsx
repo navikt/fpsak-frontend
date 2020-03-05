@@ -15,7 +15,7 @@ import {
   hasValidDate, hasValidText, maxLength, required, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, FaktaSubmitButton, allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
 import arbeidsforholdPropType from '../propTypes/arbeidsforholdPropType';
@@ -110,40 +110,44 @@ export const FodselOgTilretteleggingFaktaForm = ({
           </FlexRow>
         )}
         <FlexRow>
-          <FlexColumn className={styles.fullBredde}>
-            {formProps.error && (
-              <>
-                <VerticalSpacer sixteenPx />
-                <AlertStripeFeil>
-                  <FormattedMessage id={formProps.error} />
-                </AlertStripeFeil>
-              </>
-            )}
-          </FlexColumn>
+          {formProps.error && (
+            <FlexColumn className={styles.fullBredde}>
+              <VerticalSpacer sixteenPx />
+              <AlertStripeFeil>
+                <FormattedMessage id={formProps.error} />
+              </AlertStripeFeil>
+            </FlexColumn>
+          )}
         </FlexRow>
         <FlexRow>
           <FlexColumn>
-            {arbeidsforhold.map((a) => (
-              <>
-                <VerticalSpacer sixteenPx />
-                <AvsnittSkiller />
-                <VerticalSpacer twentyPx />
-                <TilretteleggingArbeidsforholdSection
-                  key={utledFormSectionName(a)}
-                  behandlingId={behandlingId}
-                  behandlingVersjon={behandlingVersjon}
-                  readOnly={readOnly}
-                  arbeidsforhold={a}
-                  formSectionName={utledFormSectionName(a)}
-                  erOverstyrer={erOverstyrer}
-                  changeField={formProps.change}
-                />
-              </>
-            ))}
+            {arbeidsforhold.map((a, index) => {
+              const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+              return (
+                <>
+                  <VerticalSpacer sixteenPx />
+                  <AvsnittSkiller />
+                  <VerticalSpacer twentyPx />
+                  <TilretteleggingArbeidsforholdSection
+                    key={utledFormSectionName(a)}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    readOnly={readOnly}
+                    arbeidsforhold={a}
+                    formSectionName={utledFormSectionName(a)}
+                    erOverstyrer={erOverstyrer}
+                    changeField={formProps.change}
+                    stillingsprosentArbeidsforhold={af ? af.stillingsprosent : undefined}
+                  />
+                  {index === arbeidsforhold.length - 1 && (
+                    <AvsnittSkiller />
+                  )}
+                </>
+              );
+            })}
           </FlexColumn>
         </FlexRow>
-      </FlexContainer>
-      <FlexContainer>
+        <VerticalSpacer sixteenPx />
         <FlexRow>
           <FlexColumn className={styles.halvBredde}>
             <VerticalSpacer eightPx />
@@ -156,9 +160,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
             />
           </FlexColumn>
         </FlexRow>
-      </FlexContainer>
-      <VerticalSpacer twentyPx />
-      <FlexContainer fluid wrap>
+        <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>
             <FaktaSubmitButton

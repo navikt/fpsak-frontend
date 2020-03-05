@@ -9,14 +9,14 @@ import { Element } from 'nav-frontend-typografi';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import { DatepickerField, SelectField, DecimalField } from '@fpsak-frontend/form';
 import {
-  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer, Image,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   hasValidDecimal, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
-import endreImage from '@fpsak-frontend/assets/images/endre.svg';
-import endretImage from '@fpsak-frontend/assets/images/endret_felt.svg';
+
+import TilretteleggingUtbetalingsgrad from './TilretteleggingUtbetalingsgrad';
 
 import styles from './tilretteleggingFieldArray.less';
 
@@ -37,6 +37,7 @@ export const TilretteleggingFieldArray = ({
   erOverstyrer,
   changeField,
   tilretteleggingDatoer,
+  stillingsprosentArbeidsforhold,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -75,8 +76,8 @@ export const TilretteleggingFieldArray = ({
                         changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, 100);
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
-                        const defaultUtbetalingsgrad = 100 * (1 - 23 / data.stillingsprosent);
-                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad);
+                        const defaultUtbetalingsgrad = 100 * (1 - data.stillingsprosent / stillingsprosentArbeidsforhold);
+                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad : 0);
                       }
                     }}
                   />
@@ -84,7 +85,7 @@ export const TilretteleggingFieldArray = ({
                 <FlexColumn className={styles.removeButtonMargin}>
                   {!readOnly && (
                     <>
-                      { getRemoveButton() }
+                        { getRemoveButton() }
                     </>
                   )}
                 </FlexColumn>
@@ -112,41 +113,32 @@ export const TilretteleggingFieldArray = ({
                   />
                 </FlexColumn>
                 {tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING && (
-                  <FlexColumn>
-                    <DecimalField
-                      readOnly={readOnly}
-                      name={`${fieldId}.stillingsprosent`}
-                      label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Stillingsprosent' })}
-                      validate={[required, minValue0, maxValue100, hasValidDecimal]}
-                      normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                    />
-                  </FlexColumn>
+                  <>
+                    <FlexColumn>
+                      <DecimalField
+                        className={styles.textField}
+                        readOnly={readOnly}
+                        name={`${fieldId}.stillingsprosent`}
+                        label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Stillingsprosent' })}
+                        validate={[required, minValue0, maxValue100, hasValidDecimal]}
+                        normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                        onChange={(elmt, value) => {
+                          const defaultUtbetalingsgrad = 100 * (1 - value / stillingsprosentArbeidsforhold);
+                          changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad : 0);
+                        }}
+                      />
+                    </FlexColumn>
+                    <FlexColumn className={styles.buttonMargin}>
+                      %
+                    </FlexColumn>
+                  </>
                 )}
                 {(tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING || tilretteleggingKode === tilretteleggingType.INGEN_TILRETTELEGGING) && (
-                  <FlexColumn>
-                    <FlexContainer>
-                      <FlexRow>
-                        <FlexColumn>
-                          <DecimalField
-                            readOnly={readOnly}
-                            name={`${fieldId}.overstyrtUtbetalingsgrad`}
-                            label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Utbetalingsgrad' })}
-                            validate={[required, minValue0, maxValue100, hasValidDecimal]}
-                            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                          />
-                        </FlexColumn>
-                        {erOverstyrer && (
-                          <FlexColumn>
-                            <Image
-                              className={styles.buttonMargin}
-                              src={erOverstyrer ? endreImage : endretImage}
-                              tabIndex="0"
-                            />
-                          </FlexColumn>
-                        )}
-                      </FlexRow>
-                    </FlexContainer>
-                  </FlexColumn>
+                  <TilretteleggingUtbetalingsgrad
+                    fieldId={fieldId}
+                    erOverstyrer={erOverstyrer}
+                    stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
+                  />
                 )}
               </FlexRow>
             </FlexContainer>
@@ -166,6 +158,7 @@ TilretteleggingFieldArray.propTypes = {
   formSectionName: PropTypes.string.isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   changeField: PropTypes.func.isRequired,
+  stillingsprosentArbeidsforhold: PropTypes.number.isRequired,
   tilretteleggingDatoer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 

@@ -40,6 +40,7 @@ export const TilretteleggingArbeidsforholdSection = ({
   behandlingVersjon,
   erOverstyrer,
   changeField,
+  stillingsprosentArbeidsforhold,
 }) => (
   <FormSection name={formSectionName}>
     <Normaltekst className={styles.arbeidsforholdTittel}>
@@ -89,6 +90,7 @@ export const TilretteleggingArbeidsforholdSection = ({
             behandlingVersjon={behandlingVersjon}
             erOverstyrer={erOverstyrer}
             changeField={changeField}
+            stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
           />
         </FlexColumn>
       </FlexRow>
