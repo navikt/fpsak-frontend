@@ -1,14 +1,15 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { FieldArray, FormSection } from 'redux-form';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 import { DatepickerField, CheckboxField } from '@fpsak-frontend/form';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
 import {
-  BorderBox, VerticalSpacer, FlexColumn, FlexContainer,
+  VerticalSpacer, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
 
 import TilrettteleggingFieldArray from './TilretteleggingFieldArray';
@@ -37,51 +38,62 @@ export const TilretteleggingArbeidsforholdSection = ({
   visTilrettelegginger,
   behandlingId,
   behandlingVersjon,
-  erOverstyrt,
+  erOverstyrer,
+  changeField,
 }) => (
   <FormSection name={formSectionName}>
-    <BorderBox>
-      <FlexContainer>
+    <Normaltekst className={styles.arbeidsforholdTittel}>
+      {utledArbeidsforholdTittel(arbeidsforhold)}
+    </Normaltekst>
+    <VerticalSpacer sixteenPx />
+    <CheckboxField
+      readOnly={readOnly}
+      name="skalBrukes"
+      label={{ id: 'TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging' }}
+    />
+    <VerticalSpacer sixteenPx />
+    {visTilrettelegginger && (
+    <FlexContainer>
+      <FlexRow alignItemsToBaseline>
         <FlexColumn>
-          <Normaltekst className={styles.arbeidsforholdTittel}>
-            {utledArbeidsforholdTittel(arbeidsforhold)}
+          <Normaltekst>
+            <FormattedMessage id="TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra" />
           </Normaltekst>
-          <VerticalSpacer sixteenPx />
         </FlexColumn>
         <FlexColumn>
-          <CheckboxField
+          <DatepickerField
+            name="tilretteleggingBehovFom"
+            label=""
+            validate={[required, hasValidDate]}
             readOnly={readOnly}
-            name="skalBrukes"
-            label={{ id: 'TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging' }}
           />
-          <VerticalSpacer sixteenPx />
+          <VerticalSpacer eightPx />
         </FlexColumn>
-        { visTilrettelegginger && (
-          <>
-            <FlexColumn>
-              <DatepickerField
-                name="tilretteleggingBehovFom"
-                label={{ id: 'TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra' }}
-                validate={[required, hasValidDate]}
-                readOnly={readOnly}
-              />
-              <VerticalSpacer eightPx />
-            </FlexColumn>
-            <FlexColumn>
-              <FieldArray
-                name="tilretteleggingDatoer"
-                component={TilrettteleggingFieldArray}
-                readOnly={readOnly}
-                formSectionName={formSectionName}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                erOverstyrt={erOverstyrt}
-              />
-            </FlexColumn>
-          </>
-        )}
-      </FlexContainer>
-    </BorderBox>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn>
+          <Element>
+            <FormattedMessage id="TilretteleggingFieldArray.BehovForTilrettelegging" />
+          </Element>
+        </FlexColumn>
+      </FlexRow>
+      <VerticalSpacer sixteenPx />
+      <FlexRow>
+        <FlexColumn>
+          <FieldArray
+            name="tilretteleggingDatoer"
+            component={TilrettteleggingFieldArray}
+            readOnly={readOnly}
+            formSectionName={formSectionName}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            erOverstyrer={erOverstyrer}
+            changeField={changeField}
+          />
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
+    )}
   </FormSection>
 );
 
@@ -92,7 +104,7 @@ TilretteleggingArbeidsforholdSection.propTypes = {
   visTilrettelegginger: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  erOverstyrt: PropTypes.bool.isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

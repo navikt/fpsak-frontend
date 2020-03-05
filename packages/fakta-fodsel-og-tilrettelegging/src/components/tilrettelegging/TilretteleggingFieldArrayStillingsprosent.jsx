@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
+import { FlexColumn } from '@fpsak-frontend/shared-components';
 import {
   hasValidDecimal, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
@@ -11,41 +11,32 @@ import { DecimalField } from '@fpsak-frontend/form';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 
-import styles from './tilretteleggingFieldArrayStillingsprosent.less';
-
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
 export const TilretteleggingFieldArrayStillingsprosent = ({
-  index,
+  intl,
   readOnly,
   tilretteleggingFieldId,
   showStillingsprosent,
 }) => (
   <>
-    { showStillingsprosent && (
-      <>
-        { index === 0 && (
-          <Normaltekst className={styles.tilretteleggingTittel}>
-            <FormattedMessage id="TilretteleggingFieldArray.Stillingsprosent" />
-          </Normaltekst>
-        )}
-        <div className={styles.rightAlignText}>
-          <DecimalField
-            readOnly={readOnly}
-            name={`${tilretteleggingFieldId}.stillingsprosent`}
-            label=""
-            validate={[required, minValue0, maxValue100, hasValidDecimal]}
-            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-          />
-        </div>
-      </>
+    {showStillingsprosent && (
+      <FlexColumn>
+        <DecimalField
+          readOnly={readOnly}
+          name={`${tilretteleggingFieldId}.stillingsprosent`}
+          label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Stillingsprosent' })}
+          validate={[required, minValue0, maxValue100, hasValidDecimal]}
+          normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+        />
+      </FlexColumn>
     )}
   </>
 );
 
 TilretteleggingFieldArrayStillingsprosent.propTypes = {
-  index: PropTypes.number.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   tilretteleggingFieldId: PropTypes.string.isRequired,
   showStillingsprosent: PropTypes.bool.isRequired,
@@ -63,4 +54,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 
-export default connect(mapStateToProps)(TilretteleggingFieldArrayStillingsprosent);
+export default connect(mapStateToProps)(injectIntl(TilretteleggingFieldArrayStillingsprosent));

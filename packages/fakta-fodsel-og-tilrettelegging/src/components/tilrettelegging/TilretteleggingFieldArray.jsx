@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { injectIntl } from 'react-intl';
 
 import { required } from '@fpsak-frontend/utils';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
-  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 
@@ -29,7 +28,8 @@ export const TilretteleggingFieldArray = ({
   formSectionName,
   behandlingId,
   behandlingVersjon,
-  erOverstyrt,
+  erOverstyrer,
+  changeField,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -42,16 +42,11 @@ export const TilretteleggingFieldArray = ({
         <Column xs="12">
           <FlexContainer>
             <FlexRow>
-              <FlexColumn className={styles.halfColumn}>
-                { index === 0 && (
-                <Normaltekst className={styles.tilretteleggingTittel}>
-                  <FormattedMessage id="TilretteleggingFieldArray.BehovForTilrettelegging" />
-                </Normaltekst>
-                )}
+              <FlexColumn>
                 <SelectField
                   readOnly={readOnly}
                   name={`${fieldId}.type.kode`}
-                  label=""
+                  label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Tilretteleggingsbehov' })}
                   validate={[required]}
                   placeholder={intl.formatMessage({ id: 'TilretteleggingFieldArray.VelgTilretteleggingPlaceholder' })}
                   selectValues={[
@@ -65,53 +60,56 @@ export const TilretteleggingFieldArray = ({
                       {intl.formatMessage({ id: 'TilretteleggingFieldArray.KanIkkeGjennomfores' })}
                     </option>,
                   ]}
+                  onChange={(elmt, value) => {
+                    if (value === tilretteleggingType.INGEN_TILRETTELEGGING) {
+                      changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, 100);
+                    }
+                    if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
+                      changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, 100);
+                    }
+                  }}
                 />
               </FlexColumn>
-              <FlexColumn>
-                { index === 0 && (
-                <Normaltekst className={styles.tilretteleggingTittel}>
-                  <FormattedMessage id="TilretteleggingFieldArray.Dato" />
-                </Normaltekst>
+              <FlexColumn className={styles.removeButtonMargin}>
+                { !readOnly && (
+                  <>
+                      { getRemoveButton() }
+                  </>
                 )}
+              </FlexColumn>
+            </FlexRow>
+            <FlexRow>
+              <FlexColumn>
                 <DatepickerField
                   readOnly={readOnly}
                   name={`${fieldId}.fom`}
                   defaultValue={null}
-                  label=""
+                  label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Dato' })}
                   validate={[required]}
                 />
               </FlexColumn>
+              <TilretteleggingFieldArrayStillingsprosent
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                readOnly={readOnly}
+                tilretteleggingFieldId={fieldId}
+                index={index}
+                formSectionName={formSectionName}
+              />
               <FlexColumn className={styles.smallColumn}>
-                <TilretteleggingFieldArrayStillingsprosent
+                <TilretteleggingFieldArrayUtbetalingsgrad
                   behandlingId={behandlingId}
                   behandlingVersjon={behandlingVersjon}
                   readOnly={readOnly}
                   tilretteleggingFieldId={fieldId}
                   index={index}
                   formSectionName={formSectionName}
+                  erOverstyrer={erOverstyrer}
                 />
-              </FlexColumn>
-              {erOverstyrt && (
-                <FlexColumn className={styles.smallColumn}>
-                  <TilretteleggingFieldArrayUtbetalingsgrad
-                    behandlingId={behandlingId}
-                    behandlingVersjon={behandlingVersjon}
-                    readOnly={readOnly}
-                    tilretteleggingFieldId={fieldId}
-                    index={index}
-                    formSectionName={formSectionName}
-                  />
-                </FlexColumn>
-              )}
-              <FlexColumn>
-                { !readOnly && (
-                  <>
-                    { getRemoveButton() }
-                  </>
-                )}
               </FlexColumn>
             </FlexRow>
           </FlexContainer>
+          <VerticalSpacer sixteenPx />
         </Column>
       </Row>
     )}
@@ -126,7 +124,7 @@ TilretteleggingFieldArray.propTypes = {
   formSectionName: PropTypes.string.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  erOverstyrt: PropTypes.bool.isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(TilretteleggingFieldArray);

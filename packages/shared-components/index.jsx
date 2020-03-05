@@ -29,3 +29,4 @@ export { default as TableRow } from './src/table/TableRow';
 export { default as Tooltip } from './src/Tooltip';
 export { default as VerticalSpacer } from './src/VerticalSpacer';
 export { default as DataFetchPendingModal } from './src/DataFetchPendingModal';
+export { default as AvsnittSkiller } from './src/AvsnittSkiller';

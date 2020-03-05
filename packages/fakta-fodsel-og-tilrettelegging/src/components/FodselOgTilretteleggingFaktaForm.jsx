@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -6,10 +6,9 @@ import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
-import { Knapp } from 'nav-frontend-knapper';
 
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, OverstyringKnapp,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, AvsnittSkiller,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -50,8 +49,6 @@ const skalViseInfoAlert = (iayArbeidsforhold, tilretteleggingArbeidsforhold) => 
   .every((ta) => iayArbeidsforhold.some((ia) => ta.arbeidsgiverIdent === ia.arbeidsgiverIdentifikator
     && erInnenforIntervall(ta.tilretteleggingBehovFom, ia.fomDato, ia.tomDato)));
 
-const harMinstEnOverstyrtUtbetalingsgrad = (arbeidsforhold) => arbeidsforhold.some((a) => a.tilretteleggingDatoer.some((t) => t.overstyrtUtbetalingsgrad));
-
 /**
  * Svangerskapspenger
  * Presentasjonskomponent - viser tillrettlegging før svangerskapspenger
@@ -69,11 +66,6 @@ export const FodselOgTilretteleggingFaktaForm = ({
   ...formProps
 }) => {
   const visInfoAlert = useMemo(() => skalViseInfoAlert(iayArbeidsforhold, arbeidsforhold), [behandlingVersjon]);
-  const [erOverstyrt, skalOverstyre] = useState(harMinstEnOverstyrtUtbetalingsgrad(arbeidsforhold));
-  const toggleAv = useCallback(() => {
-    formProps.reset();
-    skalOverstyre(false);
-  });
 
   return (
     <form onSubmit={formProps.handleSubmit}>
@@ -98,17 +90,13 @@ export const FodselOgTilretteleggingFaktaForm = ({
           </FlexColumn>
           )}
         </FlexRow>
-      </FlexContainer>
-      <FlexContainer>
+        <VerticalSpacer sixteenPx />
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
             <Normaltekst className={styles.arbeidsforholdTittel}>
               <FormattedMessage id="FodselOgTilretteleggingFaktaForm.ArbeidsforholdDetErSoktTilretteleggingFor" />
             </Normaltekst>
-            {erOverstyrer && (
-              <OverstyringKnapp onClick={skalOverstyre} erOverstyrt={readOnly || erOverstyrt} />
-            )}
           </FlexColumn>
         </FlexRow>
         {visInfoAlert && (
@@ -134,17 +122,23 @@ export const FodselOgTilretteleggingFaktaForm = ({
           </FlexColumn>
         </FlexRow>
         <FlexRow>
-          <FlexColumn className={styles.fullBredde}>
-            { arbeidsforhold.map((a) => (
-              <TilretteleggingArbeidsforholdSection
-                key={utledFormSectionName(a)}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                readOnly={readOnly}
-                arbeidsforhold={a}
-                formSectionName={utledFormSectionName(a)}
-                erOverstyrt={erOverstyrt}
-              />
+          <FlexColumn>
+            {arbeidsforhold.map((a) => (
+              <>
+                <VerticalSpacer sixteenPx />
+                <AvsnittSkiller />
+                <VerticalSpacer twentyPx />
+                <TilretteleggingArbeidsforholdSection
+                  key={utledFormSectionName(a)}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                  readOnly={readOnly}
+                  arbeidsforhold={a}
+                  formSectionName={utledFormSectionName(a)}
+                  erOverstyrer={erOverstyrer}
+                  changeField={formProps.change}
+                />
+              </>
             ))}
           </FlexColumn>
         </FlexRow>
@@ -176,19 +170,6 @@ export const FodselOgTilretteleggingFaktaForm = ({
               hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             />
           </FlexColumn>
-          {erOverstyrt && (
-            <FlexColumn>
-              <Knapp
-                htmlType="button"
-                spinner={formProps.submitting}
-                disabled={formProps.submitting}
-                onClick={toggleAv}
-                mini
-              >
-                <FormattedMessage id="FodselOgTilretteleggingFaktaForm.Avbryt" />
-              </Knapp>
-            </FlexColumn>
-          )}
         </FlexRow>
       </FlexContainer>
     </form>

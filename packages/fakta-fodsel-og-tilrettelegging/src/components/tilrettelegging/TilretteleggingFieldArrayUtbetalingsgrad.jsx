@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { injectIntl } from 'react-intl';
 
 import {
   hasValidDecimal, maxValue, minValue, required,
@@ -10,45 +9,58 @@ import {
 import { DecimalField } from '@fpsak-frontend/form';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
+import {
+  FlexColumn, FlexContainer, FlexRow, Image,
+} from '@fpsak-frontend/shared-components';
+import endreImage from '@fpsak-frontend/assets/images/endre.svg';
+import endretImage from '@fpsak-frontend/assets/images/endret_felt.svg';
 
-import styles from './tilretteleggingFieldArrayStillingsprosent.less';
+import styles from './tilretteleggingFieldArrayUtbetalingsgrad.less';
 
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
 export const TilretteleggingFieldArrayUtbetalingsgrad = ({
-  index,
+  intl,
   readOnly,
   tilretteleggingFieldId,
   showUtbetalingsgrad,
+  erOverstyrer,
 }) => (
   <>
-    { showUtbetalingsgrad && (
-      <>
-        { index === 0 && (
-          <Normaltekst className={styles.tilretteleggingTittel}>
-            <FormattedMessage id="TilretteleggingFieldArray.Utbetalingsgrad" />
-          </Normaltekst>
-        )}
-        <div className={styles.rightAlignText}>
-          <DecimalField
-            readOnly={readOnly}
-            name={`${tilretteleggingFieldId}.overstyrtUtbetalingsgrad`}
-            label=""
-            validate={[required, minValue0, maxValue100, hasValidDecimal]}
-            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-          />
-        </div>
-      </>
+    {showUtbetalingsgrad && (
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn>
+            <DecimalField
+              readOnly={readOnly}
+              name={`${tilretteleggingFieldId}.overstyrtUtbetalingsgrad`}
+              label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Utbetalingsgrad' })}
+              validate={[required, minValue0, maxValue100, hasValidDecimal]}
+              normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+            />
+          </FlexColumn>
+          {erOverstyrer && (
+          <FlexColumn>
+            <Image
+              className={styles.buttonMargin}
+              src={erOverstyrer ? endreImage : endretImage}
+              tabIndex="0"
+            />
+          </FlexColumn>
+          )}
+        </FlexRow>
+      </FlexContainer>
     )}
   </>
 );
 
 TilretteleggingFieldArrayUtbetalingsgrad.propTypes = {
-  index: PropTypes.number.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   tilretteleggingFieldId: PropTypes.string.isRequired,
   showUtbetalingsgrad: PropTypes.bool.isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -64,4 +76,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 
-export default connect(mapStateToProps)(TilretteleggingFieldArrayUtbetalingsgrad);
+export default connect(mapStateToProps)(injectIntl(TilretteleggingFieldArrayUtbetalingsgrad));
