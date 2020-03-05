@@ -77,7 +77,7 @@ export const TilretteleggingFieldArray = ({
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
                         const defaultUtbetalingsgrad = 100 * (1 - data.stillingsprosent / stillingsprosentArbeidsforhold);
-                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad : 0);
+                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0);
                       }
                     }}
                   />
@@ -124,7 +124,7 @@ export const TilretteleggingFieldArray = ({
                         normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                         onChange={(elmt, value) => {
                           const defaultUtbetalingsgrad = 100 * (1 - value / stillingsprosentArbeidsforhold);
-                          changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad : 0);
+                          changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0);
                         }}
                       />
                     </FlexColumn>
