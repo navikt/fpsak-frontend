@@ -2,6 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import vilkarResultat from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
 import sarligGrunn from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
@@ -144,8 +145,18 @@ export const visAksjonspunktForTilbakekreving = () => (
     vilkarvurderingsperioder={object('vilkarvurderingsperioder', vilkarvurderingsperioder)}
     vilkarvurdering={object('vilkarvurdering', vilkarvurdering)}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    apCodes={[aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING]}
+    isReadOnly={boolean('isReadOnly', false)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
     readOnlySubmitButton={boolean('readOnly', false)}
     navBrukerKjonn={NavBrukerKjonn.KVINNE}
     alleMerknaderFraBeslutter={{

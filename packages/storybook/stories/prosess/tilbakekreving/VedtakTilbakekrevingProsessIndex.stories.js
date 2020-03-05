@@ -179,7 +179,7 @@ export const visVedtakspanel = () => (
     beregningsresultat={beregningsresultat}
     vedtaksbrev={vedtaksbrev}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     isBehandlingHenlagt={boolean('isBehandlingHenlagt', false)}
     alleKodeverk={alleKodeverk}
     fetchPreviewVedtaksbrev={action('button-click')}
