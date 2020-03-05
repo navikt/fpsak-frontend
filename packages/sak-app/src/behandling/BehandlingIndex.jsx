@@ -11,7 +11,7 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  requireProps, getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
 } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
@@ -33,6 +33,7 @@ import {
 } from './selectors/behandlingerSelectors';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
+import trackRouteParam from '../app/trackRouteParam';
 
 const BehandlingEngangsstonadIndex = React.lazy(() => import('@fpsak-frontend/behandling-es'));
 const BehandlingForeldrepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-fp'));

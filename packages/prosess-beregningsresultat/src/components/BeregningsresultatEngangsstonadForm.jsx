@@ -7,10 +7,7 @@ import { injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import {
-  behandlingForm, behandlingFormValueSelector, OverstyrBegrunnelsePanel, OverstyrBekreftKnappPanel,
-  OverstyrVurderingVelger,
-} from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -19,6 +16,10 @@ import {
 } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import OverstyrBegrunnelsePanel from './OverstyrBegrunnelsePanel';
+import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
+import OverstyrVurderingVelger from './OverstyrVurderingVelger';
 
 import styles from './beregningsresultatEngangsstonadForm.less';
 
