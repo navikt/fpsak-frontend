@@ -13,7 +13,9 @@ const faktaPanelDefinisjoner = [{
   endpoints: [tilbakekrevingApi.FEILUTBETALING_AARSAK],
   renderComponent: (props) => <FeilutbetalingFaktaIndex {...props} />,
   showComponent: ({ feilutbetalingFakta }) => !!feilutbetalingFakta,
-  getData: ({ feilutbetalingFakta, fagsak }) => ({ feilutbetalingFakta, fagsakYtelseTypeKode: fagsak.fagsakYtelseType.kode }),
+  getData: ({ feilutbetalingFakta, fagsak, fpsakKodeverk }) => (
+    { feilutbetalingFakta, fagsakYtelseTypeKode: fagsak.fagsakYtelseType.kode, fpsakKodeverk }
+  ),
 }];
 
 export default faktaPanelDefinisjoner;

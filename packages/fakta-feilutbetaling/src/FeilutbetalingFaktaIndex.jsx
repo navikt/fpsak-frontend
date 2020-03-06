@@ -24,6 +24,7 @@ const FeilutbetalingFaktaIndex = ({
   aksjonspunkter,
   alleMerknaderFraBeslutter,
   alleKodeverk,
+  fpsakKodeverk,
   submitCallback,
   readOnly,
   harApneAksjonspunkter,
@@ -37,6 +38,7 @@ const FeilutbetalingFaktaIndex = ({
       aksjonspunkter={aksjonspunkter}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
+      fpsakKodeverk={fpsakKodeverk}
       submitCallback={submitCallback}
       readOnly={readOnly}
       hasOpenAksjonspunkter={harApneAksjonspunkter}
@@ -51,6 +53,7 @@ FeilutbetalingFaktaIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(feilutbetalingAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  fpsakKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   fagsakYtelseTypeKode: PropTypes.string.isRequired,

@@ -58,10 +58,12 @@ export class FeilutbetalingInfoPanelImpl extends Component {
       behandlingId,
       behandlingVersjon,
       alleKodeverk,
+      fpsakKodeverk,
       ...formProps
     } = this.props;
 
     const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+    const getFpsakKodeverknavn = getKodeverknavnFn(fpsakKodeverk, kodeverkTyper);
 
     return (
       <>
@@ -156,7 +158,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Undertekst>
                   { feilutbetaling.behandlingÅrsaker && (
                     <Normaltekst className={styles.smallPaddingRight}>
-                      {feilutbetaling.behandlingÅrsaker.map((ba) => getKodeverknavn(ba.behandlingArsakType)).join(', ')}
+                      {feilutbetaling.behandlingÅrsaker.map((ba) => getFpsakKodeverknavn(ba.behandlingArsakType)).join(', ')}
                     </Normaltekst>
                   )}
                 </Column>
@@ -179,7 +181,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Undertekst>
                   {feilutbetaling.behandlingsresultat && (
                     <Normaltekst className={styles.smallPaddingRight}>
-                      {getKodeverknavn(feilutbetaling.behandlingsresultat.type)}
+                      {getFpsakKodeverknavn(feilutbetaling.behandlingsresultat.type)}
                     </Normaltekst>
                   )}
                 </Column>
@@ -189,7 +191,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                   </Undertekst>
                   {feilutbetaling.behandlingsresultat && (
                     <Normaltekst className={styles.smallPaddingRight}>
-                      {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen.map((ba) => getKodeverknavn(ba)).join(', ')}
+                      {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen.map((ba) => getFpsakKodeverknavn(ba)).join(', ')}
                     </Normaltekst>
                   )}
                 </Column>
@@ -246,6 +248,7 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   feilutbetaling: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  fpsakKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   merknaderFraBeslutter: PropTypes.shape({

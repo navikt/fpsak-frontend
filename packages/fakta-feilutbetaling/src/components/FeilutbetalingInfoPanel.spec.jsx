@@ -69,15 +69,18 @@ const feilutbetalingFakta = {
 };
 
 const alleKodeverk = {
-  [kodeverkTyper.BEHANDLING_AARSAK]: [{
-    kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-    navn: 'Feil i lovanvendelse',
-    kodeverk: BEHANDLING_AARSAK_KODEVERK,
-  }],
   [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
     kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
     navn: 'Tilbakekreving inntrekk',
     kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+  }],
+};
+
+const fpsakKodeverk = {
+  [kodeverkTyper.BEHANDLING_AARSAK]: [{
+    kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+    navn: 'Feil i lovanvendelse',
+    kodeverk: BEHANDLING_AARSAK_KODEVERK,
   }],
   [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [{
     kode: behandlingResultatType.INNVILGET,
@@ -94,7 +97,6 @@ const alleKodeverk = {
     kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
   }],
 };
-
 
 describe('<FeilutbetalingInfoPanel>', () => {
   it('skal rendre komponent korrekt', () => {
@@ -114,6 +116,7 @@ describe('<FeilutbetalingInfoPanel>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={alleKodeverk}
+      fpsakKodeverk={fpsakKodeverk}
     />);
 
     const normaltekstfelter = wrapper.find(Normaltekst);
@@ -126,6 +129,6 @@ describe('<FeilutbetalingInfoPanel>', () => {
     expect(normaltekstfelter.at(4).childAt(0).text()).is.eql('01.01.2019');
     expect(normaltekstfelter.at(5).childAt(0).text()).is.eql('Innvilget');
     expect(normaltekstfelter.at(6).childAt(0).text()).is.eql('Foreldrepenger opphører, Endring i beregning');
-    expect(normaltekstfelter.at(7).childAt(0).text()).is.eql('Tilbakekreving inntrekk');
+    expect(normaltekstfelter.at(7).childAt(0).text(), 'valg?').is.eql('Tilbakekreving inntrekk');
   });
 });

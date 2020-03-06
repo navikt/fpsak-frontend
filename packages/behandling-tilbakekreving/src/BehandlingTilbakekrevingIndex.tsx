@@ -31,12 +31,13 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   harApenRevurdering: boolean;
+  kodeverk: {[key: string]: [Kodeverk]};
 }
 
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  kodeverk?: {[key: string]: [Kodeverk]};
+  tilbakekrevingKodeverk?: {[key: string]: [Kodeverk]};
   hasFetchError: boolean;
 }
 
@@ -70,7 +71,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
 
     hentBehandling({ behandlingId }, { keepData: false });
     hentKodeverk();
-  }
+  };
 
   componentWillUnmount = () => {
     const {
@@ -79,14 +80,15 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
     behandlingEventHandler.clear();
     resetRestApiContext();
     setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
-  }
+  };
 
   render() {
     const {
       behandling,
       forrigeBehandling,
       oppdaterBehandlingVersjon,
-      kodeverk,
+      kodeverk: fpsakKodeverk,
+      tilbakekrevingKodeverk,
       fagsak,
       navAnsatt,
       oppdaterProsessStegOgFaktaPanelIUrl,
@@ -98,7 +100,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
       hasFetchError,
     } = this.props;
 
-    if (!behandling || !kodeverk) {
+    if (!behandling || !tilbakekrevingKodeverk) {
       return <LoadingPanel />;
     }
 
@@ -116,7 +118,8 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
               behandling={isFinished ? behandling : forrigeBehandling}
               fetchedData={dataProps}
               fagsak={fagsak}
-              kodeverk={kodeverk}
+              kodeverk={tilbakekrevingKodeverk}
+              fpsakKodeverk={fpsakKodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -137,7 +140,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
 const mapStateToProps = (state) => ({
   behandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiData()(state),
   forrigeBehandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiPreviousData()(state),
-  kodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.getRestApiData()(state),
+  tilbakekrevingKodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.getRestApiData()(state),
   hasFetchError: !!tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiError()(state),
 });
 
