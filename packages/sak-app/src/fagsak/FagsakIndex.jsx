@@ -5,10 +5,12 @@ import { Route } from 'react-router-dom';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
-  behandlingerPath, getRequestPollingMessage, requireProps, DataFetcher, pathToAnnenPart,
+  behandlingerPath, pathToAnnenPart,
 } from '@fpsak-frontend/fp-felles';
-import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
+import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
 
+import DataFetcher from '../app/DataFetcher';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';

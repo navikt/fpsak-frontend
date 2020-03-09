@@ -1,5 +1,3 @@
-export { default as reducerRegistry } from './src/ReducerRegistry';
-export { default as requireProps } from './src/requireProps';
 export { default as featureToggle } from './src/featureToggle';
 export { ErrorTypes, errorOfType, getErrorResponseData } from './src/ErrorTypes';
 export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
@@ -38,10 +36,6 @@ export {
 } from './src/eksterneLenker';
 
 export {
-  setRequestPollingMessage,
-  getRequestPollingMessage,
-} from './src/pollingMessageDuck';
-export {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, getBehandlingFormName,
   isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues, getBehandlingFormSyncErrors, getBehandlingFormPrefix,
 } from './src/behandlingForm';
@@ -57,4 +51,3 @@ export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar
 export { default as skjermlenkeCodes, createLocationForHistorikkItems } from './src/skjermlenkeCodes';
 export { createVisningsnavnForAktivitet, lagVisningsNavn } from './src/util/visningsnavnHelper';
 export { default as allAccessRights } from './src/navAnsatt/access';
-export { default as DataFetcher } from './src/DataFetcher';

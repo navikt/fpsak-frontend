@@ -9,9 +9,10 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import {
-  getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, DataFetcher,
+  getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger,
 } from '@fpsak-frontend/fp-felles';
 
+import DataFetcher from '../app/DataFetcher';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 describe('<FagsakProfileIndex>', () => {

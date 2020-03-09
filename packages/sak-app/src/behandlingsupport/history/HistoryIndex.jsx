@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
-import { DataFetcher } from '@fpsak-frontend/fp-felles';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
+import DataFetcher from '../../app/DataFetcher';
 import ApplicationContextPath from '../../behandling/ApplicationContextPath';
 import { getEnabledApplicationContexts } from '../../app/duck';
 import fpsakApi from '../../data/fpsakApi';

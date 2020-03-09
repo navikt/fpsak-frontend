@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import {
-  requireProps,
-  DataFetcher,
   getLocationWithDefaultBehandlingspunktAndFakta,
   pathToBehandling,
   pathToBehandlinger,
@@ -16,6 +14,7 @@ import {
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 
+import DataFetcher from '../app/DataFetcher';
 import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';

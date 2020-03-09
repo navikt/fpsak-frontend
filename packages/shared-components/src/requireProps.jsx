@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
  *
  *  Komponent som sikkerstiller att requiredprops virkligen er lastade.
  */
-
 const propsWithValue = (propNames, value) => propNames
   .map((propName) => ({ [propName]: value }))
   .reduce((a, b) => ({ ...a, ...b }));

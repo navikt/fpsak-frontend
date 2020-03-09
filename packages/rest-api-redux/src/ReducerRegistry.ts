@@ -1,5 +1,9 @@
 // TODO (TOR) Flytt ut i utility-pakke, evt. anna pakke.
 class ReducerRegistry {
+  emitChange: (reducers: {}) => void;
+
+  reducers: {[key: string]: {}};
+
   constructor() {
     this.emitChange = null;
     this.reducers = {};

@@ -22,7 +22,12 @@ const initialState = {
   restRequestPollingMessage: undefined,
 };
 
-const pollingMessageReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
+interface Action {
+  type: string;
+  data?: string;
+}
+
+const pollingMessageReducer = (state = initialState, action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) { // NOSONAR Switch brukes som standard i reducers
     case SET_REQUEST_POLLING_MESSAGE:
       return {

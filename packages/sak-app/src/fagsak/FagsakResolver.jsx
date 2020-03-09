@@ -4,10 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import {
   pathToMissingPage,
-  requireProps,
 } from '@fpsak-frontend/fp-felles';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 

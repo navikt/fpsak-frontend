@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { DataFetcher, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import MenySakIndex, { MenyKodeverk, MenyBehandlingData, MenyRettigheter } from '@fpsak-frontend/sak-meny';
 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
@@ -20,6 +20,7 @@ import {
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
+import DataFetcher from '../app/DataFetcher';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';

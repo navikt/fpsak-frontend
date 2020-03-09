@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
-import { DataFetcher } from '@fpsak-frontend/fp-felles';
 
+import DataFetcher from '../../app/DataFetcher';
 import { HistoryIndex } from './HistoryIndex';
 
 describe('<HistoryIndex>', () => {

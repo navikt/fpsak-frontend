@@ -5,9 +5,10 @@ import { shallow } from 'enzyme';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { DataFetcher, BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import Messages, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 
+import DataFetcher from '../../app/DataFetcher';
 import { MessagesIndex } from './MessagesIndex';
 
 describe('<MessagesIndex>', () => {

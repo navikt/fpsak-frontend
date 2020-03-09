@@ -6,8 +6,7 @@ import {
   reduxForm, formValueSelector, isDirty, getFormSyncErrors, isSubmitting, getFormValues, getFormInitialValues,
 } from 'redux-form';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import requireProps from './requireProps';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;
 export const getBehandlingFormName = (behandlingId, behandlingVersjon, form) => `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${form}`;

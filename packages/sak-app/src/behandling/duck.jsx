@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 
 import { getSelectedSaksnummer } from '../fagsak/duck';
 import fpsakApi from '../data/fpsakApi';
