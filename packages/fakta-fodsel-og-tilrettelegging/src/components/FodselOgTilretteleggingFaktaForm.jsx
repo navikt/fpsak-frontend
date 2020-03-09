@@ -7,6 +7,7 @@ import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
 
+import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer, AvsnittSkiller,
 } from '@fpsak-frontend/shared-components';
@@ -267,15 +268,41 @@ const getArbeidsforhold = createSelector([
   return arbeidsforhold;
 });
 
+const utledUtbetalingsgrad = (tilretteleggingsdato, stillingsprosentArbeidsforhold) => {
+  if (tilretteleggingsdato.type.kode === tilretteleggingType.HEL_TILRETTELEGGING) {
+    return null;
+  }
+  if (tilretteleggingsdato.type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
+    if (tilretteleggingsdato.overstyrtUtbetalingsgrad) {
+      return tilretteleggingsdato.overstyrtUtbetalingsgrad;
+    }
+    const defaultUtbetalingsgrad = 100 * (1 - tilretteleggingsdato.stillingsprosent / stillingsprosentArbeidsforhold);
+    return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0;
+  }
+  if (tilretteleggingsdato.type.kode === tilretteleggingType.INGEN_TILRETTELEGGING) {
+    return tilretteleggingsdato.overstyrtUtbetalingsgrad ? tilretteleggingsdato.overstyrtUtbetalingsgrad : 100;
+  }
+};
+
 const getInitialArbeidsforholdValues = createSelector([
   (ownProps) => ownProps.svangerskapspengerTilrettelegging,
-], (tilrettelegging) => {
+  (ownProps) => ownProps.iayArbeidsforhold,
+], (tilrettelegging, iayArbeidsforhold) => {
   const arbeidsforhold = tilrettelegging ? tilrettelegging.arbeidsforholdListe : [];
   if (arbeidsforhold === undefined || arbeidsforhold === null) {
     return EMPTY_LIST;
   }
   const arbeidsforholdValues = [];
-  arbeidsforhold.forEach((a) => { arbeidsforholdValues[utledFormSectionName(a)] = { ...a }; });
+  arbeidsforhold.forEach((a) => {
+    const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    arbeidsforholdValues[utledFormSectionName(a)] = {
+      ...a,
+      tilretteleggingDatoer: a.tilretteleggingDatoer.map((tilretteleggingsdato) => ({
+        ...tilretteleggingsdato,
+        overstyrtUtbetalingsgrad: utledUtbetalingsgrad(tilretteleggingsdato, af.stillingsprosent),
+      })),
+    };
+  });
   return arbeidsforholdValues;
 });
 

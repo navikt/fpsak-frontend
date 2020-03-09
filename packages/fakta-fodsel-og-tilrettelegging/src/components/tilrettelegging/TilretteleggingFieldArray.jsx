@@ -38,6 +38,8 @@ export const TilretteleggingFieldArray = ({
   changeField,
   tilretteleggingDatoer,
   stillingsprosentArbeidsforhold,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -77,7 +79,8 @@ export const TilretteleggingFieldArray = ({
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
                         const defaultUtbetalingsgrad = 100 * (1 - data.stillingsprosent / stillingsprosentArbeidsforhold);
-                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0);
+                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`,
+                          defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0);
                       }
                     }}
                   />
@@ -136,7 +139,12 @@ export const TilretteleggingFieldArray = ({
                 {(tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING || tilretteleggingKode === tilretteleggingType.INGEN_TILRETTELEGGING) && (
                   <TilretteleggingUtbetalingsgrad
                     fieldId={fieldId}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    formSectionName={formSectionName}
                     erOverstyrer={erOverstyrer}
+                    index={index}
+                    tilretteleggingKode={tilretteleggingKode}
                     stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
                   />
                 )}
@@ -159,6 +167,8 @@ TilretteleggingFieldArray.propTypes = {
   erOverstyrer: PropTypes.bool.isRequired,
   changeField: PropTypes.func.isRequired,
   stillingsprosentArbeidsforhold: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   tilretteleggingDatoer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
