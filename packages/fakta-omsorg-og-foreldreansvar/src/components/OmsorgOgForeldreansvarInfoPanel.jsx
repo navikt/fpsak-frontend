@@ -5,8 +5,9 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
+import { behandlingForm } from '@fpsak-frontend/form';
 import {
-  getKodeverknavnFn, FaktaBegrunnelseTextField, FaktaSubmitButton, behandlingForm,
+  getKodeverknavnFn, FaktaBegrunnelseTextField, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

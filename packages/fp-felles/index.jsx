@@ -35,10 +35,6 @@ export {
   SYSTEMRUTINE_URL,
 } from './src/eksterneLenker';
 
-export {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, getBehandlingFormName,
-  isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues, getBehandlingFormSyncErrors, getBehandlingFormPrefix,
-} from './src/behandlingForm';
 export { default as FaktaGruppe } from './src/FaktaGruppe';
 export { default as isFieldEdited } from './src/util/isFieldEdited';
 export { default as FaktaSubmitButton } from './src/fakta/FaktaSubmitButton';

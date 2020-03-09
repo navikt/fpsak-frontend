@@ -9,8 +9,9 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
+  VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import { fastsattOpptjeningPropType } from '../propTypes/opptjeningVilkarOpptjeningPropType';
 import OpptjeningVilkarView from './OpptjeningVilkarView';

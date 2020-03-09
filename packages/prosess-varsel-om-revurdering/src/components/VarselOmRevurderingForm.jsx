@@ -10,11 +10,13 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingForm, behandlingFormValueSelector, SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
+import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   hasValidText, ISO_DATE_FORMAT, minLength, required, getLanguageCodeFromSprakkode,

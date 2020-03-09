@@ -10,8 +10,8 @@ import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
-import { CheckboxField } from '@fpsak-frontend/form';
+import { getBehandlingFormPrefix, behandlingFormValueSelector, CheckboxField } from '@fpsak-frontend/form';
+
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

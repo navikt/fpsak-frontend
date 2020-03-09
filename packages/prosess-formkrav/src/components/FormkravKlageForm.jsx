@@ -8,9 +8,10 @@ import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/fp-felles';
-import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, SelectField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

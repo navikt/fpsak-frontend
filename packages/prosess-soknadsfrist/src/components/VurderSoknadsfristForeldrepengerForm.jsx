@@ -14,15 +14,18 @@ import Panel from 'nav-frontend-paneler';
 import {
   AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  DatepickerField, RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import {
   dateBeforeOrEqualToToday, DDMMYYYY_DATE_FORMAT, hasValidDate, required,
 } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
+  BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
+
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';
 

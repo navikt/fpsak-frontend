@@ -7,11 +7,13 @@ import { createSelector } from 'reselect';
 import { Column } from 'nav-frontend-grid';
 
 import {
-  isFieldEdited, behandlingForm, behandlingFormValueSelector, FaktaGruppe, FaktaBegrunnelseTextField,
+  isFieldEdited, FaktaGruppe, FaktaBegrunnelseTextField,
 } from '@fpsak-frontend/fp-felles';
 import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 

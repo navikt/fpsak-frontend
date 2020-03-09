@@ -16,13 +16,15 @@ import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import {
   DateLabel, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
+  BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
 } from '@fpsak-frontend/fp-felles';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';

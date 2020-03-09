@@ -10,7 +10,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import {
-  RadioGroupField, RadioOption, SelectField, TextAreaField,
+  RadioGroupField, RadioOption, SelectField, TextAreaField, behandlingFormValueSelector, behandlingForm,
 } from '@fpsak-frontend/form';
 import {
   hasValidText,
@@ -36,7 +36,7 @@ import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/s
 import {
   ArrowBox, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
+
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 

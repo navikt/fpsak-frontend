@@ -2,7 +2,9 @@ import { createSelector } from 'reselect';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { behandlingFormValueSelector, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';

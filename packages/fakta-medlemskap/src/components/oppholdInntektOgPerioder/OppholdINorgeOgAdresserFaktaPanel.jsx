@@ -6,7 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
 

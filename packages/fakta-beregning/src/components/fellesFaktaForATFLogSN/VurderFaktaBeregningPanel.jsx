@@ -4,11 +4,13 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
+
 import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FaktaBegrunnelseTextField, behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
-
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { behandlingForm } from '@fpsak-frontend/form';
+
 import FaktaForATFLOgSNPanel, {
   getBuildInitialValuesFaktaForATFLOgSN,
   transformValuesFaktaForATFLOgSN,

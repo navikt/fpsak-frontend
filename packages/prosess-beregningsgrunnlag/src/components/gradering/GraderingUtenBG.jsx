@@ -5,17 +5,15 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+
 import {
   BehandlingspunktSubmitButton,
   getKodeverknavnFn,
-  behandlingForm,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
   createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/fp-felles';
-
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  behandlingForm, RadioGroupField, RadioOption, TextAreaField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -24,14 +22,14 @@ import {
   AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 import styles from './graderingUtenBG.less';
-import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

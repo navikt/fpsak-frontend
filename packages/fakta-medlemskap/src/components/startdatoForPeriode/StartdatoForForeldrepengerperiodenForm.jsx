@@ -8,11 +8,11 @@ import { Column, Row } from 'nav-frontend-grid';
 import { FieldArray, formPropTypes } from 'redux-form';
 
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FaktaGruppe, FaktaSubmitButton, behandlingForm } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
   hasValidDate, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
+import { DatepickerField, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';

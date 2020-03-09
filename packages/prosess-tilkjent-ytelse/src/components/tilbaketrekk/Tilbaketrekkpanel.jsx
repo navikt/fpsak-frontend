@@ -14,12 +14,12 @@ import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import styles from './tilbaketrekkpanel.less';
 

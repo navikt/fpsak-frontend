@@ -12,9 +12,10 @@ import {
 import {
   ariaCheck, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm,
+} from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import risikoklassifiseringAksjonspunktPropType from '../propTypes/risikoklassifiseringAksjonspunktPropType';

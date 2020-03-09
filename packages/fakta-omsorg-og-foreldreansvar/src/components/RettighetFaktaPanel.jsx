@@ -7,7 +7,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import styles from './rettighetFaktaPanel.less';
 

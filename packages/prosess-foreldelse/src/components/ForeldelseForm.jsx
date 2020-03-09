@@ -11,10 +11,10 @@ import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import {
   AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
-  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe, BehandlingspunktSubmitButton,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
-} from '@fpsak-frontend/fp-felles';
+  getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 

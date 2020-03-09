@@ -10,7 +10,7 @@ import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Person',

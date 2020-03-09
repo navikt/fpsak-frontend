@@ -8,7 +8,6 @@ import {
 } from '@fpsak-frontend/utils';
 
 import {
-  behandlingFormValueSelector,
   getKodeverknavnFn,
   createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/fp-felles';
@@ -20,7 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { InputField } from '@fpsak-frontend/form';
+import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 

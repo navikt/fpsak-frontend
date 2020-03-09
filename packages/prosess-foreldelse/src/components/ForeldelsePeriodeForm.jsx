@@ -9,8 +9,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm,
+} from '@fpsak-frontend/form';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import {
   hasValidText, maxLength, minLength, required,

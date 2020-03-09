@@ -4,12 +4,14 @@ import { FormattedHTMLMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm,
+} from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm, FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

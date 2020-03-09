@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner,

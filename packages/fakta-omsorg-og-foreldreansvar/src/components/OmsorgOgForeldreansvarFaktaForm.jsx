@@ -11,10 +11,10 @@ import {
   AksjonspunktHelpTextTemp, EditedIcon, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { SelectField } from '@fpsak-frontend/form';
+import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidInteger, isObjectEmpty, required } from '@fpsak-frontend/utils';
 import VilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { isFieldEdited, FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { isFieldEdited, FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
 import RettighetFaktaPanel from './RettighetFaktaPanel';

@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
+
 import {
-  behandlingForm, FaktaSubmitButton, getKodeverknavnFn, FaktaBegrunnelseTextField,
+  FaktaSubmitButton, getKodeverknavnFn, FaktaBegrunnelseTextField,
 } from '@fpsak-frontend/fp-felles';
+import { behandlingForm } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import FastsettFordeltBeregningsgrunnlag from './fordeling/FastsettFordeltBeregningsgrunnlag';
 import FordelingHelpText from './FordelingHelpText';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';

@@ -6,7 +6,8 @@ import {
   Element, Normaltekst, Undertekst, EtikettLiten,
 } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector, getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

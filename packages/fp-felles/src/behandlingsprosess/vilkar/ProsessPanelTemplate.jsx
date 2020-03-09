@@ -8,13 +8,13 @@ import {
 import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn, AksjonspunktBox, Image,
 } from '@fpsak-frontend/shared-components';
-import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
-
 import {
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '../../behandlingForm';
+} from '@fpsak-frontend/form';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
+
 import BehandlingspunktSubmitButton from '../BehandlingspunktSubmitButton';
 
 import styles from './prosessPanelTemplate.less';

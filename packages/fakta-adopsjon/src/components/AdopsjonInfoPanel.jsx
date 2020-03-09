@@ -7,8 +7,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { behandlingForm } from '@fpsak-frontend/form';
 import {
-  FaktaBegrunnelseTextField, FaktaSubmitButton, behandlingForm,
+  FaktaBegrunnelseTextField, FaktaSubmitButton,
   isFieldEdited,
 } from '@fpsak-frontend/fp-felles';
 import {

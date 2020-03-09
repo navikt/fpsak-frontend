@@ -8,7 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
+  BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
   getKodeverknavnFn,
 } from '@fpsak-frontend/fp-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -19,7 +19,9 @@ import {
 import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption,
+} from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 

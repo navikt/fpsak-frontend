@@ -11,10 +11,12 @@ import AlertStripe from 'nav-frontend-alertstriper';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
-  behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+  behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix,
+  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+
 import { omit } from '@fpsak-frontend/utils';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';

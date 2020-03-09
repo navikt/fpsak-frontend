@@ -28,10 +28,10 @@ import {
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
 import {
-  PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField,
+  PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
-import { FaktaGruppe, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 

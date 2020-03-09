@@ -11,11 +11,12 @@ import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurd
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import {
   hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import InntektsmeldingInfo from '../InntektsmeldingInfo';
 import EndreSoknadsperiode from '../EndreSoknadsperiode';

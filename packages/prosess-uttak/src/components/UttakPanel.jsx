@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
 import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
-import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';

@@ -5,10 +5,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import {
-  getKodeverknavnFn, FaktaBegrunnelseTextField, behandlingForm, behandlingFormValueSelector,
-} from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
