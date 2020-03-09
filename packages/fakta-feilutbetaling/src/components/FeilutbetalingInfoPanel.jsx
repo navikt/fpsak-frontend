@@ -15,8 +15,8 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { TextAreaField, behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { getKodeverknavnFn, FaktaGruppe } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { VerticalSpacer, AksjonspunktHelpTextTemp, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';

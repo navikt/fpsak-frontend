@@ -7,9 +7,11 @@ import { createSelector } from 'reselect';
 import { Column } from 'nav-frontend-grid';
 
 import {
-  isFieldEdited, FaktaGruppe, FaktaBegrunnelseTextField,
+  isFieldEdited, FaktaBegrunnelseTextField,
 } from '@fpsak-frontend/fp-felles';
-import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  ArrowBox, ElementWrapper, VerticalSpacer, FaktaGruppe,
+} from '@fpsak-frontend/shared-components';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import {
   RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector,

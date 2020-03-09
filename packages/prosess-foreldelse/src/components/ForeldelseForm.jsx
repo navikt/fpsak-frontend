@@ -9,9 +9,9 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer,
+  AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
-import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
   getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';

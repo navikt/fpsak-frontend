@@ -4,10 +4,9 @@ import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { DateLabel } from '@fpsak-frontend/shared-components';
+import { DateLabel, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import { buildInitialValues, TermindatoFaktaForm } from './TermindatoFaktaForm';
 

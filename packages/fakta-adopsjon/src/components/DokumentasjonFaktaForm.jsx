@@ -7,9 +7,8 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
 import { DatepickerField, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 

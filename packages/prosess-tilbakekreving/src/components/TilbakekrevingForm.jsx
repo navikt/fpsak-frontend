@@ -10,8 +10,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe, AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
   behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix,
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,

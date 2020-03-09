@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
-import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import BorderBox from './BorderBox';
+import VerticalSpacer from './VerticalSpacer';
 
 const Wrapper = ({
   withoutBorder, error, children, className,

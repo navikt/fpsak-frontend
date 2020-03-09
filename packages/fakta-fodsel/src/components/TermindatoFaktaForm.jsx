@@ -9,7 +9,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import { DateLabel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  DateLabel, ElementWrapper, VerticalSpacer, FaktaGruppe,
+} from '@fpsak-frontend/shared-components';
 import {
   DatepickerField, InputField, behandlingForm, behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
@@ -17,9 +19,7 @@ import {
   hasValidDate, hasValidInteger, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  FaktaGruppe, isFieldEdited, FaktaBegrunnelseTextField,
-} from '@fpsak-frontend/fp-felles';
+import { isFieldEdited, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 
 import styles from './termindatoFaktaForm.less';
 

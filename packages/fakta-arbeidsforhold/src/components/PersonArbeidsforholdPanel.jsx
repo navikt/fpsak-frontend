@@ -7,9 +7,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import arbeidsforholdHandling from '../kodeverk/arbeidsforholdHandling';

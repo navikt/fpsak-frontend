@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { FieldArray, formPropTypes } from 'redux-form';
 
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FaktaGruppe, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { AksjonspunktHelpTextTemp, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
+import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
   hasValidDate, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';

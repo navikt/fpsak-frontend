@@ -8,10 +8,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, FaktaGruppe } from '@fpsak-frontend/shared-components';
 
 import omsorgAksjonspunkterPropType from '../propTypes/omsorgAksjonspunkterPropType';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';

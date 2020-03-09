@@ -8,13 +8,13 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  AksjonspunktHelpTextTemp, EditedIcon, ElementWrapper, VerticalSpacer,
+  AksjonspunktHelpTextTemp, EditedIcon, ElementWrapper, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidInteger, isObjectEmpty, required } from '@fpsak-frontend/utils';
 import VilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { isFieldEdited, FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { isFieldEdited } from '@fpsak-frontend/fp-felles';
 
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
 import RettighetFaktaPanel from './RettighetFaktaPanel';
