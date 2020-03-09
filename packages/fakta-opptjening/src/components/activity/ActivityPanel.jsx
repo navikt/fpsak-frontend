@@ -193,6 +193,7 @@ export const ActivityPanel = ({
     </>
     { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
       <>
+        <VerticalSpacer sixteenPx />
         <FlexContainer fluid>
           <FlexRow>
             <FlexColumn>

@@ -103,14 +103,16 @@ export const TermindatoFaktaForm = ({
       )}
     <VerticalSpacer sixteenPx />
     <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
-    {isForTidligTerminbekreftelse
-            && (
-              <AlertStripe type="advarsel" className={styles.marginBottom}>
-                <FormattedMessage
-                  id="TermindatoFaktaForm.AdvarselForTidligUtstedtdato"
-                />
-              </AlertStripe>
-            )}
+    {isForTidligTerminbekreftelse && (
+      <>
+        <VerticalSpacer sixteenPx />
+        <AlertStripe type="advarsel" className={styles.marginBottom}>
+          <FormattedMessage
+            id="TermindatoFaktaForm.AdvarselForTidligUtstedtdato"
+          />
+        </AlertStripe>
+      </>
+    )}
   </ElementWrapper>
 );
 
