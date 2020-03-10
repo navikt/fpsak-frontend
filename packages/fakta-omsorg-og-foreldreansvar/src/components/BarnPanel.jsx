@@ -10,7 +10,7 @@ import { DatepickerField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { DateLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { MerkePanel } from '@fpsak-frontend/person-info';
+import { MerkePanel } from '@fpsak-frontend/fakta-felles';
 
 import styles from './barnPanel.less';
 

@@ -6,9 +6,8 @@ import { FieldArray, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Column } from 'nav-frontend-grid';
 
-import {
-  isFieldEdited, FaktaBegrunnelseTextField,
-} from '@fpsak-frontend/fp-felles';
+import { isFieldEdited } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fakta-felles';
 import {
   ArrowBox, ElementWrapper, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';

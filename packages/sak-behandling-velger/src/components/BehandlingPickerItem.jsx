@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 
 import behandlingVelgerBehandlingPropType from '../propTypes/behandlingVelgerBehandlingPropType';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';

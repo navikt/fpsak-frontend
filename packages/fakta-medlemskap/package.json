@@ -9,7 +9,6 @@
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/fp-felles": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/person-info": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "moment": "^2.24.0",

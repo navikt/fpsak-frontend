@@ -7,7 +7,8 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fakta-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,

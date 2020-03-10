@@ -9,8 +9,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getLanguageCodeFromSprakkode, getAddresses } from '@fpsak-frontend/utils';
+import { getKodeverknavnFn, getLanguageCodeFromSprakkode, getAddresses } from '@fpsak-frontend/utils';
+
 
 import styles from './visittkortDetaljerPopup.less';
 

@@ -6,8 +6,6 @@ export { default as faktaPanelCodes } from './src/faktaPanelCodes';
 export { default as BehandlingErPaVentModal } from './src/behandlingPaVent/BehandlingErPaVentModal';
 export { default as SettBehandlingPaVentForm } from './src/behandlingPaVent/SettBehandlingPaVentForm';
 export { default as SettBehandlingPaVentModal } from './src/behandlingPaVent/SettBehandlingPaVentModal';
-export { getKodeverknavnFn } from './src/kodeverk/kodeverkUtils';
-export { default as injectKodeverk } from './src/kodeverk/injectKodeverk';
 
 export {
   RETTSKILDE_URL,
@@ -16,8 +14,6 @@ export {
 } from './src/eksterneLenker';
 
 export { default as isFieldEdited } from './src/util/isFieldEdited';
-export { default as FaktaSubmitButton } from './src/fakta/FaktaSubmitButton';
-export { default as FaktaBegrunnelseTextField } from './src/fakta/FaktaBegrunnelseTextField';
 export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlingsprosess/BehandlingspunktBegrunnelseTextField';
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/BehandlingspunktSubmitButton';
 export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/VilkarResultPicker';

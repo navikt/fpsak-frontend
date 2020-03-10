@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { InputField } from '@fpsak-frontend/form';
-import { parseCurrencyInput, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import {
+  getKodeverknavnFn, parseCurrencyInput, removeSpacesFromNumber, required,
+} from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';

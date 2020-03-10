@@ -8,14 +8,13 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import {
   BehandlingspunktSubmitButton,
-  getKodeverknavnFn,
   createVisningsnavnForAktivitet,
 } from '@fpsak-frontend/fp-felles';
 import {
   behandlingForm, RadioGroupField, RadioOption, TextAreaField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import {
-  hasValidText, maxLength, minLength, required,
+  hasValidText, maxLength, minLength, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {

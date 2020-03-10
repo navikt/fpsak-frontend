@@ -12,7 +12,7 @@ import {
   RadioGroupField, RadioOption, TextAreaField, behandlingForm,
 } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 
 import styles from './annenForelderHarRettForm.less';
 

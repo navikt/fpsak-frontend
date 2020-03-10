@@ -2,14 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
-import Panel from 'nav-frontend-paneler';
 
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-
-import AlderVisning from './Aldervisning';
-import MerkePanel from './Merkepanel';
 
 import styles from './personInfo.less';
 
@@ -26,13 +22,12 @@ import styles from './personInfo.less';
  */
 const PersonInfo = ({
   person,
-  medPanel,
   intl,
 }) => {
   const {
-    erKvinne, dodsdato, diskresjonskode, erDod, alder, navn, personnummer,
+    erKvinne, navn, personnummer,
   } = person;
-  const content = (
+  return (
     <div>
       <Image
         className={styles.icon}
@@ -44,25 +39,19 @@ const PersonInfo = ({
         <div>
           <Undertittel>
             {`${navn} `}
-            <AlderVisning erDod={erDod} alder={alder} dodsdato={dodsdato} />
           </Undertittel>
           <Undertekst>
             {personnummer}
           </Undertekst>
         </div>
-        <div>
-          <MerkePanel erDod={erDod} diskresjonskode={diskresjonskode} />
-        </div>
       </div>
     </div>
   );
-  return medPanel ? <Panel>{content}</Panel> : content;
 };
 
 PersonInfo.propTypes = {
   intl: PropTypes.shape().isRequired,
   person: PropTypes.shape().isRequired,
-  medPanel: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(PersonInfo);

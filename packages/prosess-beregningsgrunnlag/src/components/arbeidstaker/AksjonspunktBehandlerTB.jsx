@@ -4,13 +4,10 @@ import PropTypes from 'prop-types';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
-  dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
+  dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 
-import {
-  getKodeverknavnFn,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 

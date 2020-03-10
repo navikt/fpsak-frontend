@@ -8,10 +8,8 @@ import { createSelector } from 'reselect';
 
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { behandlingForm } from '@fpsak-frontend/form';
-import {
-  FaktaBegrunnelseTextField, FaktaSubmitButton,
-  isFieldEdited,
-} from '@fpsak-frontend/fp-felles';
+import { isFieldEdited } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import {
   ElementWrapper, VerticalSpacer, AksjonspunktHelpTextTemp,
 } from '@fpsak-frontend/shared-components';

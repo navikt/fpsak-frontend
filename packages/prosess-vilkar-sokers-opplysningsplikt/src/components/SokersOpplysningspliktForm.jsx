@@ -9,14 +9,15 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
   BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
-  getKodeverknavnFn,
 } from '@fpsak-frontend/fp-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
+import {
+  DDMMYYYY_DATE_FORMAT, isObject, required, getKodeverknavnFn,
+} from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {

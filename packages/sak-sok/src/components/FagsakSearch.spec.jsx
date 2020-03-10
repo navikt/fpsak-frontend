@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { PersonIndex } from '@fpsak-frontend/person-info';
 import FagsakSearch from './FagsakSearch';
 import FagsakList from './FagsakList';
 import SearchForm from './SearchForm';
+import PersonInfo from './person/PersonInfo';
 
 
 describe('<FagsakSearch>', () => {
@@ -84,7 +84,7 @@ describe('<FagsakSearch>', () => {
     expect(wrapper.find(SearchForm)).to.have.length(1);
     expect(wrapper.find('Label')).to.have.length(0);
 
-    const personComp = wrapper.find(PersonIndex);
+    const personComp = wrapper.find(PersonInfo);
     expect(personComp).to.have.length(1);
 
     const fagsakListComp = wrapper.find(FagsakList);
