@@ -4,13 +4,17 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+<<<<<<< HEAD
 import { createLocationForHistorikkItems, skjermlenkeCodes } from '@fpsak-frontend/fp-felles';
+=======
+>>>>>>> FIX div
 
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 
 import styles from './approvalPanel.less';
 
+<<<<<<< HEAD
 const sorterteSkjermlenkeCodesForTilbakekreving = [
   skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
   skjermlenkeCodes.FORELDELSE,
@@ -25,6 +29,9 @@ const sorterTilbakekrevingContext = (approvals) => (
 );
 
 export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) => {
+=======
+export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForHistorikkItems) => {
+>>>>>>> FIX div
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
     if (props.behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && props.totrinnskontrollSkjermlenkeContext) {
@@ -66,12 +73,12 @@ export class ApprovalPanel extends Component {
     };
 
     const {
-      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper,
+      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper, createLocationForHistorikkItems,
     } = props;
     if (totrinnskontrollSkjermlenkeContext || totrinnskontrollReadOnlySkjermlenkeContext) {
       this.state = {
         ...this.state,
-        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper),
+        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper, createLocationForHistorikkItems),
       };
     }
   }
@@ -189,6 +196,7 @@ ApprovalPanel.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
+  createLocationForHistorikkItems: PropTypes.func.isRequired,
   erTilbakekreving: PropTypes.bool,
 };
 

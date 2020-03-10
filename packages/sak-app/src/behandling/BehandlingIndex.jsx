@@ -10,12 +10,12 @@ import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
-import {
-  getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
-} from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
+import {
+  getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta,
+} from '../app/paths';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 import {
   getSelectedFagsakStatus, getFagsakPerson, getSaksnummer,
@@ -123,11 +123,11 @@ export class BehandlingIndex extends Component {
     const { push: pushLocation, location } = this.props;
     let newLocation;
     if (prosessStegId === 'default') {
-      newLocation = getLocationWithDefaultBehandlingspunktAndFakta(location);
+      newLocation = getLocationWithDefaultProsessStegAndFakta(location);
     } else if (prosessStegId) {
-      newLocation = getBehandlingspunktLocation(location)(formatName(prosessStegId));
+      newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
     } else {
-      newLocation = getBehandlingspunktLocation(location)(null);
+      newLocation = getProsessStegLocation(location)(null);
     }
 
     if (faktaPanelId === 'default') {

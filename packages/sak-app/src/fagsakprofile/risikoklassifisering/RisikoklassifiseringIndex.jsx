@@ -6,11 +6,12 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { allAccessRights, getRiskPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { allAccessRights } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 
+import { getRiskPanelLocationCreator } from '../../app/paths';
 import { getBehandlingerErPaaVentStatusMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import { getNavAnsatt } from '../../app/duck';
 import { getSelectedFagsakStatus } from '../../fagsak/fagsakSelectors';

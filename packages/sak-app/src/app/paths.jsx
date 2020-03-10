@@ -28,15 +28,15 @@ const updateQueryParams = (queryString, nextParams) => {
 export const getLocationWithQueryParams = (location, queryParams) => ({ ...location, search: updateQueryParams(location.search, queryParams) });
 
 export const getSupportPanelLocationCreator = (location) => (supportPanel) => getLocationWithQueryParams(location, { stotte: supportPanel });
-export const getBehandlingspunktLocation = (location) => (behandlingspunkt) => getLocationWithQueryParams(location, { punkt: behandlingspunkt });
+export const getProsessStegLocation = (location) => (prosessSteg) => getLocationWithQueryParams(location, { punkt: prosessSteg });
 export const getFaktaLocation = (location) => (fakta) => getLocationWithQueryParams(location, { fakta });
 export const getRiskPanelLocationCreator = (location) => (isRiskPanelOpen) => getLocationWithQueryParams(location, { risiko: isRiskPanelOpen });
 
-export const DEFAULT_FAKTA = 'default';
-export const DEFAULT_BEHANDLINGSPROSESS = 'default';
+const DEFAULT_FAKTA = 'default';
+const DEFAULT_PROSESS_STEG = 'default';
 
-export const getLocationWithDefaultBehandlingspunktAndFakta = (location) => (
-  getLocationWithQueryParams(location, { punkt: DEFAULT_BEHANDLINGSPROSESS, fakta: DEFAULT_FAKTA })
+export const getLocationWithDefaultProsessStegAndFakta = (location) => (
+  getLocationWithQueryParams(location, { punkt: DEFAULT_PROSESS_STEG, fakta: DEFAULT_FAKTA })
 );
 
 export const getPathToFplos = (href) => {

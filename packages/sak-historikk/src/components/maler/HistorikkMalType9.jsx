@@ -4,7 +4,6 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
@@ -15,7 +14,7 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import styles from './historikkMalType.less';
 
 export const HistorikkMalType9 = ({
-  historikkinnslagDeler, behandlingLocation, originType, intl, getKodeverknavn,
+  historikkinnslagDeler, behandlingLocation, originType, intl, getKodeverknavn, createLocationForHistorikkItems,
 }) => {
   const getSplitPeriods = (endredeFelter) => {
     let text = '';
@@ -100,6 +99,7 @@ HistorikkMalType9.propTypes = {
   intl: PropTypes.shape().isRequired,
   originType: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForHistorikkItems: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType9);

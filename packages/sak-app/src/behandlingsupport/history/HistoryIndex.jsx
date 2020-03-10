@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,9 +7,11 @@ import moment from 'moment';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
+import { pathToBehandling } from '../../app/paths';
 import DataFetcher from '../../app/DataFetcher';
 import ApplicationContextPath from '../../behandling/ApplicationContextPath';
 import { getEnabledApplicationContexts } from '../../app/duck';
+import { createLocationForHistorikkItems } from '../../app/skjermlenkeCodes';
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
@@ -44,28 +46,36 @@ export const HistoryIndex = ({
   location,
   alleKodeverkFpsak,
   alleKodeverkFptilbake,
-}) => (
-  <DataFetcher
-    behandlingId={behandlingId}
-    behandlingVersjon={behandlingVersjon}
-    showLoadingIcon
-    behandlingNotRequired
-    endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
-    keepDataWhenRefetching
-    endpoints={enabledContexts}
-    allowErrors
-    render={(props) => sortAndTagTilbakekreving(props)
-      .map((innslag) => (
-        <HistorikkSakIndex
-          key={innslag.opprettetTidspunkt + innslag.type.kode}
-          historieInnslag={innslag}
-          saksnummer={saksnummer}
-          location={location}
-          alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
-        />
-      ))}
-  />
-);
+}) => {
+  const getBehandlingLocation = useCallback((bId) => ({
+    ...location,
+    pathname: pathToBehandling(saksnummer, bId),
+  }), [location]);
+
+  return (
+    <DataFetcher
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      showLoadingIcon
+      behandlingNotRequired
+      endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
+      keepDataWhenRefetching
+      endpoints={enabledContexts}
+      allowErrors
+      render={(props) => sortAndTagTilbakekreving(props)
+        .map((innslag) => (
+          <HistorikkSakIndex
+            key={innslag.opprettetTidspunkt + innslag.type.kode}
+            historieInnslag={innslag}
+            saksnummer={saksnummer}
+            alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
+            getBehandlingLocation={getBehandlingLocation}
+            createLocationForHistorikkItems={createLocationForHistorikkItems}
+          />
+        ))}
+    />
+  );
+};
 
 HistoryIndex.propTypes = {
   enabledContexts: PropTypes.arrayOf(PropTypes.shape()).isRequired,

@@ -4,7 +4,6 @@ import { FormattedHTMLMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
@@ -19,6 +18,7 @@ export const HistorikkMalTypeTilbakekreving = ({
   historikkinnslagDeler,
   behandlingLocation,
   getKodeverknavn,
+  createLocationForHistorikkItems,
 }) => {
   if (historikkinnslagDeler.length === 0) {
     return null;
@@ -98,6 +98,7 @@ HistorikkMalTypeTilbakekreving.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForHistorikkItems: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalTypeTilbakekreving;

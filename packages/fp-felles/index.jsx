@@ -8,26 +8,6 @@ export { default as SettBehandlingPaVentForm } from './src/behandlingPaVent/Sett
 export { default as SettBehandlingPaVentModal } from './src/behandlingPaVent/SettBehandlingPaVentModal';
 export { getKodeverknavnFn } from './src/kodeverk/kodeverkUtils';
 export { default as injectKodeverk } from './src/kodeverk/injectKodeverk';
-export {
-  getPathToFplos,
-  getLocationWithDefaultBehandlingspunktAndFakta,
-  DEFAULT_FAKTA,
-  DEFAULT_BEHANDLINGSPROSESS,
-  getFaktaLocation,
-  getBehandlingspunktLocation,
-  getSupportPanelLocationCreator,
-  getRiskPanelLocationCreator,
-  getLocationWithQueryParams,
-  fagsakPath,
-  aktoerPath,
-  behandlingerPath,
-  behandlingPath,
-  pathToFagsak,
-  pathToBehandlinger,
-  pathToBehandling,
-  pathToMissingPage,
-  pathToAnnenPart,
-} from './src/paths';
 
 export {
   RETTSKILDE_URL,
@@ -42,6 +22,5 @@ export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlin
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/BehandlingspunktSubmitButton';
 export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/VilkarResultPicker';
 export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar/ProsessPanelTemplate';
-export { default as skjermlenkeCodes, createLocationForHistorikkItems } from './src/skjermlenkeCodes';
 export { createVisningsnavnForAktivitet, lagVisningsNavn } from './src/util/visningsnavnHelper';
 export { default as allAccessRights } from './src/navAnsatt/access';

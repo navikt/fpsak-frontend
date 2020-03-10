@@ -4,8 +4,6 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
-
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
@@ -19,7 +17,7 @@ const scrollUp = () => {
 };
 
 const HistorikkMalType10 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr, getKodeverknavn,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr, getKodeverknavn, createLocationForHistorikkItems,
 }) => {
   const historikkFromToValues = (endretFelt, fieldName) => {
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl);
@@ -175,6 +173,7 @@ HistorikkMalType10.propTypes = {
   originType: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForHistorikkItems: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType10);

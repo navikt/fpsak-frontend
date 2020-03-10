@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 
 import { PersonInfo } from '@fpsak-frontend/person-info';
-import { injectKodeverk, pathToFagsak } from '@fpsak-frontend/fp-felles';
+import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import { getAlleFpSakKodeverk } from '../../kodeverk/duck';
+import { pathToFagsak } from '../../app/paths';
 
 import styles from './aktoerGrid.less';
 

@@ -1,5 +1,5 @@
-import behandlingspunktCodes from './behandlingspunktCodes';
-import faktaPanelCodes from './faktaPanelCodes';
+import { faktaPanelCodes, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+
 import { getLocationWithQueryParams } from './paths';
 
 const skjermlenkeCodes = {

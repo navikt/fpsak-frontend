@@ -30,6 +30,7 @@ const TotrinnskontrollSakIndex = ({
   erBehandlingEtterKlage,
   disableGodkjennKnapp,
   erTilbakekreving,
+  createLocationForHistorikkItems,
 }) => (
   <RawIntlProvider value={intl}>
     <ApprovalPanel
@@ -50,6 +51,7 @@ const TotrinnskontrollSakIndex = ({
       erBehandlingEtterKlage={erBehandlingEtterKlage}
       disableGodkjennKnapp={disableGodkjennKnapp}
       erTilbakekreving={erTilbakekreving}
+      createLocationForHistorikkItems={createLocationForHistorikkItems}
     />
   </RawIntlProvider>
 );
@@ -75,6 +77,7 @@ TotrinnskontrollSakIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
+  createLocationForHistorikkItems: PropTypes.func.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   erTilbakekreving: PropTypes.bool,
 };

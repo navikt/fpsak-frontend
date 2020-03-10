@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '../../kodeverk/historikkEndretFeltTypeHeadingCodes';
@@ -81,7 +80,13 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
 
 
 const HistorikkMalType5 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn,
+  historikkinnslagDeler,
+  behandlingLocation,
+  dokumentLinks,
+  intl,
+  saksNr,
+  getKodeverknavn,
+  createLocationForHistorikkItems,
 }) => {
   const lageElementInnhold = (historikkDel) => {
     const list = [];
@@ -225,6 +230,7 @@ HistorikkMalType5.propTypes = {
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
+  createLocationForHistorikkItems: PropTypes.func.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 

@@ -6,14 +6,14 @@ import { createSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router-dom';
 
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
-import {
-  getLocationWithDefaultBehandlingspunktAndFakta,
-  pathToBehandling,
-  pathToBehandlinger,
-} from '@fpsak-frontend/fp-felles';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 
+import {
+  getLocationWithDefaultProsessStegAndFakta,
+  pathToBehandling,
+  pathToBehandlinger,
+} from '../app/paths';
 import DataFetcher from '../app/DataFetcher';
 import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
@@ -46,7 +46,7 @@ export const getEnabledContexts = createSelector(
 
 const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
   if (alleBehandlinger.length === 1) {
-    return getLocationWithDefaultBehandlingspunktAndFakta({
+    return getLocationWithDefaultProsessStegAndFakta({
       ...location,
       pathname: pathToBehandling(saksnummer, alleBehandlinger[0].id),
     });
@@ -73,6 +73,10 @@ export const FagsakProfileIndex = ({
   useEffect(() => {
     setShowAll(!selectedBehandlingId);
   }, [selectedBehandlingId]);
+
+  const getBehandlingLocation = useCallback((behandlingId) => getLocationWithDefaultProsessStegAndFakta({
+    pathname: pathToBehandling(saksnummer, behandlingId),
+  }), [saksnummer]);
 
   return (
     <div className={styles.panelPadding}>
@@ -104,7 +108,7 @@ export const FagsakProfileIndex = ({
               renderBehandlingVelger={() => (
                 <BehandlingVelgerSakIndex
                   behandlinger={alleBehandlinger}
-                  saksnummer={saksnummer}
+                  getBehandlingLocation={getBehandlingLocation}
                   noExistingBehandlinger={noExistingBehandlinger}
                   behandlingId={selectedBehandlingId}
                   showAll={showAll}

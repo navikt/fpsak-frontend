@@ -4,9 +4,6 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import {
-  behandlingerPath, pathToAnnenPart,
-} from '@fpsak-frontend/fp-felles';
 import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
 
@@ -17,6 +14,7 @@ import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex'
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import { setSelectedSaksnummer } from './duck';
 
+import { behandlingerPath, pathToAnnenPart } from '../app/paths';
 import FagsakResolver from './FagsakResolver';
 import FagsakGrid from './components/FagsakGrid';
 import {

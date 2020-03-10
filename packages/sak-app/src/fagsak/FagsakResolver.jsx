@@ -5,11 +5,9 @@ import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
-import {
-  pathToMissingPage,
-} from '@fpsak-frontend/fp-felles';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 
+import { pathToMissingPage } from '../app/paths';
 import fpsakApi from '../data/fpsakApi';
 import { getBehandlingerIds } from '../behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';

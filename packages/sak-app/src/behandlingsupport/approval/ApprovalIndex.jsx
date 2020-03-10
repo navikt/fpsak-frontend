@@ -16,6 +16,7 @@ import { requireProps } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
+import { createLocationForHistorikkItems } from '../../app/skjermlenkeCodes';
 import DataFetcher from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
@@ -177,6 +178,7 @@ export class ApprovalIndex extends Component {
               erBehandlingEtterKlage={erBehandlingEtterKlage}
               disableGodkjennKnapp={disableGodkjennKnapp}
               erTilbakekreving={erTilbakekreving}
+              createLocationForHistorikkItems={createLocationForHistorikkItems}
             />
             {showBeslutterModal && (
               <DataFetcher
