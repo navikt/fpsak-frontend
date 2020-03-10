@@ -43,8 +43,6 @@ export const TilretteleggingFieldArray = ({
   changeField,
   tilretteleggingDatoer,
   stillingsprosentArbeidsforhold,
-  behandlingId,
-  behandlingVersjon,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -54,7 +52,7 @@ export const TilretteleggingFieldArray = ({
   >
     {(fieldId, index, getRemoveButton) => {
       const data = tilretteleggingDatoer[index];
-      const tilretteleggingKode = data.type ? data.type.kode : undefined;
+      const tilretteleggingKode = data && data.type ? data.type.kode : undefined;
       return (
         <Row key={fieldId} className={index !== (fields.length - 1) ? styles.notLastRow : ''}>
           <Column xs="12">
@@ -143,13 +141,8 @@ export const TilretteleggingFieldArray = ({
                 {(tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING || tilretteleggingKode === tilretteleggingType.INGEN_TILRETTELEGGING) && (
                   <TilretteleggingUtbetalingsgrad
                     fieldId={fieldId}
-                    behandlingId={behandlingId}
-                    behandlingVersjon={behandlingVersjon}
-                    formSectionName={formSectionName}
                     erOverstyrer={erOverstyrer}
-                    index={index}
                     tilretteleggingKode={tilretteleggingKode}
-                    stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
                     readOnly={readOnly}
                   />
                 )}
@@ -172,8 +165,6 @@ TilretteleggingFieldArray.propTypes = {
   erOverstyrer: PropTypes.bool.isRequired,
   changeField: PropTypes.func.isRequired,
   stillingsprosentArbeidsforhold: PropTypes.number.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
   tilretteleggingDatoer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
