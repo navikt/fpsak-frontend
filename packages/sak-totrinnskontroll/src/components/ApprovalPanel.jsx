@@ -4,12 +4,30 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
+import { createLocationForHistorikkItems, skjermlenkeCodes } from '@fpsak-frontend/fp-felles';
 
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 
 import styles from './approvalPanel.less';
+
+const sorterteSkjermlenkeCodesForTilbakekreving = [
+  skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
+  skjermlenkeCodes.FORELDELSE,
+  skjermlenkeCodes.TILBAKEKREVING,
+  skjermlenkeCodes.VEDTAK,
+];
+
+const sorterTilbakekrevingContext = (approvals) => sorterteSkjermlenkeCodesForTilbakekreving.reduce(
+  (tot, val) => {
+    const approval = approvals.find((el) => el.contextCode === val.kode);
+    if (approval) {
+      tot.push(approval);
+    }
+    return tot;
+  },
+  [],
+);
 
 export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) => {
   if (toTrinnsBehandling) {
@@ -30,6 +48,10 @@ export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) =
           aksjonspunkter: context.totrinnskontrollAksjonspunkter,
         };
       });
+      if (props.erTilbakekreving) {
+        return totrinnsContext ? sorterTilbakekrevingContext(totrinnsContext) : null;
+      }
+
       return totrinnsContext || null;
     }
   }
@@ -92,7 +114,6 @@ export class ApprovalPanel extends Component {
       erTilbakekreving,
     } = this.props;
     const { approvals } = this.state;
-
     return (
       <>
         {approvals && approvals.length > 0
@@ -140,6 +161,7 @@ export class ApprovalPanel extends Component {
                         behandlingKlageVurdering={behandlingKlageVurdering}
                         behandlingStatus={behandlingStatus}
                         alleKodeverk={alleKodeverk}
+                        erTilbakekreving={erTilbakekreving}
                       />
                     </div>
                   </div>
