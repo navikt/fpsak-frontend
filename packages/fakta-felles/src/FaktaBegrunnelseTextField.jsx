@@ -1,12 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
+  createIntl, createIntlCache, RawIntlProvider,
+} from 'react-intl';
+import {
   decodeHtmlEntity, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import styles from './faktaBegrunnelseTextField.less';
+import messages from '../i18n/nb_NO.json';
+
+const cache = createIntlCache();
+
+const intl = createIntl({
+  locale: 'nb-NO',
+  messages,
+}, cache);
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -22,7 +32,7 @@ const FaktaBegrunnelseTextField = ({
   hasVurderingText,
   name,
 }) => (
-  <ElementWrapper>
+  <RawIntlProvider value={intl}>
     {((isSubmittable) || hasBegrunnelse)
     && (
     <div className={styles.begrunnelseTextField}>
@@ -36,7 +46,7 @@ const FaktaBegrunnelseTextField = ({
       />
     </div>
     )}
-  </ElementWrapper>
+  </RawIntlProvider>
 );
 
 FaktaBegrunnelseTextField.propTypes = {

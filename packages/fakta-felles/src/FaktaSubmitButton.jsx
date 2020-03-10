@@ -1,12 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  createIntl, createIntlCache, RawIntlProvider, FormattedMessage,
+} from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { isBehandlingFormDirty, isBehandlingFormSubmitting, hasBehandlingFormErrorsOfType } from '@fpsak-frontend/form';
+
+import messages from '../i18n/nb_NO.json';
+
+const cache = createIntlCache();
+
+const intl = createIntl({
+  locale: 'nb-NO',
+  messages,
+}, cache);
 
 const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter) => {
   if (!isSubmittable || isSubmitting) {
@@ -32,7 +42,7 @@ export const FaktaSubmitButton = ({
   buttonTextId,
   onClick,
 }) => (
-  <ElementWrapper>
+  <RawIntlProvider value={intl}>
     {!isReadOnly
       && (
       <Hovedknapp
@@ -45,7 +55,7 @@ export const FaktaSubmitButton = ({
         <FormattedMessage id={buttonTextId} />
       </Hovedknapp>
       )}
-  </ElementWrapper>
+  </RawIntlProvider>
 );
 
 FaktaSubmitButton.propTypes = {
