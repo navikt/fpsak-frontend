@@ -17,7 +17,7 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
-export const TilretteleggingUtbetalingsgrad = ({
+const TilretteleggingUtbetalingsgrad = ({
   intl,
   tilretteleggingKode,
   readOnly,
