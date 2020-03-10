@@ -18,15 +18,10 @@ const sorterteSkjermlenkeCodesForTilbakekreving = [
   skjermlenkeCodes.VEDTAK,
 ];
 
-const sorterTilbakekrevingContext = (approvals) => sorterteSkjermlenkeCodesForTilbakekreving.reduce(
-  (tot, val) => {
-    const approval = approvals.find((el) => el.contextCode === val.kode);
-    if (approval) {
-      tot.push(approval);
-    }
-    return tot;
-  },
-  [],
+const sorterTilbakekrevingContext = (approvals) => (
+  sorterteSkjermlenkeCodesForTilbakekreving
+    .map((s) => approvals.find((el) => el.contextCode === s.kode))
+    .filter((s) => s)
 );
 
 export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) => {
