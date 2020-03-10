@@ -16,9 +16,10 @@ import {
   hasValidDate, hasValidText, maxLength, required, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm, FaktaSubmitButton, allAccessRights } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
+import { finnDekningsgradForDelvisTilrettelegging } from './tilrettelegging/TilretteleggingFieldArray';
 import arbeidsforholdPropType from '../propTypes/arbeidsforholdPropType';
 import iayArbeidsforholdPropType from '../propTypes/iayArbeidsforholdPropType';
 
@@ -125,7 +126,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
             {arbeidsforhold.map((a, index) => {
               const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
               return (
-                <>
+                <React.Fragment key={utledFormSectionName(a)}>
                   <VerticalSpacer sixteenPx />
                   <AvsnittSkiller />
                   <VerticalSpacer twentyPx />
@@ -143,7 +144,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
                   {index === arbeidsforhold.length - 1 && (
                     <AvsnittSkiller />
                   )}
-                </>
+                </React.Fragment>
               );
             })}
           </FlexColumn>
@@ -195,15 +196,43 @@ FodselOgTilretteleggingFaktaForm.defaultProps = {
   fødselsdato: '',
 };
 
-const transformValues = (values, arbeidsforhold) => {
-  const bekreftetSvpArbeidsforholdList = [];
-  arbeidsforhold.forEach((a) => { bekreftetSvpArbeidsforholdList.push(values[utledFormSectionName(a)]); });
-  return ([{
-    kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
-    ...values,
-    bekreftetSvpArbeidsforholdList,
-  }]);
+const finnOverstyrtUtbetalingsgrad = (type, stillingsprosent, stillingsprosentArbeidsforhold, overstyrtUtbetalingsgrad, oldOverstyrtUtbetalingsgrad) => {
+  if (oldOverstyrtUtbetalingsgrad || type.kode === tilretteleggingType.HEL_TILRETTELEGGING) {
+    return overstyrtUtbetalingsgrad;
+  }
+
+  let erLikOverstyrtVerdi = type.kode === tilretteleggingType.INGEN_TILRETTELEGGING && parseFloat(overstyrtUtbetalingsgrad) === 100;
+  if (type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
+    erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === finnDekningsgradForDelvisTilrettelegging(
+      stillingsprosent, stillingsprosentArbeidsforhold,
+    );
+  }
+
+  if (erLikOverstyrtVerdi) {
+    return undefined;
+  }
+  return overstyrtUtbetalingsgrad;
 };
+
+const transformValues = (values, iayArbeidsforhold, arbeidsforhold) => ([{
+  kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+  ...values,
+  bekreftetSvpArbeidsforholdList: arbeidsforhold.map((a) => {
+    const value = values[utledFormSectionName(a)];
+    const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    const stillingsprosentArbeidsforhold = af ? af.stillingsprosent : undefined;
+    return {
+      ...value,
+      tilretteleggingDatoer: value.tilretteleggingDatoer.map((t) => ({
+        fom: t.fom,
+        type: t.type,
+        stillingsprosent: t.stillingsprosent,
+        overstyrtUtbetalingsgrad: finnOverstyrtUtbetalingsgrad(t.type, t.stillingsprosent, stillingsprosentArbeidsforhold,
+          t.overstyrtUtbetalingsgrad, t.oldOverstyrtUtbetalingsgrad),
+      })),
+    };
+  }),
+}]);
 
 const finnAntallDatoerMappedByDato = (datoer) => datoer.reduce((acc, dato) => ({
   ...acc,
@@ -272,16 +301,11 @@ const utledUtbetalingsgrad = (tilretteleggingsdato, stillingsprosentArbeidsforho
   if (tilretteleggingsdato.type.kode === tilretteleggingType.HEL_TILRETTELEGGING) {
     return null;
   }
-  if (tilretteleggingsdato.type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
-    if (tilretteleggingsdato.overstyrtUtbetalingsgrad) {
-      return tilretteleggingsdato.overstyrtUtbetalingsgrad;
-    }
-    const defaultUtbetalingsgrad = 100 * (1 - tilretteleggingsdato.stillingsprosent / stillingsprosentArbeidsforhold);
-    return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0;
+  if (tilretteleggingsdato.overstyrtUtbetalingsgrad) {
+    return tilretteleggingsdato.overstyrtUtbetalingsgrad;
   }
-  if (tilretteleggingsdato.type.kode === tilretteleggingType.INGEN_TILRETTELEGGING) {
-    return tilretteleggingsdato.overstyrtUtbetalingsgrad ? tilretteleggingsdato.overstyrtUtbetalingsgrad : 100;
-  }
+  return tilretteleggingsdato.type.kode === tilretteleggingType.INGEN_TILRETTELEGGING ? 100
+    : finnDekningsgradForDelvisTilrettelegging(tilretteleggingsdato.stillingsprosent, stillingsprosentArbeidsforhold);
 };
 
 const getInitialArbeidsforholdValues = createSelector([
@@ -299,6 +323,7 @@ const getInitialArbeidsforholdValues = createSelector([
       ...a,
       tilretteleggingDatoer: a.tilretteleggingDatoer.map((tilretteleggingsdato) => ({
         ...tilretteleggingsdato,
+        oldOverstyrtUtbetalingsgrad: tilretteleggingsdato.overstyrtUtbetalingsgrad,
         overstyrtUtbetalingsgrad: utledUtbetalingsgrad(tilretteleggingsdato, af.stillingsprosent),
       })),
     };
@@ -323,8 +348,12 @@ const getInitialValues = createSelector(
   }),
 );
 
-const getOnSubmit = createSelector([(ownProps) => ownProps.submitCallback, getArbeidsforhold],
-  (submitCallback, arbeidsforhold) => (values) => submitCallback(transformValues(values, arbeidsforhold)));
+const getOnSubmit = createSelector([
+  (ownProps) => ownProps.submitCallback,
+  (ownProps) => ownProps.iayArbeidsforhold,
+  getArbeidsforhold,
+],
+(submitCallback, iayArbeidsforhold, arbeidsforhold) => (values) => submitCallback(transformValues(values, iayArbeidsforhold, arbeidsforhold)));
 
 const getValidate = createSelector([getArbeidsforhold], (arbeidsforhold) => (values) => validateForm(values, arbeidsforhold));
 

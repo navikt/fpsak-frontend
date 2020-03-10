@@ -54,47 +54,47 @@ export const TilretteleggingArbeidsforholdSection = ({
     />
     <VerticalSpacer sixteenPx />
     {visTilrettelegginger && (
-    <FlexContainer>
-      <FlexRow alignItemsToBaseline>
-        <FlexColumn>
-          <Normaltekst>
-            <FormattedMessage id="TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra" />
-          </Normaltekst>
-        </FlexColumn>
-        <FlexColumn>
-          <DatepickerField
-            name="tilretteleggingBehovFom"
-            label=""
-            validate={[required, hasValidDate]}
-            readOnly={readOnly}
-          />
-          <VerticalSpacer eightPx />
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn>
-          <Element>
-            <FormattedMessage id="TilretteleggingFieldArray.BehovForTilrettelegging" />
-          </Element>
-        </FlexColumn>
-      </FlexRow>
-      <VerticalSpacer sixteenPx />
-      <FlexRow>
-        <FlexColumn>
-          <FieldArray
-            name="tilretteleggingDatoer"
-            component={TilrettteleggingFieldArray}
-            readOnly={readOnly}
-            formSectionName={formSectionName}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            erOverstyrer={erOverstyrer}
-            changeField={changeField}
-            stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
-          />
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
+      <FlexContainer>
+        <FlexRow alignItemsToBaseline>
+          <FlexColumn>
+            <Normaltekst>
+              <FormattedMessage id="TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra" />
+            </Normaltekst>
+          </FlexColumn>
+          <FlexColumn>
+            <DatepickerField
+              name="tilretteleggingBehovFom"
+              label=""
+              validate={[required, hasValidDate]}
+              readOnly={readOnly}
+            />
+            <VerticalSpacer eightPx />
+          </FlexColumn>
+        </FlexRow>
+        <FlexRow>
+          <FlexColumn>
+            <Element>
+              <FormattedMessage id="TilretteleggingFieldArray.BehovForTilrettelegging" />
+            </Element>
+          </FlexColumn>
+        </FlexRow>
+        <VerticalSpacer sixteenPx />
+        <FlexRow>
+          <FlexColumn>
+            <FieldArray
+              name="tilretteleggingDatoer"
+              component={TilrettteleggingFieldArray}
+              readOnly={readOnly}
+              formSectionName={formSectionName}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              erOverstyrer={erOverstyrer}
+              changeField={changeField}
+              stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
+            />
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
     )}
   </FormSection>
 );
@@ -108,6 +108,11 @@ TilretteleggingArbeidsforholdSection.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   changeField: PropTypes.func.isRequired,
+  stillingsprosentArbeidsforhold: PropTypes.number,
+};
+
+TilretteleggingArbeidsforholdSection.defaultProps = {
+  stillingsprosentArbeidsforhold: undefined,
 };
 
 const mapStateToProps = (state, ownProps) => ({

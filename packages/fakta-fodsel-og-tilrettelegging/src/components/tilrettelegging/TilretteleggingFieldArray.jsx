@@ -23,6 +23,11 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
+export const finnDekningsgradForDelvisTilrettelegging = (stillingsprosent, stillingsprosentArbeidsforhold) => {
+  const defaultUtbetalingsgrad = 100 * (1 - stillingsprosent / stillingsprosentArbeidsforhold);
+  return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0;
+};
+
 /**
  * BehovForTilrettteleggingFieldArray
  *
@@ -73,14 +78,13 @@ export const TilretteleggingFieldArray = ({
                         {intl.formatMessage({ id: 'TilretteleggingFieldArray.KanIkkeGjennomfores' })}
                       </option>,
                     ]}
-                    onChange={(elmt, value) => {
+                    onChange={(_elmt, value) => {
                       if (value === tilretteleggingType.INGEN_TILRETTELEGGING) {
                         changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, 100);
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
-                        const defaultUtbetalingsgrad = 100 * (1 - data.stillingsprosent / stillingsprosentArbeidsforhold);
-                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`,
-                          defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0);
+                        const dekningsgrad = finnDekningsgradForDelvisTilrettelegging(data.stillingsprosent, stillingsprosentArbeidsforhold);
+                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, dekningsgrad);
                       }
                     }}
                   />
@@ -125,9 +129,9 @@ export const TilretteleggingFieldArray = ({
                         label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Stillingsprosent' })}
                         validate={[required, minValue0, maxValue100, hasValidDecimal]}
                         normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                        onChange={(elmt, value) => {
-                          const defaultUtbetalingsgrad = 100 * (1 - value / stillingsprosentArbeidsforhold);
-                          changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0);
+                        onChange={(_elmt, value) => {
+                          const dekningsgrad = finnDekningsgradForDelvisTilrettelegging(value, stillingsprosentArbeidsforhold);
+                          changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, dekningsgrad);
                         }}
                       />
                     </FlexColumn>
@@ -146,6 +150,7 @@ export const TilretteleggingFieldArray = ({
                     index={index}
                     tilretteleggingKode={tilretteleggingKode}
                     stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
+                    readOnly={readOnly}
                   />
                 )}
               </FlexRow>

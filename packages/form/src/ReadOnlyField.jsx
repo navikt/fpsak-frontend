@@ -10,7 +10,11 @@ import styles from './readOnlyField.less';
 const hasValue = (value) => value !== undefined && value !== null && value !== '';
 
 export const ReadOnlyField = ({
-  label, input, isEdited, type,
+  label,
+  input,
+  isEdited,
+  type,
+  alignRightCenterOnReadOnly,
 }) => {
   if (!hasValue(input.value)) {
     return null;
@@ -20,7 +24,7 @@ export const ReadOnlyField = ({
     <div className={styles.readOnlyContainer}>
       <Label input={label} readOnly />
       <div className={type === 'textarea' ? styles.textarea : ''}>
-        <Normaltekst className={styles.readOnlyContent}>
+        <Normaltekst className={alignRightCenterOnReadOnly ? styles.readOnlyContentCenter : styles.readOnlyContent}>
           {input.value}
           {isEdited && <EditedIcon />}
         </Normaltekst>
@@ -36,12 +40,14 @@ ReadOnlyField.propTypes = {
   }).isRequired,
   isEdited: PropTypes.bool,
   type: PropTypes.string,
+  alignRightCenterOnReadOnly: PropTypes.bool,
 };
 
 ReadOnlyField.defaultProps = {
   label: undefined,
   isEdited: false,
   type: undefined,
+  alignRightCenterOnReadOnly: false,
 };
 
 export default ReadOnlyField;
