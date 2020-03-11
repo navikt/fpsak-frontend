@@ -28,39 +28,42 @@ const FaktaBegrunnelseTextField = ({
   isReadOnly,
   isSubmittable,
   hasBegrunnelse,
-  labelCode,
+  label,
   hasVurderingText,
   name,
-}) => (
-  <RawIntlProvider value={intl}>
-    {((isSubmittable) || hasBegrunnelse)
-    && (
-    <div className={styles.begrunnelseTextField}>
-      <TextAreaField
-        name={name}
-        label={isReadOnly ? '' : { id: hasVurderingText ? 'FaktaBegrunnelseTextField.Vurdering' : labelCode }}
-        validate={[required, minLength3, maxLength1500, hasValidText]}
-        textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
-        maxLength={1500}
-        readOnly={isReadOnly}
-      />
-    </div>
-    )}
-  </RawIntlProvider>
-);
+}) => {
+  const code = hasVurderingText ? 'FaktaBegrunnelseTextField.Vurdering' : 'FaktaBegrunnelseTextField.BegrunnEndringene';
+  const textAreaLabel = label || { id: code };
+  return (
+    <RawIntlProvider value={intl}>
+      {(isSubmittable || hasBegrunnelse) && (
+      <div className={styles.begrunnelseTextField}>
+        <TextAreaField
+          name={name}
+          label={isReadOnly ? '' : textAreaLabel}
+          validate={[required, minLength3, maxLength1500, hasValidText]}
+          textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
+          maxLength={1500}
+          readOnly={isReadOnly}
+        />
+      </div>
+      )}
+    </RawIntlProvider>
+  );
+};
 
 FaktaBegrunnelseTextField.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   isSubmittable: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
-  labelCode: PropTypes.string,
+  label: PropTypes.string,
   hasVurderingText: PropTypes.bool,
   name: PropTypes.string,
 };
 
 FaktaBegrunnelseTextField.defaultProps = {
   name: 'begrunnelse',
-  labelCode: 'FaktaBegrunnelseTextField.BegrunnEndringene',
+  label: undefined,
   hasVurderingText: false,
 };
 

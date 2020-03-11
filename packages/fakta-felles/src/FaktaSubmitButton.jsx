@@ -39,7 +39,7 @@ export const FaktaSubmitButton = ({
   isDirty,
   hasEmptyRequiredFields,
   hasOpenAksjonspunkter,
-  buttonTextId,
+  buttonText,
   onClick,
 }) => (
   <RawIntlProvider value={intl}>
@@ -52,14 +52,15 @@ export const FaktaSubmitButton = ({
         onClick={onClick || ariaCheck}
         htmlType={onClick ? 'button' : 'submit'}
       >
-        <FormattedMessage id={buttonTextId} />
+        {buttonText && buttonText}
+        {!buttonText && <FormattedMessage id="SubmitButton.ConfirmInformation" />}
       </Hovedknapp>
       )}
   </RawIntlProvider>
 );
 
 FaktaSubmitButton.propTypes = {
-  buttonTextId: PropTypes.string,
+  buttonText: PropTypes.string,
   isReadOnly: PropTypes.bool.isRequired,
   isSubmittable: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
@@ -70,7 +71,7 @@ FaktaSubmitButton.propTypes = {
 };
 
 FaktaSubmitButton.defaultProps = {
-  buttonTextId: 'SubmitButton.ConfirmInformation',
+  buttonText: undefined,
   onClick: undefined,
 };
 

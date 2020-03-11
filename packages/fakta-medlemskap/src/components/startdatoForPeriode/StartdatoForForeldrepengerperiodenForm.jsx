@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
@@ -30,6 +30,7 @@ const maxLength1500 = maxLength(1500);
  * Presentasjonskomponent. Setter opp aksjonspunktet for vurdering av om startdato for foreldrepengerperioden er korrekt.
  */
 export const StartdatoForForeldrepengerperiodenForm = ({
+  intl,
   hasAksjonspunkt,
   hasOpenAksjonspunkt,
   hasOpenMedlemskapAksjonspunkter,
@@ -84,7 +85,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
       </FaktaGruppe>
       <VerticalSpacer twentyPx />
       <FaktaSubmitButton
-        buttonTextId={!hasOpenAksjonspunkt ? 'StartdatoForForeldrepengerperiodenForm.Oppdater' : undefined}
+        buttonText={!hasOpenAksjonspunkt ? intl.formatMessage({ id: 'StartdatoForForeldrepengerperiodenForm.Oppdater' }) : undefined}
         formName={formProps.form}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
@@ -97,6 +98,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
 );
 
 StartdatoForForeldrepengerperiodenForm.propTypes = {
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
   hasOpenAksjonspunkt: PropTypes.bool.isRequired,
@@ -176,4 +178,4 @@ const validateDates = (values) => {
 export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'StartdatoForForeldrepengerperiodenForm',
   validate: validateDates,
-})(StartdatoForForeldrepengerperiodenForm));
+})(injectIntl(StartdatoForForeldrepengerperiodenForm)));

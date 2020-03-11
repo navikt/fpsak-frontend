@@ -20,6 +20,7 @@ import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Omsorgsvilkåret.
  */
 export const OmsorgOgForeldreansvarInfoPanelImpl = ({
+  intl,
   behandlingId,
   behandlingVersjon,
   erAksjonspunktForeldreansvar,
@@ -56,9 +57,10 @@ export const OmsorgOgForeldreansvarInfoPanelImpl = ({
         isSubmittable={submittable}
         isReadOnly={readOnly}
         hasBegrunnelse={!!initialValues.begrunnelse}
-        labelCode={erAksjonspunktForeldreansvar
-          ? 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleFp'
-          : 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleEs'}
+        label={intl.formatMessage({
+          id: erAksjonspunktForeldreansvar ? 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleFp'
+            : 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleEs',
+        })}
       />
       <VerticalSpacer twentyPx />
       <FaktaSubmitButton
