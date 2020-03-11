@@ -23,7 +23,6 @@ export const FpBehandlingApiKeys = {
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
-  MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
@@ -60,8 +59,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soknad-original-behandling', FpBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', FpBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel('beregningsresultat-foreldrepenger-original-behandling', FpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
-  .withRel('soeker-medlemskap', FpBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('soeker-medlemskap-v2', FpBehandlingApiKeys.MEDLEMSKAP_V2)
+  .withRel('soeker-medlemskap-v2', FpBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', FpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', FpBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', FpBehandlingApiKeys.VERGE)

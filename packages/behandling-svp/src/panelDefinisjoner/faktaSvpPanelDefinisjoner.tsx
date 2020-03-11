@@ -74,7 +74,7 @@ const faktaPanelDefinisjoner = [{
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
     aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, aksjonspunktCodes.AVKLAR_OPPHOLDSRETT, aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO],
-  endpoints: [svpBehandlingApi.MEDLEMSKAP, svpBehandlingApi.MEDLEMSKAP_V2],
+  endpoints: [svpBehandlingApi.MEDLEMSKAP],
   renderComponent: (props) => <MedlemskapFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
   getData: ({

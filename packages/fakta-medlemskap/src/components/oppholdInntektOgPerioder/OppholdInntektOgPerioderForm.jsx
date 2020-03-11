@@ -252,12 +252,11 @@ export const transformValues = (values, aksjonspunkter) => {
 const buildInitalValues = createSelector([
   (ownProps) => ownProps.soknad,
   (ownProps) => ownProps.fagsakPerson,
-  (ownProps) => ownProps.medlemskapV2,
-  (ownProps) => ownProps.medlemskap.fom],
-(soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
+  (ownProps) => ownProps.medlemskap],
+(soknad, person, medlem = {}) => ({
   soknad,
   person,
-  gjeldendeFom,
+  gjeldendeFom: medlem.fom,
   medlemskapPerioder: medlem.medlemskapPerioder || [],
   inntekter: medlem.inntekt,
   perioder: (medlem.perioder || []).map((periode) => ({
