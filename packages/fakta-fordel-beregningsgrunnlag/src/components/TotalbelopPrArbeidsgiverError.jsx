@@ -63,16 +63,6 @@ const aapOgRefusjonValidering = (value) => (
   </div>
 );
 
-const arbeidsforholdValidering = (value) => (
-  <div key={value.key}>
-    <FormattedMessage
-      id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
-      values={{ arbeidsgiver: value.arbeidsgiverNavn, inntekt: formatCurrencyNoKr(value.beregningsgrunnlagPrAar) }}
-    />
-  </div>
-);
-
-
 /**
  *  TotalbelopPrArbeidsgiverError
  *
@@ -84,8 +74,8 @@ const TotalbelopPrArbeidsgiverError = ({
   const valideringList = totalInntektPrArbeidsforhold.filter(({ fastsattBelop, beregningsgrunnlagPrAar }) => fastsattBelop > beregningsgrunnlagPrAar);
   return (
     <div>
-      {valideringList.map((v) => (v.key === AAP_ARBEIDSGIVER_KEY
-        ? aapOgRefusjonValidering(v) : arbeidsforholdValidering(v)))}
+      {valideringList.filter((v) => (v.key === AAP_ARBEIDSGIVER_KEY))
+        .map((v) => aapOgRefusjonValidering(v))}
     </div>
   );
 };
