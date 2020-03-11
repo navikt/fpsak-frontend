@@ -18,7 +18,7 @@ export const getUniqueListOfArbeidsforholdFromAndeler = (andeler, bgAndeler) => 
     return arbeidsgiverList;
   }
   andeler.forEach((andel) => {
-    if (andel.arbeidsforhold !== null && !arbeidsforholdEksistererIListen(andel.arbeidsforhold, arbeidsgiverList)) {
+    if (andel.arbeidsforhold && !arbeidsforholdEksistererIListen(andel.arbeidsforhold, arbeidsgiverList)) {
       const bgAndel = finnBgAndelMedSammeArbeidsforhold(bgAndeler, andel);
       const arbeidsforholdObject = {
         andelsnr: andel.andelsnr,
