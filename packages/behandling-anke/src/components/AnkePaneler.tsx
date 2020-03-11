@@ -53,7 +53,6 @@ const AnkePaneler: FunctionComponent<OwnProps> = ({
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <AnkeProsess
         data={fetchedData}

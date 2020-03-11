@@ -55,7 +55,6 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
         kodeverk={kodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <KlageProsess
         data={fetchedData}

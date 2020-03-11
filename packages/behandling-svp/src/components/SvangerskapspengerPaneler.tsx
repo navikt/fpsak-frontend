@@ -57,7 +57,6 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <SvangerskapspengerProsess
         data={fetchedData}
