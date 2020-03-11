@@ -645,42 +645,6 @@ describe('<ValidateAndelerUtils>', () => {
     expect(fastsattError[1].fordeling).to.equal('50 000');
   });
 
-  it('skal gi error om total beløp for arbeidsforhold overstiger rapportert beløp', () => {
-    const values = [{
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      andel: 'Arbeidsgiver 1',
-      fastsattBelop: '10 000',
-      arbeidsgiverNavn: 'Arbeidsgiver 1',
-      arbeidsgiverId: '2342353525',
-      arbeidsperiodeFom: '2016-01-01',
-      arbeidsforholdId: '3r4h3uihr43',
-      eksternArbeidsforholdId: '56789',
-      beregningsgrunnlagPrAar: '10 000',
-      inntektskategori: 'ARBEIDSTAKER',
-    },
-    {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
-      andel: 'Arbeidsgiver 1',
-      fastsattBelop: '20 000',
-      arbeidsgiverNavn: 'Arbeidsgiver 1',
-      arbeidsgiverId: '2342353525',
-      arbeidsperiodeFom: '2016-01-01',
-      arbeidsforholdId: '3r4h3uihr43',
-      eksternArbeidsforholdId: '56789',
-      beregningsgrunnlagPrAar: '10 000',
-      inntektskategori: 'FRILANSER',
-    },
-    ];
-    const fastsattError = validateAndeler(values, () => true, undefined);
-    expect(fastsattError['0'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
-    expect(fastsattError['1'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
-    /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
-    expect(fastsattError._error.props.totalInntektPrArbeidsforhold.length).to.equal(1);
-    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].key).to.equal('Arbeidsgiver 1 (2342353525)...6789');
-    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].fastsattBelop).to.equal(30000);
-    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].beregningsgrunnlagPrAar).to.equal(20000);
-  });
-
   it('skal returnere required error om fastsatt beløp ikkje er satt', () => {
     const andelValue = {
       andel: 'Arbeidsgiver 1',
