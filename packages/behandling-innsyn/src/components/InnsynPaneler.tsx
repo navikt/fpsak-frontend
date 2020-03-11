@@ -47,7 +47,6 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
         kodeverk={kodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <InnsynProsess
         fagsak={fagsak}
