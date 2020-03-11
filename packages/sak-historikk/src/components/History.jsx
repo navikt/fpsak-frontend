@@ -127,6 +127,7 @@ const History = ({
         originType={historieInnslag.type}
         saksNr={saksNr}
         getKodeverknavn={getKodeverknavn}
+        erTilbakekreving={historieInnslag.erTilbakekreving}
       />
     </Snakkeboble>
   );
