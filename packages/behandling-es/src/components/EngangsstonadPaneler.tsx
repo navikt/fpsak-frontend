@@ -57,7 +57,6 @@ const EngangsstonadPaneler: FunctionComponent<OwnProps> = ({
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <EngangsstonadProsess
         data={fetchedData}
