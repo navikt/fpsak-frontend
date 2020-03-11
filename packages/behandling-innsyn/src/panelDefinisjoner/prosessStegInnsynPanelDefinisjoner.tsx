@@ -61,7 +61,7 @@ const prosessStegPanelDefinisjoner = [{
       innsyn, aksjonspunkterForSteg,
     }) => (innsyn ? getVedtakStatus(
       innsyn.innsynResultatType, aksjonspunkterForSteg,
-    ) : false),
+    ) : vilkarUtfallType.IKKE_VURDERT),
   }],
 }];
 
