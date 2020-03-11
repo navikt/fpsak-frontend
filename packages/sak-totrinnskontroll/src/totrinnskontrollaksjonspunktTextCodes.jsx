@@ -74,4 +74,6 @@ const totrinnskontrollaksjonspunktTextCodes = {
 
 };
 
+export const totrinnsTilbakekrevingkontrollaksjonspunktTextCodes = {};
+
 export default totrinnskontrollaksjonspunktTextCodes;
