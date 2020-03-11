@@ -59,9 +59,9 @@ const prosessStegPanelDefinisjoner = [{
     }),
     overrideStatus: ({
       innsyn, aksjonspunkterForSteg,
-    }) => getVedtakStatus(
+    }) => (innsyn ? getVedtakStatus(
       innsyn.innsynResultatType, aksjonspunkterForSteg,
-    ),
+    ) : vilkarUtfallType.IKKE_VURDERT),
   }],
 }];
 
