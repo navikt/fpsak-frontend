@@ -13,9 +13,7 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ISO_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
-import {
-  DateLabel, ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
   isBehandlingFormSubmitting,
@@ -128,13 +126,13 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         )}
     {readOnly
         && (
-        <ElementWrapper>
-          <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
-            {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
-          </RadioGroupField>
-          {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
+          <>
+            <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
+              {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
+            </RadioGroupField>
+            {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
           && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
-        </ElementWrapper>
+          </>
         )}
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     <BehandlingspunktSubmitButton

@@ -34,7 +34,7 @@ import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType'
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import {
-  ArrowBox, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import RenderUttakTable from './RenderUttakTable';
@@ -134,7 +134,7 @@ export const UttakActivity = ({
             </Column>
           </Row>
         )}
-    <ElementWrapper>
+    <>
       <div className={styles.marginBottom20}>
         <TextAreaField
           name="begrunnelse"
@@ -244,7 +244,7 @@ export const UttakActivity = ({
               </FlexContainer>
             </div>
           )}
-    </ElementWrapper>
+    </>
   </div>
 );
 

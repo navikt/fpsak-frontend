@@ -10,7 +10,7 @@ import {
   formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import {
-  ElementWrapper, Image, Table, TableColumn, TableRow,
+  Image, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
@@ -168,7 +168,7 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
 };
 
 const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVals, isReadOnly, arbeidsforholdList) => (
-  <ElementWrapper>
+  <>
     {(!fields.get(index).nyAndel)
       && (
       <InputField
@@ -188,7 +188,7 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
         onChange={(event) => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
       />
       )}
-  </ElementWrapper>
+  </>
 );
 
 export const lagBelopKolonne = (andelElementFieldId, readOnly, periodeUtenAarsak, isAksjonspunktClosed) => {

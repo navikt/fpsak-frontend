@@ -8,7 +8,7 @@ import { Column } from 'nav-frontend-grid';
 
 import { FaktaBegrunnelseTextField, isFieldEdited } from '@fpsak-frontend/fakta-felles';
 import {
-  ArrowBox, ElementWrapper, VerticalSpacer, FaktaGruppe,
+  ArrowBox, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import {
@@ -59,7 +59,7 @@ export const SjekkFodselDokForm = ({
   familiehendelseOriginalBehandling,
   alleMerknaderFraBeslutter,
 }) => (
-  <ElementWrapper>
+  <>
     <FodselSammenligningIndex
       behandlingsTypeKode={behandlingTypeKode}
       avklartBarn={avklartBarn}
@@ -100,7 +100,7 @@ export const SjekkFodselDokForm = ({
     </FaktaGruppe>
     <VerticalSpacer sixteenPx />
     <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
-  </ElementWrapper>
+  </>
 );
 
 SjekkFodselDokForm.propTypes = {

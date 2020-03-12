@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { change as reduxChange } from 'redux-form';
 
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getBehandlingFormName } from '@fpsak-frontend/form';
 
 const findAllNames = (children) => (children ? React.Children
@@ -60,9 +59,9 @@ export class BehandlingFormFieldCleaner extends Component {
   render() {
     const { children } = this.props;
     return (
-      <ElementWrapper>
+      <>
         {children}
-      </ElementWrapper>
+      </>
     );
   }
 }

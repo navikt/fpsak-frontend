@@ -203,7 +203,7 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
             );
           }
           return (
-            <React.Fragment key={`ElementWrapper${element.inputfieldKey}`}>
+            <React.Fragment key={`key${element.inputfieldKey}`}>
               <td key={`Col-${element.inputfieldKey}`} colSpan="2">
                 <div className={(isAksjonspunktClosed && readOnly) ? styles.adjustedField : undefined}>
                   <InputField

@@ -4,7 +4,7 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '../../kodeverk/historikkEndretFeltTypeHeadingCodes';
@@ -34,7 +34,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
   }
   if (historikkinnslagDel.gjeldendeFra && historikkinnslagDel.gjeldendeFra.navn) {
     return (
-      <ElementWrapper>
+      <>
         <FormattedHTMLMessage
           id={historikkEndretFeltTypeCodes[historikkinnslagDel.gjeldendeFra.navn].feltId}
           values={{ value: historikkinnslagDel.gjeldendeFra.verdi }}
@@ -54,12 +54,12 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
             />
           </div>
         )}
-      </ElementWrapper>
+      </>
     );
   }
   if (historikkinnslagDel.gjeldendeFra && !historikkinnslagDel.gjeldendeFra.navn) {
     return (
-      <ElementWrapper>
+      <>
         <FormattedHTMLMessage
           id="Historikk.Template.5.GjeldendeFra"
           values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
@@ -72,7 +72,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
             />
           </div>
         )}
-      </ElementWrapper>
+      </>
     );
   }
   return undefined;

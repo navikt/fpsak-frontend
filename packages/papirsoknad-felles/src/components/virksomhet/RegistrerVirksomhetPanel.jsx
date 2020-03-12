@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { NavFieldGroup } from '@fpsak-frontend/form';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
@@ -19,7 +19,7 @@ import RegistrerVirksomhetModalForm from './RegistrerVirksomhetModalForm';
 import styles from './registrerVirksomhetPanel.less';
 
 const renderVirksomhetsnavn = ({ showRegistrerVirksomhetModal, index, ...fieldProps }) => (
-  <ElementWrapper>
+  <>
     {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
     }
     <a
@@ -33,7 +33,7 @@ const renderVirksomhetsnavn = ({ showRegistrerVirksomhetModal, index, ...fieldPr
         {` ${fieldProps.input.value} `}
       </Normaltekst>
     </a>
-  </ElementWrapper>
+  </>
 );
 
 renderVirksomhetsnavn.propTypes = {
@@ -127,7 +127,7 @@ export class RegistrerVirksomhetPanel extends Component {
         >
           {fields.length > 0
           && (
-          <ElementWrapper key={1}>
+          <React.Fragment key={1}>
             <Row key="VirksomhetHeader">
               <Column xs="8">
                 <Element><FormattedMessage id="Registrering.EgenVirksomhet.Name" /></Element>
@@ -136,7 +136,7 @@ export class RegistrerVirksomhetPanel extends Component {
             <hr className={styles.divider} />
 
             {fields.map((virksomhet, index) => (
-              <ElementWrapper key={2}>
+              <React.Fragment key={2}>
                 <Row key={`${virksomhet}.navn`}>
                   <Column xs="8">
                     <Field
@@ -163,9 +163,9 @@ export class RegistrerVirksomhetPanel extends Component {
                 </Row>
                 <hr className={styles.divider} />
                 <VerticalSpacer eightPx />
-              </ElementWrapper>
+              </React.Fragment>
             ))}
-          </ElementWrapper>
+          </React.Fragment>
           )}
           {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
           }

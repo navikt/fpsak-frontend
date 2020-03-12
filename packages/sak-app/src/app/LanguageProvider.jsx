@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
-
 import fpsakApi from '../data/fpsakApi';
 
 /**
@@ -14,9 +12,7 @@ import fpsakApi from '../data/fpsakApi';
  */
 export const LanguageProvider = ({ nbMessages, children }) => (
   <IntlProvider locale="nb-NO" messages={nbMessages}>
-    <ElementWrapper>
-      {children}
-    </ElementWrapper>
+    {children}
   </IntlProvider>
 );
 

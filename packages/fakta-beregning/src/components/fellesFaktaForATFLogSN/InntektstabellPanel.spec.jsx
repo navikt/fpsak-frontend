@@ -27,7 +27,7 @@ describe('<InntektstabellPanel>', () => {
       </InntektstabellPanelImpl>,
     );
 
-    const elementWrapper = wrapper.find('ElementWrapper');
+    const elementWrapper = wrapper.find('div').last();
     expect(elementWrapper).has.length(2);
     const children = elementWrapper.first().prop('children');
     expect(children).has.length(2);

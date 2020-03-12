@@ -5,7 +5,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import { ElementWrapper, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 
@@ -47,13 +47,13 @@ const ErrorMessageDetailsModal = ({
       <Column xs="1" />
       <Column xs="11">
         {Object.keys(errorDetails).map((edKey) => (
-          <ElementWrapper key={edKey}>
+          <React.Fragment key={edKey}>
             <Undertekst>{`${capitalizeFirstLetters(edKey)}:`}</Undertekst>
             <div className={styles.detail}>
               <Normaltekst>{errorDetails[edKey]}</Normaltekst>
             </div>
             <VerticalSpacer eightPx />
-          </ElementWrapper>
+          </React.Fragment>
         ))}
       </Column>
     </Row>

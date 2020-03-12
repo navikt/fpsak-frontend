@@ -14,9 +14,7 @@ import {
   hasValidText, maxLength, minLength, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
@@ -95,10 +93,10 @@ export const GraderingUtenBG2 = ({
 
       <AvsnittSkiller luftOver luftUnder dividerParagraf />
 
-      <ElementWrapper>
+      <>
         { lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
         <VerticalSpacer sixteenPx />
-      </ElementWrapper>
+      </>
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.Gradering.Tittel" />
       </Element>

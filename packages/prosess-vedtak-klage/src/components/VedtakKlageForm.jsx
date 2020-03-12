@@ -8,7 +8,7 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -48,7 +48,7 @@ export const VedtakKlageFormImpl = ({
     <>
       <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
       <VerticalSpacer twentyPx />
-      <ElementWrapper>
+      <>
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Undertekst>
         </div>
@@ -97,7 +97,7 @@ export const VedtakKlageFormImpl = ({
           behandlingPaaVent={behandlingPaaVent}
         />
         )}
-      </ElementWrapper>
+      </>
     </>
   );
 };

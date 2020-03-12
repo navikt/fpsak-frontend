@@ -10,7 +10,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import {
-  DateLabel, ElementWrapper, VerticalSpacer, FaktaGruppe,
+  DateLabel, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
 import {
   DatepickerField, InputField, behandlingForm, behandlingFormValueSelector,
@@ -45,7 +45,7 @@ export const TermindatoFaktaForm = ({
   submittable,
   alleMerknaderFraBeslutter,
 }) => (
-  <ElementWrapper>
+  <>
     <FaktaGruppe
       aksjonspunktCode={aksjonspunktCodes.TERMINBEKREFTELSE}
       titleCode="TermindatoFaktaForm.ApplicationInformation"
@@ -115,7 +115,7 @@ export const TermindatoFaktaForm = ({
         </AlertStripe>
       </>
     )}
-  </ElementWrapper>
+  </>
 );
 
 TermindatoFaktaForm.propTypes = {

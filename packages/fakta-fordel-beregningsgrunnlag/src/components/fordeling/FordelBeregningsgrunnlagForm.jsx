@@ -11,8 +11,6 @@ import { skalValidereMotBeregningsgrunnlag } from '../BgFordelingUtils';
 
 import styles from './fordelBeregningsgrunnlagForm.less';
 
-const ElementWrapper = ({ children }) => children;
-
 const fordelBGFieldArrayNamePrefix = 'fordelBGPeriode';
 
 export const getFieldNameKey = (index) => (fordelBGFieldArrayNamePrefix + index);
@@ -100,7 +98,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
     return (
       <BorderBox className={styles.lessPadding}>
         {slaaSammenPerioder(perioder, bgPerioder).map((periode, index) => (
-          <ElementWrapper key={fordelBGFieldArrayNamePrefix + periode.fom}>
+          <React.Fragment key={fordelBGFieldArrayNamePrefix + periode.fom}>
             <VerticalSpacer eightPx />
             <FordelBeregningsgrunnlagPeriodePanel
               readOnly={readOnly}
@@ -116,7 +114,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
               behandlingType={behandlingType}
             />
             <VerticalSpacer eightPx />
-          </ElementWrapper>
+          </React.Fragment>
         ))}
       </BorderBox>
     );

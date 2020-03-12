@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 /**
@@ -22,7 +21,7 @@ export const FodselSammenligningRevurderingPanel = ({
   antallBarn,
   shouldShowVedtaksdatoAsSvangerskapsuke,
 }) => (
-  <ElementWrapper>
+  <>
     <Element><FormattedMessage id="FodselsammenligningPanel.Ytelsesvedtak" /></Element>
     <Row>
       {shouldShowVedtaksdatoAsSvangerskapsuke
@@ -40,7 +39,7 @@ export const FodselSammenligningRevurderingPanel = ({
       <Column xs="4"><Normaltekst>{terminOrFodselDate}</Normaltekst></Column>
       <Column xs="4"><Normaltekst>{antallBarn}</Normaltekst></Column>
     </Row>
-  </ElementWrapper>
+  </>
 );
 
 FodselSammenligningRevurderingPanel.propTypes = {

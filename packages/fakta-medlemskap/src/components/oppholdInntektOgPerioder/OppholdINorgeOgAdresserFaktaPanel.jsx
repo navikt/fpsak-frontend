@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
 import {
-  ElementWrapper, Image, PeriodLabel, VerticalSpacer, FaktaGruppe,
+  Image, PeriodLabel, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
@@ -127,12 +127,10 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
         {hasBosattAksjonspunkt
           && (
             <div className={styles.ieFlex}>
-              <ElementWrapper>
-                <RadioGroupField name="bosattVurdering" validate={[required]} bredde="XXL" readOnly={readOnly} isEdited={isBosattAksjonspunktClosed}>
-                  <RadioOption label={{ id: 'OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway' }} value />
-                  <RadioOption label={<FormattedHTMLMessage id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway" />} value={false} />
-                </RadioGroupField>
-              </ElementWrapper>
+              <RadioGroupField name="bosattVurdering" validate={[required]} bredde="XXL" readOnly={readOnly} isEdited={isBosattAksjonspunktClosed}>
+                <RadioOption label={{ id: 'OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway' }} value />
+                <RadioOption label={<FormattedHTMLMessage id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway" />} value={false} />
+              </RadioGroupField>
             </div>
           )}
       </Column>
