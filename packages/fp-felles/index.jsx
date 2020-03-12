@@ -1,5 +1,4 @@
 export { default as featureToggle } from './src/featureToggle';
-export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
 export { default as behandlingspunktCodes } from './src/behandlingspunktCodes';
 export { default as faktaPanelCodes } from './src/faktaPanelCodes';
 export { default as BehandlingErPaVentModal } from './src/behandlingPaVent/BehandlingErPaVentModal';

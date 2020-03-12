@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
@@ -17,7 +17,6 @@ describe('<TilbakekrevingVedtakForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       fetchPreviewVedtaksbrev={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
       formVerdier={{}}
       vedtaksbrevAvsnitt={[{
         avsnittstype: 'test',
@@ -45,7 +44,6 @@ describe('<TilbakekrevingVedtakForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       fetchPreviewVedtaksbrev={fetchPreview}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
       formVerdier={{
         OPPSUMMERING: 'Dette er oppsummeringen',
         '2019-10-10_2019-11-10': {
@@ -90,7 +88,6 @@ describe('<TilbakekrevingVedtakForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       fetchPreviewVedtaksbrev={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
       formVerdier={{}}
       vedtaksbrevAvsnitt={[{
         avsnittstype: 'test',
@@ -116,7 +113,6 @@ describe('<TilbakekrevingVedtakForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       fetchPreviewVedtaksbrev={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
       formVerdier={{}}
       vedtaksbrevAvsnitt={[{
         avsnittstype: 'test',

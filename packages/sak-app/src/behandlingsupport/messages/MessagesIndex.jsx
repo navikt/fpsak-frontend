@@ -12,7 +12,7 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
-import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import { SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 
 import DataFetcher from '../../app/DataFetcher';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
@@ -26,6 +26,7 @@ import {
 } from '../../behandling/duck';
 import { setBehandlingOnHold } from '../../behandlingmenu/duck';
 import fpsakApi from '../../data/fpsakApi';
+import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import {
   resetSubmitMessageActionCreator, submitMessageActionCreator,
 } from './duck';

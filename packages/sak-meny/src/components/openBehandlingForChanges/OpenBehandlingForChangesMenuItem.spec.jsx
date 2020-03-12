@@ -3,18 +3,16 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
 
 import OpenBehandlingForChangesMenuItem from './OpenBehandlingForChangesMenuItem';
 import MenuButton from '../MenuButton';
 
 describe('<OpenBehandlingForChangesMenuItem>', () => {
-  const behandlingIdentifier = new BehandlingIdentifier(123, 1);
 
   it('skal ikke vise modal når behandling-id er undefined', () => {
     const wrapper = shallow(<OpenBehandlingForChangesMenuItem
-      behandlingIdentifier={undefined}
+      behandlingId={undefined}
       behandlingVersjon={2}
       openBehandlingForChanges={sinon.spy()}
       toggleBehandlingsmeny={sinon.spy()}
@@ -26,7 +24,7 @@ describe('<OpenBehandlingForChangesMenuItem>', () => {
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
     const wrapper = shallow(<OpenBehandlingForChangesMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       openBehandlingForChanges={sinon.spy()}
       toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
@@ -48,7 +46,7 @@ describe('<OpenBehandlingForChangesMenuItem>', () => {
 
   it('skal skjule modal ved trykk på avbryt', () => {
     const wrapper = shallow(<OpenBehandlingForChangesMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       openBehandlingForChanges={sinon.spy()}
       toggleBehandlingsmeny={sinon.spy()}
@@ -68,7 +66,7 @@ describe('<OpenBehandlingForChangesMenuItem>', () => {
   it('skal sende data til server ved trykk på ok-knapp', () => {
     const openBehandlingForChangesCallback = sinon.spy();
     const wrapper = shallow(<OpenBehandlingForChangesMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       openBehandlingForChanges={openBehandlingForChangesCallback}
       toggleBehandlingsmeny={sinon.spy()}
@@ -87,7 +85,7 @@ describe('<OpenBehandlingForChangesMenuItem>', () => {
       behandlingId: 1,
       behandlingVersjon: 2,
     });
-    expect(openBehandlingForChangesCallback.getCalls()[0].args[1]).is.eql(behandlingIdentifier);
+    expect(openBehandlingForChangesCallback.getCalls()[0].args[1]).is.eql(1);
 
     expect(wrapper.state('showModal')).is.false;
     expect(wrapper.find(OkAvbrytModal)).has.length(0);

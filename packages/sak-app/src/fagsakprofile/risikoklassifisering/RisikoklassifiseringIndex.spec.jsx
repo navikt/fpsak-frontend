@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 
+import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import { RisikoklassifiseringIndexImpl } from './RisikoklassifiseringIndex';
 
 const lagRisikoklassifisering = (kode) => ({

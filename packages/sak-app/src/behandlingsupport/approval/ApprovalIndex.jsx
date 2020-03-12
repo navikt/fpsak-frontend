@@ -10,7 +10,7 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { featureToggle, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { requireProps } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
@@ -35,6 +35,7 @@ import {
   getBehandlingsresultat,
 } from '../../behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
+import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 
 const getArsaker = (approval) => ([{
   code: vurderPaNyttArsakType.FEIL_FAKTA,

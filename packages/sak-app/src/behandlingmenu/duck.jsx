@@ -49,16 +49,16 @@ export const nyBehandlendeEnhet = (params) => behandlingEventHandler.endreBehand
 
 export const openBehandlingForChanges = (params) => behandlingEventHandler.opneBehandlingForEndringer(params);
 
-export const opprettVerge = (push, behandlingIdentifier, versjon) => behandlingEventHandler.opprettVerge({
-  behandlingId: behandlingIdentifier.behandlingId,
+export const opprettVerge = (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.opprettVerge({
+  behandlingId,
   behandlingVersjon: versjon,
 }).then(() => push(getLocationWithDefaultProsessStegAndFakta({
-  pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
+  pathname: pathToBehandling(saksnummer, behandlingId),
 })));
 
-export const fjernVerge = (push, behandlingIdentifier, versjon) => behandlingEventHandler.fjernVerge({
-  behandlingId: behandlingIdentifier.behandlingId,
+export const fjernVerge = (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.fjernVerge({
+  behandlingId,
   behandlingVersjon: versjon,
 }).then(() => push(getLocationWithDefaultProsessStegAndFakta({
-  pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
+  pathname: pathToBehandling(saksnummer, behandlingId),
 })));

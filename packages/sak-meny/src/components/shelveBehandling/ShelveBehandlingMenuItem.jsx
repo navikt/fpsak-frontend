@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import MenuButton from '../MenuButton';
 import ShelveBehandlingModal from './ShelveBehandlingModal';
@@ -33,11 +32,11 @@ class ShelveBehandlingMenuItem extends Component {
 
   submit(formValues) {
     const {
-      behandlingIdentifier, behandlingVersjon, shelveBehandling,
+      behandlingId, behandlingVersjon, shelveBehandling,
     } = this.props;
     const henleggBehandlingDto = {
       behandlingVersjon,
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingId,
       årsakKode: formValues.årsakKode,
       begrunnelse: formValues.begrunnelse,
     };
@@ -64,7 +63,7 @@ class ShelveBehandlingMenuItem extends Component {
 
   render() {
     const {
-      behandlingIdentifier, henleggBehandlingEnabled, previewHenleggBehandling, ytelseType, behandlingType,
+      behandlingId, henleggBehandlingEnabled, previewHenleggBehandling, ytelseType, behandlingType,
       behandlingUuid, menyKodeverk,
     } = this.props;
     const { showBehandlingErHenlagtModal, showModal } = this.state;
@@ -80,7 +79,7 @@ class ShelveBehandlingMenuItem extends Component {
             onSubmit={this.submit}
             cancelEvent={this.hideModal}
             previewHenleggBehandling={previewHenleggBehandling}
-            behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
+            behandlingId={behandlingId}
             ytelseType={ytelseType}
             behandlingType={behandlingType}
             behandlingUuid={behandlingUuid}
@@ -100,7 +99,7 @@ class ShelveBehandlingMenuItem extends Component {
 
 ShelveBehandlingMenuItem.propTypes = {
   previewHenleggBehandling: PropTypes.func.isRequired,
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingId: PropTypes.number.isRequired,
   menyKodeverk: PropTypes.instanceOf(MenyKodeverk).isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   toggleBehandlingsmeny: PropTypes.func.isRequired,

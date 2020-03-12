@@ -3,7 +3,6 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
 
 import OpprettEllerFjernVergeMenuItem from './OpprettEllerFjernVergeMenuItem';
@@ -11,12 +10,12 @@ import MenuButton from '../MenuButton';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<OpprettEllerFjernVergeMenuItem>', () => {
-  const behandlingIdentifier = new BehandlingIdentifier(123, 1);
 
   it('skal rendre komponent når menyvalg er opprettet', () => {
     const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       opprettVerge={sinon.spy()}
-      behandlingIdentifier={behandlingIdentifier}
+      saksnummer={123}
+      behandlingId={1}
       behandlingVersjon={2}
       push={sinon.spy()}
     />);
@@ -28,7 +27,8 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
   it('skal rendre komponent når menyvalg er fjern', () => {
     const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       fjernVerge={sinon.spy()}
-      behandlingIdentifier={behandlingIdentifier}
+      saksnummer={123}
+      behandlingId={1}
       behandlingVersjon={2}
       push={sinon.spy()}
     />);
@@ -41,7 +41,8 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
   it('skal ikke vise modal for om en vil opprette/fjerne som standard', () => {
     const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       fjernVerge={sinon.spy()}
-      behandlingIdentifier={behandlingIdentifier}
+      saksnummer={123}
+      behandlingId={1}
       behandlingVersjon={2}
       push={sinon.spy()}
     />);
@@ -53,7 +54,8 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
     const opprettVergeCallback = sinon.spy();
     const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       opprettVerge={opprettVergeCallback}
-      behandlingIdentifier={behandlingIdentifier}
+      saksnummer={123}
+      behandlingId={1}
       behandlingVersjon={2}
       push={sinon.spy()}
     />);
@@ -67,7 +69,7 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
 
     expect(opprettVergeCallback.called).is.true;
     expect(opprettVergeCallback.getCalls()[0].args).has.length(3);
-    expect(opprettVergeCallback.getCalls()[0].args[1]).is.eql(behandlingIdentifier);
+    expect(opprettVergeCallback.getCalls()[0].args[1]).is.eql(1);
     expect(opprettVergeCallback.getCalls()[0].args[2]).is.eql(2);
   });
 
@@ -75,7 +77,8 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
     const fjernVergeCallback = sinon.spy();
     const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       fjernVerge={fjernVergeCallback}
-      behandlingIdentifier={behandlingIdentifier}
+      saksnummer={123}
+      behandlingId={1}
       behandlingVersjon={2}
       push={sinon.spy()}
     />);
@@ -89,7 +92,7 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
 
     expect(fjernVergeCallback.called).is.true;
     expect(fjernVergeCallback.getCalls()[0].args).has.length(3);
-    expect(fjernVergeCallback.getCalls()[0].args[1]).is.eql(behandlingIdentifier);
+    expect(fjernVergeCallback.getCalls()[0].args[1]).is.eql(1);
     expect(fjernVergeCallback.getCalls()[0].args[2]).is.eql(2);
   });
 });

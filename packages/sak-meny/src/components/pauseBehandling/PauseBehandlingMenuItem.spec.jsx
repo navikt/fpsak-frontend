@@ -5,21 +5,20 @@ import { expect } from 'chai';
 import moment from 'moment';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import { SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 
 import MenuButton from '../MenuButton';
 import PauseBehandlingMenuItem from './PauseBehandlingMenuItem';
 import MenyKodeverk from '../../MenyKodeverk';
 
 describe('<PauseBehandlingMenuItem>', () => {
-  const behandlingIdentifier = new BehandlingIdentifier(123, 1);
   const menyKodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
     .medFpSakKodeverk({})
     .medFpTilbakeKodeverk({});
 
   it('skal ikke vise modal ved rendring', () => {
     const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={sinon.spy()}
       setBehandlingOnHold={sinon.spy()}
@@ -37,7 +36,7 @@ describe('<PauseBehandlingMenuItem>', () => {
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
     const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
       setBehandlingOnHold={sinon.spy()}
@@ -65,7 +64,7 @@ describe('<PauseBehandlingMenuItem>', () => {
 
   it('skal skjule modal ved trykk på avbryt', () => {
     const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={sinon.spy()}
       setBehandlingOnHold={sinon.spy()}
@@ -91,7 +90,7 @@ describe('<PauseBehandlingMenuItem>', () => {
   it('skal sende data til server ved trykk på ok-knapp', () => {
     const behandlingOnHoldCallback = sinon.spy();
     const wrapper = shallow(<PauseBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={sinon.spy()}
       setBehandlingOnHold={behandlingOnHoldCallback}
