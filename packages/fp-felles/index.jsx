@@ -1,5 +1,4 @@
 export { default as featureToggle } from './src/featureToggle';
-export { ErrorTypes, errorOfType, getErrorResponseData } from './src/ErrorTypes';
 export { default as BehandlingIdentifier } from './src/BehandlingIdentifier';
 export { default as behandlingspunktCodes } from './src/behandlingspunktCodes';
 export { default as faktaPanelCodes } from './src/faktaPanelCodes';

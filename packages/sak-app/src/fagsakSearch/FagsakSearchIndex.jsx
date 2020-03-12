@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 
 import {
   errorOfType, ErrorTypes, getErrorResponseData,
-} from '@fpsak-frontend/fp-felles';
+} from '@fpsak-frontend/rest-api';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 

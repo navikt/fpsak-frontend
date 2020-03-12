@@ -9,6 +9,7 @@
     "@fpsak-frontend/error-api-redux": "1.0.0",
     "@fpsak-frontend/fp-felles": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
+    "@fpsak-frontend/rest-api": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "nav-frontend-alertstriper": "3.0.12",
