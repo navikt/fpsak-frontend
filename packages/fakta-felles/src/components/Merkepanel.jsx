@@ -10,7 +10,7 @@ import {
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 
 import styles from './merkepanel.less';
-import messages from '../i18n/nb_NO.json';
+import messages from '../../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

@@ -14,7 +14,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidInteger, isObjectEmpty, required } from '@fpsak-frontend/utils';
 import VilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { isFieldEdited } from '@fpsak-frontend/fp-felles';
+import { isFieldEdited } from '@fpsak-frontend/fakta-felles';
 
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
 import RettighetFaktaPanel from './RettighetFaktaPanel';

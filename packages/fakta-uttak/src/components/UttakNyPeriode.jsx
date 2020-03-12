@@ -40,8 +40,9 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
-import { lagVisningsNavn } from '@fpsak-frontend/fp-felles';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
+
+import lagVisningsNavn from './utils/uttakVisningsnavnHelper';
 
 import styles from './uttakNyPeriode.less';
 

@@ -1,27 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+
 import {
   dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
-
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-
-import { connect } from 'react-redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
-import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
+
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
-
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-
 
 const formPrefix = 'inntektField';
 

@@ -2,10 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
+
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { RadioGroupField } from '@fpsak-frontend/form';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+
+import { createVisningsnavnForAktivitet } from '../../../ArbeidsforholdHelper';
 import VurderMottarYtelseForm, {
   frilansMedAndreFrilanstilfeller,
   frilansUtenAndreFrilanstilfeller,

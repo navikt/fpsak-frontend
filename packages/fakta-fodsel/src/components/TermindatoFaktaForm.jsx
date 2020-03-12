@@ -18,9 +18,8 @@ import {
 import {
   hasValidDate, hasValidInteger, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fakta-felles';
+import { FaktaBegrunnelseTextField, isFieldEdited } from '@fpsak-frontend/fakta-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { isFieldEdited } from '@fpsak-frontend/fp-felles';
 
 import styles from './termindatoFaktaForm.less';
 

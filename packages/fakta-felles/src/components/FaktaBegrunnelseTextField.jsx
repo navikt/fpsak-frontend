@@ -9,7 +9,7 @@ import {
 import { TextAreaField } from '@fpsak-frontend/form';
 
 import styles from './faktaBegrunnelseTextField.less';
-import messages from '../i18n/nb_NO.json';
+import messages from '../../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

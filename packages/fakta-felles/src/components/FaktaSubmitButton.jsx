@@ -9,7 +9,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { isBehandlingFormDirty, isBehandlingFormSubmitting, hasBehandlingFormErrorsOfType } from '@fpsak-frontend/form';
 
-import messages from '../i18n/nb_NO.json';
+import messages from '../../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

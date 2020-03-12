@@ -6,10 +6,7 @@ import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import {
-  BehandlingspunktSubmitButton,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import {
   behandlingForm, RadioGroupField, RadioOption, TextAreaField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
@@ -26,6 +23,7 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 import styles from './graderingUtenBG.less';
