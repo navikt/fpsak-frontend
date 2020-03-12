@@ -15,7 +15,7 @@ import {
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 
-import BehandlingspunktSubmitButton from '../BehandlingspunktSubmitButton';
+import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
 
 import styles from './prosessPanelTemplate.less';
 
@@ -84,7 +84,7 @@ const ProsessPanelTemplate = ({
       <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={isAksjonspunktOpen}>
         {children}
         {!readOnly && <VerticalSpacer sixteenPx />}
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}

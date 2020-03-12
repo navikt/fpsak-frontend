@@ -10,7 +10,7 @@ import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from '@fpsak-frontend/form';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -166,7 +166,7 @@ const AksjonspunktBehandler = ({
           <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="12">
-              <BehandlingspunktSubmitButton
+              <ProsessStegSubmitButton
                 formName={formName}
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
@@ -219,7 +219,7 @@ const AksjonspunktBehandler = ({
           <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="12">
-              <BehandlingspunktSubmitButton
+              <ProsessStegSubmitButton
                 formName={formName}
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}

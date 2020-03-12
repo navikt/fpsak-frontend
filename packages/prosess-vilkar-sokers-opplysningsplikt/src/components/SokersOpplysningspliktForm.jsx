@@ -8,8 +8,8 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, ProsessPanelTemplate,
+} from '@fpsak-frontend/prosess-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
@@ -114,7 +114,7 @@ export const SokersOpplysningspliktFormImpl = ({
         </Row>
       </>
     )}
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     {!readOnly && (
       <>
         <VerticalSpacer sixteenPx />
@@ -217,7 +217,7 @@ export const buildInitialValues = createSelector(
       erVilkarOk: isOpenAksjonspunkt && soknadExists ? undefined : isVilkarGodkjent,
       aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon.kode : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
       hasAksjonspunkt: aksjonspunkt !== undefined,
-      ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+      ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
   },
 );
@@ -234,7 +234,7 @@ const transformValues = (values, manglendeVedlegg) => {
       aktørId: ag.aktørId,
       brukerHarSagtAtIkkeKommer: values.inntektsmeldingerSomIkkeKommer[lagArbeidsgiverKey(ag)],
     }), {}),
-    ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+    ...ProsessStegBegrunnelseTextField.transformValues(values),
   };
 };
 

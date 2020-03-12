@@ -6,9 +6,7 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import {
-  BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
   RadioGroupField, RadioOption, SelectField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
@@ -68,7 +66,7 @@ export const FormkravKlageForm = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="6">
-          <BehandlingspunktBegrunnelseTextField
+          <ProsessStegBegrunnelseTextField
             readOnly={readOnly}
           />
         </Column>
@@ -130,7 +128,7 @@ export const FormkravKlageForm = ({
         </Column>
       </Row>
       <div className={styles.confirmVilkarForm}>
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}

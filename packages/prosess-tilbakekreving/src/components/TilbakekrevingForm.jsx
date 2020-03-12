@@ -11,7 +11,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { FaktaGruppe, AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
   behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix,
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
@@ -250,7 +250,7 @@ export class TilbakekrevingFormImpl extends Component {
               <VerticalSpacer twentyPx />
             </>
           )}
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={TILBAKEKREVING_FORM_NAME}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

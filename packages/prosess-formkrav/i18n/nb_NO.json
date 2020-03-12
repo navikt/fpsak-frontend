@@ -14,9 +14,9 @@
   "Klage.Formkrav.Ja": "Ja",
   "Klage.Formkrav.Nei": "Nei",
 
-  "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
-  "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
-  "BehandlingspunktBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
+  "ProsessStegBegrunnelseTextField.ExplanationRequired": "Vurdering",
+  "ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
+  "ProsessStegBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",

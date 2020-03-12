@@ -8,7 +8,7 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -110,7 +110,7 @@ export const InnsynVedtakFormImpl = ({
       <Row>
         {!readOnly && (
         <Column xs="3">
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             textCode="SubmitButton.ConfirmInformation"
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

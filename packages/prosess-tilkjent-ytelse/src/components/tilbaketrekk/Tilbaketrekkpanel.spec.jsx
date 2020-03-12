@@ -6,7 +6,7 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilkjent-ytelse';
 
@@ -38,7 +38,7 @@ describe('<Tilbaketrekkpanel>', () => {
     expect(radioOption).to.have.length(2);
     const textfield = wrapper.find(TextAreaField);
     expect(textfield).to.have.length(1);
-    const button = wrapper.find(BehandlingspunktSubmitButton);
+    const button = wrapper.find(ProsessStegSubmitButton);
     expect(button).to.have.length(1);
     const element = wrapper.find(Element);
     expect(element).to.have.length(1);

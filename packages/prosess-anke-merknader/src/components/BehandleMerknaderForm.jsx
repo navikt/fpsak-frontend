@@ -13,9 +13,7 @@ import {
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import {
-  BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 
@@ -62,7 +60,7 @@ const AnkeMerknader = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="8">
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

@@ -22,8 +22,8 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import {
-  BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, ProsessStegSubmitButton,
+} from '@fpsak-frontend/prosess-felles';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
@@ -134,8 +134,8 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
           && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
           </>
         )}
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-    <BehandlingspunktSubmitButton
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -175,13 +175,13 @@ export const buildInitialValues = createSelector([
   (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.status],
 (aksjonspunkter, status) => ({
   erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
-  ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+  ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
 }));
 
 const transformValues = (values, aksjonspunkter) => ({
   erVilkarOk: values.erVilkarOk,
   kode: aksjonspunkter[0].definisjon.kode,
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
 const findDate = createSelector([

@@ -15,7 +15,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox, EditedIcon,
 } from '@fpsak-frontend/shared-components';
-import { VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import { VilkarResultPicker } from '@fpsak-frontend/prosess-felles';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';

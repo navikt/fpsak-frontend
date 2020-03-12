@@ -23,8 +23,8 @@ import {
 } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, ProsessStegSubmitButton,
+} from '@fpsak-frontend/prosess-felles';
 
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';
@@ -94,7 +94,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
     </Row>
     <form className={styles.marginTop} onSubmit={formProps.handleSubmit}>
       <div>
-        <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+        <ProsessStegBegrunnelseTextField readOnly={readOnly} />
         <VerticalSpacer sixteenPx />
         <div>
           <RadioGroupField name="gyldigSenFremsetting" validate={[required]} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, gyldigSenFremsetting)}>
@@ -118,7 +118,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
             </Row>
           )}
         <VerticalSpacer twentyPx />
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
@@ -155,7 +155,7 @@ export const buildInitialValues = createSelector(
   (aksjonspunkter, uttaksperiodegrense = {}, mottattDato) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
-    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+    ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
 
@@ -163,7 +163,7 @@ const transformValues = (values, aksjonspunkter) => ({
   harGyldigGrunn: values.gyldigSenFremsetting,
   ansesMottattDato: values.ansesMottatt,
   kode: aksjonspunkter[0].definisjon.kode,
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
 const formName = 'VurderSoknadsfristForeldrepengerForm';

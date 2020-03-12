@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 
 import { FlexColumn } from '@fpsak-frontend/shared-components';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
@@ -31,7 +31,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
     />);
 
     expect(wrapper.find(TilbakekrevingEditerVedtaksbrevPanel)).to.have.length(1);
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
     expect(knapp).to.have.length(1);
     expect(knapp.prop('isSubmittable')).is.true;
     expect(wrapper.find('a')).to.have.length(1);
@@ -101,7 +101,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
       perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-01-01_2019-02-02']}
     />);
 
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
     expect(knapp).to.have.length(1);
     expect(knapp.prop('isSubmittable')).is.false;
     expect(wrapper.find('a')).to.have.length(0);
@@ -135,7 +135,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
       fritekstOppsummeringPakrevdMenIkkeUtfylt
     />);
 
-    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    const knapp = wrapper.find(ProsessStegSubmitButton);
     expect(knapp).to.have.length(1);
     expect(knapp.prop('isSubmittable')).is.false;
     expect(wrapper.find('a')).to.have.length(1);

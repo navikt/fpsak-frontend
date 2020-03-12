@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
   behandlingForm, RadioGroupField, RadioOption, TextAreaField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
@@ -135,7 +135,7 @@ export const GraderingUtenBG2 = ({
       <Row>
         <Column xs="1">
           <VerticalSpacer eightPx />
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             isReadOnly={readOnly}
             isSubmittable={!readOnly}

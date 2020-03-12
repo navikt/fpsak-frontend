@@ -3,11 +3,11 @@ import { expect } from 'chai';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { TextAreaField } from '@fpsak-frontend/form';
-import BehandlingspunktBegrunnelseTextField from './BehandlingspunktBegrunnelseTextField';
+import ProsessStegBegrunnelseTextField from './ProsessStegBegrunnelseTextField';
 
-describe('<BehandlingspunktBegrunnelseTextField>', () => {
+describe('<ProsessStegBegrunnelseTextField>', () => {
   it('skal vise tekstfelt som ikke readOnly', () => {
-    const wrapper = shallowWithIntl(<BehandlingspunktBegrunnelseTextField.WrappedComponent
+    const wrapper = shallowWithIntl(<ProsessStegBegrunnelseTextField.WrappedComponent
       intl={intlMock}
       readOnly={false}
     />);
@@ -18,7 +18,7 @@ describe('<BehandlingspunktBegrunnelseTextField>', () => {
   });
 
   it('skal vise tekstfelt som readOnly', () => {
-    const wrapper = shallowWithIntl(<BehandlingspunktBegrunnelseTextField.WrappedComponent
+    const wrapper = shallowWithIntl(<ProsessStegBegrunnelseTextField.WrappedComponent
       intl={intlMock}
       readOnly
     />);
@@ -29,7 +29,7 @@ describe('<BehandlingspunktBegrunnelseTextField>', () => {
   });
 
   it('skal vise default tekstkode', () => {
-    const wrapper = shallowWithIntl(<BehandlingspunktBegrunnelseTextField.WrappedComponent
+    const wrapper = shallowWithIntl(<ProsessStegBegrunnelseTextField.WrappedComponent
       intl={intlMock}
       readOnly={false}
     />);
@@ -39,7 +39,7 @@ describe('<BehandlingspunktBegrunnelseTextField>', () => {
   });
 
   it('skal vise gitt tekstkode', () => {
-    const wrapper = shallowWithIntl(<BehandlingspunktBegrunnelseTextField.WrappedComponent
+    const wrapper = shallowWithIntl(<ProsessStegBegrunnelseTextField.WrappedComponent
       intl={intlMock}
       readOnly={false}
       textCode="Klage.ResolveKlage.ExplanationRequiredBrev"
@@ -53,7 +53,7 @@ describe('<BehandlingspunktBegrunnelseTextField>', () => {
     const aksjonspunkter = [{
       begrunnelse: 'test &amp;',
     }];
-    const initalValues = BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter);
+    const initalValues = ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter);
     expect(initalValues).is.eql({ begrunnelse: 'test &' });
   });
 });

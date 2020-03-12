@@ -7,21 +7,21 @@ import {
   decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 
-import styles from './behandlingspunktBegrunnelseTextField.less';
+import styles from './prosessStegBegrunnelseTextField.less';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
 const getBegrunnelseTextCode = (readOnly) => (readOnly
-  ? 'BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly'
-  : 'BehandlingspunktBegrunnelseTextField.ExplanationRequired');
+  ? 'ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly'
+  : 'ProsessStegBegrunnelseTextField.ExplanationRequired');
 
 /**
- * BehandlingspunktBegrunnelseTextField
+ * ProsessStegBegrunnelseTextField
  *
  * Presentasjonskomponent. Lar den NAV-ansatte skrive inn en begrunnelse før lagring av behandlingspunkter.
  */
-const BehandlingspunktBegrunnelseTextFieldImpl = ({
+const ProsessStegBegrunnelseTextFieldImpl = ({
   intl,
   readOnly,
   textCode,
@@ -35,35 +35,35 @@ const BehandlingspunktBegrunnelseTextFieldImpl = ({
       textareaClass={styles.explanationTextarea}
       maxLength={1500}
       readOnly={readOnly}
-      placeholder={intl.formatMessage({ id: 'BehandlingspunktBegrunnelseTextField.BegrunnVurdering' })}
+      placeholder={intl.formatMessage({ id: 'ProsessStegBegrunnelseTextField.BegrunnVurdering' })}
     />
   </div>
 );
 
-BehandlingspunktBegrunnelseTextFieldImpl.propTypes = {
+ProsessStegBegrunnelseTextFieldImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   textCode: PropTypes.string,
   useAllWidth: PropTypes.bool,
 };
 
-BehandlingspunktBegrunnelseTextFieldImpl.defaultProps = {
+ProsessStegBegrunnelseTextFieldImpl.defaultProps = {
   textCode: undefined,
   useAllWidth: false,
 };
 
-const BehandlingspunktBegrunnelseTextField = injectIntl(BehandlingspunktBegrunnelseTextFieldImpl);
+const ProsessStegBegrunnelseTextField = injectIntl(ProsessStegBegrunnelseTextFieldImpl);
 
 const getBegrunnelse = (aksjonspunkter) => (aksjonspunkter.length > 0 && aksjonspunkter[0].begrunnelse
   ? aksjonspunkter[0].begrunnelse
   : '');
 
-BehandlingspunktBegrunnelseTextField.buildInitialValues = (aksjonspunkter) => ({
+ProsessStegBegrunnelseTextField.buildInitialValues = (aksjonspunkter) => ({
   begrunnelse: decodeHtmlEntity(getBegrunnelse(aksjonspunkter)),
 });
 
-BehandlingspunktBegrunnelseTextField.transformValues = (values) => ({
+ProsessStegBegrunnelseTextField.transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
 });
 
-export default BehandlingspunktBegrunnelseTextField;
+export default ProsessStegBegrunnelseTextField;

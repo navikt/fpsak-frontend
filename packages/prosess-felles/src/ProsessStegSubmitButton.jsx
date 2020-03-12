@@ -14,9 +14,9 @@ const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields
 };
 
 /**
- * BehandlingspunktSubmitButton
+ * ProsessStegSubmitButton
  */
-export const BehandlingspunktSubmitButton = ({
+export const ProsessStegSubmitButton = ({
   isReadOnly,
   isSubmittable,
   isSubmitting,
@@ -39,7 +39,7 @@ export const BehandlingspunktSubmitButton = ({
   </>
 );
 
-BehandlingspunktSubmitButton.propTypes = {
+ProsessStegSubmitButton.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   isSubmittable: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
@@ -48,7 +48,7 @@ BehandlingspunktSubmitButton.propTypes = {
   textCode: PropTypes.string,
 };
 
-BehandlingspunktSubmitButton.defaultProps = {
+ProsessStegSubmitButton.defaultProps = {
   textCode: 'SubmitButton.ConfirmInformation',
 };
 
@@ -65,4 +65,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(BehandlingspunktSubmitButton);
+export default connect(mapStateToProps)(ProsessStegSubmitButton);

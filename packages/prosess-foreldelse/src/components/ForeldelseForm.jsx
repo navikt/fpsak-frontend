@@ -11,7 +11,7 @@ import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import {
   AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
   getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/form';
@@ -220,7 +220,7 @@ export class ForeldelseForm extends Component {
                   />
                 )}
               <VerticalSpacer twentyPx />
-              <BehandlingspunktSubmitButton
+              <ProsessStegSubmitButton
                 formName={FORELDELSE_FORM_NAME}
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
