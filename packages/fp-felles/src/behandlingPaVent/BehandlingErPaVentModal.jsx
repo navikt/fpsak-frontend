@@ -30,9 +30,8 @@ export const BehandlingErPaVentModal = ({
   handleOnHoldSubmit,
   hasManualPaVent,
   ventearsaker,
-  isReadOnly,
 }) => {
-  if (behandlingId && !isReadOnly) {
+  if (behandlingId) {
     return (
       <SettBehandlingPaVentForm
         onSubmit={handleOnHoldSubmit}
@@ -99,7 +98,6 @@ BehandlingErPaVentModal.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   })).isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
 };
 
 BehandlingErPaVentModal.defaultProps = {

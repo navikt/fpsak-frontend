@@ -30,18 +30,6 @@ describe('<BehandlingPaVent>', () => {
   const aksjonspunkter = [];
   const kodeverk = {};
 
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
-    kanBeslutte: false,
-    kanOverstyre: false,
-    kanSaksbehandle: true,
-    kanVeilede: false,
-    navn: 'Espen Utvikler',
-  };
-
   it('skal ikke vise modal når behandling ikke er på vent', () => {
     const wrapper = shallow(<BehandlingPaVent
       behandling={behandling}
@@ -49,7 +37,6 @@ describe('<BehandlingPaVent>', () => {
       kodeverk={kodeverk}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
-      navAnsatt={navAnsatt}
     />);
 
     expect(wrapper.find(BehandlingErPaVentModal)).to.have.length(0);
@@ -65,7 +52,6 @@ describe('<BehandlingPaVent>', () => {
       kodeverk={kodeverk}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
-      navAnsatt={navAnsatt}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
@@ -84,7 +70,6 @@ describe('<BehandlingPaVent>', () => {
       kodeverk={kodeverk}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
-      navAnsatt={navAnsatt}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
@@ -116,7 +101,6 @@ describe('<BehandlingPaVent>', () => {
       kodeverk={kodeverk}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
-      navAnsatt={navAnsatt}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
@@ -138,7 +122,6 @@ describe('<BehandlingPaVent>', () => {
       kodeverk={kodeverk}
       settPaVent={settPaVentCallback}
       hentBehandling={hentBehandlingCallback}
-      navAnsatt={navAnsatt}
     />);
 
     const modal = wrapper.find(BehandlingErPaVentModal);
