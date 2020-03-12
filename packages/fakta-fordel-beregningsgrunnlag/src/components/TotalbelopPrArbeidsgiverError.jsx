@@ -54,15 +54,6 @@ export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotBeregni
   return totalInntektArbeidsforholdList;
 };
 
-const aapOgRefusjonValidering = (value) => (
-  <div key={value.key}>
-    <FormattedMessage
-      id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
-      values={{ arbeidsgiver: value.arbeidsgiverNavn, inntekt: formatCurrencyNoKr(value.beregningsgrunnlagPrAar) }}
-    />
-  </div>
-);
-
 const arbeidsforholdValidering = (value) => (
   <div key={value.key}>
     <FormattedMessage
@@ -72,6 +63,14 @@ const arbeidsforholdValidering = (value) => (
   </div>
 );
 
+const aapOgRefusjonValidering = (value) => (
+  <div key={value.key}>
+    <FormattedMessage
+      id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
+      values={{ arbeidsgiver: value.arbeidsgiverNavn, inntekt: formatCurrencyNoKr(value.beregningsgrunnlagPrAar) }}
+    />
+  </div>
+);
 
 /**
  *  TotalbelopPrArbeidsgiverError
