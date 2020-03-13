@@ -1,14 +1,66 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import moment from 'moment';
-import Modal from 'nav-frontend-modal';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import { DatepickerField, SelectField } from '@fpsak-frontend/form';
-import { SettBehandlingPaVentModal } from './SettBehandlingPaVentModal';
+import { shallow } from 'enzyme';
 
-describe('<SettBehandlingPaVentModal>', () => {
+import SettBehandlingPaVentModal from './SettBehandlingPaVentModal';
+import { SettBehandlingPaVentFormImpl } from './SettBehandlingPaVentForm';
+
+describe('<SettBehandlingPaVentForm>', () => {
+  it('skal ikke vise avbrytknapp når ingen endringer er gjort på ventefrist eller ventearsak og behandling er på vent', () => {
+    const wrapper = shallow(<SettBehandlingPaVentFormImpl
+      handleSubmit={sinon.spy()}
+      cancelEvent={sinon.spy()}
+      frist="frist"
+      originalFrist="frist"
+      showModal
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
+      isUpdateOnHold
+      hasManualPaVent
+      ventearsaker={[]}
+    />);
+
+    const ventModal = wrapper.find(SettBehandlingPaVentModal);
+    expect(ventModal.prop('showAvbryt')).to.equal(false);
+  });
+
+  it('skal vise avbrytknapp når det er gjort endringer på ventarsak eller frist', () => {
+    const wrapper = shallow(<SettBehandlingPaVentFormImpl
+      handleSubmit={sinon.spy()}
+      cancelEvent={sinon.spy()}
+      frist="fristEndret"
+      originalFrist="frist"
+      showModal
+      ventearsak="ventearsakEndret"
+      originalVentearsak="ventearsak"
+      isUpdateOnHold={false}
+      hasManualPaVent
+      ventearsaker={[]}
+    />);
+
+    const ventModal = wrapper.find(SettBehandlingPaVentModal);
+    expect(ventModal.prop('showAvbryt')).to.equal(true);
+  });
+
+  it('skal vise avbrytknapp når behandling ikke er på vent', () => {
+    const wrapper = shallow(<SettBehandlingPaVentFormImpl
+      handleSubmit={sinon.spy()}
+      cancelEvent={sinon.spy()}
+      frist="frist"
+      originalFrist="frist"
+      showModal
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
+      isUpdateOnHold={false}
+      hasManualPaVent
+      ventearsaker={[]}
+    />);
+
+    const ventModal = wrapper.find(SettBehandlingPaVentModal);
+    expect(ventModal.prop('showAvbryt')).to.equal(true);
+  });
+
   it('skal rendre åpen modal', () => {
     const cancelEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
