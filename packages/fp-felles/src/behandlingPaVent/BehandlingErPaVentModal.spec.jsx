@@ -8,7 +8,7 @@ import SettBehandlingPaVentForm from './SettBehandlingPaVentForm';
 import BehandlingErPaVentModal from './BehandlingErPaVentModal';
 
 describe('<BehandlingErPaVentModal>', () => {
-  it('skal vise form-modal når en har behandlingsid og ikke readonly', () => {
+  it('skal vise form-modal når en har behandlingsid', () => {
     const wrapper = shallowWithIntl(<BehandlingErPaVentModal.WrappedComponent
       showModal
       closeEvent={sinon.spy()}
@@ -33,22 +33,6 @@ describe('<BehandlingErPaVentModal>', () => {
       hasManualPaVent
       ventearsaker={[]}
       isReadOnly={false}
-    />);
-
-    expect(wrapper.find(SettBehandlingPaVentForm)).to.have.length(0);
-    expect(wrapper.find(Modal)).to.have.length(1);
-  });
-
-  it('skal vise readonly-modal når readonly', () => {
-    const wrapper = shallowWithIntl(<BehandlingErPaVentModal.WrappedComponent
-      showModal
-      closeEvent={sinon.spy()}
-      intl={intlMock}
-      behandlingId={1234}
-      handleOnHoldSubmit={sinon.spy()}
-      hasManualPaVent
-      ventearsaker={[]}
-      isReadOnly
     />);
 
     expect(wrapper.find(SettBehandlingPaVentForm)).to.have.length(0);
