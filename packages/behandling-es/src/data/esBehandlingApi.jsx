@@ -21,7 +21,6 @@ export const EsBehandlingApiKeys = {
   FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
-  MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
@@ -50,8 +49,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('soknad-original-behandling', EsBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
   .withRel('familiehendelse-original-behandling', EsBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withRel('beregningsresultat-engangsstonad-original-behandling', EsBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
-  .withRel('soeker-medlemskap', EsBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('soeker-medlemskap-v2', EsBehandlingApiKeys.MEDLEMSKAP_V2)
+  .withRel('soeker-medlemskap-v2', EsBehandlingApiKeys.MEDLEMSKAP)
   .withRel('inntekt-arbeid-ytelse', EsBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', EsBehandlingApiKeys.VERGE)
   .withRel('sendt-varsel-om-revurdering', EsBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)

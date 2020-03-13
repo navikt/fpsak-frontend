@@ -22,7 +22,6 @@ const MedlemskapFaktaIndex = ({
   soknad,
   inntektArbeidYtelse,
   medlemskap,
-  medlemskapV2,
   aksjonspunkter,
   harApneAksjonspunkter,
   submittable,
@@ -44,7 +43,6 @@ const MedlemskapFaktaIndex = ({
       soknad={soknad}
       inntektArbeidYtelse={inntektArbeidYtelse}
       medlemskap={medlemskap}
-      medlemskapV2={medlemskapV2}
       fagsakPerson={fagsakPerson}
       aksjonspunkter={aksjonspunkter}
       hasOpenAksjonspunkter={harApneAksjonspunkter}
@@ -62,7 +60,6 @@ const MedlemskapFaktaIndex = ({
 MedlemskapFaktaIndex.propTypes = {
   behandling: medlemskapBehandlingPropType.isRequired,
   medlemskap: medlemskapMedlemskapPropType.isRequired,
-  medlemskapV2: medlemskapMedlemskapPropType.isRequired,
   soknad: medlemskapSoknadPropType.isRequired,
   inntektArbeidYtelse: medlemskapInntektArbeidYtelsePropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(medlemskapAksjonspunkterPropType).isRequired,

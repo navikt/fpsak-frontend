@@ -57,7 +57,6 @@ const MedlemskapInfoPanel = ({
   inntektArbeidYtelse,
   alleKodeverk,
   medlemskap,
-  medlemskapV2,
   fagsakPerson,
   behandlingPaaVent,
   readOnlyBehandling,
@@ -105,7 +104,6 @@ const MedlemskapInfoPanel = ({
           behandlingType={behandlingType}
           alleKodeverk={alleKodeverk}
           medlemskap={medlemskap}
-          medlemskapV2={medlemskapV2}
           fagsakPerson={fagsakPerson}
         />
         )}
@@ -132,7 +130,6 @@ MedlemskapInfoPanel.propTypes = {
   inntektArbeidYtelse: medlemskapInntektArbeidYtelsePropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   medlemskap: medlemskapMedlemskaPropType.isRequired,
-  medlemskapV2: medlemskapMedlemskaPropType.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   readOnlyBehandling: PropTypes.bool.isRequired,
 };

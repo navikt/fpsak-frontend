@@ -237,7 +237,6 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = (
   <MedlemskapFaktaIndex
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
-    medlemskapV2={object('medlemskap', medlemskap)}
     soknad={object('soknad', soknad)}
     inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
     aksjonspunkter={[{
@@ -269,7 +268,6 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
   <MedlemskapFaktaIndex
     behandling={object('behandling', behandling)}
     medlemskap={object('medlemskap', medlemskap)}
-    medlemskapV2={object('medlemskap', medlemskap)}
     soknad={object('soknad', soknad)}
     inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
     aksjonspunkter={[{

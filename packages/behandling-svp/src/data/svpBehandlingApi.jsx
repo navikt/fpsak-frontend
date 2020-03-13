@@ -20,7 +20,6 @@ export const SvpBehandlingApiKeys = {
   SOKNAD: 'SOKNAD',
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
-  MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
@@ -52,8 +51,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('familiehendelse-v2', SvpBehandlingApiKeys.FAMILIEHENDELSE)
   .withRel('soknad', SvpBehandlingApiKeys.SOKNAD)
   .withRel('beregningsresultat-foreldrepenger-original-behandling', SvpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
-  .withRel('soeker-medlemskap', SvpBehandlingApiKeys.MEDLEMSKAP)
-  .withRel('soeker-medlemskap-v2', SvpBehandlingApiKeys.MEDLEMSKAP_V2)
+  .withRel('soeker-medlemskap-v2', SvpBehandlingApiKeys.MEDLEMSKAP)
   .withRel('uttak-periode-grense', SvpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withRel('inntekt-arbeid-ytelse', SvpBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withRel('soeker-verge', SvpBehandlingApiKeys.VERGE)
