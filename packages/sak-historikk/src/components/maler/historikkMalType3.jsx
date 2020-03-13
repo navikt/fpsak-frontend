@@ -20,7 +20,6 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]: 'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
   [aksjonspunktCodes.OMSORGSOVERTAKELSE]: 'Historikk.OmsorgOgForeldreansvarInfoPanel.Omsorg',
   [aksjonspunktCodes.TILLEGGSOPPLYSNINGER]: 'Historikk.TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
-  [aksjonspunktCodes.MEDLEMSKAP]: 'Historikk.MedlemskapInfoPanel.Medlemskap',
   [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: 'Historikk.Behandlingspunkt.Opptjeningsvilkaret',
   [aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET]: 'HistorikkEndretFeltVerdiType.ApplicationInformation',
   [aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD]: 'Historikk.RegistrerePapirSoknadAksPkt',
@@ -63,7 +62,6 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.FASTSETT_UTTAKPERIODER]: 'Historikk.Fastsett.Manuelt',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD]: 'Historikk.OpplysningerOmDod',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST]: 'Historikk.OpplysningerOmSoknadsfrist',
-  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP]: 'Historikk.OpplysningerOmMedlemskap',
   [aksjonspunktCodes.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE]: 'Historikk.OpplysningerOmKlage',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN]:
     'Historikk.OpplysningerOmFordelingStonadsperiode',

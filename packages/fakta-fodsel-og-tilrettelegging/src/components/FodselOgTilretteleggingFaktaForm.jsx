@@ -203,9 +203,9 @@ const finnOverstyrtUtbetalingsgrad = (type, stillingsprosent, stillingsprosentAr
 
   let erLikOverstyrtVerdi = type.kode === tilretteleggingType.INGEN_TILRETTELEGGING && parseFloat(overstyrtUtbetalingsgrad) === 100;
   if (type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
-    erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === finnDekningsgradForDelvisTilrettelegging(
+    erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === parseFloat(finnDekningsgradForDelvisTilrettelegging(
       stillingsprosent, stillingsprosentArbeidsforhold,
-    );
+    ));
   }
 
   if (erLikOverstyrtVerdi) {
