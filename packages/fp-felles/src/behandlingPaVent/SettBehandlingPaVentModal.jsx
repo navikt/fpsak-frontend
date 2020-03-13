@@ -150,7 +150,6 @@ SettBehandlingPaVentModal.propTypes = {
   isUpdateOnHold: PropTypes.bool,
   showAvbryt: PropTypes.bool,
   frist: PropTypes.string,
-  aksjonspunktKode: PropTypes.string,
   comment: PropTypes.element,
   ventearsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
@@ -167,7 +166,6 @@ SettBehandlingPaVentModal.defaultProps = {
   isUpdateOnHold: false,
   showAvbryt: true,
   comment: null,
-  aksjonspunktKode: null,
 };
 
 export default injectIntl(SettBehandlingPaVentModal);

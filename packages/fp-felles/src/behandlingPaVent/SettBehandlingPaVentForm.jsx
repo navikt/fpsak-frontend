@@ -35,21 +35,19 @@ export const SettBehandlingPaVentFormImpl = ({
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
   const showAvbryt = !(isUpdateOnHold && originalFrist === frist && !venteArsakHasChanged);
   return (
-    <form>
-      <SettBehandlingPaVentModal
-        showModal={showModal}
-        frist={frist}
-        showAvbryt={showAvbryt}
-        cancelEvent={cancelEvent}
-        handleSubmit={handleSubmit}
-        comment={comment}
-        isUpdateOnHold={isUpdateOnHold}
-        venteArsakHasChanged={venteArsakHasChanged}
-        fristHasChanged={fristHasChanged}
-        hasManualPaVent={hasManualPaVent}
-        ventearsaker={ventearsaker}
-      />
-    </form>
+    <SettBehandlingPaVentModal
+      showModal={showModal}
+      frist={frist}
+      showAvbryt={showAvbryt}
+      cancelEvent={cancelEvent}
+      handleSubmit={handleSubmit}
+      comment={comment}
+      isUpdateOnHold={isUpdateOnHold}
+      venteArsakHasChanged={venteArsakHasChanged}
+      fristHasChanged={fristHasChanged}
+      hasManualPaVent={hasManualPaVent}
+      ventearsaker={ventearsaker}
+    />
   );
 };
 SettBehandlingPaVentFormImpl.propTypes = {

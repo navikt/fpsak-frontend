@@ -120,11 +120,8 @@ const HistorikkMalType3 = ({
   behandlingLocation,
   intl,
   getKodeverknavn,
-<<<<<<< HEAD
   erTilbakekreving,
-=======
   createLocationForHistorikkItems,
->>>>>>> FIX div
 }) => (
   <div>
     {historikkinnslagDeler && historikkinnslagDeler.map((historikkinnslagDel, index) => (

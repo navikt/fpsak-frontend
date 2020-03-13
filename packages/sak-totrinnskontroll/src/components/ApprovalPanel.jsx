@@ -4,17 +4,12 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-<<<<<<< HEAD
-import { createLocationForHistorikkItems, skjermlenkeCodes } from '@fpsak-frontend/fp-felles';
-=======
->>>>>>> FIX div
 
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 
 import styles from './approvalPanel.less';
 
-<<<<<<< HEAD
 const sorterteSkjermlenkeCodesForTilbakekreving = [
   skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
   skjermlenkeCodes.FORELDELSE,
@@ -28,10 +23,7 @@ const sorterTilbakekrevingContext = (approvals) => (
     .filter((s) => s)
 );
 
-export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) => {
-=======
 export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForHistorikkItems) => {
->>>>>>> FIX div
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
     if (props.behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && props.totrinnskontrollSkjermlenkeContext) {

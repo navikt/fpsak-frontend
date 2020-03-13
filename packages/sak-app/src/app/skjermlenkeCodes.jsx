@@ -1,4 +1,4 @@
-import { faktaPanelCodes, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes, prosessStegCodes } from '@fpsak-frontend/fp-felles';
 
 import { getLocationWithQueryParams } from './paths';
 
@@ -6,12 +6,12 @@ const skjermlenkeCodes = {
   BEREGNING_ENGANGSSTOENAD: {
     kode: 'BEREGNING_ENGANGSSTOENAD',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.BEREGNING,
+    punktNavn: prosessStegCodes.BEREGNING,
   },
   BEREGNING_FORELDREPENGER: {
     kode: 'BEREGNING_FORELDREPENGER',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.BEREGNINGSGRUNNLAG,
+    punktNavn: prosessStegCodes.BEREGNINGSGRUNNLAG,
   },
   FAKTA_OM_ADOPSJON: {
     kode: 'FAKTA_OM_ADOPSJON',
@@ -66,78 +66,78 @@ const skjermlenkeCodes = {
   PUNKT_FOR_FORELDREANSVAR: {
     kode: 'PUNKT_FOR_FORELDREANSVAR',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   KLAGE_BEH_NFP: {
     kode: 'KLAGE_BEH_NFP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.KLAGE_NAV_FAMILIE_OG_PENSJON,
+    punktNavn: prosessStegCodes.KLAGE_NAV_FAMILIE_OG_PENSJON,
   },
   KLAGE_BEH_NK: {
     kode: 'KLAGE_BEH_NK',
     skjermlenkeId: 'Skjermlenke.Klage.ResolveKlage.Title',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.KLAGE_NAV_KLAGEINSTANS,
+    punktNavn: prosessStegCodes.KLAGE_NAV_KLAGEINSTANS,
   },
   FORMKRAV_KLAGE_NFP: {
     kode: 'FORMKRAV_KLAGE_NFP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON,
+    punktNavn: prosessStegCodes.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON,
   },
   FORMKRAV_KLAGE_KA: {
     kode: 'FORMKRAV_KLAGE_KA',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.FORMKRAV_KLAGE_NAV_KLAGEINSTANS,
+    punktNavn: prosessStegCodes.FORMKRAV_KLAGE_NAV_KLAGEINSTANS,
   },
   ANKE_VURDERING: {
     kode: 'ANKE_VURDERING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.ANKEBEHANDLING,
+    punktNavn: prosessStegCodes.ANKEBEHANDLING,
   },
   KONTROLL_AV_SAKSOPPLYSNINGER: {
     kode: 'KONTROLL_AV_SAKSOPPLYSNINGER',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.SAKSOPPLYSNINGER,
+    punktNavn: prosessStegCodes.SAKSOPPLYSNINGER,
   },
   OPPLYSNINGSPLIKT: {
     kode: 'OPPLYSNINGSPLIKT',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.OPPLYSNINGSPLIKT,
+    punktNavn: prosessStegCodes.OPPLYSNINGSPLIKT,
   },
   PUNKT_FOR_ADOPSJON: {
     kode: 'PUNKT_FOR_ADOPSJON',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_FOEDSEL: {
     kode: 'PUNKT_FOR_FOEDSEL',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_MEDLEMSKAP: {
     kode: 'PUNKT_FOR_MEDLEMSKAP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_OMSORG: {
     kode: 'PUNKT_FOR_OMSORG',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_OPPTJENING: {
     kode: 'PUNKT_FOR_OPPTJENING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   SOEKNADSFRIST: {
     kode: 'SOEKNADSFRIST',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.SOEKNADSFRIST,
+    punktNavn: prosessStegCodes.SOEKNADSFRIST,
   },
   VEDTAK: {
     kode: 'VEDTAK',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.VEDTAK,
+    punktNavn: prosessStegCodes.VEDTAK,
   },
   FAKTA_OM_UTTAK: {
     kode: 'FAKTA_OM_UTTAK',
@@ -147,7 +147,7 @@ const skjermlenkeCodes = {
   UTTAK: {
     kode: 'UTTAK',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.UTTAK,
+    punktNavn: prosessStegCodes.UTTAK,
   },
   FAKTA_OM_VERGE: {
     kode: 'FAKTA_OM_VERGE',
@@ -157,13 +157,13 @@ const skjermlenkeCodes = {
   TILKJENT_YTELSE: {
     kode: 'TILKJENT_YTELSE',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.TILKJENT_YTELSE,
+    punktNavn: prosessStegCodes.TILKJENT_YTELSE,
   },
 
   FAKTA_OM_SIMULERING: {
     kode: 'SIMULERING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.SIMULERING,
+    punktNavn: prosessStegCodes.SIMULERING,
   },
   FAKTA_OM_FEILUTBETALING: {
     kode: 'FAKTA_OM_FEILUTBETALING',
@@ -178,12 +178,12 @@ const skjermlenkeCodes = {
   FORELDELSE: {
     kode: 'FORELDELSE',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.FORELDELSE,
+    punktNavn: prosessStegCodes.FORELDELSE,
   },
   TILBAKEKREVING: {
     kode: 'TILBAKEKREVING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.TILBAKEKREVING,
+    punktNavn: prosessStegCodes.TILBAKEKREVING,
   },
   PUNKT_FOR_SVP_INNGANG: {
     kode: 'SVANGERSKAP',
@@ -193,7 +193,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_SVANGERSKAPSPENGER: {
     kode: 'SVANGERSKAP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
+    punktNavn: prosessStegCodes.INNGANGSVILKAR,
   },
   VURDER_FARESIGNALER: {
     kode: 'VURDER_FARESIGNALER',
@@ -203,7 +203,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_MEDLEMSKAP_LØPENDE: {
     kode: 'PUNKT_FOR_MEDLEMSKAP_LØPENDE',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.FORTSATTMEDLEMSKAP,
+    punktNavn: prosessStegCodes.FORTSATTMEDLEMSKAP,
   },
 };
 

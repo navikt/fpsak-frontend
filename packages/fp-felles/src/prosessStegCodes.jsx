@@ -1,5 +1,5 @@
-// Definerer alle behandlingspunktene. Desse verdien blir også vist i URL og brukt i historikk-elementene.
-const behandlingspunktCodes = {
+// Definerer alle prosess-steg. Desse verdien blir også vist i URL og brukt i historikk-elementene.
+const prosessStegCodes = {
   DEFAULT: 'default',
   INNGANGSVILKAR: 'inngangsvilkar',
   AVREGNING: 'simulering',
@@ -27,4 +27,4 @@ const behandlingspunktCodes = {
   ANKE_RESULTAT: 'ankeresultat',
 };
 
-export default behandlingspunktCodes;
+export default prosessStegCodes;
