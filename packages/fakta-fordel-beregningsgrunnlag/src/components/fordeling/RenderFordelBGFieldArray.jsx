@@ -436,7 +436,8 @@ RenderFordelBGFieldArrayImpl.propTypes = {
 
 const RenderFordelBGFieldArray = injectIntl(RenderFordelBGFieldArrayImpl);
 
-RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, grunnbeløp, periodeDato) => {
+RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn,
+  grunnbeløp, periodeDato, skalValidereRefusjon) => {
   const fieldErrors = validateAndeler(values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, periodeDato);
   if (fieldErrors != null) {
     return fieldErrors;
@@ -452,13 +453,15 @@ RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregni
   if (fastsattForUgraderteAktiviteterError) {
     return { _error: <FormattedMessage id={fastsattForUgraderteAktiviteterError[0].id} values={fastsattForUgraderteAktiviteterError[1]} /> };
   }
-  const totalRefusjonError = validateSumRefusjon(values, grunnbeløp);
-  if (totalRefusjonError) {
-    return { _error: <FormattedMessage id={totalRefusjonError[0].id} values={totalRefusjonError[1]} /> };
-  }
-  const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(values, getKodeverknavn);
-  if (refusjonPrArbeidsforholdError) {
-    return { _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} /> };
+  if (skalValidereRefusjon) {
+    const totalRefusjonError = validateSumRefusjon(values, grunnbeløp);
+    if (totalRefusjonError) {
+      return { _error: <FormattedMessage id={totalRefusjonError[0].id} values={totalRefusjonError[1]} /> };
+    }
+    const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(values, getKodeverknavn);
+    if (refusjonPrArbeidsforholdError) {
+      return { _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} /> };
+    }
   }
   if (sumIPeriode !== undefined && sumIPeriode !== null && values.some((andel) => andel.harPeriodeAarsakGraderingEllerRefusjon === true)) {
     const fastsattBelopError = validateSumFastsattBelop(values, sumIPeriode);

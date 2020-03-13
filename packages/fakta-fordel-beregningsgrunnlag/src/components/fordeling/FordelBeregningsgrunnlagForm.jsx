@@ -147,9 +147,10 @@ FordelBeregningsgrunnlagForm.validate = (values, fordelBGPerioder, beregningsgru
     for (let i = 0; i < perioderSlattSammen.length; i += 1) {
       const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, perioderSlattSammen[i].fom);
       const periode = values[getFieldNameKey(i)];
+      const skalValidereRefusjon = periode && periode.skalKunneEndreRefusjon;
       const periodeDato = { fom: perioderSlattSammen[i], tom: perioderSlattSammen[i] };
       errors[getFieldNameKey(i)] = FordelBeregningsgrunnlagPeriodePanel.validate(periode, sumIPeriode,
-        skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, grunnbeløp, periodeDato);
+        skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, grunnbeløp, periodeDato, skalValidereRefusjon);
     }
   }
   return errors;
