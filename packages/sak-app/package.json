@@ -15,7 +15,7 @@
     "@fpsak-frontend/behandling-svp": "1.0.0",
     "@fpsak-frontend/behandling-tilbakekreving": "1.0.0",
     "@fpsak-frontend/error-api-redux": "1.0.0",
-    "@fpsak-frontend/fp-felles": "1.0.0",
+    "@fpsak-frontend/konstanter": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/rest-api": "1.0.0",

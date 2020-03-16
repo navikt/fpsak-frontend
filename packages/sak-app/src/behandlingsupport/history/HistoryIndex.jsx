@@ -7,11 +7,10 @@ import moment from 'moment';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
-import { pathToBehandling } from '../../app/paths';
+import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
 import DataFetcher from '../../app/DataFetcher';
 import ApplicationContextPath from '../../behandling/ApplicationContextPath';
 import { getEnabledApplicationContexts } from '../../app/duck';
-import { createLocationForHistorikkItems } from '../../app/skjermlenkeCodes';
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
@@ -70,7 +69,7 @@ export const HistoryIndex = ({
             saksnummer={saksnummer}
             alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
             getBehandlingLocation={getBehandlingLocation}
-            createLocationForHistorikkItems={createLocationForHistorikkItems}
+            createLocationForSkjermlenke={createLocationForSkjermlenke}
           />
         ))}
     />

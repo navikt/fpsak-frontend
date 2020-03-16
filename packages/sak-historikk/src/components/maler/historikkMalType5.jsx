@@ -86,7 +86,7 @@ const HistorikkMalType5 = ({
   intl,
   saksNr,
   getKodeverknavn,
-  createLocationForHistorikkItems,
+  createLocationForSkjermlenke,
 }) => {
   const lageElementInnhold = (historikkDel) => {
     const list = [];
@@ -169,7 +169,7 @@ const HistorikkMalType5 = ({
         && (
           <Element>
             <NavLink
-              to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+              to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
               onClick={scrollUp}
             >
               {getKodeverknavn(historikkinnslagDel.skjermlenke)}
@@ -230,7 +230,7 @@ HistorikkMalType5.propTypes = {
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 

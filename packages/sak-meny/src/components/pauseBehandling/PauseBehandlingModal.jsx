@@ -9,10 +9,15 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+import {
+  ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
+} from '@fpsak-frontend/utils';
+
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import styles from './settBehandlingPaVentModalForm.less';
+import styles from './pauseBehandlingModal.less';
 
 const initFrist = () => {
   const date = moment().toDate();
@@ -20,22 +25,13 @@ const initFrist = () => {
   return date.toISOString().substr(0, 10);
 };
 
-const getFristValidationRules = (isUpdateOnHold) => (isUpdateOnHold ? [required, hasValidDate] : [required, hasValidDate, dateAfterOrEqualToToday]);
-
-const isButtonDisabled = (frist, showAvbryt, venteArsakHasChanged, fristHasChanged, hasManualPaVent) => {
+const isButtonDisabled = (frist, venteArsakHasChanged, fristHasChanged) => {
   const dateNotValid = hasValidDate(frist) !== null || dateAfterOrEqualToToday(frist) !== null;
-  const defaultOptions = (!hasManualPaVent || showAvbryt) && (!venteArsakHasChanged && !fristHasChanged);
+  const defaultOptions = !venteArsakHasChanged && !fristHasChanged;
   return defaultOptions || dateNotValid;
 };
 
 const hovedKnappenType = (venteArsakHasChanged, fristHasChanged) => venteArsakHasChanged || fristHasChanged;
-
-const getPaVentText = (isUpdateOnHold, hasManualPaVent, frist) => {
-  if (!isUpdateOnHold) {
-    return 'SettBehandlingPaVentModal.SettesPaVent';
-  }
-  return hasManualPaVent || frist ? 'SettBehandlingPaVentModal.ErPaVent' : 'SettBehandlingPaVentModal.ErPaVentUtenFrist';
-};
 
 /**
  * SettBehandlingPaVentForm
@@ -43,7 +39,8 @@ const getPaVentText = (isUpdateOnHold, hasManualPaVent, frist) => {
  * Presentasjonskomponent. Denne formen gjenbruker settBehandlingPaVentModal. Bruk denne komponenten som en wrapper for
  * settBehandlingPaVentModal hvis du ikke har noen ytre form.
  */
-export const SettBehandlingPaVentFormImpl = ({
+export const PauseBehandlingModal = ({
+  intl,
   handleSubmit,
   cancelEvent,
   showModal,
@@ -51,14 +48,10 @@ export const SettBehandlingPaVentFormImpl = ({
   originalFrist,
   ventearsak,
   originalVentearsak,
-  comment,
-  isUpdateOnHold,
-  hasManualPaVent,
   ventearsaker,
 }) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
-  const showAvbryt = !(isUpdateOnHold && originalFrist === frist && !venteArsakHasChanged);
   return (
     <Modal
       className={styles.modal}
@@ -79,20 +72,18 @@ export const SettBehandlingPaVentFormImpl = ({
             <Column xs="7">
               <div className={styles.label}>
                 <Normaltekst className={styles.label}>
-                  <FormattedMessage id={getPaVentText(isUpdateOnHold, hasManualPaVent, frist)} />
+                  <FormattedMessage id="SettBehandlingPaVentModal.SettesPaVent" />
                 </Normaltekst>
               </div>
             </Column>
-            {(hasManualPaVent || frist) && (
             <Column xs="2">
               <div className={styles.datePicker}>
                 <DatepickerField
                   name="frist"
-                  validate={getFristValidationRules(isUpdateOnHold)}
+                  validate={[required, hasValidDate, dateAfterOrEqualToToday]}
                 />
               </div>
             </Column>
-            )}
           </Row>
           <Row className={styles.marginTop}>
             <Column xs="1" />
@@ -105,14 +96,7 @@ export const SettBehandlingPaVentFormImpl = ({
                 selectValues={ventearsaker.sort((v1, v2) => v1.navn.localeCompare(v2.navn))
                   .map((va) => <option key={va.kode} value={va.kode}>{va.navn}</option>)}
                 bredde="xxl"
-                readOnly={!hasManualPaVent}
               />
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="1" />
-            <Column xs="11">
-              {hasManualPaVent && comment}
             </Column>
           </Row>
           <VerticalSpacer eightPx />
@@ -123,21 +107,19 @@ export const SettBehandlingPaVentFormImpl = ({
                 mini
                 htmlType={hovedKnappenType(venteArsakHasChanged, fristHasChanged) ? 'submit' : 'button'}
                 className={styles.button}
-                onClick={showAvbryt ? ariaCheck : cancelEvent}
-                disabled={isButtonDisabled(frist, showAvbryt, venteArsakHasChanged, fristHasChanged, hasManualPaVent)}
+                onClick={ariaCheck}
+                disabled={isButtonDisabled(frist, venteArsakHasChanged, fristHasChanged)}
               >
                 {intl.formatMessage({ id: 'SettBehandlingPaVentModal.Ok' })}
               </Hovedknapp>
-              {(!hasManualPaVent || showAvbryt) && (
               <Knapp
                 htmlType="button"
                 mini
                 onClick={cancelEvent}
                 className={styles.cancelButton}
               >
-                {intl.formatMessage({ id: hasManualPaVent ? 'SettBehandlingPaVentModal.Avbryt' : 'SettBehandlingPaVentModal.Lukk' })}
+                {intl.formatMessage({ id: 'SettBehandlingPaVentModal.Avbryt' })}
               </Knapp>
-              )}
             </Column>
           </Row>
         </form>
@@ -145,7 +127,7 @@ export const SettBehandlingPaVentFormImpl = ({
     </Modal>
   );
 };
-SettBehandlingPaVentFormImpl.propTypes = {
+PauseBehandlingModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
@@ -153,27 +135,23 @@ SettBehandlingPaVentFormImpl.propTypes = {
   originalVentearsak: PropTypes.string,
   frist: PropTypes.string,
   originalFrist: PropTypes.string,
-  isUpdateOnHold: PropTypes.bool,
-  comment: PropTypes.element,
-  hasManualPaVent: PropTypes.bool.isRequired,
+  intl: PropTypes.shape().isRequired,
   ventearsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,
   })).isRequired,
 };
 
-SettBehandlingPaVentFormImpl.defaultProps = {
+PauseBehandlingModal.defaultProps = {
   frist: null,
   originalFrist: null,
   ventearsak: null,
   originalVentearsak: null,
-  comment: null,
-  isUpdateOnHold: false,
 };
 
 const buildInitialValues = (initialProps) => ({
   ventearsak: initialProps.ventearsak,
-  frist: initialProps.frist || !initialProps.hasManualPaVent ? initialProps.frist : initFrist(),
+  frist: initFrist(),
 });
 
 const mapStateToProps = (state, initialProps) => ({
@@ -187,4 +165,4 @@ const mapStateToProps = (state, initialProps) => ({
 export default connect(mapStateToProps)(reduxForm({
   form: 'settBehandlingModalForm',
   enableReinitialize: true,
-})(injectIntl(SettBehandlingPaVentFormImpl)));
+})(injectIntl(PauseBehandlingModal)));

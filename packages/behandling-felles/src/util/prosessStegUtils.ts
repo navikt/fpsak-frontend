@@ -5,10 +5,9 @@ import { StepType } from '@navikt/nap-process-menu/dist/Step';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { allAccessRights } from '@fpsak-frontend/fp-felles';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import {
-  Behandling, NavAnsatt, Aksjonspunkt, Vilkar,
+  Behandling, Aksjonspunkt, Vilkar,
 } from '@fpsak-frontend/types';
 
 import ProsessStegDefinisjon, { ProsessStegPanelDefinisjon } from '../types/prosessStegDefinisjonTsType';
@@ -147,15 +146,14 @@ export const utledProsessStegPaneler = (
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
   overstyrteAksjonspunktKoder: string[],
   fagsak: FagsakInfo,
-  navAnsatt: NavAnsatt,
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
+  rettigheter,
   hasFetchError: boolean,
 ) => {
-  const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
   const isReadOnlyCheck = (aksjonspunkterForSteg, vilkarForSteg) => readOnlyUtils.erReadOnly(
-    behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError,
+    behandling, aksjonspunkterForSteg, vilkarForSteg, rettigheter, hasFetchError,
   );
 
   const dataForUtleding = {

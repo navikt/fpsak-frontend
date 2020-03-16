@@ -1,4 +1,5 @@
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
+import { skjermlenkeCodes } from '@fpsak-frontend/konstanter';
 
 const FPSAK = 'fpsak';
 const FPLOS = 'fplos';
@@ -42,4 +43,9 @@ export const getLocationWithDefaultProsessStegAndFakta = (location) => (
 export const getPathToFplos = (href) => {
   const hostAndContextPath = href.substr(0, href.lastIndexOf(FPSAK) + FPSAK.length);
   return hostAndContextPath.replace(new RegExp(FPSAK, 'g'), FPLOS);
+};
+
+export const createLocationForSkjermlenke = (behandlingLocation, skjermlenkeCode) => {
+  const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
+  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };

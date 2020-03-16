@@ -8,7 +8,7 @@ import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/u
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import {
   AvklareAktiviteterPanelImpl,
   BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,

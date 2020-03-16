@@ -99,7 +99,7 @@ const History = ({
   saksNr,
   getBehandlingLocation,
   getKodeverknavn,
-  createLocationForHistorikkItems,
+  createLocationForSkjermlenke,
 }) => {
   const HistorikkMal = velgHistorikkMal(historieInnslag.type);
   const aktorIsVL = historieInnslag.aktoer.kode === 'VL';
@@ -124,7 +124,7 @@ const History = ({
         saksNr={saksNr}
         getKodeverknavn={getKodeverknavn}
         erTilbakekreving={historieInnslag.erTilbakekreving}
-        createLocationForHistorikkItems={createLocationForHistorikkItems}
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
     </Snakkeboble>
   );
@@ -135,7 +135,7 @@ History.propTypes = {
   saksNr: PropTypes.number,
   getBehandlingLocation: PropTypes.func.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 History.defaultProps = {

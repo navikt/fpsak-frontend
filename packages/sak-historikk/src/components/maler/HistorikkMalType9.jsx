@@ -14,7 +14,7 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 import styles from './historikkMalType.less';
 
 export const HistorikkMalType9 = ({
-  historikkinnslagDeler, behandlingLocation, originType, intl, getKodeverknavn, createLocationForHistorikkItems,
+  historikkinnslagDeler, behandlingLocation, originType, intl, getKodeverknavn, createLocationForSkjermlenke,
 }) => {
   const getSplitPeriods = (endredeFelter) => {
     let text = '';
@@ -41,7 +41,7 @@ export const HistorikkMalType9 = ({
             {historikkinnslagDel.skjermlenke
             && (
               <Element>
-                <NavLink to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}>
+                <NavLink to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}>
                   {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
                 </NavLink>
               </Element>
@@ -99,7 +99,7 @@ HistorikkMalType9.propTypes = {
   intl: PropTypes.shape().isRequired,
   originType: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType9);

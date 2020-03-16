@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
@@ -12,8 +10,8 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
-import { SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 
+import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
 import DataFetcher from '../../app/DataFetcher';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
@@ -173,13 +171,11 @@ export class MessagesIndex extends Component {
         />
 
         {submitFinished && showSettPaVentModal && (
-          <SettBehandlingPaVentForm
+          <MessageBehandlingPaVentModal
             showModal={submitFinished && showSettPaVentModal}
             cancelEvent={this.hideSettPaVentModal}
-            comment={<Normaltekst><FormattedMessage id="Messages.BrevErBestilt" /></Normaltekst>}
             onSubmit={this.handleSubmitFromModal}
             ventearsak={venteArsakType.AVV_DOK}
-            hasManualPaVent
             ventearsaker={ventearsaker}
           />
         )}

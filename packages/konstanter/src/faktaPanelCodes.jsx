@@ -1,4 +1,4 @@
-// Definerer koder for alle fakta-penelene.
+// Definerer koder for alle fakta-penelene. Desse verdien blir vist i URL og brukt i historikk-elementene.
 const faktaPanelCodes = {
   ADOPSJONSVILKARET: 'adopsjonsvilkaaret',
   ARBEIDSFORHOLD: 'arbeidsforhold',

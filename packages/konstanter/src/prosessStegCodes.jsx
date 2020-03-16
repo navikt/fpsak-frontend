@@ -1,4 +1,4 @@
-// Definerer alle prosess-steg. Desse verdien blir også vist i URL og brukt i historikk-elementene.
+// Definerer alle prosess-steg. Desse verdien blir vist i URL og brukt i historikk-elementene.
 const prosessStegCodes = {
   DEFAULT: 'default',
   INNGANGSVILKAR: 'inngangsvilkar',

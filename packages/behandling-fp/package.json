@@ -16,7 +16,7 @@
     "@fpsak-frontend/fakta-tilleggsopplysninger": "1.0.0",
     "@fpsak-frontend/fakta-verge": "1.0.0",
     "@fpsak-frontend/fakta-ytelser": "1.0.0",
-    "@fpsak-frontend/fp-felles": "1.0.0",
+    "@fpsak-frontend/konstanter": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/prosess-avregning": "1.0.0",
     "@fpsak-frontend/prosess-beregningsresultat": "1.0.0",

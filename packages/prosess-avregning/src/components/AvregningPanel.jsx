@@ -11,7 +11,7 @@ import {
 } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { featureToggle } from '@fpsak-frontend/fp-felles';
+import { featureToggle } from '@fpsak-frontend/konstanter';
 import {
   RadioGroupField, RadioOption, TextAreaField, getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector,
 } from '@fpsak-frontend/form';

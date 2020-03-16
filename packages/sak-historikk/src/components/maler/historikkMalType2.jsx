@@ -16,14 +16,14 @@ const HistorikkMalType2 = ({
   behandlingLocation,
   intl,
   getKodeverknavn,
-  createLocationForHistorikkItems,
+  createLocationForSkjermlenke,
 }) => (
   <div>
     {historikkinnslagDeler[0].skjermlenke
     && (
     <Element className="snakkeboble-panel__tekst">
       <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+        to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
         onClick={scrollUp}
       >
         {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
@@ -45,7 +45,7 @@ HistorikkMalType2.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
 };
 

@@ -12,7 +12,7 @@ import BubbleText from './felles/bubbleText';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const HistorikkMalType8 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn, createLocationForHistorikkItems,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn, createLocationForSkjermlenke,
 }) => {
   const formatChangedField = (endretFelt) => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
@@ -59,7 +59,7 @@ const HistorikkMalType8 = ({
           && (
             <Element>
               <NavLink
-                to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
               >
                 {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
               </NavLink>
@@ -107,7 +107,7 @@ HistorikkMalType8.propTypes = {
   intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType8);

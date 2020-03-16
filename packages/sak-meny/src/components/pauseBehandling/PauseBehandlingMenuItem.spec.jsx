@@ -5,7 +5,7 @@ import { expect } from 'chai';
 import moment from 'moment';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import { SettBehandlingPaVentForm } from '@fpsak-frontend/konstanter';
 
 import MenuButton from '../MenuButton';
 import PauseBehandlingMenuItem from './PauseBehandlingMenuItem';

@@ -7,11 +7,9 @@ import { Dispatch } from 'redux';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, prosessStegHooks, FatterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
+  FagsakInfo, prosessStegHooks, FatterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { Kodeverk, Behandling } from '@fpsak-frontend/types';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegTilbakekrevingPanelDefinisjoner';
@@ -24,7 +22,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -60,7 +58,7 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps>
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   hasFetchError,
   oppdaterBehandlingVersjon,
@@ -77,7 +75,7 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps>
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvTilbakekrevingPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, [], hasFetchError, intl, valgtProsessSteg);
+    dataTilUtledingAvTilbakekrevingPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, [], hasFetchError, intl, valgtProsessSteg);
 
   const [visApenRevurderingModal, toggleApenRevurderingModal] = useState(harApenRevurdering);
   const lukkApenRevurderingModal = useCallback(() => toggleApenRevurderingModal(false), []);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { skjermlenkeCodes } from '@fpsak-frontend/konstanter';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import ToTrinnsForm from './ToTrinnsForm';
@@ -23,7 +24,7 @@ const sorterTilbakekrevingContext = (approvals) => (
     .filter((s) => s)
 );
 
-export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForHistorikkItems) => {
+export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke) => {
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
     if (props.behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && props.totrinnskontrollSkjermlenkeContext) {
@@ -37,7 +38,7 @@ export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, c
         const skjermlenkeTypeKodeverk = skjemalenkeTyper.find((skjemalenkeType) => skjemalenkeType.kode === context.skjermlenkeType);
         return {
           contextCode: context.skjermlenkeType,
-          skjermlenke: createLocationForHistorikkItems(props.location, context.skjermlenkeType),
+          skjermlenke: createLocationForSkjermlenke(props.location, context.skjermlenkeType),
           skjermlenkeNavn: skjermlenkeTypeKodeverk.navn,
           aksjonspunkter: context.totrinnskontrollAksjonspunkter,
         };
@@ -65,12 +66,12 @@ export class ApprovalPanel extends Component {
     };
 
     const {
-      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper, createLocationForHistorikkItems,
+      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper, createLocationForSkjermlenke,
     } = props;
     if (totrinnskontrollSkjermlenkeContext || totrinnskontrollReadOnlySkjermlenkeContext) {
       this.state = {
         ...this.state,
-        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper, createLocationForHistorikkItems),
+        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke),
       };
     }
   }
@@ -188,7 +189,7 @@ ApprovalPanel.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   erTilbakekreving: PropTypes.bool,
 };
 

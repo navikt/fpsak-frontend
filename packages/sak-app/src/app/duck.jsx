@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
-import { featureToggle } from '@fpsak-frontend/fp-felles';
+import { featureToggle } from '@fpsak-frontend/konstanter';
 
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import fpsakApi from '../data/fpsakApi';

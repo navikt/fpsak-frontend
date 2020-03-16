@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 
+import PauseBehandlingModal from './PauseBehandlingModal';
 import MenuButton from '../MenuButton';
 import MenyKodeverk from '../../MenyKodeverk';
 
@@ -68,11 +68,10 @@ class PauseBehandlingMenuItem extends Component {
           <FormattedMessage id="Behandlingsmeny.BehandlingOnHold" />
         </MenuButton>
         {showModal && (
-          <SettBehandlingPaVentForm
+          <PauseBehandlingModal
             showModal={showModal}
             onSubmit={this.submit}
             cancelEvent={this.hideModal}
-            hasManualPaVent
             ventearsaker={ventearsaker}
           />
         )}

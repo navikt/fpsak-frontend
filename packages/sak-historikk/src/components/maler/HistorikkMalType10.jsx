@@ -17,7 +17,7 @@ const scrollUp = () => {
 };
 
 const HistorikkMalType10 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr, getKodeverknavn, createLocationForHistorikkItems,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr, getKodeverknavn, createLocationForSkjermlenke,
 }) => {
   const historikkFromToValues = (endretFelt, fieldName) => {
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl);
@@ -112,7 +112,7 @@ const HistorikkMalType10 = ({
         && (
         <Element>
           <NavLink
-            to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+            to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
             onClick={scrollUp}
           >
             {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
@@ -173,7 +173,7 @@ HistorikkMalType10.propTypes = {
   originType: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType10);

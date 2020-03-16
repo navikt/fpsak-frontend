@@ -1,18 +1,14 @@
 import React, {
   useState, useMemo, useCallback, FunctionComponent, useEffect,
 } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
 import { Behandling, Aksjonspunkt, Kodeverk } from '@fpsak-frontend/types';
-import {
-  Behandling, Aksjonspunkt, Kodeverk, NavAnsatt,
-} from '@fpsak-frontend/types';
-
-import BehandlingErPaVentModal from './BehandlingErPaVentModal';
-import SettPaVentParams from '../types/settPaVentParamsTsType';
+import BehandlingPaVentModal from './BehandlingPaVentModal';
+import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
@@ -22,7 +18,7 @@ interface BehandlingPaVentProps {
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
 }
 
-const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
+const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps & WrappedComponentProps> = ({
   behandling,
   aksjonspunkter,
   kodeverk,
@@ -48,17 +44,15 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
   }
 
   return (
-    <BehandlingErPaVentModal
-      showModal
-      closeEvent={skjulModal}
-      behandlingId={behandling.id}
-      fristBehandlingPaaVent={behandling.fristBehandlingPaaVent}
-      venteArsakKode={behandling.venteArsakKode}
-      handleOnHoldSubmit={oppdaterPaVentData}
+    <BehandlingPaVentModal
+      onSubmit={oppdaterPaVentData}
+      cancelEvent={skjulModal}
+      frist={behandling.fristBehandlingPaaVent}
+      ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
     />
   );
 };
 
-export default BehandlingPaVent;
+export default injectIntl(BehandlingPaVent);

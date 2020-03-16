@@ -21,7 +21,7 @@ const HistorikkSakIndex = ({
   saksnummer,
   getBehandlingLocation,
   alleKodeverk,
-  createLocationForHistorikkItems,
+  createLocationForSkjermlenke,
 }) => (
   <RawIntlProvider value={intl}>
     <History
@@ -29,7 +29,7 @@ const HistorikkSakIndex = ({
       saksNr={saksnummer}
       getBehandlingLocation={getBehandlingLocation}
       getKodeverknavn={getKodeverknavnFn(alleKodeverk, kodeverkTyper)}
-      createLocationForHistorikkItems={createLocationForHistorikkItems}
+      createLocationForSkjermlenke={createLocationForSkjermlenke}
     />
   </RawIntlProvider>
 );
@@ -39,7 +39,7 @@ HistorikkSakIndex.propTypes = {
   saksnummer: PropTypes.number,
   getBehandlingLocation: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  createLocationForHistorikkItems: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkSakIndex;

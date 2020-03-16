@@ -1,5 +1,5 @@
 export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
-export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
+export { default as BehandlingPaVent } from './src/components/paVent/BehandlingPaVent';
 export { default as ProsessStegContainer } from './src/components/ProsessStegContainer';
 export { default as MargMarkering } from './src/components/MargMarkering';
 export { default as FaktaPanel } from './src/components/FaktaPanel';
@@ -16,4 +16,5 @@ export { default as faktaHooks } from './src/util/faktaHooks';
 export { default as prosessStegHooks } from './src/util/prosessStegHooks';
 
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
+export { default as Rettigheter } from './src/types/rettigheterTsType';
 export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';

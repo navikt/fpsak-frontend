@@ -1,3 +1,5 @@
+const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+
 const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
   if (!aktivitet.arbeidsgiverNavn) {
     return aktivitet.arbeidsforholdType ? getKodeverknavn(aktivitet.arbeidsforholdType) : '';

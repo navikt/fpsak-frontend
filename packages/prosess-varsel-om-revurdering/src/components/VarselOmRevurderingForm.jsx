@@ -252,7 +252,7 @@ const nullSafe = (value) => (value || {});
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const {
-    behandlingId, behandlingVersjon, behandlingType, behandlingArsaker, aksjonspunkter, submitCallback, sprakkode, ventearsak, frist, familiehendelse,
+    behandlingId, behandlingVersjon, behandlingType, behandlingArsaker, aksjonspunkter, submitCallback, sprakkode, familiehendelse,
   } = ownProps;
   const onSubmit = (values) => submitCallback([values]);
   const erAutomatiskRevurdering = behandlingArsaker.reduce((result, current) => (result || current.erAutomatiskRevurdering), false);

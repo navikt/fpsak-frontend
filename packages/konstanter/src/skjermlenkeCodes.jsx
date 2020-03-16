@@ -1,6 +1,5 @@
-import { faktaPanelCodes, prosessStegCodes } from '@fpsak-frontend/fp-felles';
-
-import { getLocationWithQueryParams } from './paths';
+import faktaPanelCodes from './faktaPanelCodes';
+import prosessStegCodes from './prosessStegCodes';
 
 const skjermlenkeCodes = {
   BEREGNING_ENGANGSSTOENAD: {
@@ -205,11 +204,6 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: prosessStegCodes.FORTSATTMEDLEMSKAP,
   },
-};
-
-export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
-  const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
-  return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };
 
 export default skjermlenkeCodes;

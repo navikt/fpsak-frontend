@@ -41,9 +41,9 @@ export const kanOverstyreAccess = accessSelector(
   [behandlingStatusCode.BEHANDLING_UTREDES],
 );
 
-const allAccessRights = (navAnsatt, fagsakStatus, behandlingStatus, behandlingType) => ({
+const getAccessRights = (navAnsatt, fagsakStatus, behandlingStatus, behandlingType) => ({
   writeAccess: writeAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
 });
 
-export default allAccessRights;
+export default getAccessRights;
