@@ -44,7 +44,8 @@ const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/b
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/behandling-papirsoknad'));
 
-const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
+const erTilbakekreving = (behandlingTypeKode) => behandlingTypeKode === BehandlingType.TILBAKEKREVING
+  || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
 const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
 /**
@@ -58,7 +59,7 @@ const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCas
 export class BehandlingIndex extends Component {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
-    behandlingType: PropTypes.string.isRequired,
+    behandlingTypeKode: PropTypes.string.isRequired,
     behandlingVersjon: PropTypes.number.isRequired,
     location: PropTypes.shape().isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
@@ -158,7 +159,7 @@ export class BehandlingIndex extends Component {
   render() {
     const {
       behandlingId,
-      behandlingType,
+      behandlingTypeKode,
       location,
       oppdaterBehandlingVersjon,
       erAktivPapirsoknad,
@@ -194,7 +195,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
+    if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -207,7 +208,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.KLAGE) {
+    if (behandlingTypeKode === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -221,7 +222,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.ANKE) {
+    if (behandlingTypeKode === BehandlingType.ANKE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -235,7 +236,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (erTilbakekreving(behandlingType)) {
+    if (erTilbakekreving(behandlingTypeKode)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -315,16 +316,18 @@ export const getFagsakInfo = createSelector([
 
 const getRettigheter = createSelector([getNavAnsatt, getSelectedFagsakStatus, getUrlBehandlingId, getBehandlingerStatusMappedById,
   getBehandlingerTypesMappedById],
-(navAnsatt, selectedFagsakStatus, behandlingId, behandlingerStatusMappedById, behandlingerTypesMappedById) => getAccessRights(
-  navAnsatt, selectedFagsakStatus, behandlingerStatusMappedById[behandlingId], behandlingerTypesMappedById[behandlingId],
-));
+(navAnsatt, selectedFagsakStatus, behandlingId, behandlingerStatusMappedById, behandlingerTypesMappedById) => {
+  const status = behandlingerStatusMappedById[behandlingId];
+  const type = behandlingerTypesMappedById[behandlingId];
+  return getAccessRights(navAnsatt, selectedFagsakStatus, status, type);
+});
 
 const mapStateToProps = (state) => {
   const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
   return {
     behandlingId,
-    behandlingType,
+    behandlingTypeKode: behandlingType ? behandlingType.kode : undefined,
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
@@ -351,4 +354,4 @@ export default trackRouteParam({
   paramPropType: PropTypes.number,
   storeParam: setUrlBehandlingId,
   getParamFromStore: getUrlBehandlingId,
-})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingTypeKode'])(BehandlingIndex)));

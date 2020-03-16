@@ -219,7 +219,7 @@ const mapStateToProps = (state) => ({
   ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
   revurderingVarslingArsak: getKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK)(state),
   behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
-  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId],
+  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId].kode,
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 
