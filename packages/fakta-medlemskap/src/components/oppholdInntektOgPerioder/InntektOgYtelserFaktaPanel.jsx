@@ -30,7 +30,7 @@ const InntektOgYtelserFaktaPanelImpl = ({ inntekter, intl }) => {
     return (
       <Ekspanderbartpanel
         tittel={intl.formatMessage({ id: 'InntektOgYtelserFaktaPanel.ApplicationInformation' })}
-        tittelProps="element"
+        tittelprops="element"
         border
       >
         <Normaltekst>
@@ -43,7 +43,7 @@ const InntektOgYtelserFaktaPanelImpl = ({ inntekter, intl }) => {
   return (
     <Ekspanderbartpanel
       tittel={intl.formatMessage({ id: 'InntektOgYtelserFaktaPanel.ApplicationInformation' })}
-      tittelProps="element"
+      tittelprops="element"
       border
     >
       <Table headerTextCodes={headerTextCodes}>

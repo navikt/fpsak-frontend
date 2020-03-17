@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
@@ -136,8 +135,6 @@ describe('<AdopsjonInfoPanel>', () => {
       initialValues={{ begrunnelse: 'test' }}
       intl={intlMock}
       aksjonspunkter={[adopsjonAksjonspunkt, ektefellesBarnAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly

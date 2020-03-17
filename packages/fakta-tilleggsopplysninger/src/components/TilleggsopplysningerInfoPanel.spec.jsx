@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { TilleggsopplysningerInfoPanel } from './TilleggsopplysningerInfoPanel';
@@ -13,8 +12,6 @@ describe('<TilleggsopplysningerInfoPanel>', () => {
     const wrapper = shallowWithIntl(<TilleggsopplysningerInfoPanel
       {...reduxFormPropsMock}
       intl={intlMock}
-      openInfoPanels={['tilleggsopplysninger']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       readOnly={false}
       behandlingId={1}
@@ -31,8 +28,6 @@ describe('<TilleggsopplysningerInfoPanel>', () => {
     const wrapper = shallowWithIntl(<TilleggsopplysningerInfoPanel
       {...reduxFormPropsMock}
       intl={intlMock}
-      openInfoPanels={['tilleggsopplysninger']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       readOnly={false}
       behandlingId={1}
@@ -47,8 +42,6 @@ describe('<TilleggsopplysningerInfoPanel>', () => {
     const wrapper = shallowWithIntl(<TilleggsopplysningerInfoPanel
       {...reduxFormPropsMock}
       intl={intlMock}
-      openInfoPanels={['tilleggsopplysninger']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       readOnly
       behandlingId={1}

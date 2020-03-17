@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
   const behandlingId = getSelectedBehandlingId(state);
   const behandlingStatus = getBehandlingerStatusMappedById(state)[behandlingId];
   const bType = getBehandlingerTypesMappedById(state)[behandlingId];
-  const isInnsyn = bType && bType.kode === behandlingType.DOKUMENTINNSYN;
+  const isInnsyn = !!bType && bType.kode === behandlingType.DOKUMENTINNSYN;
 
   const blockers = [];
   if (behandlingStatus && behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK) {
