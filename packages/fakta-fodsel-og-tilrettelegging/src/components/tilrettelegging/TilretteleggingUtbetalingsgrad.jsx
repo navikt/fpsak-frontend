@@ -15,7 +15,7 @@ import endreDisabletImage from '@fpsak-frontend/assets/images/endre_disablet.svg
 import styles from './tilretteleggingFieldArray.less';
 
 const maxValue100 = maxValue(100);
-const minValue0 = minValue(0);
+const minValue1 = minValue(1);
 
 const TilretteleggingUtbetalingsgrad = ({
   intl,
@@ -39,7 +39,7 @@ const TilretteleggingUtbetalingsgrad = ({
           name={`${fieldId}.overstyrtUtbetalingsgrad`}
           label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Utbetalingsgrad' })}
           readOnly={erReadOnly}
-          validate={[required, minValue0, maxValue100, hasValidDecimal]}
+          validate={[required, minValue1, maxValue100, hasValidDecimal]}
           normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           alignRightCenterOnReadOnly
         />
