@@ -379,7 +379,7 @@ describe('<RenderFordelBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderFordelBGFieldArray.validate(values, 100000,
-      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, 97000, undefined, true);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(expected[0].id);
@@ -402,7 +402,7 @@ describe('<RenderFordelBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderFordelBGFieldArray.validate(values, 100000,
-      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, 97000, undefined, true);
     const expected = skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverstring);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(errors._error.props.id).to.equal(expected[0].id);

@@ -15,6 +15,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   kodeverk: {[key: string]: Kodeverk[]};
+  fpsakKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -31,6 +32,7 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
   fagsak,
   behandling,
   kodeverk,
+  fpsakKodeverk,
   navAnsatt,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -52,7 +54,6 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
         kodeverk={kodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <TilbakekrevingProsess
         data={fetchedData}
@@ -74,6 +75,7 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
         behandling={behandling}
         navAnsatt={navAnsatt}
         alleKodeverk={kodeverk}
+        fpsakKodeverk={fpsakKodeverk}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         hasFetchError={hasFetchError}
         dispatch={dispatch}

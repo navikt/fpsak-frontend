@@ -20,6 +20,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
+  fpsakKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
@@ -33,6 +34,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   behandling,
   navAnsatt,
   alleKodeverk,
+  fpsakKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
   hasFetchError,
   dispatch,
@@ -42,7 +44,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   } = data;
 
   const dataTilUtledingAvTilbakekrevingPaneler = {
-    fagsak, behandling, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
+    fagsak, behandling, perioderForeldelse, beregningsresultat, feilutbetalingFakta, fpsakKodeverk,
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvTilbakekrevingPaneler,
@@ -62,6 +64,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
             ...dataProps,
             behandling,
             alleKodeverk,
+            fpsakKodeverk,
             submitCallback: bekreftAksjonspunktCallback,
             ...valgtPanel.komponentData,
           })}

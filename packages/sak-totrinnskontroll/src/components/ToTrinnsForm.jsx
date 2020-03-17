@@ -73,6 +73,7 @@ export const ToTrinnsFormImpl = ({
                     behandlingKlageVurdering={behandlingKlageVurdering}
                     behandlingStatus={behandlingStatus}
                     alleKodeverk={alleKodeverk}
+                    erTilbakekreving={erTilbakekreving}
                   />
                 </div>
               ))}

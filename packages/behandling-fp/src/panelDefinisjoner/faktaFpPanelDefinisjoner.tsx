@@ -128,7 +128,7 @@ const faktaPanelDefinisjoner = [{
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
     aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO,
   ],
-  endpoints: [fpBehandlingApi.MEDLEMSKAP, fpBehandlingApi.MEDLEMSKAP_V2],
+  endpoints: [fpBehandlingApi.MEDLEMSKAP],
   renderComponent: (props) => <MedlemskapFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
   getData: ({
