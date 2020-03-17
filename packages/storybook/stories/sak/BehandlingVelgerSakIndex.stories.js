@@ -127,7 +127,7 @@ export const visPanelForValgAvBehandlinger = () => {
     <div style={{ width: '600px' }}>
       <BehandlingVelgerSakIndex
         behandlinger={object('behandlinger', behandlinger)}
-        saksnummer={1}
+        getBehandlingLocation={() => 'test'}
         noExistingBehandlinger={boolean('noExistingBehandlinger', false)}
         behandlingId={number('behandlingId', 1)}
         showAll={visAlle}

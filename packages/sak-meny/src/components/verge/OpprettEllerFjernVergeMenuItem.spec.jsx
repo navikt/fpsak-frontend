@@ -10,7 +10,6 @@ import MenuButton from '../MenuButton';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<OpprettEllerFjernVergeMenuItem>', () => {
-
   it('skal rendre komponent når menyvalg er opprettet', () => {
     const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       opprettVerge={sinon.spy()}

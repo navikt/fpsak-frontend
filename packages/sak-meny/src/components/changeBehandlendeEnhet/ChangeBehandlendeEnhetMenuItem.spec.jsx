@@ -11,7 +11,7 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
     enhetNavn: 'NAV',
     status: 'Aktiv',
   }];
-  
+
   it('skal ikke vise modal ved rendring', () => {
     const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
       behandlingId={1}

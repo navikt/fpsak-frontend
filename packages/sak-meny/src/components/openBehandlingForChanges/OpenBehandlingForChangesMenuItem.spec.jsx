@@ -9,7 +9,6 @@ import OpenBehandlingForChangesMenuItem from './OpenBehandlingForChangesMenuItem
 import MenuButton from '../MenuButton';
 
 describe('<OpenBehandlingForChangesMenuItem>', () => {
-
   it('skal ikke vise modal når behandling-id er undefined', () => {
     const wrapper = shallow(<OpenBehandlingForChangesMenuItem
       behandlingId={undefined}

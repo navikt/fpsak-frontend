@@ -8,7 +8,6 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import ResumeBehandlingMenuItem from './ResumeBehandlingMenuItem';
 
 describe('<ResumeBehandlingMenuItem>', () => {
-
   it('skal rendre komponent', () => {
     const wrapper = shallow(<ResumeBehandlingMenuItem
       behandlingId={1}
