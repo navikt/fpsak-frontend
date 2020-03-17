@@ -132,6 +132,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
   render() {
     const {
       props: {
+        intl,
         readOnly,
         isAksjonspunktClosed,
         submittable,

@@ -42,16 +42,15 @@ describe('<AnkeProsess>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [{
     definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
@@ -77,7 +76,7 @@ describe('<AnkeProsess>', () => {
         behandling={behandling}
         alleKodeverk={{}}
         alleBehandlinger={[]}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
@@ -118,7 +117,7 @@ describe('<AnkeProsess>', () => {
         behandling={behandling}
         alleKodeverk={{}}
         alleBehandlinger={[]}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         oppdaterBehandlingVersjon={sinon.spy()}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}

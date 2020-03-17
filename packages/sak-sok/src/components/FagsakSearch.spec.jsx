@@ -47,7 +47,6 @@ describe('<FagsakSearch>', () => {
     const searchComp = wrapper.find(SearchForm);
     expect(searchComp).to.have.length(1);
     expect(wrapper.find('Label')).to.have.length(0);
-    expect(wrapper.find('Person')).to.have.length(0);
     expect(wrapper.find(FagsakList)).to.have.length(0);
   });
 

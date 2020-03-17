@@ -6,8 +6,6 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Image } from '@fpsak-frontend/shared-components';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import PersonInfo from './PersonInfo';
-import AlderVisning from './Aldervisning';
-import MerkePanel from './Merkepanel';
 
 describe('<PersonInfo>', () => {
   it('skal sjekke at props blir brukt korrekt', () => {
@@ -34,15 +32,8 @@ describe('<PersonInfo>', () => {
     const innholdstittel = wrapper.find(Undertittel);
     expect(innholdstittel.childAt(0).text()).to.eql('frida ');
 
-    const aldervisning = wrapper.find(AlderVisning);
-    expect(aldervisning.prop('alder')).to.eql(40);
-
     const normaltekst = wrapper.find(Undertekst);
     expect(normaltekst.childAt(0).text()).to.eql('12345678910');
-
-    const merkepanel = wrapper.find(MerkePanel);
-    expect(merkepanel.prop('erDod')).is.false;
-    expect(merkepanel.prop('diskresjonskode')).to.eql('6');
   });
 
   it('skal vise annen title når søker er mann ', () => {

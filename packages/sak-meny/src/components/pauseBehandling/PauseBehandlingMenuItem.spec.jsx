@@ -5,8 +5,8 @@ import { expect } from 'chai';
 import moment from 'moment';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { SettBehandlingPaVentForm } from '@fpsak-frontend/konstanter';
 
+import PauseBehandlingModal from './PauseBehandlingModal';
 import MenuButton from '../MenuButton';
 import PauseBehandlingMenuItem from './PauseBehandlingMenuItem';
 import MenyKodeverk from '../../MenyKodeverk';
@@ -30,7 +30,7 @@ describe('<PauseBehandlingMenuItem>', () => {
       erPapirsoknad={false}
     />);
 
-    expect(wrapper.find(SettBehandlingPaVentForm)).has.length(0);
+    expect(wrapper.find(PauseBehandlingModal)).has.length(0);
   });
 
   it('skal vise modal ved trykk på meny-lenke', () => {
@@ -57,7 +57,7 @@ describe('<PauseBehandlingMenuItem>', () => {
 
     expect(toggleBehandlingsmenyCallback.called).is.true;
     expect(wrapper.state('showModal')).is.true;
-    const modal = wrapper.find(SettBehandlingPaVentForm);
+    const modal = wrapper.find(PauseBehandlingModal);
     expect(modal).has.length(1);
     expect(modal.prop('showModal')).is.true;
   });
@@ -77,7 +77,7 @@ describe('<PauseBehandlingMenuItem>', () => {
     />);
 
     wrapper.setState({ showModal: true });
-    const modal = wrapper.find(SettBehandlingPaVentForm);
+    const modal = wrapper.find(PauseBehandlingModal);
     expect(modal).has.length(1);
 
     modal.prop('cancelEvent')();
@@ -103,7 +103,7 @@ describe('<PauseBehandlingMenuItem>', () => {
     />);
 
     wrapper.setState({ showModal: true });
-    const modal = wrapper.find(SettBehandlingPaVentForm);
+    const modal = wrapper.find(PauseBehandlingModal);
     expect(modal).has.length(1);
 
     const frist = moment().toDate();

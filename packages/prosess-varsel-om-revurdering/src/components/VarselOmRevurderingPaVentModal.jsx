@@ -23,7 +23,7 @@ const isButtonDisabled = (frist) => hasValidDate(frist) !== null || dateAfterOrE
  * Presentasjonskomponent. Denne modalen vises i kontekst av sette/endre ventefrist.
  * Ved å angi en frist og venteårsak og deretter trykke på Ok blir behandlingen satt på vent/får endret ventefrist.
  */
-export const VarselOmRevurderingPaVentModal = ({
+const VarselOmRevurderingPaVentModal = ({
   cancelEvent,
   handleSubmit,
   frist,

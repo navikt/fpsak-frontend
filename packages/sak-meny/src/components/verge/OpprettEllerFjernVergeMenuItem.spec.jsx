@@ -67,9 +67,10 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
     modal.prop('submit')();
 
     expect(opprettVergeCallback.called).is.true;
-    expect(opprettVergeCallback.getCalls()[0].args).has.length(3);
-    expect(opprettVergeCallback.getCalls()[0].args[1]).is.eql(1);
-    expect(opprettVergeCallback.getCalls()[0].args[2]).is.eql(2);
+    expect(opprettVergeCallback.getCalls()[0].args).has.length(4);
+    expect(opprettVergeCallback.getCalls()[0].args[1]).is.eql(123);
+    expect(opprettVergeCallback.getCalls()[0].args[2]).is.eql(1);
+    expect(opprettVergeCallback.getCalls()[0].args[3]).is.eql(2);
   });
 
   it('skal fjerne aksjonspunkt for verge ved trykk på slett-knapp', () => {
@@ -90,8 +91,9 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
     modal.prop('submit')();
 
     expect(fjernVergeCallback.called).is.true;
-    expect(fjernVergeCallback.getCalls()[0].args).has.length(3);
-    expect(fjernVergeCallback.getCalls()[0].args[1]).is.eql(1);
-    expect(fjernVergeCallback.getCalls()[0].args[2]).is.eql(2);
+    expect(fjernVergeCallback.getCalls()[0].args).has.length(4);
+    expect(fjernVergeCallback.getCalls()[0].args[1]).is.eql(123);
+    expect(fjernVergeCallback.getCalls()[0].args[2]).is.eql(1);
+    expect(fjernVergeCallback.getCalls()[0].args[3]).is.eql(2);
   });
 });

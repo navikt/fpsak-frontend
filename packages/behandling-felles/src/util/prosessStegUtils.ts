@@ -15,6 +15,7 @@ import readOnlyUtils from './readOnlyUtils';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import ProsessStegData from '../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
+import Rettigheter from '../types/rettigheterTsType';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';
 
@@ -149,7 +150,7 @@ export const utledProsessStegPaneler = (
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
-  rettigheter,
+  rettigheter: Rettigheter,
   hasFetchError: boolean,
 ) => {
   const isReadOnlyCheck = (aksjonspunkterForSteg, vilkarForSteg) => readOnlyUtils.erReadOnly(

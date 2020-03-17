@@ -1,80 +1,28 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
+import Modal from 'nav-frontend-modal';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import SettBehandlingPaVentModal from './SettBehandlingPaVentModal';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import { BehandlingPaVentModal } from './BehandlingPaVentModal';
 
 describe('<BehandlingPaVentModal>', () => {
-  it('skal ikke vise avbrytknapp når ingen endringer er gjort på ventefrist eller ventearsak og behandling er på vent', () => {
-    const wrapper = shallow(<BehandlingPaVentModal
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      frist="frist"
-      originalFrist="frist"
-      showModal
-      ventearsak="ventearsak"
-      originalVentearsak="ventearsak"
-      isUpdateOnHold
-      hasManualPaVent
-      ventearsaker={[]}
-    />);
-
-    const ventModal = wrapper.find(SettBehandlingPaVentModal);
-    expect(ventModal.prop('showAvbryt')).to.equal(false);
-  });
-
-  it('skal vise avbrytknapp når det er gjort endringer på ventarsak eller frist', () => {
-    const wrapper = shallow(<BehandlingPaVentModal
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      frist="fristEndret"
-      originalFrist="frist"
-      showModal
-      ventearsak="ventearsakEndret"
-      originalVentearsak="ventearsak"
-      isUpdateOnHold={false}
-      hasManualPaVent
-      ventearsaker={[]}
-    />);
-
-    const ventModal = wrapper.find(SettBehandlingPaVentModal);
-    expect(ventModal.prop('showAvbryt')).to.equal(true);
-  });
-
-  it('skal vise avbrytknapp når behandling ikke er på vent', () => {
-    const wrapper = shallow(<BehandlingPaVentModal
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      frist="frist"
-      originalFrist="frist"
-      showModal
-      ventearsak="ventearsak"
-      originalVentearsak="ventearsak"
-      isUpdateOnHold={false}
-      hasManualPaVent
-      ventearsaker={[]}
-    />);
-
-    const ventModal = wrapper.find(SettBehandlingPaVentModal);
-    expect(ventModal.prop('showAvbryt')).to.equal(true);
-  });
-
   it('skal rendre åpen modal', () => {
     const cancelEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      gyldigDato={sinon.spy()}
-      onChangeEvent={sinon.spy()}
+
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
-      frist="2017-10-10"
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
+      frist="frist"
+      originalFrist="frist"
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
       hasManualPaVent
+      ventearsaker={[]}
     />);
 
     const modal = wrapper.find(Modal);
@@ -85,209 +33,94 @@ describe('<BehandlingPaVentModal>', () => {
     expect(modal.prop('onRequestClose')).to.eql(cancelEventCallback);
   });
 
-  it('skal rendre lukket modal', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal={false}
-      gyldigDato={sinon.spy()}
-      onChangeEvent={sinon.spy()}
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      frist="2017-10-10"
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
-      hasManualPaVent
-    />);
-
-    const modal = wrapper.find(Modal);
-    expect(modal.prop('isOpen')).is.false;
-  });
-
-  it('skal lukke modal ved klikk på avbryt-knapp', () => {
-    const cancelEventCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
-      handleSubmit={sinon.spy()}
-      cancelEvent={cancelEventCallback}
-      frist="2017-10-10"
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
-      hasManualPaVent
-    />);
-
-    wrapper.find('Knapp').simulate('click');
-    expect(cancelEventCallback).to.have.property('callCount', 1);
-  });
-
   it('skal ikke disable knapp for lagring når frist er en gyldig fremtidig dato', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       frist="2099-10-10"
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
+      originalFrist="frist"
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
       hasManualPaVent
+      ventearsaker={[]}
     />);
-
 
     const button = wrapper.find(Hovedknapp);
     expect(button.prop('disabled')).is.false;
-  });
-
-  it('skal vise lukk-knapp når oppdater sett på vent', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      frist="2099-10-10"
-      isUpdateOnHold
-      ventearsaker={[]}
-      kodeverkReceived
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
-      hasManualPaVent
-    />);
-
-    const avbrytKnapp = wrapper.find('Knapp');
-    expect(avbrytKnapp).to.have.length(1);
-  });
-
-  it('skal være obligatorisk å velge årsak', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      frist="2099-10-10"
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
-      hasManualPaVent
-    />);
-
-    const select = wrapper.find('SelectField');
-    expect(select.prop('validate')).to.have.length(1);
   });
 
   it('skal disable knapp for lagring når frist er en ugyldig dato', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       frist="20-10-10"
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
+      originalFrist="frist"
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
       hasManualPaVent
+      ventearsaker={[]}
     />);
 
     const button = wrapper.find(Hovedknapp);
     expect(button.prop('disabled')).is.true;
-  });
-
-  it('skal ikke disable knapp for lagring når frist er en gyldig dato tilbake i tid når oppdatering av sett på vent', () => {
-    const date = moment().toDate();
-    date.setDate(date.getDate() + 1);
-    const tomorrow = date.toISOString().substr(0, 10);
-
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      frist={tomorrow}
-      ventearsaker={[]}
-      kodeverkReceived
-      isUpdateOnHold
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
-      hasManualPaVent
-    />);
-
-    const button = wrapper.find(Hovedknapp);
-    expect(button.prop('disabled')).is.false;
   });
 
   it('skal disable knapp for lagring når frist er en historisk dato', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       frist="2015-10-10"
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
+      originalFrist="frist"
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
       hasManualPaVent
+      ventearsaker={[]}
     />);
 
     const button = wrapper.find(Hovedknapp);
     expect(button.prop('disabled')).is.true;
   });
 
-  it('skal kalle cancel event når avbrytknapp ikke vises', () => {
-    const cancelEvent = sinon.spy();
-
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
-      handleSubmit={sinon.spy()}
-      cancelEvent={cancelEvent}
-      frist="2015-10-10"
-      ventearsaker={[]}
-      showAvbryt={false}
+  it('skal være obligatorisk å velge årsak', () => {
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
       intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
+      handleSubmit={sinon.spy()}
+      cancelEvent={sinon.spy()}
+      frist="2099-10-10"
+      originalFrist="frist"
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
       hasManualPaVent
+      ventearsaker={[]}
     />);
-
-    wrapper.find(Hovedknapp).simulate('click');
-    expect(cancelEvent).to.have.property('callCount', 1);
+    const select = wrapper.find(SelectField);
+    expect(select.prop('validate')).to.have.length(1);
   });
 
   it('skal ikke vise frist-input når behandling automatisk er satt på vent uten frist', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
-      ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
+      ventearsak="ventearsak"
+      originalVentearsak="ventearsak"
       hasManualPaVent={false}
+      ventearsaker={[]}
     />);
 
     expect(wrapper.find(DatepickerField)).to.have.length(0);
   });
 
   it('skal vise frist-input når behandling automatisk er satt på vent med frist', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       frist="2015-10-10"
       ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
       hasManualPaVent={false}
     />);
 
@@ -295,16 +128,12 @@ describe('<BehandlingPaVentModal>', () => {
   });
 
   it('skal vise årsak-input som readonly når behandling automatisk er satt på vent', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       frist="2015-10-10"
       ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
       hasManualPaVent={false}
     />);
 
@@ -312,16 +141,12 @@ describe('<BehandlingPaVentModal>', () => {
   });
 
   it('skal alltid vise lukk-knapp når behandling automatisk er satt på vent', () => {
-    const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
-      showModal
-      onChangeEvent={sinon.spy()}
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       frist="2015-10-10"
       ventearsaker={[]}
-      intl={intlMock}
-      venteArsakHasChanged
-      fristHasChanged
       hasManualPaVent={false}
     />);
 

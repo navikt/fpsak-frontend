@@ -57,16 +57,15 @@ describe('<faktaPanelUtils>', () => {
       personopplysninger: 'test_personopplysninger',
       inntektArbeidYtelse: 'test_inntektArbeidYtelse',
     };
-    const navAnsatt = {
-      brukernavn: 'Espen Utvikler',
-      navn: 'Espen Utvikler',
-      kanVeilede: false,
-      kanSaksbehandle: true,
-      kanOverstyre: false,
-      kanBeslutte: false,
-      kanBehandleKode6: false,
-      kanBehandleKode7: false,
-      kanBehandleKodeEgenAnsatt: false,
+    const rettigheter = {
+      writeAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
+      kanOverstyreAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
     };
     const aksjonspunkter = [{
       definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
@@ -76,7 +75,7 @@ describe('<faktaPanelUtils>', () => {
     }];
     const hasFetchError = false;
 
-    const faktaPaneler = utledFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError);
+    const faktaPaneler = utledFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling, rettigheter, aksjonspunkter, hasFetchError);
 
     expect(faktaPaneler).to.have.length(1);
     expect(faktaPaneler[0]).to.eql({

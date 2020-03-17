@@ -56,7 +56,6 @@ describe('<BehandlingPaVent>', () => {
 
     const modal = wrapper.find(BehandlingPaVentModal);
     expect(modal).to.have.length(1);
-    expect(modal.prop('showModal')).is.true;
     expect(modal.prop('hasManualPaVent')).to.false;
   });
 
@@ -75,7 +74,7 @@ describe('<BehandlingPaVent>', () => {
     const modal = wrapper.find(BehandlingPaVentModal);
     expect(modal).to.have.length(1);
 
-    modal.prop('closeEvent')();
+    modal.prop('cancelEvent')();
 
     expect(wrapper.find(BehandlingPaVentModal)).to.have.length(0);
   });
@@ -126,7 +125,7 @@ describe('<BehandlingPaVent>', () => {
 
     const modal = wrapper.find(BehandlingPaVentModal);
 
-    await modal.prop('handleOnHoldSubmit')({ dato: '10.10.2019' });
+    await modal.prop('onSubmit')({ dato: '10.10.2019' });
 
     const calls = settPaVentCallback.getCalls();
     expect(calls).to.have.length(1);

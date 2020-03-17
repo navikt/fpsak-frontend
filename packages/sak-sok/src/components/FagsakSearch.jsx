@@ -39,7 +39,7 @@ const FagsakSearch = ({
     )}
 
     {fagsaker.length > 1 && fagsaker[0].person && (
-      <PersonInfo person={person} />
+      <PersonInfo person={fagsaker[0].person} />
     )}
 
     <VerticalSpacer eightPx />

@@ -24,9 +24,9 @@ const initFrist = () => {
   return date.toISOString().substr(0, 10);
 };
 
-const isButtonDisabled = (frist, showAvbryt, venteArsakHasChanged, fristHasChanged) => {
+const isButtonDisabled = (frist, venteArsakHasChanged, fristHasChanged) => {
   const dateNotValid = hasValidDate(frist) !== null || dateAfterOrEqualToToday(frist) !== null;
-  const defaultOptions = (showAvbryt) && (!venteArsakHasChanged && !fristHasChanged);
+  const defaultOptions = !venteArsakHasChanged && !fristHasChanged;
   return defaultOptions || dateNotValid;
 };
 
@@ -113,7 +113,7 @@ export const MessageBehandlingPaVentModal = ({
                 htmlType={hovedKnappenType(venteArsakHasChanged, fristHasChanged) ? 'submit' : 'button'}
                 className={styles.button}
                 onClick={ariaCheck}
-                disabled={isButtonDisabled(frist, showAvbryt, venteArsakHasChanged, fristHasChanged)}
+                disabled={isButtonDisabled(frist, venteArsakHasChanged, fristHasChanged)}
               >
                 {intl.formatMessage({ id: 'SettBehandlingPaVentModal.Ok' })}
               </Hovedknapp>

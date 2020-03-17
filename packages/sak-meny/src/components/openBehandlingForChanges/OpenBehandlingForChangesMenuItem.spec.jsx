@@ -79,12 +79,11 @@ describe('<OpenBehandlingForChangesMenuItem>', () => {
     wrapper.update();
 
     expect(openBehandlingForChangesCallback.called).is.true;
-    expect(openBehandlingForChangesCallback.getCalls()[0].args).has.length(2);
+    expect(openBehandlingForChangesCallback.getCalls()[0].args).has.length(1);
     expect(openBehandlingForChangesCallback.getCalls()[0].args[0]).is.eql({
       behandlingId: 1,
       behandlingVersjon: 2,
     });
-    expect(openBehandlingForChangesCallback.getCalls()[0].args[1]).is.eql(1);
 
     expect(wrapper.state('showModal')).is.false;
     expect(wrapper.find(OkAvbrytModal)).has.length(0);

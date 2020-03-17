@@ -1,7 +1,6 @@
 import React, {
   useState, useMemo, useCallback, FunctionComponent, useEffect,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -18,7 +17,7 @@ interface BehandlingPaVentProps {
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
 }
 
-const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps & WrappedComponentProps> = ({
+const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
   behandling,
   aksjonspunkter,
   kodeverk,
@@ -55,4 +54,4 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps & WrappedCompone
   );
 };
 
-export default injectIntl(BehandlingPaVent);
+export default BehandlingPaVent;

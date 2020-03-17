@@ -35,7 +35,7 @@ describe('<ProsessStegBegrunnelseTextField>', () => {
     />);
 
     const textField = wrapper.find(TextAreaField);
-    expect(textField.prop('label')).is.eql('Vurdering');
+    expect(textField.prop('label')).is.eql('ProsessStegBegrunnelseTextField.ExplanationRequired');
   });
 
   it('skal vise gitt tekstkode', () => {
