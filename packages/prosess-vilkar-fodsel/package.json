@@ -8,7 +8,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "nav-frontend-core": "4.0.11",
+    "nav-frontend-core": "4.0.12",
     "nav-frontend-typografi": "2.0.18",
     "nav-frontend-typografi-style": "1.0.19",
     "prop-types": "^15.7.2",
