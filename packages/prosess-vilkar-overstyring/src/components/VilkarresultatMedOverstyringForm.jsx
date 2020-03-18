@@ -177,6 +177,7 @@ export const VilkarresultatMedOverstyringForm = ({
                 spinner={formProps.submitting}
                 disabled={formProps.submitting}
                 onClick={toggleAv}
+                mini
               >
                 <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
               </Knapp>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import {
@@ -87,7 +87,7 @@ const PersonArbeidsforholdTable = ({
               className={styles.image}
               src={erIBrukImageUrl}
               alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
-              tooltip={{ header: <Element><FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" /></Element> }}
+              tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
               tabIndex="0"
             />
             )}

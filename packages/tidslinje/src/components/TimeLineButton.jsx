@@ -53,7 +53,7 @@ const TimeLineButton = ({
     tabIndex="0"
     className={inverted ? styles.timeLineButtonInverted : styles.timeLineButton}
     alt={text}
-    title={text}
+    tooltip={text}
     onMouseDown={callback}
     onKeyDown={callback}
   />

@@ -41,6 +41,7 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
       submitCallback={sinon.spy()}
       submittable
       toggle
+      erOverstyrer
     />);
 
     const faktaForm = wrapper.find(FodselOgTilretteleggingFaktaForm);

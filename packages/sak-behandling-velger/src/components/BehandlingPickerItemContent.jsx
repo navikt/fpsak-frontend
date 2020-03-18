@@ -148,7 +148,7 @@ const BehandlingPickerItemContent = ({
             <Image
               className={styles.starImage}
               src={stjerneImg}
-              tooltip={{ header: <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" /></Normaltekst> }}
+              tooltip={<FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" />}
               tabIndex="0"
             />
           )}

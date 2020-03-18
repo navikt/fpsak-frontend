@@ -12,6 +12,6 @@ describe('<TimeLineSokerEnsamSoker>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
-    expect(rows.find(Image).at(0).props().title).to.have.length.above(3);
+    expect(rows.find(Image).at(0).props().tooltip).to.have.length.above(3);
   });
 });

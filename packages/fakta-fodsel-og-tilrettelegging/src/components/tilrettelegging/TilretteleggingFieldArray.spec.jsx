@@ -1,10 +1,12 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import { expect } from 'chai';
+
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { expect } from 'chai';
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
-import { FormattedMessage } from 'react-intl';
+
 import { TilretteleggingFieldArray } from './TilretteleggingFieldArray';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
@@ -18,8 +20,10 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly={false}
       formSectionName="FORM_SECTION_NAME"
-      behandlingId={1}
-      behandlingVersjon={1}
+      erOverstyrer
+      changeField={() => undefined}
+      tilretteleggingDatoer={[]}
+      stillingsprosentArbeidsforhold={50}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -39,17 +43,9 @@ describe('<TilretteleggingFieldArray>', () => {
     const datepickerField = innerWrapper.find(DatepickerField);
     expect(datepickerField).has.length(1);
 
-    const tilretteleggingFieldArrayStillingsprosentImpl = innerWrapper.find('Connect(TilretteleggingFieldArrayStillingsprosent)');
-    expect(tilretteleggingFieldArrayStillingsprosentImpl).has.length(1);
-
-    const formattedMessages = innerWrapper.find(FormattedMessage);
-    expect(formattedMessages).has.length(3);
-    expect(formattedMessages.get(0).props.id).to.eql('TilretteleggingFieldArray.BehovForTilrettelegging');
-    expect(formattedMessages.get(1).props.id).to.eql('TilretteleggingFieldArray.Dato');
-    expect(formattedMessages.get(2).props.id).to.eql('TilretteleggingFieldArray.Stillingsprosent');
-
     expect(innerWrapper.find('#avslutt')).has.length(1);
   });
+
   it('skal vise tilrettelegging fields uten tittel for index 1', () => {
     const wrapper = shallowWithIntl(<TilretteleggingFieldArray
       intl={intlMock}
@@ -57,8 +53,10 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly={false}
       formSectionName="FORM_SECTION_NAME"
-      behandlingId={1}
-      behandlingVersjon={1}
+      erOverstyrer
+      changeField={() => undefined}
+      tilretteleggingDatoer={[]}
+      stillingsprosentArbeidsforhold={50}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -78,14 +76,12 @@ describe('<TilretteleggingFieldArray>', () => {
     const datepickerField = innerWrapper.find(DatepickerField);
     expect(datepickerField).has.length(1);
 
-    const tilretteleggingFieldArrayStillingsprosentImpl = innerWrapper.find('Connect(TilretteleggingFieldArrayStillingsprosent)');
-    expect(tilretteleggingFieldArrayStillingsprosentImpl).has.length(1);
-
     const formattedMessages = innerWrapper.find(FormattedMessage);
     expect(formattedMessages).has.length(0);
 
     expect(innerWrapper.find('#avslutt')).has.length(1);
   });
+
   it('skal ikke vise getRemoveButtno i readOnly modus', () => {
     const wrapper = shallowWithIntl(<TilretteleggingFieldArray
       intl={intlMock}
@@ -93,8 +89,10 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly
       formSectionName="FORM_SECTION_NAME"
-      behandlingId={1}
-      behandlingVersjon={1}
+      erOverstyrer
+      changeField={() => undefined}
+      tilretteleggingDatoer={[]}
+      stillingsprosentArbeidsforhold={50}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -113,9 +111,6 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const datepickerField = innerWrapper.find(DatepickerField);
     expect(datepickerField).has.length(1);
-
-    const tilretteleggingFieldArrayStillingsprosentImpl = innerWrapper.find('Connect(TilretteleggingFieldArrayStillingsprosent)');
-    expect(tilretteleggingFieldArrayStillingsprosentImpl).has.length(1);
 
     const formattedMessages = innerWrapper.find(FormattedMessage);
     expect(formattedMessages).has.length(0);

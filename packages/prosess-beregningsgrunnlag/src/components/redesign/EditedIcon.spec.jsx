@@ -13,6 +13,6 @@ describe('EditedIcon', () => {
     expect(komponent.length).to.equal(1);
     const image = komponent.find(Image);
     expect(image.props().alt).to.have.length.above(10);
-    expect(image.props().title).to.have.length.above(10);
+    expect(image.props().tooltip).to.have.length.above(10);
   });
 });

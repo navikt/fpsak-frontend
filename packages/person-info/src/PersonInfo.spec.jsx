@@ -27,10 +27,9 @@ describe('<PersonInfo>', () => {
       isPrimaryParent
       medPanel
     />);
-
     const image = wrapper.find(Image);
     expect(image.prop('alt')).to.have.length.above(1);
-    expect(image.prop('title')).to.have.length.above(1);
+    expect(image.prop('tooltip')).to.have.length.above(1);
 
     const innholdstittel = wrapper.find(Undertittel);
     expect(innholdstittel.childAt(0).text()).to.eql('frida ');
@@ -65,6 +64,6 @@ describe('<PersonInfo>', () => {
     />);
 
     const image = wrapper.find(Image);
-    expect(image.prop('title')).to.have.length.above(1);
+    expect(image.prop('tooltip')).to.have.length.above(1);
   });
 });

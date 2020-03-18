@@ -7,8 +7,9 @@ import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
 
+import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import {
-  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, AvsnittSkiller,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -18,6 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
+import { finnDekningsgradForDelvisTilrettelegging } from './tilrettelegging/TilretteleggingFieldArray';
 import arbeidsforholdPropType from '../propTypes/arbeidsforholdPropType';
 import iayArbeidsforholdPropType from '../propTypes/iayArbeidsforholdPropType';
 
@@ -62,6 +64,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
   submittable,
   arbeidsforhold,
   iayArbeidsforhold,
+  erOverstyrer,
   ...formProps
 }) => {
   const visInfoAlert = useMemo(() => skalViseInfoAlert(iayArbeidsforhold, arbeidsforhold), [behandlingVersjon]);
@@ -89,8 +92,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
           </FlexColumn>
           )}
         </FlexRow>
-      </FlexContainer>
-      <FlexContainer>
+        <VerticalSpacer sixteenPx />
         <FlexRow>
           <FlexColumn>
             <VerticalSpacer eightPx />
@@ -110,33 +112,44 @@ export const FodselOgTilretteleggingFaktaForm = ({
           </FlexRow>
         )}
         <FlexRow>
-          <FlexColumn className={styles.fullBredde}>
-            {formProps.error && (
-              <>
-                <VerticalSpacer sixteenPx />
-                <AlertStripeFeil>
-                  <FormattedMessage id={formProps.error} />
-                </AlertStripeFeil>
-              </>
-            )}
-          </FlexColumn>
+          {formProps.error && (
+            <FlexColumn className={styles.fullBredde}>
+              <VerticalSpacer sixteenPx />
+              <AlertStripeFeil>
+                <FormattedMessage id={formProps.error} />
+              </AlertStripeFeil>
+            </FlexColumn>
+          )}
         </FlexRow>
         <FlexRow>
-          <FlexColumn className={styles.fullBredde}>
-            { arbeidsforhold.map((a) => (
-              <TilretteleggingArbeidsforholdSection
-                key={utledFormSectionName(a)}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                readOnly={readOnly}
-                arbeidsforhold={a}
-                formSectionName={utledFormSectionName(a)}
-              />
-            ))}
+          <FlexColumn>
+            {arbeidsforhold.map((a, index) => {
+              const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+              return (
+                <React.Fragment key={utledFormSectionName(a)}>
+                  <VerticalSpacer sixteenPx />
+                  <AvsnittSkiller />
+                  <VerticalSpacer twentyPx />
+                  <TilretteleggingArbeidsforholdSection
+                    key={utledFormSectionName(a)}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    readOnly={readOnly}
+                    arbeidsforhold={a}
+                    formSectionName={utledFormSectionName(a)}
+                    erOverstyrer={erOverstyrer}
+                    changeField={formProps.change}
+                    stillingsprosentArbeidsforhold={af ? af.stillingsprosent : undefined}
+                  />
+                  {index === arbeidsforhold.length - 1 && (
+                    <AvsnittSkiller />
+                  )}
+                </React.Fragment>
+              );
+            })}
           </FlexColumn>
         </FlexRow>
-      </FlexContainer>
-      <FlexContainer>
+        <VerticalSpacer sixteenPx />
         <FlexRow>
           <FlexColumn className={styles.halvBredde}>
             <VerticalSpacer eightPx />
@@ -149,21 +162,17 @@ export const FodselOgTilretteleggingFaktaForm = ({
             />
           </FlexColumn>
         </FlexRow>
-      </FlexContainer>
-      <FlexContainer fluid wrap>
+        <VerticalSpacer twentyPx />
         <FlexRow>
           <FlexColumn>
-            <ElementWrapper>
-              <VerticalSpacer twentyPx />
-              <FaktaSubmitButton
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                formName={FODSEL_TILRETTELEGGING_FORM}
-                isSubmittable={submittable && !formProps.error}
-                isReadOnly={readOnly}
-                hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-              />
-            </ElementWrapper>
+            <FaktaSubmitButton
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              formName={FODSEL_TILRETTELEGGING_FORM}
+              isSubmittable={submittable && !formProps.error}
+              isReadOnly={readOnly}
+              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+            />
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
@@ -180,21 +189,50 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   submittable: PropTypes.bool.isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
   iayArbeidsforhold: PropTypes.arrayOf(iayArbeidsforholdPropType).isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 FodselOgTilretteleggingFaktaForm.defaultProps = {
   fødselsdato: '',
 };
 
-const transformValues = (values, arbeidsforhold) => {
-  const bekreftetSvpArbeidsforholdList = [];
-  arbeidsforhold.forEach((a) => { bekreftetSvpArbeidsforholdList.push(values[utledFormSectionName(a)]); });
-  return ([{
-    kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
-    ...values,
-    bekreftetSvpArbeidsforholdList,
-  }]);
+const finnOverstyrtUtbetalingsgrad = (type, stillingsprosent, stillingsprosentArbeidsforhold, overstyrtUtbetalingsgrad, oldOverstyrtUtbetalingsgrad) => {
+  if (oldOverstyrtUtbetalingsgrad || type.kode === tilretteleggingType.HEL_TILRETTELEGGING) {
+    return overstyrtUtbetalingsgrad;
+  }
+
+  let erLikOverstyrtVerdi = type.kode === tilretteleggingType.INGEN_TILRETTELEGGING && parseFloat(overstyrtUtbetalingsgrad) === 100;
+  if (type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
+    erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === parseFloat(finnDekningsgradForDelvisTilrettelegging(
+      stillingsprosent, stillingsprosentArbeidsforhold,
+    ));
+  }
+
+  if (erLikOverstyrtVerdi) {
+    return undefined;
+  }
+  return overstyrtUtbetalingsgrad;
 };
+
+const transformValues = (values, iayArbeidsforhold, arbeidsforhold) => ([{
+  kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+  ...values,
+  bekreftetSvpArbeidsforholdList: arbeidsforhold.map((a) => {
+    const value = values[utledFormSectionName(a)];
+    const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    const stillingsprosentArbeidsforhold = af ? af.stillingsprosent : undefined;
+    return {
+      ...value,
+      tilretteleggingDatoer: value.tilretteleggingDatoer.map((t) => ({
+        fom: t.fom,
+        type: t.type,
+        stillingsprosent: t.stillingsprosent,
+        overstyrtUtbetalingsgrad: finnOverstyrtUtbetalingsgrad(t.type, t.stillingsprosent, stillingsprosentArbeidsforhold,
+          t.overstyrtUtbetalingsgrad, t.oldOverstyrtUtbetalingsgrad),
+      })),
+    };
+  }),
+}]);
 
 const finnAntallDatoerMappedByDato = (datoer) => datoer.reduce((acc, dato) => ({
   ...acc,
@@ -259,15 +297,37 @@ const getArbeidsforhold = createSelector([
   return arbeidsforhold;
 });
 
+const utledUtbetalingsgrad = (tilretteleggingsdato, stillingsprosentArbeidsforhold) => {
+  if (tilretteleggingsdato.type.kode === tilretteleggingType.HEL_TILRETTELEGGING) {
+    return null;
+  }
+  if (tilretteleggingsdato.overstyrtUtbetalingsgrad) {
+    return tilretteleggingsdato.overstyrtUtbetalingsgrad;
+  }
+  return tilretteleggingsdato.type.kode === tilretteleggingType.INGEN_TILRETTELEGGING ? 100
+    : finnDekningsgradForDelvisTilrettelegging(tilretteleggingsdato.stillingsprosent, stillingsprosentArbeidsforhold);
+};
+
 const getInitialArbeidsforholdValues = createSelector([
   (ownProps) => ownProps.svangerskapspengerTilrettelegging,
-], (tilrettelegging) => {
+  (ownProps) => ownProps.iayArbeidsforhold,
+], (tilrettelegging, iayArbeidsforhold) => {
   const arbeidsforhold = tilrettelegging ? tilrettelegging.arbeidsforholdListe : [];
   if (arbeidsforhold === undefined || arbeidsforhold === null) {
     return EMPTY_LIST;
   }
   const arbeidsforholdValues = [];
-  arbeidsforhold.forEach((a) => { arbeidsforholdValues[utledFormSectionName(a)] = { ...a }; });
+  arbeidsforhold.forEach((a) => {
+    const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    arbeidsforholdValues[utledFormSectionName(a)] = {
+      ...a,
+      tilretteleggingDatoer: a.tilretteleggingDatoer.map((tilretteleggingsdato) => ({
+        ...tilretteleggingsdato,
+        oldOverstyrtUtbetalingsgrad: tilretteleggingsdato.overstyrtUtbetalingsgrad,
+        overstyrtUtbetalingsgrad: utledUtbetalingsgrad(tilretteleggingsdato, af.stillingsprosent),
+      })),
+    };
+  });
   return arbeidsforholdValues;
 });
 
@@ -288,8 +348,12 @@ const getInitialValues = createSelector(
   }),
 );
 
-const getOnSubmit = createSelector([(ownProps) => ownProps.submitCallback, getArbeidsforhold],
-  (submitCallback, arbeidsforhold) => (values) => submitCallback(transformValues(values, arbeidsforhold)));
+const getOnSubmit = createSelector([
+  (ownProps) => ownProps.submitCallback,
+  (ownProps) => ownProps.iayArbeidsforhold,
+  getArbeidsforhold,
+],
+(submitCallback, iayArbeidsforhold, arbeidsforhold) => (values) => submitCallback(transformValues(values, iayArbeidsforhold, arbeidsforhold)));
 
 const getValidate = createSelector([getArbeidsforhold], (arbeidsforhold) => (values) => validateForm(values, arbeidsforhold));
 

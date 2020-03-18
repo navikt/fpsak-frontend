@@ -8,21 +8,26 @@
   "FodselOgTilretteleggingFaktaForm.DuplikateDatoer": "Flere like datoer.",
   "FodselOgTilretteleggingFaktaForm.TermindatoForDato": "Termindato er før eller lik dato jordmor/lege oppgir at søker trenger tilrettelegging. Kontroller opplysningene i saken.",
   "FodselOgTilretteleggingFaktaForm.UndersokNarmere": "Det er søkt for et org.nr. eller fødselsnummer der søker ikke var ansatt da behovet for tilrettelegging oppsto. Vurder om du skal kontakte arbeidsgiver eller søker for avklaring. Hvis du innvilger behandlingen nå, vil bruker få 0 kroner utbetalt.",
-
+  
   "TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
   "TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging": "Søker har søkt svangerskapspenger for dette arbeidsforholdet",
   "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger": "Arbeidsgiver oppgir nødvendig tilrettelegging",
   "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger.Dato": "Dato",
 
   "TilretteleggingFieldArray.VelgTilretteleggingPlaceholder": "- Velg tilretteleggingsbehov -",
-  "TilretteleggingFieldArray.Stillingsprosent": "Stillingsprosent ut i fra en 100 % stilling",
+  "TilretteleggingFieldArray.Stillingsprosent": "Stillingsprosent",
+  "TilretteleggingFieldArray.StillingsprosentUtvidet": "Stillingsprosent skal oppgis ut fra en 100% stilling",
+  "TilretteleggingFieldArray.Utbetalingsgrad": "Utbetalingsgrad",
+  "TilretteleggingFieldArray.EndreUtbetalingsgrad": "Endre utbetalingsgrad",
   "TilretteleggingFieldArray.LeggTilTilretteleggingsbehov": "Legg til tilretteleggingsbehov",
   "TilretteleggingFieldArray.BehovForTilrettelegging": "Arbeidsgiver oppgir nødvendig tilrettelegging",
   "TilretteleggingFieldArray.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
   "TilretteleggingFieldArray.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
   "TilretteleggingFieldArray.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
   "TilretteleggingFieldArray.Dato": "Dato",
+  "TilretteleggingFieldArray.Tilretteleggingsbehov": "Tilretteleggingsbehov",
 
+  "OverstyringKnapp.Overstyring": "Overstyr",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",

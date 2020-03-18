@@ -53,6 +53,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       submittable
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
+      erOverstyrer
     />);
 
     const tilretteleggingArbeidsforholdSection = wrapper.find(TilretteleggingArbeidsforholdSection);
@@ -77,6 +78,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       submittable
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
+      erOverstyrer
     />);
 
     const tilretteleggingArbeidsforholdSection = wrapper.find(TilretteleggingArbeidsforholdSection);
@@ -101,6 +103,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       submittable
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
+      erOverstyrer
       {...formProps}
     />);
 
@@ -277,6 +280,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       submittable
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
+      erOverstyrer
     />);
 
     const tilretteleggingArbeidsforholdSection = wrapper.find(TilretteleggingArbeidsforholdSection);
@@ -327,6 +331,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       submittable
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={iayArbeidsforhold}
+      erOverstyrer
     />);
 
     expect(wrapper.find(AlertStripeInfo)).has.length(1);
@@ -369,6 +374,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       submittable
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={iayArbeidsforhold}
+      erOverstyrer
     />);
 
     expect(wrapper.find(AlertStripeInfo)).has.length(1);
@@ -410,6 +416,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       submittable
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={iayArbeidsforhold}
+      erOverstyrer
     />);
 
     expect(wrapper.find(AlertStripeInfo)).has.length(0);

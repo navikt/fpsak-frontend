@@ -23,6 +23,7 @@ const FodselOgTilretteleggingInfoPanel = ({
   hasOpenAksjonspunkter,
   submitCallback,
   submittable,
+  erOverstyrer,
 }) => (
   <>
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
@@ -39,6 +40,7 @@ const FodselOgTilretteleggingInfoPanel = ({
       readOnly={readOnly}
       hasOpenAksjonspunkter={hasOpenAksjonspunkter}
       submittable={submittable}
+      erOverstyrer={erOverstyrer}
     />
   </>
 );
@@ -53,6 +55,7 @@ FodselOgTilretteleggingInfoPanel.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   submittable: PropTypes.bool.isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 export default FodselOgTilretteleggingInfoPanel;
