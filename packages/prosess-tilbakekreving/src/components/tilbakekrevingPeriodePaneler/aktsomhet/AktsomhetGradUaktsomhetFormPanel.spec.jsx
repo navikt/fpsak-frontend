@@ -1,13 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 
 import sarligGrunn from '../../../kodeverk/sarligGrunn';
 import aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
-import AktsomhetGradUaktsomhetFormPanel from './AktsomhetGradUaktsomhetFormPanel';
+import { AktsomhetGradUaktsomhetFormPanel } from './AktsomhetGradUaktsomhetFormPanel';
 
 describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
   const sarligGrunnTyper = [{
@@ -28,6 +29,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       harMerEnnEnYtelse
       feilutbetalingBelop={100}
       erTotalBelopUnder4Rettsgebyr
+      intl={intlMock}
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(1);
@@ -44,6 +46,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       harMerEnnEnYtelse
       feilutbetalingBelop={100}
       erTotalBelopUnder4Rettsgebyr
+      intl={intlMock}
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
@@ -61,6 +64,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       harMerEnnEnYtelse
       feilutbetalingBelop={100}
       erTotalBelopUnder4Rettsgebyr={false}
+      intl={intlMock}
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
