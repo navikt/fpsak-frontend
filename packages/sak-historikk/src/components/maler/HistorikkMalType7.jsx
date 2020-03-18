@@ -43,6 +43,7 @@ const HistorikkMalType7 = ({
 
   return (
     historikkinnslagDeler
+      .sort((a, b) => !a.skjermlenke - !b.skjermlenke)
       .map((historikkinnslagDel, historikkinnslagDelIndex) => (
         <div key={
           `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
@@ -55,7 +56,7 @@ const HistorikkMalType7 = ({
                 <NavLink
                   to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
                 >
-                  {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
+                  {getKodeverknavn(historikkinnslagDel.skjermlenke)}
                 </NavLink>
               </Element>
             )}
