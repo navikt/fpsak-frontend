@@ -20,10 +20,13 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       visTilrettelegginger
       behandlingId={1}
       behandlingVersjon={1}
+      erOverstyrer
+      changeField={() => undefined}
+      stillingsprosentArbeidsforhold={40}
     />);
     const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).has.length(1);
-    expect(normaltekst.props().children).to.eq('ARB_NAVN_1 (111222333)....-001');
+    expect(normaltekst).has.length(2);
+    expect(normaltekst.at(0).props().children).to.eq('ARB_NAVN_1 (111222333)....-001');
     const checkboxField = wrapper.find(CheckboxField);
     expect(checkboxField).has.length(1);
     const datepickerField = wrapper.find(DatepickerField);
@@ -43,6 +46,9 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       visTilrettelegginger={false}
       behandlingId={1}
       behandlingVersjon={1}
+      erOverstyrer
+      changeField={() => undefined}
+      stillingsprosentArbeidsforhold={40}
     />);
     const normaltekst = wrapper.find(Normaltekst);
     expect(normaltekst).has.length(1);

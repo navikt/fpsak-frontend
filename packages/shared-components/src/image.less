@@ -1,0 +1,41 @@
+@import '@{coreModulePath}nav-frontend-core/less/core';
+
+.tooltip {
+  display: inline-block;
+  position: relative;
+  z-index: 30;
+}
+
+.tooltip .tooltiptext {
+  background-color: @orangeFocusLighten80;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 @navGra40;
+  color: @navMorkGra;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  margin-left: -45px;
+  margin-top: 30px;
+  opacity: 0;
+  padding: 2px 8px;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.tooltip:hover .tooltiptext {
+  animation-delay: 0.4s;
+  animation-duration: 0.1s;
+  animation-fill-mode: forwards;
+  animation-name: showTooltip;
+}
+
+@keyframes showTooltip {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

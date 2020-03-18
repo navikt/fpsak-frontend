@@ -26,7 +26,7 @@ const TittelMedDivider = ({
           <Image
             src={imageSrc}
             alt={intl.formatMessage({ id: 'Risikopanel.Tittel' })}
-            title={intl.formatMessage({ id: 'Risikopanel.Tittel' })}
+            tooltip={intl.formatMessage({ id: 'Risikopanel.Tittel' })}
           />
         </FlexColumn>
         <FlexColumn>

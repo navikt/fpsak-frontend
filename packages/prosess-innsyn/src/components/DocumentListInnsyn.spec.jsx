@@ -79,7 +79,7 @@ describe('<DocumentListInnsyn>', () => {
       readOnly={false}
     />);
 
-    expect(wrapper.find(Image).prop('title')).to.have.length.above(1);
+    expect(wrapper.find(Image).prop('tooltip')).to.have.length.above(1);
   });
 
 
@@ -97,7 +97,7 @@ describe('<DocumentListInnsyn>', () => {
       saksNr={123}
       readOnly={false}
     />);
-    expect(wrapper.find(Image).prop('title')).to.have.length.above(1);
+    expect(wrapper.find(Image).prop('tooltip')).to.have.length.above(1);
   });
 
 

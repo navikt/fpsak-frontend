@@ -25,6 +25,7 @@ const FodselOgTilretteleggingFaktaIndex = ({
   readOnly,
   harApneAksjonspunkter,
   submittable,
+  erOverstyrer,
 }) => (
   <RawIntlProvider value={intl}>
     <FodselOgTilretteleggingInfoPanel
@@ -37,6 +38,7 @@ const FodselOgTilretteleggingFaktaIndex = ({
       readOnly={readOnly}
       hasOpenAksjonspunkter={harApneAksjonspunkter}
       submittable={submittable}
+      erOverstyrer={erOverstyrer}
     />
   </RawIntlProvider>
 );
@@ -50,6 +52,7 @@ FodselOgTilretteleggingFaktaIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
+  erOverstyrer: PropTypes.bool.isRequired,
 };
 
 export default FodselOgTilretteleggingFaktaIndex;

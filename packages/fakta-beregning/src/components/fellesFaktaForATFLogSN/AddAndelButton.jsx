@@ -47,7 +47,7 @@ export const AddAndelButtonImpl = ({
         className={styles.addPeriode}
         role="button"
         tabIndex="0"
-        title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.LeggTilAndel' })}
+        tooltip={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.LeggTilAndel' })}
       >
         <Image
           className={styles.addCircleIcon}

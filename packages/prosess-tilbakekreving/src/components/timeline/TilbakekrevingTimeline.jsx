@@ -177,7 +177,7 @@ class TilbakekrevingTimeline extends Component {
                 className={styles.iconMedsoker}
                 src={isKvinne(kjonn) ? urlKvinne : urlMann}
                 alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
-                title={intl.formatMessage({ id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man' })}
+                tooltip={intl.formatMessage({ id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man' })}
               />
             </Row>
           </Column>

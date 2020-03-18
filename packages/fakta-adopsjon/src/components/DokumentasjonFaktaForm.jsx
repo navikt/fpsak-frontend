@@ -101,7 +101,7 @@ const DokumentasjonFaktaFormImpl = ({
                   <Image
                     className={styles.image}
                     alt={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
-                    title={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
+                    tooltip={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
                     src={advarselImageUrl}
                   />
                 )}

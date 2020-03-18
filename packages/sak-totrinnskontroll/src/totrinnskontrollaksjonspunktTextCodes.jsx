@@ -58,7 +58,6 @@ const totrinnskontrollaksjonspunktTextCodes = {
 
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD]: 'ToTrinnsForm.Uttak.Dod',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST]: 'ToTrinnsForm.Uttak.Soknadsfrist',
-  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP]: 'ToTrinnsForm.Uttak.Medlemskap',
   [aksjonspunktCodes.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE]: 'ToTrinnsForm.Uttak.Klage',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN]:
     'ToTrinnsForm.Uttak.FordelingStonadsperioder',
