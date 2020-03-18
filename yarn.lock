@@ -12570,17 +12570,6 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
 
-<<<<<<< HEAD
-nav-frontend-alertstriper-style@2.0.10:
-  version "2.0.10"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.10.tgz#524b24fc03ce1a84701ac4bae3084f3d233bd731"
-  integrity sha512-tpvbKBNgPSqLosb2BCCBLddyGom7OvEJ28ZMAy/mM6Caz3MueSJjEV6W6Dwa7l40gEuHafmO+Jyowh21sMzFIg==
-
-nav-frontend-alertstriper@3.0.12:
-  version "3.0.12"
-  resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.12.tgz#f7a66f89025c11723aece341a81bc3f8b01da6a6"
-  integrity sha512-NN79NS+IMIq1bD9fn2LA86k0/6ChJPvUj6Aft7jUcH2wQJeNEbph5kh0KuPffhuskUwxEpW3bDYf02BYB1gqaA==
-=======
 nav-frontend-alertstriper-style@2.0.11:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper-style/-/nav-frontend-alertstriper-style-2.0.11.tgz#d3561213fc33d92da47b8de526ba02bfa1718bbf"
@@ -12590,7 +12579,6 @@ nav-frontend-alertstriper@3.0.13:
   version "3.0.13"
   resolved "https://registry.yarnpkg.com/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.13.tgz#e00e6e453eca6c9fd0909132fbdfb97b22418c70"
   integrity sha512-uZSxaEthAYh+CGnH+9eFoSlr4hnTXu+HGJy3fJnLae7P7ZJdQF5H9AUGc7vgMTKbgKXgz509VCV54ELgcYH+eA==
->>>>>>> FIX div
 
 nav-frontend-chevron-style@0.3.5, nav-frontend-chevron-style@^0.3.5:
   version "0.3.5"
