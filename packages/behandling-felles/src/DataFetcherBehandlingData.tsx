@@ -1,7 +1,7 @@
 import React, {
   FunctionComponent, useEffect, useRef, useState,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
@@ -35,13 +35,14 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
     data: {},
   });
 
+  const store = useStore();
+
   const endpointData = endpoints.reduce((acc, e) => ({
     ...acc,
     [e.name]: {
       formattedName: format(e.name),
       data: useSelector((state) => e.getRestApiData()(state)),
       isFinished: useSelector((state) => e.getRestApiFinished()(state)),
-      cacheParams: useSelector((state) => e.getRestApiCacheParams()(state)),
     },
   }), {});
 
@@ -58,8 +59,14 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
       data: oldState.data,
     }));
 
+    const state = store.getState();
+
     ref.current = behandlingVersion;
-    const endpointsToFetchFrom = activeEndpointsData.filter((e) => !e.cacheParams || e.cacheParams.behandlingVersion !== behandlingVersion);
+
+    const endpointsToFetchFrom = activeEndpointsData.filter((e) => {
+      const cacheParams = e.endpoint.getRestApiCacheParams()(state);
+      return !cacheParams || cacheParams.behandlingVersion !== behandlingVersion;
+    });
 
     const meta = {
       keepData: showOldDataWhenRefetching,
