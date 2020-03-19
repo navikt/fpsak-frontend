@@ -105,9 +105,7 @@ describe('RequestRunner', () => {
       }),
     };
 
-    const requestConfig = new RequestConfig('BEHANDLING', '/behandling', {
-      fetchLinkDataAutomatically: true,
-    }).withGetAsyncMethod();
+    const requestConfig = new RequestConfig('BEHANDLING', '/behandling').withGetAsyncMethod();
 
     const params = {
       behandlingId: 1,

@@ -158,7 +158,9 @@
     "exclude": [
       "packages/**/*.spec.jsx",
       "packages/**/*.spec.tsx",
-      "packages/**/*.spec.ts"
+      "packages/**/*.spec.ts",
+      "packages/storybook/**",
+      "packages/utils-test/**"
     ]
   }
 }
