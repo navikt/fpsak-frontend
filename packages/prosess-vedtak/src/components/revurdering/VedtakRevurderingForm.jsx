@@ -166,7 +166,7 @@ export class VedtakRevurderingFormImpl extends Component {
               />
             )}
 
-            {skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.ENGANGSSTONAD && (
+            {skalBrukeOverstyrendeFritekstBrev && (
               <FritekstBrevPanel
                 intl={intl}
                 readOnly={readOnly}

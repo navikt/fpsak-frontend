@@ -54,8 +54,8 @@ const createRequestThunk = (requestRunner, actionCreators, reduxEvents, resultKe
 
   if (reduxEvents.getPollingMessageActionCreator()) {
     notificationMapper.addUpdatePollingMessageEventHandler((data) => dispatch(reduxEvents.getPollingMessageActionCreator()(data)));
-    notificationMapper.addRequestFinishedEventHandler((data, type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
-    notificationMapper.addRequestErrorEventHandler((data, type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
+    notificationMapper.addRequestFinishedEventHandler((_data, _type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
+    notificationMapper.addRequestErrorEventHandler((_data, _type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
   }
 
   if (!requestRunner.getPath()) {
