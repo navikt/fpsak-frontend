@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import sarligGrunn from '../kodeverk/sarligGrunn';
@@ -28,7 +29,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     navn: 'forsett',
   }];
 
-  it('skal vis panel for foreldet periode', () => {
+  it('skal vise panel for foreldet periode', () => {
     const periode = {
       erForeldet: true,
       ytelser: [],
@@ -54,6 +55,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       beregnBelop={() => undefined}
+      intl={intlMock}
       {...reduxFormPropsMock}
     />);
 
