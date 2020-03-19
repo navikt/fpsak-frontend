@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
-import { getRequestPollingMessage, requireProps } from '@fpsak-frontend/fp-felles';
+import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
+import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
 
 import { getSelectedAktoer, getSelectedAktoerId } from './aktoerSelectors';
 import { setSelectedAktoerId } from './duck';

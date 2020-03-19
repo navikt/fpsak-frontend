@@ -7,7 +7,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -15,7 +15,6 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import {
   FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
 
 import styles from './uttakSlettPeriodeModal.less';
 

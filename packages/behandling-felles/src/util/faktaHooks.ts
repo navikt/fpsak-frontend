@@ -2,12 +2,13 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, NavAnsatt, Aksjonspunkt } from '@fpsak-frontend/types';
+import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 
 import {
   utledFaktaPaneler, finnValgtPanel, formaterPanelerForSidemeny, getBekreftAksjonspunktCallback,
 } from './faktaUtils';
 import FagsakInfo from '../types/fagsakInfoTsType';
+import Rettigheter from '../types/rettigheterTsType';
 import FaktaPanelDefinisjon from '../types/faktaPanelDefinisjonTsType';
 import FaktaPanelUtledet from '../types/faktaPanelUtledetTsType';
 import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
@@ -15,15 +16,14 @@ import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
 const useFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDefinisjon[],
   panelData: {},
-  fagsak: FagsakInfo,
   behandling: Behandling,
-  navAnsatt: NavAnsatt,
+  rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
   hasFetchError: boolean,
   valgtFaktaPanelKode: string,
   intl,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelFaktaPanelMenyRadMeny[]] => {
-  const faktaPaneler = useMemo(() => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, fagsak, behandling, navAnsatt,
+  const faktaPaneler = useMemo(() => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, behandling, rettigheter,
     aksjonspunkter, hasFetchError),
   [behandling.versjon]);
 

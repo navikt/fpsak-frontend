@@ -8,8 +8,9 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import {
   formatCurrencyNoKr, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';

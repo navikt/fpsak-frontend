@@ -69,7 +69,7 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerTB).to.have.length(0);
     expect(aksjonspunktBehandlerFL).to.have.length(1);
     expect(aksjonspunktBehandlerSN).to.have.length(0);
-    expect(wrapper.find('BehandlingspunktSubmitButton')).to.have.length(0);
+    expect(wrapper.find('ProsessStegSubmitButton')).to.have.length(0);
   });
 
   it('Skal teste at submitButton blir rendret riktig når readOnly=false', () => {

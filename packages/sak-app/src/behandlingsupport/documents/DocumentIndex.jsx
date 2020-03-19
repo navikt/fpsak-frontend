@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { DataFetcher, requireProps } from '@fpsak-frontend/fp-felles';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 
+import DataFetcher from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';

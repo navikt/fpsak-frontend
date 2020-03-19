@@ -4,8 +4,6 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
-
 import {
   findEndretFeltNavn, findEndretFeltVerdi, findHendelseText, findIdForOpplysningCode, findResultatText,
 } from './felles/historikkUtils';
@@ -14,7 +12,7 @@ import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const HistorikkMalType7 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn, createLocationForSkjermlenke,
 }) => {
   const formatChangedField = (endretFelt) => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
@@ -54,7 +52,7 @@ const HistorikkMalType7 = ({
             && (
               <Element>
                 <NavLink
-                  to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                  to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
                 >
                   {getKodeverknavn(historikkinnslagDel.skjermlenke)}
                 </NavLink>
@@ -98,6 +96,7 @@ HistorikkMalType7.propTypes = {
   intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType7);

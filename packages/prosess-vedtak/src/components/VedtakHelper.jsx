@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';

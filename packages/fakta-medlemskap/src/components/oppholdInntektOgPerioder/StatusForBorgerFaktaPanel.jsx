@@ -5,11 +5,10 @@ import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 /**
  * StatusForBorgerFaktaPanel

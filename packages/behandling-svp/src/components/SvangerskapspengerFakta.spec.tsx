@@ -41,16 +41,15 @@ describe('<SvangerskapspengerFakta>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [{
     definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
@@ -72,7 +71,7 @@ describe('<SvangerskapspengerFakta>', () => {
         data={{ aksjonspunkter, vilkar }}
         behandling={behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
@@ -103,7 +102,7 @@ describe('<SvangerskapspengerFakta>', () => {
         data={{ aksjonspunkter, vilkar }}
         behandling={behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         valgtFaktaSteg="default"
@@ -133,7 +132,7 @@ describe('<SvangerskapspengerFakta>', () => {
         data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
         behandling={behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"

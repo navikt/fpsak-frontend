@@ -2,11 +2,9 @@ import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { Kodeverk, Behandling } from '@fpsak-frontend/types';
 
 import EngangsstonadProsess from './EngangsstonadProsess';
 import EngangsstonadFakta from './EngangsstonadFakta';
@@ -17,7 +15,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -34,7 +32,7 @@ const EngangsstonadPaneler: FunctionComponent<OwnProps> = ({
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   valgtFaktaSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -63,7 +61,7 @@ const EngangsstonadPaneler: FunctionComponent<OwnProps> = ({
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -79,7 +77,7 @@ const EngangsstonadPaneler: FunctionComponent<OwnProps> = ({
         data={fetchedData}
         fagsak={fagsak}
         alleKodeverk={alleKodeverk}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         hasFetchError={hasFetchError}
         valgtFaktaSteg={valgtFaktaSteg}
         valgtProsessSteg={valgtProsessSteg}

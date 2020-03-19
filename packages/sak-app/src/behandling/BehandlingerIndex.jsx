@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
-import { behandlingPath } from '@fpsak-frontend/fp-felles';
-
+import { behandlingPath } from '../app/paths';
 import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';
 import { getNumBehandlinger } from './selectors/behandlingerSelectors';

@@ -2,13 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-
 import MenuButton from '../MenuButton';
 
-const submit = (resumeBehandling, behandlingIdentifier, selectedBehandlingVersjon) => () => {
+const submit = (resumeBehandling, behandlingId, selectedBehandlingVersjon) => () => {
   resumeBehandling({
-    behandlingId: behandlingIdentifier.behandlingId,
+    behandlingId,
     behandlingVersjon: selectedBehandlingVersjon,
   });
 };
@@ -20,13 +18,13 @@ const submit = (resumeBehandling, behandlingIdentifier, selectedBehandlingVersjo
  * Håndterer også visning av modal.
  */
 const ResumeBehandlingMenuItem = ({
-  behandlingIdentifier,
+  behandlingId,
   behandlingVersjon,
   resumeBehandling,
   gjenopptaBehandlingEnabled,
 }) => (
   <MenuButton
-    onMouseDown={submit(resumeBehandling, behandlingIdentifier, behandlingVersjon)}
+    onMouseDown={submit(resumeBehandling, behandlingId, behandlingVersjon)}
     disabled={!gjenopptaBehandlingEnabled}
   >
     <FormattedMessage id="Behandlingsmeny.ResumeBehandling" />
@@ -34,7 +32,7 @@ const ResumeBehandlingMenuItem = ({
 );
 
 ResumeBehandlingMenuItem.propTypes = {
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number,
   resumeBehandling: PropTypes.func.isRequired,
   gjenopptaBehandlingEnabled: PropTypes.bool,

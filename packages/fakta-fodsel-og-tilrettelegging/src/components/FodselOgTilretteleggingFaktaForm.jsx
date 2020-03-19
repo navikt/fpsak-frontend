@@ -11,12 +11,12 @@ import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingTyp
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer, AvsnittSkiller,
 } from '@fpsak-frontend/shared-components';
-import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
+import { DatepickerField, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import {
   hasValidDate, hasValidText, maxLength, required, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
 import { finnDekningsgradForDelvisTilrettelegging } from './tilrettelegging/TilretteleggingFieldArray';

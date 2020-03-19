@@ -14,9 +14,9 @@
   
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
-  "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
-  "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
-  "BehandlingspunktBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
+  "ProsessStegBegrunnelseTextField.ExplanationRequired": "Vurdering",
+  "ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
+  "ProsessStegBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "HelpText.ToTrinnsKontroll": "Kontroller endrede opplysninger og faglige vurderinger",

@@ -51,6 +51,7 @@ describe('HistorikkMalTypeForeldelse', () => {
       historikkinnslagDeler={historikkinnslagDeler}
       behandlingLocation={{}}
       getKodeverknavn={getKodeverknavn}
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const messages = wrapper.find(FormattedHTMLMessage);

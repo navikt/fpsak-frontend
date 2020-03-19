@@ -3,13 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
+
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm,
+} from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 
 import styles from './annenForelderHarRettForm.less';
 

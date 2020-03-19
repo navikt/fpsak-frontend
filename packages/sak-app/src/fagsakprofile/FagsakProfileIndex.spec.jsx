@@ -8,10 +8,13 @@ import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
-import {
-  getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, DataFetcher,
-} from '@fpsak-frontend/fp-felles';
 
+import {
+  getLocationWithDefaultProsessStegAndFakta,
+  pathToBehandling,
+  pathToBehandlinger,
+} from '../app/paths';
+import DataFetcher from '../app/DataFetcher';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 describe('<FagsakProfileIndex>', () => {
@@ -73,7 +76,7 @@ describe('<FagsakProfileIndex>', () => {
     const saksnummer = 123;
     const location = {};
     const pathToBehandlingerForFagsak = pathToBehandlinger(saksnummer);
-    const locationForBehandling = getLocationWithDefaultBehandlingspunktAndFakta({ ...location, pathname: pathToBehandling(saksnummer, behandlingId) });
+    const locationForBehandling = getLocationWithDefaultProsessStegAndFakta({ ...location, pathname: pathToBehandling(saksnummer, behandlingId) });
 
     const wrapper = shallow(<FagsakProfileIndex
       saksnummer={saksnummer}

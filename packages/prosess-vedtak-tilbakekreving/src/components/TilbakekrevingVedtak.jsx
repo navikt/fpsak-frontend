@@ -6,7 +6,7 @@ import { Undertittel, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 
 import vedtaksbrevAvsnittPropType from '../propTypes/vedtaksbrevAvsnittPropType';
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';

@@ -7,8 +7,8 @@ import { injectIntl } from 'react-intl';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { getPathToFplos } from '@fpsak-frontend/fp-felles';
 
+import { getPathToFplos } from '../paths';
 import Dashboard from './Dashboard';
 
 const isDevelopment = () => process.env.NODE_ENV === 'development';

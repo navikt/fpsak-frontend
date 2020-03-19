@@ -5,7 +5,7 @@ import { FieldArray, formValueSelector } from 'redux-form';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import FrilansOppdragForFamilieFieldArray, { defaultFrilansPeriode } from './FrilansOppdragForFamilieFieldArray';
@@ -20,7 +20,7 @@ export const FrilansOppdragForFamiliePanelImpl = ({
   readOnly,
   harHattOppdragForFamilie,
 }) => (
-  <ElementWrapper>
+  <>
     <RadioGroupField
       name="harHattOppdragForFamilie"
       readOnly={readOnly}
@@ -37,7 +37,7 @@ export const FrilansOppdragForFamiliePanelImpl = ({
         <FieldArray name="oppdragPerioder" component={FrilansOppdragForFamilieFieldArray} readOnly={readOnly} />
       </ArrowBox>
       )}
-  </ElementWrapper>
+  </>
 );
 
 FrilansOppdragForFamiliePanelImpl.propTypes = {

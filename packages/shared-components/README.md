@@ -70,7 +70,6 @@ Komponent/Ikon som viser om noe i GUI er endret.
 |-----------------------|---------------|---------|---------|
 | className             | string        |         | null    |
 
-### ElementWrapper
 ### FadingPanel
 ### Image
 Presentasjonskomponent. Komponent som har ansvar for visning av bilder.

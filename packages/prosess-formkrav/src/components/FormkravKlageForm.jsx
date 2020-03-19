@@ -6,13 +6,12 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
-  BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
-} from '@fpsak-frontend/fp-felles';
-import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
+  RadioGroupField, RadioOption, SelectField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './formkravKlageForm.less';
@@ -67,7 +66,7 @@ export const FormkravKlageForm = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="6">
-          <BehandlingspunktBegrunnelseTextField
+          <ProsessStegBegrunnelseTextField
             readOnly={readOnly}
           />
         </Column>
@@ -129,7 +128,7 @@ export const FormkravKlageForm = ({
         </Column>
       </Row>
       <div className={styles.confirmVilkarForm}>
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}

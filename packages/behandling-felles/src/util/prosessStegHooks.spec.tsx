@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -83,16 +83,15 @@ describe('<prosessStegHooks>', () => {
     const ekstraPanelData = {
       soknad: 'test_soknad',
     };
-    const navAnsatt = {
-      brukernavn: 'Espen Utvikler',
-      navn: 'Espen Utvikler',
-      kanVeilede: false,
-      kanSaksbehandle: true,
-      kanOverstyre: false,
-      kanBeslutte: false,
-      kanBehandleKode6: false,
-      kanBehandleKode7: false,
-      kanBehandleKodeEgenAnsatt: false,
+    const rettigheter = {
+      writeAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
+      kanOverstyreAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
     };
 
     const apentFaktaPanelInfo = undefined;
@@ -103,7 +102,7 @@ describe('<prosessStegHooks>', () => {
 
     // ACT
     const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
-      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, navAnsatt, behandling,
+      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, rettigheter, behandling,
       aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
     ));
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values(

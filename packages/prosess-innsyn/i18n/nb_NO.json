@@ -29,9 +29,9 @@
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
-  "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
-  "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
-  "BehandlingspunktBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
+  "ProsessStegBegrunnelseTextField.ExplanationRequired": "Vurdering",
+  "ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
+  "ProsessStegBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
 

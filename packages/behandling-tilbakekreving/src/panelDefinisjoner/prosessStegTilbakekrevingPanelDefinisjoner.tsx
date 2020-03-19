@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';

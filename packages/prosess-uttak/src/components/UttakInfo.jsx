@@ -7,14 +7,13 @@ import moment from 'moment/moment';
 
 import { CheckboxField, DecimalField, SelectField } from '@fpsak-frontend/form';
 import {
-  calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, hasValidDecimal, maxValue, notDash, required,
+  calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, hasValidDecimal, maxValue, notDash, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './uttakActivity.less';

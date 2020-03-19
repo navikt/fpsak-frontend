@@ -8,11 +8,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FagsakInfo, ProsessStegPanel, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal, ProsessStegContainer,
+  FagsakInfo, Rettigheter, ProsessStegPanel, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { Kodeverk, Behandling } from '@fpsak-frontend/types';
 
 import svpBehandlingApi from '../data/svpBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegSvpPanelDefinisjoner';
@@ -25,7 +23,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
   hasFetchError: boolean;
@@ -92,7 +90,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   valgtFaktaSteg,
   hasFetchError,
@@ -113,7 +111,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvSvpPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo);
+    dataTilUtledingAvSvpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);

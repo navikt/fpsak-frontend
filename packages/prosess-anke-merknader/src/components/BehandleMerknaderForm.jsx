@@ -8,11 +8,12 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils';
 import {
-  BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
-} from '@fpsak-frontend/fp-felles';
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 
 import PreviewAnkeLink from './PreviewAnkeLink';
 
@@ -59,7 +60,7 @@ const AnkeMerknader = ({
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="8">
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

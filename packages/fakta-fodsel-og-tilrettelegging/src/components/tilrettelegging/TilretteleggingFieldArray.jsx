@@ -6,8 +6,9 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Element } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
-import { DatepickerField, SelectField, DecimalField } from '@fpsak-frontend/form';
+import {
+  DatepickerField, SelectField, DecimalField, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';

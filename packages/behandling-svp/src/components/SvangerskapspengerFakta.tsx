@@ -3,12 +3,10 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks,
+  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { Kodeverk, Behandling } from '@fpsak-frontend/types';
 
 import svpBehandlingApi from '../data/svpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaSvpPanelDefinisjoner';
@@ -22,7 +20,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
@@ -36,7 +34,7 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
   data,
   behandling,
   fagsak,
-  navAnsatt,
+  rettigheter,
   alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
@@ -54,7 +52,7 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
-    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvSvpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvSvpPaneler, behandling, rettigheter, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 

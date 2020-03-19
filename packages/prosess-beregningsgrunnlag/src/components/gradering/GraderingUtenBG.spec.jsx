@@ -5,7 +5,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { buildInitialValues, GraderingUtenBG2 as UnwrappedForm } from './GraderingUtenBG';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
@@ -87,7 +87,7 @@ describe('<GraderingUtenBG>', () => {
     expect(radioOption).to.have.length(2);
     const textfield = wrapper.find(TextAreaField);
     expect(textfield).to.have.length(1);
-    const button = wrapper.find(BehandlingspunktSubmitButton);
+    const button = wrapper.find(ProsessStegSubmitButton);
     expect(button).to.have.length(1);
     const hjelpetekst = wrapper.find('FormattedHTMLMessage');
     const formattedMessages = wrapper.find('FormattedMessage');
@@ -112,7 +112,7 @@ describe('<GraderingUtenBG>', () => {
     expect(radioOption).to.have.length(2);
     const textfield = wrapper.find(TextAreaField);
     expect(textfield).to.have.length(1);
-    const button = wrapper.find(BehandlingspunktSubmitButton);
+    const button = wrapper.find(ProsessStegSubmitButton);
     expect(button).to.have.length(1);
     const hjelpetekst = wrapper.find('FormattedHTMLMessage');
     const formattedMessages = wrapper.find('FormattedMessage');

@@ -5,7 +5,7 @@ import {
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';
 
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const logger = isDevelopment ? require('redux-logger') : null;

@@ -15,7 +15,7 @@ const intl = createIntl({
 
 const BehandlingVelgerSakIndex = ({
   behandlinger,
-  saksnummer,
+  getBehandlingLocation,
   noExistingBehandlinger,
   behandlingId,
   showAll,
@@ -25,7 +25,7 @@ const BehandlingVelgerSakIndex = ({
   <RawIntlProvider value={intl}>
     <BehandlingPicker
       behandlinger={behandlinger}
-      saksnummer={saksnummer}
+      getBehandlingLocation={getBehandlingLocation}
       noExistingBehandlinger={noExistingBehandlinger}
       behandlingId={behandlingId}
       showAll={showAll}
@@ -37,7 +37,7 @@ const BehandlingVelgerSakIndex = ({
 
 BehandlingVelgerSakIndex.propTypes = {
   behandlinger: PropTypes.arrayOf(behandlingVelgerBehandlingPropType).isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  getBehandlingLocation: PropTypes.func.isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number,
   showAll: PropTypes.bool.isRequired,

@@ -6,9 +6,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import styles from './ektefelleFaktaForm.less';
 

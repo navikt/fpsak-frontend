@@ -8,10 +8,9 @@ import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DateLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { MerkePanel } from '@fpsak-frontend/person-info';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { MerkePanel } from '@fpsak-frontend/fakta-felles';
 
 import styles from './barnPanel.less';
 

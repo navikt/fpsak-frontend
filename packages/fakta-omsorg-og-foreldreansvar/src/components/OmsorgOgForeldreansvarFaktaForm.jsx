@@ -8,13 +8,13 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  AksjonspunktHelpTextTemp, EditedIcon, ElementWrapper, VerticalSpacer,
+  AksjonspunktHelpTextTemp, EditedIcon, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { SelectField } from '@fpsak-frontend/form';
+import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidInteger, isObjectEmpty, required } from '@fpsak-frontend/utils';
 import VilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { isFieldEdited, FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { isFieldEdited } from '@fpsak-frontend/fakta-felles';
 
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
 import RettighetFaktaPanel from './RettighetFaktaPanel';
@@ -60,7 +60,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
   behandlingVersjon,
   alleMerknaderFraBeslutter,
 }) => (
-  <ElementWrapper>
+  <>
     <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {findAksjonspunktHelpTexts(erAksjonspunktForeldreansvar)}
     </AksjonspunktHelpTextTemp>
@@ -141,7 +141,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
         </Normaltekst>
       </FaktaGruppe>
       )}
-  </ElementWrapper>
+  </>
 );
 
 OmsorgOgForeldreansvarFaktaFormImpl.propTypes = {

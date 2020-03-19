@@ -1,4 +1,4 @@
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 
 import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
 

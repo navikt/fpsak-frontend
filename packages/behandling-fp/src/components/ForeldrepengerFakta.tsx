@@ -3,12 +3,10 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks,
+  FagsakInfo, Rettigheter, FaktaPanel, DataFetcherBehandlingData, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { Kodeverk, Behandling } from '@fpsak-frontend/types';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaFpPanelDefinisjoner';
@@ -22,7 +20,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
@@ -36,7 +34,7 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   data,
   behandling,
   fagsak,
-  navAnsatt,
+  rettigheter,
   alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
@@ -54,7 +52,7 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
-    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, behandling, rettigheter, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 

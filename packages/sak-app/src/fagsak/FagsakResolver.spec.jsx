@@ -5,9 +5,9 @@ import { expect } from 'chai';
 import { Redirect } from 'react-router-dom';
 
 import { dummyFagsak } from '@fpsak-frontend/utils-test/src/data-test-helper';
-import { pathToMissingPage } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
+import { pathToMissingPage } from '../app/paths';
 import { FagsakResolver } from './FagsakResolver';
 
 const fagsak = dummyFagsak();
