@@ -139,7 +139,7 @@ export const FodselOgTilretteleggingFaktaForm = ({
                     formSectionName={utledFormSectionName(a)}
                     erOverstyrer={erOverstyrer}
                     changeField={formProps.change}
-                    stillingsprosentArbeidsforhold={af ? af.stillingsprosent : undefined}
+                    stillingsprosentArbeidsforhold={af ? af.stillingsprosent : 100}
                   />
                   {index === arbeidsforhold.length - 1 && (
                     <AvsnittSkiller />
@@ -220,7 +220,7 @@ const transformValues = (values, iayArbeidsforhold, arbeidsforhold) => ([{
   bekreftetSvpArbeidsforholdList: arbeidsforhold.map((a) => {
     const value = values[utledFormSectionName(a)];
     const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
-    const stillingsprosentArbeidsforhold = af ? af.stillingsprosent : undefined;
+    const stillingsprosentArbeidsforhold = af ? af.stillingsprosent : 100;
     return {
       ...value,
       tilretteleggingDatoer: value.tilretteleggingDatoer.map((t) => ({
@@ -319,12 +319,13 @@ const getInitialArbeidsforholdValues = createSelector([
   const arbeidsforholdValues = [];
   arbeidsforhold.forEach((a) => {
     const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    const stillingsprosentArbeidsforhold = af ? af.stillingsprosent : 100;
     arbeidsforholdValues[utledFormSectionName(a)] = {
       ...a,
       tilretteleggingDatoer: a.tilretteleggingDatoer.map((tilretteleggingsdato) => ({
         ...tilretteleggingsdato,
         oldOverstyrtUtbetalingsgrad: tilretteleggingsdato.overstyrtUtbetalingsgrad,
-        overstyrtUtbetalingsgrad: utledUtbetalingsgrad(tilretteleggingsdato, af.stillingsprosent),
+        overstyrtUtbetalingsgrad: utledUtbetalingsgrad(tilretteleggingsdato, stillingsprosentArbeidsforhold),
       })),
     };
   });
