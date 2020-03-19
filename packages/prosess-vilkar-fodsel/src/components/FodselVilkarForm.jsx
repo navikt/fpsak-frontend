@@ -9,8 +9,9 @@ import { Element } from 'nav-frontend-typografi';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, ProsessPanelTemplate,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, VilkarResultPicker, ProsessPanelTemplate,
+} from '@fpsak-frontend/prosess-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -56,7 +57,7 @@ export const FodselVilkarFormImpl = ({
       customVilkarOppfyltText={{ id: 'FodselVilkarForm.Oppfylt' }}
       customVilkarIkkeOppfyltText={{ id: 'FodselVilkarForm.IkkeOppfylt' }}
     />
-    <BehandlingspunktBegrunnelseTextField useAllWidth readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField useAllWidth readOnly={readOnly} />
   </ProsessPanelTemplate>
 );
 
@@ -90,13 +91,13 @@ export const buildInitialValues = createSelector(
     (state, ownProps) => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
-    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+    ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
 
 const transformValues = (values, aksjonspunkter) => ({
   ...VilkarResultPicker.transformValues(values),
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
   ...{ kode: aksjonspunkter[0].definisjon.kode },
 });
 

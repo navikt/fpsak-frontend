@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 
+import PauseBehandlingModal from './PauseBehandlingModal';
 import MenuButton from '../MenuButton';
 import MenyKodeverk from '../../MenyKodeverk';
 
@@ -29,11 +29,11 @@ class PauseBehandlingMenuItem extends Component {
 
   submit(formValues) {
     const {
-      setBehandlingOnHold, behandlingIdentifier, behandlingVersjon,
+      setBehandlingOnHold, behandlingId, behandlingVersjon,
     } = this.props;
     const values = {
       behandlingVersjon,
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingId,
       frist: formValues.frist,
       ventearsak: formValues.ventearsak,
     };
@@ -53,10 +53,10 @@ class PauseBehandlingMenuItem extends Component {
   }
 
   render() {
-    const { settBehandlingPaVentEnabled, behandlingIdentifier, menyKodeverk } = this.props;
+    const { settBehandlingPaVentEnabled, behandlingId, menyKodeverk } = this.props;
     const { showModal } = this.state;
 
-    if (!behandlingIdentifier) {
+    if (!behandlingId) {
       return null;
     }
 
@@ -68,11 +68,10 @@ class PauseBehandlingMenuItem extends Component {
           <FormattedMessage id="Behandlingsmeny.BehandlingOnHold" />
         </MenuButton>
         {showModal && (
-          <SettBehandlingPaVentForm
+          <PauseBehandlingModal
             showModal={showModal}
             onSubmit={this.submit}
             cancelEvent={this.hideModal}
-            hasManualPaVent
             ventearsaker={ventearsaker}
           />
         )}
@@ -82,7 +81,7 @@ class PauseBehandlingMenuItem extends Component {
 }
 
 PauseBehandlingMenuItem.propTypes = {
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingId: PropTypes.number.isRequired,
   menyKodeverk: PropTypes.instanceOf(MenyKodeverk).isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   toggleBehandlingsmeny: PropTypes.func.isRequired,

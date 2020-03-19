@@ -149,6 +149,7 @@ export const visAksjonspunktForFeilutbetaling = () => (
       erAktivt: true,
     }]}
     alleKodeverk={alleKodeverk}
+    fpsakKodeverk={alleKodeverk}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
     }}

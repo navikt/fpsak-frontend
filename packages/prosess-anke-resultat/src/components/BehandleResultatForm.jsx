@@ -9,9 +9,10 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 
@@ -130,7 +131,7 @@ const AnkeResultatForm = ({
     <VerticalSpacer sixteenPx />
     <Row>
       <Column xs="12">
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
@@ -143,7 +144,7 @@ const AnkeResultatForm = ({
           textCode="Ankebehandling.Resultat.SendTilMedunderskriver"
         />
         <span>&nbsp;</span>
-        <BehandlingspunktSubmitButton
+        <ProsessStegSubmitButton
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}

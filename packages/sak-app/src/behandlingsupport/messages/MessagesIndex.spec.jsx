@@ -5,9 +5,11 @@ import { shallow } from 'enzyme';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { DataFetcher, BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import Messages, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 
+import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
+import DataFetcher from '../../app/DataFetcher';
+import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import { MessagesIndex } from './MessagesIndex';
 
 describe('<MessagesIndex>', () => {
@@ -380,7 +382,7 @@ describe('<MessagesIndex>', () => {
       frist: '2017-10-10',
       ventearsak: 'TEST',
     };
-    wrapper.find(SettBehandlingPaVentForm).prop('onSubmit')(formValues);
+    wrapper.find(MessageBehandlingPaVentModal).prop('onSubmit')(formValues);
 
     expect(setBehandlingOnHoldCallback).to.have.property('callCount', 1);
     const { args } = setBehandlingOnHoldCallback.getCalls()[0];

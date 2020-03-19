@@ -8,10 +8,9 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { dateBeforeOrEqualToToday, getAddresses, hasValidDate } from '@fpsak-frontend/utils';
-import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { DateLabel, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 const getParentHeader = (erMor) => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'ForeldrePanel.FatherDeathDate');
 

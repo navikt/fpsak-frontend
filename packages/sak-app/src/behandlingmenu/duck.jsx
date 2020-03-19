@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling } from '@fpsak-frontend/fp-felles';
 
+import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import fpsakApi from '../data/fpsakApi';
 import behandlingEventHandler from '../behandling/BehandlingEventHandler';
 
@@ -20,13 +20,13 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
       return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
         .then((behandlingerResponse) => {
           const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
-          push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname }));
+          push(getLocationWithDefaultProsessStegAndFakta({ pathname }));
           return Promise.resolve(behandlingerResponse);
         });
     }
     // NEW_BEHANDLING har returnert behandling
     return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
-      .then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
+      .then(() => push(getLocationWithDefaultProsessStegAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
   });
 
 export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
@@ -49,16 +49,16 @@ export const nyBehandlendeEnhet = (params) => behandlingEventHandler.endreBehand
 
 export const openBehandlingForChanges = (params) => behandlingEventHandler.opneBehandlingForEndringer(params);
 
-export const opprettVerge = (push, behandlingIdentifier, versjon) => behandlingEventHandler.opprettVerge({
-  behandlingId: behandlingIdentifier.behandlingId,
+export const opprettVerge = (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.opprettVerge({
+  behandlingId,
   behandlingVersjon: versjon,
-}).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
-  pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
+}).then(() => push(getLocationWithDefaultProsessStegAndFakta({
+  pathname: pathToBehandling(saksnummer, behandlingId),
 })));
 
-export const fjernVerge = (push, behandlingIdentifier, versjon) => behandlingEventHandler.fjernVerge({
-  behandlingId: behandlingIdentifier.behandlingId,
+export const fjernVerge = (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.fjernVerge({
+  behandlingId,
   behandlingVersjon: versjon,
-}).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
-  pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
+}).then(() => push(getLocationWithDefaultProsessStegAndFakta({
+  pathname: pathToBehandling(saksnummer, behandlingId),
 })));

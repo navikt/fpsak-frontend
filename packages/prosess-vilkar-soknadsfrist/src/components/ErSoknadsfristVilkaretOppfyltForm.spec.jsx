@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { ProsessStegBegrunnelseTextField } from '@fpsak-frontend/prosess-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -147,7 +147,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
 
     const radioButtons = wrapper.find('RadioOption');
     expect(radioButtons).has.length(2);
-    expect(wrapper.find(BehandlingspunktBegrunnelseTextField)).has.length(1);
+    expect(wrapper.find(ProsessStegBegrunnelseTextField)).has.length(1);
     expect(wrapper.find('injectIntl(ConfirmInformationVilkarFormReadOnly)')).has.length(0);
   });
 
@@ -168,7 +168,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
       getKodeverknavn={getKodeverknavn}
     />);
 
-    const confirm = wrapper.find(BehandlingspunktBegrunnelseTextField);
+    const confirm = wrapper.find(ProsessStegBegrunnelseTextField);
     expect(confirm).has.length(1);
     expect(confirm.prop('readOnly')).is.true;
     expect(wrapper.find('RadioOption')).has.length(1);

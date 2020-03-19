@@ -10,7 +10,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import {
-  RadioGroupField, RadioOption, SelectField, TextAreaField,
+  RadioGroupField, RadioOption, SelectField, TextAreaField, behandlingFormValueSelector, behandlingForm,
 } from '@fpsak-frontend/form';
 import {
   hasValidText,
@@ -34,9 +34,9 @@ import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType'
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import {
-  ArrowBox, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
+
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 
@@ -134,7 +134,7 @@ export const UttakActivity = ({
             </Column>
           </Row>
         )}
-    <ElementWrapper>
+    <>
       <div className={styles.marginBottom20}>
         <TextAreaField
           name="begrunnelse"
@@ -244,7 +244,7 @@ export const UttakActivity = ({
               </FlexContainer>
             </div>
           )}
-    </ElementWrapper>
+    </>
   </div>
 );
 

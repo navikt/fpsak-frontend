@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -109,16 +109,15 @@ describe('<prosessStegUtils>', () => {
     const ekstraPanelData = {
       soknad: 'test_soknad',
     };
-    const navAnsatt = {
-      brukernavn: 'Espen Utvikler',
-      navn: 'Espen Utvikler',
-      kanVeilede: false,
-      kanSaksbehandle: true,
-      kanOverstyre: false,
-      kanBeslutte: false,
-      kanBehandleKode6: false,
-      kanBehandleKode7: false,
-      kanBehandleKodeEgenAnsatt: false,
+    const rettigheter = {
+      writeAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
+      kanOverstyreAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
     };
 
     const hasFetchError = false;
@@ -127,7 +126,7 @@ describe('<prosessStegUtils>', () => {
 
     // ACT
     const prosessStegPaneler = utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunktKoder,
-      fagsak, navAnsatt, behandling, aksjonspunkter, vilkar, hasFetchError);
+      fagsak, behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(prosessStegPaneler).to.have.length(1);
     const paneler = [{

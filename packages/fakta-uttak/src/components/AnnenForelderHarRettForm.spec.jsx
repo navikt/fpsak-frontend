@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import { AnnenForelderHarRettForm } from './AnnenForelderHarRettForm';
 
 

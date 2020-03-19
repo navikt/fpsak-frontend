@@ -7,7 +7,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
+import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/konstanter';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';

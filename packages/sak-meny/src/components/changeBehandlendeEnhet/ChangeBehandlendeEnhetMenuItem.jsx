@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-
 import ChangeBehandlendeEnhetModal from './ChangeBehandlendeEnhetModal';
 import MenuButton from '../MenuButton';
 
@@ -30,12 +28,12 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
 
   submit(formValues) {
     const {
-      behandlingIdentifier, behandlingVersjon, nyBehandlendeEnhet,
+      behandlingId, behandlingVersjon, nyBehandlendeEnhet,
     } = this.props;
     const { nyEnhet } = this.state;
     const values = {
       behandlingVersjon,
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingId,
       enhetNavn: nyEnhet.enhetNavn,
       enhetId: nyEnhet.enhetId,
       begrunnelse: formValues.begrunnelse,
@@ -90,7 +88,7 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
 }
 
 ChangeBehandlendeEnhetMenuItem.propTypes = {
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
+  behandlingId: PropTypes.number,
   behandlingVersjon: PropTypes.number,
   behandlendeEnhetId: PropTypes.string,
   behandlendeEnhetNavn: PropTypes.string,
@@ -104,7 +102,7 @@ ChangeBehandlendeEnhetMenuItem.propTypes = {
 };
 
 ChangeBehandlendeEnhetMenuItem.defaultProps = {
-  behandlingIdentifier: undefined,
+  behandlingId: undefined,
   behandlingVersjon: undefined,
   behandlendeEnhetId: undefined,
   behandlendeEnhetNavn: undefined,

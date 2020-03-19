@@ -10,10 +10,10 @@ import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
-  BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
-} from '@fpsak-frontend/fp-felles';
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
@@ -67,7 +67,7 @@ export const BehandleKlageFormKaImpl = ({
         <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="8">
-            <BehandlingspunktSubmitButton
+            <ProsessStegSubmitButton
               formName={formProps.form}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}

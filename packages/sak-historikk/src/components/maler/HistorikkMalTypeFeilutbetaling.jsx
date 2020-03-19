@@ -4,7 +4,6 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
@@ -48,11 +47,12 @@ const HistorikkMalTypeFeilutbetaling = ({
   historikkinnslagDeler,
   behandlingLocation,
   getKodeverknavn,
+  createLocationForSkjermlenke,
 }) => (
   <div>
     <Element>
       <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+        to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
         onClick={scrollUp}
       >
         {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
@@ -86,6 +86,7 @@ HistorikkMalTypeFeilutbetaling.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalTypeFeilutbetaling);

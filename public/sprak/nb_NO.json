@@ -80,8 +80,6 @@
   "BegrunnelsePanel.ConfirmInformation": "Bekreft opplysningene",
   "BegrunnelsePanel.ChangeOfInformationRequiresExplanation": "Begrunn endringene",
   "BegrunnelsePanel.readOnly": "Begrunnelse",
-  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
-  "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
   "ConfirmInformationVilkarReadOnly.Reasoning": "Begrunnelse",
@@ -164,17 +162,6 @@
   "Person.Unknown": "Ukjent",
   "Person.ManglerDodsdato": "Dødsdato mangler",
   "Person.HarIkkeNorskFnrEllerDnr": "Har ikke norsk f.nr. eller d-nr.",
-  "MerkePanel.Dod": "DØD",
-  "MerkePanel.DodFodt": "DØDFØDT",
-  "MerkePanel.Diskresjon6": "Kode 6",
-  "MerkePanel.Diskresjon7": "Kode 7",
-  "MerkePanel.EgenAnsatt": "NAV",
-  "MerkePanel.Verge": "Verge",
-  "MerkePanel.DodTittel": "Personen er død",
-  "MerkePanel.Diskresjon6Tittel": "Personen har diskresjonsmerking kode 6",
-  "MerkePanel.Diskresjon7Tittel": "Personen har diskresjonsmerking kode 7",
-  "MerkePanel.EgenAnsattTittel": "Personen er ansatt i NAV",
-  "MerkePanel.VergeTittel": "Personen har verge",
   "Historikk.Omsorg.Omsorg": "Omsorg",
   "Historikk.Aleneomsorg.Aleneomsorg": "Aleneomsorg",
   "Historikk.Aleneomsorg.ApplicationInformation": "Manuell kontroll av om søker har aleneomsorg",
@@ -406,6 +393,8 @@
 
   "TilbakekrevingFakta.FaktaFeilutbetaling": "Feilutbetaling",
   "FaktaPanel.FaktaOm": "Fakta om",
+
+  "AktoerGrid.IngenFagsaker": "Har ingen fagsaker i fpsak",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 

@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { skjermlenkeCodes } from '@fpsak-frontend/konstanter';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { createLocationForHistorikkItems, skjermlenkeCodes } from '@fpsak-frontend/fp-felles';
 
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
@@ -24,7 +24,7 @@ const sorterTilbakekrevingContext = (approvals) => (
     .filter((s) => s)
 );
 
-export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) => {
+export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke) => {
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
     if (props.behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && props.totrinnskontrollSkjermlenkeContext) {
@@ -38,7 +38,7 @@ export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) =
         const skjermlenkeTypeKodeverk = skjemalenkeTyper.find((skjemalenkeType) => skjemalenkeType.kode === context.skjermlenkeType);
         return {
           contextCode: context.skjermlenkeType,
-          skjermlenke: createLocationForHistorikkItems(props.location, context.skjermlenkeType),
+          skjermlenke: createLocationForSkjermlenke(props.location, context.skjermlenkeType),
           skjermlenkeNavn: skjermlenkeTypeKodeverk.navn,
           aksjonspunkter: context.totrinnskontrollAksjonspunkter,
         };
@@ -66,19 +66,21 @@ export class ApprovalPanel extends Component {
     };
 
     const {
-      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper,
+      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper, createLocationForSkjermlenke,
     } = props;
     if (totrinnskontrollSkjermlenkeContext || totrinnskontrollReadOnlySkjermlenkeContext) {
       this.state = {
         ...this.state,
-        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper),
+        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke),
       };
     }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.totrinnskontrollSkjermlenkeContext || nextProps.totrinnskontrollReadOnlySkjermlenkeContext) {
-      this.setState({ approvals: mapPropsToContext(nextProps.toTrinnsBehandling, nextProps, nextProps.skjemalenkeTyper) });
+      this.setState({
+        approvals: mapPropsToContext(nextProps.toTrinnsBehandling, nextProps, nextProps.skjemalenkeTyper, nextProps.createLocationForSkjermlenke),
+      });
     }
   }
 
@@ -189,6 +191,7 @@ ApprovalPanel.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   erTilbakekreving: PropTypes.bool,
 };
 

@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { createVisningsnavnForAktivitet, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import {
   Table, TableColumn, TableRow, VerticalSpacer, FloatRight,
 } from '@fpsak-frontend/shared-components';
-import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 
@@ -18,6 +17,17 @@ import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje
 import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
 
 import styles from './tilkjentYtelse.less';
+
+const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+
+export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
+  if (!aktivitet.arbeidsgiverNavn) {
+    return aktivitet.arbeidsforholdType ? getKodeverknavn(aktivitet.arbeidsforholdType) : '';
+  }
+  return aktivitet.arbeidsgiverId
+    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+    : aktivitet.arbeidsgiverNavn;
+};
 
 const createVisningNavnForUttakArbeidstaker = (andel, getKodeverknavn) => {
   if (!andel.arbeidsgiverOrgnr) {

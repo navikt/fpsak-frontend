@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Behandling, Kodeverk, NavAnsatt,
-} from '@fpsak-frontend/types';
+import { Behandling, Kodeverk } from '@fpsak-frontend/types';
 
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';
 import ForeldrepengerPaneler from './components/ForeldrepengerPaneler';
@@ -25,7 +23,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -100,7 +98,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       valgtFaktaSteg,
@@ -130,7 +128,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
               fetchedData={dataProps}
               fagsak={fagsak}
               alleKodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               valgtFaktaSteg={valgtFaktaSteg}

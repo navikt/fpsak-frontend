@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
@@ -46,7 +46,7 @@ describe('<CheckPersonStatusForm>', () => {
     expect(helpText.childAt(0).text())
       .is.eql('Søker har personstatus: Ukjent. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus');
 
-    const submit = wrapper.find(BehandlingspunktBegrunnelseTextField);
+    const submit = wrapper.find(ProsessStegBegrunnelseTextField);
     expect(submit).to.have.length(1);
   });
 
@@ -125,10 +125,10 @@ describe('<CheckPersonStatusForm>', () => {
     expect(radioGroupField).to.have.length(1);
     expect(radioGroupField.prop('readOnly')).is.true;
 
-    const info = wrapper.find(BehandlingspunktBegrunnelseTextField);
+    const info = wrapper.find(ProsessStegBegrunnelseTextField);
     expect(info).to.have.length(1);
     expect(info.prop('readOnly')).is.true;
-    const button = wrapper.find(BehandlingspunktSubmitButton);
+    const button = wrapper.find(ProsessStegSubmitButton);
     expect(button).to.have.length(1);
     expect(button.prop('isReadOnly')).is.true;
   });

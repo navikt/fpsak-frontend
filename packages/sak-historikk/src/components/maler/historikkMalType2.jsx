@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
-
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText, findResultatText } from './felles/historikkUtils';
 
@@ -18,13 +16,14 @@ const HistorikkMalType2 = ({
   behandlingLocation,
   intl,
   getKodeverknavn,
+  createLocationForSkjermlenke,
 }) => (
   <div>
     {historikkinnslagDeler[0].skjermlenke
     && (
     <Element className="snakkeboble-panel__tekst">
       <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+        to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
         onClick={scrollUp}
       >
         {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
@@ -46,6 +45,7 @@ HistorikkMalType2.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
 };
 

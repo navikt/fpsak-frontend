@@ -5,7 +5,7 @@ import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /**
  *
@@ -18,17 +18,15 @@ export const BekreftelsePanel = ({
   annenForelderInformertRequired,
 }) => (
   <BorderBox>
-    <ElementWrapper>
-      <VerticalSpacer twentyPx />
-      <Undertittel>{intl.formatMessage({ id: 'Registrering.TheOtherParent.Confirmation' })}</Undertittel>
-      <VerticalSpacer eightPx />
-      <Undertekst>{intl.formatMessage({ id: 'Registrering.TheOtherParent.OtherParentKnowPeriods' })}</Undertekst>
-      <VerticalSpacer eightPx />
-      <RadioGroupField name="annenForelderInformert" readOnly={readOnly} validate={annenForelderInformertRequired ? [required] : []}>
-        <RadioOption label={{ id: 'Registrering.TheOtherParent.Yes' }} value />
-        <RadioOption label={{ id: 'Registrering.TheOtherParent.No' }} value={false} />
-      </RadioGroupField>
-    </ElementWrapper>
+    <VerticalSpacer twentyPx />
+    <Undertittel>{intl.formatMessage({ id: 'Registrering.TheOtherParent.Confirmation' })}</Undertittel>
+    <VerticalSpacer eightPx />
+    <Undertekst>{intl.formatMessage({ id: 'Registrering.TheOtherParent.OtherParentKnowPeriods' })}</Undertekst>
+    <VerticalSpacer eightPx />
+    <RadioGroupField name="annenForelderInformert" readOnly={readOnly} validate={annenForelderInformertRequired ? [required] : []}>
+      <RadioOption label={{ id: 'Registrering.TheOtherParent.Yes' }} value />
+      <RadioOption label={{ id: 'Registrering.TheOtherParent.No' }} value={false} />
+    </RadioGroupField>
   </BorderBox>
 );
 

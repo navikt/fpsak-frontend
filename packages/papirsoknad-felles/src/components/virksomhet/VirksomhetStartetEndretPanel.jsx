@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, hasValidInteger, required } from '@fpsak-frontend/utils';
 import {
   CheckboxField, DatepickerField, InputField, RadioGroupField, RadioOption, TextAreaField,
@@ -25,7 +25,7 @@ export const VirksomhetStartetEndretPanel = ({
   erNyIArbeidslivet,
   harVarigEndring,
 }) => (
-  <ElementWrapper>
+  <>
     <Undertekst><FormattedMessage id="Registrering.VirksomhetStartetPanel.NewlyStartedOrChanged" /></Undertekst>
     <VerticalSpacer fourPx />
     <RadioGroupField name="varigEndretEllerStartetSisteFireAr" readOnly={readOnly}>
@@ -84,7 +84,7 @@ export const VirksomhetStartetEndretPanel = ({
     </Row>
     )}
     <VerticalSpacer eightPx />
-  </ElementWrapper>
+  </>
 
 );
 

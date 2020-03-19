@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { createSelector, createStructuredSelector } from 'reselect';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import VurderMilitaer from './vurderMilitaer/VurderMilitaer';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
@@ -110,55 +110,55 @@ const getFaktaPanels = (
     if (tilfelle === faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD) {
       hasShownPanel = true;
       faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
+        <React.Fragment key={tilfelle}>
           <TidsbegrensetArbeidsforholdForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
             faktaOmBeregning={faktaOmBeregning}
             alleKodeverk={alleKodeverk}
           />
-        </ElementWrapper>,
+        </React.Fragment>,
       );
     }
     if (tilfelle === faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET) {
       hasShownPanel = true;
       faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
+        <React.Fragment key={tilfelle}>
           {spacer(hasShownPanel)}
           <NyIArbeidslivetSNForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
           />
-        </ElementWrapper>,
+        </React.Fragment>,
       );
     }
     if (tilfelle === faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE) {
       hasShownPanel = true;
       faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
+        <React.Fragment key={tilfelle}>
           <VurderMilitaer
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
           />
-        </ElementWrapper>,
+        </React.Fragment>,
       );
     }
     if (tilfelle === faktaOmBeregningTilfelle.VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT) {
       hasShownPanel = true;
       faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
+        <React.Fragment key={tilfelle}>
           <VurderRefusjonForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
             faktaOmBeregning={faktaOmBeregning}
           />
-        </ElementWrapper>,
+        </React.Fragment>,
       );
     }
   });
   setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed, faktaOmBeregning, behandlingId, behandlingVersjon, alleKodeverk);
   faktaPanels.push(
-    <ElementWrapper key="VurderOgFastsettATFL">
+    <React.Fragment key="VurderOgFastsettATFL">
       {spacer(true)}
       <VurderOgFastsettATFL
         readOnly={readOnly}
@@ -172,7 +172,7 @@ const getFaktaPanels = (
         erOverstyrer={erOverstyrer}
         aksjonspunkter={aksjonspunkter}
       />
-    </ElementWrapper>,
+    </React.Fragment>,
   );
   return faktaPanels;
 };

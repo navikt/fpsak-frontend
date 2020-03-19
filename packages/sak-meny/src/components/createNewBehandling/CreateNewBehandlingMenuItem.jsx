@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import CreateNewBehandlingModal from './CreateNewBehandlingModal';
@@ -33,17 +32,17 @@ class CreateNewBehandlingMenuItem extends Component {
 
   submit(formValues) {
     const {
-      saksnummer, behandlingIdentifier, submitNyBehandling, push,
+      saksnummer, behandlingId, submitNyBehandling, push,
     } = this.props;
     const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
-    const tilbakekrevingBehandlingId = behandlingIdentifier && isTilbakekreving ? { behandlingId: behandlingIdentifier.behandlingId } : {};
+    const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
     const data = {
       saksnummer: saksnummer.toString(),
       ...tilbakekrevingBehandlingId,
       ...formValues,
     };
 
-    const erBehandlingValgt = behandlingIdentifier !== undefined && behandlingIdentifier.behandlingId;
+    const erBehandlingValgt = !!behandlingId;
     submitNyBehandling(push, saksnummer, erBehandlingValgt, isTilbakekreving, data);
     this.hideModal();
   }
@@ -61,7 +60,7 @@ class CreateNewBehandlingMenuItem extends Component {
   render() {
     const {
       opprettNyForstegangsBehandlingEnabled, opprettRevurderingEnabled, ikkeVisOpprettNyBehandling, menyKodeverk,
-      behandlingType, behandlingIdentifier, ytelseType, saksnummer, kanTilbakekrevingOpprettes, uuidForSistLukkede,
+      behandlingType, behandlingId, ytelseType, saksnummer, kanTilbakekrevingOpprettes, uuidForSistLukkede,
       erTilbakekrevingAktivert, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
     } = this.props;
     const { showModal } = this.state;
@@ -82,7 +81,7 @@ class CreateNewBehandlingMenuItem extends Component {
             menyKodeverk={menyKodeverk}
             kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
             behandlingType={behandlingType}
-            behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
+            behandlingId={behandlingId}
             uuidForSistLukkede={uuidForSistLukkede}
             erTilbakekrevingAktivert={erTilbakekrevingAktivert}
             sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
@@ -99,7 +98,7 @@ CreateNewBehandlingMenuItem.propTypes = {
   behandlingType: kodeverkObjektPropType,
   ytelseType: kodeverkObjektPropType.isRequired,
   saksnummer: PropTypes.number.isRequired,
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
+  behandlingId: PropTypes.number,
   push: PropTypes.func.isRequired,
   submitNyBehandling: PropTypes.func.isRequired,
   opprettNyForstegangsBehandlingEnabled: PropTypes.bool.isRequired,

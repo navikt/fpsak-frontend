@@ -12,11 +12,12 @@ import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurd
 import {
   ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors,
+} from '@fpsak-frontend/form';
 import {
   hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from '@fpsak-frontend/fp-felles';
 
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';

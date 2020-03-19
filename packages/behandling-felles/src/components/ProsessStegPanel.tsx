@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Dispatch } from 'redux';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { Behandling, Kodeverk } from '@fpsak-frontend/types';

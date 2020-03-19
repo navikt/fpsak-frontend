@@ -7,6 +7,7 @@ export { default as BeregningsresultatFp } from './src/beregningsresultatFpTsTyp
 export { default as Dokument } from './src/dokumentTsType';
 export { default as InntektArbeidYtelse } from './src/inntektArbeidYtelseTsType';
 export { default as Kodeverk } from './src/kodeverkTsType';
+export { default as KodeverkMedNavn } from './src/kodeverkMedNavnTsType';
 export { default as NavAnsatt } from './src/navAnsattTsType';
 export { default as Personopplysninger } from './src/personopplysningerTsType';
 export { default as SimuleringResultat } from './src/simuleringResultatTsType';

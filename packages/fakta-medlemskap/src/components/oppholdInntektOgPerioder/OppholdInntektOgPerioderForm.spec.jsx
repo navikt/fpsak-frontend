@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -18,8 +17,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       initialValues={{}}
       intl={intlMock}
       aksjonspunkter={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       isRevurdering={false}
@@ -55,8 +52,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
       aksjonspunkter={[bosattAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -95,8 +90,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
       aksjonspunkter={[periodeAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -131,8 +124,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
       aksjonspunkter={[oppholdsrettAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -167,8 +158,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
       aksjonspunkter={[lovligOppholdAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -204,8 +193,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
       aksjonspunkter={[fortsattMedlemskapAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}

@@ -42,7 +42,7 @@ describe('<BehandlingPicker>', () => {
     const wrapper = shallow(<BehandlingPicker
       noExistingBehandlinger
       behandlinger={[]}
-      saksnummer={1}
+      getBehandlingLocation={() => 'url'}
       showAll={false}
       toggleShowAll={sinon.spy()}
       alleKodeverk={{}}
@@ -70,7 +70,7 @@ describe('<BehandlingPicker>', () => {
     const wrapper = shallow(<BehandlingPicker
       noExistingBehandlinger={false}
       behandlinger={behandlinger}
-      saksnummer={1}
+      getBehandlingLocation={() => 'url'}
       showAll
       toggleShowAll={sinon.spy()}
       alleKodeverk={{}}
@@ -101,7 +101,7 @@ describe('<BehandlingPicker>', () => {
       noExistingBehandlinger={false}
       behandlinger={behandlinger}
       behandlingId={2}
-      saksnummer={1}
+      getBehandlingLocation={() => 'url'}
       showAll
       toggleShowAll={sinon.spy()}
       alleKodeverk={{}}

@@ -6,11 +6,12 @@ import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 
 import {
-  pathToFagsak, errorOfType, ErrorTypes, getErrorResponseData,
-} from '@fpsak-frontend/fp-felles';
+  errorOfType, ErrorTypes, getErrorResponseData,
+} from '@fpsak-frontend/rest-api';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
+import { pathToFagsak } from '../app/paths';
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { ErrorTypes } from '@fpsak-frontend/fp-felles';
+import { ErrorTypes } from '@fpsak-frontend/rest-api';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 

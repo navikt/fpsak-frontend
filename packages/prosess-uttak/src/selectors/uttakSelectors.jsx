@@ -2,13 +2,14 @@ import { createSelector } from 'reselect';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { behandlingFormValueSelector, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  calcDays, calcDaysAndWeeks, DDMMYY_DATE_FORMAT,
+  calcDays, calcDaysAndWeeks, DDMMYY_DATE_FORMAT, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';

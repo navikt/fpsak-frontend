@@ -10,7 +10,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
@@ -28,10 +28,9 @@ import {
   requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
 import {
-  PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField,
+  PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField, behandlingForm, behandlingFormValueSelector,
 } from '@fpsak-frontend/form';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
-import { FaktaGruppe, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 

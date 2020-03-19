@@ -4,16 +4,13 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import ResumeBehandlingMenuItem from './ResumeBehandlingMenuItem';
 
 describe('<ResumeBehandlingMenuItem>', () => {
-  const behandlingIdentifier = new BehandlingIdentifier(123, 1);
-
   it('skal rendre komponent', () => {
     const wrapper = shallow(<ResumeBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={sinon.spy()}
       resumeBehandling={sinon.spy()}
@@ -29,7 +26,7 @@ describe('<ResumeBehandlingMenuItem>', () => {
   it('skal sende data til server ved trykk på ok-knapp', () => {
     const resumeBehandlingCallback = sinon.spy();
     const wrapper = shallow(<ResumeBehandlingMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       resumeBehandling={resumeBehandlingCallback}
       gjenopptaBehandlingEnabled

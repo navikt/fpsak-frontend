@@ -65,10 +65,6 @@
   "BeregningInfoPanel.FordelBG.Inntekt": "Inntekt",
   "BeregningInfoPanel.FordelBG.Beregningsgrunnlag": "Grunnlag",
   
-  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
-  "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
-
-  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",

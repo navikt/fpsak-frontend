@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, BehandlingPaVent, SettPaVentParams, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk } from '@fpsak-frontend/types';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -16,7 +16,7 @@ interface OwnProps {
   behandling: Behandling;
   kodeverk: {[key: string]: Kodeverk[]};
   fpsakKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -33,7 +33,7 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
   behandling,
   kodeverk,
   fpsakKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
@@ -60,7 +60,6 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={kodeverk}
-        navAnsatt={navAnsatt}
         valgtProsessSteg={valgtProsessSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
@@ -68,12 +67,13 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
         harApenRevurdering={harApenRevurdering}
         hasFetchError={hasFetchError}
         dispatch={dispatch}
+        rettigheter={rettigheter}
       />
       <TilbakekrevingFakta
         data={fetchedData}
         fagsak={fagsak}
         behandling={behandling}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={kodeverk}
         fpsakKodeverk={fpsakKodeverk}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}

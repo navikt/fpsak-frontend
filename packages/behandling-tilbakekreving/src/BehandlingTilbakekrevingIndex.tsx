@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, NavAnsatt, Behandling } from '@fpsak-frontend/types';
+import { Kodeverk, Behandling } from '@fpsak-frontend/types';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
@@ -21,7 +21,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -90,7 +90,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
       kodeverk: fpsakKodeverk,
       tilbakekrevingKodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
@@ -120,7 +120,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
               fagsak={fagsak}
               kodeverk={tilbakekrevingKodeverk}
               fpsakKodeverk={fpsakKodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}

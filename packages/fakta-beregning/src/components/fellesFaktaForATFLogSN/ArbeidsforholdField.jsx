@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField } from '@fpsak-frontend/form';
 import { getUniqueListOfArbeidsforholdFields, createVisningsnavnForAktivitet } from '../ArbeidsforholdHelper';
 
@@ -47,7 +46,7 @@ export const ArbeidsforholdFieldImpl = ({
 }) => {
   const arbeidsforholdList = getUniqueListOfArbeidsforholdFields(fields);
   return (
-    <ElementWrapper>
+    <>
       {(!fields.get(index).skalKunneEndreAktivitet)
       && (
       <InputField
@@ -67,7 +66,7 @@ export const ArbeidsforholdFieldImpl = ({
         onChange={(event) => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
       />
       )}
-    </ElementWrapper>
+    </>
   );
 };
 

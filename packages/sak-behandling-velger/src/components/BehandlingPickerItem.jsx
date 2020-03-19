@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 
 import behandlingVelgerBehandlingPropType from '../propTypes/behandlingVelgerBehandlingPropType';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
@@ -40,10 +40,10 @@ const renderToggleShowAllButton = (toggleShowAll, behandling, showAll, getKodeve
   </button>
 );
 
-const renderLinkToBehandling = (saksnummer, behandling, isActive, toggleShowAll, showAll, getKodeverknavn) => (
+const renderLinkToBehandling = (getBehandlingLocation, behandling, isActive, toggleShowAll, showAll, getKodeverknavn) => (
   <NavLink
     className={styles.linkToBehandling}
-    to={getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, behandling.id) })}
+    to={getBehandlingLocation(behandling.id)}
     onClick={toggleShowAll}
   >
     {renderItemContent(behandling, getKodeverknavn, false, showAll && isActive)}
@@ -53,7 +53,7 @@ const renderLinkToBehandling = (saksnummer, behandling, isActive, toggleShowAll,
 const BehandlingPickerItem = ({
   onlyOneBehandling,
   behandling,
-  saksnummer,
+  getBehandlingLocation,
   isActive,
   showAll,
   toggleShowAll,
@@ -64,7 +64,7 @@ const BehandlingPickerItem = ({
     return renderItemContent(behandling, getKodeverknavn);
   }
   if (onlyOneBehandling || showAll) {
-    return renderLinkToBehandling(saksnummer, behandling, isActive, toggleShowAll, showAll, getKodeverknavn);
+    return renderLinkToBehandling(getBehandlingLocation, behandling, isActive, toggleShowAll, showAll, getKodeverknavn);
   }
   if (isActive) {
     return renderToggleShowAllButton(toggleShowAll, behandling, showAll, getKodeverknavn);
@@ -75,7 +75,7 @@ const BehandlingPickerItem = ({
 BehandlingPickerItem.propTypes = {
   onlyOneBehandling: PropTypes.bool.isRequired,
   behandling: behandlingVelgerBehandlingPropType.isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  getBehandlingLocation: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,

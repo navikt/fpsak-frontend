@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { SelectField } from '@fpsak-frontend/form';
-import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { SelectField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import styles from './feilutbetalingPerioderTable.less';
 

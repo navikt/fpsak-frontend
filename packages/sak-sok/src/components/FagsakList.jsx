@@ -6,7 +6,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './fagsakList.less';

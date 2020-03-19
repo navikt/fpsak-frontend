@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
@@ -37,35 +37,32 @@ export const InntektstabellPanelImpl = ({
   aksjonspunkter,
   erOverstyrt,
 }) => (
-  <ElementWrapper>
+  <>
     {children}
     <div className={styles.fadeinTabell}>
       <VerticalSpacer sixteenPx />
-      {(kanOverstyre || erOverstyrt)
-          && (
-          <div className={styles.rightAligned}>
-            <CheckboxField
-              key="manuellOverstyring"
-              name={MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}
-              label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
-              readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
-            />
-          </div>
+      {(kanOverstyre || erOverstyrt) && (
+      <div className={styles.rightAligned}>
+        <CheckboxField
+          key="manuellOverstyring"
+          name={MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}
+          label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
+          readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
+        />
+      </div>
+      )}
+      {skalViseTabell && (
+        <div>
+          {hjelpeTekstId && (
+            <Element>
+              <FormattedMessage id={hjelpeTekstId} />
+            </Element>
           )}
-      {skalViseTabell
-      && (
-      <ElementWrapper>
-        {hjelpeTekstId
-        && (
-          <Element>
-            <FormattedMessage id={hjelpeTekstId} />
-          </Element>
-        )}
-        {tabell}
-      </ElementWrapper>
+          {tabell}
+        </div>
       )}
     </div>
-  </ElementWrapper>
+  </>
 );
 
 InntektstabellPanelImpl.propTypes = {

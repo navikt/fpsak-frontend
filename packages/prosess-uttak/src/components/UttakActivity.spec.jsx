@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { initialValue, UttakActivity } from './UttakActivity';
@@ -167,8 +166,6 @@ describe('<UttakActivity>', () => {
     expect(updateKnapp).to.have.length(1);
     const cancelKnapp = wrapper.find('Knapp');
     expect(cancelKnapp).to.have.length(1);
-    const elementWrapper = wrapper.find(ElementWrapper);
-    expect(elementWrapper).to.have.length(1);
   });
 
   it('skal rendre uttakactivity readonly', () => {

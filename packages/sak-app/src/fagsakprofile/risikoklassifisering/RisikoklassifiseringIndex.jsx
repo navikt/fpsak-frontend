@@ -6,13 +6,14 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { allAccessRights, getRiskPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 
+import { getRiskPanelLocationCreator } from '../../app/paths';
 import { getBehandlingerErPaaVentStatusMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import { getNavAnsatt } from '../../app/duck';
+import getAccessRights from '../../app/util/access';
 import { getSelectedFagsakStatus } from '../../fagsak/fagsakSelectors';
 import {
   getBehandlingIdentifier, getBehandlingVersjon, getSelectedBehandlingId, getBehandlingStatus, getBehandlingType,
@@ -119,7 +120,7 @@ const getRettigheter = createSelector([
   getSelectedFagsakStatus,
   getBehandlingStatus,
   getBehandlingType,
-], allAccessRights);
+], getAccessRights);
 
 const getReadOnly = createSelector([getRettigheter, getNavAnsatt, getBehandlingerErPaaVentStatusMappedById, getSelectedBehandlingId],
   (rettigheter, navAnsatt, erPaaVentMap, selectedBehandlingId) => {

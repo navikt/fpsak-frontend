@@ -7,10 +7,10 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import {
-  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
@@ -59,7 +59,7 @@ export const PersonArbeidsforholdDetailForm = ({
   alleKodeverk,
   ...formProps
 }) => (
-  <ElementWrapper>
+  <>
     <Element><FormattedMessage id="PersonArbeidsforholdDetailForm.Header" /></Element>
     <PermisjonPeriode arbeidsforhold={arbeidsforhold} />
     <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
@@ -138,7 +138,7 @@ export const PersonArbeidsforholdDetailForm = ({
         )}
       </Column>
     </Row>
-  </ElementWrapper>
+  </>
 );
 
 PersonArbeidsforholdDetailForm.propTypes = {

@@ -8,9 +8,8 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import {
   required, hasValidText, maxLength, minLength,
 } from '@fpsak-frontend/utils';
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
 

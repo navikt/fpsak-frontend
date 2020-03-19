@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import {
   minLength, maxLength, required, hasValidText,
 } from '@fpsak-frontend/utils';
-import { TextAreaField } from '@fpsak-frontend/form';
-import { behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/fp-felles';
+import { TextAreaField, behandlingFormValueSelector, isBehandlingFormDirty } from '@fpsak-frontend/form';
 
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 import aktivtArbeidsforholdHandling from '../../kodeverk/aktivtArbeidsforholdHandling';

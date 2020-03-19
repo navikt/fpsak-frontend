@@ -9,7 +9,7 @@ import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 
 const getVedtakStatus = (behandlingsresultat, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);

@@ -1,13 +1,15 @@
 import React, { FunctionComponent } from 'react';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import {
+  FormattedMessage, FormattedHTMLMessage, injectIntl, WrappedComponentProps,
+} from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertittel, Element } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm, FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import { AksjonspunktBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingForm } from '@fpsak-frontend/form';
 
 import styles from './innhentDokOpptjeningUtlandPanel.less';
 
@@ -28,7 +30,8 @@ interface OwnProps {
   form: string;
 }
 
-export const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
+export const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
   behandlingId,
   behandlingVersjon,
   readOnly,
@@ -64,7 +67,7 @@ export const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
         isSubmittable={submittable}
         isReadOnly={readOnly}
         hasBegrunnelse={!!initialValues.begrunnelse}
-        labelCode="InnhentDokOpptjeningUtlandPanel.Begrunnelse"
+        label={intl.formatMessage({ id: 'InnhentDokOpptjeningUtlandPanel.Begrunnelse' })}
       />
       <VerticalSpacer sixteenPx />
       <FaktaSubmitButton
@@ -97,4 +100,4 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 
 export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'InnhentDokOpptjeningUtlandPanel',
-})(InnhentDokOpptjeningUtlandPanel));
+})(injectIntl(InnhentDokOpptjeningUtlandPanel)));

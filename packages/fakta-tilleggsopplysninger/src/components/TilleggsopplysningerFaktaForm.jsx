@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import styles from './tilleggsopplysningerFaktaForm.less';
@@ -19,17 +19,17 @@ const TilleggsopplysningerFaktaForm = ({
   submitting,
   tilleggsopplysninger,
 }) => (
-  <ElementWrapper>
+  <>
     <Normaltekst className={styles.explanationReadOnly}>{decodeHtmlEntity(tilleggsopplysninger)}</Normaltekst>
     {!readOnly && (
-      <ElementWrapper>
+      <>
         <VerticalSpacer twentyPx />
         <Hovedknapp mini spinner={submitting} disabled={submitting}>
           <FormattedMessage id="TilleggsopplysningerFaktaForm.Confirmed" />
         </Hovedknapp>
-      </ElementWrapper>
+      </>
     )}
-  </ElementWrapper>
+  </>
 );
 
 TilleggsopplysningerFaktaForm.propTypes = {

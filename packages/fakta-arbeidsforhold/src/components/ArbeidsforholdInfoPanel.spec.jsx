@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -25,15 +24,11 @@ const ap5080 = {
   erAktivt: true,
 };
 
-const toggleCallback = sinon.spy();
-
 describe('<ArbeidsforholdInfoPanel>', () => {
   it('Skal vise komponenten korrekt med aksjonspunkt hvor man ikke kan legge til nye arbeidsforhold', () => {
     const wrapper = shallow(
       <ArbeidsforholdInfoPanelImpl
         aksjonspunkter={[ap5080]}
-        openInfoPanels={['arbeidsforhold']}
-        toggleInfoPanelCallback={toggleCallback}
         readOnly={false}
         hasOpenAksjonspunkter
         skalKunneLeggeTilNyeArbeidsforhold={false}
@@ -55,8 +50,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
     const wrapper = shallow(
       <ArbeidsforholdInfoPanelImpl
         aksjonspunkter={[ap5080]}
-        openInfoPanels={['arbeidsforhold']}
-        toggleInfoPanelCallback={toggleCallback}
         readOnly={false}
         hasOpenAksjonspunkter
         skalKunneLeggeTilNyeArbeidsforhold
@@ -78,8 +71,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
     const wrapper = shallow(
       <ArbeidsforholdInfoPanelImpl
         aksjonspunkter={[]}
-        openInfoPanels={['arbeidsforhold']}
-        toggleInfoPanelCallback={toggleCallback}
         readOnly={false}
         hasOpenAksjonspunkter={false}
         skalKunneLeggeTilNyeArbeidsforhold

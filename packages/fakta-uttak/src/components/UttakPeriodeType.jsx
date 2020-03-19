@@ -12,7 +12,8 @@ import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
-import { lagVisningsNavn } from '@fpsak-frontend/fp-felles';
+
+import lagVisningsNavn from './utils/uttakVisningsnavnHelper';
 
 import styles from './uttakPeriodeType.less';
 

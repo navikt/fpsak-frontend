@@ -42,7 +42,7 @@ describe('<BehandlingPickerItem>', () => {
     const wrapper = shallow(<BehandlingPickerItem
       onlyOneBehandling
       behandling={behandlingTemplate}
-      saksnummer={1}
+      getBehandlingLocation={() => 'url'}
       isActive
       showAll
       toggleShowAll={() => undefined}
@@ -57,7 +57,7 @@ describe('<BehandlingPickerItem>', () => {
     const wrapper = shallow(<BehandlingPickerItem
       onlyOneBehandling
       behandling={behandlingTemplate}
-      saksnummer={1}
+      getBehandlingLocation={() => 'url'}
       isActive={false}
       showAll
       toggleShowAll={() => undefined}
@@ -72,7 +72,7 @@ describe('<BehandlingPickerItem>', () => {
     const wrapper = shallow(<BehandlingPickerItem
       onlyOneBehandling={false}
       behandling={behandlingTemplate}
-      saksnummer={1}
+      getBehandlingLocation={() => 'url'}
       isActive
       showAll={false}
       toggleShowAll={() => undefined}

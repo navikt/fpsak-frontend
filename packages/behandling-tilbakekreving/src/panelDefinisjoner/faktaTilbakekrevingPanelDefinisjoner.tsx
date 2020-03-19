@@ -1,7 +1,7 @@
 import React from 'react';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/konstanter';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';

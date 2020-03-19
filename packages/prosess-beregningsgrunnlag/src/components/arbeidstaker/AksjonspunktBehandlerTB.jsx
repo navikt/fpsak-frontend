@@ -1,31 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import {
-  dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
-} from '@fpsak-frontend/utils';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import {
-  behandlingFormValueSelector,
-  getKodeverknavnFn,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/fp-felles';
+  dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required, getKodeverknavnFn,
+} from '@fpsak-frontend/utils';
+import { InputField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-
-import { connect } from 'react-redux';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
-import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { InputField } from '@fpsak-frontend/form';
+
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
-
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
-
 
 const formPrefix = 'inntektField';
 
@@ -210,7 +203,7 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
             );
           }
           return (
-            <React.Fragment key={`ElementWrapper${element.inputfieldKey}`}>
+            <React.Fragment key={`key${element.inputfieldKey}`}>
               <td key={`Col-${element.inputfieldKey}`} colSpan="2">
                 <div className={(isAksjonspunktClosed && readOnly) ? styles.adjustedField : undefined}>
                   <InputField

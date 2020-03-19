@@ -10,7 +10,7 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
-import { ArrowBox, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { ArrowBox, BorderBox } from '@fpsak-frontend/shared-components';
 
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 
@@ -44,7 +44,7 @@ export const AndreYtelserPanelImpl = ({
     .map((ay) => {
       const ytelseFieldName = `${ay.kode}_${ANDRE_YTELSER_PERIODE_SUFFIX}`;
       return (
-        <ElementWrapper key={ay.kode}>
+        <React.Fragment key={ay.kode}>
           <CheckboxField key={ay.kode} name={ay.kode} label={ay.navn} readOnly={readOnly} />
           {selectedYtelser && selectedYtelser[ay.kode]
           && (
@@ -60,19 +60,17 @@ export const AndreYtelserPanelImpl = ({
             </Column>
           </Row>
           )}
-        </ElementWrapper>
+        </React.Fragment>
       );
     });
   return (
-    <ElementWrapper>
-      <FormSection name={ANDRE_YTELSER_FORM_NAME_PREFIX}>
-        <BorderBox>
-          <SkjemaGruppe className={styles.fullWidth} legend={intl.formatMessage({ id: 'Registrering.AndreYtelser.Title' })}>
-            {checkboxFields}
-          </SkjemaGruppe>
-        </BorderBox>
-      </FormSection>
-    </ElementWrapper>
+    <FormSection name={ANDRE_YTELSER_FORM_NAME_PREFIX}>
+      <BorderBox>
+        <SkjemaGruppe className={styles.fullWidth} legend={intl.formatMessage({ id: 'Registrering.AndreYtelser.Title' })}>
+          {checkboxFields}
+        </SkjemaGruppe>
+      </BorderBox>
+    </FormSection>
   );
 };
 

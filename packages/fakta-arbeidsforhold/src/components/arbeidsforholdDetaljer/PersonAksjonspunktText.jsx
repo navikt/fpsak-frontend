@@ -4,8 +4,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 import moment from 'moment';
 
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { DDMMYYYY_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import arbeidsforholdKilder from '../../kodeverk/arbeidsforholdKilder';

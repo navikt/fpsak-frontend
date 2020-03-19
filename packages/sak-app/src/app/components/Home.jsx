@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
-import { aktoerPath, fagsakPath } from '@fpsak-frontend/fp-felles';
 import { NotFoundPage } from '@fpsak-frontend/sak-feilsider';
 
+import { aktoerPath, fagsakPath } from '../paths';
 import FagsakIndex from '../../fagsak/FagsakIndex';
 import AktoerIndex from '../../aktoer/AktoerIndex';
 import DashboardResolver from './DashboardResolver';

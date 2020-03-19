@@ -2,12 +2,12 @@ import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { allAccessRights } from '@fpsak-frontend/fp-felles';
-import { Behandling, NavAnsatt, Aksjonspunkt } from '@fpsak-frontend/types';
+import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 
 import readOnlyUtils from './readOnlyUtils';
 import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 import FagsakInfo from '../types/fagsakInfoTsType';
+import Rettigheter from '../types/rettigheterTsType';
 import FaktaPanelDefinisjon from '../types/faktaPanelDefinisjonTsType';
 import FaktaPanelUtledet from '../types/faktaPanelUtledetTsType';
 import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
@@ -18,13 +18,11 @@ export const DEFAULT_PROSESS_STEG_KODE = 'default';
 export const utledFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDefinisjon[],
   ekstraPanelData: {},
-  fagsak: FagsakInfo,
   behandling: Behandling,
-  navAnsatt: NavAnsatt,
+  rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
   hasFetchError: boolean,
 ): FaktaPanelUtledet[] => {
-  const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   return faktaPanelDefinisjoner
@@ -40,7 +38,7 @@ export const utledFaktaPaneler = (
         harApneAksjonspunkter,
         komponentData: {
           aksjonspunkter: filtrerteAksjonspunkter,
-          readOnly: readOnlyUtils.erReadOnly(behandling, filtrerteAksjonspunkter, [], navAnsatt, fagsak, hasFetchError),
+          readOnly: readOnlyUtils.erReadOnly(behandling, filtrerteAksjonspunkter, [], rettigheter, hasFetchError),
           submittable: !filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) || filtrerteAksjonspunkter.some((ap) => ap.kanLoses),
           harApneAksjonspunkter,
           alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(behandling, filtrerteAksjonspunkter),

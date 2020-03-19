@@ -5,33 +5,26 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  BehandlingspunktSubmitButton,
-  getKodeverknavnFn,
-  behandlingForm,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-  createVisningsnavnForAktivitet,
-} from '@fpsak-frontend/fp-felles';
 
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
-  hasValidText, maxLength, minLength, required,
+  behandlingForm, RadioGroupField, RadioOption, TextAreaField, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+import {
+  hasValidText, maxLength, minLength, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 import styles from './graderingUtenBG.less';
-import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
@@ -100,10 +93,10 @@ export const GraderingUtenBG2 = ({
 
       <AvsnittSkiller luftOver luftUnder dividerParagraf />
 
-      <ElementWrapper>
+      <>
         { lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
         <VerticalSpacer sixteenPx />
-      </ElementWrapper>
+      </>
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.Gradering.Tittel" />
       </Element>
@@ -142,7 +135,7 @@ export const GraderingUtenBG2 = ({
       <Row>
         <Column xs="1">
           <VerticalSpacer eightPx />
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             isReadOnly={readOnly}
             isSubmittable={!readOnly}

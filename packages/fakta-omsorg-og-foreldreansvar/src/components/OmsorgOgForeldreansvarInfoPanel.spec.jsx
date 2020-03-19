@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import sinon from 'sinon';
 
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fakta-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 import { OmsorgOgForeldreansvarInfoPanelImpl } from './OmsorgOgForeldreansvarInfoPanel';
@@ -33,8 +32,6 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkt={aksjonspunkt}
       erAksjonspunktForeldreansvar={false}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -61,8 +58,6 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkt={aksjonspunkt}
       erAksjonspunktForeldreansvar={false}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly
@@ -84,8 +79,6 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkt={aksjonspunkt}
       erAksjonspunktForeldreansvar={false}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly={false}
@@ -108,8 +101,6 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkt={aksjonspunkt}
       erAksjonspunktForeldreansvar
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly={false}

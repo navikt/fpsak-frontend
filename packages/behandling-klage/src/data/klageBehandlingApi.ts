@@ -1,6 +1,7 @@
-import { ReduxEvents, ReduxRestApiBuilder, RestApiConfigBuilder } from '@fpsak-frontend/rest-api-redux';
+import {
+  reducerRegistry, setRequestPollingMessage, ReduxEvents, ReduxRestApiBuilder, RestApiConfigBuilder,
+} from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
 export const KlageBehandlingApiKeys = {
   BEHANDLING_KLAGE: 'BEHANDLING_KLAGE',

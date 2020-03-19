@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
 
 import MenuButton from '../MenuButton';
@@ -27,12 +26,12 @@ class OpenBehandlingForChangesMenuItem extends Component {
   }
 
   submit() {
-    const { openBehandlingForChanges, behandlingIdentifier, behandlingVersjon } = this.props;
+    const { openBehandlingForChanges, behandlingId, behandlingVersjon } = this.props;
     const params = {
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingId,
       behandlingVersjon,
     };
-    openBehandlingForChanges(params, behandlingIdentifier);
+    openBehandlingForChanges(params);
 
     this.hideModal();
   }
@@ -48,10 +47,10 @@ class OpenBehandlingForChangesMenuItem extends Component {
   }
 
   render() {
-    const { behandlingIdentifier } = this.props;
+    const { behandlingId } = this.props;
     const { showModal } = this.state;
 
-    if (!behandlingIdentifier) {
+    if (!behandlingId) {
       return null;
     }
 
@@ -75,14 +74,14 @@ class OpenBehandlingForChangesMenuItem extends Component {
 }
 
 OpenBehandlingForChangesMenuItem.propTypes = {
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
+  behandlingId: PropTypes.number,
   behandlingVersjon: PropTypes.number,
   openBehandlingForChanges: PropTypes.func.isRequired,
   toggleBehandlingsmeny: PropTypes.func.isRequired,
 };
 
 OpenBehandlingForChangesMenuItem.defaultProps = {
-  behandlingIdentifier: undefined,
+  behandlingId: undefined,
   behandlingVersjon: undefined,
 };
 

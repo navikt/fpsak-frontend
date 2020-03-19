@@ -1,0 +1,17 @@
+{
+  "MerkePanel.Dod": "DØD",
+  "MerkePanel.DodTittel": "Personen er død",
+  "MerkePanel.DodFodt": "DØDFØDT",
+  "MerkePanel.Diskresjon6": "Kode 6",
+  "MerkePanel.Diskresjon7": "Kode 7",
+  "MerkePanel.EgenAnsatt": "NAV",
+  "MerkePanel.Verge": "Verge",
+  "MerkePanel.Diskresjon6Tittel": "Personen har diskresjonsmerking kode 6",
+  "MerkePanel.Diskresjon7Tittel": "Personen har diskresjonsmerking kode 7",
+  "MerkePanel.EgenAnsattTittel": "Personen er ansatt i NAV",
+  "MerkePanel.VergeTittel": "Personen har verge",
+
+  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
+  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
+  "FaktaBegrunnelseTextField.Vurdering": "Vurdering"
+}

@@ -10,13 +10,14 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import {
-  DataFetcher, requireProps, featureToggle, BehandlingIdentifier,
-} from '@fpsak-frontend/fp-felles';
+import { featureToggle } from '@fpsak-frontend/konstanter';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { requireProps } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
+import { createLocationForSkjermlenke } from '../../app/paths';
+import DataFetcher from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../../app/duck';
@@ -34,6 +35,7 @@ import {
   getBehandlingsresultat,
 } from '../../behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
+import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 
 const getArsaker = (approval) => ([{
   code: vurderPaNyttArsakType.FEIL_FAKTA,
@@ -177,6 +179,7 @@ export class ApprovalIndex extends Component {
               erBehandlingEtterKlage={erBehandlingEtterKlage}
               disableGodkjennKnapp={disableGodkjennKnapp}
               erTilbakekreving={erTilbakekreving}
+              createLocationForSkjermlenke={createLocationForSkjermlenke}
             />
             {showBeslutterModal && (
               <DataFetcher

@@ -151,7 +151,7 @@ describe('<ApprovalPanel>', () => {
 
     const nextProps = getNextProps(totrinnskontrollAksjonspunkter, behandlingStatus.FATTER_VEDTAK);
     const skjemalenkeTyper = getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter);
-    const context = mapPropsToContext(true, nextProps, skjemalenkeTyper);
+    const context = mapPropsToContext(true, nextProps, skjemalenkeTyper, () => 'url');
     expect(context)
       .to
       .have
@@ -255,6 +255,7 @@ describe('<ApprovalPanel>', () => {
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       disableGodkjennKnapp={false}
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -299,6 +300,7 @@ describe('<ApprovalPanel>', () => {
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollSkjermlenkecontexts)}
       disableGodkjennKnapp={false}
       erTilbakekreving
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -340,6 +342,7 @@ describe('<ApprovalPanel>', () => {
       totrinnskontrollSkjermlenkeContext={undefined}
       skjemalenkeTyper={[]}
       disableGodkjennKnapp={false}
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -388,6 +391,7 @@ describe('<ApprovalPanel>', () => {
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       disableGodkjennKnapp={false}
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const approvals = wrapper.state('approvals');

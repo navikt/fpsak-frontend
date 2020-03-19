@@ -6,8 +6,7 @@ import {
   calcDaysAndWeeks, dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
 } from '@fpsak-frontend/utils';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
-import { DatepickerField } from '@fpsak-frontend/form';
+import { DatepickerField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';

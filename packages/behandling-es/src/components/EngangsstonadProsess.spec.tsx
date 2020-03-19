@@ -47,16 +47,15 @@ describe('<EngangsstonadProsess>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [{
     definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
@@ -88,7 +87,7 @@ describe('<EngangsstonadProsess>', () => {
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -137,7 +136,7 @@ describe('<EngangsstonadProsess>', () => {
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -168,7 +167,7 @@ describe('<EngangsstonadProsess>', () => {
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -236,7 +235,7 @@ describe('<EngangsstonadProsess>', () => {
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -282,7 +281,7 @@ describe('<EngangsstonadProsess>', () => {
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -328,7 +327,7 @@ describe('<EngangsstonadProsess>', () => {
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -356,7 +355,7 @@ describe('<EngangsstonadProsess>', () => {
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -387,7 +386,7 @@ describe('<EngangsstonadProsess>', () => {
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="vedtak"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -418,7 +417,7 @@ describe('<EngangsstonadProsess>', () => {
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="simulering"
         valgtFaktaSteg="default"
         hasFetchError={false}

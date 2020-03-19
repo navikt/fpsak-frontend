@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import MenuButton from '../MenuButton';
 
-const submit = (operasjon, behandlingIdentifier, selectedBehandlingVersjon, toggleModal, push) => () => {
+const submit = (operasjon, saksnummer, behandlingId, selectedBehandlingVersjon, toggleModal, push) => () => {
   toggleModal(false);
-  return operasjon(push, behandlingIdentifier, selectedBehandlingVersjon);
+  return operasjon(push, saksnummer, behandlingId, selectedBehandlingVersjon);
 };
 
 /**
@@ -20,7 +19,8 @@ const submit = (operasjon, behandlingIdentifier, selectedBehandlingVersjon, togg
 const OpprettEllerFjernVergeMenuItem = ({
   fjernVerge,
   opprettVerge,
-  behandlingIdentifier,
+  saksnummer,
+  behandlingId,
   behandlingVersjon,
   push,
 }) => {
@@ -36,7 +36,7 @@ const OpprettEllerFjernVergeMenuItem = ({
         <OkAvbrytModal
           textCode={opprettVerge ? 'OpprettEllerFjernVergeMenuItem.OpprettVergeSporsmal' : 'OpprettEllerFjernVergeMenuItem.FjernVergeSporsmal'}
           showModal={showModal}
-          submit={submit(opprettVerge || fjernVerge, behandlingIdentifier, behandlingVersjon, toggleModal, push)}
+          submit={submit(opprettVerge || fjernVerge, saksnummer, behandlingId, behandlingVersjon, toggleModal, push)}
           cancel={() => toggleModal(false)}
         />
       )}
@@ -45,7 +45,8 @@ const OpprettEllerFjernVergeMenuItem = ({
 };
 
 OpprettEllerFjernVergeMenuItem.propTypes = {
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  saksnummer: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number,
   fjernVerge: PropTypes.func,
   opprettVerge: PropTypes.func,

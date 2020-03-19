@@ -39,10 +39,10 @@ export const getBehandlingerInfo = createSelector([getBehandlinger], (behandling
 export const getBehandlingerIds = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.map((b) => b.id));
 
 export const getBehandlingerTypesMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .reduce((acc, b) => ({ ...acc, [b.id]: b.type.kode }), {}));
+  .reduce((acc, b) => ({ ...acc, [b.id]: b.type }), {}));
 
 export const getBehandlingerStatusMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .reduce((acc, b) => ({ ...acc, [b.id]: b.status.kode }), {}));
+  .reduce((acc, b) => ({ ...acc, [b.id]: b.status }), {}));
 
 export const getBehandlingerAktivPapirsoknadMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.erAktivPapirsoknad }), {}));

@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper, Image } from '@fpsak-frontend/shared-components';
+import { Image } from '@fpsak-frontend/shared-components';
 import checkImg from '@fpsak-frontend/assets/images/check.svg'; //
 import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
@@ -95,12 +95,12 @@ export const ToTrinnsFormReadOnlyImpl = ({ approvalList, getAksjonspunktText }) 
       }) => {
         if (aksjonspunkter.length > 0) {
           return (
-            <ElementWrapper key={contextCode}>
+            <React.Fragment key={contextCode}>
               <NavLink to={skjermlenke} onClick={() => window.scroll(0, 0)}>
                 {skjermlenkeNavn}
               </NavLink>
               {aksjonspunkter.map((aksjonspunkt) => renderAksjonspunkt(aksjonspunkt, getAksjonspunktText))}
-            </ElementWrapper>
+            </React.Fragment>
           );
         }
         return null;

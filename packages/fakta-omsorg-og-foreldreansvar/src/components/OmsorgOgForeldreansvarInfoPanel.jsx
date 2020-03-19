@@ -5,9 +5,9 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
-import {
-  getKodeverknavnFn, FaktaBegrunnelseTextField, FaktaSubmitButton, behandlingForm,
-} from '@fpsak-frontend/fp-felles';
+import { behandlingForm } from '@fpsak-frontend/form';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -20,6 +20,7 @@ import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Omsorgsvilkåret.
  */
 export const OmsorgOgForeldreansvarInfoPanelImpl = ({
+  intl,
   behandlingId,
   behandlingVersjon,
   erAksjonspunktForeldreansvar,
@@ -56,9 +57,10 @@ export const OmsorgOgForeldreansvarInfoPanelImpl = ({
         isSubmittable={submittable}
         isReadOnly={readOnly}
         hasBegrunnelse={!!initialValues.begrunnelse}
-        labelCode={erAksjonspunktForeldreansvar
-          ? 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleFp'
-          : 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleEs'}
+        label={intl.formatMessage({
+          id: erAksjonspunktForeldreansvar ? 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleFp'
+            : 'OmsorgOgForeldreansvarInfoPanel.BegrunnelseTitleEs',
+        })}
       />
       <VerticalSpacer twentyPx />
       <FaktaSubmitButton
@@ -78,11 +80,6 @@ OmsorgOgForeldreansvarInfoPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   erAksjonspunktForeldreansvar: PropTypes.bool.isRequired,
-  /**
-   * Oversikt over hvilke faktapaneler som er åpne
-   */
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,

@@ -14,12 +14,12 @@ import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 
 import styles from './tilbaketrekkpanel.less';
 
@@ -99,7 +99,7 @@ export const Tilbaketrekkpanel = ({
       <Row>
         <Column xs="1">
           <VerticalSpacer eightPx />
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={formProps.form}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

@@ -12,18 +12,18 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  DateLabel, ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+  RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, ProsessStegSubmitButton,
+} from '@fpsak-frontend/prosess-felles';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
@@ -126,16 +126,16 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         )}
     {readOnly
         && (
-        <ElementWrapper>
-          <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
-            {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
-          </RadioGroupField>
-          {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
+          <>
+            <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
+              {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
+            </RadioGroupField>
+            {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
           && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
-        </ElementWrapper>
+          </>
         )}
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-    <BehandlingspunktSubmitButton
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -175,13 +175,13 @@ export const buildInitialValues = createSelector([
   (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.status],
 (aksjonspunkter, status) => ({
   erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
-  ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+  ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
 }));
 
 const transformValues = (values, aksjonspunkter) => ({
   erVilkarOk: values.erVilkarOk,
   kode: aksjonspunkter[0].definisjon.kode,
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
 const findDate = createSelector([

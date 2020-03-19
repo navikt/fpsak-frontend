@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { ProsessStegBegrunnelseTextField } from '@fpsak-frontend/prosess-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -32,7 +32,7 @@ describe('<AdopsjonVilkarForm>', () => {
     />);
 
 
-    const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);
+    const readonlyForm = wrapper.find(ProsessStegBegrunnelseTextField);
     expect(readonlyForm).to.have.length(1);
     expect(readonlyForm.prop('readOnly')).is.true;
   });
@@ -63,7 +63,7 @@ describe('<AdopsjonVilkarForm>', () => {
     }]);
     expect(selector.prop('erVilkarOk')).is.undefined;
 
-    expect(wrapper.find(BehandlingspunktBegrunnelseTextField)).to.have.length(1);
+    expect(wrapper.find(ProsessStegBegrunnelseTextField)).to.have.length(1);
     expect(wrapper.find('ConfirmInformationVilkarFormReadOnly')).to.have.length(0);
   });
 
@@ -82,7 +82,7 @@ describe('<AdopsjonVilkarForm>', () => {
       behandlingVersjon={1}
     />);
 
-    const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);
+    const readonlyForm = wrapper.find(ProsessStegBegrunnelseTextField);
     expect(readonlyForm).to.have.length(1);
     expect(readonlyForm.prop('readOnly')).is.true;
   });

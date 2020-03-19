@@ -14,13 +14,10 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { TextAreaField } from '@fpsak-frontend/form';
+import { TextAreaField, behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import { VerticalSpacer, AksjonspunktHelpTextTemp, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import {
-  behandlingForm, getKodeverknavnFn, getBehandlingFormPrefix, FaktaGruppe,
-} from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-import {
-  DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
+  DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';

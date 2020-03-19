@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { getSupportPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
 
+import { getSupportPanelLocationCreator } from '../app/paths';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';

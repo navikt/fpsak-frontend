@@ -5,8 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray, FormSection } from 'redux-form';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import { DatepickerField, CheckboxField } from '@fpsak-frontend/form';
-import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { DatepickerField, CheckboxField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
 import {
   VerticalSpacer, FlexColumn, FlexContainer, FlexRow,

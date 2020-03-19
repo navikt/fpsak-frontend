@@ -9,8 +9,9 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
-} from '@fpsak-frontend/fp-felles';
+  VilkarResultPicker, ProsessStegBegrunnelseTextField, ProsessPanelTemplate,
+} from '@fpsak-frontend/prosess-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import { fastsattOpptjeningPropType } from '../propTypes/opptjeningVilkarOpptjeningPropType';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
@@ -67,7 +68,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       customVilkarIkkeOppfyltText={{ id: 'OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt' }}
     />
     <VerticalSpacer sixteenPx />
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
   </ProsessPanelTemplate>
 );
 
@@ -95,13 +96,13 @@ export const buildInitialValues = createSelector(
     (ownProps) => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
-    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+    ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
   }),
 );
 
 const transformValues = (values, aksjonspunkter) => ({
   ...VilkarResultPicker.transformValues(values),
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
   ...{ kode: aksjonspunkter[0].definisjon.kode },
 });
 

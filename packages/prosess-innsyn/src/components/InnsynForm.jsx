@@ -10,15 +10,15 @@ import { Row } from 'nav-frontend-grid';
 
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  DatepickerField, RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector,
+  isBehandlingFormDirty, isBehandlingFormSubmitting, hasBehandlingFormErrorsOfType,
+} from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { hasValidDate, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import {
-  BehandlingspunktBegrunnelseTextField, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
@@ -64,7 +64,7 @@ export const InnsynFormImpl = ({
     <VedtakDocuments vedtaksdokumenter={vedtaksdokumenter} behandlingTypes={behandlingTypes} />
     <VerticalSpacer twentyPx />
     <DocumentListInnsyn saksNr={saksNr} documents={documents} readOnly={readOnly} />
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     <VerticalSpacer sixteenPx />
     <RadioGroupField
       name="innsynResultatType"
@@ -102,7 +102,7 @@ export const InnsynFormImpl = ({
     </ArrowBox>
     )}
     <VerticalSpacer sixteenPx />
-    <BehandlingspunktSubmitButton
+    <ProsessStegSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -166,7 +166,7 @@ const buildInitialValues = createSelector(
     innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
     fristDato: moment().add(3, 'days').format(ISO_DATE_FORMAT),
     sattPaVent: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : !!fristBehandlingPaaVent,
-    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+    ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     ...hentDokumenterMedNavnOgFikkInnsyn(dokumenter || []),
   }),
 );

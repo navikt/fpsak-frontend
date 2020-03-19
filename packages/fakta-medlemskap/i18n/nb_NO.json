@@ -60,10 +60,6 @@
   "StatusForBorgerFaktaPanel.HarLovligOpphold": "Søker har lovlig opphold",
   "StatusForBorgerFaktaPanel.HarIkkeLovligOpphold": "Søker har <b>ikke</b> lovlig opphold",
 
-  "MerkePanel.Dod": "DØD",
-  "MerkePanel.DodTittel": "Personen er død",
-  "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
-  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "BostedSokerView.ForeignAddresse": "Utenlandsadresse",
   "BostedSokerFaktaIndex.Soker": "Søker",
   "Personstatus.Hjelpetekst": "Personstatus",
@@ -71,7 +67,6 @@
   "Sivilstand.Hjelpetekst": "Sivilstand",
   "BostedSokerView.Region": "Region",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
-  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",

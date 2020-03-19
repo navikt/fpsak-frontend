@@ -13,8 +13,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import {
   dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
 } from '@fpsak-frontend/utils';
-import { DatepickerField } from '@fpsak-frontend/form';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
+import { DatepickerField, behandlingForm } from '@fpsak-frontend/form';
 
 import styles from './delOppPeriodeModal.less';
 

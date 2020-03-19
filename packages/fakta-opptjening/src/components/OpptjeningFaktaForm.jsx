@@ -11,7 +11,7 @@ import { AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpTextTemp, DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';

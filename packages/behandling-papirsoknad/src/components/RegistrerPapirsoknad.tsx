@@ -1,13 +1,10 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { allAccessRights } from '@fpsak-frontend/fp-felles';
 import {
-  FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Behandling, Aksjonspunkt, Kodeverk, NavAnsatt,
-} from '@fpsak-frontend/types';
+import { Behandling, Aksjonspunkt, Kodeverk } from '@fpsak-frontend/types';
 
 import SoknadRegistrertModal from './SoknadRegistrertModal';
 import RegistrerPapirsoknadPanel from './RegistrerPapirsoknadPanel';
@@ -17,7 +14,7 @@ interface OwnProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
   kodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   lagreAksjonspunkt: (params: {}) => Promise<void>;
@@ -61,14 +58,13 @@ export const RegistrerPapirsoknad: FunctionComponent<OwnProps> = ({
   behandling,
   aksjonspunkter,
   kodeverk,
-  navAnsatt,
+  rettigheter,
   settPaVent,
   hentBehandling,
   lagreAksjonspunkt,
   erAksjonspunktLagret,
 }) => {
   const [soknadData, setSoknadData] = useState();
-  const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
   const readOnly = !rettigheter.writeAccess.isEnabled || behandling.behandlingPaaVent;
 
   const lagre = lagLagreFunksjon(soknadData, behandling, aksjonspunkter, fagsak, lagreAksjonspunkt);

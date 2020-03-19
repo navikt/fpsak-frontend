@@ -20,7 +20,7 @@ export const sortBehandlinger = (behandlinger) => behandlinger.sort((b1, b2) => 
   return moment(b2.opprettet).diff(moment(b1.opprettet));
 });
 
-const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk) => (
+const renderListItems = (behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, alleKodeverk) => (
   sortBehandlinger(behandlinger)
     .filter((behandling) => showAll || behandling.id === behandlingId)
     .map((behandling) => (
@@ -28,7 +28,7 @@ const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggle
         <BehandlingPickerItem
           onlyOneBehandling={behandlinger.length === 1}
           behandling={behandling}
-          saksnummer={saksnummer}
+          getBehandlingLocation={getBehandlingLocation}
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
@@ -46,7 +46,7 @@ const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggle
 const BehandlingPicker = ({
   noExistingBehandlinger,
   behandlinger,
-  saksnummer,
+  getBehandlingLocation,
   behandlingId,
   showAll,
   toggleShowAll,
@@ -54,14 +54,14 @@ const BehandlingPicker = ({
 }) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && <Normaltekst><FormattedMessage id="BehandlingList.ZeroBehandlinger" /></Normaltekst>}
-    {!noExistingBehandlinger && renderListItems(behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk)}
+    {!noExistingBehandlinger && renderListItems(behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, alleKodeverk)}
   </ul>
 );
 
 BehandlingPicker.propTypes = {
   behandlinger: PropTypes.arrayOf(behandlingVelgerBehandlingPropType).isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  getBehandlingLocation: PropTypes.func.isRequired,
   behandlingId: PropTypes.number,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,

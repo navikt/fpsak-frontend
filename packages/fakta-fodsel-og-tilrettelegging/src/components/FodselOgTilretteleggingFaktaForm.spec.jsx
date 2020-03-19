@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
-import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 
 import { FodselOgTilretteleggingFaktaForm, validateForm } from './FodselOgTilretteleggingFaktaForm';
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';

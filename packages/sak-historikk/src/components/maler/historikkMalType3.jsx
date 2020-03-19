@@ -6,7 +6,6 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText } from './felles/historikkUtils';
@@ -122,6 +121,7 @@ const HistorikkMalType3 = ({
   intl,
   getKodeverknavn,
   erTilbakekreving,
+  createLocationForSkjermlenke,
 }) => (
   <div>
     {historikkinnslagDeler && historikkinnslagDeler.map((historikkinnslagDel, index) => (
@@ -136,7 +136,7 @@ const HistorikkMalType3 = ({
           ? (
             <Element>
               <NavLink
-                to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
                 onClick={scrollUp}
               >
                 {getKodeverknavn(historikkinnslagDel.skjermlenke)}
@@ -159,6 +159,7 @@ HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
   erTilbakekreving: PropTypes.bool,
 };

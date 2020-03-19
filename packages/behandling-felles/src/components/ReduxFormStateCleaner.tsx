@@ -2,7 +2,7 @@ import { FunctionComponent, useEffect, useRef } from 'react';
 import { destroy } from 'redux-form';
 import { useDispatch } from 'react-redux';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 interface OwnProps {
   behandlingId: number;

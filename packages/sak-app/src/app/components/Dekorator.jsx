@@ -3,7 +3,7 @@ import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
-import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/fp-felles';
+import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/konstanter';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
