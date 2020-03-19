@@ -35,7 +35,7 @@ const sarligGrunnerBegrunnelseDiv = (readOnly, intl) => (
     <VerticalSpacer twentyPx />
   </div>
 );
-export const AktsomhetGradUaktsomhetFormPanel = ({
+const AktsomhetGradUaktsomhetFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
   handletUaktsomhetGrad,
