@@ -78,7 +78,9 @@ export class ApprovalPanel extends Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.totrinnskontrollSkjermlenkeContext || nextProps.totrinnskontrollReadOnlySkjermlenkeContext) {
-      this.setState({ approvals: mapPropsToContext(nextProps.toTrinnsBehandling, nextProps, nextProps.skjemalenkeTyper) });
+      this.setState({
+        approvals: mapPropsToContext(nextProps.toTrinnsBehandling, nextProps, nextProps.skjemalenkeTyper, nextProps.createLocationForSkjermlenke),
+      });
     }
   }
 
