@@ -63,7 +63,7 @@ export const KlageVurderingRadioOptionsKa = ({
           validate={[required]}
           bredde="xl"
         />
-        <VerticalSpacer sixPx />
+        <VerticalSpacer sixteenPx />
         <RadioGroupField
           name="klageVurderingOmgjoer"
           validate={[required]}
