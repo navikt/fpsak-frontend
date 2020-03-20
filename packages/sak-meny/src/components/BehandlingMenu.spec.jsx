@@ -5,7 +5,6 @@ import { expect } from 'chai';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import BehandlingMenu from './BehandlingMenu';
 import PauseBehandlingMenuItem from './pauseBehandling/PauseBehandlingMenuItem';
@@ -38,7 +37,6 @@ describe('<BehandlingMenu>', () => {
     navn: '',
   };
 
-  const behandlingIdentifier = new BehandlingIdentifier(23, 1);
   const type = { kode: behandlingType.FORSTEGANGSSOKNAD };
   const behandlingData = new MenyBehandlingData(1, '3', 2, type, false, false, 'enhetsid', 'Enhetsnavn', false, undefined);
   const kodeverk = new MenyKodeverk();
@@ -85,13 +83,13 @@ describe('<BehandlingMenu>', () => {
 
     const behandlingOnHoldMenuItem = wrapper.find(PauseBehandlingMenuItem);
     expect(behandlingOnHoldMenuItem).has.length(1);
-    expect(behandlingOnHoldMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
+    expect(behandlingOnHoldMenuItem.prop('behandlingId')).is.eql(1);
     expect(behandlingOnHoldMenuItem.prop('setBehandlingOnHold')).is.eql(behandlingOnHoldCallback);
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
 
     const kanHenleggesMenuItem = wrapper.find(ShelveBehandlingMenuItem);
     expect(kanHenleggesMenuItem).has.length(1);
-    expect(kanHenleggesMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
+    expect(kanHenleggesMenuItem.prop('behandlingId')).is.eql(1);
     expect(kanHenleggesMenuItem.prop('previewHenleggBehandling')).is.eql(previewCallback);
     expect(kanHenleggesMenuItem.prop('shelveBehandling')).is.eql(shelveBehandlingCallback);
     expect(kanHenleggesMenuItem.prop('push')).is.eql(pushCallback);
@@ -127,7 +125,7 @@ describe('<BehandlingMenu>', () => {
 
     const behandlingOnHoldMenuItem = wrapper.find('ResumeBehandlingMenuItem');
     expect(behandlingOnHoldMenuItem).has.length(1);
-    expect(behandlingOnHoldMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
+    expect(behandlingOnHoldMenuItem.prop('behandlingId')).is.eql(1);
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
   });
 
@@ -222,7 +220,7 @@ describe('<BehandlingMenu>', () => {
 
     const behandlingOnHoldMenuItem = wrapper.find('ResumeBehandlingMenuItem');
     expect(behandlingOnHoldMenuItem).has.length(1);
-    expect(behandlingOnHoldMenuItem.prop('behandlingIdentifier')).is.eql(behandlingIdentifier);
+    expect(behandlingOnHoldMenuItem.prop('behandlingId')).is.eql(1);
     expect(behandlingOnHoldMenuItem.prop('toggleBehandlingsmeny')).is.not.null;
 
     const kanHenleggesMenuItem = wrapper.find(ShelveBehandlingMenuItem);

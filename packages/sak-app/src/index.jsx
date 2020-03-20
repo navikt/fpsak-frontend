@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import { render } from 'react-dom';
 import { init, Integrations } from '@sentry/browser';
 
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
 import AppIndex from './app/AppIndex';

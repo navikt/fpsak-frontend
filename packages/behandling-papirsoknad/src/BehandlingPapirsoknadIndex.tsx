@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix, ErrorTypes } from '@fpsak-frontend/fp-felles';
+import { ErrorTypes } from '@fpsak-frontend/rest-api';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 import {
-  Kodeverk, NavAnsatt, Aksjonspunkt, Behandling,
+  Kodeverk, Aksjonspunkt, Behandling,
 } from '@fpsak-frontend/types';
 
 import papirsoknadApi, { reduxRestApi, PapirsoknadApiKeys } from './data/papirsoknadApi';
@@ -26,7 +27,7 @@ interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   location: {};
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
@@ -84,7 +85,7 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
     const {
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       settPaVent,
       hentBehandling,
       behandling,
@@ -112,7 +113,7 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
               aksjonspunkter={dataProps.aksjonspunkter}
               fagsak={fagsak}
               kodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}
               lagreAksjonspunkt={lagreAksjonspunkt}

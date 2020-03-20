@@ -8,8 +8,9 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import {
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import {
   formatCurrencyNoKr, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -59,6 +60,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     behandlingId: PropTypes.number.isRequired,
     behandlingVersjon: PropTypes.number.isRequired,
     beregnBelop: PropTypes.func.isRequired,
+    intl: PropTypes.shape().isRequired,
     ...formPropTypes,
   };
 
@@ -66,7 +68,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     erBelopetIBehold: undefined,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: undefined,
     andelSomTilbakekreves: undefined,
-  }
+  };
 
   resetFields = () => {
     const {
@@ -74,7 +76,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     } = this.props;
     const fields = [valgtVilkarResultatType];
     clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
-  }
+  };
 
   resetAnnetTextField = () => {
     const {
@@ -84,7 +86,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       const fields = [`${valgtVilkarResultatType}.${handletUaktsomhetGrad}.annetBegrunnelse`];
       clearFormFields(`${behandlingFormPrefix}.${TILBAKEKREVING_PERIODE_FORM_NAME}`, false, false, ...fields);
     }
-  }
+  };
 
   saveOrToggleModal = () => {
     const { showModal } = this.state;
@@ -100,7 +102,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     } else {
       formProps.handleSubmit();
     }
-  }
+  };
 
   saveForm = () => {
     const { showModal } = this.state;
@@ -110,7 +112,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
 
     this.setState((state) => ({ ...state, showModal: !showModal }));
     formProps.handleSubmit();
-  }
+  };
 
   render() {
     const {
@@ -133,6 +135,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       behandlingId,
       behandlingVersjon,
       beregnBelop,
+      intl,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
@@ -182,6 +185,8 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                     validate={[required, minLength3, maxLength1500, hasValidText]}
                     maxLength={1500}
                     readOnly={readOnly}
+                    textareaClass={styles.explanationTextarea}
+                    placeholder={intl.formatMessage({ id: 'TilbakekrevingPeriodeForm.Vurdering.Hjelpetekst' })}
                   />
                   <VerticalSpacer twentyPx />
                   <Undertekst><FormattedMessage id="TilbakekrevingPeriodeForm.oppfylt" /></Undertekst>
@@ -218,7 +223,11 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                     <VerticalSpacer eightPx />
                     <TextAreaField
                       name="vurderingBegrunnelse"
-                      label={{ id: 'TilbakekrevingPeriodeForm.Vurdering' }}
+                      label={{
+                        id: valgtVilkarResultatType === VilkarResultat.GOD_TRO
+                          ? 'TilbakekrevingPeriodeForm.VurderingMottattIGodTro'
+                          : 'TilbakekrevingPeriodeForm.VurderingAktsomhet',
+                      }}
                       validate={[required, minLength3, maxLength1500, hasValidText]}
                       maxLength={1500}
                       readOnly={readOnly}

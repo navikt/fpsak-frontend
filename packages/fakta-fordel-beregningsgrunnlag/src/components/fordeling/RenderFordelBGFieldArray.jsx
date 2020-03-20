@@ -7,16 +7,15 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
-  formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber,
+  formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import {
-  ElementWrapper, Image, Table, TableColumn, TableRow,
+  Image, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
   DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
 } from '@fpsak-frontend/form';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { arbeidsforholdBeregningProptype, kodeverkPropType } from '@fpsak-frontend/prop-types';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
@@ -169,7 +168,7 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
 };
 
 const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVals, isReadOnly, arbeidsforholdList) => (
-  <ElementWrapper>
+  <>
     {(!fields.get(index).nyAndel)
       && (
       <InputField
@@ -189,7 +188,7 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
         onChange={(event) => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
       />
       )}
-  </ElementWrapper>
+  </>
 );
 
 export const lagBelopKolonne = (andelElementFieldId, readOnly, periodeUtenAarsak, isAksjonspunktClosed) => {

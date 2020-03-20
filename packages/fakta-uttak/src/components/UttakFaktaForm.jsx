@@ -5,8 +5,8 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 
-import { dateFormat, guid } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix, behandlingForm, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { dateFormat, guid, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { behandlingForm, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import UttakPerioder from './UttakPerioder';

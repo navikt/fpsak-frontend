@@ -5,10 +5,9 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
 const {
@@ -123,11 +122,11 @@ const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn) => {
   const helpTexts = createGraderingOrRefusjonString(gradering, refusjon, permisjonMedGraderingEllerRefusjon, getKodeverknavn);
   if (helpTexts.length === 2) {
     return [
-      <ElementWrapper>
+      <>
         {helpTexts[0]}
         <VerticalSpacer eightPx />
         {helpTexts[1]}
-      </ElementWrapper>];
+      </>];
   }
   return helpTexts;
 };

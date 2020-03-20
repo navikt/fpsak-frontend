@@ -7,12 +7,10 @@ import { Column, Row } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { behandlingForm } from '@fpsak-frontend/form';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton, isFieldEdited } from '@fpsak-frontend/fakta-felles';
 import {
-  FaktaBegrunnelseTextField, FaktaSubmitButton, behandlingForm,
-  isFieldEdited,
-} from '@fpsak-frontend/fp-felles';
-import {
-  ElementWrapper, VerticalSpacer, AksjonspunktHelpTextTemp,
+  VerticalSpacer, AksjonspunktHelpTextTemp,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -100,24 +98,24 @@ export const AdopsjonInfoPanelImpl = ({
         </Column>
       </Row>
       {aksjonspunkter && aksjonspunkter.length > 0 && (
-      <ElementWrapper>
-        <VerticalSpacer twentyPx />
-        <FaktaBegrunnelseTextField
-          isDirty={formProps.dirty}
-          isSubmittable={submittable}
-          isReadOnly={readOnly}
-          hasBegrunnelse={!!initialValues.begrunnelse}
-        />
-        <VerticalSpacer twentyPx />
-        <FaktaSubmitButton
-          formName={formProps.form}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          isSubmittable={submittable}
-          isReadOnly={readOnly}
-          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        />
-      </ElementWrapper>
+        <>
+          <VerticalSpacer twentyPx />
+          <FaktaBegrunnelseTextField
+            isDirty={formProps.dirty}
+            isSubmittable={submittable}
+            isReadOnly={readOnly}
+            hasBegrunnelse={!!initialValues.begrunnelse}
+          />
+          <VerticalSpacer twentyPx />
+          <FaktaSubmitButton
+            formName={formProps.form}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            isSubmittable={submittable}
+            isReadOnly={readOnly}
+            hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+          />
+        </>
       )}
     </form>
   </>

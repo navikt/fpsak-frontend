@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { FieldArray, FormSection, formValueSelector } from 'redux-form';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { BorderBox } from '@fpsak-frontend/shared-components';
 import { arrayMinLength, required } from '@fpsak-frontend/utils';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 
@@ -43,7 +43,7 @@ export const EgenVirksomhetPanel = ({
             <RadioOption label={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.Yes' })} value />
           </RadioGroupField>
         </div>
-        <ElementWrapper>
+        <>
           {harArbeidetIEgenVirksomhet
         && (
         <FieldArray
@@ -57,7 +57,7 @@ export const EgenVirksomhetPanel = ({
           alleKodeverk={alleKodeverk}
         />
         )}
-        </ElementWrapper>
+        </>
       </SkjemaGruppe>
     </BorderBox>
   </FormSection>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
@@ -14,8 +13,6 @@ describe('<RegistrereVergeInfoPanel>', () => {
     const wrapper = shallowWithIntl(<RegistrereVergeInfoPanelImpl
       {...reduxFormPropsMock}
       intl={intlMock}
-      openInfoPanels={['verge']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       readOnly={false}
       aksjonspunkt={{

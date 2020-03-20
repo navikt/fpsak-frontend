@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import ChangeBehandlendeEnhetMenuItem from './ChangeBehandlendeEnhetMenuItem';
 
 describe('<ChangeBehandlendeEnhetMenuItem>', () => {
@@ -12,11 +11,10 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
     enhetNavn: 'NAV',
     status: 'Aktiv',
   }];
-  const behandlingIdentifier = new BehandlingIdentifier(123, 1);
 
   it('skal ikke vise modal ved rendring', () => {
     const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={sinon.spy()}
       behandlendeEnheter={behandlendeEnheter}
@@ -31,7 +29,7 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
     const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={toggleBehandlingsmenyCallback}
       behandlendeEnheter={behandlendeEnheter}
@@ -57,7 +55,7 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
 
   it('skal skjule modal ved trykk på avbryt', () => {
     const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={sinon.spy()}
       behandlendeEnheter={behandlendeEnheter}
@@ -84,7 +82,7 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
     };
     const nyBehandlendeEnhetCallback = sinon.spy();
     const wrapper = shallow(<ChangeBehandlendeEnhetMenuItem
-      behandlingIdentifier={behandlingIdentifier}
+      behandlingId={1}
       behandlingVersjon={2}
       toggleBehandlingsmeny={sinon.spy()}
       behandlendeEnheter={behandlendeEnheter}

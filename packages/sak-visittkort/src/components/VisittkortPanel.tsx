@@ -26,11 +26,11 @@ const utledKjonn = (kjonn) => {
 
 interface OwnProps {
   fagsak: Fagsak;
-  personopplysninger?: Personopplysninger;
-  familieHendelse: FamilieHendelseSamling;
-  lenkeTilAnnenPart?: string;
   alleKodeverk: {[key: string]: [Kodeverk]};
   sprakkode: Kodeverk;
+  personopplysninger?: Personopplysninger;
+  familieHendelse?: FamilieHendelseSamling;
+  lenkeTilAnnenPart?: string;
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({

@@ -4,16 +4,16 @@ import { connect } from 'react-redux';
 import { formPropTypes, initialize as reduxFormInitialize } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
-import {
-  getBehandlingFormPrefix, FaktaBegrunnelseTextField, behandlingForm, FaktaSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { CheckboxField } from '@fpsak-frontend/form';
+import { CheckboxField, getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
+
 import { formNameAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, getFormValuesForAvklarAktiviteter } from '../BeregningFormUtils';
 import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
@@ -132,6 +132,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
   render() {
     const {
       props: {
+        intl,
         readOnly,
         isAksjonspunktClosed,
         submittable,
@@ -220,7 +221,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
                 {skalViseSubmitknappInneforBorderBox
               && (
               <FaktaSubmitButton
-                buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText'}
+                buttonText={intl.formatMessage({ id: erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText' })}
                 formName={formProps.form}
                 isSubmittable={submittable && submitEnabled && !formProps.error}
                 isReadOnly={readOnly}
@@ -237,7 +238,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
                 <>
                   <VerticalSpacer twentyPx />
                   <FaktaSubmitButton
-                    buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : undefined}
+                    buttonText={erOverstyrt ? intl.formatMessage({ id: 'AvklarAktivitetPanel.OverstyrText' }) : undefined}
                     formName={formProps.form}
                     isSubmittable={submittable && submitEnabled && !formProps.error}
                     isReadOnly={readOnly}
@@ -258,6 +259,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
 }
 
 AvklareAktiviteterPanelImpl.propTypes = {
+  intl: PropTypes.shape().isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
@@ -350,4 +352,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
   form: formNameAvklarAktiviteter,
-})(AvklareAktiviteterPanelImpl));
+})(injectIntl(AvklareAktiviteterPanelImpl)));

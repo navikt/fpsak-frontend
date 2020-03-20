@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 
 import fpsakApi, { FpsakApiKeys } from '../data/fpsakApi';
 

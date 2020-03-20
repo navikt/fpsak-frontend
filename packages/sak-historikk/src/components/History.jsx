@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { pathToBehandling } from '@fpsak-frontend/fp-felles';
-
 import historikkinnslagPropType from '../propTypes/historikkinnslagPropType';
 import historikkinnslagType from '../kodeverk/historikkinnslagType';
 import Snakkeboble from './maler/felles/snakkeboble';
@@ -99,8 +97,9 @@ const velgHistorikkMal = (histType) => { // NOSONAR
 const History = ({
   historieInnslag,
   saksNr,
-  location,
+  getBehandlingLocation,
   getKodeverknavn,
+  createLocationForSkjermlenke,
 }) => {
   const HistorikkMal = velgHistorikkMal(historieInnslag.type);
   const aktorIsVL = historieInnslag.aktoer.kode === 'VL';
@@ -120,14 +119,12 @@ const History = ({
       <HistorikkMal
         historikkinnslagDeler={historieInnslag.historikkinnslagDeler}
         dokumentLinks={historieInnslag.dokumentLinks}
-        behandlingLocation={{
-          ...location,
-          pathname: pathToBehandling(saksNr, historieInnslag.behandlingId),
-        }}
+        behandlingLocation={getBehandlingLocation(historieInnslag.behandlingId)}
         originType={historieInnslag.type}
         saksNr={saksNr}
         getKodeverknavn={getKodeverknavn}
         erTilbakekreving={historieInnslag.erTilbakekreving}
+        createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
     </Snakkeboble>
   );
@@ -136,10 +133,9 @@ const History = ({
 History.propTypes = {
   historieInnslag: historikkinnslagPropType.isRequired,
   saksNr: PropTypes.number,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
+  getBehandlingLocation: PropTypes.func.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 History.defaultProps = {

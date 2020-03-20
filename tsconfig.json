@@ -5,6 +5,7 @@
 		"allowJs": true,
 		"noEmit": true,
 		"strict": false,
+		"resolveJsonModule": true,
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"jsx": "react",

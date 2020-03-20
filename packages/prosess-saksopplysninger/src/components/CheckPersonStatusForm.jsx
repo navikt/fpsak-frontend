@@ -8,18 +8,19 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, getKodeverknavnFn, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
+
 
 import styles from './checkPersonStatusForm.less';
 
@@ -78,9 +79,9 @@ export const CheckPersonStatusFormImpl = ({
       )}
     </div>
     <VerticalSpacer sixteenPx />
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     <VerticalSpacer sixteenPx />
-    <BehandlingspunktSubmitButton
+    <ProsessStegSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -138,7 +139,7 @@ export const buildInitialValues = createSelector(
         ? getKodeverknavn(avklartPersonstatus.orginalPersonstatus) : getKodeverknavn(personstatus),
       fortsettBehandling: isAksjonspunktOpen(aksjonspunkt.status.kode) ? undefined : shouldContinueBehandling,
       personstatus: getValgtOpplysning(avklartPersonstatus),
-      ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+      ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
   },
 );
@@ -152,7 +153,7 @@ const transformValues = (values, aksjonspunkter) => ({
   fortsettBehandling: values.fortsettBehandling,
   personstatus: values.personstatus,
   kode: aksjonspunkter[0].definisjon.kode,
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
 const formName = 'CheckPersonStatusForm';

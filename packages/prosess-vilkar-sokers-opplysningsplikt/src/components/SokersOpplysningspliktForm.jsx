@@ -8,18 +8,21 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
-  getKodeverknavnFn,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, ProsessPanelTemplate,
+} from '@fpsak-frontend/prosess-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
+import {
+  DDMMYYYY_DATE_FORMAT, isObject, required, getKodeverknavnFn,
+} from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption,
+} from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 
@@ -111,7 +114,7 @@ export const SokersOpplysningspliktFormImpl = ({
         </Row>
       </>
     )}
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     {!readOnly && (
       <>
         <VerticalSpacer sixteenPx />
@@ -214,7 +217,7 @@ export const buildInitialValues = createSelector(
       erVilkarOk: isOpenAksjonspunkt && soknadExists ? undefined : isVilkarGodkjent,
       aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon.kode : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
       hasAksjonspunkt: aksjonspunkt !== undefined,
-      ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+      ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
   },
 );
@@ -231,7 +234,7 @@ const transformValues = (values, manglendeVedlegg) => {
       aktørId: ag.aktørId,
       brukerHarSagtAtIkkeKommer: values.inntektsmeldingerSomIkkeKommer[lagArbeidsgiverKey(ag)],
     }), {}),
-    ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+    ...ProsessStegBegrunnelseTextField.transformValues(values),
   };
 };
 

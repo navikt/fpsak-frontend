@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-import { requireProps } from '@fpsak-frontend/fp-felles';
 
 import { updateAktoer as updateAktoerCreator } from './duck';
 import { getAllAktoerInfoResolved, getSelectedAktoerId } from './aktoerSelectors';

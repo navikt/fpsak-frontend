@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { Image } from '@fpsak-frontend/shared-components';
 import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
@@ -161,7 +160,6 @@ class BehandlingMenu extends Component {
       sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes, uuidForSistLukkede, erTilbakekrevingAktivert,
     } = this.props;
     const { menuVisible } = this.state;
-    const behandlingIdentifier = new BehandlingIdentifier(saksnummer, behandlingData.id);
     return (
       <div className={styles.container}>
         <Knapp
@@ -187,7 +185,7 @@ class BehandlingMenu extends Component {
             {this.isResumeBehandlingEnabled() && (
               <ResumeBehandlingMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
-                behandlingIdentifier={behandlingIdentifier}
+                behandlingId={behandlingData.id}
                 behandlingVersjon={behandlingData.versjon}
                 resumeBehandling={resumeBehandling}
                 gjenopptaBehandlingEnabled={rettigheter.gjenopptaBehandlingAccess.isEnabled}
@@ -195,7 +193,7 @@ class BehandlingMenu extends Component {
             )}
             {this.isPauseBehandlingEnabled() && (
               <PauseBehandlingMenuItem
-                behandlingIdentifier={behandlingIdentifier}
+                behandlingId={behandlingData.id}
                 behandlingVersjon={behandlingData.versjon}
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 setBehandlingOnHold={setBehandlingOnHold}
@@ -206,7 +204,7 @@ class BehandlingMenu extends Component {
             {this.isShelveBehandlingEnebled() && (
               <ShelveBehandlingMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
-                behandlingIdentifier={behandlingIdentifier}
+                behandlingId={behandlingData.id}
                 behandlingVersjon={behandlingData.versjon}
                 previewHenleggBehandling={previewHenleggBehandling}
                 shelveBehandling={shelveBehandling}
@@ -221,7 +219,7 @@ class BehandlingMenu extends Component {
             {this.hasEnabledOpenBehandlingForChangesAccess() && (
               <OpenBehandlingForChangesMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
-                behandlingIdentifier={behandlingIdentifier}
+                behandlingId={behandlingData.id}
                 openBehandlingForChanges={openBehandlingForChanges}
                 behandlingVersjon={behandlingData.versjon}
               />
@@ -230,7 +228,7 @@ class BehandlingMenu extends Component {
               <ChangeBehandlendeEnhetMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 behandlendeEnheter={behandlendeEnheter}
-                behandlingIdentifier={behandlingIdentifier}
+                behandlingId={behandlingData.id}
                 behandlingVersjon={behandlingData.versjon}
                 behandlendeEnhetId={behandlingData.behandlendeEnhetId}
                 behandlendeEnhetNavn={behandlingData.behandlendeEnhetNavn}
@@ -242,7 +240,7 @@ class BehandlingMenu extends Component {
               <CreateNewBehandlingMenuItem
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 saksnummer={saksnummer}
-                behandlingIdentifier={behandlingIdentifier}
+                behandlingId={behandlingData.id}
                 behandlingType={behandlingData.type}
                 push={push}
                 submitNyBehandling={createNewBehandling}
@@ -262,7 +260,8 @@ class BehandlingMenu extends Component {
               <OpprettEllerFjernVergeMenuItem
                 fjernVerge={fjernVerge}
                 opprettVerge={opprettVerge}
-                behandlingIdentifier={behandlingIdentifier}
+                saksnummer={saksnummer}
+                behandlingId={behandlingData.id}
                 behandlingVersjon={behandlingData.versjon}
                 push={push}
               />

@@ -7,7 +7,7 @@ import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 
 const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);

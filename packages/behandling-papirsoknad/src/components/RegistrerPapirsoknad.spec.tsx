@@ -58,16 +58,15 @@ const behandling = {
   links: [],
 };
 
-const navAnsatt = {
-  brukernavn: 'bruker',
-  kanBehandleKode6: false,
-  kanBehandleKode7: false,
-  kanBehandleKodeEgenAnsatt: false,
-  kanBeslutte: false,
-  kanOverstyre: false,
-  kanSaksbehandle: true,
-  kanVeilede: false,
-  navn: 'Petra',
+const rettigheter = {
+  writeAccess: {
+    isEnabled: true,
+    employeeHasAccess: true,
+  },
+  kanOverstyreAccess: {
+    isEnabled: true,
+    employeeHasAccess: true,
+  },
 };
 
 describe('<RegistrerPapirsoknad>', () => {
@@ -77,7 +76,7 @@ describe('<RegistrerPapirsoknad>', () => {
       behandling={behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={sinon.spy()}
@@ -96,9 +95,12 @@ describe('<RegistrerPapirsoknad>', () => {
       behandling={behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={{
-        ...navAnsatt,
-        kanVeilede: true,
+      rettigheter={{
+        ...rettigheter,
+        writeAccess: {
+          isEnabled: false,
+          employeeHasAccess: false,
+        },
       }}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
@@ -118,7 +120,7 @@ describe('<RegistrerPapirsoknad>', () => {
       }}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={sinon.spy()}
@@ -137,7 +139,7 @@ describe('<RegistrerPapirsoknad>', () => {
       behandling={behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={sinon.spy()}
@@ -172,7 +174,7 @@ describe('<RegistrerPapirsoknad>', () => {
         erAktivt: true,
       }]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={lagreAksjonspunkt}

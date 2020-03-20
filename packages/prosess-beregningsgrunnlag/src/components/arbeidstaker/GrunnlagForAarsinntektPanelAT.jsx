@@ -5,15 +5,17 @@ import PropTypes from 'prop-types';
 import {
   Element, Normaltekst, Undertekst, EtikettLiten,
 } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 
-import { behandlingFormValueSelector, getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
-import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { behandlingFormValueSelector } from '@fpsak-frontend/form';
+import {
+  getKodeverknavnFn, dateFormat, formatCurrencyNoKr, removeSpacesFromNumber,
+} from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-
-import { Column, Row } from 'nav-frontend-grid';
 import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 import NaturalytelsePanel2 from './NaturalytelsePanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';

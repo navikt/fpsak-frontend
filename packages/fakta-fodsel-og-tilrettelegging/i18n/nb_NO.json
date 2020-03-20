@@ -29,8 +29,6 @@
 
   "OverstyringKnapp.Overstyring": "Overstyr",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
-  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
-  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",

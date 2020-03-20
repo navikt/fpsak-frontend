@@ -11,11 +11,10 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import {
   ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
-import { CheckboxField } from '@fpsak-frontend/form';
+import { CheckboxField, getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';

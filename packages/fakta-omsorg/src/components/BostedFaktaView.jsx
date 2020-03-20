@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/shared-components';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
 
 import omsorgPersonopplysningerPropType from '../propTypes/omsorgPersonopplysningerPropType';

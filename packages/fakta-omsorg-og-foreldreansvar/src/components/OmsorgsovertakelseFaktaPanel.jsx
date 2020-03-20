@@ -5,7 +5,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/shared-components';
 
 /**
  * OmsorgsovertakelseFaktaPanel

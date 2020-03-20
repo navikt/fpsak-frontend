@@ -9,12 +9,12 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer,
+  AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
-  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe, BehandlingspunktSubmitButton,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
-} from '@fpsak-frontend/fp-felles';
+  getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 
@@ -220,7 +220,7 @@ export class ForeldelseForm extends Component {
                   />
                 )}
               <VerticalSpacer twentyPx />
-              <BehandlingspunktSubmitButton
+              <ProsessStegSubmitButton
                 formName={FORELDELSE_FORM_NAME}
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}

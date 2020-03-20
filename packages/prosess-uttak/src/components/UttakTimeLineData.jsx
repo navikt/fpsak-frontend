@@ -4,14 +4,13 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 
-import { calcDays } from '@fpsak-frontend/utils';
+import { calcDays, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpText, EditedIcon, ElementWrapper, Image, VerticalSpacer, FloatRight,
+  AksjonspunktHelpText, EditedIcon, Image, VerticalSpacer, FloatRight,
 } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import UttakActivity from './UttakActivity';
@@ -241,14 +240,14 @@ export class UttakTimeLineData extends Component {
           </Column>
         </Row>
         {selectedItemData.manuellBehandlingÅrsak && selectedItemData.manuellBehandlingÅrsak.kode !== '-' && (
-          <ElementWrapper>
+          <>
             <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
               {selectedItemData.periodeType
                 ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, selectedItemData.periodeType.kode)
                 : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn)}
             </AksjonspunktHelpText>
             <VerticalSpacer twentyPx />
-          </ElementWrapper>
+          </>
         )}
         <UttakActivity
           cancelSelectedActivity={callbackCancelSelectedActivity}

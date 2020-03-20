@@ -3,12 +3,13 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { DataFetcher, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
+import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
+import DataFetcher from '../../app/DataFetcher';
 import { ApprovalIndex } from './ApprovalIndex';
 
 describe('<ApprovalIndex>', () => {

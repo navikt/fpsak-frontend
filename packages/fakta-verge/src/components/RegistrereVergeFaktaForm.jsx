@@ -8,8 +8,7 @@ import {
 import {
   DatepickerField, InputField, SelectField,
 } from '@fpsak-frontend/form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import vergeType from '../kodeverk/vergeType';

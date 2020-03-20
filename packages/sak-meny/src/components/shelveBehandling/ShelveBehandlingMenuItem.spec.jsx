@@ -3,7 +3,6 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
@@ -13,7 +12,7 @@ import ShelveBehandlingMenuItem from './ShelveBehandlingMenuItem';
 describe('<ShelveBehandlingMenuItem>', () => {
   it('skal ikke vise modal ved rendring', () => {
     const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+      behandlingId={2}
       behandlingUuid="1"
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}
@@ -37,7 +36,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
   it('skal vise modal ved trykk på meny-lenke', () => {
     const toggleBehandlingsmenyCallback = sinon.spy();
     const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+      behandlingId={2}
       behandlingUuid="1"
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}
@@ -72,7 +71,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
 
   it('skal skjule modal ved trykk på avbryt', () => {
     const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+      behandlingId={2}
       behandlingUuid="1"
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}
@@ -104,7 +103,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
   it('skal sende data til server og vise "behandling er henlagt"-modal ved trykk på ok-knapp', () => {
     const shelveBehandlingCallback = sinon.stub();
     const wrapper = shallow(<ShelveBehandlingMenuItem
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
+      behandlingId={1}
       behandlingUuid="1"
       behandlingVersjon={2}
       previewHenleggBehandling={sinon.spy()}

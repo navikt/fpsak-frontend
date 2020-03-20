@@ -5,7 +5,7 @@ import AnkeProsessIndex from '@fpsak-frontend/prosess-anke';
 import AnkeMerknaderProsessIndex from '@fpsak-frontend/prosess-anke-merknader';
 
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 
 const PANEL_ATTRIBUTTER = {
   vilkarCodes: [],

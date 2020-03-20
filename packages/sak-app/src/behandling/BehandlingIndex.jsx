@@ -9,13 +9,13 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import {
-  requireProps, getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
-} from '@fpsak-frontend/fp-felles';
+import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
+import getAccessRights from '../app/util/access';
+import {
+  getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta,
+} from '../app/paths';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 import {
   getSelectedFagsakStatus, getFagsakPerson, getSaksnummer,
@@ -24,12 +24,12 @@ import {
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
-  resetBehandlingContext as resetBehandlingContextActionCreator,
+  setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId,
+  oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
-  getBehandlingerLinksMappedById,
+  getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo, getBehandlingerLinksMappedById, getBehandlingerTypesMappedById,
+  getBehandlingerStatusMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
@@ -44,7 +44,8 @@ const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/b
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/behandling-papirsoknad'));
 
-const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
+const erTilbakekreving = (behandlingTypeKode) => behandlingTypeKode === BehandlingType.TILBAKEKREVING
+  || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
 const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
 /**
@@ -58,7 +59,7 @@ const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCas
 export class BehandlingIndex extends Component {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
-    behandlingType: PropTypes.string.isRequired,
+    behandlingTypeKode: PropTypes.string.isRequired,
     behandlingVersjon: PropTypes.number.isRequired,
     location: PropTypes.shape().isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
@@ -88,9 +89,18 @@ export class BehandlingIndex extends Component {
       requestPayload: PropTypes.any,
       type: PropTypes.string.isRequired,
     })).isRequired,
-    navAnsatt: navAnsattPropType.isRequired,
     push: PropTypes.func.isRequired,
     visFeilmelding: PropTypes.func.isRequired,
+    rettigheter: PropTypes.shape({
+      writeAccess: PropTypes.shape({
+        employeeHasAccess: PropTypes.bool.isRequired,
+        isEnabled: PropTypes.bool.isRequired,
+      }).isRequired,
+      kanOverstyreAccess: PropTypes.shape({
+        employeeHasAccess: PropTypes.bool.isRequired,
+        isEnabled: PropTypes.bool.isRequired,
+      }).isRequired,
+    }),
   };
 
   static defaultProps = {
@@ -123,11 +133,11 @@ export class BehandlingIndex extends Component {
     const { push: pushLocation, location } = this.props;
     let newLocation;
     if (prosessStegId === 'default') {
-      newLocation = getLocationWithDefaultBehandlingspunktAndFakta(location);
+      newLocation = getLocationWithDefaultProsessStegAndFakta(location);
     } else if (prosessStegId) {
-      newLocation = getBehandlingspunktLocation(location)(formatName(prosessStegId));
+      newLocation = getProsessStegLocation(location)(formatName(prosessStegId));
     } else {
-      newLocation = getBehandlingspunktLocation(location)(null);
+      newLocation = getProsessStegLocation(location)(null);
     }
 
     if (faktaPanelId === 'default') {
@@ -149,7 +159,7 @@ export class BehandlingIndex extends Component {
   render() {
     const {
       behandlingId,
-      behandlingType,
+      behandlingTypeKode,
       location,
       oppdaterBehandlingVersjon,
       erAktivPapirsoknad,
@@ -157,8 +167,8 @@ export class BehandlingIndex extends Component {
       kodeverk,
       fagsak,
       fagsakBehandlingerInfo,
-      navAnsatt,
       visFeilmelding,
+      rettigheter,
     } = this.props;
 
     const defaultProps = {
@@ -167,7 +177,7 @@ export class BehandlingIndex extends Component {
       behandlingEventHandler,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
       key: behandlingId,
@@ -185,7 +195,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
+    if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -198,7 +208,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.KLAGE) {
+    if (behandlingTypeKode === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -212,7 +222,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.ANKE) {
+    if (behandlingTypeKode === BehandlingType.ANKE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -226,7 +236,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (erTilbakekreving(behandlingType)) {
+    if (erTilbakekreving(behandlingTypeKode)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
@@ -304,13 +314,20 @@ export const getFagsakInfo = createSelector([
   isForeldrepengerFagsak: isForeldrepenger,
 }));
 
+const getRettigheter = createSelector([getNavAnsatt, getSelectedFagsakStatus, getUrlBehandlingId, getBehandlingerStatusMappedById,
+  getBehandlingerTypesMappedById],
+(navAnsatt, selectedFagsakStatus, behandlingId, behandlingerStatusMappedById, behandlingerTypesMappedById) => {
+  const status = behandlingerStatusMappedById[behandlingId];
+  const type = behandlingerTypesMappedById[behandlingId];
+  return getAccessRights(navAnsatt, selectedFagsakStatus, status, type);
+});
 
 const mapStateToProps = (state) => {
   const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
   return {
     behandlingId,
-    behandlingType,
+    behandlingTypeKode: behandlingType ? behandlingType.kode : undefined,
     behandlingVersjon: getTempBehandlingVersjon(state),
     location: state.router.location,
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
@@ -318,8 +335,8 @@ const mapStateToProps = (state) => {
     kodeverk: getAlleFpSakKodeverk(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
-    navAnsatt: getNavAnsatt(state),
     fagsak: getFagsakInfo(state),
+    rettigheter: getRettigheter(state),
   };
 };
 
@@ -337,4 +354,4 @@ export default trackRouteParam({
   paramPropType: PropTypes.number,
   storeParam: setUrlBehandlingId,
   getParamFromStore: getUrlBehandlingId,
-})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingTypeKode'])(BehandlingIndex)));

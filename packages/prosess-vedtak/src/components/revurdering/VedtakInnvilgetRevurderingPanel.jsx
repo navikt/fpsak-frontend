@@ -7,9 +7,8 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { formatCurrencyWithKr, getKodeverknavnFn } from '@fpsak-frontend/utils';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import { findTilbakekrevingText } from '../VedtakHelper';

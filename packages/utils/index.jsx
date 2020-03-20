@@ -122,3 +122,5 @@ export {
   dateNotBeforeOrEqualMessage,
   dateNotAfterOrEqualMessage,
 } from './src/validation/messages';
+
+export { getKodeverknavnFn } from './src/kodeverkUtils';
