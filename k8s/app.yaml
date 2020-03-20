@@ -24,7 +24,7 @@ spec:
     timeout: 1
   replicas: # Optional. Set min = max to disable autoscaling.
     min: 2 # minimum number of replicas.
-    max: 2 # maximum number of replicas.
+    max: 5 # maximum number of replicas.
     cpuThresholdPercentage: 50 # total cpu percentage threshold on deployment, at which point it will increase number of pods if current < max
   leaderElection: false # Optional. If true, a http endpoint will be available at $ELECTOR_PATH that return the current leader
   # Compare this value with the $HOSTNAME to see if the current instance is the leader
