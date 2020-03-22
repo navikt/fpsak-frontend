@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
@@ -106,9 +107,9 @@ describe('<prosessStegHooks>', () => {
       prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, rettigheter, behandling,
       aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
     ));
-    const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values(
-      wrapper.find('div').prop('data-values'),
-    ).reduce((acc, value) => [...acc, value], []);
+    const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
+      ...wrapper.find('div').prop('data-values'),
+    }).reduce((acc, value) => [...acc, value], []);
 
     const paneler = [{
       aksjonspunkter,
@@ -190,7 +191,7 @@ describe('<prosessStegHooks>', () => {
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
       behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
-    const prosessStegVelger = wrapper.find('div').prop('data-values');
+    const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
     prosessStegVelger(0);
 
@@ -238,7 +239,7 @@ describe('<prosessStegHooks>', () => {
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
       behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
-    const prosessStegVelger = wrapper.find('div').prop('data-values');
+    const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
     prosessStegVelger(0);
 
@@ -253,6 +254,7 @@ describe('<prosessStegHooks>', () => {
     const prosessStegPanel = {
       urlCode: 'opplysningsplikt',
       label: 'Behandlingspunkt.Opplysningsplikt',
+      prosessStegTittelKode: 'TEST',
       aksjonspunkter,
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
@@ -282,7 +284,7 @@ describe('<prosessStegHooks>', () => {
 
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
-    const lagringSideEffectsCallback = () => {};
+    const lagringSideEffectsCallback = () => () => {};
     const behandlingApi: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
@@ -291,8 +293,8 @@ describe('<prosessStegHooks>', () => {
 
     const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling,
       behandlingApi as {[name: string]: EndpointOperations},
-      lagringSideEffectsCallback, dispatch, prosessStegPanel));
-    const bekreftAksjonspunkt = wrapper.find('div').prop('data-values');
+      lagringSideEffectsCallback, dispatch as Dispatch, prosessStegPanel));
+    const bekreftAksjonspunkt = wrapper.find('div').prop('data-values') as (number) => void;
 
     bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
 

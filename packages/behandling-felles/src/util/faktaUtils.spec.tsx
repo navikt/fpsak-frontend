@@ -226,7 +226,7 @@ describe('<faktaPanelUtils>', () => {
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, 
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes,
       api as {[name: string]: EndpointOperations});
 
     const aksjonspunkter = [{
@@ -266,7 +266,7 @@ describe('<faktaPanelUtils>', () => {
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, 
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes,
       api as {[name: string]: EndpointOperations});
 
     const aksjonspunkter = [{
