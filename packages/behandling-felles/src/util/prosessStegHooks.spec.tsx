@@ -18,7 +18,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import prosessStegHooks from './prosessStegHooks';
 
-const HookWrapper = ({ callback }) => <div values={callback()} />;
+const HookWrapper = ({ callback }) => <div data-values={callback()} />;
 
 const testHook = (callback) => shallow(<HookWrapper callback={callback} />);
 
@@ -106,7 +106,7 @@ describe('<prosessStegHooks>', () => {
       aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
     ));
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values(
-      wrapper.find('div').prop('values'),
+      wrapper.find('div').prop('data-values'),
     ).reduce((acc, value) => [...acc, value], []);
 
     const paneler = [{
@@ -155,6 +155,7 @@ describe('<prosessStegHooks>', () => {
   it('skal velge første prosess-steg', () => {
     const prosessStegPaneler = [{
       urlCode: 'opplysningsplikt',
+      prosessStegTittelKode: 'TEST',
       label: 'Behandlingspunkt.Opplysningsplikt',
       aksjonspunkter,
       erStegBehandlet: true,
@@ -188,7 +189,7 @@ describe('<prosessStegHooks>', () => {
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
       behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
-    const prosessStegVelger = wrapper.find('div').prop('values');
+    const prosessStegVelger = wrapper.find('div').prop('data-values');
 
     prosessStegVelger(0);
 
@@ -203,6 +204,7 @@ describe('<prosessStegHooks>', () => {
     const prosessStegPaneler = [{
       urlCode: 'opplysningsplikt',
       label: 'Behandlingspunkt.Opplysningsplikt',
+      prosessStegTittelKode: 'TEST',
       aksjonspunkter,
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
@@ -235,7 +237,7 @@ describe('<prosessStegHooks>', () => {
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
       behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
-    const prosessStegVelger = wrapper.find('div').prop('values');
+    const prosessStegVelger = wrapper.find('div').prop('data-values');
 
     prosessStegVelger(0);
 
@@ -288,7 +290,7 @@ describe('<prosessStegHooks>', () => {
 
     const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi,
       lagringSideEffectsCallback, dispatch, prosessStegPanel));
-    const bekreftAksjonspunkt = wrapper.find('div').prop('values');
+    const bekreftAksjonspunkt = wrapper.find('div').prop('data-values');
 
     bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
 

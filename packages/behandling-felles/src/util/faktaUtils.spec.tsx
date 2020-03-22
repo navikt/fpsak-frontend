@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -224,7 +225,7 @@ describe('<faktaPanelUtils>', () => {
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, api);
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, api);
 
     const aksjonspunkter = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
@@ -263,7 +264,7 @@ describe('<faktaPanelUtils>', () => {
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, api);
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, api);
 
     const aksjonspunkter = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
@@ -194,6 +195,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'opplysningsplikt',
+      prosessStegTittelKode: 'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
     }, testPanelData];
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
@@ -233,6 +235,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'vedtak',
+      prosessStegTittelKode: 'Behandlingspunkt.Vedtak',
     }];
     const erBehandlingHenlagt = true;
     const apentFaktaPanelInfo = undefined;
@@ -272,6 +275,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'vedtak',
+      prosessStegTittelKode: 'Behandlingspunkt.Vedtak',
     }];
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = { urlCode: 'FODSEL', textCode: 'Fakta.Test' };
@@ -311,6 +315,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'vedtak',
+      prosessStegTittelKode: 'Behandlingspunkt.Vedtak',
     }];
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
@@ -381,7 +386,7 @@ describe('<prosessStegUtils>', () => {
     };
     const lagringSideEffectsCallback = sinon.spy();
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
     const aksjonspunktModeller = [{
       kode: aksjonspunkter[0].definisjon.kode,
     }];
@@ -415,7 +420,7 @@ describe('<prosessStegUtils>', () => {
     };
     const lagringSideEffectsCallback = sinon.spy();
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
 
     const aksjonspunktModeller = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,

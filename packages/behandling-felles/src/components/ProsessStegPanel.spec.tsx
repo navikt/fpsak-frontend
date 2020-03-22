@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -94,6 +95,7 @@ describe('<ProsessStegPanel>', () => {
       isReadOnly: false,
       panelData: [],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const wrapper = shallow(
@@ -125,6 +127,7 @@ describe('<ProsessStegPanel>', () => {
       isReadOnly: false,
       panelData: [],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const wrapper = shallow(
@@ -149,6 +152,7 @@ describe('<ProsessStegPanel>', () => {
     const valgtPanel = {
       ...fellesProsessStegData,
       urlCode: bpc.INNGANGSVILKAR,
+      prosessStegTittelKode: 'TEST',
       erStegBehandlet: true,
       isReadOnly: false,
       panelData: [{
@@ -205,6 +209,7 @@ describe('<ProsessStegPanel>', () => {
         aksjonspunktHelpTextCodes: [],
       }],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const wrapper = shallow(
@@ -250,6 +255,7 @@ describe('<ProsessStegPanel>', () => {
         aksjonspunktHelpTextCodes: [],
       }],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const lagringSideeffekterCallback = sinon.spy();
@@ -270,7 +276,7 @@ describe('<ProsessStegPanel>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={lagringSideeffekterCallback}
         behandlingApi={behandlingApi}
-        dispatch={dispatch}
+        dispatch={dispatch as Dispatch}
       />,
     );
 

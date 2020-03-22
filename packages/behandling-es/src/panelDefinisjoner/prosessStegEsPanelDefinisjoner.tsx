@@ -18,6 +18,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 
 import findStatusForVedtak from './vedtakStatusUtlederEs';
 import api from '../data/esBehandlingApi';
@@ -207,7 +208,7 @@ const prosessStegPanelDefinisjoner = [{
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...PANEL_ATTRIBUTTER,
     ...p,
   })),

@@ -16,7 +16,7 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
-import { Kodeverk } from '@fpsak-frontend/types';
+import { KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import styles from './soknadTypePickerForm.less';
 
@@ -27,9 +27,9 @@ export const soeknadsTyper = [
   familieHendelseType.FODSEL];
 
 interface OwnProps {
-  fagsakYtelseTyper: Kodeverk[];
-  familieHendelseTyper: Kodeverk[];
-  foreldreTyper: Kodeverk[];
+  fagsakYtelseTyper: KodeverkMedNavn[];
+  familieHendelseTyper: KodeverkMedNavn[];
+  foreldreTyper: KodeverkMedNavn[];
   handleSubmit: () => undefined;
   selectedFagsakYtelseType?: string;
   ytelseErSatt: boolean;
@@ -119,9 +119,15 @@ export const SoknadTypePickerForm: FunctionComponent<OwnProps> = ({
   </form>
 );
 
-const buildInitialValues = createSelector<any, any, any>(
+interface FormValues {
+  fagsakYtelseType?: KodeverkMedNavn;
+  familieHendelseType?: KodeverkMedNavn;
+  foreldreType?: KodeverkMedNavn;
+}
+
+const buildInitialValues = createSelector(
   [(_state, ownProps) => ownProps.fagsakYtelseType, getFormValues(SOKNAD_TYPE_PICKER_FORM)],
-  (sakstype, formValues) => {
+  (sakstype, formValues: FormValues) => {
     const { ...selectedValues } = formValues;
     const initialFagsakYtelseType = selectedValues.fagsakYtelseType ? selectedValues.fagsakYtelseType : sakstype.kode;
 
@@ -136,7 +142,7 @@ const buildInitialValues = createSelector<any, any, any>(
     const initialForeldreType = selectedValues.foreldreType ? selectedValues.foreldreType : null;
     return {
       ...initialValues,
-      familieHendelseType: initialFamilieHendelseType === '-' ? null : initialFamilieHendelseType,
+      familieHendelseType: initialFamilieHendelseType.kode === '-' ? null : initialFamilieHendelseType,
       foreldreType: initialForeldreType,
     };
   },
