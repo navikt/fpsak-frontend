@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -282,13 +283,14 @@ describe('<prosessStegHooks>', () => {
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
     const lagringSideEffectsCallback = () => {};
-    const behandlingApi = {
+    const behandlingApi: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
     };
 
-    const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi,
+    const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling,
+      behandlingApi as {[name: string]: EndpointOperations},
       lagringSideEffectsCallback, dispatch, prosessStegPanel));
     const bekreftAksjonspunkt = wrapper.find('div').prop('data-values');
 

@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Dispatch } from 'redux';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -260,7 +261,7 @@ describe('<ProsessStegPanel>', () => {
 
     const lagringSideeffekterCallback = sinon.spy();
     const makeRestApiRequest = sinon.spy();
-    const behandlingApi = {
+    const behandlingApi: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
@@ -275,7 +276,7 @@ describe('<ProsessStegPanel>', () => {
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={lagringSideeffekterCallback}
-        behandlingApi={behandlingApi}
+        behandlingApi={behandlingApi as {[name: string]: EndpointOperations}}
         dispatch={dispatch as Dispatch}
       />,
     );
