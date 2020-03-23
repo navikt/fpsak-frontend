@@ -24,7 +24,7 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
-export const finnDekningsgradForDelvisTilrettelegging = (stillingsprosent, stillingsprosentArbeidsforhold) => {
+export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent, stillingsprosentArbeidsforhold) => {
   const defaultUtbetalingsgrad = 100 * (1 - stillingsprosent / stillingsprosentArbeidsforhold);
   return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0;
 };
@@ -82,8 +82,8 @@ export const TilretteleggingFieldArray = ({
                         changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, 100);
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
-                        const dekningsgrad = finnDekningsgradForDelvisTilrettelegging(data.stillingsprosent, stillingsprosentArbeidsforhold);
-                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, dekningsgrad);
+                        const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(data.stillingsprosent, stillingsprosentArbeidsforhold);
+                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, utbetalingsgrad);
                       }
                     }}
                   />
@@ -129,8 +129,8 @@ export const TilretteleggingFieldArray = ({
                         validate={[required, minValue0, maxValue100, hasValidDecimal]}
                         normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                         onChange={(_elmt, value) => {
-                          const dekningsgrad = finnDekningsgradForDelvisTilrettelegging(value, stillingsprosentArbeidsforhold);
-                          changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, dekningsgrad);
+                          const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(value, stillingsprosentArbeidsforhold);
+                          changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, utbetalingsgrad);
                         }}
                       />
                     </FlexColumn>
