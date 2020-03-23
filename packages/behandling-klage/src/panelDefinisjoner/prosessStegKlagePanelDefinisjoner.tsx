@@ -7,7 +7,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
-
+import { ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 
@@ -101,12 +101,15 @@ const prosessStegPanelDefinisjoner = [{
     }) => getVedtakStatus(
       behandling.behandlingsresultat, aksjonspunkterForSteg,
     ),
+    vilkarCodes: [],
+    isOverridable: false,
+    endpoints: [],
   }],
 }];
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...PANEL_ATTRIBUTTER,
     ...p,
   })),

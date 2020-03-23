@@ -18,3 +18,4 @@ export { default as prosessStegHooks } from './src/util/prosessStegHooks';
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
 export { default as Rettigheter } from './src/types/rettigheterTsType';
 export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';
+export { ProsessStegPanelDefinisjon } from './src/types/prosessStegDefinisjonTsType';

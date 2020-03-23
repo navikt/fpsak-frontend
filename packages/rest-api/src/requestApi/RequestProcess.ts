@@ -125,7 +125,7 @@ class RequestProcess {
         return { payload: CANCELLED };
       }
 
-      const responseData = response.data;
+      const responseData = 'data' in response ? response.data : undefined;
       this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
       return responseData ? { payload: responseData } : { payload: undefined };
     } catch (error) {

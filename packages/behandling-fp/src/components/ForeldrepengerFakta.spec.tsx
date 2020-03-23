@@ -12,6 +12,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import FetchedData from '../types/fetchedDataTsType';
 
 import ForeldrepengerFakta from './ForeldrepengerFakta';
 
@@ -64,11 +65,16 @@ describe('<ForeldrepengerFakta>', () => {
     relatertTilgrensendeYtelserForAnnenForelder: [],
   };
 
+  const fetchedData: Partial<FetchedData> = {
+    aksjonspunkter,
+    vilkar,
+  };
+
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+        data={fetchedData as FetchedData}
         behandling={behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}
@@ -99,7 +105,7 @@ describe('<ForeldrepengerFakta>', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
+        data={fetchedData as FetchedData}
         behandling={behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}
@@ -126,10 +132,16 @@ describe('<ForeldrepengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+      inntektArbeidYtelse,
+    };
+
     const wrapper = shallowWithIntl(
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
+        data={fetchedDataLocal as FetchedData}
         behandling={behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}

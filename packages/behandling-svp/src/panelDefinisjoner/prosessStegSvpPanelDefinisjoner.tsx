@@ -16,6 +16,7 @@ import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 
 import findStatusForVedtak from './vedtakStatusUtlederSvp';
 import api from '../data/svpBehandlingApi';
@@ -204,7 +205,7 @@ const prosessStegPanelDefinisjoner = [{
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...VALGFRIE_ATTRIBUTTER,
     ...p,
   })),

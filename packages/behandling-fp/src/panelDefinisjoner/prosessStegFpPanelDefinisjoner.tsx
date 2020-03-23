@@ -23,6 +23,7 @@ import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import { ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 
 import findStatusForVedtak from './vedtakStatusUtlederFp';
 import api from '../data/fpBehandlingApi';
@@ -327,7 +328,7 @@ const prosessStegPanelDefinisjoner = [{
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...PANEL_ATTRIBUTTER,
     ...p,
   })),

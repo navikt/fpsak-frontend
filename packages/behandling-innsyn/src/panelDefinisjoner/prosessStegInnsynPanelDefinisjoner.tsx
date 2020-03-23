@@ -5,7 +5,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
-
+import { ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 
@@ -62,12 +62,15 @@ const prosessStegPanelDefinisjoner = [{
     }) => (innsyn ? getVedtakStatus(
       innsyn.innsynResultatType, aksjonspunkterForSteg,
     ) : vilkarUtfallType.IKKE_VURDERT),
+    vilkarCodes: [],
+    isOverridable: false,
+    endpoints: [],
   }],
 }];
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...PANEL_ATTRIBUTTER,
     ...p,
   })),

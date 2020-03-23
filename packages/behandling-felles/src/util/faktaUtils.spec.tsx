@@ -1,7 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -218,13 +220,14 @@ describe('<faktaPanelUtils>', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const makeRestApiRequest = sinon.spy();
     const overstyringApCodes = [];
-    const api = {
+    const api: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, api);
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes,
+      api as {[name: string]: EndpointOperations});
 
     const aksjonspunkter = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
@@ -257,13 +260,14 @@ describe('<faktaPanelUtils>', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const makeRestApiRequest = sinon.spy();
     const overstyringApCodes = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
-    const api = {
+    const api: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_OVERSTYRT_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, api);
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes,
+      api as {[name: string]: EndpointOperations});
 
     const aksjonspunkter = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
