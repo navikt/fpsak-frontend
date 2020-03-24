@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -8,12 +7,30 @@ import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import { getIntegrationStatusList, getShowDetailedErrorMessages } from '../duck';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 
+
+interface OwnProps {
+  showIntegrationStatus?: boolean;
+  integrationStatusList: {
+    systemNavn?: string;
+    endepunkt?: string;
+    nedeFremTilTidspunkt?: string;
+    feilmelding?: string;
+    stackTrace?: string;
+  }[];
+  fetchIntegrationStatus: () => void;
+}
+
 /**
  * Dashboard
  *
  * Presentasjonskomponent. Viser statuspanelet for integrasjonsstjenester i tillegg til søkepanel.
  */
-export class Dashboard extends Component {
+export class Dashboard extends Component<OwnProps> {
+  static defaultProps = {
+    showIntegrationStatus: false,
+    integrationStatusList: [],
+  };
+
   componentDidMount() {
     const { fetchIntegrationStatus, showIntegrationStatus } = this.props;
 
@@ -33,23 +50,6 @@ export class Dashboard extends Component {
     );
   }
 }
-
-Dashboard.propTypes = {
-  showIntegrationStatus: PropTypes.bool,
-  integrationStatusList: PropTypes.arrayOf(PropTypes.shape({
-    systemNavn: PropTypes.string,
-    endepunkt: PropTypes.string,
-    nedeFremTilTidspunkt: PropTypes.string,
-    feilmelding: PropTypes.string,
-    stackTrace: PropTypes.string,
-  })),
-  fetchIntegrationStatus: PropTypes.func.isRequired,
-};
-
-Dashboard.defaultProps = {
-  showIntegrationStatus: false,
-  integrationStatusList: [],
-};
 
 const mapStateToProps = (state) => ({
   showIntegrationStatus: getShowDetailedErrorMessages(state),

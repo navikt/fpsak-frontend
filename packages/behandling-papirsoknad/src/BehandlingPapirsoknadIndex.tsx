@@ -28,7 +28,6 @@ interface OwnProps {
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: Kodeverk[]};
   rettigheter: Rettigheter;
-  location: {};
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;

@@ -2,6 +2,8 @@
  * Denne brukers til å utføre operasjoner på behandling utenfor behandlingskonteksten.
  */
 class BehandlingEventHandler {
+    handler?: {[key: string]: (params: {}) => Promise<any> }
+
     setHandler = (handler) => {
       this.handler = handler;
     }

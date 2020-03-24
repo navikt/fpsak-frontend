@@ -56,7 +56,12 @@ const initialState = {
   behandlingVersjon: undefined,
 };
 
-export const behandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
+interface Action {
+  type: string;
+  data?: number;
+}
+
+export const behandlingReducer = (state = initialState, action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) {
     case SET_URL_BEHANDLING_ID:
       return {

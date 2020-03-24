@@ -1,8 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
-
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { shallow } from 'enzyme';
 
 import AppIndex from './AppIndex';
 import Home from './components/Home';
@@ -10,15 +8,17 @@ import Dekorator from './components/Dekorator';
 
 
 describe('<AppIndex>', () => {
+  const locationMock = {
+    pathname: 'test',
+    search: 'test',
+    state: {},
+    hash: 'test',
+  };
+
   it('skal vise hjem-skjermbilde inkludert header men ikke feilmelding', () => {
-    const wrapper = shallowWithIntl(<AppIndex.WrappedComponent
-      intl={intlMock}
+    const wrapper = shallow(<AppIndex.WrappedComponent
       navAnsattName="Peder"
-      errorMessagesLength={0}
-      showCrashMessage={sinon.spy()}
-      removeErrorMessage={sinon.spy()}
-      location={{ search: undefined }}
-      showDetailedErrorMessages={false}
+      location={locationMock}
     />);
     const headerComp = wrapper.find(Dekorator);
     expect(headerComp).to.have.length(1);
@@ -30,14 +30,10 @@ describe('<AppIndex>', () => {
   });
 
   it('skal vise hjem-skjermbilde inkludert header og feilmelding', () => {
-    const wrapper = shallowWithIntl(<AppIndex.WrappedComponent
-      intl={intlMock}
+    const wrapper = shallow(<AppIndex.WrappedComponent
       navAnsattName="Peder"
-      showCrashMessage={sinon.spy()}
-      removeErrorMessage={sinon.spy()}
       errorMessages={[{ message: 'error' }]}
-      location={{ search: undefined }}
-      showDetailedErrorMessages={false}
+      location={locationMock}
     />);
 
     const headerComp = wrapper.find(Dekorator);
@@ -54,14 +50,9 @@ describe('<AppIndex>', () => {
       search: '?errormessage=Det+finnes+ingen+sak+med+denne+referansen%3A+266',
     };
 
-    const wrapper = shallowWithIntl(<AppIndex.WrappedComponent
-      intl={intlMock}
+    const wrapper = shallow(<AppIndex.WrappedComponent
       navAnsattName="Peder"
-      removeErrorMessage={sinon.spy()}
-      showCrashMessage={sinon.spy()}
-      errorMessagesLength={1}
-      location={location}
-      showDetailedErrorMessages={false}
+      location={{ ...locationMock, ...location }}
     />);
 
     const headerComp = wrapper.find(Dekorator);

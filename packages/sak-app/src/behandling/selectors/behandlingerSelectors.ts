@@ -2,22 +2,29 @@ import { createSelector } from 'reselect';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Behandling } from '@fpsak-frontend/types';
 
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 
 const getBehandlingerData = createSelector(
   [fpsakApi.BEHANDLINGER_FPSAK.getRestApiData(), fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiData()],
-  (behandlingerFpsak = [], behandlingerTilbake = []) => behandlingerFpsak.concat(behandlingerTilbake),
+  (behandlingerFpsak: Behandling[] = [], behandlingerTilbake: Behandling[] = []) => behandlingerFpsak.concat(behandlingerTilbake),
 );
 
 const getBehandlingerFpsakMeta = fpsakApi.BEHANDLINGER_FPSAK.getRestApiMeta();
 const getBehandlingerTilbakeMeta = fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiMeta();
 
+interface MetaData {
+  params: {
+    saksnummer?: number;
+  };
+}
+
 // TODO (TOR) Denne bør ikkje eksporterast. Bryt opp i fleire selectors
 export const getBehandlinger = createSelector(
   [getSelectedSaksnummer, getBehandlingerData, getBehandlingerFpsakMeta, getBehandlingerTilbakeMeta],
-  (saksnummer, behandlingerData, behandlingerFpsakMeta = { params: {} }, behandlingerTilbakeMeta = { params: {} }) => {
+  (saksnummer, behandlingerData, behandlingerFpsakMeta: MetaData = { params: {} }, behandlingerTilbakeMeta: MetaData = { params: {} }) => {
     const hasRequestedBehandling = behandlingerFpsakMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer;
     const isFpsakOk = !behandlingerFpsakMeta.params.saksnummer || behandlingerFpsakMeta.params.saksnummer === saksnummer;
     const isTilbakeOk = !behandlingerTilbakeMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer === saksnummer;
@@ -64,4 +71,5 @@ const getSisteLukkedeForsteEllerRevurd = createSelector([getBehandlinger], (beha
   .find((b) => b.gjeldendeVedtak && b.status.kode === behandlingStatus.AVSLUTTET
     && (b.type.kode === behandlingType.FORSTEGANGSSOKNAD || b.type.kode === behandlingType.REVURDERING)));
 
-export const getUuidForSisteLukkedeForsteEllerRevurd = createSelector([getSisteLukkedeForsteEllerRevurd], (behandling = {}) => behandling.uuid);
+export const getUuidForSisteLukkedeForsteEllerRevurd = createSelector([getSisteLukkedeForsteEllerRevurd], (behandling) => (behandling
+  ? behandling.uuid : undefined));

@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 
 import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
+import { Fagsak, FagsakPerson } from '@fpsak-frontend/types';
 
 import { getSelectedAktoer, getSelectedAktoerId } from './aktoerSelectors';
 import { setSelectedAktoerId } from './duck';
@@ -11,10 +11,19 @@ import AktoerGrid from './components/AktoerGrid';
 import AktoerResolver from './AktoerResolver';
 import trackRouteParam from '../app/trackRouteParam';
 
+interface OwnProps {
+  aktoerId: number;
+  requestPendingMessage?: string;
+  selectedAktoer?: {
+    fagsaker: Fagsak[];
+    person: FagsakPerson;
+  };
+}
+
 /**
  * AktoerIndex
  */
-export const AktoerIndex = ({
+export const AktoerIndex: FunctionComponent<OwnProps> = ({
   aktoerId, requestPendingMessage, selectedAktoer,
 }) => (
   <>
@@ -24,17 +33,6 @@ export const AktoerIndex = ({
     {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
   </>
 );
-
-AktoerIndex.propTypes = {
-  aktoerId: PropTypes.number.isRequired,
-  requestPendingMessage: PropTypes.string,
-  selectedAktoer: PropTypes.shape(),
-};
-
-AktoerIndex.defaultProps = {
-  requestPendingMessage: undefined,
-  selectedAktoer: undefined,
-};
 
 const mapStateToProps = (state) => ({
   aktoerId: getSelectedAktoerId(state),
@@ -46,7 +44,6 @@ const mapStateToProps = (state) => ({
 export default trackRouteParam({
   paramName: 'aktoerId',
   parse: (aktoerIdFromUrl) => Number.parseInt(aktoerIdFromUrl, 10),
-  paramPropType: PropTypes.number,
   storeParam: setSelectedAktoerId,
   getParamFromStore: getSelectedAktoerId,
 })(connect(mapStateToProps)(requireProps(['aktoerId'])(AktoerIndex)));

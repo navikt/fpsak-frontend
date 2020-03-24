@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { RouteProps } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
@@ -19,6 +19,19 @@ import Dekorator from './components/Dekorator';
 
 import '@fpsak-frontend/assets/styles/global.less';
 
+interface OwnProps {
+  errorMessages?: {
+    type: EventType;
+  }[];
+  removeErrorMessage: () => void;
+  crashMessage?: string;
+  showCrashMessage: (message: string) => void;
+  navAnsattName?: string;
+  funksjonellTid?: string;
+  location: RouteProps['location'];
+  showDetailedErrorMessages: boolean;
+}
+
 /**
  * AppIndex
  *
@@ -27,7 +40,14 @@ import '@fpsak-frontend/assets/styles/global.less';
  * Komponenten er også ansvarlig for å hente innlogget NAV-ansatt og kodeverk fra server og
  * lagre desse i klientens state.
  */
-class AppIndex extends Component {
+class AppIndex extends Component<OwnProps> {
+  static defaultProps = {
+    crashMessage: '',
+    navAnsattName: '',
+    funksjonellTid: undefined,
+    errorMessages: [],
+  };
+
   state = {
     headerHeight: 0,
   };
@@ -111,25 +131,6 @@ class AppIndex extends Component {
     );
   }
 }
-
-AppIndex.propTypes = {
-  errorMessages: PropTypes.arrayOf(PropTypes.shape()),
-  removeErrorMessage: PropTypes.func.isRequired,
-  crashMessage: PropTypes.string,
-  showCrashMessage: PropTypes.func.isRequired,
-  navAnsattName: PropTypes.string,
-  funksjonellTid: PropTypes.string,
-  location: PropTypes.shape({
-    search: PropTypes.string,
-  }).isRequired,
-  showDetailedErrorMessages: PropTypes.bool.isRequired,
-};
-AppIndex.defaultProps = {
-  crashMessage: '',
-  navAnsattName: '',
-  funksjonellTid: undefined,
-  errorMessages: [],
-};
 
 const mapStateToProps = (state) => ({
   errorMessages: errorHandler.getAllErrorMessages(state),

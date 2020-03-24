@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -21,14 +20,28 @@ const formatErrorMsgHeader = (systemNavn, nedeFremTilTidspunkt) => (nedeFremTilT
   )
   : <FormattedMessage id="IntegrationStatusPanel.Downtime" values={{ system: systemNavn }} />);
 
+interface OwnProps {
+  integrationStatusList: {
+    systemNavn?: string;
+    endepunkt?: string;
+    nedeFremTilTidspunkt?: string;
+    feilmelding?: string;
+    stackTrace?: string;
+  }[];
+}
+
+interface OwnState {
+  toggleOpen: boolean;
+}
+
 /**
  * IntegrationStatusPanel
  *
  * Presentasjonskomponent. Panel som viser hvilke systemer/tjenester som har nedetid.
  */
-class IntegrationStatusPanel extends Component {
-  constructor() {
-    super();
+class IntegrationStatusPanel extends Component<OwnProps, OwnState> {
+  constructor(props) {
+    super(props);
 
     this.state = {
       toggleOpen: false,
@@ -56,7 +69,7 @@ class IntegrationStatusPanel extends Component {
     const { toggleOpen } = this.state;
 
     return (
-      <div className={styles.container} tabIndex="0" role="button" onKeyDown={this.togglePanelOnKeyDown}>
+      <div className={styles.container} tabIndex={0} role="button" onKeyDown={this.togglePanelOnKeyDown}>
         <Image className={styles.cursor} src={toggleOpen ? chevronUp : chevronDown} onClick={this.togglePanelOnClick} />
         <Row className={styles.row} onClick={this.togglePanelOnClick}>
           <Column xs="1">
@@ -101,15 +114,5 @@ class IntegrationStatusPanel extends Component {
     );
   }
 }
-
-IntegrationStatusPanel.propTypes = {
-  integrationStatusList: PropTypes.arrayOf(PropTypes.shape({
-    systemNavn: PropTypes.string,
-    endepunkt: PropTypes.string,
-    nedeFremTilTidspunkt: PropTypes.string,
-    feilmelding: PropTypes.string,
-    stackTrace: PropTypes.string,
-  })).isRequired,
-};
 
 export default injectIntl(IntegrationStatusPanel);

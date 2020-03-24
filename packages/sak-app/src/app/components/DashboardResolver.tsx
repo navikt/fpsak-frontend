@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -13,12 +12,16 @@ import Dashboard from './Dashboard';
 
 const isDevelopment = () => process.env.NODE_ENV === 'development';
 
+interface OwnProps {
+  addErrorMessage: (message: string) => void;
+}
+
 /**
  * DashboardResolver
  *
  * Komponent som redirecter til Fplos eller går til fremsiden til Fpsak. Går alltid til Fpsak på utviklingsmiljø eller når Fplos ikke kan nåes
  */
-export class DashboardResolver extends Component {
+export class DashboardResolver extends Component<OwnProps & WrappedComponentProps> {
   state = { isLoading: true };
 
   componentDidMount = async () => {
@@ -41,11 +44,6 @@ export class DashboardResolver extends Component {
     return !isDevelopment() && isLoading ? <LoadingPanel /> : <Dashboard />;
   }
 }
-
-DashboardResolver.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  addErrorMessage: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = () => ({
 });

@@ -27,7 +27,7 @@ describe('Behandling-reducer', () => {
   });
 
   it('skal returnere initial state', () => {
-    expect(behandlingReducer(undefined, {})).to.eql({
+    expect(behandlingReducer(undefined, { type: '' })).to.eql({
       behandlingId: undefined,
       behandlingVersjon: undefined,
       urlBehandlingId: undefined,

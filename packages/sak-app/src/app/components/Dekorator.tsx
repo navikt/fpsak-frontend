@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
-import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, useMemo } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/konstanter';
@@ -29,14 +28,28 @@ const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
   return resolvedErrorMessages;
 };
 
-const Dekorator = ({
+interface OwnProps {
+  queryStrings: {
+    errorcode?: string;
+    errormessage?: string;
+  };
+  navAnsattName: string;
+  removeErrorMessage: () => void;
+  showDetailedErrorMessages?: boolean;
+  hideErrorMessages?: boolean;
+  errorMessages?: {}[];
+  setSiteHeight: () => void;
+}
+
+const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
-  errorMessages,
+  errorMessages = [],
   navAnsattName,
   queryStrings,
   setSiteHeight,
   removeErrorMessage: removeErrorMsg,
-  showDetailedErrorMessages, hideErrorMessages,
+  showDetailedErrorMessages = false,
+  hideErrorMessages = false,
 }) => {
   const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, errorMessages, queryStrings), [errorMessages, queryStrings]);
 
@@ -62,23 +75,6 @@ const Dekorator = ({
       setSiteHeight={setSiteHeight}
     />
   );
-};
-
-Dekorator.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  queryStrings: PropTypes.shape().isRequired,
-  navAnsattName: PropTypes.string.isRequired,
-  removeErrorMessage: PropTypes.func.isRequired,
-  showDetailedErrorMessages: PropTypes.bool,
-  hideErrorMessages: PropTypes.bool,
-  errorMessages: PropTypes.arrayOf(PropTypes.shape()),
-  setSiteHeight: PropTypes.func.isRequired,
-};
-
-Dekorator.defaultProps = {
-  hideErrorMessages: false,
-  showDetailedErrorMessages: false,
-  errorMessages: [],
 };
 
 export default injectIntl(Dekorator);

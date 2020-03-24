@@ -22,6 +22,10 @@ type Behandling = Readonly<{
   taskStatus?: {
     readOnly: boolean;
   };
+  opprettet: string;
+  avsluttet?: string;
+  erAktivPapirsoknad: boolean;
+  gjeldendeVedtak: boolean;
 }>
 
 export default Behandling;

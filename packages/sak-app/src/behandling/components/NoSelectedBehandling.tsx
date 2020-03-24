@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { AlertStripeInfo } from 'nav-frontend-alertstriper';
@@ -8,12 +7,18 @@ import styles from './noSelectedBehandling.less';
 
 const getMessage = (numBehandlinger) => (numBehandlinger === 0 ? 'NoSelectedBehandling.ZeroBehandlinger' : 'FagsakGrid.PleaseSelectBehandling');
 
+interface OwnProps {
+  numBehandlinger: number;
+}
+
 /**
  * NoSelectedBehandling
  *
  * Presentasjonskomponent. Vises når ingen behandling er valgt på en fagsak
  */
-const NoSelectedBehandling = ({ numBehandlinger }) => (
+const NoSelectedBehandling: FunctionComponent<OwnProps> = ({
+  numBehandlinger,
+}) => (
   <div className={styles.noSelectedBehandlingPanel}>
     <AlertStripeInfo>
       <Normaltekst>
@@ -22,9 +27,5 @@ const NoSelectedBehandling = ({ numBehandlinger }) => (
     </AlertStripeInfo>
   </div>
 );
-
-NoSelectedBehandling.propTypes = {
-  numBehandlinger: PropTypes.number.isRequired,
-};
 
 export default NoSelectedBehandling;

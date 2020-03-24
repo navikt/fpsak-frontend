@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
+import {
+  Kodeverk, KodeverkMedNavn, Fagsak, FagsakPerson,
+} from '@fpsak-frontend/types';
 
 import { getAlleFpSakKodeverk } from '../../kodeverk/duck';
 import { pathToFagsak } from '../../app/paths';
@@ -15,7 +17,16 @@ import { getBehandlingSprak } from '../../behandling/duck';
 
 import styles from './aktoerGrid.less';
 
-export const AktoerGrid = ({
+interface OwnProps {
+  data: {
+    fagsaker: Fagsak[];
+    person: FagsakPerson;
+  };
+  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  sprakkode?: Kodeverk;
+}
+
+export const AktoerGrid: FunctionComponent<OwnProps> = ({
   data,
   alleKodeverk,
   sprakkode,
@@ -45,16 +56,6 @@ export const AktoerGrid = ({
       </div>
     </>
   );
-};
-
-AktoerGrid.propTypes = {
-  data: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.shape(),
-};
-
-AktoerGrid.defaultProps = {
-  sprakkode: undefined,
 };
 
 const mapStateToProps = (state) => ({

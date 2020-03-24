@@ -1,18 +1,19 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { NavAnsatt, Kodeverk } from '@fpsak-frontend/types';
 
-const kanVeilede = (navAnsatt = {}) => navAnsatt.kanVeilede;
-const kanSaksbehandle = (navAnsatt = {}) => navAnsatt.kanSaksbehandle;
-const kanOverstyre = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanOverstyre;
+const kanVeilede = (navAnsatt) => navAnsatt && navAnsatt.kanVeilede;
+const kanSaksbehandle = (navAnsatt) => navAnsatt && navAnsatt.kanSaksbehandle;
+const kanOverstyre = (navAnsatt) => kanSaksbehandle(navAnsatt) && navAnsatt.kanOverstyre;
 const isBehandlingAvTilbakekreving = (type) => (type
   ? (type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING) : false);
 
 const accessibleFor = (validNavAnsattPredicates) => (navAnsatt) => validNavAnsattPredicates.some((predicate) => predicate(navAnsatt));
 
-const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatus = {}, behandlingStatus = {}, isTilbakekrevingBehandling) => (
-  (isTilbakekrevingBehandling || validFagsakStauses.includes(fagsakStatus.kode))
-  && validBehandlingStatuses.includes(behandlingStatus.kode)
+const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatus, behandlingStatus, isTilbakekrevingBehandling) => (
+  (isTilbakekrevingBehandling || (fagsakStatus && validFagsakStauses.includes(fagsakStatus.kode)))
+  && (behandlingStatus && validBehandlingStatuses.includes(behandlingStatus.kode))
 );
 
 const accessSelector = (validNavAnsattPredicates, validFagsakStatuses, validBehandlingStatuses) => (navAnsatt,
@@ -41,7 +42,12 @@ export const kanOverstyreAccess = accessSelector(
   [behandlingStatusCode.BEHANDLING_UTREDES],
 );
 
-const getAccessRights = (navAnsatt, fagsakStatus, behandlingStatus, behandlingType) => ({
+const getAccessRights = (
+  navAnsatt: NavAnsatt,
+  fagsakStatus: Kodeverk,
+  behandlingStatus: Kodeverk,
+  behandlingType: Kodeverk,
+) => ({
   writeAccess: writeAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   kanOverstyreAccess: kanOverstyreAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
 });

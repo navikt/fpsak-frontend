@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -9,13 +8,20 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { updateAktoer as updateAktoerCreator } from './duck';
 import { getAllAktoerInfoResolved, getSelectedAktoerId } from './aktoerSelectors';
 
+interface OwnProps {
+  children?: ReactNode;
+  aktoerId: number;
+  updateAktoer: (aktorId: number) => void;
+  allAktoerInfoResolved: boolean;
+}
+
 /**
  * AktoerResolver
  *
  * Container-komponent. Har ansvar for å hente info om aktør med et gitt saksnummer fra serveren.
  * NB: Komponenten henter kun ajtør når den konstrueres. Bruk unik key.
  */
-export class AktoerResolver extends Component {
+export class AktoerResolver extends Component<OwnProps> {
   constructor(props) {
     super(props);
     const { aktoerId, updateAktoer } = this.props;
@@ -31,15 +37,6 @@ export class AktoerResolver extends Component {
   }
 }
 
-AktoerResolver.propTypes = {
-  children: PropTypes.node,
-  aktoerId: PropTypes.number.isRequired,
-  updateAktoer: PropTypes.func.isRequired,
-  allAktoerInfoResolved: PropTypes.bool.isRequired,
-};
-AktoerResolver.defaultProps = {
-  children: null,
-};
 const mapStateToProps = (state) => ({
   aktoerId: getSelectedAktoerId(state),
   allAktoerInfoResolved: getAllAktoerInfoResolved(state),

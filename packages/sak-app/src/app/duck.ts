@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
+import { NavAnsatt } from '@fpsak-frontend/types';
 import { featureToggle } from '@fpsak-frontend/konstanter';
 
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
@@ -35,7 +36,12 @@ const initialState = {
   disabledApplicationContexts: [],
 };
 
-export const appReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
+interface Action {
+  type: string;
+  data?: string;
+}
+
+export const appReducer = (state = initialState, action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) {
     case SET_DISABLED_APPLICATION_CONTEXT:
       return {
@@ -55,9 +61,10 @@ const getDisabledApplicationContexts = createSelector([getAppContext], (appConte
 
 /* Selectors */
 export const getNavAnsatt = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()], (navAnsattData) => navAnsattData || {});
-export const getNavAnsattName = createSelector([getNavAnsatt], (navAnsatt) => navAnsatt.navn);
-export const getFunksjonellTid = createSelector([getNavAnsatt], (navAnsatt) => navAnsatt.funksjonellTid);
-export const getFeatureToggles = createSelector([fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles);
+export const getNavAnsattName = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.navn);
+export const getFunksjonellTid = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.funksjonellTid);
+export const getFeatureToggles = createSelector([fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData: { featureToggles: {}}) => (ftData
+  ? ftData.featureToggles : undefined));
 export const getShowDetailedErrorMessages = createSelector(
   [fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiData()], (showDetailedErrorMessages = false) => showDetailedErrorMessages,
 );

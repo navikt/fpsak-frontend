@@ -18,3 +18,4 @@ export { default as Vilkar } from './src/vilkarTsType';
 export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
 export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
 export { default as Fagsak } from './src/fagsakTsType';
+export { default as FagsakPerson } from './src/fagsakPersonTsType';

@@ -21,7 +21,6 @@ interface OwnProps {
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: Kodeverk[]};
   rettigheter: Rettigheter;
-  location: {};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;

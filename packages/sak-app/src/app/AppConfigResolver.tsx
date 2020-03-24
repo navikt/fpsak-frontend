@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, ReactNode } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -10,19 +9,19 @@ import {
   fetchAlleKodeverk as fetchAlleKodeverkAC, getFeatureToggles, isFinishedLoadingData, fetchAllFeatureToggles,
 } from './duck';
 
-class AppConfigResolver extends Component {
-  static propTypes = {
-    finishedLoadingBlockers: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-    fetchNavAnsatt: PropTypes.func.isRequired,
-    fetchLanguageFile: PropTypes.func.isRequired,
-    fetchBehandlendeEnheter: PropTypes.func.isRequired,
-    fetchAlleKodeverk: PropTypes.func.isRequired,
-    fetchShowDetailedErrorMessages: PropTypes.func.isRequired,
-    fetchFeatureToggles: PropTypes.func.isRequired,
-    featureToggles: PropTypes.shape(),
-  };
+interface OwnProps {
+  finishedLoadingBlockers: boolean;
+  children: ReactNode;
+  fetchNavAnsatt: () => void;
+  fetchLanguageFile: () => void;
+  fetchBehandlendeEnheter: () => void;
+  fetchAlleKodeverk: (featureToggles: {}) => void;
+  fetchShowDetailedErrorMessages: () => void;
+  fetchFeatureToggles: () => void;
+  featureToggles: {};
+}
 
+class AppConfigResolver extends Component<OwnProps> {
   static defaultProps = {
     featureToggles: undefined,
   };

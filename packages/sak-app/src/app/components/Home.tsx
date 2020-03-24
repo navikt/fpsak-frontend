@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { NotFoundPage } from '@fpsak-frontend/sak-feilsider';
@@ -11,12 +10,16 @@ import DashboardResolver from './DashboardResolver';
 
 import styles from './home.less';
 
+interface OwnProps {
+  headerHeight: number;
+}
+
 /**
  * Home
  *
  * Presentasjonskomponent. Wrapper for sideinnholdet som vises under header.
  */
-const Home = ({
+const Home: FunctionComponent<OwnProps> = ({
   headerHeight,
 }) => (
   <div className={styles.content} style={{ margin: `${headerHeight}px auto 0` }}>
@@ -28,9 +31,5 @@ const Home = ({
     </Switch>
   </div>
 );
-
-Home.propTypes = {
-  headerHeight: PropTypes.number.isRequired,
-};
 
 export default Home;

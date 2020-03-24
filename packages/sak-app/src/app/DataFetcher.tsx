@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -10,38 +9,39 @@ export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m
 const FETCH_PREFIX = 'FETCH_';
 const CACHE_PREFIX = 'CACHE_';
 
+interface OwnProps {
+  render: () => void;
+  endpoints: {}[];
+  isFetchFinished: boolean;
+  behandlingNotRequired?: boolean;
+  behandlingId?: number;
+  behandlingVersjon?: number;
+  showComponent?: boolean;
+  showComponentDuringFetch?: boolean;
+  showLoadingIcon?: boolean;
+  valueThatWillTriggerRefetchWhenChanged?: number;
+  keepDataWhenRefetching?: boolean;
+  endpointParams?: {};
+  allowErrors?: boolean;
+}
+
+interface StateProps {
+  nrOfErrors: number;
+  fakeCache: {};
+}
+
 /**
  * DataFetcher
  *
  * Henter data fra valgte restendepunkter. Ved endring i behandlingId eller behandlingVersjon blir data hentet på nytt
  */
-export class DataFetcher extends Component {
-  static propTypes = {
-    render: PropTypes.func.isRequired,
-    endpoints: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-    isFetchFinished: PropTypes.bool.isRequired,
-    behandlingNotRequired: PropTypes.bool,
-    behandlingId: PropTypes.number,
-    behandlingVersjon: PropTypes.number,
-    showComponent: PropTypes.bool,
-    showComponentDuringFetch: PropTypes.bool,
-    showLoadingIcon: PropTypes.bool,
-    valueThatWillTriggerRefetchWhenChanged: PropTypes.number,
-    keepDataWhenRefetching: PropTypes.bool,
-    endpointParams: PropTypes.shape(),
-    allowErrors: PropTypes.bool,
-  };
-
+export class DataFetcher extends Component<OwnProps, StateProps> {
   static defaultProps = {
     behandlingNotRequired: false,
-    behandlingId: undefined,
-    behandlingVersjon: undefined,
     showComponent: true,
     showComponentDuringFetch: false,
     showLoadingIcon: false,
-    valueThatWillTriggerRefetchWhenChanged: undefined,
     keepDataWhenRefetching: false,
-    endpointParams: undefined,
     allowErrors: false,
   }
 

@@ -1,18 +1,18 @@
 import React, { Component, Suspense } from 'react';
 import { createSelector } from 'reselect';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { RouteProps } from 'react-router';
 
+import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Fagsak, KodeverkMedNavn } from '@fpsak-frontend/types';
+import { Fagsak, KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
 import getAccessRights from '../app/util/access';
 import {
@@ -55,37 +55,30 @@ interface OwnProps {
   behandlingTypeKode: string;
   behandlingVersjon: number;
   location: RouteProps['location'];
-  oppdaterBehandlingVersjon: () => void;
+  oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
   erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;
-  setBehandlingIdOgVersjon: () => void;
+  setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
   featureToggles: {};
   kodeverk: {[key: string]: [KodeverkMedNavn]};
   fagsak: Fagsak;
   fagsakBehandlingerInfo: {
-    id: PropTypes.number.isRequired,
-    type: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }).isRequired,
-    avsluttet: PropTypes.string,
+    id: number;
+    type: Kodeverk;
+    avsluttet?: string;
   }[];
-  behandlingLinks: {
-    href: PropTypes.string.isRequired,
-    rel: PropTypes.string.isRequired,
-    requestPayload: PropTypes.any,
-    type: PropTypes.string.isRequired,
-  }[];
-  push: () => void;
-  visFeilmelding: () => void;
+  behandlingLinks: Link[];
+  push: (location: RouteProps['location'] | string) => void;
+  visFeilmelding: (data: {}) => void;
   rettigheter: {
-    writeAccess: PropTypes.shape({
-      employeeHasAccess: PropTypes.bool.isRequired,
-      isEnabled: PropTypes.bool.isRequired,
-    }).isRequired,
-    kanOverstyreAccess: PropTypes.shape({
-      employeeHasAccess: PropTypes.bool.isRequired,
-      isEnabled: PropTypes.bool.isRequired,
-    }).isRequired,
+    writeAccess: {
+      employeeHasAccess: boolean;
+      isEnabled: boolean;
+    };
+    kanOverstyreAccess: {
+      employeeHasAccess: boolean;
+      isEnabled: boolean;
+    };
   };
 }
 
@@ -98,10 +91,6 @@ interface OwnProps {
  * Komponenten har ansvar å legge valgt behandlingId fra URL-en i staten.
  */
 export class BehandlingIndex extends Component<OwnProps> {
-  static defaultProps = {
-    erAktivPapirsoknad: false,
-  };
-
   constructor(props) {
     super(props);
     const { setBehandlingIdOgVersjon, behandlingVersjon } = props;
@@ -157,7 +146,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       behandlingTypeKode,
       location,
       oppdaterBehandlingVersjon,
-      erAktivPapirsoknad,
+      erAktivPapirsoknad = false,
       featureToggles,
       kodeverk,
       fagsak,
@@ -346,7 +335,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 export default trackRouteParam({
   paramName: 'behandlingId',
   parse: (behandlingFromUrl) => Number.parseInt(behandlingFromUrl, 10),
-  paramPropType: PropTypes.number,
   storeParam: setUrlBehandlingId,
   getParamFromStore: getUrlBehandlingId,
 })(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingTypeKode'])(BehandlingIndex)));

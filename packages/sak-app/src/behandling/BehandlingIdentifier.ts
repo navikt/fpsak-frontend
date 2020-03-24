@@ -1,4 +1,8 @@
-class BehandlingIdentifier {
+class BehandlingIdentifier<Fields> {
+  $$saksnummer: string;
+
+  $$behandlingId: number;
+
   constructor(saksnummer, behandlingId) {
     this.$$saksnummer = saksnummer;
     this.$$behandlingId = behandlingId;
