@@ -142,7 +142,7 @@ const buildInitialValues = createSelector(
     const initialForeldreType = selectedValues.foreldreType ? selectedValues.foreldreType : null;
     return {
       ...initialValues,
-      familieHendelseType: initialFamilieHendelseType.kode === '-' ? null : initialFamilieHendelseType,
+      familieHendelseType: initialFamilieHendelseType && initialFamilieHendelseType.kode === '-' ? null : initialFamilieHendelseType,
       foreldreType: initialForeldreType,
     };
   },
