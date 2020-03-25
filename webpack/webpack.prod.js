@@ -15,7 +15,7 @@ const config = {
 
   entry: [
     '@babel/polyfill',
-    APP_DIR + '/index.jsx',
+    APP_DIR + '/index.tsx',
   ],
   output: {
     filename: '[name]-[contenthash].js',

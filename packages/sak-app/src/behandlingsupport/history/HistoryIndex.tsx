@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
-import { KodeverkMedNavn } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
 import DataFetcher from '../../app/DataFetcher';
@@ -21,7 +21,13 @@ const historyRestApis = {
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
 };
 
-const sortAndTagTilbakekreving = createSelector(
+interface History {
+  opprettetTidspunkt: string;
+  erTilbakekreving?: boolean;
+  type: Kodeverk;
+}
+
+const sortAndTagTilbakekreving = createSelector<{ historyFpsak: History[]; historyFptilbake: History[] }, History[], History[]>(
   [(props) => props.historyFpsak, (props) => props.historyFptilbake],
   (historyFpsak = [], historyFptilbake = []) => {
     const historikkFraTilbakekrevingMedMarkor = historyFptilbake.map((ht) => ({

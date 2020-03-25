@@ -92,6 +92,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   }, [selectedBehandlingId]);
 
   const getBehandlingLocation = useCallback((behandlingId) => getLocationWithDefaultProsessStegAndFakta({
+    ...location,
     pathname: pathToBehandling(saksnummer, behandlingId),
   }), [saksnummer]);
 

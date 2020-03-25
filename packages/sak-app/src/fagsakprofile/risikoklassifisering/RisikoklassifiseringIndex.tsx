@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { RouteProps } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -20,13 +19,13 @@ import {
   getBehandlingIdentifier, getBehandlingVersjon, getSelectedBehandlingId, getBehandlingStatus, getBehandlingType,
 } from '../../behandling/duck';
 import {
-  isRiskPanelOpen, resolveAksjonspunkter, setRiskPanelOpen,
+  isRiskPanelOpen, resolveAksjonspunkter as resolveAp, setRiskPanelOpen,
 } from './duck';
 import trackRouteParam from '../../app/trackRouteParam';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 
 interface OwnProps {
-  resolveAksjonspunkter: (params: {}, behandlingIdentifier: BehandlingIdentifier) => Promise<any>;
+  resolveAksjonspunkter: (params: {}, behandlingIdentifier: BehandlingIdentifier) => void;
   push: (location: RouteProps['location']) => void;
   location: RouteProps['location'];
   isPanelOpen: boolean;
@@ -62,7 +61,7 @@ export class RisikoklassifiseringIndexImpl extends Component<OwnProps> {
     const {
       behandlingIdentifier,
       behandlingVersjon,
-      resolveAksjonspunkter: resolveAp,
+      resolveAksjonspunkter,
     } = this.props;
 
     const params = {
@@ -74,7 +73,7 @@ export class RisikoklassifiseringIndexImpl extends Component<OwnProps> {
       }],
     };
 
-    return resolveAp(params, behandlingIdentifier);
+    return resolveAksjonspunkter(params, behandlingIdentifier);
   }
 
   toggleRiskPanel = () => {
@@ -138,15 +137,14 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
     dispatchSubmitFailed,
-    resolveAksjonspunkter,
     setRiskPanelOpen,
+    resolveAksjonspunkter: resolveAp,
   }, dispatch),
 });
 
 export default trackRouteParam({
   paramName: 'risiko',
   parse: (isOpen) => isOpen === 'true',
-  paramPropType: PropTypes.bool,
   storeParam: setRiskPanelOpen,
   getParamFromStore: isRiskPanelOpen,
   isQueryParam: true,

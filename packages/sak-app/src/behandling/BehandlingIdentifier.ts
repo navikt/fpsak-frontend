@@ -1,4 +1,4 @@
-class BehandlingIdentifier<Fields> {
+class BehandlingIdentifier {
   $$saksnummer: string;
 
   $$behandlingId: number;

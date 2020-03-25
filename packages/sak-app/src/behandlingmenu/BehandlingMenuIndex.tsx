@@ -71,10 +71,14 @@ interface OwnProps {
 }
 
 class BehandlingMenuIndex extends Component<OwnProps> {
+  static defaultProps = {
+    behandlingData: MenyBehandlingData.lagIngenValgtBehandling(),
+  }
+
   componentDidMount = () => {
     const {
       saksnummer,
-      behandlingData = MenyBehandlingData.lagIngenValgtBehandling(),
+      behandlingData,
       hentVergeMenyvalg: hentMenyvalg,
     } = this.props;
 
@@ -93,7 +97,7 @@ class BehandlingMenuIndex extends Component<OwnProps> {
 
   componentDidUpdate = (prevProps) => {
     const {
-      saksnummer, behandlingData = MenyBehandlingData.lagIngenValgtBehandling(), behandlingId, hentVergeMenyvalg: hentMenyvalg,
+      saksnummer, behandlingData, behandlingId, hentVergeMenyvalg: hentMenyvalg,
     } = this.props;
 
     if (behandlingData.harValgtBehandling) {
@@ -108,7 +112,7 @@ class BehandlingMenuIndex extends Component<OwnProps> {
 
   render() {
     const {
-      behandlingData = MenyBehandlingData.lagIngenValgtBehandling(),
+      behandlingData,
       navAnsatt,
       fagsakStatus,
       kanRevurderingOpprettes,

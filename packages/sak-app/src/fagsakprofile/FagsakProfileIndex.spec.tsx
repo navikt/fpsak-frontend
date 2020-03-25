@@ -80,9 +80,11 @@ describe('<FagsakProfileIndex>', () => {
   it('skal omdirigere til behandling hvis flagget er satt', () => {
     const behandlingId = 67890;
     const saksnummer = 123;
-    const location = {};
     const pathToBehandlingerForFagsak = pathToBehandlinger(saksnummer);
-    const locationForBehandling = getLocationWithDefaultProsessStegAndFakta({ ...location, pathname: pathToBehandling(saksnummer, behandlingId) });
+    const locationForBehandling = getLocationWithDefaultProsessStegAndFakta({
+      ...locationMock,
+      pathname: pathToBehandling(saksnummer, behandlingId),
+    });
 
     const wrapper = shallow(<FagsakProfileIndex
       saksnummer={saksnummer}

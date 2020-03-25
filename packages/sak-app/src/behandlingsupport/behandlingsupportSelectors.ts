@@ -32,13 +32,13 @@ const getSendMessageIsRelevant = createSelector([getSelectedSaksnummer, erBehand
 
 const getReturnedIsRelevant = createSelector(
   [erBehandlingPaVent, fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData(), getBehandlingStatus],
-  (isOnHold, toTrinnsAksjonspunkter: TotrinnskontrollAksjonspunkt[] = [], status = {}) => !isOnHold && toTrinnsAksjonspunkter
+  (isOnHold, toTrinnsAksjonspunkter: TotrinnskontrollAksjonspunkt[] = [], status) => !isOnHold && toTrinnsAksjonspunkter
     .reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
-    .some((ap) => ap.totrinnskontrollGodkjent === false) && status.kode === behandlingStatus.BEHANDLING_UTREDES,
+    .some((ap) => ap.totrinnskontrollGodkjent === false) && status && status.kode === behandlingStatus.BEHANDLING_UTREDES,
 );
 
-const getApprovalIsRelevant = createSelector([erBehandlingPaVent, getBehandlingStatus], (isOnHold, status = {}) => !isOnHold
-  && status.kode === behandlingStatus.FATTER_VEDTAK);
+const getApprovalIsRelevant = createSelector([erBehandlingPaVent, getBehandlingStatus], (isOnHold, status) => !isOnHold
+  && status && status.kode === behandlingStatus.FATTER_VEDTAK);
 
 export const getAccessibleSupportPanels = createSelector(
   [

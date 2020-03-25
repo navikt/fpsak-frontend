@@ -43,7 +43,7 @@ describe('<FagsakResolver>', () => {
   it('skal rendre children når all informasjon er hentet', () => {
     const props = getRequiredProps();
 
-    const ChildComponent = () => 'Innhold';
+    const ChildComponent = () => <>Innhold</>;
     const wrapper = shallow(<FagsakResolver {...props}><ChildComponent /></FagsakResolver>);
 
     expect(wrapper.find(ChildComponent)).to.have.length(0);

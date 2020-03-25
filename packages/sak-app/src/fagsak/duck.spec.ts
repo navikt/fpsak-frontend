@@ -31,7 +31,7 @@ describe('Fagsak-reducer', () => {
   });
 
   it('skal returnere initial state', () => {
-    expect(fagsakReducer(undefined, {})).to.eql({
+    expect(fagsakReducer(undefined, { type: '' })).to.eql({
       selectedSaksnummer: null,
     });
   });

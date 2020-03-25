@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/sak-app",
   "version": "1.0.0",
-  "module": "src/index.jsx",
+  "module": "src/index.tsx",
   "license": "MIT",
   "private": true,
   "dependencies": {

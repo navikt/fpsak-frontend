@@ -22,7 +22,7 @@ const configureStore = (browserHistory) => {
   if (isDevelopment) {
     middleware.push(logger.createLogger());
     /* eslint-disable no-underscore-dangle */
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const composeEnhancers = (window && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
     /* eslint-enable */
     enhancer = composeEnhancers(applyMiddleware(...middleware));
   } else {

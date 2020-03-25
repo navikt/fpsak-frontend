@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
@@ -207,7 +207,7 @@ export class MessagesIndex extends Component<OwnProps, StateProps> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: any) => ({
   submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
@@ -219,7 +219,7 @@ const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   ...bindActionCreators({
     push,
     setBehandlingOnHold,
