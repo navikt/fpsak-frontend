@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { hasValidDate, required } from '@fpsak-frontend/utils';
+import { hasValidDate, required, dateBeforeOrEqualToToday } from '@fpsak-frontend/utils';
 import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
@@ -40,7 +40,7 @@ export const AvklartBarnFieldArray = ({
                   name={`${periodeElementFieldId}.fodselsdato`}
                   defaultValue={null}
                   label={{ id: 'AvklartBarnFieldArray.Title' }}
-                  validate={[hasValidDate, required]}
+                  validate={[hasValidDate, required, dateBeforeOrEqualToToday]}
                   readOnly={readOnly}
                 />
               </FlexColumn>
@@ -60,7 +60,7 @@ export const AvklartBarnFieldArray = ({
                   name={`${periodeElementFieldId}.dodsdato`}
                   defaultValue={null}
                   label={{ id: 'AvklartBarnFieldArray.Dodsdato' }}
-                  validate={[hasValidDate]}
+                  validate={[hasValidDate, dateBeforeOrEqualToToday]}
                   readOnly={readOnly}
                 />
               </FlexColumn>

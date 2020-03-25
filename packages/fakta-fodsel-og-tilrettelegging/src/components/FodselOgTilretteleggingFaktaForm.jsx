@@ -19,7 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
-import { finnDekningsgradForDelvisTilrettelegging } from './tilrettelegging/TilretteleggingFieldArray';
+import { finnUtbetalingsgradForDelvisTilrettelegging } from './tilrettelegging/TilretteleggingFieldArray';
 import arbeidsforholdPropType from '../propTypes/arbeidsforholdPropType';
 import iayArbeidsforholdPropType from '../propTypes/iayArbeidsforholdPropType';
 
@@ -203,7 +203,7 @@ const finnOverstyrtUtbetalingsgrad = (type, stillingsprosent, stillingsprosentAr
 
   let erLikOverstyrtVerdi = type.kode === tilretteleggingType.INGEN_TILRETTELEGGING && parseFloat(overstyrtUtbetalingsgrad) === 100;
   if (type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
-    erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === parseFloat(finnDekningsgradForDelvisTilrettelegging(
+    erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === parseFloat(finnUtbetalingsgradForDelvisTilrettelegging(
       stillingsprosent, stillingsprosentArbeidsforhold,
     ));
   }
@@ -305,7 +305,7 @@ const utledUtbetalingsgrad = (tilretteleggingsdato, stillingsprosentArbeidsforho
     return tilretteleggingsdato.overstyrtUtbetalingsgrad;
   }
   return tilretteleggingsdato.type.kode === tilretteleggingType.INGEN_TILRETTELEGGING ? 100
-    : finnDekningsgradForDelvisTilrettelegging(tilretteleggingsdato.stillingsprosent, stillingsprosentArbeidsforhold);
+    : finnUtbetalingsgradForDelvisTilrettelegging(tilretteleggingsdato.stillingsprosent, stillingsprosentArbeidsforhold);
 };
 
 const getInitialArbeidsforholdValues = createSelector([

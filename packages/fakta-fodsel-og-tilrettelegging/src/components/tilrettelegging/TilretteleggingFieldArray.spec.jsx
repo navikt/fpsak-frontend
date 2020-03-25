@@ -7,7 +7,7 @@ import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 
-import { TilretteleggingFieldArray } from './TilretteleggingFieldArray';
+import { TilretteleggingFieldArray, finnUtbetalingsgradForDelvisTilrettelegging } from './TilretteleggingFieldArray';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 const getRemoveButton = () => <button id="avslutt" type="button" />;
@@ -116,5 +116,23 @@ describe('<TilretteleggingFieldArray>', () => {
     expect(formattedMessages).has.length(0);
 
     expect(innerWrapper.find('#avslutt')).has.length(0);
+  });
+
+  it('skal finnne utbetalingsgrad for delvis tilrettelegging - eks. 1', () => {
+    const stillingsprosent = 70;
+    const stillingsprosentArbeidsgiver = 70;
+
+    const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
+
+    expect(utbetalingsgrad).is.eql(0);
+  });
+
+  it('skal finnne utbetalingsgrad for delvis tilrettelegging - eks. 2', () => {
+    const stillingsprosent = 70;
+    const stillingsprosentArbeidsgiver = 30;
+
+    const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
+
+    expect(utbetalingsgrad).is.eql(0);
   });
 });
