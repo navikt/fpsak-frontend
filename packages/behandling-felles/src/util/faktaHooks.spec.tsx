@@ -2,7 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -145,14 +147,14 @@ describe('<faktaHooks>', () => {
     const makeRestApiRequest = sinon.spy();
     const overstyringApCodes = [];
     const valgtProsessSteg = 'default';
-    const behandlingApi = {
+    const behandlingApi: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
     };
 
     const wrapper = testHook(() => faktaHooks.useCallbacks(paneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl,
-      valgtProsessSteg, overstyringApCodes, behandlingApi, dispatch));
+      valgtProsessSteg, overstyringApCodes, behandlingApi as {[name: string]: EndpointOperations}, dispatch as Dispatch));
     const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 
     velgFaktaPanelCallback(0);

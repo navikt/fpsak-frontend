@@ -27,6 +27,11 @@ interface OwnProps {
   featureToggles: {};
 }
 
+interface FaktaPanelInfo {
+  urlCode: string;
+  textCode: string;
+}
+
 const EngangsstonadPaneler: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
@@ -43,7 +48,7 @@ const EngangsstonadPaneler: FunctionComponent<OwnProps> = ({
   hasFetchError,
   featureToggles,
 }) => {
-  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState();
+  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
 

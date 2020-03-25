@@ -18,6 +18,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import FetchedData from '../types/fetchedDataTsType';
 
 import ForeldrepengerProsess from './ForeldrepengerProsess';
 
@@ -79,11 +80,17 @@ describe('<ForeldrepengerProsess>', () => {
     },
   };
 
+  const fetchedData: Partial<FetchedData> = {
+    aksjonspunkter,
+    vilkar,
+    soknad,
+  };
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -150,7 +157,7 @@ describe('<ForeldrepengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -181,7 +188,7 @@ describe('<ForeldrepengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -244,10 +251,16 @@ describe('<ForeldrepengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={vedtakBehandling}
         alleKodeverk={{
@@ -290,10 +303,16 @@ describe('<ForeldrepengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{
@@ -336,10 +355,16 @@ describe('<ForeldrepengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{
@@ -369,7 +394,7 @@ describe('<ForeldrepengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -400,7 +425,7 @@ describe('<ForeldrepengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -431,7 +456,7 @@ describe('<ForeldrepengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <ForeldrepengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}

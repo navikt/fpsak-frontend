@@ -17,6 +17,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import FetchedData from '../types/fetchedDataTsType';
 
 import SvangerskapspengerProsess from './SvangerskapspengerProsess';
 
@@ -78,11 +79,17 @@ describe('<SvangerskapspengerProsess>', () => {
     },
   };
 
+  const fetchedData: Partial<FetchedData> = {
+    aksjonspunkter,
+    vilkar,
+    soknad,
+  };
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -94,6 +101,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -142,7 +150,7 @@ describe('<SvangerskapspengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -154,6 +162,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -172,7 +181,7 @@ describe('<SvangerskapspengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -184,6 +193,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -234,10 +244,16 @@ describe('<SvangerskapspengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={vedtakBehandling}
         alleKodeverk={{}}
@@ -249,6 +265,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -277,10 +294,16 @@ describe('<SvangerskapspengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -292,6 +315,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -320,10 +344,16 @@ describe('<SvangerskapspengerProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -335,6 +365,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={opneSokeside}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -350,7 +381,7 @@ describe('<SvangerskapspengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -362,6 +393,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         opneSokeside={sinon.spy()}
         dispatch={sinon.spy()}
+        featureToggles={{}}
       />,
     );
 
@@ -380,7 +412,7 @@ describe('<SvangerskapspengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -392,6 +424,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
@@ -410,7 +443,7 @@ describe('<SvangerskapspengerProsess>', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -422,6 +455,7 @@ describe('<SvangerskapspengerProsess>', () => {
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         opneSokeside={sinon.spy()}
         dispatch={dispatch}
+        featureToggles={{}}
       />,
     );
 
