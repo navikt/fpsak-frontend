@@ -16,7 +16,10 @@ const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
     resolvedErrorMessages.push({ message: queryStrings.errormessage });
   }
   errorMessages.forEach((message) => {
-    let msg = { message: (message.code ? intl.formatMessage({ id: message.code }, message.params) : message.text) };
+    let msg = {
+      message: (message.code ? intl.formatMessage({ id: message.code }, message.params) : message.text),
+      additionalInfo: undefined,
+    };
     if (message.params && message.params.errorDetails) {
       msg = {
         ...msg,
@@ -37,8 +40,14 @@ interface OwnProps {
   removeErrorMessage: () => void;
   showDetailedErrorMessages?: boolean;
   hideErrorMessages?: boolean;
-  errorMessages?: {}[];
-  setSiteHeight: () => void;
+  errorMessages?: {
+    code?: string;
+    params?: {
+      errorDetails?: string;
+    };
+    text?: string;
+  }[];
+  setSiteHeight: (headerHeight: number) => void;
 }
 
 const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({

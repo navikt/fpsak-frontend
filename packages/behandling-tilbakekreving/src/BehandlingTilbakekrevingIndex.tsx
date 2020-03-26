@@ -8,7 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, Behandling } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
@@ -19,7 +19,6 @@ const tilbakekrevingData = [tilbakekrevingApi.AKSJONSPUNKTER, tilbakekrevingApi.
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -31,13 +30,13 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   harApenRevurdering: boolean;
-  kodeverk: {[key: string]: [Kodeverk]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
 }
 
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  tilbakekrevingKodeverk?: {[key: string]: [Kodeverk]};
+  tilbakekrevingKodeverk?: {[key: string]: KodeverkMedNavn[]};
   hasFetchError: boolean;
 }
 
@@ -137,14 +136,14 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state): StateProps => ({
   behandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiData()(state),
   forrigeBehandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiPreviousData()(state),
   tilbakekrevingKodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.getRestApiData()(state),
   hasFetchError: !!tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiError()(state),
 });
 
-const getResetRestApiContext = () => (dispatch) => {
+const getResetRestApiContext = () => (dispatch: Dispatch) => {
   Object.values(TilbakekrevingBehandlingApiKeys)
     .forEach((value) => {
       dispatch(tilbakekrevingApi[value].resetRestApi()());
@@ -165,4 +164,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingTilbakekrevingIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingTilbakekrevingIndex);

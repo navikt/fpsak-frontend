@@ -8,7 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, Rettigheter, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import FetchedData from './types/fetchedDataTsType';
 import klageApi, { reduxRestApi, KlageBehandlingApiKeys } from './data/klageBehandlingApi';
@@ -18,9 +18,8 @@ const klageData = [klageApi.AKSJONSPUNKTER, klageApi.VILKAR, klageApi.KLAGE_VURD
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
@@ -30,13 +29,14 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  alleBehandlinger: [{
+  alleBehandlinger: {
     id: number;
-    type: Kodeverk;
-    avsluttet?: string;
-    status: Kodeverk;
     uuid: string;
-  }];
+    type: Kodeverk;
+    status: Kodeverk;
+    opprettet: string;
+    avsluttet?: string;
+  }[];
 }
 
 interface StateProps {

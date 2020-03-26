@@ -14,6 +14,7 @@ import configureStore from './configureStore';
 
 /* global VERSION:true */
 /* eslint no-undef: "error" */
+// @ts-ignore
 const release = VERSION;
 const environment = window.location.hostname;
 const isDevelopment = process.env.NODE_ENV === 'development';
@@ -24,17 +25,22 @@ init({
   integrations: [new Integrations.Breadcrumbs({ console: false })],
   beforeSend: (event, hint) => {
     const exception = hint.originalException;
+    // @ts-ignore
     if (exception.isAxiosError) {
+      // @ts-ignore
       const requestUrl = new URL(exception.request.responseURL);
       // eslint-disable-next-line no-param-reassign
       event.fingerprint = [
         '{{ default }}',
+        // @ts-ignore
         String(exception.name),
+        // @ts-ignore
         String(exception.message),
         String(requestUrl.pathname),
       ];
       // eslint-disable-next-line no-param-reassign
       event.extra = event.extra ? event.extra : {};
+      // @ts-ignore
       // eslint-disable-next-line no-param-reassign
       event.extra.callId = exception.response.config.headers['Nav-Callid'];
     }

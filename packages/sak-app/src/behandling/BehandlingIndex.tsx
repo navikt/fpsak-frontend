@@ -12,7 +12,9 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Fagsak, KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
+import {
+  FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt,
+} from '@fpsak-frontend/types';
 
 import getAccessRights from '../app/util/access';
 import {
@@ -31,7 +33,7 @@ import {
 } from './duck';
 import {
   getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo, getBehandlingerLinksMappedById, getBehandlingerTypesMappedById,
-  getBehandlingerStatusMappedById,
+  getBehandlingerStatusMappedById, BehandlingerInfo,
 } from './selectors/behandlingerSelectors';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
@@ -50,6 +52,13 @@ const erTilbakekreving = (behandlingTypeKode) => behandlingTypeKode === Behandli
   || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
 const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
+interface FagsakInfo {
+  saksnummer: number;
+  fagsakYtelseType: Kodeverk;
+  fagsakPerson: FagsakPerson;
+  fagsakStatus: Kodeverk;
+}
+
 interface OwnProps {
   behandlingId: number;
   behandlingTypeKode: string;
@@ -60,13 +69,9 @@ interface OwnProps {
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
   featureToggles: {};
-  kodeverk: {[key: string]: [KodeverkMedNavn]};
-  fagsak: Fagsak;
-  fagsakBehandlingerInfo: {
-    id: number;
-    type: Kodeverk;
-    avsluttet?: string;
-  }[];
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
+  fagsak: FagsakInfo;
+  fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
   push: (location: RouteProps['location'] | string) => void;
   visFeilmelding: (data: {}) => void;
@@ -300,7 +305,7 @@ export const getFagsakInfo = createSelector([
 
 const getRettigheter = createSelector([getNavAnsatt, getSelectedFagsakStatus, getUrlBehandlingId, getBehandlingerStatusMappedById,
   getBehandlingerTypesMappedById],
-(navAnsatt, selectedFagsakStatus, behandlingId, behandlingerStatusMappedById, behandlingerTypesMappedById) => {
+(navAnsatt: NavAnsatt, selectedFagsakStatus, behandlingId, behandlingerStatusMappedById, behandlingerTypesMappedById) => {
   const status = behandlingerStatusMappedById[behandlingId];
   const type = behandlingerTypesMappedById[behandlingId];
   return getAccessRights(navAnsatt, selectedFagsakStatus, status, type);

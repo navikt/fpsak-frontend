@@ -4,6 +4,7 @@ import sinon from 'sinon';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { omit } from '@fpsak-frontend/utils';
+import { Behandling } from '@fpsak-frontend/types';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
   ProsessStegPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal, ProsessStegContainer,
@@ -92,7 +93,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
@@ -159,7 +160,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
@@ -190,7 +191,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
@@ -262,7 +263,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
-        behandling={vedtakBehandling}
+        behandling={vedtakBehandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
@@ -314,7 +315,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
@@ -366,7 +367,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
@@ -396,7 +397,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
@@ -427,7 +428,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="vedtak"
@@ -458,7 +459,7 @@ describe('<ForeldrepengerProsess>', () => {
         intl={intlMock}
         data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="simulering"

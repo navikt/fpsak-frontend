@@ -4,6 +4,7 @@ import sinon from 'sinon';
 
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -73,7 +74,7 @@ describe('<AnkeProsess>', () => {
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, ankeVurdering }}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         alleBehandlinger={[]}
         rettigheter={rettigheter}
@@ -114,7 +115,7 @@ describe('<AnkeProsess>', () => {
         intl={intlMock}
         data={{ aksjonspunkter, vilkar, ankeVurdering }}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         alleBehandlinger={[]}
         rettigheter={rettigheter}

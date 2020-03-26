@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import { Column } from 'nav-frontend-grid';
 
+import { Behandling } from '@fpsak-frontend/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -72,7 +73,7 @@ describe('<InngangsvilkarPanel>', () => {
 
     const wrapper = shallow(
       <InngangsvilkarPanel
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         prosessStegData={prosessStegData}
         submitCallback={sinon.spy()}
@@ -112,7 +113,7 @@ describe('<InngangsvilkarPanel>', () => {
 
     const wrapper = shallow(
       <InngangsvilkarPanel
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         prosessStegData={prosessStegData}
         submitCallback={sinon.spy()}

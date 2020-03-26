@@ -6,6 +6,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Behandling } from '@fpsak-frontend/types';
 
 import readOnlyUtils from './readOnlyUtils';
 
@@ -65,7 +66,7 @@ describe('<readOnlyUtils>', () => {
         readOnly: true,
       },
     };
-    const status = readOnlyUtils.harBehandlingReadOnlyStatus(behandlingMedReadOnly);
+    const status = readOnlyUtils.harBehandlingReadOnlyStatus(behandlingMedReadOnly as Behandling);
     expect(status).is.true;
   });
 
@@ -76,13 +77,13 @@ describe('<readOnlyUtils>', () => {
         readOnly: false,
       },
     };
-    const status = readOnlyUtils.harBehandlingReadOnlyStatus(behandlingMedReadOnly);
+    const status = readOnlyUtils.harBehandlingReadOnlyStatus(behandlingMedReadOnly as Behandling);
     expect(status).is.false;
   });
 
   it('skal ikke være readonly', () => {
     const hasFetchError = false;
-    const erReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
+    const erReadOnly = readOnlyUtils.erReadOnly(behandling as Behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(erReadOnly).is.false;
   });
@@ -96,14 +97,14 @@ describe('<readOnlyUtils>', () => {
       },
     };
     const hasFetchError = false;
-    const erReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkter, vilkar, nyRettigheter, hasFetchError);
+    const erReadOnly = readOnlyUtils.erReadOnly(behandling as Behandling, aksjonspunkter, vilkar, nyRettigheter, hasFetchError);
 
     expect(erReadOnly).is.true;
   });
 
   it('skal være readonly når en har fetch error', () => {
     const hasFetchError = true;
-    const erReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
+    const erReadOnly = readOnlyUtils.erReadOnly(behandling as Behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(erReadOnly).is.true;
   });
@@ -116,7 +117,7 @@ describe('<readOnlyUtils>', () => {
       },
     };
     const hasFetchError = false;
-    const erReadOnly = readOnlyUtils.erReadOnly(behandlingMedReadOnly, aksjonspunkter, vilkar, rettigheter, hasFetchError);
+    const erReadOnly = readOnlyUtils.erReadOnly(behandlingMedReadOnly as Behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(erReadOnly).is.true;
   });
@@ -127,7 +128,7 @@ describe('<readOnlyUtils>', () => {
       erAktivt: false,
     }];
     const hasFetchError = false;
-    const erReadOnly = readOnlyUtils.erReadOnly(behandling, nyeAksjonspunkter, vilkar, rettigheter, hasFetchError);
+    const erReadOnly = readOnlyUtils.erReadOnly(behandling as Behandling, nyeAksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(erReadOnly).is.true;
   });
@@ -138,7 +139,7 @@ describe('<readOnlyUtils>', () => {
       overstyrbar: false,
     }];
     const hasFetchError = false;
-    const erReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkter, nyeVilkar, rettigheter, hasFetchError);
+    const erReadOnly = readOnlyUtils.erReadOnly(behandling as Behandling, aksjonspunkter, nyeVilkar, rettigheter, hasFetchError);
 
     expect(erReadOnly).is.true;
   });

@@ -34,7 +34,7 @@ const sortAndTagTilbakekreving = createSelector<{ historyFpsak: History[]; histo
       ...ht,
       erTilbakekreving: true,
     }));
-    return historyFpsak.concat(historikkFraTilbakekrevingMedMarkor).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
+    return historyFpsak.concat(historikkFraTilbakekrevingMedMarkor).sort((a, b) => moment(b.opprettetTidspunkt).diff(moment(a.opprettetTidspunkt)));
   },
 );
 

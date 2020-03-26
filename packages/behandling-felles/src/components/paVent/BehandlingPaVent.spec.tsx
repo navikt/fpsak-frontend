@@ -7,6 +7,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { Behandling } from '@fpsak-frontend/types';
+
 import BehandlingPaVentModal from './BehandlingPaVentModal';
 
 import BehandlingPaVent from './BehandlingPaVent';
@@ -32,7 +34,7 @@ describe('<BehandlingPaVent>', () => {
 
   it('skal ikke vise modal når behandling ikke er på vent', () => {
     const wrapper = shallow(<BehandlingPaVent
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={sinon.spy()}
@@ -47,7 +49,7 @@ describe('<BehandlingPaVent>', () => {
       behandling={{
         ...behandling,
         behandlingPaaVent: true,
-      }}
+      } as Behandling}
       aksjonspunkter={aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={sinon.spy()}
@@ -64,7 +66,7 @@ describe('<BehandlingPaVent>', () => {
       behandling={{
         ...behandling,
         behandlingPaaVent: true,
-      }}
+      } as Behandling}
       aksjonspunkter={aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={sinon.spy()}
@@ -84,7 +86,7 @@ describe('<BehandlingPaVent>', () => {
       behandling={{
         ...behandling,
         behandlingPaaVent: true,
-      }}
+      } as Behandling}
       aksjonspunkter={[{
         status: {
           kode: aksjonspunktStatus.OPPRETTET,
@@ -116,7 +118,7 @@ describe('<BehandlingPaVent>', () => {
       behandling={{
         ...behandling,
         behandlingPaaVent: true,
-      }}
+      } as Behandling}
       aksjonspunkter={aksjonspunkter}
       kodeverk={kodeverk}
       settPaVent={settPaVentCallback}

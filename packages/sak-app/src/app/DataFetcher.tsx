@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
@@ -11,7 +12,7 @@ const CACHE_PREFIX = 'CACHE_';
 
 interface OwnProps {
   render: () => void;
-  endpoints: {}[];
+  endpoints: EndpointOperations[];
   isFetchFinished: boolean;
   behandlingNotRequired?: boolean;
   behandlingId?: number;

@@ -69,9 +69,15 @@ class IntegrationStatusPanel extends Component<OwnProps, OwnState> {
     const { toggleOpen } = this.state;
 
     return (
-      <div className={styles.container} tabIndex={0} role="button" onKeyDown={this.togglePanelOnKeyDown}>
-        <Image className={styles.cursor} src={toggleOpen ? chevronUp : chevronDown} onClick={this.togglePanelOnClick} />
-        <Row className={styles.row} onClick={this.togglePanelOnClick}>
+      <button
+        type="button"
+        tabIndex={0}
+        className={styles.container}
+        onClick={this.togglePanelOnClick}
+        onKeyDown={this.togglePanelOnKeyDown}
+      >
+        <Image className={styles.cursor} src={toggleOpen ? chevronUp : chevronDown} />
+        <Row className={styles.row}>
           <Column xs="1">
             <Image src={infoImageUrl} />
             <div className={styles.divider} />
@@ -110,7 +116,7 @@ class IntegrationStatusPanel extends Component<OwnProps, OwnState> {
             })}
           </Column>
         </Row>
-      </div>
+      </button>
     );
   }
 }

@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FaktaPanel } from '@fpsak-frontend/behandling-felles';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -30,7 +31,7 @@ describe('<TilbakekrevingFakta>', () => {
       personnummer: '12345',
     },
   };
-  const behandling = {
+  const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
     status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
@@ -107,7 +108,7 @@ describe('<TilbakekrevingFakta>', () => {
         data={{
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}
         alleKodeverk={{}}
@@ -134,7 +135,7 @@ describe('<TilbakekrevingFakta>', () => {
         data={{
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}
         alleKodeverk={{}}

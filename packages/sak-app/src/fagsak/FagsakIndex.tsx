@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
@@ -108,7 +107,6 @@ const mapStateToProps = (state) => ({
 export default trackRouteParam({
   paramName: 'saksnummer',
   parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
-  paramPropType: PropTypes.number,
   storeParam: setSelectedSaksnummer,
   getParamFromStore: getSelectedSaksnummer,
 })(connect(mapStateToProps)(requireProps(['selectedSaksnummer'])(FagsakIndex)));

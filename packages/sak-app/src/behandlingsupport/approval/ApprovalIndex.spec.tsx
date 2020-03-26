@@ -24,7 +24,7 @@ describe('<ApprovalIndex>', () => {
     opprettet: '‎29.08.‎2017‎ ‎09‎:‎54‎:‎22',
     status: {
       kode: 'FVED',
-      navn: 'Fatter vedtak',
+      kodeverk: 'BEHANDLING_STATUS',
     },
     toTrinnsBehandling: true,
     ansvarligSaksbehandler: 'Espen Utvikler',

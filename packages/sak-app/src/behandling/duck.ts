@@ -106,11 +106,11 @@ export const getTempBehandlingVersjon = createSelector([getBehandlinger, getUrlB
   (behandlinger = [], behandlingId) => (behandlinger.some((b) => b.id === behandlingId) ? behandlinger.find((b) => b.id === behandlingId).versjon : undefined));
 export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
 
-export const getBehandlingStatus = createSelector([getBehandling], (behandling = {}) => behandling.status);
-export const getBehandlingType = createSelector([getBehandling], (behandling = {}) => behandling.type);
-export const getBehandlingBehandlendeEnhetId = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetId);
-export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetNavn);
-export const getBehandlingSprak = createSelector([getBehandling], (behandling = {}) => behandling.sprakkode);
+export const getBehandlingStatus = createSelector([getBehandling], (behandling) => (behandling ? behandling.status : undefined));
+export const getBehandlingType = createSelector([getBehandling], (behandling) => (behandling ? behandling.type : undefined));
+export const getBehandlingBehandlendeEnhetId = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlendeEnhetId : undefined));
+export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlendeEnhetNavn : undefined));
+export const getBehandlingSprak = createSelector([getBehandling], (behandling) => (behandling ? behandling.sprakkode : undefined));
 export const erBehandlingPaVent = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingPaaVent : false));
 export const erBehandlingKoet = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingKoet : false));
 export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling], (behandling) => (behandling

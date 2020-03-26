@@ -27,8 +27,8 @@ export const AktoerIndex: FunctionComponent<OwnProps> = ({
   aktoerId, requestPendingMessage, selectedAktoer,
 }) => (
   <>
-    <AktoerResolver key={aktoerId}>
-      {selectedAktoer.person ? <AktoerGrid data={selectedAktoer} /> : `Ugyldig aktoerId: ${aktoerId}`}
+    <AktoerResolver>
+      <>{selectedAktoer.person ? <AktoerGrid data={selectedAktoer} /> : `Ugyldig aktoerId: ${aktoerId}`}</>
     </AktoerResolver>
     {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
   </>

@@ -3,20 +3,22 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+
 import { DataFetcher, mapStateToProps, createFetchForEachEndpoint } from './DataFetcher';
 
 describe('<DataFetcher>', () => {
   it('skal ikke hente data når en ikke har behandling-id', () => {
     const renderComponent = sinon.spy();
     const fetchKodeverk = sinon.spy();
-    const endpoints = [{
+    const endpoint: Partial<EndpointOperations> = {
       name: 'HENT_KODEVERK',
-    }];
+    };
 
     shallow(<DataFetcher
       behandlingVersjon={1}
       isFetchFinished={false}
-      endpoints={endpoints}
+      endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
@@ -28,16 +30,16 @@ describe('<DataFetcher>', () => {
   it('skal ikke hente data når en ikke skal vise komponent', () => {
     const renderComponent = sinon.spy();
     const fetchKodeverk = sinon.spy();
-    const endpoints = [{
+    const endpoint: Partial<EndpointOperations> = {
       name: 'HENT_KODEVERK',
-    }];
+    };
 
     shallow(<DataFetcher
       behandlingId={1}
       behandlingVersjon={1}
       showComponent={false}
       isFetchFinished={false}
-      endpoints={endpoints}
+      endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
@@ -49,15 +51,15 @@ describe('<DataFetcher>', () => {
   it('skal ikke hente data når en allerede har hentet data for samme behandlingsid og behandlingsversjon', () => {
     const renderComponent = sinon.spy();
     const fetchKodeverk = sinon.spy();
-    const endpoints = [{
+    const endpoint: Partial<EndpointOperations> = {
       name: 'HENT_KODEVERK',
-    }];
+    };
 
     shallow(<DataFetcher
       behandlingId={1}
       behandlingVersjon={1}
       isFetchFinished={false}
-      endpoints={endpoints}
+      endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
       CACHE_HENT_KODEVERK={{ behandlingId: 1, behandlingVersjon: 1 }}
@@ -69,15 +71,15 @@ describe('<DataFetcher>', () => {
   it('skal hente data ved mount når en har behandling-id og behandling-versjon', () => {
     const renderComponent = sinon.spy();
     const fetchKodeverk = sinon.spy();
-    const endpoints = [{
+    const endpoint: Partial<EndpointOperations> = {
       name: 'HENT_KODEVERK',
-    }];
+    };
 
     shallow(<DataFetcher
       behandlingId={1}
       behandlingVersjon={1}
       isFetchFinished
-      endpoints={endpoints}
+      endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
@@ -103,19 +105,19 @@ describe('<DataFetcher>', () => {
 
   it('skal kalle endepunkt med parameter og ikke fjerne allerede hentet data', () => {
     const fetchKodeverk = sinon.spy();
-    const endpoints = [{
+    const endpoint: Partial<EndpointOperations> = {
       name: 'HENT_KODEVERK',
-    }];
+    };
 
     shallow(<DataFetcher
       behandlingId={1}
       behandlingVersjon={1}
       isFetchFinished
-      endpoints={endpoints}
+      endpoints={[endpoint] as EndpointOperations[]}
       render={sinon.spy()}
       FETCH_HENT_KODEVERK={fetchKodeverk}
       keepDataWhenRefetching
-      endpointParams={{ [endpoints[0].name]: { saksnummer: 1 } }}
+      endpointParams={{ [endpoint.name]: { saksnummer: 1 } }}
     />);
 
     expect(fetchKodeverk.called).is.true;
@@ -134,14 +136,14 @@ describe('<DataFetcher>', () => {
   it('skal hente data når en har behandling-id blir endret', () => {
     const renderComponent = sinon.spy();
     const fetchKodeverk = sinon.spy();
-    const endpoints = [{
+    const endpoint: Partial<EndpointOperations> = {
       name: 'HENT_KODEVERK',
-    }];
+    };
 
     const wrapper = shallow(<DataFetcher
       behandlingVersjon={1}
       isFetchFinished
-      endpoints={endpoints}
+      endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
@@ -161,17 +163,18 @@ describe('<DataFetcher>', () => {
   });
 
   it('skal vise data når kun ett kall feiler', async () => {
-    const endpoints = [{
+    const endpoint1: Partial<EndpointOperations> = {
       name: 'BEHANDLING_FPSAK',
-    }, {
+    };
+    const endpoint2: Partial<EndpointOperations> = {
       name: 'BEHANDLING_FPTILBAKE',
-    }];
+    };
 
     const wrapper = await shallow(<DataFetcher
       behandlingId={1}
       behandlingVersjon={1}
       isFetchFinished
-      endpoints={endpoints}
+      endpoints={[endpoint1, endpoint2] as EndpointOperations[]}
       render={() => <div>test</div>}
       FETCH_BEHANDLING_FPSAK={() => Promise.resolve()}
       FETCH_BEHANDLING_FPTILBAKE={() => Promise.reject()}

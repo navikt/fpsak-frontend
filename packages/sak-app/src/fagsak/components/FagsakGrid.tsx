@@ -1,6 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import MediaQuery from 'react-responsive';
-import PropTypes from 'prop-types';
 
 import styles from './fagsakGrid.less';
 
@@ -40,12 +39,5 @@ const FagsakGrid: FunctionComponent<OwnProps> = ({
     </div>
   </>
 );
-
-FagsakGrid.propTypes = {
-  behandlingContent: PropTypes.node.isRequired,
-  profileAndNavigationContent: PropTypes.node.isRequired,
-  supportContent: PropTypes.node.isRequired,
-  visittkortContent: PropTypes.func.isRequired,
-};
 
 export default FagsakGrid;

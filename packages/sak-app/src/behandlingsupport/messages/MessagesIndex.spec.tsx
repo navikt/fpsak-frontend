@@ -85,7 +85,7 @@ describe('<MessagesIndex>', () => {
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
     }).find(Messages);
-    const previewCallback = messages.prop('previewCallback');
+    const previewCallback = messages.prop('previewCallback') as (params: {}) => void;
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
@@ -115,11 +115,13 @@ describe('<MessagesIndex>', () => {
     />);
     wrapper.setState({ showMessagesModal: true });
 
-    wrapper.find(MessagesModalSakIndex).prop('closeEvent')();
+    const closeEvent = wrapper.find(MessagesModalSakIndex).prop('closeEvent') as () => void;
+    closeEvent();
 
     expect(resetSubmitMessageFunction).to.have.property('callCount', 1);
 
-    expect(wrapper.state().showMessagesModal).is.false;
+    const state = wrapper.state() as { showMessagesModal: boolean };
+    expect(state.showMessagesModal).is.false;
   });
 
   it('skal sende melding', () => {
@@ -155,7 +157,8 @@ describe('<MessagesIndex>', () => {
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
     }).find(Messages);
-    messages.prop('submitCallback')(message);
+    const submitCallback = messages.prop('submitCallback') as (params: {}) => void;
+    submitCallback(message);
 
     expect(submitMessageCallback).to.have.property('callCount', 1);
     const { args } = submitMessageCallback.getCalls()[0];
@@ -203,9 +206,11 @@ describe('<MessagesIndex>', () => {
       brevmaler: templates,
     }).find(Messages);
 
-    return messages.prop('submitCallback')(message).then(() => {
-      expect(wrapper.state().showMessagesModal).is.true;
-      expect(wrapper.state().showSettPaVentModal).is.false;
+    const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
+    return submitCallback(message).then(() => {
+      const state = wrapper.state() as { showSettPaVentModal: boolean; showMessagesModal: boolean };
+      expect(state.showMessagesModal).is.true;
+      expect(state.showSettPaVentModal).is.false;
       expect(submitMessageCallback).to.have.property('callCount', 1);
       const { args } = submitMessageCallback.getCalls()[0];
       expect(args).to.have.length(1);
@@ -252,9 +257,12 @@ describe('<MessagesIndex>', () => {
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
     }).find(Messages);
-    return messages.prop('submitCallback')(message).then(() => {
-      expect(wrapper.state().showMessagesModal).is.false;
-      expect(wrapper.state().showSettPaVentModal).is.true;
+
+    const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
+    return submitCallback(message).then(() => {
+      const state = wrapper.state() as { showSettPaVentModal: boolean; showMessagesModal: boolean };
+      expect(state.showMessagesModal).is.false;
+      expect(state.showSettPaVentModal).is.true;
       expect(submitMessageCallback).to.have.property('callCount', 1);
       const { args } = submitMessageCallback.getCalls()[0];
       expect(args).to.have.length(1);
@@ -301,9 +309,12 @@ describe('<MessagesIndex>', () => {
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
     }).find(Messages);
-    return messages.prop('submitCallback')(message).then(() => {
-      expect(wrapper.state().showMessagesModal).is.false;
-      expect(wrapper.state().showSettPaVentModal).is.true;
+
+    const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
+    return submitCallback(message).then(() => {
+      const state = wrapper.state() as { showSettPaVentModal: boolean; showMessagesModal: boolean };
+      expect(state.showMessagesModal).is.false;
+      expect(state.showSettPaVentModal).is.true;
       expect(submitMessageCallback).to.have.property('callCount', 1);
       const { args } = submitMessageCallback.getCalls()[0];
       expect(args).to.have.length(1);
@@ -351,9 +362,11 @@ describe('<MessagesIndex>', () => {
       brevmaler: templates,
     }).find(Messages);
 
-    return messages.prop('submitCallback')(message).then(() => {
-      expect(wrapper.state().showMessagesModal).is.false;
-      expect(wrapper.state().showSettPaVentModal).is.true;
+    const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
+    return submitCallback(message).then(() => {
+      const state = wrapper.state() as { showSettPaVentModal: boolean; showMessagesModal: boolean };
+      expect(state.showMessagesModal).is.false;
+      expect(state.showSettPaVentModal).is.true;
       expect(submitMessageCallback).to.have.property('callCount', 1);
       const { args } = submitMessageCallback.getCalls()[0];
       expect(args).to.have.length(1);
@@ -412,6 +425,7 @@ describe('<MessagesIndex>', () => {
     expect(pushCallback.getCalls()[0].args).to.have.length(1);
     expect(pushCallback.getCalls()[0].args[0]).to.eql('/');
 
-    expect(wrapper.state().showSettPaVentModal).is.false;
+    const state = wrapper.state() as { showSettPaVentModal: boolean };
+    expect(state.showSettPaVentModal).is.false;
   });
 });

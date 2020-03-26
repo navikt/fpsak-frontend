@@ -39,14 +39,19 @@ export const AktoerGrid: FunctionComponent<OwnProps> = ({
         sprakkode={sprakkode}
         fagsak={{
           person: data.person,
-        }}
+        } as Fagsak}
       />
       <div className={styles.list}>
         {data.fagsaker.length ? data.fagsaker.map((fagsak) => (
           <Lenkepanel
-            linkCreator={(props) => (<Link to={pathToFagsak(fagsak.saksnummer)} {...props} />)}
+            linkCreator={(props) => (
+              <Link to={pathToFagsak(fagsak.saksnummer)} className={props.className}>
+                {props.children}
+              </Link>
+            )}
             key={fagsak.saksnummer}
             href="#"
+            tittelProps="normaltekst"
           >
             {getKodeverknavn(fagsak.sakstype)}
             {` (${fagsak.saksnummer}) `}

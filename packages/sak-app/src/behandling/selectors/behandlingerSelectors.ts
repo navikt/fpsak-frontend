@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { Behandling } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk } from '@fpsak-frontend/types';
 
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
@@ -32,8 +32,17 @@ export const getBehandlinger = createSelector(
   },
 );
 
+export interface BehandlingerInfo {
+  id: number;
+  uuid: string;
+  type: Kodeverk;
+  status: Kodeverk;
+  opprettet: string;
+  avsluttet?: string;
+}
+
 // Skal kun brukes av BehandlingIndex
-export const getBehandlingerInfo = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
+export const getBehandlingerInfo = createSelector([getBehandlinger], (behandlinger = []): BehandlingerInfo[] => behandlinger
   .map((behandling) => ({
     id: behandling.id,
     uuid: behandling.uuid,

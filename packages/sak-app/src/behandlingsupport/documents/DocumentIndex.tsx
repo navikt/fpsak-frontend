@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
+import { Dokument } from '@fpsak-frontend/types';
 
 import DataFetcher from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
@@ -18,7 +19,7 @@ const selectDocument = (saksNr) => (e, id, document) => {
 
 const dokumentData = [fpsakApi.ALL_DOCUMENTS];
 
-const getSortedDocuments = createSelector([(allDocuments) => allDocuments], (alleDokumenter) => (alleDokumenter || [])
+const getSortedDocuments = createSelector([(allDocuments) => allDocuments], (alleDokumenter: Dokument[]) => (alleDokumenter || [])
   .sort((a, b) => {
     if (!a.tidspunkt) {
       return +1;

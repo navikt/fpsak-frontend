@@ -38,9 +38,21 @@ const VERGE_MENYVALG = {
   OPPRETT: 'OPPRETT',
 };
 
+interface MenyRettigheterProps {
+  navAnsatt: NavAnsatt;
+  fagsakStatus: Kodeverk;
+  kanRevurderingOpprettes: boolean;
+  skalBehandlesAvInfotrygd: boolean;
+  ytelseType: Kodeverk;
+  behandlingStatus: Kodeverk;
+  harSoknad: boolean;
+  erIInnhentSoknadopplysningerSteg: boolean;
+  behandlingType: Kodeverk;
+}
+
 // TODO (TOR) Flytt rettigheter til server
 const getMenyRettigheter = createSelector([
-  (ownProps) => ownProps.navAnsatt,
+  (ownProps: MenyRettigheterProps) => ownProps.navAnsatt,
   (ownProps) => ownProps.fagsakStatus,
   (ownProps) => ownProps.kanRevurderingOpprettes,
   (ownProps) => ownProps.skalBehandlesAvInfotrygd,
@@ -58,7 +70,7 @@ interface OwnProps {
   saksnummer: number;
   behandlingId?: number;
   behandlingData?: MenyBehandlingData;
-  hentVergeMenyvalg: (params: { behandlingId: number; saksnummer: string }) => Promise<any>;
+  hentVergeMenyvalg: (params: { behandlingId: number; saksnummer: string }) => void;
   resetVergeMenyvalg: () => void;
   navAnsatt: NavAnsatt;
   fagsakStatus: Kodeverk;

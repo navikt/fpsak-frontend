@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FaktaPanel, DataFetcherBehandlingData } from '@fpsak-frontend/behandling-felles';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -75,7 +76,7 @@ describe('<ForeldrepengerFakta>', () => {
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
         data={fetchedData as FetchedData}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}
         alleKodeverk={{}}
@@ -106,7 +107,7 @@ describe('<ForeldrepengerFakta>', () => {
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
         data={fetchedData as FetchedData}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}
         alleKodeverk={{}}
@@ -142,7 +143,7 @@ describe('<ForeldrepengerFakta>', () => {
       <ForeldrepengerFakta.WrappedComponent
         intl={intlMock}
         data={fetchedDataLocal as FetchedData}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
         rettigheter={rettigheter}
         alleKodeverk={{}}

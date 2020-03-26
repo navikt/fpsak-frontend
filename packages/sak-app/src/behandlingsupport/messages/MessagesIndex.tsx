@@ -39,14 +39,17 @@ interface OwnProps {
   selectedBehandlingVersjon?: number;
   selectedBehandlingSprak?: Kodeverk;
   recipients?: string[];
-  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
-  submitMessage: (data: {}) => Promise<any>;
-  setBehandlingOnHold: (params: {}) => void;
-  resetSubmitMessage: () => void;
-  push: (param: string) => void;
   ventearsaker?: Kodeverk[];
   behandlingTypeKode: string;
   revurderingVarslingArsak: Kodeverk[];
+}
+
+interface DispatchProps {
+  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
+  submitMessage: (data: {}) => Promise<any>;
+  setBehandlingOnHold: (params: {}) => void;
+  push: (param: string) => void;
+  resetSubmitMessage: () => void;
 }
 
 interface StateProps {
@@ -60,7 +63,7 @@ interface StateProps {
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-export class MessagesIndex extends Component<OwnProps, StateProps> {
+export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProps> {
   constructor(props) {
     super(props);
     this.submitCallback = this.submitCallback.bind(this);
@@ -207,7 +210,7 @@ export class MessagesIndex extends Component<OwnProps, StateProps> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: any): OwnProps => ({
   submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
@@ -219,7 +222,7 @@ const mapStateToProps = (state: any) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
     push,
     setBehandlingOnHold,

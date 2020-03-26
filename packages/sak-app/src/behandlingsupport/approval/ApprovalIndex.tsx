@@ -243,9 +243,9 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
   }
 }
 
-const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsaker], (behandlingArsaker = []) => behandlingArsaker
+const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsaker], (behandlingArsaker: { behandlingArsakType: Kodeverk}[] = []) => behandlingArsaker
   .map(({ behandlingArsakType }) => behandlingArsakType)
-  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+  .some((bt: Kodeverk) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
     || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
 
 const mapStateToPropsFactory = (initialState) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { Behandling } from '@fpsak-frontend/types';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -87,7 +88,7 @@ describe('<InnsynProsess>', () => {
           aksjonspunkter, vilkar, innsyn, innsynDokumenter,
         }}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
@@ -123,7 +124,7 @@ describe('<InnsynProsess>', () => {
           aksjonspunkter, vilkar, innsyn, innsynDokumenter,
         }}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"

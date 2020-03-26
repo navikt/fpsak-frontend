@@ -5,7 +5,7 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 import {
   FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
@@ -20,7 +20,6 @@ const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -32,14 +31,13 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  harApenRevurdering: boolean;
   featureToggles: {};
 }
 
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  kodeverk?: {[key: string]: [Kodeverk]};
+  kodeverk?: {[key: string]: KodeverkMedNavn[]};
   hasFetchError: boolean;
 }
 
@@ -146,13 +144,13 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state): StateProps => ({
   behandling: esBehandlingApi.BEHANDLING_ES.getRestApiData()(state),
   forrigeBehandling: esBehandlingApi.BEHANDLING_ES.getRestApiPreviousData()(state),
   hasFetchError: !!esBehandlingApi.BEHANDLING_ES.getRestApiError()(state),
 });
 
-const getResetRestApiContext = () => (dispatch) => {
+const getResetRestApiContext = () => (dispatch: Dispatch) => {
   Object.values(EsBehandlingApiKeys)
     .forEach((value) => {
       dispatch(esBehandlingApi[value].resetRestApi()());
@@ -176,4 +174,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingEngangsstonadIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingEngangsstonadIndex);

@@ -4,6 +4,7 @@ import sinon from 'sinon';
 
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -30,7 +31,7 @@ describe('<TilbakekrevingProsess>', () => {
       personnummer: '12345',
     },
   };
-  const behandling = {
+  const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
     status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
@@ -108,7 +109,7 @@ describe('<TilbakekrevingProsess>', () => {
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"
@@ -152,7 +153,7 @@ describe('<TilbakekrevingProsess>', () => {
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         rettigheter={rettigheter}
         valgtProsessSteg="default"

@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Dispatch } from 'redux';
 
+import { Behandling } from '@fpsak-frontend/types';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -106,7 +107,7 @@ describe('<ProsessStegPanel>', () => {
         behandling={{
           ...behandling,
           behandlingHenlagt: true,
-        }}
+        } as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -135,7 +136,7 @@ describe('<ProsessStegPanel>', () => {
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -178,7 +179,7 @@ describe('<ProsessStegPanel>', () => {
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -217,7 +218,7 @@ describe('<ProsessStegPanel>', () => {
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -272,7 +273,7 @@ describe('<ProsessStegPanel>', () => {
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={lagringSideeffekterCallback}

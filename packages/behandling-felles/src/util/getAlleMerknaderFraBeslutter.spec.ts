@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 
+import { Behandling } from '@fpsak-frontend/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -40,7 +41,7 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
   }];
 
   it('skal hente alle merknader fra beslutter når behandlingstatus er BEHANDLING_UTREDER', () => {
-    const merknader = getAlleMerknaderFraBeslutter(behandling, aksjonspunkter);
+    const merknader = getAlleMerknaderFraBeslutter(behandling as Behandling, aksjonspunkter);
 
     expect(merknader).is.eql({
       [aksjonspunkter[0].definisjon.kode]: {
@@ -57,7 +58,7 @@ describe('<getAlleMerknaderFraBeslutter>', () => {
         kodeverk: 'BEHANDLING_STATUS',
       },
     };
-    const merknader = getAlleMerknaderFraBeslutter(behandlingMedAnnenStatus, aksjonspunkter);
+    const merknader = getAlleMerknaderFraBeslutter(behandlingMedAnnenStatus as Behandling, aksjonspunkter);
 
     expect(merknader).is.eql({});
   });

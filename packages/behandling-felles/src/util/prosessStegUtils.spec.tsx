@@ -15,6 +15,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { Behandling } from '@fpsak-frontend/types';
 
 import {
   utledProsessStegPaneler, getBekreftAksjonspunktCallback, formaterPanelerForProsessmeny, finnValgtPanel,
@@ -128,7 +129,7 @@ describe('<prosessStegUtils>', () => {
 
     // ACT
     const prosessStegPaneler = utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunktKoder,
-      fagsak, behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
+      fagsak, behandling as Behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(prosessStegPaneler).to.have.length(1);
     const paneler = [{
@@ -388,7 +389,7 @@ describe('<prosessStegUtils>', () => {
     const lagringSideEffectsCallback = sinon.spy();
 
     const callback = getBekreftAksjonspunktCallback(
-      dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter,
+      dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling as Behandling, aksjonspunkter,
       api as {[name: string]: EndpointOperations},
     );
     const aksjonspunktModeller = [{
@@ -424,7 +425,7 @@ describe('<prosessStegUtils>', () => {
     };
     const lagringSideEffectsCallback = sinon.spy();
 
-    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter,
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling as Behandling, aksjonspunkter,
       api as {[name: string]: EndpointOperations});
 
     const aksjonspunktModeller = [{

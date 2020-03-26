@@ -8,7 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';
 import ForeldrepengerPaneler from './components/ForeldrepengerPaneler';
@@ -21,7 +21,6 @@ const foreldrepengerData = [fpBehandlingApi.AKSJONSPUNKTER, fpBehandlingApi.VILK
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -39,7 +38,7 @@ interface OwnProps {
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  kodeverk?: {[key: string]: [Kodeverk]};
+  kodeverk?: {[key: string]: KodeverkMedNavn[]};
   hasFetchError: boolean;
 }
 
@@ -146,13 +145,13 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state): StateProps => ({
   behandling: fpBehandlingApi.BEHANDLING_FP.getRestApiData()(state),
   forrigeBehandling: fpBehandlingApi.BEHANDLING_FP.getRestApiPreviousData()(state),
   hasFetchError: !!fpBehandlingApi.BEHANDLING_FP.getRestApiError()(state),
 });
 
-const getResetRestApiContext = () => (dispatch) => {
+const getResetRestApiContext = () => (dispatch: Dispatch) => {
   Object.values(FpBehandlingApiKeys)
     .forEach((value) => {
       dispatch(fpBehandlingApi[value].resetRestApi()());
@@ -176,4 +175,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingForeldrepengerIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingForeldrepengerIndex);
