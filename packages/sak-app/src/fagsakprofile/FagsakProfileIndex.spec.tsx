@@ -44,6 +44,7 @@ describe('<FagsakProfileIndex>', () => {
     }).find(FagsakProfilSakIndex);
     expect(fagsakProfile).has.length(1);
 
+    // @ts-ignore
     const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')({
     }).find(BehandlingVelgerSakIndex);
     expect(behandlingVelger).has.length(1);
@@ -71,6 +72,7 @@ describe('<FagsakProfileIndex>', () => {
     }).find(FagsakProfilSakIndex);
     expect(fagsakProfile).has.length(1);
 
+    // @ts-ignore
     const behandlingVelger = fagsakProfile.renderProp('renderBehandlingVelger')({
     }).find(BehandlingVelgerSakIndex);
     expect(behandlingVelger).has.length(1);

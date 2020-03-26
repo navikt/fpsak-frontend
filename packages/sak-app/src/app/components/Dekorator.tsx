@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
+import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/konstanter';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
@@ -41,6 +42,7 @@ interface OwnProps {
   showDetailedErrorMessages?: boolean;
   hideErrorMessages?: boolean;
   errorMessages?: {
+    type: EventType;
     code?: string;
     params?: {
       errorDetails?: string;

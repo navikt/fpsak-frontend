@@ -222,6 +222,7 @@ const mapStateToProps = (state: any): OwnProps => ({
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 
+// @ts-ignore (Korleis fikse denne?)
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
     push,

@@ -141,6 +141,7 @@ export class DataFetcher extends Component<OwnProps, StateProps> {
           [propName]: this.props[propName],
         };
       }, {});
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       return render(dataProps);
     }
 

@@ -15,6 +15,7 @@ describe('Behandling-reducer', () => {
   let mockAxios;
 
   before(() => {
+    // @ts-ignore
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 

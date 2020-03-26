@@ -22,6 +22,11 @@ import '@fpsak-frontend/assets/styles/global.less';
 interface OwnProps {
   errorMessages?: {
     type: EventType;
+    code?: string;
+    params?: {
+      errorDetails?: string;
+    };
+    text?: string;
   }[];
   removeErrorMessage: () => void;
   crashMessage?: string;

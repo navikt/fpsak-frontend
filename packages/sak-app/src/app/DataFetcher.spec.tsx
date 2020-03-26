@@ -20,6 +20,7 @@ describe('<DataFetcher>', () => {
       isFetchFinished={false}
       endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
 
@@ -41,6 +42,7 @@ describe('<DataFetcher>', () => {
       isFetchFinished={false}
       endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
 
@@ -61,6 +63,7 @@ describe('<DataFetcher>', () => {
       isFetchFinished={false}
       endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       FETCH_HENT_KODEVERK={fetchKodeverk}
       CACHE_HENT_KODEVERK={{ behandlingId: 1, behandlingVersjon: 1 }}
     />);
@@ -81,6 +84,7 @@ describe('<DataFetcher>', () => {
       isFetchFinished
       endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
 
@@ -115,6 +119,7 @@ describe('<DataFetcher>', () => {
       isFetchFinished
       endpoints={[endpoint] as EndpointOperations[]}
       render={sinon.spy()}
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       FETCH_HENT_KODEVERK={fetchKodeverk}
       keepDataWhenRefetching
       endpointParams={{ [endpoint.name]: { saksnummer: 1 } }}
@@ -145,6 +150,7 @@ describe('<DataFetcher>', () => {
       isFetchFinished
       endpoints={[endpoint] as EndpointOperations[]}
       render={renderComponent}
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
 
@@ -176,6 +182,7 @@ describe('<DataFetcher>', () => {
       isFetchFinished
       endpoints={[endpoint1, endpoint2] as EndpointOperations[]}
       render={() => <div>test</div>}
+      // @ts-ignore (Blir fiksa ved refaktorering av denne komponenten)
       FETCH_BEHANDLING_FPSAK={() => Promise.resolve()}
       FETCH_BEHANDLING_FPTILBAKE={() => Promise.reject()}
       showComponent

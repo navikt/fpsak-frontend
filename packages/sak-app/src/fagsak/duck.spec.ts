@@ -19,6 +19,7 @@ describe('Fagsak-reducer', () => {
   let mockAxios;
 
   before(() => {
+    // @ts-ignore
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
