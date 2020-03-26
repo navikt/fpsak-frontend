@@ -96,6 +96,10 @@ interface OwnProps {
  * Komponenten har ansvar å legge valgt behandlingId fra URL-en i staten.
  */
 export class BehandlingIndex extends Component<OwnProps> {
+  static defaultProps = {
+    erAktivPapirsoknad: false,
+  }
+
   constructor(props) {
     super(props);
     const { setBehandlingIdOgVersjon, behandlingVersjon } = props;
@@ -151,7 +155,7 @@ export class BehandlingIndex extends Component<OwnProps> {
       behandlingTypeKode,
       location,
       oppdaterBehandlingVersjon,
-      erAktivPapirsoknad = false,
+      erAktivPapirsoknad,
       featureToggles,
       kodeverk,
       fagsak,

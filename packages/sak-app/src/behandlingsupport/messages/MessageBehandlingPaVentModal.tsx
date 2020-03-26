@@ -25,7 +25,7 @@ const initFrist = () => {
 };
 
 const isButtonDisabled = (frist, venteArsakHasChanged, fristHasChanged) => {
-  const dateNotValid = hasValidDate(frist) !== null || dateAfterOrEqualToToday(frist) !== null;
+  const dateNotValid = !!hasValidDate(frist) || !!dateAfterOrEqualToToday(frist);
   const defaultOptions = !venteArsakHasChanged && !fristHasChanged;
   return defaultOptions || dateNotValid;
 };

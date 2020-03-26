@@ -34,8 +34,15 @@ interface OwnProps {
  * mot server og lagringen av resultatet i klientens state.
  */
 class FagsakSearchIndex extends Component<OwnProps> {
+  static defaultProps = {
+    fagsaker: [],
+    searchStarted: false,
+    searchResultAccessDenied: null,
+    searchResultReceived: false,
+  };
+
   componentDidUpdate() {
-    const { searchResultReceived = false, fagsaker = [] } = this.props;
+    const { searchResultReceived, fagsaker } = this.props;
     if (searchResultReceived && fagsaker.length === 1) {
       this.goToFagsak(fagsaker[0].saksnummer);
     }
@@ -53,7 +60,7 @@ class FagsakSearchIndex extends Component<OwnProps> {
 
   render() {
     const {
-      fagsaker = [], searchFagsaker: search, searchResultReceived = false, searchStarted = false, searchResultAccessDenied, alleKodeverk,
+      fagsaker, searchFagsaker: search, searchResultReceived, searchStarted, searchResultAccessDenied, alleKodeverk,
     } = this.props;
     return (
       <FagsakSokSakIndex

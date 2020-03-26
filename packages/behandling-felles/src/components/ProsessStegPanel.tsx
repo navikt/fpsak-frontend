@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import ProsessStegData from '../types/prosessStegDataTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
@@ -18,7 +18,7 @@ import prosessStegHooks from '../util/prosessStegHooks';
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   valgtProsessSteg?: ProsessStegData;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;

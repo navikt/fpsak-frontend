@@ -96,6 +96,12 @@ interface StateProps {
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
 export class ApprovalIndex extends Component<OwnProps, StateProps> {
+  static defaultProps = {
+    toTrinnsBehandling: false,
+    erBehandlingEtterKlage: false,
+    erGodkjenningFerdig: false,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -174,9 +180,9 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
   render() {
     const {
       totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, behandlingStatus,
-      location, navAnsatt, ansvarligSaksbehandler, toTrinnsBehandling = false, skjemalenkeTyper,
-      behandlingIdentifier, selectedBehandlingVersjon, alleKodeverk, erBehandlingEtterKlage = false,
-      isForeldrepenger, disableGodkjennKnapp, fagsakYtelseType, erGodkjenningFerdig = false,
+      location, navAnsatt, ansvarligSaksbehandler, toTrinnsBehandling, skjemalenkeTyper,
+      behandlingIdentifier, selectedBehandlingVersjon, alleKodeverk, erBehandlingEtterKlage,
+      isForeldrepenger, disableGodkjennKnapp, fagsakYtelseType, erGodkjenningFerdig,
       behandlingsresultat, behandlingId, behandlingTypeKode, erTilbakekreving,
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;

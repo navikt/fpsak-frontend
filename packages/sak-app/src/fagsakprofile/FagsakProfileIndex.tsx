@@ -85,7 +85,10 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   dekningsgrad,
 }) => {
   const [showAll, setShowAll] = useState(!selectedBehandlingId);
-  const toggleShowAll = useCallback(() => setShowAll(!showAll), []);
+  const toggleShowAll = useCallback(() => {
+    debugger;
+    return setShowAll(!showAll);
+  }, []);
 
   useEffect(() => {
     setShowAll(!selectedBehandlingId);

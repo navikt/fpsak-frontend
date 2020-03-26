@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import {
   FagsakInfo, BehandlingPaVent, SettPaVentParams, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
@@ -14,8 +14,8 @@ interface OwnProps {
   fetchedData: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  kodeverk: {[key: string]: Kodeverk[]};
-  fpsakKodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
+  fpsakKodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;

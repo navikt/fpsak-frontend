@@ -64,6 +64,12 @@ interface StateProps {
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
 export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProps> {
+  static defaultProps = {
+    submitFinished: false,
+    ventearsaker: [],
+    recipients: ['Søker'],
+  };
+
   constructor(props) {
     super(props);
     this.submitCallback = this.submitCallback.bind(this);
@@ -159,10 +165,10 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
 
   render() {
     const {
-      recipients = ['Søker'],
-      submitFinished = false,
+      recipients,
+      submitFinished,
       selectedBehandlingSprak,
-      ventearsaker = [],
+      ventearsaker,
       behandlingIdentifier,
       selectedBehandlingVersjon,
       revurderingVarslingArsak,

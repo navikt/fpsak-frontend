@@ -44,6 +44,10 @@ interface OwnProps {
  * om klassifisering er utført og ingen faresignaler er funnet og om klassifisering er utført og faresignaler er funnet
  */
 export class RisikoklassifiseringIndexImpl extends Component<OwnProps> {
+  static defaultProps = {
+    isPanelOpen: false,
+  };
+
   componentDidMount = () => {
     this.apnePanelVedAksjonspunkt();
   }

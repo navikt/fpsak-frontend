@@ -10,7 +10,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
   FagsakInfo, Rettigheter, ProsessStegPanel, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, Behandling } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import svpBehandlingApi from '../data/svpBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegSvpPanelDefinisjoner';
@@ -22,7 +22,7 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
