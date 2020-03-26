@@ -412,14 +412,13 @@ describe('<MessagesIndex>', () => {
 
     expect(setBehandlingOnHoldCallback).to.have.property('callCount', 1);
     const { args } = setBehandlingOnHoldCallback.getCalls()[0];
-    expect(args).to.have.length(2);
+    expect(args).to.have.length(1);
     expect(args[0]).to.eql({
       behandlingId: 1,
       behandlingVersjon: 123,
       frist: formValues.frist,
       ventearsak: formValues.ventearsak,
     });
-    expect(args[1]).to.eql(behandlingIdentifier);
 
     expect(pushCallback).to.have.property('callCount', 1);
     expect(pushCallback.getCalls()[0].args).to.have.length(1);

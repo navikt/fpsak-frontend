@@ -63,7 +63,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingTypeKode: string;
   behandlingVersjon: number;
-  location: RouteProps['location'];
+  location: RouteProps['location'] & { query: { punkt?: string; fakta?: string } };
   oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
   erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;

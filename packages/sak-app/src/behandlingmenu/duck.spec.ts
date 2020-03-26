@@ -10,6 +10,13 @@ import { createNewBehandling } from './duck';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+const locationMock = {
+  pathname: 'test',
+  search: '',
+  state: {},
+  hash: 'test',
+};
+
 describe('BehandlingMenu-reducer', () => {
   let mockAxios;
 
@@ -61,7 +68,7 @@ describe('BehandlingMenu-reducer', () => {
     const params = { behandlingType: 'revurdering' };
     const isTilbakekreving = false;
 
-    return store.dispatch(createNewBehandling(push, fagsak.saksnummer, true, isTilbakekreving, params))
+    return store.dispatch(createNewBehandling(locationMock)(push, fagsak.saksnummer, true, isTilbakekreving, params))
       .then(() => {
         expect(store.getActions()).to.have.length(7);
         const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
@@ -81,6 +88,7 @@ describe('BehandlingMenu-reducer', () => {
         expect(push.called).is.true;
         expect(push.getCalls()).has.length(1);
         expect(push.getCalls()[0].args[0]).is.eql({
+          ...locationMock,
           pathname: '/fagsak/1/behandling/2/',
           search: '?punkt=default&fakta=default',
         });
@@ -112,7 +120,7 @@ describe('BehandlingMenu-reducer', () => {
     const params = { behandlingType: 'revurdering' };
     const isTilbakekreving = false;
 
-    return store.dispatch(createNewBehandling(push, 1, true, isTilbakekreving, params))
+    return store.dispatch(createNewBehandling(locationMock)(push, 1, true, isTilbakekreving, params))
       .then(() => {
         expect(store.getActions()).to.have.length(4);
         const [requestStartedAction, requestFinishedAction] = store.getActions();
@@ -129,6 +137,7 @@ describe('BehandlingMenu-reducer', () => {
         expect(push.called).is.true;
         expect(push.getCalls()).has.length(1);
         expect(push.getCalls()[0].args[0]).is.eql({
+          ...locationMock,
           pathname: '/fagsak/1/behandling/2/',
           search: '?punkt=default&fakta=default',
         });

@@ -6,7 +6,7 @@ import { getSelectedFagsak } from './fagsakSelectors';
 
 describe('<fagsakSelectors>', () => {
   it('skal returnere fagsak når valgt saksnummer stemmer overens med hentet fagsak', () => {
-    const selectedSaksnummer = '123';
+    const selectedSaksnummer = 123;
     const fagsak: Partial<Fagsak> = {
       saksnummer: 123,
     };
@@ -15,7 +15,7 @@ describe('<fagsakSelectors>', () => {
   });
 
   it('skal ikke returnere fagsak når valgt saksnummer er ulik hentet fagsak', () => {
-    const selectedSaksnummer = '123';
+    const selectedSaksnummer = 123;
     const fagsak: Partial<Fagsak> = {
       saksnummer: 456,
     };

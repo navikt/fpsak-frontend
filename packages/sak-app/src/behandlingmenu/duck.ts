@@ -12,7 +12,7 @@ const findNewBehandlingId = (behandlingerResponse) => {
   return sortedBehandlinger[0].id;
 };
 
-export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => (dispatch) => dispatch((isTilbakekreving
+export const createNewBehandling = (location) => (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => (dispatch) => dispatch((isTilbakekreving
   ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params))
   .then((response) => {
     const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
@@ -20,13 +20,16 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
       return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
         .then((behandlingerResponse) => {
           const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
-          push(getLocationWithDefaultProsessStegAndFakta({ pathname }));
+          push(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
           return Promise.resolve(behandlingerResponse);
         });
     }
     // NEW_BEHANDLING har returnert behandling
     return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
-      .then(() => push(getLocationWithDefaultProsessStegAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
+      .then(() => push(getLocationWithDefaultProsessStegAndFakta({
+        ...location,
+        pathname: pathToBehandling(saksnummer, response.payload.id),
+      })));
   });
 
 export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
@@ -49,16 +52,18 @@ export const nyBehandlendeEnhet = (params: {}) => behandlingEventHandler.endreBe
 
 export const openBehandlingForChanges = (params: {}) => behandlingEventHandler.opneBehandlingForEndringer(params);
 
-export const opprettVerge = (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.opprettVerge({
+export const opprettVerge = (location) => (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.opprettVerge({
   behandlingId,
   behandlingVersjon: versjon,
 }).then(() => push(getLocationWithDefaultProsessStegAndFakta({
+  ...location,
   pathname: pathToBehandling(saksnummer, behandlingId),
 })));
 
-export const fjernVerge = (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.fjernVerge({
+export const fjernVerge = (location) => (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.fjernVerge({
   behandlingId,
   behandlingVersjon: versjon,
 }).then(() => push(getLocationWithDefaultProsessStegAndFakta({
+  ...location,
   pathname: pathToBehandling(saksnummer, behandlingId),
 })));

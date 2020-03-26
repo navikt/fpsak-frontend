@@ -3,6 +3,8 @@ import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import { RouteProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import MenySakIndex, { MenyKodeverk, MenyBehandlingData, MenyRettigheter } from '@fpsak-frontend/sak-meny';
@@ -80,6 +82,7 @@ interface OwnProps {
   behandlingStatus?: Kodeverk;
   erIInnhentSoknadopplysningerSteg: boolean;
   vergeMenyvalg?: string;
+  location: RouteProps['location'];
 }
 
 class BehandlingMenuIndex extends Component<OwnProps> {
@@ -133,6 +136,7 @@ class BehandlingMenuIndex extends Component<OwnProps> {
       behandlingStatus,
       erIInnhentSoknadopplysningerSteg,
       vergeMenyvalg,
+      location,
     } = this.props;
 
     return (
@@ -160,8 +164,8 @@ class BehandlingMenuIndex extends Component<OwnProps> {
             resumeBehandling={resumeBehandling}
             nyBehandlendeEnhet={nyBehandlendeEnhet}
             openBehandlingForChanges={openBehandlingForChanges}
-            fjernVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge : undefined}
-            opprettVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT ? opprettVerge : undefined}
+            fjernVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge(location) : undefined}
+            opprettVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT ? opprettVerge(location) : undefined}
             {...this.props}
           />
         )}
@@ -214,9 +218,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   previewHenleggBehandling: previewMessage,
-  createNewBehandling,
+  createNewBehandling: createNewBehandling(location),
   hentVergeMenyvalg,
   resetVergeMenyvalg,
   sjekkOmTilbakekrevingKanOpprettes,
@@ -224,4 +228,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   push,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuIndex);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuIndex));
