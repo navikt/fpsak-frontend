@@ -4,8 +4,10 @@ import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Undertekst } from 'nav-frontend-typografi';
+import { Undertekst, Element } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import Alertstripe from 'nav-frontend-alertstriper';
 
 import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
@@ -75,23 +77,51 @@ export const TerminFodselDatoPanelImpl = ({
               </div>
             </ArrowBox>
           )}
-          { erBarnetFodt
-          && (
+          { erBarnetFodt && (
             <ArrowBox alignOffset={0}>
-              <DatepickerField
-                name="foedselsDato"
-                label={{ id: 'Registrering.Fodselsdato' }}
+              <Row>
+                <Column xs="2">
+                  <DatepickerField
+                    name="foedselsDato"
+                    label={{ id: 'Registrering.Fodselsdato' }}
               /* foedselsDato is array in DTO data model, so we transform the value to/from the store/input */
-                format={(valueFromStore) => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
-                parse={(valueFromInput) => (valueFromInput ? [valueFromInput] : valueFromInput)}
-                readOnly={readOnly}
-              />
-              <InputField
-                name="antallBarn"
-                label={{ id: 'Registrering.AntallBarn' }}
-                bredde="XS"
-                readOnly={readOnly}
-              />
+                    format={(valueFromStore) => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
+                    parse={(valueFromInput) => (valueFromInput ? [valueFromInput] : valueFromInput)}
+                    readOnly={readOnly}
+                  />
+                </Column>
+                <Column xs="2">
+                  <InputField
+                    name="antallBarn"
+                    label={{ id: 'Registrering.AntallBarn' }}
+                    bredde="XS"
+                    readOnly={readOnly}
+                  />
+                </Column>
+              </Row>
+              <VerticalSpacer eightPx />
+              <Alertstripe type="info" form="inline">
+                <Element>
+                  <FormattedMessage id="Registrering.RettTilPrematuruker" />
+                </Element>
+              </Alertstripe>
+              <VerticalSpacer eightPx />
+              <Row>
+                <Column xs="2">
+                  <DatepickerField
+                    name="termindato"
+                    label={{ id: 'Registrering.Termindato' }}
+                    readOnly={readOnly}
+                  />
+                </Column>
+                <Column xs="4">
+                  <DatepickerField
+                    name="terminbekreftelseDato"
+                    label={{ id: 'Registrering.UtstedtDato' }}
+                    readOnly={readOnly}
+                  />
+                </Column>
+              </Row>
             </ArrowBox>
           )}
         </SkjemaGruppe>

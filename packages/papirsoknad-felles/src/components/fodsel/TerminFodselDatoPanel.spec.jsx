@@ -31,7 +31,7 @@ describe('<TerminFodselDatoPanel>', () => {
       erBarnetFodt
     />);
 
-    expect(wrapper.find({ name: 'terminbekreftelseDato' })).to.have.length(0);
+    expect(wrapper.find({ name: 'terminbekreftelseDato' })).to.have.length(1);
     expect(wrapper.find({ name: 'foedselsDato' })).to.have.length(1);
   });
 
