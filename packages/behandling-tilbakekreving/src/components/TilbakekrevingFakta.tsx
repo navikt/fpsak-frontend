@@ -5,7 +5,7 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
   FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, Behandling } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';
@@ -17,8 +17,8 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
-  fpsakKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  fpsakKodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;

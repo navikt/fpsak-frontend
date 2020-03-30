@@ -8,7 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, Behandling } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import svpBehandlingApi, { reduxRestApi, SvpBehandlingApiKeys } from './data/svpBehandlingApi';
 import SvangerskapspengerPaneler from './components/SvangerskapspengerPaneler';
@@ -20,7 +20,6 @@ const svangerskapspengerData = [svpBehandlingApi.AKSJONSPUNKTER, svpBehandlingAp
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -38,7 +37,7 @@ interface OwnProps {
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  kodeverk?: {[key: string]: [Kodeverk]};
+  kodeverk?: {[key: string]: KodeverkMedNavn[]};
   hasFetchError: boolean;
 }
 
@@ -145,13 +144,13 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state): StateProps => ({
   behandling: svpBehandlingApi.BEHANDLING_SVP.getRestApiData()(state),
   forrigeBehandling: svpBehandlingApi.BEHANDLING_SVP.getRestApiPreviousData()(state),
   hasFetchError: !!svpBehandlingApi.BEHANDLING_SVP.getRestApiError()(state),
 });
 
-const getResetRestApiContext = () => (dispatch) => {
+const getResetRestApiContext = () => (dispatch: Dispatch) => {
   Object.values(SvpBehandlingApiKeys)
     .forEach((value) => {
       dispatch(svpBehandlingApi[value].resetRestApi()());
@@ -175,4 +174,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingSvangerskapspengerIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingSvangerskapspengerIndex);

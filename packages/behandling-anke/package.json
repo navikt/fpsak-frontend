@@ -9,7 +9,6 @@
     "@fpsak-frontend/error-api-redux": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/konstanter": "1.0.0",
-    "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/prosess-anke": "1.0.0",
     "@fpsak-frontend/prosess-anke-merknader": "1.0.0",
     "@fpsak-frontend/prosess-anke-resultat": "1.0.0",

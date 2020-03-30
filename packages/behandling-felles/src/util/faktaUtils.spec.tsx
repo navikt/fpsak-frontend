@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Dispatch } from 'redux';
 
+import { Behandling } from '@fpsak-frontend/types';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -77,7 +78,7 @@ describe('<faktaPanelUtils>', () => {
     }];
     const hasFetchError = false;
 
-    const faktaPaneler = utledFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling, rettigheter, aksjonspunkter, hasFetchError);
+    const faktaPaneler = utledFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling as Behandling, rettigheter, aksjonspunkter, hasFetchError);
 
     expect(faktaPaneler).to.have.length(1);
     expect(faktaPaneler[0]).to.eql({
@@ -226,8 +227,8 @@ describe('<faktaPanelUtils>', () => {
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes,
-      api as {[name: string]: EndpointOperations});
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+      overstyringApCodes, api as {[name: string]: EndpointOperations});
 
     const aksjonspunkter = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
@@ -266,8 +267,8 @@ describe('<faktaPanelUtils>', () => {
       },
     };
 
-    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes,
-      api as {[name: string]: EndpointOperations});
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, fagsak, behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+      overstyringApCodes, api as {[name: string]: EndpointOperations});
 
     const aksjonspunkter = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,

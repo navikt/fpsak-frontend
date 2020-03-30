@@ -12998,11 +12998,6 @@ nav-frontend-grid@1.0.27:
   resolved "https://registry.yarnpkg.com/nav-frontend-grid/-/nav-frontend-grid-1.0.27.tgz#68e54b138ccf4c416ad12faa95ae5d3bb4d013ad"
   integrity sha512-0iMVIYck9k4pPk/Djn5JgH4/XnzPf21rlZlR821aYDTJC9SYKK8e+lnbyY1shgygbmdbWM9Xu/cVpih1rnBjTA==
 
-nav-frontend-ikoner-assets@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-2.0.1.tgz#82060b7f4f67255eeca55d6823b04a565ba53f3c"
-  integrity sha512-b3Xvu9XdpGQQO0y1G5f9Rikq1Q77m5ua6DJniKRq1pNG5X3z4qssj7ZO8LGRQ4gLl7D02zckK/QgaQ3bzfpRng==
-
 nav-frontend-ikoner-assets@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.3.tgz#fca3d5c689524416ca25c7dd1d207c2f5effea2f"
@@ -15583,7 +15578,7 @@ react-router-dom@^5.1.2:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-router@5.1.2:
+react-router@5.1.2, react-router@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/react-router/-/react-router-5.1.2.tgz#6ea51d789cb36a6be1ba5f7c0d48dd9e817d3418"
   dependencies:

@@ -8,7 +8,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   FagsakInfo, Rettigheter, prosessStegHooks, IverksetterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, Behandling } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegInnsynPanelDefinisjoner';
@@ -20,7 +20,7 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;

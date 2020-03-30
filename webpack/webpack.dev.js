@@ -14,7 +14,7 @@ const config = {
     '@babel/polyfill',
     'webpack-dev-server/client?http://localhost:9000',
     'webpack/hot/only-dev-server',
-    APP_DIR + '/index.jsx',
+    APP_DIR + '/index.tsx',
   ],
   output: {
     path: ROOT_DIR,

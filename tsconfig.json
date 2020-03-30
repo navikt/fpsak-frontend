@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "esnext",
+		"module": "es2020",
 		"moduleResolution": "node",
 		"allowJs": true,
 		"noEmit": true,
@@ -27,9 +28,15 @@
 		"packages/behandling-es",
 		"packages/fakta-ytelser",
 		"packages/fakta-saken",
+		"packages/konstanter",
+		"packages/sak-app",
+		"packages/sak-feilsider",
 		"packages/sak-visittkort",
 		"packages/sak-support-meny",
+		"packages/shared-components",
+		"packages/tidslinje",
 		"packages/types",
+		"packages/utils",
 		"@types"
 	],
 

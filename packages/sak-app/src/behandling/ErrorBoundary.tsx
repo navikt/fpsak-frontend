@@ -1,23 +1,18 @@
 import React, { Component, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { captureException, withScope } from '@sentry/browser';
 
 import { ErrorPage } from '@fpsak-frontend/sak-feilsider';
 
-type OwnProps = {
+interface OwnProps {
   errorMessageCallback: (error: {}) => void;
   children: ReactNode;
-};
-type State = {
+}
+
+interface State {
   hasError: boolean;
-};
+}
 
 export class ErrorBoundary extends Component<OwnProps, State> {
-  static propTypes = {
-    errorMessageCallback: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.state = { hasError: false };

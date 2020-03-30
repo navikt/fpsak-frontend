@@ -14,6 +14,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { BehandlingPaVent } from '@fpsak-frontend/behandling-felles';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
+import { Behandling } from '@fpsak-frontend/types';
 
 import RegistrerPapirsoknad from './RegistrerPapirsoknad';
 import SoknadRegistrertModal from './SoknadRegistrertModal';
@@ -73,7 +74,7 @@ describe('<RegistrerPapirsoknad>', () => {
   it('skal rendre komponenter', () => {
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
       rettigheter={rettigheter}
@@ -92,7 +93,7 @@ describe('<RegistrerPapirsoknad>', () => {
   it('skal rendre komponenter som readonly når veileder', () => {
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
       rettigheter={{
@@ -117,7 +118,7 @@ describe('<RegistrerPapirsoknad>', () => {
       behandling={{
         ...behandling,
         behandlingPaaVent: true,
-      }}
+      } as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
       rettigheter={rettigheter}
@@ -136,7 +137,7 @@ describe('<RegistrerPapirsoknad>', () => {
   it('skal sette nye søknadsdata', () => {
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
       rettigheter={rettigheter}
@@ -160,7 +161,7 @@ describe('<RegistrerPapirsoknad>', () => {
     const lagreAksjonspunkt = sinon.spy();
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER,

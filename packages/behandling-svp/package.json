@@ -30,7 +30,6 @@
     "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/nap-process-menu": "1.0.9",
     "react": "^16.12.0",
     "react-intl": "^3.12.0",
     "react-redux": "^7.2.0",

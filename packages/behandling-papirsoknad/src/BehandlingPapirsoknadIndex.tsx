@@ -10,7 +10,7 @@ import {
   FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 import {
-  Kodeverk, Aksjonspunkt, Behandling,
+  KodeverkMedNavn, Aksjonspunkt, Behandling,
 } from '@fpsak-frontend/types';
 
 import papirsoknadApi, { reduxRestApi, PapirsoknadApiKeys } from './data/papirsoknadApi';
@@ -26,9 +26,8 @@ interface DataProps {
 interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
-  location: {};
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;

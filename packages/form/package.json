@@ -14,7 +14,6 @@
     "nav-frontend-core": "4.0.12",
     "nav-frontend-etiketter": "1.0.31",
     "nav-frontend-etiketter-style": "0.3.20",
-    "nav-frontend-ikoner-assets": "2.0.1",
     "nav-frontend-js-utils": "1.0.8",
     "nav-frontend-lukknapp": "1.0.25",
     "nav-frontend-lukknapp-style": "0.2.22",
@@ -29,7 +28,8 @@
     "react-intl": "^3.12.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.1"
+    "redux-form": "^8.3.1",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

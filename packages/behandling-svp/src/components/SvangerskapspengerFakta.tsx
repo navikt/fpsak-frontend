@@ -6,7 +6,7 @@ import {
   FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Kodeverk, Behandling } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import svpBehandlingApi from '../data/svpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaSvpPanelDefinisjoner';
@@ -19,7 +19,7 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;

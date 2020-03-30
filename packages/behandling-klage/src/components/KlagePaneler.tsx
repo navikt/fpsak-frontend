@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import {
   FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -13,7 +13,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   fetchedData: FetchedData;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -21,13 +21,14 @@ interface OwnProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
-  alleBehandlinger: [{
+  alleBehandlinger: {
     id: number;
-    type: Kodeverk;
-    avsluttet?: string;
-    status: Kodeverk;
     uuid: string;
-  }];
+    type: Kodeverk;
+    status: Kodeverk;
+    opprettet: string;
+    avsluttet?: string;
+  }[];
 }
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({

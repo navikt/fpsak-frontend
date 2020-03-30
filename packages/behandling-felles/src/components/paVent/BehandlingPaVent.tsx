@@ -5,14 +5,14 @@ import React, {
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Behandling, Aksjonspunkt, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, Aksjonspunkt, KodeverkMedNavn } from '@fpsak-frontend/types';
 import BehandlingPaVentModal from './BehandlingPaVentModal';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
 }

@@ -9,6 +9,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { faktaPanelCodes } from '@fpsak-frontend/konstanter';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -84,7 +85,7 @@ describe('<faktaHooks>', () => {
     const valgtFaktaSteg = 'default';
     const intl = { formatMessage: (data) => data.id };
 
-    const wrapper = testHook(() => faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling, rettigheter,
+    const wrapper = testHook(() => faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling as Behandling, rettigheter,
       aksjonspunkter, hasFetchError, valgtFaktaSteg, intl));
     const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 
@@ -153,7 +154,7 @@ describe('<faktaHooks>', () => {
       },
     };
 
-    const wrapper = testHook(() => faktaHooks.useCallbacks(paneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+    const wrapper = testHook(() => faktaHooks.useCallbacks(paneler, fagsak, behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg, overstyringApCodes, behandlingApi as {[name: string]: EndpointOperations}, dispatch as Dispatch));
     const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 

@@ -4,7 +4,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import { ProsessStegPanelData } from '../types/prosessStegDataTsType';
 import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
@@ -13,7 +13,7 @@ import styles from './inngangsvilkarPanel.less';
 
 interface OwnProps {
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   prosessStegData: ProsessStegPanelData[];
   submitCallback: (data: {}) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};

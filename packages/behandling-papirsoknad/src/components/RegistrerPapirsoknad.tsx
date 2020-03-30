@@ -4,7 +4,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Aksjonspunkt, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, Aksjonspunkt, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import SoknadRegistrertModal from './SoknadRegistrertModal';
 import RegistrerPapirsoknadPanel from './RegistrerPapirsoknadPanel';
@@ -13,7 +13,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;

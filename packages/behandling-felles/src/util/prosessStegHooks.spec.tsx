@@ -10,7 +10,7 @@ import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -104,7 +104,7 @@ describe('<prosessStegHooks>', () => {
 
     // ACT
     const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
-      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, rettigheter, behandling,
+      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, rettigheter, behandling as Behandling,
       aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
     ));
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
@@ -190,7 +190,7 @@ describe('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'default';
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
-      behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
+      behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
     const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
     prosessStegVelger(0);
@@ -238,7 +238,7 @@ describe('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'opplysningsplikt';
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
-      behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
+      behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
     const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
     prosessStegVelger(0);
@@ -291,7 +291,7 @@ describe('<prosessStegHooks>', () => {
       },
     };
 
-    const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling,
+    const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling as Behandling,
       behandlingApi as {[name: string]: EndpointOperations},
       lagringSideEffectsCallback, dispatch as Dispatch, prosessStegPanel));
     const bekreftAksjonspunkt = wrapper.find('div').prop('data-values') as (number) => void;

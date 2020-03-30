@@ -8,7 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, Rettigheter, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 import InnsynPaneler from './components/InnsynPaneler';
@@ -19,9 +19,8 @@ const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN
 interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
-  location: {};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;

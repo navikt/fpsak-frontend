@@ -8,7 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   FagsakInfo, Rettigheter, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
 import AnkePaneler from './components/AnkePaneler';
@@ -18,10 +18,9 @@ const ankeData = [ankeApi.AKSJONSPUNKTER, ankeApi.VILKAR, ankeApi.ANKE_VURDERING
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
   rettigheter: Rettigheter;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
