@@ -31,6 +31,18 @@ describe('<TerminFodselDatoPanel>', () => {
       erBarnetFodt
     />);
 
+    expect(wrapper.find({ name: 'terminbekreftelseDato' })).to.have.length(0);
+    expect(wrapper.find({ name: 'foedselsDato' })).to.have.length(1);
+  });
+
+  it('skal i tillegg vise inputs for terminbekreftelse når ytelsen er foreldrepenger', () => {
+    const wrapper = shallowWithIntl(<TerminFodselDatoPanelImpl
+      intl={intlMock}
+      readOnly={false}
+      erBarnetFodt
+      erForeldrepenger
+    />);
+
     expect(wrapper.find({ name: 'terminbekreftelseDato' })).to.have.length(1);
     expect(wrapper.find({ name: 'foedselsDato' })).to.have.length(1);
   });
