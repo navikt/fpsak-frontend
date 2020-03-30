@@ -1,4 +1,4 @@
-import React, { ReactNode, Component } from 'react';
+import React, { ReactNode, Component, ChangeEvent } from 'react';
 import moment from 'moment';
 import { Input } from 'nav-frontend-skjema';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -14,7 +14,7 @@ interface OwnProps {
   placeholder?: string;
   feil?: { feilmelding?: string };
   disabled?: boolean;
-  onChange: (dato: string) => void;
+  onChange: (dato: string | ChangeEvent) => void;
   onBlur: () => void;
   value?: string;
   initialMonth?: Date;

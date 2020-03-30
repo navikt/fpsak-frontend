@@ -12,7 +12,7 @@ const classNames = classnames.bind(styles);
 const EMPTY_STRING = 'EMPTY';
 
 interface OwnProps {
-  headerTextCodes?: string[] | ReactElement[];
+  headerTextCodes?: any;
   children: ReactElement | ReactElement[];
   classNameTable?: string;
   noHover?: boolean;
@@ -48,7 +48,7 @@ const Table: FunctionComponent<OwnProps> = ({
       </TableRow>
     </thead>
     <tbody>
-      {Array.isArray(children) ? children.map((child) => React.cloneElement(child, { noHover })) : React.cloneElement(children, { noHover })}
+      {Array.isArray(children) ? React.Children.map(children, ((child) => React.cloneElement(child, { noHover }))) : React.cloneElement(children, { noHover })}
     </tbody>
   </table>
 );

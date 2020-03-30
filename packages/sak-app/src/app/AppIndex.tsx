@@ -129,8 +129,8 @@ class AppIndex extends Component<OwnProps> {
             setSiteHeight={this.setSiteHeight}
           />
           {shouldRenderHome && (<Home headerHeight={headerHeight} />)}
-          {forbiddenErrors.length > 0 && (<ForbiddenPage errorMessages={forbiddenErrors} />)}
-          {unauthorizedErrors.length > 0 && (<UnauthorizedPage errorMessages={unauthorizedErrors} />)}
+          {forbiddenErrors.length > 0 && (<ForbiddenPage />)}
+          {unauthorizedErrors.length > 0 && (<UnauthorizedPage />)}
         </LanguageProvider>
       </AppConfigResolver>
     );

@@ -37,6 +37,7 @@ const AksjonspunktHelpText: FunctionComponent<OwnProps & WrappedComponentProps> 
     return (
       <>
         {React.Children.map(children, (child) => (
+          // @ts-ignore (Denne komponenten skal fjernast)
           <Normaltekst key={isObject(child) ? child.key : child} className={styles.wordwrap}>
             <strong>
               <FormattedMessage id="HelpText.Aksjonspunkt.BehandletAksjonspunkt" />
@@ -60,6 +61,7 @@ const AksjonspunktHelpText: FunctionComponent<OwnProps & WrappedComponentProps> 
           </FlexColumn>
           <FlexColumn className={styles.aksjonspunktText}>
             {React.Children.map(children, (child) => (
+              // @ts-ignore (Denne komponenten skal fjernast)
               <div key={isObject(child) ? child.key : child} className={elementStyle}>
                 <Element className={styles.wordwrap}>{child}</Element>
               </div>

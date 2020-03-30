@@ -1,15 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, MouseEvent } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
+
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import Kjønnkode from '@fpsak-frontend/types/src/Kjønnkode';
+
 import TimeLineControl from './components/TimeLineControl';
 import TimeLineSoker from './components/TimeLineSoker';
 import TimeLineSokerEnsamSoker from './components/TimeLineSokerEnsamSoker';
 
 import styles from './tidslinje.less';
+
+interface EventProps {
+  items: string[];
+  event: Event;
+}
+
+interface Periode {
+  fom: string;
+  tom: string;
+  id: string;
+  className?: string;
+  hoverText?: string;
+}
+
+interface TidslinjeProps {
+  customTimes: {
+    soknad: string;
+    fodsel: string;
+    revurdering: string;
+    dodSoker: string;
+  };
+  hovedsokerKjonnKode: Kjønnkode;
+  medsokerKjonnKode?: Kjønnkode;
+  openPeriodInfo: (event: MouseEvent) => void;
+  selectedPeriod?: Periode;
+  selectPeriodCallback: (eventProps: EventProps) => void;
+  uttakPerioder: Periode[];
+  children?: React.ReactNode;
+}
 
 const getOptions = (customTimes, sortedUttakPeriods) => ({
   end: moment(sortedUttakPeriods[sortedUttakPeriods.length - 1].tom).add(2, 'days'),
@@ -76,9 +107,11 @@ const formatGroups = (periodItems = []) => {
  *
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for uttak
  */
-class Tidslinje extends Component {
-  constructor() {
-    super();
+class Tidslinje extends Component<TidslinjeProps> {
+  timelineRef: React.RefObject<any>;
+
+  constructor(props) {
+    super(props);
 
     this.goForward = this.goForward.bind(this);
     this.goBackward = this.goBackward.bind(this);
@@ -193,21 +226,5 @@ class Tidslinje extends Component {
     );
   }
 }
-
-Tidslinje.propTypes = {
-  customTimes: PropTypes.shape().isRequired,
-  hovedsokerKjonnKode: PropTypes.string.isRequired,
-  medsokerKjonnKode: PropTypes.string,
-  openPeriodInfo: PropTypes.func.isRequired,
-  selectedPeriod: PropTypes.shape(),
-  selectPeriodCallback: PropTypes.func.isRequired,
-  uttakPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  children: PropTypes.node,
-};
-
-Tidslinje.defaultProps = {
-  medsokerKjonnKode: undefined,
-  selectedPeriod: undefined,
-};
 
 export default Tidslinje;

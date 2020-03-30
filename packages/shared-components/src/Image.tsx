@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useState, useCallback, ReactNode, KeyboardEvent,
+  FunctionComponent, useState, useCallback, ReactNode, KeyboardEvent, MouseEvent,
 } from 'react';
 
 import styles from './image.less';
@@ -8,9 +8,9 @@ interface OwnProps {
   className?: string;
   src?: string;
   srcHover?: string;
-  onMouseDown?: () => void;
+  onMouseDown?: (event: MouseEvent) => void;
   onKeyDown?: (event: KeyboardEvent) => void;
-  onClick?: () => void;
+  onClick?: (event: MouseEvent) => void;
   alt?: string;
   tabIndex?: number;
   tooltip?: string | ReactNode;

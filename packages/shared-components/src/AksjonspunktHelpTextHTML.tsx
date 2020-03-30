@@ -38,6 +38,7 @@ const AksjonspunktHelpTextHTML: FunctionComponent<OwnProps & WrappedComponentPro
 
           <FlexColumn className={styles.aksjonspunktText}>
             {React.Children.map(children, (child) => (
+              // @ts-ignore (Denne komponenten skal fjernast)
               <div key={isObject(child) ? child.key : child} className={elementStyle}>
                 <Normaltekst className={styles.wordwrap}>{child}</Normaltekst>
               </div>

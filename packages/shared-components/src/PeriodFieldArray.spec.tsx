@@ -18,7 +18,7 @@ describe('<PeriodFieldArray>', () => {
         meta={metaMock}
         readOnly={readOnly}
       >
-        {(periodeElementFieldId) => <span key={periodeElementFieldId}>test</span>}
+        {() => <span>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
@@ -42,7 +42,7 @@ describe('<PeriodFieldArray>', () => {
         meta={metaMock}
         readOnly={readOnly}
       >
-        {(periodeElementFieldId, index, getRemoveButton) => (
+        {(_periodeElementFieldId, index, getRemoveButton: () => void) => (
           <div key={index} id={`id_${index}`}>
             test
             {getRemoveButton()}
@@ -71,7 +71,7 @@ describe('<PeriodFieldArray>', () => {
         meta={metaMock}
         readOnly={readOnly}
       >
-        {(periodeElementFieldId) => <span key={periodeElementFieldId}>test</span>}
+        {() => <span>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
@@ -93,7 +93,7 @@ describe('<PeriodFieldArray>', () => {
         meta={metaMock}
         readOnly={readOnly}
       >
-        {(periodeElementFieldId, index, getRemoveButton) => (
+        {(_periodeElementFieldId, index, getRemoveButton: () => void) => (
           <div key={index} id={`id_${index}`}>
             test
             {getRemoveButton()}
@@ -120,7 +120,7 @@ describe('<PeriodFieldArray>', () => {
         shouldShowAddButton={false}
         readOnly={readOnly}
       >
-        {(periodeElementFieldId) => <span key={periodeElementFieldId}>test</span>}
+        {() => <span>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 
@@ -138,7 +138,7 @@ describe('<PeriodFieldArray>', () => {
         createAddButtonInsteadOfImageLink
         readOnly={readOnly}
       >
-        {(periodeElementFieldId) => <span key={periodeElementFieldId}>test</span>}
+        {() => <span>test</span>}
       </PeriodFieldArray.WrappedComponent>,
     );
 

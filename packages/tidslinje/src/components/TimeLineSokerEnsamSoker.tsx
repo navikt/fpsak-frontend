@@ -1,24 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
+import { useIntl } from 'react-intl';
 import { Row } from 'nav-frontend-grid';
 
+import Kjønnkode from '@fpsak-frontend/types/src/Kjønnkode';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
-
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
-import { useIntl } from 'react-intl';
+
 import styles from './timeLineSokerEnsamSoker.less';
+
+const isKvinne = (kode) => kode === navBrukerKjonn.KVINNE;
 
 /**
  * TimeLineSoker
  *
  * Presentationskomponent. Viser korrekt ikon for soker/medsoker
  */
-
-const isKvinne = (kode) => kode === navBrukerKjonn.KVINNE;
-
-const TimeLineSokerEnsamSoker = ({
+const TimeLineSokerEnsamSoker: FunctionComponent<{ hovedsokerKjonnKode: Kjønnkode }> = ({
   hovedsokerKjonnKode,
 }) => {
   const intl = useIntl();
@@ -34,10 +33,6 @@ const TimeLineSokerEnsamSoker = ({
       </Row>
     </div>
   );
-};
-
-TimeLineSokerEnsamSoker.propTypes = {
-  hovedsokerKjonnKode: PropTypes.string.isRequired,
 };
 
 export default TimeLineSokerEnsamSoker;

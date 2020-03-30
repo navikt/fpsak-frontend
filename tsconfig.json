@@ -30,6 +30,7 @@
 		"packages/fakta-saken",
 		"packages/konstanter",
 		"packages/sak-app",
+		"packages/sak-feilsider",
 		"packages/sak-visittkort",
 		"packages/sak-support-meny",
 		"packages/shared-components",

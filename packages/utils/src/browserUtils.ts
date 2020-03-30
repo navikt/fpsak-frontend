@@ -1,3 +1,9 @@
+declare global {
+  interface Document {
+      documentMode?: any;
+  }
+}
+
 export const isIE11 = () => !!window.MSInputMethodContext && !!document.documentMode;
 
 export const isEdge = () => /Edge/.test(navigator.userAgent);

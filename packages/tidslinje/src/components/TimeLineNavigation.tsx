@@ -1,11 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, MouseEvent } from 'react';
+import { useIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { useIntl } from 'react-intl';
 import TimeLineButton from './TimeLineButton';
 
-const TimeLineNavigation = ({
+const TimeLineNavigation: FunctionComponent<{ openPeriodInfo: (event: MouseEvent) => void }> = ({
   openPeriodInfo,
 }) => {
   const intl = useIntl();
@@ -17,10 +16,6 @@ const TimeLineNavigation = ({
       </Column>
     </Row>
   );
-};
-
-TimeLineNavigation.propTypes = {
-  openPeriodInfo: PropTypes.func.isRequired,
 };
 
 export default TimeLineNavigation;

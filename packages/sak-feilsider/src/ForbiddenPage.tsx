@@ -1,6 +1,5 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
 
 import ErrorPageWrapper from './components/ErrorPageWrapper';
 
@@ -16,7 +15,6 @@ const ForbiddenPage = () => (
     <br />
     <a href="/"><FormattedMessage id="ForbiddenPage.LinkText" /></a>
     <br />
-    <Undertittel />
   </ErrorPageWrapper>
 );
 

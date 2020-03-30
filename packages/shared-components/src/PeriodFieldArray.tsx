@@ -19,7 +19,7 @@ const onKeyDown = (fields, emptyPeriodTemplate) => ({ keyCode }) => {
   }
 };
 
-const getRemoveButton = (index, fields) => (className) => {
+const getRemoveButton = (index: number, fields) => (className) => {
   if (index > 0) {
     return (
       <button

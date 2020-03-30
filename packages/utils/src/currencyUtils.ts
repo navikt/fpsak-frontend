@@ -19,8 +19,7 @@ export const removeSpacesFromNumber = (input) => {
   if (!input || input === parseInt(input, 10)) {
     return input;
   }
-  const noSpaceInput = parseInt(input.replace(/\s/g, ''), 10);
-  const parsedValue = parseInt(noSpaceInput, 10);
+  const parsedValue = parseInt(input.replace(/\s/g, ''), 10);
   return Number.isNaN(parsedValue) ? input : parsedValue;
 };
 

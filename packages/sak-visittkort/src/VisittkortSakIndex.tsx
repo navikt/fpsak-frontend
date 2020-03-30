@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import {
-  Kodeverk, Personopplysninger, FamilieHendelseSamling, Fagsak,
+  Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
 } from '@fpsak-frontend/types';
 
 import VisittkortPanel from './components/VisittkortPanel';
@@ -18,7 +18,7 @@ const intl = createIntl({
 interface OwnProps {
   fagsak: Fagsak;
   sprakkode: Kodeverk;
-  alleKodeverk: {[key: string]: [Kodeverk]};
+  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   personopplysninger?: Personopplysninger;
   familieHendelse?: FamilieHendelseSamling;
   lenkeTilAnnenPart?: string;

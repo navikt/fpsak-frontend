@@ -25,8 +25,8 @@ describe('validatorsHelper', () => {
 
   describe('integerRegex', () => {
     it('Skal sjekke om input er int', () => {
-      expect(integerRegex.test(34)).is.true;
-      expect(integerRegex.test(34.5)).is.false;
+      expect(integerRegex.test('34')).is.true;
+      expect(integerRegex.test('34.5')).is.false;
       expect(integerRegex.test('XXX')).is.false;
     });
   });
@@ -48,7 +48,7 @@ describe('validatorsHelper', () => {
   describe('textRegex', () => {
     it('Skal sjekke om input er tekst', () => {
       expect(textRegex.test('text')).is.true;
-      expect(textRegex.test(3434)).is.true;
+      expect(textRegex.test('3434')).is.true;
     });
   });
 

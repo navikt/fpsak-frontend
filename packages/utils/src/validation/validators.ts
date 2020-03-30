@@ -133,17 +133,23 @@ export const dateIsAfter = (date, checkAgainsDate) => moment(date).isAfter(check
 export const isDatesEqual = (date1, date2) => (date1 !== date2 ? datesNotEqual(moment(date2).format(DDMMYYYY_DATE_FORMAT)) : null);
 
 const validateDate = (dateAsText, date, earliestDate, latestDate) => {
-  let error = required(dateAsText) || hasValidDate(dateAsText);
+  const error = required(dateAsText) || hasValidDate(dateAsText);
   if (!error && earliestDate) {
-    error = dateAfterOrEqual(earliestDate)(date);
+    return dateAfterOrEqual(earliestDate)(date);
   }
   if (!error && latestDate) {
-    error = dateBeforeOrEqual(latestDate)(date);
+    return dateBeforeOrEqual(latestDate)(date);
   }
   return error;
 };
 
-export const hasValidPeriodIncludingOtherErrors = (values, otherErrors = [{}], options = {}) => {
+interface Options {
+  todayOrBefore?: boolean;
+  todayOrAfter?: boolean;
+  tidligstDato?: string;
+}
+
+export const hasValidPeriodIncludingOtherErrors = (values, otherErrors = [{}], options: Options = {}) => {
   const today = moment().format(ISO_DATE_FORMAT);
   let earliestDate = options.todayOrAfter ? today : null;
   if (options.tidligstDato) {
@@ -244,19 +250,20 @@ export const isArbeidsProsentVidUtsettelse100 = (values, aktivitetArray) => {
 export const validateProsentandel = (prosentandel) => required(prosentandel) || hasValidDecimal(prosentandel) || hasValidNumber(prosentandel.replace('.', ''));
 
 export const ariaCheck = () => {
-  let errors = [];
+  let errors;
   setTimeout(() => {
     if (document.getElementsByClassName('skjemaelement__feilmelding').length > 0) {
       errors = document.getElementsByClassName('skjemaelement__feilmelding');
     } else if (document.getElementsByClassName('alertstripe--advarsel')) {
       errors = (document.getElementsByClassName('alertstripe--advarsel'));
     }
-    if (errors.length > 0) {
+    if (errors && errors.length > 0) {
       const ariaNavTab = document.createAttribute('tabindex');
       ariaNavTab.value = '-1';
       const firstError = errors[0];
       firstError.setAttributeNode(ariaNavTab);
-      document.activeElement.blur();
+      const element = document.activeElement as HTMLElement;
+      element.blur();
       firstError.focus();
     }
   }, 300);

@@ -1,4 +1,11 @@
-export const getKodeverknavnFraKode = (alleKodeverk, kodeverkType, kode, undertype) => {
+import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
+
+export const getKodeverknavnFraKode = (
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]},
+  kodeverkType: string,
+  kode: string,
+  undertype?: string,
+) => {
   let kodeverkForType = alleKodeverk[kodeverkType];
   if (!kodeverkForType || kodeverkForType.length === 0) {
     return '';
@@ -11,6 +18,12 @@ export const getKodeverknavnFraKode = (alleKodeverk, kodeverkType, kode, underty
   return kodeverk ? kodeverk.navn : '';
 };
 
-export const getKodeverknavnFn = (alleKodeverk, kodeverkTyper) => (kodeverkOjekt, undertype) => getKodeverknavnFraKode(
+export const getKodeverknavnFn = (
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]},
+  kodeverkTyper: {[key: string]: string},
+) => (
+  kodeverkOjekt: Kodeverk,
+  undertype?: string,
+) => getKodeverknavnFraKode(
   alleKodeverk, kodeverkTyper[kodeverkOjekt.kodeverk], kodeverkOjekt.kode, undertype,
 );

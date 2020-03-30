@@ -1,10 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { Image } from '@fpsak-frontend/shared-components';
-import styles from './legendBox.less';
+
 import TimeLineButton from './TimeLineButton';
 
-const LegendBox = ({
+import styles from './legendBox.less';
+
+interface LegendBoxProps {
+  legends: {
+    src: string;
+    text: string;
+  }[];
+}
+
+const LegendBox: React.FunctionComponent<LegendBoxProps> = ({
   legends,
 }) => (
   <span className={styles.popUnder}>
@@ -28,16 +37,6 @@ const LegendBox = ({
       </div>
     </div>
   </span>
-
 );
-
-const Legend = () => {};
-Legend.propTypes = {
-  src: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-};
-LegendBox.propTypes = {
-  legends: PropTypes.arrayOf(Legend).isRequired,
-};
 
 export default LegendBox;

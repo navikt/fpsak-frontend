@@ -1,17 +1,36 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ReactNode, MouseEvent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Row } from 'nav-frontend-grid';
-import { injectIntl } from 'react-intl';
+
 import TimeLineButton from './TimeLineButton';
+
 import styles from './timeLineControl.less';
 
+interface Periode {
+  fom: string;
+  tom: string;
+  id: string;
+  className?: string;
+  hoverText?: string;
+}
+
+
+interface TimeLineControlProps {
+  children?: ReactNode;
+  goBackwardCallback: (event: MouseEvent) => void;
+  goForwardCallback: (event: MouseEvent) => void;
+  openPeriodInfo: (event: MouseEvent) => void;
+  selectedPeriod?: Periode;
+  zoomInCallback: (event: MouseEvent) => void;
+  zoomOutCallback: (event: MouseEvent) => void;
+}
 
 /*
  * Timeline controller
  *
  * Holds the controls for the timeline (zoom, traversing left/right and opening the data area)
  */
-const TimeLineControl = ({
+const TimeLineControl: FunctionComponent<TimeLineControlProps & WrappedComponentProps> = ({
   children,
   goBackwardCallback,
   goForwardCallback,
@@ -40,21 +59,8 @@ const TimeLineControl = ({
   );
 };
 
-TimeLineControl.propTypes = {
-  children: PropTypes.node,
-  goBackwardCallback: PropTypes.func.isRequired,
-  goForwardCallback: PropTypes.func.isRequired,
-  intl: PropTypes.shape().isRequired,
-  openPeriodInfo: PropTypes.func.isRequired,
-  selectedPeriod: PropTypes.shape(),
-  zoomInCallback: PropTypes.func.isRequired,
-  zoomOutCallback: PropTypes.func.isRequired,
-};
-
-
 TimeLineControl.defaultProps = {
   selectedPeriod: undefined,
 };
-
 
 export default injectIntl(TimeLineControl);
