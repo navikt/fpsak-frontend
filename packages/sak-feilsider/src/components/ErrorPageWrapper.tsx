@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ReactNode } from 'react';
 import {
   createIntl, createIntlCache, FormattedHTMLMessage, RawIntlProvider,
 } from 'react-intl';
@@ -15,13 +14,21 @@ const intl = createIntl({
   messages,
 }, cache);
 
+interface OwnProps {
+  children: ReactNode | ReactNode[];
+  titleCode?: string;
+}
+
 /**
  * FeilsideContainer
  *
  * Presentasjonskomponent. Denne komponenten vises når den NAV-ansatte prøver å aksessere en url som ikke finnes.
  * Det blir presentert en generell feilmelding og en lenke som tar NAV-ansatt tilbake til hovedsiden.
  */
-const ErrorPageWrapper = ({ children, titleCode }) => (
+const ErrorPageWrapper: FunctionComponent<OwnProps> = ({
+  children,
+  titleCode,
+}) => (
   <RawIntlProvider value={intl}>
     <div className={pageContainer}>
       <Innholdstittel>
@@ -32,14 +39,6 @@ const ErrorPageWrapper = ({ children, titleCode }) => (
     </div>
   </RawIntlProvider>
 );
-
-ErrorPageWrapper.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  titleCode: PropTypes.string,
-};
 
 ErrorPageWrapper.defaultProps = {
   titleCode: 'GenericErrorPage.Header',
