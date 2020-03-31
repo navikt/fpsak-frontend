@@ -260,6 +260,22 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'FASTSETT_RESULTAT_PERIODEN_INNLEGGELSEN_DOKUMENTERT',
     verdiId: 'HistorikkEndretFeltVerdiType.InnleggelsenDokumentert',
   },
+  FASTSETT_RESULTAT_PERIODEN_HV_DOKUMENTERT: {
+    kode: 'FASTSETT_RESULTAT_PERIODEN_HV_DOKUMENTERT',
+    verdiId: 'HistorikkEndretFeltVerdiType.HVDokumentert',
+  },
+  FASTSETT_RESULTAT_PERIODEN_NAV_TILTAK_DOKUMENTERT: {
+    kode: 'FASTSETT_RESULTAT_PERIODEN_NAV_TILTAK_DOKUMENTERT',
+    verdiId: 'HistorikkEndretFeltVerdiType.NAVTiltakDokumentert',
+  },
+  FASTSETT_RESULTAT_PERIODEN_HV_DOKUMENTERT_IKKE: {
+    kode: 'FASTSETT_RESULTAT_PERIODEN_HV_DOKUMENTERT_IKKE',
+    verdiId: 'HistorikkEndretFeltVerdiType.HVDokumentertIkke',
+  },
+  FASTSETT_RESULTAT_PERIODEN_NAV_TILTAK_DOKUMENTERT_IKKE: {
+    kode: 'FASTSETT_RESULTAT_PERIODEN_NAV_TILTAK_DOKUMENTERT_IKKE',
+    verdiId: 'HistorikkEndretFeltVerdiType.NAVTiltakDokumentertIkke',
+  },
   FASTSETT_RESULTAT_ENDRE_SOEKNADSPERIODEN: {
     kode: 'FASTSETT_RESULTAT_ENDRE_SOEKNADSPERIODEN',
     verdiId: 'HistorikkEndretFeltVerdiType.EndreSoeknadsperioden',

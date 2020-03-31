@@ -1,4 +1,8 @@
 {
+  "SykdomOgSkadePeriode.HeimevernetErDok": "Øvelse eller tjeneste i heimevernet er dokumentert, angi periode",
+  "SykdomOgSkadePeriode.HeimevernetErIkkeDok": "Øvelse eller tjeneste i heimevernet er ikke dokumentert",
+  "SykdomOgSkadePeriode.TiltakIRegiNavErDok": "Tiltak i regi av NAV er dokumentert, angi periode",
+  "SykdomOgSkadePeriode.TiltakIRegiNavErIkkeDok": "Tiltak i regi av NAV er ikke dokumentert",
   "UttakInfoPanel.FaktaUttak": "Fakta om uttak",
   "UttakInfoPanel.Aksjonspunkt.5070": "Fastsett korrekt og dokumentert søknadsperiode og andel i arbeid. Kontakt søker ved behov.",
   "UttakInfoPanel.Aksjonspunkt.5081": "Første dato for uttak er {value}. Rediger søknadsperiodene så de stemmer overens med startdato. Kontakt søker ved behov.",
