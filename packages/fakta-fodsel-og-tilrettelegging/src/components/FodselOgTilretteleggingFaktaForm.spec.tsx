@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { AlertStripeFeil, AlertStripeInfo } from 'nav-frontend-alertstriper';
 
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 
@@ -54,6 +55,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
       erOverstyrer
+      {...reduxFormPropsMock}
     />);
 
     const tilretteleggingArbeidsforholdSection = wrapper.find(TilretteleggingArbeidsforholdSection);
@@ -79,6 +81,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
       erOverstyrer
+      {...reduxFormPropsMock}
     />);
 
     const tilretteleggingArbeidsforholdSection = wrapper.find(TilretteleggingArbeidsforholdSection);
@@ -104,6 +107,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
       erOverstyrer
+      {...reduxFormPropsMock}
       {...formProps}
     />);
 
@@ -161,6 +165,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
     };
     const errors = validateForm(values, arbeidsforhold);
 
+    // @ts-ignore
     // eslint-disable-next-line no-underscore-dangle
     expect(errors._error).is.eql('FodselOgTilretteleggingFaktaForm.MinstEnTilretteleggingMåBrukes');
   });
@@ -281,6 +286,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={[]}
       erOverstyrer
+      {...reduxFormPropsMock}
     />);
 
     const tilretteleggingArbeidsforholdSection = wrapper.find(TilretteleggingArbeidsforholdSection);
@@ -332,6 +338,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={iayArbeidsforhold}
       erOverstyrer
+      {...reduxFormPropsMock}
     />);
 
     expect(wrapper.find(AlertStripeInfo)).has.length(1);
@@ -375,6 +382,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={iayArbeidsforhold}
       erOverstyrer
+      {...reduxFormPropsMock}
     />);
 
     expect(wrapper.find(AlertStripeInfo)).has.length(1);
@@ -417,6 +425,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       arbeidsforhold={arbeidsforhold}
       iayArbeidsforhold={iayArbeidsforhold}
       erOverstyrer
+      {...reduxFormPropsMock}
     />);
 
     expect(wrapper.find(AlertStripeInfo)).has.length(0);

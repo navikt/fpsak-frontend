@@ -124,7 +124,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
 
-    expect(utbetalingsgrad).is.eql(0);
+    expect(utbetalingsgrad).is.eql('0');
   });
 
   it('skal finnne utbetalingsgrad for delvis tilrettelegging - eks. 2', () => {
@@ -133,6 +133,6 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
 
-    expect(utbetalingsgrad).is.eql(0);
+    expect(utbetalingsgrad).is.eql('0');
   });
 });

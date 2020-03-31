@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
@@ -15,6 +15,7 @@ import {
   hasValidDecimal, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 import TilretteleggingUtbetalingsgrad from './TilretteleggingUtbetalingsgrad';
 
@@ -23,19 +24,31 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
-export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent: number, stillingsprosentArbeidsforhold: number) => {
+export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent: number, stillingsprosentArbeidsforhold: number): string => {
   const defaultUtbetalingsgrad = 100 * (1 - (stillingsprosent / stillingsprosentArbeidsforhold));
-  return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0;
+  return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : '0';
 };
 
+interface TilretteleggingDato {
+  type: Kodeverk;
+  stillingsprosent: number;
+}
+
 interface OwnProps {
-  fields: {};
-  meta: {};
+  fields: {}[];
+  meta?: {
+    error?: {
+      id: string;
+      values?: {[key: string]: string};
+    };
+    dirty: boolean;
+    submitFailed: boolean;
+  };
   readOnly: boolean;
   formSectionName: string;
   erOverstyrer: boolean;
-  changeField: () => void;
-  tilretteleggingDatoer: {}[];
+  changeField: (field: string, value: string) => void;
+  tilretteleggingDatoer: TilretteleggingDato[];
   stillingsprosentArbeidsforhold: number;
 }
 
@@ -61,7 +74,7 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
     textCode="TilretteleggingFieldArray.LeggTilTilretteleggingsbehov"
     readOnly={readOnly}
   >
-    {(fieldId, index, getRemoveButton) => {
+    {(fieldId: string, index, getRemoveButton: () => ReactNode) => {
       const data = tilretteleggingDatoer[index];
       const tilretteleggingKode = data && data.type ? data.type.kode : undefined;
       return (
@@ -89,7 +102,7 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                     ]}
                     onChange={(_elmt, value) => {
                       if (value === tilretteleggingType.INGEN_TILRETTELEGGING) {
-                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, 100);
+                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, '100');
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
                         const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(data.stillingsprosent, stillingsprosentArbeidsforhold);

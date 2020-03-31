@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -13,7 +12,7 @@ interface OwnProps {
   behandlingVersjon: number;
   svangerskapspengerTilrettelegging: FodselOgTilrettelegging;
   aksjonspunkter: Aksjonspunkt[];
-  iayArbeidsforhold: Arbeidsforhold;
+  iayArbeidsforhold: Arbeidsforhold[];
   readOnly: boolean;
   hasOpenAksjonspunkter: boolean;
   submitCallback: () => void;

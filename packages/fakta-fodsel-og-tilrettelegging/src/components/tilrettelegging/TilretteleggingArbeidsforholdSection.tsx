@@ -4,18 +4,18 @@ import { FormattedMessage } from 'react-intl';
 import { FieldArray, FormSection } from 'redux-form';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
-import { Aksjonspunkt } from '@fpsak-frontend/types';
 import { DatepickerField, CheckboxField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
 import {
   VerticalSpacer, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
 
+import Arbeidsforhold from '../../types/arbeidsforholdTsType';
 import TilrettteleggingFieldArray from './TilretteleggingFieldArray';
 
 import styles from './tilretteleggingArbeidsforholdSection.less';
 
-const utledArbeidsforholdTittel = (arbeidsforhold) => {
+const utledArbeidsforholdTittel = (arbeidsforhold: Arbeidsforhold) => {
   let tittel = arbeidsforhold.arbeidsgiverNavn;
   if (arbeidsforhold.arbeidsgiverIdent) {
     tittel += ` (${arbeidsforhold.arbeidsgiverIdentVisning})`;
@@ -32,7 +32,7 @@ const utledArbeidsforholdTittel = (arbeidsforhold) => {
 
 interface OwnProps {
   readOnly: boolean;
-  arbeidsforhold: Aksjonspunkt;
+  arbeidsforhold: Arbeidsforhold;
   formSectionName: string;
   visTilrettelegginger: boolean;
   behandlingId: number;
