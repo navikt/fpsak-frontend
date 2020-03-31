@@ -56,6 +56,14 @@ const historikkSoeknadsperiodeTypeCodes = {
     kode: 'OPPHOLD',
     feltId: 'HistorikkSoeknadsperiode.Opphold',
   },
+  UTSETTELSE_HV: {
+    kode: 'UTSETTELSE_HV',
+    feltId: 'HistorikkSoeknadsperiode.UtsettelseHeimevern',
+  },
+  UTSETTELSE_TILTAK_I_REGI_AV_NAV: {
+    kode: 'UTSETTELSE_TILTAK_I_REGI_AV_NAV ',
+    feltId: 'HistorikkSoeknadsperiode.UtsettelseNavTiltak',
+  },
 };
 
 export default historikkSoeknadsperiodeTypeCodes;
