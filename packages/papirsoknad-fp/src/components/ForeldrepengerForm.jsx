@@ -70,7 +70,7 @@ export class ForeldrepengerForm extends React.Component {
         <AndreYtelserPanel readOnly={readOnly} form={form} alleKodeverk={alleKodeverk} />
         <DekningsgradPanel readOnly={readOnly} />
         {soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL
-          && <TerminFodselDatoPanel readOnly={readOnly} form={form} />}
+          && <TerminFodselDatoPanel readOnly={readOnly} form={form} erForeldrepenger />}
         <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />
         <FormSection name={OMSORG_FORM_NAME_PREFIX}>
           <OmsorgOgAdopsjonPanel

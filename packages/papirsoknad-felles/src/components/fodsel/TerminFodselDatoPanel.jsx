@@ -4,10 +4,14 @@ import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Undertekst } from 'nav-frontend-typografi';
+import { Undertekst, Element } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
+import Alertstripe from 'nav-frontend-alertstriper';
 
-import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import {
+  FlexColumn, FlexContainer, FlexRow, ArrowBox, BorderBox, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import {
   DatepickerField, InputField, NavFieldGroup, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
@@ -35,6 +39,7 @@ export const TerminFodselDatoPanelImpl = ({
   readOnly,
   intl,
   erBarnetFodt,
+  erForeldrepenger,
 }) => (
   <BorderBox>
     <div className={styles.flexContainer}>
@@ -75,23 +80,57 @@ export const TerminFodselDatoPanelImpl = ({
               </div>
             </ArrowBox>
           )}
-          { erBarnetFodt
-          && (
+          { erBarnetFodt && (
             <ArrowBox alignOffset={0}>
-              <DatepickerField
-                name="foedselsDato"
-                label={{ id: 'Registrering.Fodselsdato' }}
+              <FlexContainer>
+                <FlexRow>
+                  <FlexColumn>
+                    <DatepickerField
+                      name="foedselsDato"
+                      label={{ id: 'Registrering.Fodselsdato' }}
               /* foedselsDato is array in DTO data model, so we transform the value to/from the store/input */
-                format={(valueFromStore) => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
-                parse={(valueFromInput) => (valueFromInput ? [valueFromInput] : valueFromInput)}
-                readOnly={readOnly}
-              />
-              <InputField
-                name="antallBarn"
-                label={{ id: 'Registrering.AntallBarn' }}
-                bredde="XS"
-                readOnly={readOnly}
-              />
+                      format={(valueFromStore) => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
+                      parse={(valueFromInput) => (valueFromInput ? [valueFromInput] : valueFromInput)}
+                      readOnly={readOnly}
+                    />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <InputField
+                      name="antallBarn"
+                      label={{ id: 'Registrering.AntallBarn' }}
+                      bredde="XS"
+                      readOnly={readOnly}
+                    />
+                  </FlexColumn>
+                </FlexRow>
+                {erForeldrepenger && (
+                <>
+                  <VerticalSpacer eightPx />
+                  <Alertstripe type="info" form="inline">
+                    <Element>
+                      <FormattedMessage id="Registrering.RettTilPrematuruker" />
+                    </Element>
+                  </Alertstripe>
+                  <VerticalSpacer eightPx />
+                  <FlexRow>
+                    <FlexColumn>
+                      <DatepickerField
+                        name="termindato"
+                        label={{ id: 'Registrering.Termindato' }}
+                        readOnly={readOnly}
+                      />
+                    </FlexColumn>
+                    <FlexColumn>
+                      <DatepickerField
+                        name="terminbekreftelseDato"
+                        label={{ id: 'Registrering.UtstedtDato' }}
+                        readOnly={readOnly}
+                      />
+                    </FlexColumn>
+                  </FlexRow>
+                </>
+                )}
+              </FlexContainer>
             </ArrowBox>
           )}
         </SkjemaGruppe>
@@ -104,10 +143,12 @@ TerminFodselDatoPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   erBarnetFodt: PropTypes.bool,
+  erForeldrepenger: PropTypes.bool,
 };
 
 TerminFodselDatoPanelImpl.defaultProps = {
   erBarnetFodt: undefined,
+  erForeldrepenger: false,
 };
 
 const mapStateToProps = (state, initialProps) => ({
