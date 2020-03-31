@@ -27,6 +27,21 @@ import styles from './periodeTyper.less';
 const minLength3 = minLength(3);
 const maxLength4000 = maxLength(4000);
 
+const finnTextTilRadio1 = (erHeimevern, erNavTiltak) => {
+  if (erHeimevern) {
+    return 'SykdomOgSkadePeriode.HeimevernetErDok';
+  }
+  return erNavTiltak ? 'SykdomOgSkadePeriode.TiltakIRegiNavErDok' : 'UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode';
+};
+
+const finnTextTilRadio2 = (erHeimevern, erNavTiltak) => {
+  if (erHeimevern) {
+    return 'SykdomOgSkadePeriode.HeimevernetErIkkeDok';
+  }
+  return erNavTiltak ? 'SykdomOgSkadePeriode.TiltakIRegiNavErIkkeDok' : 'UttakInfoPanel.SykdomSkadenIkkeDokumentert';
+};
+
+
 // TODO slå sammen ForeldreAnsvarPeriode, SykdomOgSkadePeriode og InnleggelsePeriode
 
 export const SykdomOgSkadePeriode = ({
@@ -41,6 +56,8 @@ export const SykdomOgSkadePeriode = ({
   dokumentertePerioder,
   formSyncErrors,
   behandlingStatusKode,
+  erHeimevern,
+  erNavTiltak,
   ...formProps
 }) => {
   let errorHeight = 0;
@@ -88,12 +105,12 @@ export const SykdomOgSkadePeriode = ({
             isEdited={isEdited}
           >
             <RadioOption
-              label={{ id: 'UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode' }}
+              label={{ id: finnTextTilRadio1(erHeimevern, erNavTiltak) }}
               value={uttakPeriodeVurdering.PERIODE_OK}
               style={inlineStyle.radioOption}
             />
             <RadioOption
-              label={{ id: 'UttakInfoPanel.SykdomSkadenIkkeDokumentert' }}
+              label={{ id: finnTextTilRadio2(erHeimevern, erNavTiltak) }}
               value={uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES}
             />
           </RadioGroupField>
@@ -154,6 +171,8 @@ SykdomOgSkadePeriode.propTypes = {
   overforingArsak: PropTypes.shape(),
   formSyncErrors: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
+  erHeimevern: PropTypes.bool,
+  erNavTiltak: PropTypes.bool,
 };
 
 SykdomOgSkadePeriode.defaultProps = {
@@ -163,6 +182,8 @@ SykdomOgSkadePeriode.defaultProps = {
   behandlingStatusKode: undefined,
   utsettelseArsak: undefined,
   overforingArsak: undefined,
+  erHeimevern: false,
+  erNavTiltak: false,
 };
 
 const validateSykdomOgSkadeForm = (

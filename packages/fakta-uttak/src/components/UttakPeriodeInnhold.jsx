@@ -64,6 +64,8 @@ export const renderPeriode = (
         />
       );
     case utsettelseArsakCodes.SYKDOM:
+    case utsettelseArsakCodes.HV_OVELSE:
+    case utsettelseArsakCodes.NAV_TILTAK:
       return (
         <SykdomOgSkadePeriode
           fieldId={fieldId}
@@ -81,6 +83,8 @@ export const renderPeriode = (
           behandlingVersjon={behandlingVersjon}
           gjeldendeFamiliehendelse={gjeldendeFamiliehendelse}
           vilkarForSykdomExists={vilkarForSykdomExists}
+          erHeimevern={utsettelseSwitch === utsettelseArsakCodes.HV_OVELSE}
+          erNavTiltak={utsettelseSwitch === utsettelseArsakCodes.NAV_TILTAK}
         />
       );
     case utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER:
