@@ -79,6 +79,7 @@
   "Registrering.FrilansOppdrag.FieldArray.periodeTom": "T.o.m.",
   "Registrering.FrilansOppdrag.FieldArray.Oppdragsgiver": "Oppdragsgiver",
   "Registrering.FrilansOppdrag.FieldArray.BeforeFomValidation": "F.o.m må være lik eller etter dato for første periode med frilansvirksomhet",
+  "Registrering.RettTilPrematuruker": "Rett til prematuruker vil kun sjekkes når du også oppgir termindato",
 
   "Registrering.Adopsjon.GjelderEktefellesBarn": "Gjelder adopsjon ektefelles/samboers barn?",
   "Registrering.Adopsjon.Ja": "Ja",
