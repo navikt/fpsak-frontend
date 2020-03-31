@@ -1,5 +1,5 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ApiStateBuilder } from './data-test-helper';
+import { ApiStateBuilder } from '@fpsak-frontend/rest-api-redux';
 
 
 const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };

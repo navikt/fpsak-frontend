@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper';
+import { ApiStateBuilder } from '@fpsak-frontend/rest-api-redux';
 
 import fpsakApi from '../data/fpsakApi';
 import { getNavAnsatt } from './duck';

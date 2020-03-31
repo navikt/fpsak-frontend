@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -10,6 +9,7 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { InputField, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '../beregning-test-helper';
 import { AndelRowImpl, mapStateToProps } from './InntektFieldArrayRow';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';

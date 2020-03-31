@@ -7,8 +7,6 @@
   "dependencies": {
     "@commercetools/enzyme-extensions": "^5.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "@fpsak-frontend/rest-api": "1.0.0",
-    "@fpsak-frontend/rest-api-redux": "1.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "react": "^16.12.0",

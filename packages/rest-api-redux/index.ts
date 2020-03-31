@@ -8,3 +8,4 @@ export {
   setRequestPollingMessage,
   getRequestPollingMessage,
 } from './src/pollingMessageDuck';
+export { ApiStateBuilder, dummyFagsak } from './src/data-test-helper';
