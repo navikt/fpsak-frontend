@@ -1,10 +1,10 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray, FormSection } from 'redux-form';
 import { Normaltekst, Element } from 'nav-frontend-typografi';
 
+import { Aksjonspunkt } from '@fpsak-frontend/types';
 import { DatepickerField, CheckboxField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
 import {
@@ -30,7 +30,19 @@ const utledArbeidsforholdTittel = (arbeidsforhold) => {
   return tittel;
 };
 
-export const TilretteleggingArbeidsforholdSection = ({
+interface OwnProps {
+  readOnly: boolean;
+  arbeidsforhold: Aksjonspunkt;
+  formSectionName: string;
+  visTilrettelegginger: boolean;
+  behandlingId: number;
+  behandlingVersjon: number;
+  erOverstyrer: boolean;
+  changeField: () => void;
+  stillingsprosentArbeidsforhold?: number;
+}
+
+export const TilretteleggingArbeidsforholdSection: FunctionComponent<OwnProps> = ({
   readOnly,
   arbeidsforhold,
   formSectionName,
@@ -97,18 +109,6 @@ export const TilretteleggingArbeidsforholdSection = ({
     )}
   </FormSection>
 );
-
-TilretteleggingArbeidsforholdSection.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  arbeidsforhold: PropTypes.shape().isRequired,
-  formSectionName: PropTypes.string.isRequired,
-  visTilrettelegginger: PropTypes.bool.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  erOverstyrer: PropTypes.bool.isRequired,
-  changeField: PropTypes.func.isRequired,
-  stillingsprosentArbeidsforhold: PropTypes.number,
-};
 
 TilretteleggingArbeidsforholdSection.defaultProps = {
   stillingsprosentArbeidsforhold: undefined,

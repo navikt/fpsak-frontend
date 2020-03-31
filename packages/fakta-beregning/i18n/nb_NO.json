@@ -40,7 +40,7 @@
 
   "AvklareAktiviteter.OverstyrerAktivitetAdvarsel": "Overstyr hvilke aktiviteter og eventuelle inntektsmeldinger som skal benyttes i beregning.",
   "AvklareAktiviteter.ManuellOverstyring": "Overstyring av aktiviteter i beregningsgrunnlaget",
-  "AvklarAktiviteter.Tittel": "Aktiviteter i beregningsgrunnlaget",
+  "AvklareAktiviteter.AktiviteterIBeregningsgrunnlaget": "Aktiviteter i beregningsgrunnlaget",
   "VurderAktiviteterTabell.Header.Aktivitet": "Aktivitet",
   "VurderAktiviteterTabell.Header.Periode": "Periode",
   "VurderAktiviteterTabell.Header.Benytt": "Benytt",

@@ -138,6 +138,7 @@ export const VurderAktiviteterTabell = ({
     <Element>
       {finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}
     </Element>
+    tst
     <Table headerTextCodes={getHeaderTextCodes()} noHover>
       {aktiviteter.map((aktivitet) => (
         lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt)

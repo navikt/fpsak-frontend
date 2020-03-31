@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Element } from 'nav-frontend-typografi';
 
@@ -24,17 +23,28 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
-export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent, stillingsprosentArbeidsforhold) => {
-  const defaultUtbetalingsgrad = 100 * (1 - stillingsprosent / stillingsprosentArbeidsforhold);
+export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent: number, stillingsprosentArbeidsforhold: number) => {
+  const defaultUtbetalingsgrad = 100 * (1 - (stillingsprosent / stillingsprosentArbeidsforhold));
   return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0;
 };
+
+interface OwnProps {
+  fields: {};
+  meta: {};
+  readOnly: boolean;
+  formSectionName: string;
+  erOverstyrer: boolean;
+  changeField: () => void;
+  tilretteleggingDatoer: {}[];
+  stillingsprosentArbeidsforhold: number;
+}
 
 /**
  * BehovForTilrettteleggingFieldArray
  *
  * Viser inputfelter for tilrettelegging av arbeidsforhold for selvstendig næringsdrivende eller frilans.
  */
-export const TilretteleggingFieldArray = ({
+export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   fields,
   meta,
@@ -156,18 +166,6 @@ export const TilretteleggingFieldArray = ({
     }}
   </PeriodFieldArray>
 );
-
-TilretteleggingFieldArray.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  fields: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  meta: PropTypes.shape().isRequired,
-  formSectionName: PropTypes.string.isRequired,
-  erOverstyrer: PropTypes.bool.isRequired,
-  changeField: PropTypes.func.isRequired,
-  stillingsprosentArbeidsforhold: PropTypes.number.isRequired,
-  tilretteleggingDatoer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
 
 const mapStateToProps = (state, ownProps) => {
   const {
