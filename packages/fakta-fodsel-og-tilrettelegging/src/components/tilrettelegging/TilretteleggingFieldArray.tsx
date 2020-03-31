@@ -50,6 +50,7 @@ interface OwnProps {
   changeField: (field: string, value: string) => void;
   tilretteleggingDatoer: TilretteleggingDato[];
   stillingsprosentArbeidsforhold: number;
+  setOverstyrtUtbetalingsgrad: (erOverstyrt: boolean) => void;
 }
 
 /**
@@ -67,6 +68,7 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
   changeField,
   tilretteleggingDatoer,
   stillingsprosentArbeidsforhold,
+  setOverstyrtUtbetalingsgrad,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -168,6 +170,7 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                     erOverstyrer={erOverstyrer}
                     tilretteleggingKode={tilretteleggingKode}
                     readOnly={readOnly}
+                    setOverstyrtUtbetalingsgrad={setOverstyrtUtbetalingsgrad}
                   />
                 )}
               </FlexRow>

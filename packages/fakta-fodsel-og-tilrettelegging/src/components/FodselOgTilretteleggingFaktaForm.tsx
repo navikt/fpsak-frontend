@@ -1,15 +1,15 @@
-import React, { useMemo, FunctionComponent } from 'react';
+import React, { useMemo, useState, FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Element } from 'nav-frontend-typografi';
 import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, AvsnittSkiller,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, AvsnittSkiller, Image,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, TextAreaField, behandlingForm } from '@fpsak-frontend/form';
 import {
@@ -18,6 +18,7 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import { Arbeidsforhold as IayArbeidsforhold, Aksjonspunkt } from '@fpsak-frontend/types';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
 import FodselOgTilrettelegging from '../types/fodselOgTilretteleggingTsType';
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
@@ -81,6 +82,7 @@ export const FodselOgTilretteleggingFaktaForm: FunctionComponent<FodselOgTilrett
   ...formProps
 }) => {
   const visInfoAlert = useMemo(() => skalViseInfoAlert(iayArbeidsforhold, arbeidsforhold), [behandlingVersjon]);
+  const [harOverstyrtUtbetalingsgrad, setOverstyrtUtbetalingsgrad] = useState(false);
 
   return (
     <form onSubmit={formProps.handleSubmit}>
@@ -153,6 +155,7 @@ export const FodselOgTilretteleggingFaktaForm: FunctionComponent<FodselOgTilrett
                     erOverstyrer={erOverstyrer}
                     changeField={formProps.change}
                     stillingsprosentArbeidsforhold={af ? af.stillingsprosent : 100}
+                    setOverstyrtUtbetalingsgrad={setOverstyrtUtbetalingsgrad}
                   />
                   {index === arbeidsforhold.length - 1 && (
                     <AvsnittSkiller />
@@ -175,7 +178,18 @@ export const FodselOgTilretteleggingFaktaForm: FunctionComponent<FodselOgTilrett
             />
           </FlexColumn>
         </FlexRow>
-        <VerticalSpacer twentyPx />
+        <VerticalSpacer eightPx />
+        {harOverstyrtUtbetalingsgrad && (
+          <FlexRow>
+            <FlexColumn>
+              <Image src={advarselIkonUrl} />
+            </FlexColumn>
+            <FlexColumn>
+              <Element><FormattedMessage id="FodselOgTilretteleggingFaktaForm.BegrunnOverstyring" /></Element>
+            </FlexColumn>
+          </FlexRow>
+        )}
+        <VerticalSpacer sixteenPx />
         <FlexRow>
           <FlexColumn>
             <FaktaSubmitButton

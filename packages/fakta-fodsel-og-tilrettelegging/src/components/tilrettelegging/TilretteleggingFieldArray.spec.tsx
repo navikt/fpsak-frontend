@@ -24,6 +24,7 @@ describe('<TilretteleggingFieldArray>', () => {
       changeField={() => undefined}
       tilretteleggingDatoer={[]}
       stillingsprosentArbeidsforhold={50}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -57,6 +58,7 @@ describe('<TilretteleggingFieldArray>', () => {
       changeField={() => undefined}
       tilretteleggingDatoer={[]}
       stillingsprosentArbeidsforhold={50}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -93,6 +95,7 @@ describe('<TilretteleggingFieldArray>', () => {
       changeField={() => undefined}
       tilretteleggingDatoer={[]}
       stillingsprosentArbeidsforhold={50}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);

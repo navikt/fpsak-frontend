@@ -40,6 +40,7 @@ interface OwnProps {
   erOverstyrer: boolean;
   changeField: () => void;
   stillingsprosentArbeidsforhold?: number;
+  setOverstyrtUtbetalingsgrad: (erOverstyrt: boolean) => void;
 }
 
 export const TilretteleggingArbeidsforholdSection: FunctionComponent<OwnProps> = ({
@@ -52,6 +53,7 @@ export const TilretteleggingArbeidsforholdSection: FunctionComponent<OwnProps> =
   erOverstyrer,
   changeField,
   stillingsprosentArbeidsforhold,
+  setOverstyrtUtbetalingsgrad,
 }) => (
   <FormSection name={formSectionName}>
     <Normaltekst className={styles.arbeidsforholdTittel}>
@@ -102,6 +104,7 @@ export const TilretteleggingArbeidsforholdSection: FunctionComponent<OwnProps> =
               erOverstyrer={erOverstyrer}
               changeField={changeField}
               stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
+              setOverstyrtUtbetalingsgrad={setOverstyrtUtbetalingsgrad}
             />
           </FlexColumn>
         </FlexRow>

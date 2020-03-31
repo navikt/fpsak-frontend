@@ -21,6 +21,7 @@ interface OwnProps {
   erOverstyrer: boolean;
   fieldId: string;
   tilretteleggingKode: string;
+  setOverstyrtUtbetalingsgrad: (erOverstyrt: boolean) => void;
 }
 
 const TilretteleggingUtbetalingsgrad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -29,6 +30,7 @@ const TilretteleggingUtbetalingsgrad: FunctionComponent<OwnProps & WrappedCompon
   readOnly,
   erOverstyrer,
   fieldId,
+  setOverstyrtUtbetalingsgrad,
 }) => {
   const [erIEditeringsmodus, setEditeres] = useState(false);
 
@@ -56,8 +58,8 @@ const TilretteleggingUtbetalingsgrad: FunctionComponent<OwnProps & WrappedCompon
       {erOverstyrer && (
       <FlexColumn>
         <Image
-          onClick={() => setEditeres(true)}
-          onKeyDown={() => setEditeres(true)}
+          onClick={() => { setEditeres(true); setOverstyrtUtbetalingsgrad(true); }}
+          onKeyDown={() => { setEditeres(true); setOverstyrtUtbetalingsgrad(true); }}
           className={erIEditeringsmodus ? styles.buttonMargin : styles.enabletImage}
           src={erIEditeringsmodus ? endreDisabletImage : endreImage}
           tabIndex={0}
