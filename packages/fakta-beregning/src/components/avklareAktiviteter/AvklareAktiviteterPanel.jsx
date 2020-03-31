@@ -5,12 +5,12 @@ import { formPropTypes, initialize as reduxFormInitialize } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import {
-  AksjonspunktHelpTextTemp, OverstyringKnapp, BorderBox, VerticalSpacer,
+  AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -164,13 +164,9 @@ export class AvklareAktiviteterPanelImpl extends Component {
     return (
       <>
         <form onSubmit={formProps.handleSubmit}>
-          <Undertittel>
-            <FormattedMessage id="AvklareAktiviteter.AktiviteterIBeregningsgrunnlaget" />
-          </Undertittel>
           {(kanOverstyre || erOverstyrt)
           && (
             <div className={styles.rightAligned}>
-              <OverstyringKnapp onClick={() => this.initializeAktiviteter()} erOverstyrt={erOverstyrt} />
               <CheckboxField
                 key="manuellOverstyring"
                 name={MANUELL_OVERSTYRING_FIELD}
