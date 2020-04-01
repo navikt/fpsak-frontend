@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { createBeregningTableData } from './BeregningsresultatTable';
 
 const vilkaarBG = {
@@ -577,6 +578,42 @@ describe('<BeregningsresultatTable>', () => {
     const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }, { kode: 'AAP', kodeverk: 'AKTIVITET_STATUS' }];
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].arbeidsforhold = { naturalytelseBortfaltPrÅr: 48000 };
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].bortfaltNaturalytelse = 48000;
+    const selectorData = createBeregningTableData.resultFunc(
+      beregningsgrunnlagPerioder,
+      aktivitetStatusList,
+      dekningsgrad,
+      grunnbelop,
+      false,
+      vilkaarBG.vilkarStatus,
+    );
+    selectorData.forEach((periode) => {
+      expect(periode.rowsAndeler.length).to.equal(2);
+      const {
+        rowsAndeler, dagsatser, bruttoRad, redusertRad,
+      } = periode;
+      expect(bruttoRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.BruttoTotalt');
+      expect(bruttoRad.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar));
+      expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
+      expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
+      expect(rowsAndeler.length).to.equal(2);
+      const andelLabelAT = rowsAndeler[0].ledetekst;
+      expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.AT');
+      expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(300001));
+      const andelLabelAAP = rowsAndeler[1].ledetekst;
+      expect(andelLabelAAP.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Naturalytelser');
+      expect(formatCurrencyNoKr(rowsAndeler[1].verdi)).to.equal(formatCurrencyNoKr(48000));
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
+    });
+  });
+  it('Skal teste at flere perioder med årsak som ikke skal vises fører til at første periode vises', () => {
+    const beregningsgrunnlagPerioder = mockPeriode();
+    const dekningsgrad = 80;
+    const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }, { kode: 'AAP', kodeverk: 'AKTIVITET_STATUS' }];
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].arbeidsforhold = { naturalytelseBortfaltPrÅr: 48000 };
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].bortfaltNaturalytelse = 48000;
+    beregningsgrunnlagPerioder[0].periodeAarsaker.push({
+      kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV,
+    });
     const selectorData = createBeregningTableData.resultFunc(
       beregningsgrunnlagPerioder,
       aktivitetStatusList,

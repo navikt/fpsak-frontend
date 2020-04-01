@@ -355,6 +355,7 @@ const sjekkharBortfaltNaturalYtelse = (periode) => {
       && andel.bortfaltNaturalytelse !== null
       && andel.bortfaltNaturalytelse !== 0);
 };
+
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
@@ -364,6 +365,10 @@ export const createBeregningTableData = createSelector(
     (state, ownProps) => ownProps.vilkaarBG.vilkarStatus],
   (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, harAksjonspunkter, vilkarStatus) => {
     const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
+    if (perioderSomSkalVises.length < 1) {
+      // Alle perioder har periodeårsak som egentlig ikke trengs vises, velger første periode som den eneste som blir vist.
+      perioderSomSkalVises.push(allePerioder[0]);
+    }
     const periodeResultatTabeller = [];
     const seksG = grunnbelop * 6;
     perioderSomSkalVises.forEach((periode) => {
