@@ -22,7 +22,7 @@ import {
 import fpsakApi from '../data/fpsakApi';
 import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
 import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
-import DataFetcher from '../app/DataFetcher2';
+import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher2';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
@@ -141,12 +141,10 @@ class BehandlingMenuIndex extends Component<OwnProps> {
 
     return (
       <DataFetcher
-        behandlingId={behandlingData.id}
-        behandlingVersion={behandlingData.versjon}
-        behandlingNotRequired
+        fetchingTriggers={new DataFetcherTriggers({ behandlingId: behandlingData.id, behandlingVersion: behandlingData.versjon }, false)}
         showOldDataWhenRefetching
         endpoints={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
-        render={(dataProps) => (
+        render={(dataProps: { menyhandlingRettigheter?: { harSoknad: boolean }}) => (
           <MenySakIndex
             rettigheter={getMenyRettigheter({
               navAnsatt,

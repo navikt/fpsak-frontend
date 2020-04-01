@@ -9,28 +9,53 @@ import { isObjectEmpty } from '@fpsak-frontend/utils';
 
 const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
+export class DataFetcherTriggers {
+  triggers = {}
+
+  isRequiredForInitiallFetching = false
+
+  constructor(triggers, isRequiredForInitiallFetching) {
+    this.triggers = triggers;
+    this.isRequiredForInitiallFetching = isRequiredForInitiallFetching;
+  }
+
+  getTriggers = () => this.triggers;
+
+  getTriggerValues = () => Object.values(this.triggers);
+
+  shouldFetch = (previousTriggerValues, cacheParams) => {
+    // Skal rehente når triggerverdi har endret seg fra en verdi(ulik undefined) til en annen
+    if (previousTriggerValues && Object.keys(this.triggers).some((key) => previousTriggerValues[key] !== undefined
+      && previousTriggerValues[key] !== this.triggers[key])) {
+      return true;
+    }
+    // Skal ikke rehente når siste henting er gjort med udefinerte triggere.
+    if (!this.isRequiredForInitiallFetching && cacheParams && Object.keys(this.triggers).every((key) => !cacheParams[key] && !cacheParams[key])) {
+      return false;
+    }
+    // Skal hente data om dette er første forsøk eller rehente om triggere har endret seg
+    return !cacheParams || Object.keys(this.triggers).some((key) => cacheParams[key] !== this.triggers[key]);
+  }
+
+  hasChanged = (previousTriggerValues) => previousTriggerValues && Object.keys(this.triggers).some((key) => previousTriggerValues[key] !== this.triggers[key])
+}
+
 interface OwnProps {
-  behandlingId?: number;
-  behandlingVersion?: number;
-  behandlingNotRequired?: boolean;
+  fetchingTriggers: DataFetcherTriggers;
   render: (data: {}, isFinished: boolean) => any;
   endpoints: EndpointOperations[];
   endpointParams?: {};
   showOldDataWhenRefetching?: boolean;
   showComponent?: boolean;
-  valueThatWillTriggerRefetchWhenChanged?: number;
 }
 
 const DataFetcher: FunctionComponent<OwnProps> = ({
+  fetchingTriggers,
   render,
   endpoints,
   endpointParams,
   showOldDataWhenRefetching = false,
   showComponent = true,
-  behandlingVersion,
-  behandlingId,
-  behandlingNotRequired,
-  valueThatWillTriggerRefetchWhenChanged = 0,
 }) => {
   if (!showComponent) {
     return null;
@@ -58,7 +83,7 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
   }));
 
   const dispatch = useDispatch();
-  const ref = useRef<{ behandlingId: number; behandlingVersion: number; valueThatWillTriggerRefetchWhenChanged: number }>();
+  const ref = useRef<any>();
   useEffect(() => {
     setFetchingData((oldState) => ({
       hasFinishedFetching: false,
@@ -67,24 +92,14 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
 
     const state = store.getState();
 
-    const endpointsToFetchFrom = activeEndpointsData.filter((e) => {
-      const cacheParams = e.endpoint.getRestApiCacheParams()(state);
-      if (ref.current && ref.current.valueThatWillTriggerRefetchWhenChanged !== valueThatWillTriggerRefetchWhenChanged) {
-        return true;
-      }
-      if (behandlingNotRequired && cacheParams && !cacheParams.behandlingId && !cacheParams.behandlingVersion) {
-        return false;
-      }
-      return !cacheParams
-        || cacheParams.behandlingId !== behandlingId
-        || cacheParams.behandlingVersion !== behandlingVersion;
-    });
+    const endpointsToFetchFrom = activeEndpointsData.filter((e) => fetchingTriggers
+      .shouldFetch(ref.current, e.endpoint.getRestApiCacheParams()(state)));
 
-    ref.current = { behandlingId, behandlingVersion, valueThatWillTriggerRefetchWhenChanged };
+    ref.current = fetchingTriggers.getTriggers();
 
     const meta = {
       keepData: showOldDataWhenRefetching,
-      cacheParams: { behandlingId, behandlingVersion },
+      cacheParams: ref.current,
     };
 
     Promise.all(endpointsToFetchFrom.map((e) => {
@@ -99,9 +114,9 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
         }), {}),
       });
     });
-  }, [behandlingId, behandlingVersion]);
+  }, fetchingTriggers.getTriggerValues());
 
-  const hasChanged = ref.current && (ref.current.behandlingId !== behandlingId || ref.current.behandlingVersion !== behandlingVersion);
+  const hasChanged = fetchingTriggers.hasChanged(ref.current);
   const hasFinishedFetching = fetchingData.hasFinishedFetching && activeEndpointsData.every((e) => e.isFinished);
 
   if (hasFinishedFetching && !hasChanged) {
