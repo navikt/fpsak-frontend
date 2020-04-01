@@ -10,7 +10,7 @@ import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
-import DataFetcher from '../../app/DataFetcher3';
+import DataFetcher from '../../app/DataFetcher2';
 import ApplicationContextPath from '../../behandling/ApplicationContextPath';
 import { getEnabledApplicationContexts } from '../../app/duck';
 import fpsakApi from '../../data/fpsakApi';

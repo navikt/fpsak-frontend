@@ -69,7 +69,7 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
 
     const endpointsToFetchFrom = activeEndpointsData.filter((e) => {
       const cacheParams = e.endpoint.getRestApiCacheParams()(state);
-      if (ref.current.valueThatWillTriggerRefetchWhenChanged !== valueThatWillTriggerRefetchWhenChanged) {
+      if (ref.current && ref.current.valueThatWillTriggerRefetchWhenChanged !== valueThatWillTriggerRefetchWhenChanged) {
         return true;
       }
       if (behandlingNotRequired && cacheParams && !cacheParams.behandlingId && !cacheParams.behandlingVersion) {
