@@ -6,7 +6,7 @@ import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { Dokument } from '@fpsak-frontend/types';
 
-import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher2';
+import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';

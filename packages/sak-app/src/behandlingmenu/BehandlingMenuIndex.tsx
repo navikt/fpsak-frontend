@@ -22,7 +22,7 @@ import {
 import fpsakApi from '../data/fpsakApi';
 import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
 import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher2';
+import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';

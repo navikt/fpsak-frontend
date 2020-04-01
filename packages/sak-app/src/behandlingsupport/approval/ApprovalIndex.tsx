@@ -17,7 +17,7 @@ import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fp
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
-import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher2';
+import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../../app/duck';

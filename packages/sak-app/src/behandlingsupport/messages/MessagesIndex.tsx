@@ -11,7 +11,7 @@ import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-me
 
 import { Kodeverk } from '@fpsak-frontend/types';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher2';
+import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from '../../kodeverk/duck';

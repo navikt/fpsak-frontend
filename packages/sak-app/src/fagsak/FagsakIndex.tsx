@@ -9,7 +9,7 @@ import {
   Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
 } from '@fpsak-frontend/types';
 
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher2';
+import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';

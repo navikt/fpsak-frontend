@@ -18,7 +18,7 @@ import {
   pathToBehandling,
   pathToBehandlinger,
 } from '../app/paths';
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher2';
+import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';

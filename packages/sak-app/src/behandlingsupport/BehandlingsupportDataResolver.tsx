@@ -16,7 +16,6 @@ interface OwnProps {
   resetTotrinnsaksjonspunkterReadonly: () => void;
   behandlingId?: number;
   behandlingStatusKode?: string;
-  isInSync: boolean;
   isInnsyn: boolean;
   children: ReactNode;
 }
