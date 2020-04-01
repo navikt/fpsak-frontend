@@ -32,7 +32,7 @@ describe('<HistoryIndex>', () => {
           kode: 'Test',
         },
       }],
-    }).find(HistorikkSakIndex);
+    }, true).find(HistorikkSakIndex);
     expect(history).to.have.length(1);
   });
 });

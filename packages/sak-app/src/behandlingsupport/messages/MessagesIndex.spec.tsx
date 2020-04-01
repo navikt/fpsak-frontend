@@ -53,7 +53,7 @@ describe('<MessagesIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates2,
-    }).find(Messages);
+    }, true).find(Messages);
     expect(messages).to.have.length(1);
     expect(messages.prop('recipients')).to.eql(recipients);
     expect(messages.prop('templates')).to.eql(templates2);
@@ -84,7 +84,7 @@ describe('<MessagesIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
-    }).find(Messages);
+    }, true).find(Messages);
     const previewCallback = messages.prop('previewCallback') as (params: {}) => void;
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
@@ -156,7 +156,7 @@ describe('<MessagesIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
-    }).find(Messages);
+    }, true).find(Messages);
     const submitCallback = messages.prop('submitCallback') as (params: {}) => void;
     submitCallback(message);
 
@@ -204,7 +204,7 @@ describe('<MessagesIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
-    }).find(Messages);
+    }, true).find(Messages);
 
     const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
     return submitCallback(message).then(() => {
@@ -256,7 +256,7 @@ describe('<MessagesIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
-    }).find(Messages);
+    }, true).find(Messages);
 
     const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
     return submitCallback(message).then(() => {
@@ -308,7 +308,7 @@ describe('<MessagesIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
-    }).find(Messages);
+    }, true).find(Messages);
 
     const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
     return submitCallback(message).then(() => {
@@ -360,7 +360,7 @@ describe('<MessagesIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
-    }).find(Messages);
+    }, true).find(Messages);
 
     const submitCallback = messages.prop('submitCallback') as (message) => Promise<any>;
     return submitCallback(message).then(() => {

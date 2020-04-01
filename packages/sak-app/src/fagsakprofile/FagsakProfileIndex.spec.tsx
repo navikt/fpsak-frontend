@@ -41,7 +41,7 @@ describe('<FagsakProfileIndex>', () => {
     expect(dataFetchers.at(1).prop('showComponent')).is.false;
 
     const fagsakProfile = dataFetchers.at(0).renderProp('render')({
-    }).find(FagsakProfilSakIndex);
+    }, true).find(FagsakProfilSakIndex);
     expect(fagsakProfile).has.length(1);
 
     // @ts-ignore (Korleis fikse denne?)
@@ -69,7 +69,7 @@ describe('<FagsakProfileIndex>', () => {
     expect(dataFetchers.at(1).prop('showComponent')).is.false;
 
     const fagsakProfile = dataFetchers.at(0).renderProp('render')({
-    }).find(FagsakProfilSakIndex);
+    }, true).find(FagsakProfilSakIndex);
     expect(fagsakProfile).has.length(1);
 
     // @ts-ignore (Korleis fikse denne?)
@@ -102,7 +102,7 @@ describe('<FagsakProfileIndex>', () => {
     />);
 
     let redirect = wrapper.find(DataFetcher).at(0).renderProp('render')({
-    }).find(Redirect);
+    }, true).find(Redirect);
     expect(redirect).to.have.length(0);
 
     wrapper.setProps({ shouldRedirectToBehandlinger: true });
@@ -113,7 +113,7 @@ describe('<FagsakProfileIndex>', () => {
       }, {
         id: 2,
       }],
-    }).find(Redirect);
+    }, true).find(Redirect);
     expect(redirect).to.have.length(1);
     expect(redirect.at(0).props()).to.have.property('to').that.eql(pathToBehandlingerForFagsak);
 
@@ -121,7 +121,7 @@ describe('<FagsakProfileIndex>', () => {
       behandlingerFpsak: [{
         id: 67890,
       }],
-    }).find(Redirect);
+    }, true).find(Redirect);
     expect(redirect).to.have.length(1);
     expect(redirect.at(0).props()).to.have.property('to').that.eql(locationForBehandling);
   });

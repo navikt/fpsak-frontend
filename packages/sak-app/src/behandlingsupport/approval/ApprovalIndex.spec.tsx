@@ -127,8 +127,8 @@ describe('<ApprovalIndex>', () => {
     wrapper.setState({ showBeslutterModal: true, allAksjonspunktApproved: true });
 
     const dataFetcher = wrapper.find(DataFetcher);
-    const innerDataFetcher = dataFetcher.renderProp('render')({ }).find(DataFetcher);
-    const vedtakStatusModal = innerDataFetcher.renderProp('render')({ }).find(FatterVedtakApprovalModalSakIndex);
+    const innerDataFetcher = dataFetcher.renderProp('render')({ }, true).find(DataFetcher);
+    const vedtakStatusModal = innerDataFetcher.renderProp('render')({ }, true).find(FatterVedtakApprovalModalSakIndex);
     expect(vedtakStatusModal).to.have.length(1);
   });
 

@@ -196,14 +196,16 @@ const getTilbakekrevingOpprettes = createSelector([
 
 const mapStateToProps = (state) => {
   const vergeMenyvalg = fpsakApi.VERGE_MENYVALG.getRestApiData()(state);
+  const behandlingData = getMenyBehandlingData(state);
   return {
+    behandlingData,
     saksnummer: getSelectedSaksnummer(state),
     behandlingId: getSelectedBehandlingId(state),
-    behandlingData: getMenyBehandlingData(state),
     ytelseType: getFagsakYtelseType(state),
     behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
     navAnsatt: getNavAnsatt(state),
-    vergeMenyvalg: vergeMenyvalg ? vergeMenyvalg.vergeBehandlingsmeny : undefined,
+    vergeMenyvalg: vergeMenyvalg && behandlingData
+      && YTELSE_BEHANDLINGTYPER.includes(behandlingData.type.kode) ? vergeMenyvalg.vergeBehandlingsmeny : undefined,
     kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
     erTilbakekrevingAktivert: getEnabledApplicationContexts(state).includes(ApplicationContextPath.FPTILBAKE),
     uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
