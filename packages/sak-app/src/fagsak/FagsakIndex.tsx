@@ -7,7 +7,7 @@ import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
 import { KodeverkMedNavn, Kodeverk, Fagsak } from '@fpsak-frontend/types';
 
-import DataFetcher from '../app/DataFetcher';
+import DataFetcher from '../app/DataFetcher2';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
@@ -69,8 +69,7 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
           return (
             <DataFetcher
               behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              showLoadingIcon
+              behandlingVersion={behandlingVersjon}
               behandlingNotRequired
               endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
               endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}

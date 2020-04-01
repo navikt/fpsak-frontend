@@ -17,7 +17,7 @@ import {
   pathToBehandling,
   pathToBehandlinger,
 } from '../app/paths';
-import DataFetcher from '../app/DataFetcher';
+import DataFetcher from '../app/DataFetcher2';
 import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';
@@ -100,16 +100,14 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
     <div className={styles.panelPadding}>
       <DataFetcher
         behandlingId={selectedBehandlingId}
-        behandlingVersjon={behandlingVersjon}
-        showLoadingIcon
+        behandlingVersion={behandlingVersjon}
         behandlingNotRequired
         endpointParams={{
           [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
           [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
         }}
-        keepDataWhenRefetching
+        showOldDataWhenRefetching
         endpoints={enabledApis}
-        allowErrors
         render={(dataProps) => {
           const alleBehandlinger = getAlleBehandlinger(dataProps);
           if (shouldRedirectToBehandlinger) {
@@ -140,7 +138,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
       />
       <DataFetcher
         behandlingId={selectedBehandlingId}
-        behandlingVersjon={behandlingVersjon}
+        behandlingVersion={behandlingVersjon}
         showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
         endpoints={risikoklassifiseringData}
         render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}

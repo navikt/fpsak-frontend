@@ -6,7 +6,7 @@ import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { Dokument } from '@fpsak-frontend/types';
 
-import DataFetcher from '../../app/DataFetcher';
+import DataFetcher from '../../app/DataFetcher2';
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
@@ -49,12 +49,11 @@ export const DocumentIndex: FunctionComponent<OwnProps> = ({
 }) => (
   <DataFetcher
     behandlingId={behandlingId}
-    behandlingVersjon={behandlingVersjon}
-    showLoadingIcon
+    behandlingVersion={behandlingVersjon}
     endpoints={dokumentData}
     behandlingNotRequired
     endpointParams={{ [fpsakApi.ALL_DOCUMENTS.name]: { saksnummer: saksNr } }}
-    keepDataWhenRefetching
+    showOldDataWhenRefetching
     render={(dataProps) => (
       <DokumenterSakIndex
         documents={getSortedDocuments(dataProps.allDocuments)}

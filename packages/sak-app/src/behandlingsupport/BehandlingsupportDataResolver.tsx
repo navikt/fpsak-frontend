@@ -1,10 +1,9 @@
-import React, { Component, ReactNode } from 'react';
+import { Component, ReactNode } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import { getSelectedBehandlingId } from '../behandling/duck';
 import { getBehandlingerTypesMappedById, getBehandlingerStatusMappedById } from '../behandling/selectors/behandlingerSelectors';
@@ -49,10 +48,8 @@ export class BehandlingsupportDataResolver extends Component<OwnProps> {
   }
 
   render() {
-    const { isInSync, children } = this.props;
-    return isInSync
-      ? children
-      : <LoadingPanel />;
+    const { children } = this.props;
+    return children;
   }
 }
 
@@ -62,16 +59,7 @@ const mapStateToProps = (state) => {
   const bType = getBehandlingerTypesMappedById(state)[behandlingId];
   const isInnsyn = !!bType && bType.kode === behandlingType.DOKUMENTINNSYN;
 
-  const blockers = [];
-  if (behandlingStatus && behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK) {
-    blockers.push(fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.getRestApiFinished()(state));
-  }
-  if (behandlingStatus && behandlingStatus.kode === BehandlingStatus.BEHANDLING_UTREDES) {
-    blockers.push(fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiFinished()(state));
-  }
-
   return {
-    isInSync: isInnsyn || blockers.every((finished) => finished),
     behandlingStatusKode: behandlingStatus ? behandlingStatus.kode : undefined,
     isInnsyn,
     behandlingId,

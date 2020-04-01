@@ -11,7 +11,7 @@ import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-me
 
 import { Kodeverk } from '@fpsak-frontend/types';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import DataFetcher from '../../app/DataFetcher';
+import DataFetcher from '../../app/DataFetcher2';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from '../../kodeverk/duck';
@@ -183,9 +183,8 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
 
         <DataFetcher
           behandlingId={behandlingIdentifier.behandlingId}
-          behandlingVersjon={selectedBehandlingVersjon}
+          behandlingVersion={selectedBehandlingVersjon}
           valueThatWillTriggerRefetchWhenChanged={submitCounter}
-          showLoadingIcon
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
           render={(props) => (
             <MeldingerSakIndex

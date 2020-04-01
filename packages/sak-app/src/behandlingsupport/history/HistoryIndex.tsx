@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
-import DataFetcher from '../../app/DataFetcher';
+import DataFetcher from '../../app/DataFetcher3';
 import ApplicationContextPath from '../../behandling/ApplicationContextPath';
 import { getEnabledApplicationContexts } from '../../app/duck';
 import fpsakApi from '../../data/fpsakApi';
@@ -39,7 +40,7 @@ const sortAndTagTilbakekreving = createSelector<{ historyFpsak: History[]; histo
 );
 
 interface OwnProps {
-  enabledContexts: {}[];
+  enabledContexts: EndpointOperations[];
   saksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
@@ -70,13 +71,11 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
   return (
     <DataFetcher
       behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      showLoadingIcon
+      behandlingVersion={behandlingVersjon}
       behandlingNotRequired
       endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
-      keepDataWhenRefetching
+      showOldDataWhenRefetching
       endpoints={enabledContexts}
-      allowErrors
       render={(props) => sortAndTagTilbakekreving(props)
         .map((innslag) => (
           <HistorikkSakIndex
