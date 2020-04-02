@@ -5,9 +5,11 @@ import { Route } from 'react-router-dom';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
-import { KodeverkMedNavn, Kodeverk, Fagsak } from '@fpsak-frontend/types';
+import {
+  Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
+} from '@fpsak-frontend/types';
 
-import DataFetcher from '../app/DataFetcher';
+import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
@@ -40,6 +42,17 @@ interface OwnProps {
   fagsak?: Fagsak;
 }
 
+interface DataProps {
+  behandlingPersonopplysninger?: Personopplysninger;
+  behandlingFamilieHendelse?: FamilieHendelseSamling;
+  annenPartBehandling?: {
+    saksnr: {
+      verdi: string;
+    };
+    behandlingId: number;
+  };
+}
+
 /**
  * FagsakIndex
  *
@@ -68,13 +81,11 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
 
           return (
             <DataFetcher
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              showLoadingIcon
-              behandlingNotRequired
+              fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion: behandlingVersjon }, false)}
               endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
               endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
-              render={(dataProps) => (
+              showOldDataWhenRefetching
+              render={(dataProps: DataProps) => (
                 <VisittkortSakIndex
                   personopplysninger={dataProps.behandlingPersonopplysninger}
                   familieHendelse={dataProps.behandlingFamilieHendelse}

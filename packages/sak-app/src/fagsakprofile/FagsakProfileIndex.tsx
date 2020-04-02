@@ -10,6 +10,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { Kodeverk, KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import {
@@ -17,11 +18,11 @@ import {
   pathToBehandling,
   pathToBehandlinger,
 } from '../app/paths';
-import DataFetcher from '../app/DataFetcher';
+import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';
-import fpsakApi, { FpsakApiKeys } from '../data/fpsakApi';
+import fpsakApi from '../data/fpsakApi';
 import {
   getFagsakYtelseType,
   getSelectedFagsakStatus,
@@ -58,7 +59,7 @@ const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
 };
 
 interface OwnProps {
-  enabledApis: FpsakApiKeys[];
+  enabledApis: EndpointOperations[];
   saksnummer: number;
   sakstype: Kodeverk;
   fagsakStatus: Kodeverk;
@@ -99,17 +100,13 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   return (
     <div className={styles.panelPadding}>
       <DataFetcher
-        behandlingId={selectedBehandlingId}
-        behandlingVersjon={behandlingVersjon}
-        showLoadingIcon
-        behandlingNotRequired
+        fetchingTriggers={new DataFetcherTriggers({ behandlingId: selectedBehandlingId, behandlingVersion: behandlingVersjon }, false)}
         endpointParams={{
           [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
           [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
         }}
-        keepDataWhenRefetching
+        showOldDataWhenRefetching
         endpoints={enabledApis}
-        allowErrors
         render={(dataProps) => {
           const alleBehandlinger = getAlleBehandlinger(dataProps);
           if (shouldRedirectToBehandlinger) {
@@ -139,10 +136,10 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
         }}
       />
       <DataFetcher
-        behandlingId={selectedBehandlingId}
-        behandlingVersjon={behandlingVersjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingId: selectedBehandlingId, behandlingVersion: behandlingVersjon }, true)}
         showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
         endpoints={risikoklassifiseringData}
+        showOldDataWhenRefetching
         render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}
       />
     </div>

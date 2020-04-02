@@ -11,7 +11,7 @@ import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-me
 
 import { Kodeverk } from '@fpsak-frontend/types';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import DataFetcher from '../../app/DataFetcher';
+import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from '../../kodeverk/duck';
@@ -58,6 +58,15 @@ interface StateProps {
   submitCounter: number;
 }
 
+interface DataProps {
+  brevmaler?: {
+    kode: string;
+    navn: string;
+    tilgjengelig: boolean;
+  }[];
+  harApentKontrollerRevurderingAp?: boolean;
+}
+
 /**
  * MessagesIndex
  *
@@ -77,7 +86,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
     this.afterSubmit = this.afterSubmit.bind(this);
     this.hideSettPaVentModal = this.hideSettPaVentModal.bind(this);
     this.handleSubmitFromModal = this.handleSubmitFromModal.bind(this);
-    this.state = { showSettPaVentModal: false, showMessagesModal: false, submitCounter: 0 };
+    this.state = { showSettPaVentModal: false, showMessagesModal: false, submitCounter: undefined };
   }
 
   submitCallback(values) {
@@ -102,7 +111,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
       .then(() => this.resetMessage())
       .then(() => this.setState({
         showSettPaVentModal: isInnhentEllerForlenget,
-        submitCounter: submitCounter + 1,
+        submitCounter: submitCounter ? submitCounter + 1 : 1,
       }));
   }
 
@@ -182,12 +191,13 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
         )}
 
         <DataFetcher
-          behandlingId={behandlingIdentifier.behandlingId}
-          behandlingVersjon={selectedBehandlingVersjon}
-          valueThatWillTriggerRefetchWhenChanged={submitCounter}
-          showLoadingIcon
+          fetchingTriggers={new DataFetcherTriggers({
+            behandlingId: behandlingIdentifier.behandlingId,
+            behandlingVersion: selectedBehandlingVersjon,
+            submitCounter,
+          }, true)}
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
-          render={(props) => (
+          render={(props: DataProps) => (
             <MeldingerSakIndex
               submitCallback={this.submitCallback}
               recipients={recipients}

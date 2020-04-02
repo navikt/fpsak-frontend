@@ -17,7 +17,7 @@ import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fp
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
-import DataFetcher from '../../app/DataFetcher';
+import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../../app/duck';
@@ -195,10 +195,16 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
 
     return (
       <DataFetcher
-        behandlingId={behandlingIdentifier.behandlingId}
-        behandlingVersjon={selectedBehandlingVersjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingId: behandlingIdentifier.behandlingId, behandlingVersion: selectedBehandlingVersjon }, true)}
         endpoints={klageData.some((kd) => kd.isEndpointEnabled()) ? klageData : ingenData}
-        render={(props) => (
+        render={(props: {
+          totrinnsKlageVurdering?: {
+            klageVurdering?: string;
+            klageVurderingOmgjoer?: string;
+            klageVurderingResultatNFP?: {};
+            klageVurderingResultatNK?: {};
+          };
+        }) => (
           <>
             <TotrinnskontrollSakIndex
               behandlingId={behandlingIdentifier.behandlingId}
@@ -222,10 +228,12 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
             />
             {showBeslutterModal && (
               <DataFetcher
-                behandlingId={behandlingIdentifier.behandlingId}
-                behandlingVersjon={selectedBehandlingVersjon}
+                fetchingTriggers={new DataFetcherTriggers({
+                  behandlingId: behandlingIdentifier.behandlingId,
+                  behandlingVersion: selectedBehandlingVersjon,
+                }, true)}
                 endpoints={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
-                render={(modalProps) => (
+                render={(modalProps: { harRevurderingSammeResultat: boolean }) => (
                   <FatterVedtakApprovalModalSakIndex
                     showModal={showBeslutterModal}
                     closeEvent={this.goToSearchPage}

@@ -22,7 +22,7 @@ describe('<DocumentIndex>', () => {
     const dataFetcher = wrapper.find(DataFetcher);
     const documentList = dataFetcher.renderProp('render')({
       allDocuments: documents,
-    }).find(DokumenterSakIndex);
+    }, true).find(DokumenterSakIndex);
     expect(documentList).to.have.length(1);
     expect(documentList.prop('documents')).to.eql(documents);
     expect(documentList.prop('selectDocumentCallback')).is.not.null;
