@@ -481,7 +481,7 @@
   "HistorikkSoeknadsperiode.UtsettelseFerie": "<b>Utsettelse: Ferie</b> <br>{value}",
   "HistorikkSoeknadsperiode.UtsettelseSykdom": "<b>Utsettelse: Sykdom/skade</b> <br>{value}",
   "HistorikkSoeknadsperiode.UtsettelseHeimevern": "<b>Utsettelse: Heimevernet</b> <br>{value}",
-  "HistorikkSoeknadsperiode.UtsettelseNavTiltak": "<b>Utsettelse: Tiltak i regi av nav</b> <br>{value}",
+  "HistorikkSoeknadsperiode.UtsettelseNavTiltak": "<b>Utsettelse: Tiltak i regi av NAV</b> <br>{value}",
   "HistorikkSoeknadsperiode.UtsettelseInstitusjonSoker": "<b>Utsettelse: Innleggelse av forelder</b> <br>{value}",
   "HistorikkSoeknadsperiode.UtsettelseInstitusjonBarn": "<b>Utsettelse: Innleggelse av barn</b> <br>{value}",
   "HistorikkSoeknadsperiode.NySoeknadsperiode": "<b>Ny periode er lagt til</b> <br>{value}",
