@@ -84,6 +84,7 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
               fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion: behandlingVersjon }, false)}
               endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
               endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
+              showOldDataWhenRefetching
               render={(dataProps: DataProps) => (
                 <VisittkortSakIndex
                   personopplysninger={dataProps.behandlingPersonopplysninger}

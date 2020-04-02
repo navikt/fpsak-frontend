@@ -139,6 +139,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
         fetchingTriggers={new DataFetcherTriggers({ behandlingId: selectedBehandlingId, behandlingVersion: behandlingVersjon }, true)}
         showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
         endpoints={risikoklassifiseringData}
+        showOldDataWhenRefetching
         render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}
       />
     </div>
