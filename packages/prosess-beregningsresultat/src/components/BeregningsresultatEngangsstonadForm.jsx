@@ -8,7 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, OverstyringKnapp,
 } from '@fpsak-frontend/shared-components';
 import {
   formatCurrencyWithKr, hasValidInteger, maxValue, minValue, required,
@@ -43,22 +43,25 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
-    <Row>
-      <Column xs="9">
-        <Undertittel>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Beregning' })}</Undertittel>
-      </Column>
-      <Column xs="3">
-        <OverstyrVurderingVelger
-          isBeregningOverstyrer
-          aksjonspunktCode={aksjonspunktCode.OVERSTYR_BEREGNING}
-          resetValues={formProps.reset}
-          overrideReadOnly={overrideReadOnly}
-          kanOverstyreAccess={kanOverstyreAccess}
-          aksjonspunktCodes={aksjonspunktCodes}
-          toggleOverstyring={toggleOverstyring}
-        />
-      </Column>
-    </Row>
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn>
+          <Undertittel>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Beregning' })}</Undertittel>
+        </FlexColumn>
+        <FlexColumn>
+          <OverstyringKnapp onClick={() => undefined} erOverstyrt={false} />
+          <OverstyrVurderingVelger
+            isBeregningOverstyrer
+            aksjonspunktCode={aksjonspunktCode.OVERSTYR_BEREGNING}
+            resetValues={formProps.reset}
+            overrideReadOnly={overrideReadOnly}
+            kanOverstyreAccess={kanOverstyreAccess}
+            aksjonspunktCodes={aksjonspunktCodes}
+            toggleOverstyring={() => toggleOverstyring((oldArray) => [...oldArray, aksjonspunktCode.OVERSTYR_BEREGNING])}
+          />
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
     <VerticalSpacer eightPx />
     <Row>
       <Column xs="3">
