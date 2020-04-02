@@ -43,6 +43,7 @@ interface OwnProps {
   originalVentearsak?: string;
   hasManualPaVent: boolean;
   ventearsaker: KodeverkMedNavn[];
+  erTilbakekreving: boolean;
 }
 
 /**
@@ -61,10 +62,16 @@ export const BehandlingPaVentModal: FunctionComponent<OwnProps & WrappedComponen
   originalVentearsak,
   hasManualPaVent,
   ventearsaker,
+  erTilbakekreving,
 }) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged);
+  const erFristenUtløpt = ((frist !== undefined && new Date(frist) <= new Date())
+    || (originalFrist !== undefined && new Date(originalFrist) <= new Date()));
+  const erVenterPaKravgrunnlag = ventearsak === 'VENT_PÅ_TILBAKEKREVINGSGRUNNLAG';
+  const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
+
   return (
     <Modal
       className={styles.modal}
@@ -119,6 +126,13 @@ export const BehandlingPaVentModal: FunctionComponent<OwnProps & WrappedComponen
             <Column xs="11">
               {hasManualPaVent && (
                 <Normaltekst>{intl.formatMessage({ id: 'BehandlingErPaVentModal.EndreFrist' })}</Normaltekst>
+              )}
+              {!hasManualPaVent && showFristenTekst && (
+                <Normaltekst>{intl.formatMessage({ id: 'BehandlingErPaVentModal.UtløptFrist' })}</Normaltekst>
+              )}
+              <VerticalSpacer eightPx />
+              {!hasManualPaVent && showFristenTekst && (
+                <Normaltekst>{intl.formatMessage({ id: 'BehandlingErPaVentModal.HenleggeSaken' })}</Normaltekst>
               )}
             </Column>
           </Row>

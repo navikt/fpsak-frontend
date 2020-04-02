@@ -6,6 +6,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Behandling, Aksjonspunkt, KodeverkMedNavn } from '@fpsak-frontend/types';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingPaVentModal from './BehandlingPaVentModal';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
@@ -42,6 +43,9 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
     return null;
   }
 
+  const erTilbakekreving = (behandlingTypeKode) => behandlingTypeKode === BehandlingType.TILBAKEKREVING
+    || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
+
   return (
     <BehandlingPaVentModal
       onSubmit={oppdaterPaVentData}
@@ -50,6 +54,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
       ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
+      erTilbakekreving={erTilbakekreving(behandling.type.kode)}
     />
   );
 };

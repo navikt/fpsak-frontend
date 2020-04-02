@@ -14,7 +14,7 @@
   "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fødsel og tilrettelegging",
   "YtelserFaktaIndex.Ytelser": "Ytelser",
   "SakenFaktaPanel.Title": "Saken",
-  
+
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.Inngangsvilkar": "Inngangsvilkår",
@@ -61,7 +61,7 @@
   "ErForeldreansvarVilkaarOppfyltForm.4LeddParagraf": "Vurder om vilkårene i § 14-17 fjerde ledd for far er oppfylt (når far overtar foreldreansvaret alene)",
   "SvangerskapVilkarForm.FyllerVilkår": "Kontroller at søker fyller vilkårene i § 14-4 første eller andre ledd og tredje ledd, første punktum",
   "AdopsjonVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
-  
+
   "NoSelectedBehandling.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
   "IverksetterVedtakStatusModal.Beskrivelse": "Vedtak er innvilget. Du kommer nå til forsiden.",
@@ -85,7 +85,7 @@
   "ConfirmInformationVilkarReadOnly.Reasoning": "Begrunnelse",
   "ConfirmInformationVilkarReadOnly.ConditionMet": "Vilkåret er oppfylt",
   "ConfirmInformationVilkarReadOnly.ConditionNotMet": "Vilkåret er ikke oppfylt",
-  
+
   "Fagsak.NoFagsakWithReferenceNr": "Det finnes ingen sak med saksnummer: {saksnummer}",
   "FagsakGrid.PleaseSelectBehandling": "Velg behandling",
   "BehandlingErPaVentModal.ModalDescription": "Behandlingen er satt på vent",
@@ -93,6 +93,8 @@
   "BehandlingErPaVentModal.SattPaVent": "Behandlingen er satt på vent med frist {frist}",
   "BehandlingErPaVentModal.Ok": "OK",
   "BehandlingErPaVentModal.EndreFrist": "Du kan endre frist eller årsak før du fortsetter",
+  "BehandlingErPaVentModal.UtløptFrist": "OBS! Fristen på denne behandlingen er utløpt!",
+  "BehandlingErPaVentModal.HenleggeSaken": "Kontroller hvorfor Økonomi ikke har dannet et kravgrunnlag.\n Dersom det feilutbetalte beløpet er bortfalt skal saken henlegges.\nFor mer informasjon, se rutine under tilbakekreving.",
   "FortsattMedlemskapFaktaPanel.Fom": "Gjeldende f.o.m",
   "FortsattMedlemskapFaktaPanel.OpplysningerFraFolkeregisteret": "Opplysninger fra folkeregisteret:",
   "FortsattMedlemskapFaktaPanel.NyUtlandsadresse": "Ny utenlandsadresse f.o.m. {dato}",
@@ -230,7 +232,7 @@
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.KlagenErFerdigbehandlet": "Klagen er ferdigbehandlet",
   "FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver": "Forslag til klageresultat er sendt til medunderskriver",
-  
+
   "SettBehandlingPaVentModal.ModalDescription": "Behandlingen settes på vent med frist",
   "SettBehandlingPaVentModal.PaVent": "På vent",
   "SettBehandlingPaVentModal.SettesPaVent": "Behandlingen settes på vent med frist",
@@ -241,7 +243,7 @@
   "SettBehandlingPaVentModal.SelectPlaceholder": "Velg årsak",
   "SettBehandlingPaVentModal.Avbryt": "Avbryt",
   "SettBehandlingPaVentModal.Lukk": "Lukk",
-  
+
   "PeriodLabel.DateToday": "d.d.",
 
   "Registrering.RegistrereSoknad": "Registrere søknad",
@@ -255,7 +257,7 @@
   "SoknadRegistrertModal.InfoTextOne": "Søknaden er registrert og vil bli behandlet",
   "SoknadRegistrertModal.InfoTextTwo": "Du kommer nå til forsiden",
   "SoknadRegistrertModal.OkButtonText": "OK",
-  
+
   "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
   "PeriodFieldArray.LeggTilBarn": "Legg til barn",
   "PreviewAnkeLink.ForhandvisBrev": "Forhåndsvis brev",
@@ -293,7 +295,7 @@
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
   "Calendar.Month.11": "Desember",
-  
+
   "Skjermlenke.Klage.ResolveKlage.Title": "Behandle klage",
   "Klage.ResolveKlage.ExplanationRequiredBrev": "Begrunnelse/tekst i brev",
 
