@@ -67,8 +67,8 @@ export const BehandlingPaVentModal: FunctionComponent<OwnProps & WrappedComponen
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged);
-  const erFristenUtløpt = ((frist !== undefined && new Date(frist) <= new Date())
-    || (originalFrist !== undefined && new Date(originalFrist) <= new Date()));
+  const erFristenUtløpt = ((frist !== undefined && new Date(frist) < new Date())
+    || (originalFrist !== undefined && new Date(originalFrist) < new Date()));
   const erVenterPaKravgrunnlag = ventearsak === 'VENT_PÅ_TILBAKEKREVINGSGRUNNLAG';
   const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
 
