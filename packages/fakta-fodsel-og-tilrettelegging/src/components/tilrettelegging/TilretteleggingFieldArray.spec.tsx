@@ -24,6 +24,7 @@ describe('<TilretteleggingFieldArray>', () => {
       changeField={() => undefined}
       tilretteleggingDatoer={[]}
       stillingsprosentArbeidsforhold={50}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -57,6 +58,7 @@ describe('<TilretteleggingFieldArray>', () => {
       changeField={() => undefined}
       tilretteleggingDatoer={[]}
       stillingsprosentArbeidsforhold={50}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -93,6 +95,7 @@ describe('<TilretteleggingFieldArray>', () => {
       changeField={() => undefined}
       tilretteleggingDatoer={[]}
       stillingsprosentArbeidsforhold={50}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -124,7 +127,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
 
-    expect(utbetalingsgrad).is.eql(0);
+    expect(utbetalingsgrad).is.eql('0');
   });
 
   it('skal finnne utbetalingsgrad for delvis tilrettelegging - eks. 2', () => {
@@ -133,6 +136,6 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
 
-    expect(utbetalingsgrad).is.eql(0);
+    expect(utbetalingsgrad).is.eql('0');
   });
 });

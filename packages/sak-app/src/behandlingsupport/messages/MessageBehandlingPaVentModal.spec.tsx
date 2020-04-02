@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { SelectField } from '@fpsak-frontend/form';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
@@ -15,7 +16,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
 
     const wrapper = shallowWithIntl(<MessageBehandlingPaVentModal
       intl={intlMock}
-      handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
       showModal
       frist="frist"
@@ -23,6 +23,7 @@ describe('<MessageBehandlingPaVentModal>', () => {
       ventearsak="ventearsak"
       originalVentearsak="ventearsak"
       ventearsaker={[]}
+      {...reduxFormPropsMock}
     />);
 
     const modal = wrapper.find(Modal);
@@ -38,7 +39,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
 
     const wrapper = shallowWithIntl(<MessageBehandlingPaVentModal
       intl={intlMock}
-      handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
       showModal={false}
       frist="frist"
@@ -46,6 +46,7 @@ describe('<MessageBehandlingPaVentModal>', () => {
       ventearsak="ventearsak"
       originalVentearsak="ventearsak"
       ventearsaker={[]}
+      {...reduxFormPropsMock}
     />);
 
 
@@ -57,7 +58,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
     const cancelEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<MessageBehandlingPaVentModal
       intl={intlMock}
-      handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
       showModal={false}
       frist="frist"
@@ -65,6 +65,7 @@ describe('<MessageBehandlingPaVentModal>', () => {
       ventearsak="ventearsak"
       originalVentearsak="ventearsak"
       ventearsaker={[]}
+      {...reduxFormPropsMock}
     />);
 
     wrapper.find(Knapp).simulate('click');
@@ -74,7 +75,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
   it('skal ikke disable knapp for lagring når frist er en gyldig fremtidig dato', () => {
     const wrapper = shallowWithIntl(<MessageBehandlingPaVentModal
       intl={intlMock}
-      handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       showModal
       frist="2099-10-10"
@@ -82,6 +82,7 @@ describe('<MessageBehandlingPaVentModal>', () => {
       ventearsak="ventearsak"
       originalVentearsak="ventearsak"
       ventearsaker={[]}
+      {...reduxFormPropsMock}
     />);
 
     const button = wrapper.find(Hovedknapp);
@@ -91,7 +92,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
   it('skal disable knapp for lagring når frist er en ugyldig dato', () => {
     const wrapper = shallowWithIntl(<MessageBehandlingPaVentModal
       intl={intlMock}
-      handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       showModal
       frist="20-10-10"
@@ -99,6 +99,7 @@ describe('<MessageBehandlingPaVentModal>', () => {
       ventearsak="ventearsak"
       originalVentearsak="ventearsak"
       ventearsaker={[]}
+      {...reduxFormPropsMock}
     />);
 
     const button = wrapper.find(Hovedknapp);
@@ -108,7 +109,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
   it('skal disable knapp for lagring når frist er en historisk dato', () => {
     const wrapper = shallowWithIntl(<MessageBehandlingPaVentModal
       intl={intlMock}
-      handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       showModal
       frist="2015-10-10"
@@ -116,6 +116,7 @@ describe('<MessageBehandlingPaVentModal>', () => {
       ventearsak="ventearsak"
       originalVentearsak="ventearsak"
       ventearsaker={[]}
+      {...reduxFormPropsMock}
     />);
 
     const button = wrapper.find(Hovedknapp);
@@ -125,7 +126,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
   it('skal være obligatorisk å velge årsak', () => {
     const wrapper = shallowWithIntl(<MessageBehandlingPaVentModal
       intl={intlMock}
-      handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       showModal
       frist="2099-10-10"
@@ -133,6 +133,7 @@ describe('<MessageBehandlingPaVentModal>', () => {
       ventearsak="ventearsak"
       originalVentearsak="ventearsak"
       ventearsaker={[]}
+      {...reduxFormPropsMock}
     />);
     const select = wrapper.find(SelectField);
     expect(select.prop('validate')).to.have.length(1);

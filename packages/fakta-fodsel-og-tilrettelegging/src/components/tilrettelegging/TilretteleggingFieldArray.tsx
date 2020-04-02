@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl, FormattedMessage, WrappedComponentProps } from 'react-intl';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Element } from 'nav-frontend-typografi';
 
@@ -16,6 +15,7 @@ import {
   hasValidDecimal, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 import TilretteleggingUtbetalingsgrad from './TilretteleggingUtbetalingsgrad';
 
@@ -24,17 +24,41 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
-export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent, stillingsprosentArbeidsforhold) => {
-  const defaultUtbetalingsgrad = 100 * (1 - stillingsprosent / stillingsprosentArbeidsforhold);
-  return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : 0;
+export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent: number, stillingsprosentArbeidsforhold: number): string => {
+  const defaultUtbetalingsgrad = 100 * (1 - (stillingsprosent / stillingsprosentArbeidsforhold));
+  return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : '0';
 };
+
+interface TilretteleggingDato {
+  type: Kodeverk;
+  stillingsprosent: number;
+}
+
+interface OwnProps {
+  fields: {}[];
+  meta?: {
+    error?: {
+      id: string;
+      values?: {[key: string]: string};
+    };
+    dirty: boolean;
+    submitFailed: boolean;
+  };
+  readOnly: boolean;
+  formSectionName: string;
+  erOverstyrer: boolean;
+  changeField: (field: string, value: string) => void;
+  tilretteleggingDatoer: TilretteleggingDato[];
+  stillingsprosentArbeidsforhold: number;
+  setOverstyrtUtbetalingsgrad: (erOverstyrt: boolean) => void;
+}
 
 /**
  * BehovForTilrettteleggingFieldArray
  *
  * Viser inputfelter for tilrettelegging av arbeidsforhold for selvstendig næringsdrivende eller frilans.
  */
-export const TilretteleggingFieldArray = ({
+export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   fields,
   meta,
@@ -44,6 +68,7 @@ export const TilretteleggingFieldArray = ({
   changeField,
   tilretteleggingDatoer,
   stillingsprosentArbeidsforhold,
+  setOverstyrtUtbetalingsgrad,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -51,7 +76,7 @@ export const TilretteleggingFieldArray = ({
     textCode="TilretteleggingFieldArray.LeggTilTilretteleggingsbehov"
     readOnly={readOnly}
   >
-    {(fieldId, index, getRemoveButton) => {
+    {(fieldId: string, index, getRemoveButton: () => ReactNode) => {
       const data = tilretteleggingDatoer[index];
       const tilretteleggingKode = data && data.type ? data.type.kode : undefined;
       return (
@@ -79,7 +104,7 @@ export const TilretteleggingFieldArray = ({
                     ]}
                     onChange={(_elmt, value) => {
                       if (value === tilretteleggingType.INGEN_TILRETTELEGGING) {
-                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, 100);
+                        changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, '100');
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
                         const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(data.stillingsprosent, stillingsprosentArbeidsforhold);
@@ -145,6 +170,7 @@ export const TilretteleggingFieldArray = ({
                     erOverstyrer={erOverstyrer}
                     tilretteleggingKode={tilretteleggingKode}
                     readOnly={readOnly}
+                    setOverstyrtUtbetalingsgrad={setOverstyrtUtbetalingsgrad}
                   />
                 )}
               </FlexRow>
@@ -156,18 +182,6 @@ export const TilretteleggingFieldArray = ({
     }}
   </PeriodFieldArray>
 );
-
-TilretteleggingFieldArray.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  fields: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  meta: PropTypes.shape().isRequired,
-  formSectionName: PropTypes.string.isRequired,
-  erOverstyrer: PropTypes.bool.isRequired,
-  changeField: PropTypes.func.isRequired,
-  stillingsprosentArbeidsforhold: PropTypes.number.isRequired,
-  tilretteleggingDatoer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
 
 const mapStateToProps = (state, ownProps) => {
   const {

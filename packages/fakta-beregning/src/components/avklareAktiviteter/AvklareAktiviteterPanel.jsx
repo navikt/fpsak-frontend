@@ -9,7 +9,9 @@ import { Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
-import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { CheckboxField, getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';

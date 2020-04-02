@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import React, { useState, useEffect, FunctionComponent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { DecimalField } from '@fpsak-frontend/form';
 import {
@@ -17,12 +16,21 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue1 = minValue(1);
 
-const TilretteleggingUtbetalingsgrad = ({
+interface OwnProps {
+  readOnly: boolean;
+  erOverstyrer: boolean;
+  fieldId: string;
+  tilretteleggingKode: string;
+  setOverstyrtUtbetalingsgrad: (erOverstyrt: boolean) => void;
+}
+
+const TilretteleggingUtbetalingsgrad: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   tilretteleggingKode,
   readOnly,
   erOverstyrer,
   fieldId,
+  setOverstyrtUtbetalingsgrad,
 }) => {
   const [erIEditeringsmodus, setEditeres] = useState(false);
 
@@ -50,25 +58,17 @@ const TilretteleggingUtbetalingsgrad = ({
       {erOverstyrer && (
       <FlexColumn>
         <Image
-          onClick={() => setEditeres(true)}
-          onKeyDown={() => setEditeres(true)}
+          onClick={() => { setEditeres(true); setOverstyrtUtbetalingsgrad(true); }}
+          onKeyDown={() => { setEditeres(true); setOverstyrtUtbetalingsgrad(true); }}
           className={erIEditeringsmodus ? styles.buttonMargin : styles.enabletImage}
           src={erIEditeringsmodus ? endreDisabletImage : endreImage}
-          tabIndex="0"
+          tabIndex={0}
           tooltip={intl.formatMessage({ id: 'TilretteleggingFieldArray.EndreUtbetalingsgrad' })}
         />
       </FlexColumn>
       )}
     </>
   );
-};
-
-TilretteleggingUtbetalingsgrad.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  erOverstyrer: PropTypes.bool.isRequired,
-  fieldId: PropTypes.string.isRequired,
-  tilretteleggingKode: PropTypes.string.isRequired,
 };
 
 export default injectIntl(TilretteleggingUtbetalingsgrad);

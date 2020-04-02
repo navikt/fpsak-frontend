@@ -1,5 +1,4 @@
-import React from 'react';
-import { PropTypes } from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { FieldArray, FormSection } from 'redux-form';
@@ -11,11 +10,12 @@ import {
   VerticalSpacer, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
 
+import Arbeidsforhold from '../../types/arbeidsforholdTsType';
 import TilrettteleggingFieldArray from './TilretteleggingFieldArray';
 
 import styles from './tilretteleggingArbeidsforholdSection.less';
 
-const utledArbeidsforholdTittel = (arbeidsforhold) => {
+const utledArbeidsforholdTittel = (arbeidsforhold: Arbeidsforhold) => {
   let tittel = arbeidsforhold.arbeidsgiverNavn;
   if (arbeidsforhold.arbeidsgiverIdent) {
     tittel += ` (${arbeidsforhold.arbeidsgiverIdentVisning})`;
@@ -30,7 +30,20 @@ const utledArbeidsforholdTittel = (arbeidsforhold) => {
   return tittel;
 };
 
-export const TilretteleggingArbeidsforholdSection = ({
+interface OwnProps {
+  readOnly: boolean;
+  arbeidsforhold: Arbeidsforhold;
+  formSectionName: string;
+  visTilrettelegginger: boolean;
+  behandlingId: number;
+  behandlingVersjon: number;
+  erOverstyrer: boolean;
+  changeField: () => void;
+  stillingsprosentArbeidsforhold?: number;
+  setOverstyrtUtbetalingsgrad: (erOverstyrt: boolean) => void;
+}
+
+export const TilretteleggingArbeidsforholdSection: FunctionComponent<OwnProps> = ({
   readOnly,
   arbeidsforhold,
   formSectionName,
@@ -40,6 +53,7 @@ export const TilretteleggingArbeidsforholdSection = ({
   erOverstyrer,
   changeField,
   stillingsprosentArbeidsforhold,
+  setOverstyrtUtbetalingsgrad,
 }) => (
   <FormSection name={formSectionName}>
     <Normaltekst className={styles.arbeidsforholdTittel}>
@@ -90,6 +104,7 @@ export const TilretteleggingArbeidsforholdSection = ({
               erOverstyrer={erOverstyrer}
               changeField={changeField}
               stillingsprosentArbeidsforhold={stillingsprosentArbeidsforhold}
+              setOverstyrtUtbetalingsgrad={setOverstyrtUtbetalingsgrad}
             />
           </FlexColumn>
         </FlexRow>
@@ -97,18 +112,6 @@ export const TilretteleggingArbeidsforholdSection = ({
     )}
   </FormSection>
 );
-
-TilretteleggingArbeidsforholdSection.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  arbeidsforhold: PropTypes.shape().isRequired,
-  formSectionName: PropTypes.string.isRequired,
-  visTilrettelegginger: PropTypes.bool.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  erOverstyrer: PropTypes.bool.isRequired,
-  changeField: PropTypes.func.isRequired,
-  stillingsprosentArbeidsforhold: PropTypes.number,
-};
 
 TilretteleggingArbeidsforholdSection.defaultProps = {
   stillingsprosentArbeidsforhold: undefined,
