@@ -1,8 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { CheckboxField, DatepickerField } from '@fpsak-frontend/form';
 import { FieldArray } from 'redux-form';
+import { Normaltekst } from 'nav-frontend-typografi';
+
+import { CheckboxField, DatepickerField } from '@fpsak-frontend/form';
+
+import Arbeidsforhold from '../../types/arbeidsforholdTsType';
 import { TilretteleggingArbeidsforholdSection } from './TilretteleggingArbeidsforholdSection';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
@@ -15,7 +18,7 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
         arbeidsgiverIdent: '111222333',
         arbeidsgiverIdentVisning: '111222333',
         eksternArbeidsforholdReferanse: 'ARB001-001',
-      }}
+      } as Arbeidsforhold}
       formSectionName="ARB_NAVN"
       visTilrettelegginger
       behandlingId={1}
@@ -23,6 +26,7 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       erOverstyrer
       changeField={() => undefined}
       stillingsprosentArbeidsforhold={40}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const normaltekst = wrapper.find(Normaltekst);
     expect(normaltekst).has.length(2);
@@ -41,7 +45,7 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
         arbeidsgiverNavn: 'FRILANSER',
         arbeidsgiverIdent: '',
         eksternArbeidsforholdReferanse: '',
-      }}
+      } as Arbeidsforhold}
       formSectionName="ARB_NAVN"
       visTilrettelegginger={false}
       behandlingId={1}
@@ -49,6 +53,7 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       erOverstyrer
       changeField={() => undefined}
       stillingsprosentArbeidsforhold={40}
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
     const normaltekst = wrapper.find(Normaltekst);
     expect(normaltekst).has.length(1);

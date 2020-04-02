@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { connect } from 'react-redux';
-import { formValueSelector, reduxForm } from 'redux-form';
+import { formValueSelector, reduxForm, InjectedFormProps } from 'redux-form';
 import moment from 'moment';
 import Modal from 'nav-frontend-modal';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -34,7 +34,6 @@ const hovedKnappenType = (venteArsakHasChanged, fristHasChanged) => venteArsakHa
 
 interface OwnProps {
   showModal: boolean;
-  handleSubmit: () => void;
   cancelEvent: () => void;
   ventearsak?: string;
   originalVentearsak?: string;
@@ -49,7 +48,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne formen gjenbruker settBehandlingPaVentModal. Bruk denne komponenten som en wrapper for
  * settBehandlingPaVentModal hvis du ikke har noen ytre form.
  */
-export const MessageBehandlingPaVentModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+export const MessageBehandlingPaVentModal: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
   intl,
   handleSubmit,
   cancelEvent,

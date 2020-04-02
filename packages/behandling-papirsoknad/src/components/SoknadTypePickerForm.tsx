@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import {
-  formValueSelector, getFormValues, reduxForm,
+  formValueSelector, getFormValues, reduxForm, InjectedFormProps,
 } from 'redux-form';
 import { connect } from 'react-redux';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
@@ -30,7 +30,6 @@ interface OwnProps {
   fagsakYtelseTyper: KodeverkMedNavn[];
   familieHendelseTyper: KodeverkMedNavn[];
   foreldreTyper: KodeverkMedNavn[];
-  handleSubmit: () => undefined;
   selectedFagsakYtelseType?: string;
   ytelseErSatt: boolean;
   submitSucceeded: boolean;
@@ -41,7 +40,7 @@ interface OwnProps {
  *
  * Presentasjonskomponent: Toppkomponent for registrering av papirsøknad der søknadstype, tema og søker/foreldretype blir valgt.
  */
-export const SoknadTypePickerForm: FunctionComponent<OwnProps> = ({
+export const SoknadTypePickerForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
   fagsakYtelseTyper,
   familieHendelseTyper,
   foreldreTyper,

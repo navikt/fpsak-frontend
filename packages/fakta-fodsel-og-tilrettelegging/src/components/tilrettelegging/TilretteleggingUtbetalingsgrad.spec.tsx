@@ -16,6 +16,7 @@ describe('<TilretteleggingUtbetalingsgrad>', () => {
       readOnly={false}
       erOverstyrer
       fieldId="1"
+      setOverstyrtUtbetalingsgrad={() => undefined}
     />);
 
     expect(wrapper.find(DecimalField).prop('readOnly')).is.true;
