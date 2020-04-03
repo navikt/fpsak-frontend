@@ -15,6 +15,7 @@ interface BehandlingPaVentProps {
   kodeverk: {[key: string]: KodeverkMedNavn[]};
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  erTilbakekreving?: boolean;
 }
 
 const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
@@ -23,6 +24,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
   kodeverk,
   settPaVent,
   hentBehandling,
+  erTilbakekreving,
 }) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
@@ -50,8 +52,13 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
       ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
+      erTilbakekreving={erTilbakekreving}
     />
   );
+};
+
+BehandlingPaVent.defaultProps = {
+  erTilbakekreving: false,
 };
 
 export default BehandlingPaVent;

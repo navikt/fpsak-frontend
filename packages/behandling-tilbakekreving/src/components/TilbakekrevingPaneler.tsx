@@ -54,6 +54,7 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
         kodeverk={kodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
+        erTilbakekreving
       />
       <TilbakekrevingProsess
         data={fetchedData}

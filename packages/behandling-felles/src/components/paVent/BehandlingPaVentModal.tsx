@@ -10,12 +10,13 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import {
-  ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
+  ariaCheck, dateAfterOrEqualToToday, dateBeforeToday, hasValidDate, required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { KodeverkMedNavn } from '@fpsak-frontend/types';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import styles from './behandlingPaVentModal.less';
 
 const initFrist = () => {
@@ -43,6 +44,7 @@ interface OwnProps {
   originalVentearsak?: string;
   hasManualPaVent: boolean;
   ventearsaker: KodeverkMedNavn[];
+  erTilbakekreving: boolean;
 }
 
 /**
@@ -61,10 +63,16 @@ export const BehandlingPaVentModal: FunctionComponent<OwnProps & WrappedComponen
   originalVentearsak,
   hasManualPaVent,
   ventearsaker,
+  erTilbakekreving,
 }) => {
   const venteArsakHasChanged = !(originalVentearsak === ventearsak || (!ventearsak && !originalVentearsak));
   const fristHasChanged = !(originalFrist === frist || (!frist && !originalFrist));
   const showAvbryt = !(originalFrist === frist && !venteArsakHasChanged);
+  const erFristenUtløpt = erTilbakekreving && ((frist !== undefined && dateBeforeToday(frist) === null)
+    || (originalFrist !== undefined && dateBeforeToday(originalFrist) === null));
+  const erVenterPaKravgrunnlag = ventearsak === venteArsakType.VENT_PÅ_TILBAKEKREVINGSGRUNNLAG;
+  const showFristenTekst = erTilbakekreving && erFristenUtløpt && erVenterPaKravgrunnlag;
+
   return (
     <Modal
       className={styles.modal}
@@ -119,6 +127,13 @@ export const BehandlingPaVentModal: FunctionComponent<OwnProps & WrappedComponen
             <Column xs="11">
               {hasManualPaVent && (
                 <Normaltekst>{intl.formatMessage({ id: 'BehandlingErPaVentModal.EndreFrist' })}</Normaltekst>
+              )}
+              {!hasManualPaVent && showFristenTekst && (
+                <Normaltekst>
+                  <FormattedMessage id="BehandlingErPaVentModal.UtløptFrist" />
+                  <VerticalSpacer eightPx />
+                  <FormattedMessage id="BehandlingErPaVentModal.HenleggeSaken" />
+                </Normaltekst>
               )}
             </Column>
           </Row>
