@@ -6,6 +6,9 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 [![Known Vulnerabilities](https://snyk.io/test/github/navikt/fpsak-frontend/badge.svg)](https://snyk.io/test/github/navikt/fpsak-frontend) 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+## Storybook
+https://navikt.github.io/fpsak-frontend
+
 ## Komme i gang
 ````
 yarn install
