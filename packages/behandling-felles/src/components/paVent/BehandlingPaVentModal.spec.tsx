@@ -185,5 +185,8 @@ it('skal vise fristen tekst for tilbakekreving behandling venter på kravgrunnla
 
   expect(wrapper.find(SelectField).prop('readOnly')).is.true;
   const label = wrapper.find(Normaltekst);
-  expect(label).to.have.length(3);
+  expect(label).to.have.length(2);
+  expect(label.first().childAt(0).prop('id')).is.eql('SettBehandlingPaVentModal.ErPaVent');
+  expect(label.at(1).childAt(0).prop('id')).is.eql('BehandlingErPaVentModal.UtløptFrist');
+  expect(label.at(1).childAt(2).prop('id')).is.eql('BehandlingErPaVentModal.HenleggeSaken');
 });

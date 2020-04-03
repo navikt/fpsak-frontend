@@ -6,7 +6,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Behandling, Aksjonspunkt, KodeverkMedNavn } from '@fpsak-frontend/types';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingPaVentModal from './BehandlingPaVentModal';
 import SettPaVentParams from '../../types/settPaVentParamsTsType';
 
@@ -16,6 +15,7 @@ interface BehandlingPaVentProps {
   kodeverk: {[key: string]: KodeverkMedNavn[]};
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
+  erTilbakekreving?: boolean;
 }
 
 const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
@@ -24,6 +24,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
   kodeverk,
   settPaVent,
   hentBehandling,
+  erTilbakekreving,
 }) => {
   const [skalViseModal, setVisModal] = useState(behandling.behandlingPaaVent);
   const skjulModal = useCallback(() => setVisModal(false), []);
@@ -43,9 +44,6 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
     return null;
   }
 
-  const erTilbakekreving = (behandlingTypeKode) => behandlingTypeKode === BehandlingType.TILBAKEKREVING
-    || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING;
-
   return (
     <BehandlingPaVentModal
       onSubmit={oppdaterPaVentData}
@@ -54,9 +52,13 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
       ventearsak={behandling.venteArsakKode}
       hasManualPaVent={erManueltSattPaVent}
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
-      erTilbakekreving={erTilbakekreving(behandling.type.kode)}
+      erTilbakekreving={erTilbakekreving}
     />
   );
+};
+
+BehandlingPaVent.defaultProps = {
+  erTilbakekreving: false,
 };
 
 export default BehandlingPaVent;
