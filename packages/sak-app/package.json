@@ -36,7 +36,7 @@
     "@sentry/browser": "^5.15.4",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
-    "connected-react-router": "^6.6.1",
+    "connected-react-router": "6.6.1",
     "history": "^4.9.0",
     "moment": "^2.24.0",
     "nav-frontend-alertstriper": "3.0.14",
