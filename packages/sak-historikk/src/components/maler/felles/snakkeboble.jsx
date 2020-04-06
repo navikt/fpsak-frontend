@@ -4,6 +4,13 @@ import classNames from 'classnames/bind';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertekst } from 'nav-frontend-typografi';
 
+import navAnsattHistorikkImg from '@fpsak-frontend/assets/images/nav_ansatt_historikk.svg';
+import kvinneImg from '@fpsak-frontend/assets/images/kvinne.svg';
+import maskinImg from '@fpsak-frontend/assets/images/maskin.svg';
+import arbeidsgiverImg from '@fpsak-frontend/assets/images/arbeidsgiver.svg';
+import mannImg from '@fpsak-frontend/assets/images/mann.svg';
+import beslutterImg from '@fpsak-frontend/assets/images/beslutter.svg';
+import { Image } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import styles from './snakkeboble.less';
@@ -25,15 +32,6 @@ const snakkeboblePilCls = (rolle) => cx('snakkeboble__snakkebole-pil', {
   'snakkeboble__snakkebole-pil--venstre--ekstern': rolle === 'ARBEIDSGIVER',
 });
 
-const snakkebobleIkonCls = (rolle, kjoennKode) => cx('snakkeboble__ikon', {
-  'snakkeboble__ikon--saksbehandler': rolle === 'SBH',
-  'snakkeboble__ikon--brukerMann': rolle === 'SOKER' && kjoennKode === navBrukerKjonn.MANN,
-  'snakkeboble__ikon--brukerKvinne': rolle === 'SOKER' && kjoennKode === navBrukerKjonn.KVINNE,
-  'snakkeboble__ikon--beslutter': rolle === 'BESL',
-  'snakkeboble__ikon--losningen': rolle === 'VL',
-  'snakkeboble__ikon--ekstern': rolle === 'ARBEIDSGIVER',
-});
-
 const snakkeboblePanelCls = (rolle) => cx('snakkeboble__panel snakkeboble-panel', {
   'snakkeboble__snakkebole-panel--saksbehandler': rolle === 'SBH',
   'snakkeboble__snakkebole-panel--beslutter': rolle === 'BESL',
@@ -41,6 +39,22 @@ const snakkeboblePanelCls = (rolle) => cx('snakkeboble__panel snakkeboble-panel'
   'snakkeboble__snakkebole-panel--bruker': rolle === 'SOKER',
   'snakkeboble__snakkebole-panel--ekstern': rolle === 'ARBEIDSGIVER',
 });
+
+const utledIkonOgStyle = (rolle, kjoennKode) => {
+  if (rolle === 'SBH') {
+    return { src: navAnsattHistorikkImg, className: styles.saksbehandlerImage };
+  } if (rolle === 'SOKER' && kjoennKode === navBrukerKjonn.MANN) {
+    return { src: mannImg, className: styles.image };
+  } if (rolle === 'SOKER' && kjoennKode === navBrukerKjonn.KVINNE) {
+    return { src: kvinneImg, className: styles.image };
+  } if (rolle === 'BESL') {
+    return { src: beslutterImg, className: styles.image };
+  } if (rolle === 'VL') {
+    return { src: maskinImg, className: styles.image };
+  }
+  return { src: arbeidsgiverImg, className: styles.image };
+};
+
 /**
  * Snakkeboble
  *
@@ -55,7 +69,7 @@ const Snakkeboble = ({
   children,
 }) => (
   <div className={snakkebobleCls(rolle)}>
-    <i className={snakkebobleIkonCls(rolle, kjoennKode)} title={rolleNavn} />
+    <Image {...utledIkonOgStyle(rolle, kjoennKode)} tooltip={rolleNavn} />
     <div className={styles['snakkeboble__snakkeboble-pil-container']}>
       <i className={snakkeboblePilCls(rolle)} />
     </div>
