@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 
@@ -31,24 +31,26 @@ const mapAktivitetTextEndring = (arbeidsgiverNavn, orgnr, aktivitetType) => {
 const mapAktivitetTextUnderkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => {
   if (arbeidsgiverNavn && orgnr) {
     return (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="ToTrinnsForm.Opptjening.UnderkjenningArbeidMedNavn"
-        values={{ a: aktivitetType, b: arbeidsgiverNavn, c: orgnr }}
+        values={{
+          a: aktivitetType, bb: arbeidsgiverNavn, c: orgnr, b: (...chunks) => <b>{chunks}</b>,
+        }}
       />
     );
   }
   if (orgnr) {
     return (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn"
-        values={{ a: aktivitetType, b: orgnr }}
+        values={{ a: aktivitetType, bb: orgnr, b: (...chunks) => <b>{chunks}</b> }}
       />
     );
   }
   return (
-    <FormattedHTMLMessage
+    <FormattedMessage
       id="ToTrinnsForm.Opptjening.UnderkjenningAktivitet"
-      values={{ a: aktivitetType }}
+      values={{ a: aktivitetType, b: (...chunks) => <b>{chunks}</b> }}
     />
   );
 };

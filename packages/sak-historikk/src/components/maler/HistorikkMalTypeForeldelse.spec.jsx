@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import { HistorikkMalTypeForeldelse } from './HistorikkMalTypeForeldelse';
@@ -54,7 +54,7 @@ describe('HistorikkMalTypeForeldelse', () => {
       createLocationForSkjermlenke={() => 'url'}
     />);
 
-    const messages = wrapper.find(FormattedHTMLMessage);
+    const messages = wrapper.find(FormattedMessage);
     expect(messages).to.have.length(3);
     expect(messages.at(1).prop('values')).to.eql({
       navn: 'testing',

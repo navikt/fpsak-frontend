@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
@@ -48,8 +48,17 @@ const VilkarResultPickerImpl = ({
             <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
           </FlexColumn>
           <FlexColumn>
-            {erVilkarOk && <Normaltekst><FormattedHTMLMessage id={findRadioButtonTextCode(customVilkarOppfyltText, true)} /></Normaltekst>}
-            {!erVilkarOk && <Normaltekst><FormattedHTMLMessage id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)} /></Normaltekst>}
+            {erVilkarOk && <Normaltekst><FormattedMessage id={findRadioButtonTextCode(customVilkarOppfyltText, true)} /></Normaltekst>}
+            {!erVilkarOk && (
+            <Normaltekst>
+              <FormattedMessage
+                id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)}
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
+              />
+            </Normaltekst>
+            )}
           </FlexColumn>
         </FlexRow>
         <VerticalSpacer eightPx />
@@ -65,18 +74,24 @@ const VilkarResultPickerImpl = ({
       >
         <RadioOption
           label={(
-            <FormattedHTMLMessage
+            <FormattedMessage
               id={findRadioButtonTextCode(customVilkarOppfyltText, true)}
-              values={customVilkarOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
+              values={customVilkarOppfyltText ? {
+                b: (...chunks) => <b>{chunks}</b>,
+                ...customVilkarIkkeOppfyltText.values,
+              } : { b: (...chunks) => <b>{chunks}</b> }}
             />
           )}
           value
         />
         <RadioOption
           label={(
-            <FormattedHTMLMessage
+            <FormattedMessage
               id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)}
-              values={customVilkarIkkeOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
+              values={customVilkarIkkeOppfyltText ? {
+                b: (...chunks) => <b>{chunks}</b>,
+                ...customVilkarIkkeOppfyltText.values,
+              } : { b: (...chunks) => <b>{chunks}</b> }}
             />
           )}
           value={false}

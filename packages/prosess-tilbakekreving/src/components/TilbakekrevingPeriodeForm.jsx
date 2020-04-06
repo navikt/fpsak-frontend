@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes, FormSection } from 'redux-form';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -155,9 +155,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
         {reduserteBelop.map((belop) => (
           <>
             <Normaltekst>
-              <FormattedHTMLMessage
+              <FormattedMessage
                 id={belop.erTrekk ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk' : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling'}
-                values={{ belop: formatCurrencyNoKr(belop.belop) }}
+                values={{ belop: formatCurrencyNoKr(belop.belop), b: (...chunks) => <b>{chunks}</b> }}
               />
             </Normaltekst>
             <VerticalSpacer eigthPx />

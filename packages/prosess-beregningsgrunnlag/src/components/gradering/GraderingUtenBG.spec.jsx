@@ -89,7 +89,7 @@ describe('<GraderingUtenBG>', () => {
     expect(textfield).to.have.length(1);
     const button = wrapper.find(ProsessStegSubmitButton);
     expect(button).to.have.length(1);
-    const hjelpetekst = wrapper.find('FormattedHTMLMessage');
+    const hjelpetekst = wrapper.find('FormattedMessage');
     const formattedMessages = wrapper.find('FormattedMessage');
     expect(formattedMessages.prop('id')).to.eql('Beregningsgrunnlag.Gradering.Tittel');
     expect(hjelpetekst.prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123) og arbeidsgiver (456)' });
@@ -114,7 +114,7 @@ describe('<GraderingUtenBG>', () => {
     expect(textfield).to.have.length(1);
     const button = wrapper.find(ProsessStegSubmitButton);
     expect(button).to.have.length(1);
-    const hjelpetekst = wrapper.find('FormattedHTMLMessage');
+    const hjelpetekst = wrapper.find('FormattedMessage');
     const formattedMessages = wrapper.find('FormattedMessage');
     expect(formattedMessages.prop('id')).to.eql('Beregningsgrunnlag.Gradering.Tittel');
     expect(hjelpetekst.prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123), selvstendig næringsdrivende og frilanser' });
