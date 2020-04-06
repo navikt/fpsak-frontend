@@ -358,7 +358,7 @@ const getInitialArbeidsforholdValues = createSelector([
       ...a,
       tilretteleggingDatoer: a.tilretteleggingDatoer.map((tilretteleggingsdato) => ({
         ...tilretteleggingsdato,
-        stillingsprosent: tilrettelegging.saksbehandlet && alleIafAf.length === 1 ? tilretteleggingsdato.stillingsprosent : undefined,
+        stillingsprosent: tilrettelegging.saksbehandlet || alleIafAf.length === 1 ? tilretteleggingsdato.stillingsprosent : undefined,
         oldOverstyrtUtbetalingsgrad: tilretteleggingsdato.overstyrtUtbetalingsgrad,
         overstyrtUtbetalingsgrad: utledUtbetalingsgrad(tilretteleggingsdato, stillingsprosentArbeidsforhold),
       })),
