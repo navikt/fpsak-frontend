@@ -227,7 +227,7 @@ const finnOverstyrtUtbetalingsgrad = (type, stillingsprosent, stillingsprosentAr
   let erLikOverstyrtVerdi = type.kode === tilretteleggingType.INGEN_TILRETTELEGGING && parseFloat(overstyrtUtbetalingsgrad) === 100;
   if (type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
     erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === parseFloat(finnUtbetalingsgradForDelvisTilrettelegging(
-      stillingsprosent, stillingsprosentArbeidsforhold,
+      stillingsprosentArbeidsforhold, stillingsprosent,
     ));
   }
 
@@ -338,7 +338,7 @@ const utledUtbetalingsgrad = (tilretteleggingsdato, stillingsprosentArbeidsforho
     return tilretteleggingsdato.overstyrtUtbetalingsgrad;
   }
   return tilretteleggingsdato.type.kode === tilretteleggingType.INGEN_TILRETTELEGGING ? 100
-    : finnUtbetalingsgradForDelvisTilrettelegging(tilretteleggingsdato.stillingsprosent, stillingsprosentArbeidsforhold);
+    : finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsforhold, tilretteleggingsdato.stillingsprosent);
 };
 
 const getInitialArbeidsforholdValues = createSelector([
