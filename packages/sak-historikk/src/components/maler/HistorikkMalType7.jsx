@@ -70,7 +70,15 @@ const HistorikkMalType7 = ({
               .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
 
             {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger
-              .map((opplysning) => (<FormattedMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />))}
+              .map((opplysning) => (
+                <FormattedMessage
+                  id={findIdForOpplysningCode(opplysning)}
+                  values={{
+                    antallBarn: opplysning.tilVerdi,
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              ))}
 
             {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}

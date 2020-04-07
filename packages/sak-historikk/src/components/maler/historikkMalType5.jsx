@@ -37,7 +37,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
       <>
         <FormattedMessage
           id={historikkEndretFeltTypeCodes[historikkinnslagDel.gjeldendeFra.navn].feltId}
-          values={{ value: historikkinnslagDel.gjeldendeFra.verdi }}
+          values={{ value: historikkinnslagDel.gjeldendeFra.verdi, b: (...chunks) => <b>{chunks}</b>, br: <br /> }}
         />
         {historikkinnslagDel.gjeldendeFra.fra
         && (
@@ -138,7 +138,7 @@ const HistorikkMalType5 = ({
     if (tema) {
       const heading = historikkEndretFeltTypeHeadingCodes[tema.endretFeltNavn.kode];
       if (heading && tema.navnVerdi) {
-        return <FormattedMessage id={heading.feltId} values={{ value: tema.navnVerdi }} />;
+        return <FormattedMessage id={heading.feltId} values={{ value: tema.navnVerdi, b: (...chunks) => <b>{chunks}</b>, br: <br /> }} />;
       }
     }
     return undefined;
@@ -151,13 +151,15 @@ const HistorikkMalType5 = ({
         values={{
           navnVerdi: soeknadsperiode.navnVerdi,
           value: soeknadsperiode.tilVerdi,
+          b: (...chunks) => <b>{chunks}</b>,
+          br: <br />,
         }}
       />
     )
     : (
       <FormattedMessage
         id={findIdForSoeknadsperiodeCode(soeknadsperiode)}
-        values={{ value: soeknadsperiode.tilVerdi }}
+        values={{ value: soeknadsperiode.tilVerdi, b: (...chunks) => <b>{chunks}</b>, br: <br /> }}
       />
     ));
 
@@ -202,7 +204,7 @@ const HistorikkMalType5 = ({
         {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger.map((opplysning) => (
           <FormattedMessage
             id={findIdForOpplysningCode(opplysning)}
-            values={{ antallBarn: opplysning.tilVerdi }}
+            values={{ antallBarn: opplysning.tilVerdi, b: (...chunks) => <b>{chunks}</b>, br: <br /> }}
             key={`${getKodeverknavn(opplysning)}@${opplysning.tilVerdi}`}
           />
         ))}

@@ -74,6 +74,7 @@ const HistorikkMalType10 = ({
               fromValueDays,
               toValueWeeks,
               toValueDays,
+              b: (...chunks) => <b>{chunks}</b>,
             }}
           />
         </div>

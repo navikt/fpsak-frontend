@@ -51,7 +51,10 @@ export const HistorikkMalTypeForeldelse = ({
                     <FormattedMessage
                       id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
                       values={{
-                        navn: getKodeverknavn(endretFeltNavn), fraVerdi, tilVerdi, b: (...chunks) => <b>{chunks}</b>,
+                        navn: getKodeverknavn(endretFeltNavn),
+                        fraVerdi,
+                        tilVerdi,
+                        b: (...chunks) => <b>{chunks}</b>,
                       }}
                     />
                   </Normaltekst>
