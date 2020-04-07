@@ -125,7 +125,7 @@ describe('<TilretteleggingFieldArray>', () => {
     const stillingsprosent = 70;
     const stillingsprosentArbeidsgiver = 70;
 
-    const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
+    const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsgiver, stillingsprosent);
 
     expect(utbetalingsgrad).is.eql('0');
   });
@@ -134,7 +134,7 @@ describe('<TilretteleggingFieldArray>', () => {
     const stillingsprosent = 70;
     const stillingsprosentArbeidsgiver = 30;
 
-    const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosent, stillingsprosentArbeidsgiver);
+    const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsgiver, stillingsprosent);
 
     expect(utbetalingsgrad).is.eql('0');
   });

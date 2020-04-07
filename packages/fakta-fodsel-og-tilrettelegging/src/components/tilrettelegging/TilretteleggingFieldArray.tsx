@@ -24,7 +24,7 @@ import styles from './tilretteleggingFieldArray.less';
 const maxValue100 = maxValue(100);
 const minValue0 = minValue(0);
 
-export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosent: number, stillingsprosentArbeidsforhold: number): string => {
+export const finnUtbetalingsgradForDelvisTilrettelegging = (stillingsprosentArbeidsforhold: number, stillingsprosent?: number): string => {
   const defaultUtbetalingsgrad = 100 * (1 - (stillingsprosent / stillingsprosentArbeidsforhold));
   return defaultUtbetalingsgrad > 0 ? defaultUtbetalingsgrad.toFixed(2) : '0';
 };
@@ -107,7 +107,7 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                         changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, '100');
                       }
                       if (value === tilretteleggingType.DELVIS_TILRETTELEGGING) {
-                        const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(data.stillingsprosent, stillingsprosentArbeidsforhold);
+                        const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsforhold, data.stillingsprosent);
                         changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, utbetalingsgrad);
                       }
                     }}
@@ -152,9 +152,9 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                         name={`${fieldId}.stillingsprosent`}
                         label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Stillingsprosent' })}
                         validate={[required, minValue0, maxValue100, hasValidDecimal]}
-                        normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                        normalizeOnBlur={(value) => (new RegExp(/^-?\d+\.?\d*$/).test(value) ? parseFloat(value).toFixed(2) : value)}
                         onChange={(_elmt, value) => {
-                          const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(value, stillingsprosentArbeidsforhold);
+                          const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsforhold, value);
                           changeField(`${formSectionName}.tilretteleggingDatoer[${index}].overstyrtUtbetalingsgrad`, utbetalingsgrad);
                         }}
                       />
@@ -164,14 +164,15 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                     </FlexColumn>
                   </>
                 )}
-                {(tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING || tilretteleggingKode === tilretteleggingType.INGEN_TILRETTELEGGING) && (
-                  <TilretteleggingUtbetalingsgrad
-                    fieldId={fieldId}
-                    erOverstyrer={erOverstyrer}
-                    tilretteleggingKode={tilretteleggingKode}
-                    readOnly={readOnly}
-                    setOverstyrtUtbetalingsgrad={setOverstyrtUtbetalingsgrad}
-                  />
+                {((data && data.stillingsprosent && tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING)
+                    || tilretteleggingKode === tilretteleggingType.INGEN_TILRETTELEGGING) && (
+                    <TilretteleggingUtbetalingsgrad
+                      fieldId={fieldId}
+                      erOverstyrer={erOverstyrer}
+                      tilretteleggingKode={tilretteleggingKode}
+                      readOnly={readOnly}
+                      setOverstyrtUtbetalingsgrad={setOverstyrtUtbetalingsgrad}
+                    />
                 )}
               </FlexRow>
             </FlexContainer>

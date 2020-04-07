@@ -53,6 +53,13 @@ const skalViseInfoAlert = (iayArbeidsforhold, tilretteleggingArbeidsforhold) => 
   .every((ta) => iayArbeidsforhold.some((ia) => ta.arbeidsgiverIdent === ia.arbeidsgiverIdentifikator
     && erInnenforIntervall(ta.tilretteleggingBehovFom, ia.fomDato, ia.tomDato)));
 
+const finnArbeidsforhold = (alleIafAf, internArbeidsforholdReferanse) => {
+  if (alleIafAf.length > 1) {
+    return alleIafAf.find((iafAf) => iafAf.arbeidsforholdId === internArbeidsforholdReferanse);
+  }
+  return alleIafAf.length === 1 ? alleIafAf[0] : undefined;
+};
+
 interface FodselOgTilretteleggingFaktaFormProps {
   behandlingId: number;
   behandlingVersjon: number;
@@ -139,7 +146,8 @@ export const FodselOgTilretteleggingFaktaForm: FunctionComponent<FodselOgTilrett
         <FlexRow>
           <FlexColumn>
             {arbeidsforhold.map((a, index) => {
-              const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+              const alleIafAf = iayArbeidsforhold.filter((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+              const af = finnArbeidsforhold(alleIafAf, a.internArbeidsforholdReferanse);
               return (
                 <React.Fragment key={utledFormSectionName(a)}>
                   <VerticalSpacer sixteenPx />
@@ -219,7 +227,7 @@ const finnOverstyrtUtbetalingsgrad = (type, stillingsprosent, stillingsprosentAr
   let erLikOverstyrtVerdi = type.kode === tilretteleggingType.INGEN_TILRETTELEGGING && parseFloat(overstyrtUtbetalingsgrad) === 100;
   if (type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING) {
     erLikOverstyrtVerdi = parseFloat(overstyrtUtbetalingsgrad) === parseFloat(finnUtbetalingsgradForDelvisTilrettelegging(
-      stillingsprosent, stillingsprosentArbeidsforhold,
+      stillingsprosentArbeidsforhold, stillingsprosent,
     ));
   }
 
@@ -234,7 +242,8 @@ const transformValues = (values, iayArbeidsforhold, arbeidsforhold) => ([{
   ...values,
   bekreftetSvpArbeidsforholdList: arbeidsforhold.map((a) => {
     const value = values[utledFormSectionName(a)];
-    const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    const alleIafAf = iayArbeidsforhold.filter((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    const af = finnArbeidsforhold(alleIafAf, a.internArbeidsforholdReferanse);
     const stillingsprosentArbeidsforhold = af ? af.stillingsprosent : 100;
     return {
       ...value,
@@ -329,7 +338,7 @@ const utledUtbetalingsgrad = (tilretteleggingsdato, stillingsprosentArbeidsforho
     return tilretteleggingsdato.overstyrtUtbetalingsgrad;
   }
   return tilretteleggingsdato.type.kode === tilretteleggingType.INGEN_TILRETTELEGGING ? 100
-    : finnUtbetalingsgradForDelvisTilrettelegging(tilretteleggingsdato.stillingsprosent, stillingsprosentArbeidsforhold);
+    : finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsforhold, tilretteleggingsdato.stillingsprosent);
 };
 
 const getInitialArbeidsforholdValues = createSelector([
@@ -342,12 +351,14 @@ const getInitialArbeidsforholdValues = createSelector([
   }
   const arbeidsforholdValues = [];
   arbeidsforhold.forEach((a) => {
-    const af = iayArbeidsforhold.find((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    const alleIafAf = iayArbeidsforhold.filter((iaya) => iaya.arbeidsgiverIdentifikator === a.arbeidsgiverIdent);
+    const af = finnArbeidsforhold(alleIafAf, a.internArbeidsforholdReferanse);
     const stillingsprosentArbeidsforhold = af ? af.stillingsprosent : 100;
     arbeidsforholdValues[utledFormSectionName(a)] = {
       ...a,
       tilretteleggingDatoer: a.tilretteleggingDatoer.map((tilretteleggingsdato) => ({
         ...tilretteleggingsdato,
+        stillingsprosent: tilrettelegging.saksbehandlet || alleIafAf.length === 1 ? tilretteleggingsdato.stillingsprosent : undefined,
         oldOverstyrtUtbetalingsgrad: tilretteleggingsdato.overstyrtUtbetalingsgrad,
         overstyrtUtbetalingsgrad: utledUtbetalingsgrad(tilretteleggingsdato, stillingsprosentArbeidsforhold),
       })),
