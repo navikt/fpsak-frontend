@@ -46,7 +46,10 @@ export const HistorikkMalTypeTilbakekreving = ({
         return (
           <div key={periodeFom + periodeTom}>
             <Normaltekst>
-              <FormattedMessage id="Historikk.Template.Tilbakekreving.VurderingAvPerioden" values={{ periodeFom, periodeTom, b: (...chunks) => <b>{chunks}</b> }} />
+              <FormattedMessage
+                id="Historikk.Template.Tilbakekreving.VurderingAvPerioden"
+                values={{ periodeFom, periodeTom, b: (...chunks) => <b>{chunks}</b> }}
+              />
             </Normaltekst>
             <VerticalSpacer eightPx />
             {endredeFelter && endredeFelter.map((felt, index) => {
