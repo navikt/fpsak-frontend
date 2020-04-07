@@ -57,4 +57,8 @@ describe('<FordelingHelpText>', () => {
     const string = createFordelArbeidsforholdString(arbeidsforholdListe, textCase.REFUSJON, fn);
     expect(string).to.eql('Sopra Steria (123456789)...6789 f.o.m. 01.01.2016 - t.o.m. 01.01.2026');
   });
+  it('skal lage endret arbeidsforhold for endring i ytelse', () => {
+    const string = createFordelArbeidsforholdString(arbeidsforholdListe, textCase.ENDRING_YTELSE, fn);
+    expect(string).to.eql('Sopra Steria (123456789)...6789 f.o.m. 01.01.2016 - t.o.m. 01.01.2026');
+  });
 });
