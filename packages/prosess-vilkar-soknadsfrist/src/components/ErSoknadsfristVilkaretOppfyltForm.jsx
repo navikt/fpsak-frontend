@@ -148,7 +148,18 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         && (
           <>
             <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
-              {[<RadioOption key="dummy" label={<FormattedMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
+              {[<RadioOption
+                key="dummy"
+                label={(
+                  <FormattedMessage
+                    id={findRadioButtonTextCode(erVilkarOk)}
+                    values={{
+                      b: (...chunks) => <b>{chunks}</b>,
+                    }}
+                  />
+                )}
+                value=""
+              />]}
             </RadioGroupField>
             {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
           && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
