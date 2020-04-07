@@ -38,8 +38,8 @@ describe('<TimeLineInfo>', () => {
     />);
 
     const messages = wrapper.find('FormattedMessage');
-    expect(messages).to.have.length(2);
-    expect(messages.at(0).props().values.ukerVerdi).to.equal(24);
+    expect(messages).to.have.length(3);
+    expect(messages.at(1).props().values.ukerVerdi).to.equal(24);
   });
 
   it('skal vise tabell med disponible dager', () => {
@@ -72,9 +72,9 @@ describe('<TimeLineInfo>', () => {
 
     wrapper.setState({ aktiv: 1, visKonto: konto });
     const messages = wrapper.find('FormattedMessage');
-    expect(messages).to.have.length(2);
-    expect(messages.at(1).props().values.dato).to.equal('01.12.2018');
-    expect(messages.at(0).props().values.ukerVerdi).to.equal(24);
+    expect(messages).to.have.length(3);
+    expect(messages.at(2).props().values.dato).to.equal('01.12.2018');
+    expect(messages.at(1).props().values.ukerVerdi).to.equal(24);
   });
 
   it('skal vise tabs', () => {

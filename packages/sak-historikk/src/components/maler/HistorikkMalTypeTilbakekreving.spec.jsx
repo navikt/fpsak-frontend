@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 
+import { omit } from '@fpsak-frontend/utils';
+
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import { HistorikkMalTypeTilbakekreving } from './HistorikkMalTypeTilbakekreving';
@@ -68,12 +70,12 @@ describe('HistorikkMalTypeTilbakekreving', () => {
 
     const messages = wrapper.find(FormattedMessage);
     expect(messages).to.have.length(3);
-    expect(messages.at(1).prop('values')).to.eql({
+    expect(omit(messages.at(1).prop('values'), 'b')).to.eql({
       navn: 'testing',
       fraVerdi: 'gammel verdi',
       tilVerdi: 'ny verdi',
     });
-    expect(messages.at(2).prop('values')).to.eql({
+    expect(omit(messages.at(2).prop('values'), 'b')).to.eql({
       navn: 'testing 2',
       fraVerdi: undefined,
       tilVerdi: 'ny verdi 2',
