@@ -8,7 +8,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/nap-process-menu": "1.0.9",
+    "@navikt/nap-process-menu": "1.0.12",
     "@navikt/nap-side-menu": "1.0.4",
     "classnames": "^2.2.6",
     "moment": "^2.24.0",
