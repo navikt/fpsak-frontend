@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
@@ -213,8 +213,11 @@ export class OpptjeningFaktaFormImpl extends Component {
         {dokStatus && (
           <>
             <AlertStripeInfo className={styles.info}>
-              <FormattedHTMLMessage
+              <FormattedMessage
                 id={dokStatus === DOKUMENTASJON_VIL_BLI_INNHENTET ? 'OpptjeningFaktaForm.DetErInnhentetDok' : 'OpptjeningFaktaForm.DetErIkkeInnhentetDok'}
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
               />
             </AlertStripeInfo>
             <VerticalSpacer twentyPx />

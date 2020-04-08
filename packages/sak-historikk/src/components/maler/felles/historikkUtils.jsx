@@ -1,3 +1,5 @@
+import React from 'react';
+
 import historikkResultatTypeCodes from '../../../kodeverk/historikkResultatTypeCodes';
 import historikkEndretFeltVerdiTypeCodes from '../../../kodeverk/historikkEndretFeltVerdiTypeCodes';
 import historikkEndretFeltTypeCodes from '../../../kodeverk/historikkEndretFeltTypeCodes';
@@ -37,7 +39,7 @@ export const findResultatText = (resultat, intl) => {
     return (`ResultatTypeCode ${resultat} finnes ikke-LEGG DET INN`);
   }
   const fieldId = resultatCode.feltId;
-  return intl.formatMessage({ id: fieldId });
+  return intl.formatMessage({ id: fieldId }, { b: (...chunks) => <b>{chunks}</b>, br: <br /> });
 };
 
 export const findHendelseText = (hendelse, getKodeverknavn) => {
@@ -64,18 +66,25 @@ export const findEndretFeltVerdi = (endretFelt, verdi, intl) => {
     if (!verdiCode) {
       return (`EndretFeltVerdiTypeCode ${verdi} finnes ikke-LEGG DET INN`);
     }
-    return intl.formatMessage({ id: verdiCode.verdiId });
+    return intl.formatMessage({ id: verdiCode.verdiId }, { b: (...chunks) => <b>{chunks}</b>, br: <br /> });
   }
   return verdi;
 };
 
 export const findEndretFeltNavn = (endretFelt, intl) => {
-  const { formatHTMLMessage } = intl;
+  const { formatMessage } = intl;
   const navnCode = endretFelt.endretFeltNavn.kode;
   const endretFeltNavnType = historikkEndretFeltTypeCodes[navnCode];
   if (!endretFeltNavnType) {
     return (`EndretFeltTypeCode ${navnCode} finnes ikke-LEGG DET INN`);
   }
   const fieldId = endretFeltNavnType.feltId;
-  return endretFelt.navnVerdi !== null ? formatHTMLMessage({ id: fieldId }, { value: endretFelt.navnVerdi }) : formatHTMLMessage({ id: fieldId });
+  return endretFelt.navnVerdi !== null ? formatMessage({ id: fieldId }, {
+    value: endretFelt.navnVerdi,
+    b: (...chunks) => <b>{chunks}</b>,
+    br: <br />,
+  }) : formatMessage({ id: fieldId }, {
+    b: (...chunks) => <b>{chunks}</b>,
+    br: <br />,
+  });
 };

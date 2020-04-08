@@ -13,11 +13,6 @@ describe('<Table>', () => {
     'FagsakList.Sakstype',
   ];
 
-  const formattedHeaderTextCodes = [
-    <FormattedMessage id="FagsakList.Saksnummer" />,
-    <FormattedMessage id="FagsakList.Sakstype" />,
-  ];
-
 
   it('skal vise korrekt antall kolonneheadere med korrekt tekst', () => {
     const wrapper = shallow(
@@ -40,8 +35,13 @@ describe('<Table>', () => {
   });
 
   it('skal vise korrekt antall kolonneheadere med korrekt tekst for formatterte headere', () => {
+    const formattedHeaderTextCodes = [
+      <FormattedMessage id="FagsakList.Saksnummer" />,
+      <FormattedMessage id="FagsakList.Sakstype" />,
+    ];
+
     const wrapper = shallow(
-      <Table headerTextCodes={formattedHeaderTextCodes} allowFormattedHeader>
+      <Table headerColumnContent={formattedHeaderTextCodes}>
         <TableRow id="1">
           <TableColumn key={1}>{12345}</TableColumn>
           <TableColumn key={2}>{23446}</TableColumn>

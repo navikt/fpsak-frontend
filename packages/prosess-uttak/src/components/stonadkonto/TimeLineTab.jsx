@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
@@ -64,11 +64,12 @@ const TimeLineTab = ({
             </Row>
             <Row>
               <Normaltekst>
-                <FormattedHTMLMessage
+                <FormattedMessage
                   id="TimeLineTab.Stonadinfo.UkerDager"
                   values={{
                     ukerVerdi: fordelteDager.uker,
                     dagerVerdi: fordelteDager.dager,
+                    b: (...chunks) => <b>{chunks}</b>,
                   }}
                 />
               </Normaltekst>

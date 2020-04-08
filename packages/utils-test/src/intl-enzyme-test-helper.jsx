@@ -65,6 +65,5 @@ export const intlMock = {
   formatNumber: sinon.spy(),
   formatPlural: sinon.spy(),
   formatMessage: sinon.spy(),
-  formatHTMLMessage: sinon.spy(),
   now: sinon.spy(),
 };

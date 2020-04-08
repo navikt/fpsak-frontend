@@ -4,9 +4,10 @@ import { shallow } from 'enzyme';
 
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { SelectField } from '@fpsak-frontend/form';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-papirsoknad-svp';
 import BehovForTilrettteleggingFieldArray from './BehovForTilrettteleggingFieldArray';
 
 describe('<TilretteleggingForArbeidsgiverFieldArray>', () => {

@@ -1,5 +1,5 @@
 import React, { ReactElement, FunctionComponent } from 'react';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 
 import TableRow from './TableRow';
@@ -13,10 +13,10 @@ const EMPTY_STRING = 'EMPTY';
 
 interface OwnProps {
   headerTextCodes?: any;
+  headerColumnContent?: ReactElement[];
   children: ReactElement | ReactElement[];
   classNameTable?: string;
   noHover?: boolean;
-  allowFormattedHeader?: boolean;
 }
 
 /**
@@ -26,7 +26,7 @@ interface OwnProps {
  */
 const Table: FunctionComponent<OwnProps> = ({
   headerTextCodes = [],
-  allowFormattedHeader = false,
+  headerColumnContent = [],
   classNameTable = '',
   noHover = false,
   children,
@@ -34,17 +34,18 @@ const Table: FunctionComponent<OwnProps> = ({
   <table className={classNames('table', { [classNameTable]: classNameTable, noHover })}>
     <thead>
       <TableRow isHeader noHover={noHover}>
-        {headerTextCodes.map((headerElement) => {
-          if (typeof headerElement === 'string' && headerElement.startsWith(EMPTY_STRING)) {
-            return <TableColumn key={headerElement}>&nbsp;</TableColumn>;
-          }
-          return (
+        {headerTextCodes.map((headerElement) => (typeof headerElement === 'string' && headerElement.startsWith(EMPTY_STRING)
+          ? <TableColumn key={headerElement}>&nbsp;</TableColumn>
+          : (
             <TableColumn key={headerElement.key ? headerElement.key : headerElement}>
-              { allowFormattedHeader && headerElement}
-              { !allowFormattedHeader && <FormattedHTMLMessage id={headerElement} />}
+              <FormattedMessage id={headerElement} />
             </TableColumn>
-          );
-        })}
+          )))}
+        {headerColumnContent.map((element) => (
+          <TableColumn key={element.key}>
+            {element}
+          </TableColumn>
+        ))}
       </TableRow>
     </thead>
     <tbody>

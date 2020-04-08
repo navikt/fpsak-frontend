@@ -1,8 +1,11 @@
 import { expect } from 'chai';
 import React from 'react';
+
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 import FastsettSN, { FastsettSN as UnwrappedForm, begrunnelseFieldname, fastsettInntektFieldname } from './FastsettSN';
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse) => ({

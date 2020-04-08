@@ -1,6 +1,5 @@
 {
   "OpptjeningVilkarView.Oppfylt": "Vilkåret er oppfylt",
-  "OpptjeningVilkarView.IkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
   "OpptjeningVilkarView.Godkjent": "Godkjent",
   "OpptjeningVilkarView.Avslatt": "Avslått",
   "OpptjeningVilkarView.Months": "måneder",
@@ -28,7 +27,6 @@
   "VilkarResultPicker.Arsak": "Avslagsårsak",
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
-  "VilkarResultPicker.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "ProsessStegBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",

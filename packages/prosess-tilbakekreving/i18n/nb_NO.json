@@ -94,7 +94,6 @@
   "UttakInfoPanel.PeriodenSlettes": "Perioden {fom} - {tom} {uttakPeriodeType} slettes",
   "UttakInfoPanel.Frilans": "Frilanser",
   "UttakInfoPanel.Selvstendignæringsdrivende": "Selvstendig næringsdrivende",
-  "UttakInfoPanel.IkkeOppgittUtsettelse": "<b>{årsak}:</b> Ikke oppgitt {årsakLowerCase}",
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",

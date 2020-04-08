@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';
@@ -37,7 +37,7 @@ const getHeaderCodes = (showCollapseButton, collapseProps, rangeOfMonths, nextPe
         })}
         key={`${month.month}-${month.year}`}
       >
-        <FormattedHTMLMessage id={`Avregning.headerText.${month.month}`} />
+        <FormattedMessage id={`Avregning.headerText.${month.month}`} />
       </span>
     )),
   ];
@@ -112,13 +112,12 @@ const AvregningTable = ({
       <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
         { tableTitle(mottaker) }
         <Table
-          headerTextCodes={getHeaderCodes(
+          headerColumnContent={getHeaderCodes(
             showCollapseButton(mottaker.resultatPerFagområde),
             { toggleDetails, showDetails: (visDetaljer ? visDetaljer.show : false), mottakerIndex },
             rangeOfMonths,
             nesteMåned,
           )}
-          allowFormattedHeader
           key={`tableIndex${mottakerIndex + 1}`}
           classNameTable={styles.simuleringTable}
         >

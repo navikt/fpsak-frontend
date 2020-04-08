@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -146,9 +146,9 @@ class TimeLineInfo extends Component {
                 </Column>
                 <Column xs="4">
                   <Normaltekst>
-                    <FormattedHTMLMessage
+                    <FormattedMessage
                       id="TimeLineInfo.Stonadinfo.Total"
-                      values={{ ukerVerdi: findTilgjengeligeUker(stonadskonto) }}
+                      values={{ ukerVerdi: findTilgjengeligeUker(stonadskonto), b: (...chunks) => <b>{chunks}</b> }}
                     />
                   </Normaltekst>
                 </Column>
@@ -156,9 +156,9 @@ class TimeLineInfo extends Component {
                 && (
                   <Column xs="3">
                     <Normaltekst>
-                      <FormattedHTMLMessage
+                      <FormattedMessage
                         id="TimeLineInfo.Stonadinfo.MaksDato"
-                        values={{ dato: moment(maksDatoUttak).format(DDMMYYYY_DATE_FORMAT) }}
+                        values={{ dato: moment(maksDatoUttak).format(DDMMYYYY_DATE_FORMAT), b: (...chunks) => <b>{chunks}</b> }}
                       />
                     </Normaltekst>
                   </Column>
@@ -187,7 +187,7 @@ class TimeLineInfo extends Component {
                             <Normaltekst>
                               {arbforhold.saldo
                               && (
-                              <FormattedHTMLMessage
+                              <FormattedMessage
                                 id="TimeLineInfo.Stonadinfo.UkerDager"
                                 values={{
                                   ukerVerdi: findAntallUkerOgDager(
@@ -196,6 +196,7 @@ class TimeLineInfo extends Component {
                                   dagerVerdi: findAntallUkerOgDager(
                                     arbforhold.saldo,
                                   ).dager,
+                                  b: (...chunks) => <b>{chunks}</b>,
                                 }}
                               />
                               )}

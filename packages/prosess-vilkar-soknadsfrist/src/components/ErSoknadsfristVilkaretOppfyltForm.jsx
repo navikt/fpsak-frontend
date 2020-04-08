@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -118,8 +118,28 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         <Row>
           <Column xs="6">
             <RadioGroupField name="erVilkarOk" validate={[required]}>
-              <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(true)} />} value />
-              <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(false)} />} value={false} />
+              <RadioOption
+                label={(
+                  <FormattedMessage
+                    id={findRadioButtonTextCode(true)}
+                    values={{
+                      b: (...chunks) => <b>{chunks}</b>,
+                    }}
+                  />
+                )}
+                value
+              />
+              <RadioOption
+                label={(
+                  <FormattedMessage
+                    id={findRadioButtonTextCode(false)}
+                    values={{
+                      b: (...chunks) => <b>{chunks}</b>,
+                    }}
+                  />
+                )}
+                value={false}
+              />
             </RadioGroupField>
           </Column>
         </Row>
@@ -128,7 +148,18 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         && (
           <>
             <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
-              {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
+              {[<RadioOption
+                key="dummy"
+                label={(
+                  <FormattedMessage
+                    id={findRadioButtonTextCode(erVilkarOk)}
+                    values={{
+                      b: (...chunks) => <b>{chunks}</b>,
+                    }}
+                  />
+                )}
+                value=""
+              />]}
             </RadioGroupField>
             {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
           && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}

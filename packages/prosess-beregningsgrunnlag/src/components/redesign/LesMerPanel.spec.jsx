@@ -16,7 +16,7 @@ describe('Lesmerpanel', () => {
         lukkTekst="lukketekst"
         apneTekst="aapnetekst"
       >
-        {[<span>innholdstekst</span>]}
+        {[<span key={1}>innholdstekst</span>]}
       </Lesmerpanel>,
     );
 

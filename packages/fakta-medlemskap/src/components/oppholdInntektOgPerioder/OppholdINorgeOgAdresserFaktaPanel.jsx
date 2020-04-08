@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
@@ -129,7 +129,17 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
             <div className={styles.ieFlex}>
               <RadioGroupField name="bosattVurdering" validate={[required]} bredde="XXL" readOnly={readOnly} isEdited={isBosattAksjonspunktClosed}>
                 <RadioOption label={{ id: 'OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway' }} value />
-                <RadioOption label={<FormattedHTMLMessage id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway" />} value={false} />
+                <RadioOption
+                  label={(
+                    <FormattedMessage
+                      id="OppholdINorgeOgAdresserFaktaPanel.NotResidingInNorway"
+                      values={{
+                        b: (...chunks) => <b>{chunks}</b>,
+                      }}
+                    />
+                  )}
+                  value={false}
+                />
               </RadioGroupField>
             </div>
           )}

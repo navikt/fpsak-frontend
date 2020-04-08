@@ -7,18 +7,18 @@ import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-arbeids
 
 
 describe('<IngenArbeidsforholdRegistrert>', () => {
-  const headerTextCodes = [
-    'PersonArbeidsforholdTable.Arbeidsforhold',
-    'PersonArbeidsforholdTable.Periode',
-    'PersonArbeidsforholdTable.Kilde',
-    'PersonArbeidsforholdTable.Stillingsprosent',
-    'PersonArbeidsforholdTable.MottattDato',
-    'EMPTY_2',
+  const headerColumnContent = [
+    <span>PersonArbeidsforholdTable.Arbeidsforhold</span>,
+    <span>PersonArbeidsforholdTable.Periode</span>,
+    <span>PersonArbeidsforholdTable.Kilde</span>,
+    <span>PersonArbeidsforholdTable.Stillingsprosent</span>,
+    <span>PersonArbeidsforholdTable.MottattDato</span>,
+    <></>,
   ];
   it('Skal sjekke at IngenArbeidsforholdRegistrert rendrer korrekt', () => {
     const wrapper = shallowWithIntl(
       <IngenArbeidsforholdRegistrert
-        headerTextCodes={headerTextCodes}
+        headerColumnContent={headerColumnContent}
       />,
     );
     expect(wrapper.find(TableColumn)).has.length(6);

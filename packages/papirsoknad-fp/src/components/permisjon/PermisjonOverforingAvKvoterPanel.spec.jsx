@@ -2,10 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import { FieldArray } from 'redux-form';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SelectField } from '@fpsak-frontend/form';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
 
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-papirsoknad-fp';
 import { PermisjonOverforingAvKvoterPanelImpl as PermisjonOverforingAvKvoterPanel } from './PermisjonOverforingAvKvoterPanel';
 
 const overforingAvKvoterArsaker = [{ navn: 'Den andre forelderen er innlagt i helseinstitusjon', kode: 'INSTITUSJONSOPPHOLD_ANNEN_FORELDER' },

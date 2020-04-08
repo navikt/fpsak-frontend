@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
@@ -52,9 +52,10 @@ const renderAvvikContentUtsettelseFraSøknad = (utsettelseArsak, getKodeverknavn
         </FlexColumn>
         <FlexColumn>
           <Normaltekst className={classNames('avvik', 'hasAvvik')}>
-            <FormattedHTMLMessage
+            <FormattedMessage
               id="UttakInfoPanel.IkkeOppgittUtsettelse"
               values={{
+                b: (...chunks) => <b>{chunks}</b>,
                 årsak: getKodeverknavn(utsettelseArsak),
                 årsakLowerCase: getKodeverknavn(utsettelseArsak).toLowerCase(),
               }}

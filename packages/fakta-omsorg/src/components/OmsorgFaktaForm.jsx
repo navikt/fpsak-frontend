@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
@@ -43,12 +43,29 @@ const OmsorgFaktaForm = ({
       >
         <Normaltekst className={styles.paddingBottom}>
           {oppgittAleneomsorgSoknad
-            ? <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittAleneomsorg" />
-            : <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittIkkeAleneomsorg" />}
+            ? <FormattedMessage id="OmsorgFaktaForm.OppgittAleneomsorg" />
+            : (
+              <FormattedMessage
+                id="OmsorgFaktaForm.OppgittIkkeAleneomsorg"
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
+              />
+            )}
         </Normaltekst>
         <RadioGroupField name="aleneomsorg" readOnly={readOnly} validate={[required]} isEdited={aleneomsorgIsEdited}>
           <RadioOption label={{ id: 'OmsorgFaktaForm.HarAleneomsorg' }} value />
-          <RadioOption label={<FormattedHTMLMessage id="OmsorgFaktaForm.HarIkkeAleneomsorg" />} value={false} />
+          <RadioOption
+            label={(
+              <FormattedMessage
+                id="OmsorgFaktaForm.HarIkkeAleneomsorg"
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
+              />
+            )}
+            value={false}
+          />
         </RadioGroupField>
       </FaktaGruppe>
       )}
@@ -62,12 +79,29 @@ const OmsorgFaktaForm = ({
       >
         <Normaltekst className={styles.paddingBottom}>
           {oppgittOmsorgSoknad
-            ? <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittOmsorg" />
-            : <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittIkkeOmsorg" />}
+            ? <FormattedMessage id="OmsorgFaktaForm.OppgittOmsorg" />
+            : (
+              <FormattedMessage
+                id="OmsorgFaktaForm.OppgittIkkeOmsorg"
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
+              />
+            )}
         </Normaltekst>
         <RadioGroupField name="omsorg" readOnly={readOnly} validate={[required]} isEdited={omsorgIsEdited}>
           <RadioOption label={{ id: 'OmsorgFaktaForm.HarOmsorg' }} value />
-          <RadioOption label={<FormattedHTMLMessage id="OmsorgFaktaForm.HarIkkeOmsorg" />} value={false} />
+          <RadioOption
+            label={(
+              <FormattedMessage
+                id="OmsorgFaktaForm.HarIkkeOmsorg"
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
+              />
+            )}
+            value={false}
+          />
         </RadioGroupField>
         {omsorg === false
           ? (

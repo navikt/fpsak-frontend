@@ -7,7 +7,7 @@ const exposedProperties = ['window', 'document'];
 
 sinon.stub(console, 'error')
   .callsFake((warning) => {
-    if (warning
+    if (warning && warning.indexOf
       && (warning.indexOf('Warning: Failed prop type:') > -1 || warning.indexOf('Warning: Each child in an array or iterator should have a unique "key" prop')
         > -1)) {
       throw new Error(warning);

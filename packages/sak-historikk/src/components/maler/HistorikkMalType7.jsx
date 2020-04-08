@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -24,13 +24,14 @@ const HistorikkMalType7 = ({
     if (endretFelt.fraVerdi !== null) {
       return (
         <div>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.7.ChangedFromTo"
             values={{
               sub1,
               sub2,
               fromValue,
               toValue,
+              b: (...chunks) => <b>{chunks}</b>,
             }}
           />
         </div>
@@ -69,7 +70,15 @@ const HistorikkMalType7 = ({
               .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
 
             {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger
-              .map((opplysning) => (<FormattedHTMLMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />))}
+              .map((opplysning) => (
+                <FormattedMessage
+                  id={findIdForOpplysningCode(opplysning)}
+                  values={{
+                    antallBarn: opplysning.tilVerdi,
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              ))}
 
             {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}

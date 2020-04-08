@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
@@ -34,7 +34,14 @@ const aktørPrefix = 'aktør_';
 const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
 const getLabel = (intl) => (
   <div>
-    <div><FormattedHTMLMessage id={findRadioButtonTextCode(false)} /></div>
+    <div>
+      <FormattedMessage
+        id={findRadioButtonTextCode(false)}
+        values={{
+          b: (...chunks) => <b>{chunks}</b>,
+        }}
+      />
+    </div>
     <div>{intl.formatMessage({ id: 'SokersOpplysningspliktForm.VilkarIkkeOppfyltMerInfo' })}</div>
   </div>
 );
@@ -123,7 +130,7 @@ export const SokersOpplysningspliktFormImpl = ({
             <RadioGroupField name="erVilkarOk" validate={[required]}>
               <RadioOption
                 label={(
-                  <FormattedHTMLMessage
+                  <FormattedMessage
                     id={findRadioButtonTextCode(true)}
                   />
               )}

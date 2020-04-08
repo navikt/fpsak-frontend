@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
@@ -11,6 +11,7 @@ import {
   SoknadData, OmsorgOgAdopsjonPanel, TerminFodselDatoPanel,
 } from '@fpsak-frontend/papirsoknad-felles';
 
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-papirsoknad-fp';
 import { ForeldrepengerForm } from './ForeldrepengerForm';
 
 describe('<ForeldrepengerForm>', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { formValueSelector, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -58,7 +58,7 @@ const SearchFormImpl = ({
     <Row>
       <Column xs="12">
         <Image className={styles.advarselIcon} src={advarselIcon} />
-        <FormattedHTMLMessage className={styles.feilmelding} id={searchResultAccessDenied.feilmelding} />
+        <FormattedMessage className={styles.feilmelding} id={searchResultAccessDenied.feilmelding} />
       </Column>
     </Row>
     )}

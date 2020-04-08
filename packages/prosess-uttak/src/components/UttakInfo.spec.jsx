@@ -67,7 +67,7 @@ describe('<UttakInfo>', () => {
       <input type="checkbox" disabled />,
     ));
     const formattedMessage = wrapper.find('FormattedMessage');
-    expect(formattedMessage).to.have.length(3);
+    expect(formattedMessage).to.have.length(4);
   });
 
   it('skal rendre uttakinfo uten flerbarns checkbox når ett barn', () => {

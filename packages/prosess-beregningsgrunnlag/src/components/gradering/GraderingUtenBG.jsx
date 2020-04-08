@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
@@ -60,7 +60,7 @@ const lagAksjonspunktViser = (aksjonspunktTekstId, andelerMedGraderingUtenBG, ge
   }
   return (
     <AksjonspunktHelpTextHTML>
-      <FormattedHTMLMessage
+      <FormattedMessage
         key="GradringAksjonspunktHP"
         id={aksjonspunktTekstId}
         values={{ arbeidsforholdTekst: lagArbeidsgiverString(andelerMedGraderingUtenBG, getKodeverknavn) }}
