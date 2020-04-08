@@ -2,7 +2,7 @@ import React, {
   FunctionComponent, useState, useCallback, ReactNode, KeyboardEvent, MouseEvent,
 } from 'react';
 
-import styles from './image.less';
+import Tooltip from './Tooltip';
 
 interface OwnProps {
   className?: string;
@@ -73,10 +73,9 @@ const Image: FunctionComponent<OwnProps> = ({
   }
 
   return (
-    <div className={styles.tooltip}>
+    <Tooltip content={tooltip}>
       {image}
-      <span className={styles.tooltiptext}>{tooltip}</span>
-    </div>
+    </Tooltip>
   );
 };
 

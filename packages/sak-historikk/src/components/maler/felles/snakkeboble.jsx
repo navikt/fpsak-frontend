@@ -40,19 +40,19 @@ const snakkeboblePanelCls = (rolle) => cx('snakkeboble__panel snakkeboble-panel'
   'snakkeboble__snakkebole-panel--ekstern': rolle === 'ARBEIDSGIVER',
 });
 
-const utledIkonOgStyle = (rolle, kjoennKode) => {
+const utledIkon = (rolle, kjoennKode) => {
   if (rolle === 'SBH') {
-    return { src: navAnsattHistorikkImg, className: styles.saksbehandlerImage };
+    return navAnsattHistorikkImg;
   } if (rolle === 'SOKER' && kjoennKode === navBrukerKjonn.MANN) {
-    return { src: mannImg, className: styles.image };
+    return mannImg;
   } if (rolle === 'SOKER' && kjoennKode === navBrukerKjonn.KVINNE) {
-    return { src: kvinneImg, className: styles.image };
+    return kvinneImg;
   } if (rolle === 'BESL') {
-    return { src: beslutterImg, className: styles.image };
+    return beslutterImg;
   } if (rolle === 'VL') {
-    return { src: maskinImg, className: styles.image };
+    return maskinImg;
   }
-  return { src: arbeidsgiverImg, className: styles.image };
+  return arbeidsgiverImg;
 };
 
 /**
@@ -69,7 +69,7 @@ const Snakkeboble = ({
   children,
 }) => (
   <div className={snakkebobleCls(rolle)}>
-    <Image {...utledIkonOgStyle(rolle, kjoennKode)} tooltip={rolleNavn} />
+    <Image className={styles.image} src={utledIkon(rolle, kjoennKode)} tooltip={rolleNavn} />
     <div className={styles['snakkeboble__snakkeboble-pil-container']}>
       <i className={snakkeboblePilCls(rolle)} />
     </div>

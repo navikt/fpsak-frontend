@@ -1,43 +1,26 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import classnames from 'classnames/bind';
-
-import VerticalSpacer from './VerticalSpacer';
 
 import styles from './tooltip.less';
 
-const classNames = classnames.bind(styles);
-
 interface OwnProps {
-  header: ReactNode;
-  body?: ReactNode;
-  show?: boolean;
-  alignArrowLeft?: boolean;
-  children: ReactNode;
+  children: ReactNode | string;
+  content: ReactNode | string;
+  alignLeft?: boolean;
+  alignRight?: boolean;
+  alignTop?: boolean;
+  alignBottom?: boolean;
 }
 
 /**
  * Tooltip
  */
 const Tooltip: FunctionComponent<OwnProps> = ({
-  header,
-  body,
-  show = false,
-  alignArrowLeft = false,
   children,
+  content,
 }) => (
   <div className={styles.tooltip}>
+    <span className={styles.tooltiptext}>{content}</span>
     {children}
-    {header
-      && (
-      <div className={classNames(styles.tooltiptext, {
-        show, hide: !show, tooltiptextLeft: alignArrowLeft, tooltiptextBottom: !alignArrowLeft,
-      })}
-      >
-        {header}
-        <VerticalSpacer eightPx />
-        {body}
-      </div>
-      )}
   </div>
 );
 
