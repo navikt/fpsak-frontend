@@ -14,6 +14,7 @@ interface OwnProps {
   alt?: string;
   tabIndex?: number;
   tooltip?: string | ReactNode;
+  alignTooltipLeft?: boolean;
 }
 
 /**
@@ -31,6 +32,7 @@ const Image: FunctionComponent<OwnProps> = ({
   alt,
   onKeyDown,
   tooltip,
+  alignTooltipLeft = false,
 }) => {
   const [isHovering, setHoovering] = useState(false);
 
@@ -73,7 +75,7 @@ const Image: FunctionComponent<OwnProps> = ({
   }
 
   return (
-    <Tooltip content={tooltip}>
+    <Tooltip content={tooltip} alignLeft={alignTooltipLeft}>
       {image}
     </Tooltip>
   );

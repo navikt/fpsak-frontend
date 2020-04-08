@@ -55,6 +55,8 @@ const utledIkon = (rolle, kjoennKode) => {
   return arbeidsgiverImg;
 };
 
+const utledTooltipPlassering = (rolle) => rolle === 'SBH' || rolle === 'VL' || rolle === 'BESL';
+
 /**
  * Snakkeboble
  *
@@ -69,7 +71,7 @@ const Snakkeboble = ({
   children,
 }) => (
   <div className={snakkebobleCls(rolle)}>
-    <Image className={styles.image} src={utledIkon(rolle, kjoennKode)} tooltip={rolleNavn} />
+    <Image className={styles.image} src={utledIkon(rolle, kjoennKode)} tooltip={rolleNavn} alignTooltipLeft={utledTooltipPlassering(rolle)} />
     <div className={styles['snakkeboble__snakkeboble-pil-container']}>
       <i className={snakkeboblePilCls(rolle)} />
     </div>

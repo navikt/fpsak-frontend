@@ -150,6 +150,7 @@ const BehandlingPickerItemContent = ({
               src={stjerneImg}
               tooltip={<FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" />}
               tabIndex="0"
+              alignTooltipLeft
             />
           )}
         </FlexColumn>
@@ -205,7 +206,7 @@ const BehandlingPickerItemContent = ({
         </FlexColumn>
         <FlexColumn className={styles.pushRightCorner}>
           <Normaltekst className={styles.inline}><FormattedMessage id="BehandlingPickerItemContent.Enhet" /></Normaltekst>
-          <Tooltip content={behandlendeEnhetNavn}>
+          <Tooltip content={behandlendeEnhetNavn} alignLeft>
             <Normaltekst className={styles.inline}>{behandlendeEnhetId}</Normaltekst>
           </Tooltip>
         </FlexColumn>

@@ -20,15 +20,15 @@ interface OwnProps {
 const Tooltip: FunctionComponent<OwnProps> = ({
   children,
   content,
-  alignRight = true,
+  alignRight = false,
   alignLeft = false,
   alignTop = false,
   alignBottom = false,
 }) => (
   <div className={styles.tooltip}>
     <span className={classNames(styles.tooltiptext, {
+      right: alignRight || (!alignLeft && !alignTop && !alignBottom),
       left: alignLeft,
-      right: alignRight,
       top: alignTop,
       bottom: alignBottom,
     })}

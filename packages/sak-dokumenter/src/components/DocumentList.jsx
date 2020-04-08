@@ -99,7 +99,7 @@ const DocumentList = ({
             <TableColumn>
               {isTextMoreThan25char(document.gjelderFor)
               && (
-                <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>}>
+                <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
                   {trimText(document.gjelderFor)}
                 </Tooltip>
               )}

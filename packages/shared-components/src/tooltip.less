@@ -1,8 +1,8 @@
 @import '@{coreModulePath}nav-frontend-core/less/core';
 
 .tooltip {
-  position: relative;
   display: inline-block;
+  position: relative;
 }
 
 /* Tooltip text */
@@ -14,23 +14,20 @@
   font-family: 'Source Sans Pro', Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
-  text-align: center;
-  padding: 2px 8px 0 8px;
-  width: max-content;
   max-width: 200px;
-  pointer-events: none;
-  /* Position the tooltip text */
-  position: absolute;
-  z-index: 1;
-
-  /* Fade in tooltip */
   opacity: 0;
+  padding: 2px 8px 0 8px;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  width: max-content;
+  z-index: 1;
 }
 
 .left {
   bottom: auto;
-  top: -5px;
   right: 110%;
+  top: -5px;
 }
 
 .top {
@@ -38,9 +35,10 @@
 }
 
 .right {
-  top: -5px;
   left: 110%;
+  top: -5px;
 }
+
 .bottom {
   top: 135%;
 }
