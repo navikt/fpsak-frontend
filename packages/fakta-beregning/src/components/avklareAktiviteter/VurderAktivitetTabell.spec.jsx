@@ -14,6 +14,7 @@ import VurderAktiviteterTabell, { lagAktivitetFieldId, skalVurdereAktivitet } fr
 const aktivitet1 = {
   arbeidsgiverNavn: 'Arbeidsgiveren',
   arbeidsgiverId: '384723894723',
+  arbeidsgiverIdVisning: '384723894723',
   fom: '2019-01-01',
   tom: null,
   skalBrukes: null,
@@ -23,6 +24,7 @@ const aktivitet1 = {
 const aktivitet2 = {
   arbeidsgiverNavn: 'Arbeidsgiveren2',
   arbeidsgiverId: '334534623342',
+  arbeidsgiverIdVisning: '334534623342',
   arbeidsforholdId: 'efj8343f34f',
   eksternArbeidsforholdId: '123456',
   fom: '2019-01-01',
@@ -35,6 +37,7 @@ const aktivitet3 = {
   arbeidsgiverNavn: 'Arbeidsgiveren3',
   aktørIdString: '324234234234',
   arbeidsgiverId: '1960-01-01',
+  arbeidsgiverIdVisning: '1960-01-01',
   arbeidsforholdId: 'efj8343f34f',
   eksternArbeidsforholdId: '56789',
   fom: '2019-01-01',

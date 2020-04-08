@@ -9,8 +9,8 @@ export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk) => {
   if (!aktivitet.arbeidsgiverNavn) {
     return aktivitet.arbeidsforholdType ? getKodeverknavnFn(alleKodeverk, kodeverkTyper)(aktivitet.arbeidsforholdType) : '';
   }
-  return aktivitet.arbeidsgiverId
-    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+  return aktivitet.arbeidsgiverIdVisning
+    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverIdVisning})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
     : aktivitet.arbeidsgiverNavn;
 };
 
@@ -24,6 +24,7 @@ export const sortArbeidsforholdList = (arbeidsforhold) => {
 export const arbeidsforholdProptype = PropTypes.shape({
   arbeidsgiverNavn: PropTypes.string,
   arbeidsgiverId: PropTypes.string,
+  arbeidsgiverIdVisning: PropTypes.string,
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
@@ -48,6 +49,7 @@ export const getUniqueListOfArbeidsforholdFields = (fields) => {
         andelsnr: field.andelsnr,
         arbeidsforholdId: field.arbeidsforholdId,
         arbeidsgiverId: field.arbeidsgiverId,
+        arbeidsgiverIdVisning: field.arbeidsgiverIdVisning,
         arbeidsgiverNavn: field.arbeidsgiverNavn,
         arbeidsperiodeFom: field.arbeidsperiodeFom,
         arbeidsperiodeTom: field.arbeidsperiodeTom,
