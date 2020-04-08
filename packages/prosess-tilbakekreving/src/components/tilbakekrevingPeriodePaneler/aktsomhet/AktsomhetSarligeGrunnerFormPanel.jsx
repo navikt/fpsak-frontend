@@ -31,7 +31,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
     </Undertekst>
     <VerticalSpacer eightPx />
     {sarligGrunnTyper.map((sgt) => (
-      <>
+      <React.Fragment key={sgt.kode}>
         <CheckboxField
           key={sgt.kode}
           name={sgt.kode}
@@ -39,7 +39,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
           readOnly={readOnly}
         />
         <VerticalSpacer eightPx />
-      </>
+      </React.Fragment>
     ))}
     {erSerligGrunnAnnetValgt && (
       <Row>

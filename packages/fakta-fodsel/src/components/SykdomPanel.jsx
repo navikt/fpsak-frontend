@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
@@ -37,7 +37,17 @@ export const SykdomPanel = ({
     <VerticalSpacer eightPx />
     <RadioGroupField name="erMorForSykVedFodsel" validate={[required]} bredde="XL" readOnly={readOnly} direction="vertical">
       <RadioOption value label={{ id: 'SykdomPanel.AnnenForelderForSyk' }} />
-      <RadioOption value={false} label={<FormattedHTMLMessage id="SykdomPanel.AnnenForelderIkkeForSyk" />} />
+      <RadioOption
+        value={false}
+        label={(
+          <FormattedMessage
+            id="SykdomPanel.AnnenForelderIkkeForSyk"
+            values={{
+              b: (...chunks) => <b>{chunks}</b>,
+            }}
+          />
+      )}
+      />
     </RadioGroupField>
   </FaktaGruppe>
 );

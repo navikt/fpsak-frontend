@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { skjermlenkeCodes } from '@fpsak-frontend/konstanter';
@@ -149,7 +149,12 @@ export class ApprovalPanel extends Component {
                 : (
                   <div>
                     <div className={styles.resultatFraGodkjenningTextContainer}>
-                      <FormattedHTMLMessage id="ToTrinnsForm.LøstAksjonspunkt" />
+                      <FormattedMessage
+                        id="ToTrinnsForm.LøstAksjonspunkt"
+                        values={{
+                          b: (...chunks) => <b>{chunks}</b>,
+                        }}
+                      />
                     </div>
                     <div>
                       <ToTrinnsFormReadOnly

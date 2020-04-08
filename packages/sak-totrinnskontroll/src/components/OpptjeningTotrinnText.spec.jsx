@@ -90,7 +90,7 @@ describe('<OpptjeningTotrinnnText>', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText
       aktivitet={lagOpptjeningAktivitetArbeidMedNavn('UNDERKJENNING')}
     />);
-    const normaltekstFields = wrapper.find('FormattedHTMLMessage');
+    const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningArbeidMedNavn');
   });
@@ -99,7 +99,7 @@ describe('<OpptjeningTotrinnnText>', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText
       aktivitet={lagOpptjeningAktivitetArbeidUtenNavn('UNDERKJENNING')}
     />);
-    const normaltekstFields = wrapper.find('FormattedHTMLMessage');
+    const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn');
   });
@@ -109,7 +109,7 @@ describe('<OpptjeningTotrinnnText>', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText
       aktivitet={lagOpptjeningAktivitet('UNDERKJENNING')}
     />);
-    const normaltekstFields = wrapper.find('FormattedHTMLMessage');
+    const normaltekstFields = wrapper.find('FormattedMessage');
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningAktivitet');
   });

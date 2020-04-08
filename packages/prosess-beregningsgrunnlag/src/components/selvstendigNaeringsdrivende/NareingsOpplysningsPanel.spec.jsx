@@ -3,9 +3,10 @@ import { expect } from 'chai';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import NaeringsopplysningsPanel from './NaeringsOpplysningsPanel';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
+import NaeringsopplysningsPanel from './NaeringsOpplysningsPanel';
 
 const andelerForstePeriode = {
   aktivitetStatus:

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import moment from 'moment';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -174,7 +174,17 @@ export const ActivityPanel = ({
         { (!initialValues.erManueltOpprettet) && (
           <RadioGroupField name="erGodkjent" validate={[required]} readOnly={readOnly} isEdited={initialValues.erEndret}>
             <RadioOption value label={{ id: 'ActivityPanel.Godkjent' }} />
-            <RadioOption value={false} label={<FormattedHTMLMessage id="ActivityPanel.IkkeGodkjent" />} />
+            <RadioOption
+              value={false}
+              label={(
+                <FormattedMessage
+                  id="ActivityPanel.IkkeGodkjent"
+                  values={{
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              )}
+            />
           </RadioGroupField>
         )}
       </>
