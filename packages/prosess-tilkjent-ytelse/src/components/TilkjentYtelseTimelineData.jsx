@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
@@ -169,9 +169,9 @@ const TilkjentYtelseTimeLineData = ({
         <VerticalSpacer fourPx />
         <Row>
           <Column xs="12">
-            <FormattedHTMLMessage
+            <FormattedMessage
               id="TilkjentYtelse.PeriodeData.Dagsats"
-              values={{ dagsatsVerdi: selectedItemData.dagsats }}
+              values={{ dagsatsVerdi: selectedItemData.dagsats, b: (...chunks) => <b>{chunks}</b> }}
             />
           </Column>
         </Row>

@@ -14,13 +14,13 @@ import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 
 import styles from './personArbeidsforholdTable.less';
 
-const headerTextCodes = [
-  'PersonArbeidsforholdTable.Arbeidsforhold',
-  'PersonArbeidsforholdTable.Periode',
-  'PersonArbeidsforholdTable.Kilde',
-  'PersonArbeidsforholdTable.Stillingsprosent',
-  'PersonArbeidsforholdTable.MottattDato',
-  'EMPTY_2',
+const headerColumnContent = [
+  <FormattedMessage key={1} id="PersonArbeidsforholdTable.Arbeidsforhold" values={{ br: <br /> }} />,
+  <FormattedMessage key={2} id="PersonArbeidsforholdTable.Periode" values={{ br: <br /> }} />,
+  <FormattedMessage key={3} id="PersonArbeidsforholdTable.Kilde" values={{ br: <br /> }} />,
+  <FormattedMessage key={4} id="PersonArbeidsforholdTable.Stillingsprosent" values={{ br: <br /> }} />,
+  <FormattedMessage key={5} id="PersonArbeidsforholdTable.MottattDato" values={{ br: <br /> }} />,
+  <></>,
 ];
 
 const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
@@ -49,13 +49,13 @@ const PersonArbeidsforholdTable = ({
   if (alleArbeidsforhold.length === 0) {
     return (
       <IngenArbeidsforholdRegistrert
-        headerTextCodes={headerTextCodes}
+        headerColumnContent={headerColumnContent}
       />
     );
   }
   const intl = useIntl();
   return (
-    <Table headerTextCodes={headerTextCodes}>
+    <Table headerColumnContent={headerColumnContent}>
       {alleArbeidsforhold && alleArbeidsforhold.map((a) => {
         const stillingsprosent = a.stillingsprosent !== undefined && a.stillingsprosent !== null ? `${parseFloat(a.stillingsprosent).toFixed(2)} %` : '';
         const navn = utledNavn(a);

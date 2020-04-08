@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -45,9 +45,9 @@ const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
           <Normaltekst>
             <span>
               { !ikkeVurdert && (
-                <FormattedHTMLMessage
+                <FormattedMessage
                   id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
-                  values={{ dagSats: dagsatsRad.grunnlag }}
+                  values={{ dagSats: dagsatsRad.grunnlag, b: (...chunks) => <b>{chunks}</b> }}
                 />
               )}
               { ikkeVurdert && (
@@ -145,12 +145,12 @@ const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key) => (
     <Normaltekst className={beregningStyles.redError}>
       <Image
         className={styles.avslaat_icon}
-        alt={intl.formatMessage({ id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' })}
+        alt={intl.formatMessage({ id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' }, { b: (...chunks) => <b>{chunks}</b> })}
         src={avslaatIkonUrl}
       />
       <FormattedMessage
         id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2"
-        values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
+        values={{ halvG: formatCurrencyNoKr(halvGVerdi), b: (...chunks) => <b>{chunks}</b> }}
       />
     </Normaltekst>
   </React.Fragment>

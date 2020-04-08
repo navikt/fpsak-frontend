@@ -67,8 +67,8 @@ describe('BeregningsresultatPanel', () => {
     expect(andelText).to.equal(tableData.rowsAndeler[0].ledetekst);
     expect(formatCurrencyNoKr(andelVerdi)).to.equal(formatCurrencyNoKr(tableData.rowsAndeler[0].verdi));
     const sumRow = rows.last();
-    const sumText = sumRow.find('FormattedHTMLMessage').props().id;
-    const sumTextTall = sumRow.find('FormattedHTMLMessage').props().values.dagSats;
+    const sumText = sumRow.find('FormattedMessage').props().id;
+    const sumTextTall = sumRow.find('FormattedMessage').props().values.dagSats;
     const sumVerdi = sumRow.find('Normaltekst').last().childAt(0).text();
     expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.DagsatsNy');
     expect(sumTextTall).to.equal(formatCurrencyNoKr(400));

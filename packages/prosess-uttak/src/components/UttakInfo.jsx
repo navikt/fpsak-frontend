@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 
@@ -74,7 +74,7 @@ const typePeriode = (selectedItem, kontoIkkeSatt, getKodeverknavn) => {
   if (selectedItem.utsettelseType.kode === '-' && !kontoIkkeSatt) {
     returnText = (<FormattedMessage id="UttakActivity.Uttak" />);
   } else if (selectedItem.utsettelseType.kode !== '-') {
-    returnText = (<FormattedHTMLMessage id="UttakActivity.Utsettelse" values={{ utsettelseType: getKodeverknavn(selectedItem.utsettelseType) }} />);
+    returnText = (<FormattedMessage id="UttakActivity.Utsettelse" values={{ utsettelseType: getKodeverknavn(selectedItem.utsettelseType) }} />);
   } else if (kontoIkkeSatt) {
     returnText = (<FormattedMessage id="UttakActivity.IngenKonto" />);
   }
@@ -85,16 +85,16 @@ const isInnvilgetText = (selectedItemData, getKodeverknavn) => {
   let returnText = '';
   if (periodeIsInnvilget(selectedItemData)) {
     returnText = (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="UttakActivity.InnvilgelseAarsak"
-        values={{ innvilgelseAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak) }}
+        values={{ innvilgelseAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak), b: (...chunks) => <b>{chunks}</b> }}
       />
     );
   } else {
     returnText = (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="UttakActivity.IkkeOppfyltAarsak"
-        values={{ avslagAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak) }}
+        values={{ avslagAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak), b: (...chunks) => <b>{chunks}</b> }}
       />
     );
   }

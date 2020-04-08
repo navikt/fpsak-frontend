@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -40,7 +40,7 @@ export const HistorikkMalTypeForeldelse = ({
         return (
           <div key={periodeFom + periodeTom}>
             <Normaltekst>
-              <FormattedHTMLMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
+              <FormattedMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom, b: (...chunks) => <b>{chunks}</b> }} />
             </Normaltekst>
             {endredeFelter && endredeFelter.map((felt) => {
               const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
@@ -48,9 +48,14 @@ export const HistorikkMalTypeForeldelse = ({
               return (
                 <React.Fragment key={endretFeltNavn.kode}>
                   <Normaltekst>
-                    <FormattedHTMLMessage
+                    <FormattedMessage
                       id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                      values={{ navn: getKodeverknavn(endretFeltNavn), fraVerdi, tilVerdi }}
+                      values={{
+                        navn: getKodeverknavn(endretFeltNavn),
+                        fraVerdi,
+                        tilVerdi,
+                        b: (...chunks) => <b>{chunks}</b>,
+                      }}
                     />
                   </Normaltekst>
                   <VerticalSpacer eightPx />

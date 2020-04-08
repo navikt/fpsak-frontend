@@ -33,7 +33,7 @@ describe('<PersonAksjonspunktText>', () => {
       arbeidsforhold={undefined}
       alleKodeverk={alleKodeverk}
     />);
-    expect(wrapper.find('FormattedHTMLMessage')).to.have.length(0);
+    expect(wrapper.find('FormattedMessage')).to.have.length(0);
   });
 
   it('skal ikke vise hjelpetekst når arbeidsforholdet ikke skal vurderes', () => {
@@ -44,7 +44,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    expect(wrapper.find('FormattedHTMLMessage')).to.have.length(0);
+    expect(wrapper.find('FormattedMessage')).to.have.length(0);
   });
 
   it('skal vise hjelpetekst når det ikke er mottatt inntekstmelding for arbeidsforholdet', () => {
@@ -55,7 +55,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarManglendeInntektsmelding');
   });
 
@@ -71,7 +71,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarErstatteTidligere');
   });
 
@@ -85,7 +85,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarErstatteAlle');
   });
 
@@ -101,7 +101,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.AvklarIkkeRegistrertIAa');
   });
 
@@ -117,7 +117,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component).to.be.empty;
   });
 
@@ -134,7 +134,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.LeggTilArbeidsforhold');
   });
 
@@ -157,7 +157,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarPermisjonOgIkkeMottattIM');
     expect(component.props().values.permisjonFom).to.eql('01.10.2018');
     expect(component.props().values.permisjonTom).to.eql('');
@@ -182,7 +182,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarPermisjonOgMottattIM');
     expect(component.props().values.permisjonFom).to.eql('01.10.2018');
     expect(component.props().values.permisjonTom).to.eql('');
@@ -216,7 +216,7 @@ describe('<PersonAksjonspunktText>', () => {
       }}
       alleKodeverk={alleKodeverk}
     />);
-    const component = wrapper.find('FormattedHTMLMessage');
+    const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarFlerePermisjoner');
     expect(component.props().values).to.empty;
   });

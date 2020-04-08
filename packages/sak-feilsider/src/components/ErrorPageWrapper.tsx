@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import {
-  createIntl, createIntlCache, FormattedHTMLMessage, RawIntlProvider,
+  createIntl, createIntlCache, FormattedMessage, RawIntlProvider,
 } from 'react-intl';
 
 import { Innholdstittel } from 'nav-frontend-typografi';
@@ -32,7 +32,7 @@ const ErrorPageWrapper: FunctionComponent<OwnProps> = ({
   <RawIntlProvider value={intl}>
     <div className={pageContainer}>
       <Innholdstittel>
-        <FormattedHTMLMessage id={titleCode} />
+        <FormattedMessage id={titleCode} values={{ br: <br /> }} />
       </Innholdstittel>
       <br />
       {children}

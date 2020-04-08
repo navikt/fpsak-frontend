@@ -173,7 +173,6 @@
   "UttakInfoPanel.PeriodenSlettes": "Perioden {fom} - {tom} {uttakPeriodeType} slettes",
   "UttakInfoPanel.Frilans": "Frilanser",
   "UttakInfoPanel.Selvstendignæringsdrivende": "Selvstendig næringsdrivende",
-  "UttakInfoPanel.IkkeOppgittUtsettelse": "<b>{årsak}:</b> Ikke oppgitt {årsakLowerCase}",
   "UttakInfoPanel.AnnenForelderHarRett": "Annen forelder har rett",
   "UttakInfoPanel.AnnenForelderHarIkkeRett": "Annen forelder har ikke rett",
   "UttakInfoPanel.ManuellOverstyring": "Manuell overstyring",
