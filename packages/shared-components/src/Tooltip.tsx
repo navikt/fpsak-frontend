@@ -1,6 +1,6 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 
-import styles from './tooltip.less';
+import styles from './tooltip2.less';
 
 interface OwnProps {
   children: ReactNode | string;
@@ -19,7 +19,7 @@ const Tooltip: FunctionComponent<OwnProps> = ({
   content,
 }) => (
   <div className={styles.tooltip}>
-    <span className={styles.tooltiptext}>{content}</span>
+    <div className={styles.tooltiptext}>{content}</div>
     {children}
   </div>
 );
