@@ -1,10 +1,11 @@
 @import '@{coreModulePath}nav-frontend-core/less/core';
 
 .tooltip {
+  position: relative;
   display: inline-block;
-  z-index: 30;
 }
 
+/* Tooltip text */
 .tooltip .tooltiptext {
   background-color: @orangeFocusLighten80;
   border-radius: 4px;
@@ -13,15 +14,38 @@
   font-family: 'Source Sans Pro', Arial, sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
-  margin-top: 25px;
+  text-align: center;
+  padding: 2px 8px 0 8px;
+  width: max-content;
   max-width: 200px;
-  opacity: 0;
-  padding: 2px 8px;
   pointer-events: none;
+  /* Position the tooltip text */
   position: absolute;
-  z-index: 2;
+  z-index: 1;
+
+  /* Fade in tooltip */
+  opacity: 0;
 }
 
+.left {
+  bottom: auto;
+  top: -5px;
+  right: 110%;
+}
+
+.top {
+  bottom: 125%;
+}
+
+.right {
+  top: -5px;
+  left: 110%;
+}
+.bottom {
+  top: 135%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
   animation-delay: 0.4s;
   animation-duration: 0.1s;

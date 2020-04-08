@@ -1,6 +1,9 @@
 import React, { FunctionComponent, ReactNode } from 'react';
+import classnames from 'classnames/bind';
 
-import styles from './tooltip2.less';
+import styles from './tooltip.less';
+
+const classNames = classnames.bind(styles);
 
 interface OwnProps {
   children: ReactNode | string;
@@ -17,9 +20,21 @@ interface OwnProps {
 const Tooltip: FunctionComponent<OwnProps> = ({
   children,
   content,
+  alignRight = true,
+  alignLeft = false,
+  alignTop = false,
+  alignBottom = false,
 }) => (
   <div className={styles.tooltip}>
-    <div className={styles.tooltiptext}>{content}</div>
+    <span className={classNames(styles.tooltiptext, {
+      left: alignLeft,
+      right: alignRight,
+      top: alignTop,
+      bottom: alignBottom,
+    })}
+    >
+      {content}
+    </span>
     {children}
   </div>
 );
