@@ -40,6 +40,7 @@ export const BehandleKlageFormKaImpl = ({
   formValues,
   intl,
   alleKodeverk,
+  skalBenytteFritekstBrevmal,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -84,6 +85,7 @@ export const BehandleKlageFormKaImpl = ({
                 fritekstTilBrev={formValues.fritekstTilBrev}
                 klageVurdering={formValues.klageVurdering}
                 aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NK}
+                skalBenytteFritekstBrevmal={skalBenytteFritekstBrevmal}
               />
             )}
           </Column>
@@ -107,6 +109,7 @@ BehandleKlageFormKaImpl.propTypes = {
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
+  skalBenytteFritekstBrevmal: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 

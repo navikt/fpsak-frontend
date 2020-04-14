@@ -29,6 +29,7 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
+  skalBenytteFritekstBrevmal: boolean;
   alleBehandlinger: {
     id: number;
     uuid: string;
@@ -97,6 +98,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
       hentBehandling,
       opneSokeside,
       alleBehandlinger,
+      skalBenytteFritekstBrevmal,
     } = this.props;
 
     if (!behandling) {
@@ -126,6 +128,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
               hentBehandling={hentBehandling}
               opneSokeside={opneSokeside}
               alleBehandlinger={alleBehandlinger}
+              skalBenytteFritekstBrevmal={skalBenytteFritekstBrevmal}
             />
           </>
         )}

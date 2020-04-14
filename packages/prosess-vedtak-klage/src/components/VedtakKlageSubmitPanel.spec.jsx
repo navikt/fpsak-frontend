@@ -34,6 +34,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
       behandlingPaaVent={false}
       klageVurderingResultatNK={klageVurderingResultatNK}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      skalBenytteFritekstBrevmal={false}
     />);
 
 
@@ -58,6 +59,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
       behandlingPaaVent={false}
       klageVurderingResultatNK={klageVurderingResultatNK}
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      skalBenytteFritekstBrevmal={false}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -75,6 +77,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
       readOnly={false}
       behandlingPaaVent
       previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      skalBenytteFritekstBrevmal={false}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
