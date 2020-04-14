@@ -31,10 +31,10 @@
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "react": "^16.13.1",
-    "react-intl": "^4.3.1",
+    "react-intl": "^4.4.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.2",
+    "redux-form": "^8.3.5",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
@@ -42,6 +42,6 @@
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
     "redux-mock-store": "^1.5.4",
-    "sinon": "^9.0.1"
+    "sinon": "^9.0.2"
   }
 }

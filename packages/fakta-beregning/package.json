@@ -11,7 +11,7 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "core-js": "^3.6.4",
+    "core-js": "^3.6.5",
     "moment": "^2.24.0",
     "nav-frontend-alertstriper": "3.0.14",
     "nav-frontend-alertstriper-style": "2.0.12",
@@ -21,16 +21,16 @@
     "nav-frontend-typografi-style": "1.0.19",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-intl": "^4.3.1",
+    "react-intl": "^4.4.0",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.2",
+    "redux-form": "^8.3.5",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.11.0",
-    "sinon": "^9.0.1"
+    "sinon": "^9.0.2"
   }
 }

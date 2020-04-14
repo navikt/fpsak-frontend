@@ -118,6 +118,8 @@ class CalendarOverlay extends Component<OwnProps & WrappedComponentProps> {
         onKeyDown={this.onKeyDown}
         role="link"
       >
+        {/*
+          // @ts-ignore https://github.com/gpbl/react-day-picker/issues/1009 */}
         <DayPicker
           {...this.getDayPickerLocalization()}
           className={dayPickerClassName}
