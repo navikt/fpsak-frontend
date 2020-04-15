@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
-import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, Tooltip } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -72,12 +72,13 @@ describe('<VisittkortDetaljerPopup>', () => {
       sprakkode={{ kode: 'NN' }}
     />);
 
-    const etiketter = wrapper.find(EtikettInfo);
-    expect(etiketter).has.length(4);
-    expect(etiketter.at(0).prop('title')).is.eql('Statsborgerskap');
-    expect(etiketter.at(1).prop('title')).is.eql('Personstatus');
-    expect(etiketter.at(2).prop('title')).is.eql('Sivilstand');
-    expect(etiketter.at(3).prop('title')).is.eql('Foretrukket språk');
+    expect(wrapper.find(EtikettInfo)).has.length(4);
+    const tooltips = wrapper.find(Tooltip);
+    expect(tooltips).has.length(4);
+    expect(tooltips.at(0).prop('content')).is.eql('Statsborgerskap');
+    expect(tooltips.at(1).prop('content')).is.eql('Personstatus');
+    expect(tooltips.at(2).prop('content')).is.eql('Sivilstand');
+    expect(tooltips.at(3).prop('content')).is.eql('Foretrukket språk');
   });
 
   it('skal vise adresser', () => {

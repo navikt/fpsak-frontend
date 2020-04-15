@@ -17,7 +17,7 @@
     "nav-frontend-grid": "1.0.27",
     "nav-frontend-grid-style": "0.2.20",
     "nav-frontend-js-utils": "^1.0.8",
-    "nav-frontend-knapper": "1.0.40",
+    "nav-frontend-knapper": "2.0.1",
     "nav-frontend-knapper-style": "0.3.35",
     "nav-frontend-lukknapp": "1.0.25",
     "nav-frontend-lukknapp-style": "0.2.22",
@@ -28,7 +28,7 @@
     "nav-frontend-typografi-style": "1.0.19",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-intl": "^4.3.1"
+    "react-intl": "^4.4.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

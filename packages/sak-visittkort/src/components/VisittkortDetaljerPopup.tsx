@@ -5,7 +5,7 @@ import { Normaltekst, Element } from 'nav-frontend-typografi';
 
 import { Kodeverk, KodeverkMedNavn, Personopplysninger } from '@fpsak-frontend/types';
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip,
 } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -49,54 +49,59 @@ const VisittkortDetaljerPopup: FunctionComponent<OwnProps & WrappedComponentProp
         <FlexRow>
           {personopplysninger.region && (
           <FlexColumn>
-            <EtikettInfo
-              className={styles.etikett}
-              typo="undertekst"
-              title={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Statsborgerskap.Hjelpetekst' })}
-            >
-              {getKodeverknavn(personopplysninger.region)}
-            </EtikettInfo>
+            <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Statsborgerskap.Hjelpetekst' })} alignBottom>
+              <EtikettInfo
+                className={styles.etikett}
+                typo="undertekst"
+              >
+                {getKodeverknavn(personopplysninger.region)}
+              </EtikettInfo>
+            </Tooltip>
           </FlexColumn>
           )}
           <FlexColumn>
-            <EtikettInfo
-              className={styles.etikett}
-              typo="undertekst"
-              title={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Personstatus.Hjelpetekst' })}
-            >
-              {getKodeverknavn(findPersonStatus(personopplysninger))}
-            </EtikettInfo>
+            <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Personstatus.Hjelpetekst' })} alignBottom>
+              <EtikettInfo
+                className={styles.etikett}
+                typo="undertekst"
+              >
+                {getKodeverknavn(findPersonStatus(personopplysninger))}
+              </EtikettInfo>
+            </Tooltip>
           </FlexColumn>
           {personopplysninger.sivilstand && (
           <FlexColumn>
-            <EtikettInfo
-              className={styles.etikett}
-              typo="undertekst"
-              title={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Sivilstand.Hjelpetekst' })}
-            >
-              {getKodeverknavn(personopplysninger.sivilstand)}
-            </EtikettInfo>
+            <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Sivilstand.Hjelpetekst' })} alignBottom>
+              <EtikettInfo
+                className={styles.etikett}
+                typo="undertekst"
+              >
+                {getKodeverknavn(personopplysninger.sivilstand)}
+              </EtikettInfo>
+            </Tooltip>
           </FlexColumn>
           )}
           {borMedBarnet && (
             <FlexColumn>
-              <EtikettInfo
-                className={styles.etikett}
-                typo="undertekst"
-                title={intl.formatMessage({ id: 'VisittkortDetaljerPopup.BorMedBarnet' })}
-              >
-                <FormattedMessage id="VisittkortDetaljerPopup.BorMedBarnet" />
-              </EtikettInfo>
+              <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.BorMedBarnet' })} alignBottom>
+                <EtikettInfo
+                  className={styles.etikett}
+                  typo="undertekst"
+                >
+                  <FormattedMessage id="VisittkortDetaljerPopup.BorMedBarnet" />
+                </EtikettInfo>
+              </Tooltip>
             </FlexColumn>
           )}
           <FlexColumn>
-            <EtikettInfo
-              className={styles.etikett}
-              typo="undertekst"
-              title={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Malform.Beskrivelse' })}
-            >
-              <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
-            </EtikettInfo>
+            <Tooltip content={intl.formatMessage({ id: 'VisittkortDetaljerPopup.Malform.Beskrivelse' })} alignBottom>
+              <EtikettInfo
+                className={styles.etikett}
+                typo="undertekst"
+              >
+                <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
+              </EtikettInfo>
+            </Tooltip>
           </FlexColumn>
         </FlexRow>
         <VerticalSpacer sixteenPx />

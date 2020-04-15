@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
+import Panel from 'nav-frontend-paneler';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -43,7 +44,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning={false}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelAT = wrapper.find('AvviksopplysningerAT');
@@ -60,7 +61,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning={false}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelAT = wrapper.find('AvviksopplysningerAT');
@@ -94,7 +95,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning={false}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelSN = wrapper.find('AvviksopplysningerSN');
@@ -114,7 +115,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning={false}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const avvikPanelFL = wrapper.find('AvviksopplysningerFL');
@@ -134,7 +135,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning={false}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const rows = wrapper.find('Row');
@@ -158,7 +159,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning={false}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const headerTitle = panel.find('FormattedMessage').first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
     const rows = wrapper.find('Row');
@@ -182,7 +183,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning={false}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const formatedText = panel.find('FormattedMessage');
     const headerTitle = formatedText.first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');
@@ -204,7 +205,7 @@ describe('<Avviksopplysninger>', () => {
       aktivitetStatusKode=""
       gjelderBesteberegning
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const formatedText = panel.find('FormattedMessage');
     const headerTitle = formatedText.first();
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.Avviksopplysninger.ApplicationInformation');

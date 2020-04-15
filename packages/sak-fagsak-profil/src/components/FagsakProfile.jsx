@@ -7,7 +7,7 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, Tooltip,
 } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
@@ -47,9 +47,11 @@ export const FagsakProfile = ({
               </FlexColumn>
               {visSakDekningsgrad(sakstype.kode, dekningsgrad) && (
                 <FlexColumn>
-                  <EtikettInfo title={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}>
-                    {`${dekningsgrad}%`}
-                  </EtikettInfo>
+                  <Tooltip content={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })} alignBottom>
+                    <EtikettInfo>
+                      {`${dekningsgrad}%`}
+                    </EtikettInfo>
+                  </Tooltip>
                 </FlexColumn>
               )}
             </FlexRow>

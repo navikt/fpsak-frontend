@@ -11,6 +11,7 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { Tooltip } from '@fpsak-frontend/shared-components';
 
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-visittkort';
 import VisittkortLabels from './VisittkortLabels';
@@ -83,9 +84,10 @@ describe('<VisittkortLabels>', () => {
       }}
     />);
 
-    const etikett = wrapper.find(EtikettInfo);
-    expect(etikett).has.length(1);
-    expect(etikett.prop('title')).is.eql('Personen er død');
+    expect(wrapper.find(EtikettInfo)).has.length(1);
+    const tooltip = wrapper.find(Tooltip);
+    expect(tooltip).has.length(1);
+    expect(tooltip.prop('content')).is.eql('Personen er død');
   });
 
   it('skal vise etikett for kode 6', () => {
@@ -97,9 +99,10 @@ describe('<VisittkortLabels>', () => {
       }}
     />);
 
-    const etikett = wrapper.find(EtikettAdvarsel);
-    expect(etikett).has.length(1);
-    expect(etikett.prop('title')).is.eql('Personen har diskresjonsmerking kode 6');
+    expect(wrapper.find(EtikettAdvarsel)).has.length(1);
+    const tooltip = wrapper.find(Tooltip);
+    expect(tooltip).has.length(1);
+    expect(tooltip.prop('content')).is.eql('Personen har diskresjonsmerking kode 6');
   });
 
   it('skal vise etikett for kode 7', () => {
@@ -111,9 +114,10 @@ describe('<VisittkortLabels>', () => {
       }}
     />);
 
-    const etikett = wrapper.find(EtikettFokus);
-    expect(etikett).has.length(1);
-    expect(etikett.prop('title')).is.eql('Personen har diskresjonsmerking kode 7');
+    expect(wrapper.find(EtikettFokus)).has.length(1);
+    const tooltip = wrapper.find(Tooltip);
+    expect(tooltip).has.length(1);
+    expect(tooltip.prop('content')).is.eql('Personen har diskresjonsmerking kode 7');
   });
 
   it('skal vise etikett for verge', () => {
@@ -125,9 +129,10 @@ describe('<VisittkortLabels>', () => {
       }}
     />);
 
-    const etikett = wrapper.find(EtikettInfo);
-    expect(etikett).has.length(1);
-    expect(etikett.prop('title')).is.eql('Personen har verge');
+    expect(wrapper.find(EtikettInfo)).has.length(1);
+    const tooltip = wrapper.find(Tooltip);
+    expect(tooltip).has.length(1);
+    expect(tooltip.prop('content')).is.eql('Personen har verge');
   });
 
   it('skal vise etikett for søker under 18', () => {
@@ -139,8 +144,9 @@ describe('<VisittkortLabels>', () => {
       }}
     />);
 
-    const etikett = wrapper.find(EtikettInfo);
-    expect(etikett).has.length(1);
-    expect(etikett.prop('title')).is.eql('Personen er under 18 år');
+    expect(wrapper.find(EtikettInfo)).has.length(1);
+    const tooltip = wrapper.find(Tooltip);
+    expect(tooltip).has.length(1);
+    expect(tooltip.prop('content')).is.eql('Personen er under 18 år');
   });
 });

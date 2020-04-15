@@ -1,82 +1,62 @@
-/* Based on https://www.w3schools.com/css/css_tooltip.asp */
-@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+@import '@{coreModulePath}nav-frontend-core/less/core';
 
 .tooltip {
   display: inline-block;
   position: relative;
 }
 
-.tooltiptext {
-  background-color: @navMorkGra;
-  border: 1px solid @navMorkGra;
-  border-radius: @border-radius-base;
-  box-shadow: 5px 2px 10px @navMorkGra;
-  color: white;
-  margin-bottom: 20px;
-  min-width: 150px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 10px;
-  padding-top: 10px;
+/* Tooltip text */
+.tooltip .tooltiptext {
+  background-color: @orangeFocusLighten80;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px 0 @navGra40;
+  color: @navMorkGra;
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  max-width: 200px;
+  opacity: 0;
+  padding: 2px 8px 0 8px;
+  pointer-events: none;
   position: absolute;
-  z-index: 101;
+  text-align: center;
+  width: max-content;
+  z-index: 1;
 }
 
-.tooltiptextLeft {
-  margin-left: 45px;
-  top: -30px;
+.left {
+  bottom: auto;
+  right: 110%;
+  top: -5px;
 }
 
-.tooltiptextBottom {
-  bottom: 100%;
-  left: 50%;
-  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+.top {
+  bottom: 125%;
 }
 
-.show {
-  visibility: visible;
+.right {
+  left: 110%;
+  top: -5px;
 }
 
-.hide {
-  visibility: hidden;
+.bottom {
+  top: 135%;
 }
 
-.tooltiptextLeft:before {
-  border-color: transparent @navMorkGra transparent transparent;
-  border-style: solid;
-  content: ' ';
-  filter: drop-shadow(2px 5px 8px @navMorkGra);
-  position: absolute;
-  right: 100%; /* To the left of the tooltip */
-  top: 30px;
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  animation-delay: 0.4s;
+  animation-duration: 0.1s;
+  animation-fill-mode: forwards;
+  animation-name: showTooltip;
 }
 
-.tooltiptextLeft:after {
-  border-color: transparent @navMorkGra transparent transparent;
-  border-style: solid;
-  border-width: 12px;
-  content: ' ';
-  position: absolute;
-  right: 100%; /* To the left of the tooltip */
-  top: 30px;
-}
+@keyframes showTooltip {
+  from {
+    opacity: 0;
+  }
 
-.tooltiptextBottom:before {
-  border-color: @navMorkGra transparent transparent transparent;
-  border-style: solid;
-  content: ' ';
-  filter: drop-shadow(2px 5px 8px @navMorkGra);
-  left: 42px;
-  position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
-}
-
-.tooltiptextBottom:after {
-  border-color: @navMorkGra transparent transparent transparent;
-  border-style: solid;
-  border-width: 12px;
-  content: ' ';
-  left: 43px;
-  position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  to {
+    opacity: 1;
+  }
 }
