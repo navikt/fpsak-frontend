@@ -1,8 +1,11 @@
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { expect } from 'chai';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import React from 'react';
+import { expect } from 'chai';
+import Panel from 'nav-frontend-paneler';
+
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
 
@@ -36,7 +39,7 @@ describe('BeregningsresultatPanel', () => {
       vilkaarBG={vilkaarBG}
       halvGVerdi={98866}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const rows = panel.find('Row');
     expect(rows).to.have.length(3);
     const andelRow = rows.first();
@@ -57,7 +60,7 @@ describe('BeregningsresultatPanel', () => {
       vilkaarBG={vilkaarBG}
       halvGVerdi={98866}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const rows = panel.find('Row');
     expect(rows).to.have.length(5);
     const andelRow = rows.first();

@@ -8,6 +8,7 @@ import {
 } from 'nav-frontend-etiketter';
 
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
+import { Tooltip } from '@fpsak-frontend/shared-components';
 
 import styles from './merkepanel.less';
 import messages from '../../i18n/nb_NO.json';
@@ -43,35 +44,47 @@ const MerkePanel = ({
     <RawIntlProvider value={intl}>
       <div className={styles.merkePanel}>
         {erDod && (
-        <EtikettInfo className={styles.dodMerke} title={formatMessage({ id: 'MerkePanel.DodTittel' })}>
-          <FormattedMessage id="MerkePanel.Dod" />
-        </EtikettInfo>
+          <Tooltip content={formatMessage({ id: 'MerkePanel.DodTittel' })} alignBottom>
+            <EtikettInfo className={styles.dodMerke}>
+              <FormattedMessage id="MerkePanel.Dod" />
+            </EtikettInfo>
+          </Tooltip>
         )}
         {erDodFodt && (
-        <EtikettInfo className={styles.dodMerke} title={formatMessage({ id: 'MerkePanel.DodTittel' })}>
-          <FormattedMessage id="MerkePanel.DodFodt" />
-        </EtikettInfo>
+          <Tooltip content={formatMessage({ id: 'MerkePanel.DodTittel' })} alignBottom>
+            <EtikettInfo className={styles.dodMerke}>
+              <FormattedMessage id="MerkePanel.DodFodt" />
+            </EtikettInfo>
+          </Tooltip>
         )}
         {diskresjonskode === diskresjonskodeType.KODE6 && !erDod && (
-        <EtikettAdvarsel className={styles.merkeDiskresjonskoder} title={formatMessage({ id: 'MerkePanel.Diskresjon6Tittel' })}>
-          <FormattedMessage id="MerkePanel.Diskresjon6" />
-        </EtikettAdvarsel>
+          <Tooltip content={formatMessage({ id: 'MerkePanel.Diskresjon6Tittel' })} alignBottom>
+            <EtikettAdvarsel className={styles.merkeDiskresjonskoder}>
+              <FormattedMessage id="MerkePanel.Diskresjon6" />
+            </EtikettAdvarsel>
+          </Tooltip>
         )}
         {diskresjonskode === diskresjonskodeType.KODE7 && !erDod && (
-        <EtikettFokus className={styles.merkeDiskresjonskoder} title={formatMessage({ id: 'MerkePanel.Diskresjon7Tittel' })}>
-          <FormattedMessage id="MerkePanel.Diskresjon7" />
-        </EtikettFokus>
+          <Tooltip content={formatMessage({ id: 'MerkePanel.Diskresjon7Tittel' })} alignBottom>
+            <EtikettFokus className={styles.merkeDiskresjonskoder}>
+              <FormattedMessage id="MerkePanel.Diskresjon7" />
+            </EtikettFokus>
+          </Tooltip>
         )}
         {erNAVAnsatt && !erDod && (
-        <EtikettSuksess className={styles.navMerke} title={formatMessage({ id: 'MerkePanel.EgenAnsattTittel' })}>
-          <FormattedMessage id="MerkePanel.EgenAnsatt" />
-        </EtikettSuksess>
+          <Tooltip content={formatMessage({ id: 'MerkePanel.EgenAnsattTittel' })} alignBottom>
+            <EtikettSuksess className={styles.navMerke}>
+              <FormattedMessage id="MerkePanel.EgenAnsatt" />
+            </EtikettSuksess>
+          </Tooltip>
         )}
         {erVerge && !erDod && (
-        <EtikettFokus className={styles.vergeMerke} title={formatMessage({ id: 'MerkePanel.VergeTittel' })}>
-          <span className={styles.vergeIcon} />
-          <FormattedMessage id="MerkePanel.Verge" />
-        </EtikettFokus>
+          <Tooltip content={formatMessage({ id: 'MerkePanel.VergeTittel' })} alignBottom>
+            <EtikettFokus className={styles.vergeMerke}>
+              <span className={styles.vergeIcon} />
+              <FormattedMessage id="MerkePanel.Verge" />
+            </EtikettFokus>
+          </Tooltip>
         )}
       </div>
     </RawIntlProvider>

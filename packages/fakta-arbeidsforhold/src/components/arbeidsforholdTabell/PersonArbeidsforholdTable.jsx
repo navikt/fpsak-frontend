@@ -89,6 +89,7 @@ const PersonArbeidsforholdTable = ({
               alt={intl.formatMessage({ id: 'PersonArbeidsforholdTable.ErIBruk' })}
               tooltip={<FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" />}
               tabIndex="0"
+              alignTooltipLeft
             />
             )}
             </TableColumn>

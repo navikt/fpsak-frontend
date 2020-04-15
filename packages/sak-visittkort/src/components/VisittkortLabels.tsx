@@ -8,6 +8,7 @@ import {
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import { Personopplysninger } from '@fpsak-frontend/types';
 import { dateFormat } from '@fpsak-frontend/utils';
+import { Tooltip } from '@fpsak-frontend/shared-components';
 
 import styles from './visittkortLabels.less';
 
@@ -23,29 +24,39 @@ const VisittkortLabels: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   return (
     <>
       {personopplysninger.dodsdato && (
-        <EtikettInfo className={styles.etikett} title={intl.formatMessage({ id: 'VisittkortLabels.DodTittel' })}>
-          <FormattedMessage id="VisittkortLabels.Dod" values={{ dato: dateFormat(personopplysninger.dodsdato) }} />
-        </EtikettInfo>
+        <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.DodTittel' })} alignBottom>
+          <EtikettInfo className={styles.etikett}>
+            <FormattedMessage id="VisittkortLabels.Dod" values={{ dato: dateFormat(personopplysninger.dodsdato) }} />
+          </EtikettInfo>
+        </Tooltip>
       )}
       {personopplysninger.diskresjonskode === diskresjonskodeType.KODE6 && !personopplysninger.dodsdato && (
-        <EtikettAdvarsel className={styles.etikett} title={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon6Tittel' })}>
-          <FormattedMessage id="VisittkortLabels.Diskresjon6" />
-        </EtikettAdvarsel>
+        <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon6Tittel' })} alignBottom>
+          <EtikettAdvarsel className={styles.etikett}>
+            <FormattedMessage id="VisittkortLabels.Diskresjon6" />
+          </EtikettAdvarsel>
+        </Tooltip>
       )}
       {personopplysninger.diskresjonskode === diskresjonskodeType.KODE7 && !personopplysninger.dodsdato && (
-        <EtikettFokus className={styles.etikett} title={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon7Tittel' })}>
-          <FormattedMessage id="VisittkortLabels.Diskresjon7" />
-        </EtikettFokus>
+        <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon7Tittel' })} alignBottom>
+          <EtikettFokus className={styles.etikett}>
+            <FormattedMessage id="VisittkortLabels.Diskresjon7" />
+          </EtikettFokus>
+        </Tooltip>
       )}
       {personopplysninger.harVerge && !personopplysninger.dodsdato && (
-        <EtikettInfo className={styles.etikett} title={intl.formatMessage({ id: 'VisittkortLabels.VergeTittel' })}>
-          <FormattedMessage id="VisittkortLabels.Verge" />
-        </EtikettInfo>
+        <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.VergeTittel' })} alignBottom>
+          <EtikettInfo className={styles.etikett}>
+            <FormattedMessage id="VisittkortLabels.Verge" />
+          </EtikettInfo>
+        </Tooltip>
       )}
       {erSokerUnder18 && (
-        <EtikettInfo className={styles.etikett} title={intl.formatMessage({ id: 'VisittkortLabels.Under18Tittel' })}>
-          <FormattedMessage id="VisittkortLabels.Under18" />
-        </EtikettInfo>
+        <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Under18Tittel' })} alignBottom>
+          <EtikettInfo className={styles.etikett}>
+            <FormattedMessage id="VisittkortLabels.Under18" />
+          </EtikettInfo>
+        </Tooltip>
       )}
     </>
   );

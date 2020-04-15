@@ -121,6 +121,7 @@ class Periodpicker extends Component<OwnProps, StateProps> {
         to: moment(currentEndDate, DDMMYYYY_DATE_FORMAT).toDate(),
       };
 
+      // @ts-ignore https://github.com/gpbl/react-day-picker/issues/1009
       const newRange = DateUtils.addDayToRange(selectedDay, range);
       const period = createPeriod(newRange.from, newRange.to);
       this.setState({ period });

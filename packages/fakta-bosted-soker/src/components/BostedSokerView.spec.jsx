@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
+import { Tooltip } from '@fpsak-frontend/shared-components';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -112,17 +113,17 @@ describe('<BostedsokerView>', () => {
       personstatusTypes={personstatusTypes}
       sokerTypeTextId="BostedSokerFaktaIndex.Soker"
     />);
+
+    const tooltips = wrapper.find(Tooltip);
+    expect(tooltips).to.have.length(3);
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
-    const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus');
-    expect(personstatus.childAt(0).text()).to.equal('Bosatt');
-    const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand');
-    expect(sivilstand.childAt(0).text()).to.equal('Ugift');
-    const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('Region');
-    expect(region.childAt(0).text()).to.equal('Norden');
+    expect(tooltips.at(0).prop('content')).to.equal('Personstatus');
+    expect(etikettfokus.at(0).childAt(0).text()).to.equal('Bosatt');
+    expect(tooltips.at(1).prop('content')).to.equal('Sivilstand');
+    expect(etikettfokus.at(1).childAt(0).text()).to.equal('Ugift');
+    expect(tooltips.at(2).prop('content')).to.equal('Region');
+    expect(etikettfokus.at(2).childAt(0).text()).to.equal('Norden');
   });
 
   it('skal vise ukjent når personstatus ukjent', () => {
@@ -139,16 +140,16 @@ describe('<BostedsokerView>', () => {
       personstatusTypes={personstatusTypes}
       sokerTypeTextId="BostedSokerFaktaIndex.Soker"
     />);
+
+    const tooltips = wrapper.find(Tooltip);
+    expect(tooltips).to.have.length(3);
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
-    const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus');
-    expect(personstatus.childAt(0).text()).to.equal('Ukjent');
-    const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand');
-    expect(sivilstand.childAt(0).text()).to.equal('Ugift');
-    const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('Region');
-    expect(region.childAt(0).text()).to.equal('Norden');
+    expect(tooltips.at(0).prop('content')).to.equal('Personstatus');
+    expect(etikettfokus.at(0).childAt(0).text()).to.equal('Ukjent');
+    expect(tooltips.at(1).prop('content')).to.equal('Sivilstand');
+    expect(etikettfokus.at(1).childAt(0).text()).to.equal('Ugift');
+    expect(tooltips.at(2).prop('content')).to.equal('Region');
+    expect(etikettfokus.at(2).childAt(0).text()).to.equal('Norden');
   });
 });

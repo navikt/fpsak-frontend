@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import oransjeTrekant from '@fpsak-frontend/assets/images/advarsel.svg';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 

@@ -2,7 +2,7 @@ import React, {
   FunctionComponent, useState, useCallback, ReactNode, KeyboardEvent, MouseEvent,
 } from 'react';
 
-import styles from './image.less';
+import Tooltip from './Tooltip';
 
 interface OwnProps {
   className?: string;
@@ -14,6 +14,7 @@ interface OwnProps {
   alt?: string;
   tabIndex?: number;
   tooltip?: string | ReactNode;
+  alignTooltipLeft?: boolean;
 }
 
 /**
@@ -31,6 +32,7 @@ const Image: FunctionComponent<OwnProps> = ({
   alt,
   onKeyDown,
   tooltip,
+  alignTooltipLeft = false,
 }) => {
   const [isHovering, setHoovering] = useState(false);
 
@@ -73,10 +75,9 @@ const Image: FunctionComponent<OwnProps> = ({
   }
 
   return (
-    <div className={styles.tooltip}>
+    <Tooltip content={tooltip} alignLeft={alignTooltipLeft}>
       {image}
-      <span className={styles.tooltiptext}>{tooltip}</span>
-    </div>
+    </Tooltip>
   );
 };
 
