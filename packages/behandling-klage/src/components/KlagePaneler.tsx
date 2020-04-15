@@ -21,6 +21,7 @@ interface OwnProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
+  skalBenytteFritekstBrevmal: boolean;
   alleBehandlinger: {
     id: number;
     uuid: string;
@@ -44,6 +45,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   alleBehandlinger,
+  skalBenytteFritekstBrevmal,
 }) => {
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
@@ -69,6 +71,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
         alleBehandlinger={alleBehandlinger}
         dispatch={dispatch}
         alleKodeverk={kodeverk}
+        skalBenytteFritekstBrevmal={skalBenytteFritekstBrevmal}
       />
     </>
   );

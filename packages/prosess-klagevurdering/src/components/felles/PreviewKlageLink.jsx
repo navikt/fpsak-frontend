@@ -9,27 +9,31 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './previewKlageLink.less';
 
-const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
+const finnKode = (skalBenytteFritekstBrevmal) => (skalBenytteFritekstBrevmal
+  ? dokumentMalType.KLAGE_STADFESTET : dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK);
+
+
+const getBrevKode = (klageVurdering, klageVurdertAvKa, skalBenytteFritekstBrevmal) => {
   switch (klageVurdering) {
     case klageVurderingType.STADFESTE_YTELSESVEDTAK:
-      return klageVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
+      return klageVurdertAvKa ? finnKode(skalBenytteFritekstBrevmal) : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
     case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
       return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
       return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.MEDHOLD_I_KLAGE:
-      return dokumentMalType.VEDTAK_MEDHOLD;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_OMGJORING : dokumentMalType.VEDTAK_MEDHOLD;
     default:
       return null;
   }
 };
 
-const getBrevData = (klageVurdering, aksjonspunktCode, fritekstTilBrev) => {
+const getBrevData = (klageVurdering, aksjonspunktCode, fritekstTilBrev, skalBenytteFritekstBrevmal) => {
   const klageVurdertAv = aksjonspunktCode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? 'NK' : 'NFP';
   const data = {
     fritekst: fritekstTilBrev || '',
     mottaker: '',
-    dokumentMal: getBrevKode(klageVurdering, klageVurdertAv === 'NK'),
+    dokumentMal: getBrevKode(klageVurdering, klageVurdertAv === 'NK', skalBenytteFritekstBrevmal),
     klageVurdertAv,
     erOpphevetKlage: klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
   };
@@ -41,9 +45,10 @@ const PreviewKlageLink = ({
   fritekstTilBrev,
   klageVurdering,
   aksjonspunktCode,
+  skalBenytteFritekstBrevmal,
 }) => {
   const previewMessage = (e) => {
-    previewCallback(getBrevData(klageVurdering, aksjonspunktCode, fritekstTilBrev));
+    previewCallback(getBrevData(klageVurdering, aksjonspunktCode, fritekstTilBrev, skalBenytteFritekstBrevmal));
     e.preventDefault();
   };
   return (
@@ -63,6 +68,7 @@ PreviewKlageLink.propTypes = {
   aksjonspunktCode: PropTypes.string.isRequired,
   fritekstTilBrev: PropTypes.string,
   klageVurdering: PropTypes.string,
+  skalBenytteFritekstBrevmal: PropTypes.bool.isRequired,
 };
 
 PreviewKlageLink.defaultProps = {

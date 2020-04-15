@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { RouteProps } from 'react-router';
 
+import { featureToggle } from '@fpsak-frontend/konstanter';
 import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -206,6 +207,7 @@ export class BehandlingIndex extends Component<OwnProps> {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
+              skalBenytteFritekstBrevmal={featureToggles[featureToggle.BENYTT_FRITEKST_BREVMAL_FOR_KLAGE]}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}

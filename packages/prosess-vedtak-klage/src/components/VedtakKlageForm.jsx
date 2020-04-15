@@ -41,6 +41,7 @@ export const VedtakKlageFormImpl = ({
   klageVurdering,
   behandlingPaaVent,
   alleKodeverk,
+  skalBenytteFritekstBrevmal,
   ...formProps
 }) => {
   const kodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
@@ -95,6 +96,7 @@ export const VedtakKlageFormImpl = ({
           formProps={formProps}
           readOnly={readOnly}
           behandlingPaaVent={behandlingPaaVent}
+          skalBenytteFritekstBrevmal={skalBenytteFritekstBrevmal}
         />
         )}
       </>

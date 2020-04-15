@@ -16,18 +16,21 @@ export const isMedholdIKlage = (
   klageVurderingResultatNFP, klageVurderingResultatNK,
 ) => medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
 
-const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
+const finnKode = (skalBenytteFritekstBrevmal) => (skalBenytteFritekstBrevmal
+  ? dokumentMalType.KLAGE_STADFESTET : dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK);
+
+const getBrevKode = (klageVurdering, klageVurdertAvKa, skalBenytteFritekstBrevmal) => {
   switch (klageVurdering) {
     case klageVurderingType.STADFESTE_YTELSESVEDTAK:
-      return klageVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
+      return klageVurdertAvKa ? finnKode(skalBenytteFritekstBrevmal) : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
     case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
       return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
       return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.MEDHOLD_I_KLAGE:
-      return dokumentMalType.VEDTAK_MEDHOLD;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_OMGJORING : dokumentMalType.VEDTAK_MEDHOLD;
     case klageVurderingType.AVVIS_KLAGE:
-      return dokumentMalType.KLAGE_AVVIST_DOK;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_AVVIST : dokumentMalType.KLAGE_AVVIST_DOK;
     default:
       return null;
   }

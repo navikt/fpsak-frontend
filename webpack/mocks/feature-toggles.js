@@ -6,6 +6,7 @@ const toggles = {
     'fpsak.simuler-oppdrag-varseltekst': false,
     'fpsak.aktiver-tilbakekrevingbehandling': false,
     'fpsak.beslutt-tilbakekreving': false,
+    'fpsak.benytte.fritekstbrevmal.for.klage': false,
   },
 };
 if (process.env.FEATURE_TOGGLES) {

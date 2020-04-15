@@ -32,6 +32,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       formProps={{}}
       sprakkode={sprakkode}
       alleKodeverk={{}}
+      skalBenytteFritekstBrevmal={false}
       {...reduxFormPropsMock}
     />);
     expect(wrapper.find('PreviewKlageLink')).to.have.length(1);
@@ -52,6 +53,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       formProps={{}}
       sprakkode={sprakkode}
       alleKodeverk={{}}
+      skalBenytteFritekstBrevmal={false}
       {...reduxFormPropsMock}
     />);
     expect(wrapper.find(PreviewKlageLink)).to.have.length(0);
@@ -72,6 +74,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       formProps={{}}
       sprakkode={sprakkode}
       alleKodeverk={{}}
+      skalBenytteFritekstBrevmal={false}
       {...reduxFormPropsMock}
     />);
     expect(wrapper.find(PreviewKlageLink)).to.have.length(0);

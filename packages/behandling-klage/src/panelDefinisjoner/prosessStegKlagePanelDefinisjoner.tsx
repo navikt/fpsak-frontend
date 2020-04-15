@@ -54,10 +54,13 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.BEHANDLE_KLAGE_NFP],
     renderComponent: (props) => <KlagevurderingProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ saveKlageText, klageVurdering, previewCallback }) => ({
+    getData: ({
+      saveKlageText, klageVurdering, previewCallback, skalBenytteFritekstBrevmal,
+    }) => ({
       saveKlage: saveKlageText,
       klageVurdering,
       previewCallback,
+      skalBenytteFritekstBrevmal,
     }),
   }],
 }, {
@@ -79,10 +82,13 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.BEHANDLE_KLAGE_NK],
     renderComponent: (props) => <KlagevurderingProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ saveKlageText, klageVurdering, previewCallback }) => ({
+    getData: ({
+      saveKlageText, klageVurdering, previewCallback, skalBenytteFritekstBrevmal,
+    }) => ({
       saveKlage: saveKlageText,
       klageVurdering,
       previewCallback,
+      skalBenytteFritekstBrevmal,
     }),
   }],
 }, {
@@ -92,9 +98,10 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL],
     renderComponent: (props) => <VedtakKlageProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ previewCallback, klageVurdering }) => ({
+    getData: ({ previewCallback, klageVurdering, skalBenytteFritekstBrevmal }) => ({
       previewVedtakCallback: previewCallback,
       klageVurdering,
+      skalBenytteFritekstBrevmal,
     }),
     overrideStatus: ({
       behandling, aksjonspunkterForSteg,
