@@ -401,6 +401,27 @@ const mapStateToProps = (_state, ownProps) => ({
   onSubmit: getOnSubmit(ownProps),
 });
 
+// https://jira.adeo.no/browse/TFP-3098 - https://github.com/redux-form/redux-form/issues/3276
+const shouldValidate = ({
+  values,
+  nextProps,
+  props,
+  initialRender,
+  lastFieldValidatorKeys,
+  fieldValidatorKeys,
+  structure,
+}) => {
+  if (initialRender) {
+    return true;
+  }
+  return (
+    !structure.deepEqual(values, nextProps.values)
+    || !structure.deepEqual(lastFieldValidatorKeys, fieldValidatorKeys)
+    || props.registeredFields !== nextProps.registeredFields
+  );
+};
+
 export default connect(mapStateToProps)(behandlingForm({
   form: FODSEL_TILRETTELEGGING_FORM,
+  shouldValidate: () => shouldValidate,
 })(FodselOgTilretteleggingFaktaForm));
