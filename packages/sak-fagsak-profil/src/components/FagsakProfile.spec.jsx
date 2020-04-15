@@ -6,6 +6,7 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { Tooltip } from '@fpsak-frontend/shared-components';
 
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-fagsak-profil';
 import { FagsakProfile } from './FagsakProfile';
@@ -102,9 +103,10 @@ describe('<FagsakProfile>', () => {
     expect(normaltekst).to.have.length(1);
     expect(normaltekst.childAt(0).text()).is.eql('12345 - Opprettet');
 
-    const etikettinfo = wrapper.find(EtikettInfo);
-    expect(etikettinfo).to.have.length(1);
-    expect(etikettinfo.prop('title')).is.eql('Dekningsgraden er 100%');
+    expect(wrapper.find(EtikettInfo)).to.have.length(1);
+    const tooltip = wrapper.find(Tooltip);
+    expect(tooltip).to.have.length(1);
+    expect(tooltip.prop('content')).is.eql('Dekningsgraden er 100%');
   });
 
   it('skal ikke vise dekningsgrad for foreldrepenger om den ikke eksisterer', () => {

@@ -77,6 +77,7 @@ const TimeLineButton: React.FunctionComponent<TimeLineButtonProps> = ({
     tooltip={text}
     onMouseDown={callback}
     onKeyDown={callback}
+    alignTooltipLeft
   />
 );
 
