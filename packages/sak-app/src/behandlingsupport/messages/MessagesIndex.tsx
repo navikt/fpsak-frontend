@@ -196,6 +196,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
             behandlingVersion: selectedBehandlingVersjon,
             submitCounter,
           }, true)}
+          key={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? 0 : 1}
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
           render={(props: DataProps) => (
             <MeldingerSakIndex
