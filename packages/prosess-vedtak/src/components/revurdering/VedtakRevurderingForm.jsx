@@ -109,91 +109,88 @@ export class VedtakRevurderingFormImpl extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-        >
-          <VerticalSpacer eightPx />
-          <>
-            {visOverstyringKnapp && (
-              <VedtakOverstyrendeKnapp
-                toggleCallback={this.onToggleOverstyring}
-                readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
-                keyName="skalBrukeOverstyrendeFritekstBrev"
-                readOnlyHideEmpty={false}
-              />
-            )}
+        />
+        <VerticalSpacer eightPx />
+        {visOverstyringKnapp && (
+          <VedtakOverstyrendeKnapp
+            toggleCallback={this.onToggleOverstyring}
+            readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
+            keyName="skalBrukeOverstyrendeFritekstBrev"
+            readOnlyHideEmpty={false}
+          />
+        )}
 
-            {isInnvilget(behandlingresultat.type.kode) && (
-              <VedtakInnvilgetRevurderingPanel
-                antallBarn={antallBarn}
-                ytelseTypeKode={ytelseTypeKode}
-                aksjonspunktKoder={aksjonspunktKoder}
-                revurderingsAarsakString={revurderingsAarsakString}
-                behandlingsresultat={behandlingresultat}
-                readOnly={readOnly}
-                beregningResultat={resultatstruktur}
-                sprakKode={sprakkode}
-                tilbakekrevingvalg={tilbakekrevingvalg}
-                simuleringResultat={simuleringResultat}
-                alleKodeverk={alleKodeverk}
-                originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                beregningErManueltFastsatt={beregningErManueltFastsatt}
-              />
-            )}
-            {isAvslag(behandlingresultat.type.kode) && (
-              <VedtakAvslagRevurderingPanel
-                behandlingStatusKode={behandlingStatusKode}
-                aksjonspunkter={aksjonspunkter}
-                behandlingsresultat={behandlingresultat}
-                readOnly={readOnly}
-                alleKodeverk={alleKodeverk}
-                beregningResultat={resultatstruktur}
-                sprakkode={sprakkode}
-                vilkar={vilkar}
-                tilbakekrevingvalg={tilbakekrevingvalg}
-                simuleringResultat={simuleringResultat}
-                originaltBeregningResultat={resultatstrukturOriginalBehandling}
-              />
-            )}
-            {isOpphor(behandlingresultat.type.kode) && (
-              <VedtakOpphorRevurderingPanel
-                revurderingsAarsakString={revurderingsAarsakString}
-                ytelseTypeKode={ytelseTypeKode}
-                readOnly={readOnly}
-                behandlingsresultat={behandlingresultat}
-                sprakKode={sprakkode}
-                medlemskapFom={medlemskapFom}
-                resultatstruktur={resultatstruktur}
-                beregningErManueltFastsatt={beregningErManueltFastsatt}
-              />
-            )}
+        {isInnvilget(behandlingresultat.type.kode) && (
+          <VedtakInnvilgetRevurderingPanel
+            antallBarn={antallBarn}
+            ytelseTypeKode={ytelseTypeKode}
+            aksjonspunktKoder={aksjonspunktKoder}
+            revurderingsAarsakString={revurderingsAarsakString}
+            behandlingsresultat={behandlingresultat}
+            readOnly={readOnly}
+            beregningResultat={resultatstruktur}
+            sprakKode={sprakkode}
+            tilbakekrevingvalg={tilbakekrevingvalg}
+            simuleringResultat={simuleringResultat}
+            alleKodeverk={alleKodeverk}
+            originaltBeregningResultat={resultatstrukturOriginalBehandling}
+            beregningErManueltFastsatt={beregningErManueltFastsatt}
+          />
+        )}
+        {isAvslag(behandlingresultat.type.kode) && (
+          <VedtakAvslagRevurderingPanel
+            behandlingStatusKode={behandlingStatusKode}
+            aksjonspunkter={aksjonspunkter}
+            behandlingsresultat={behandlingresultat}
+            readOnly={readOnly}
+            alleKodeverk={alleKodeverk}
+            beregningResultat={resultatstruktur}
+            sprakkode={sprakkode}
+            vilkar={vilkar}
+            tilbakekrevingvalg={tilbakekrevingvalg}
+            simuleringResultat={simuleringResultat}
+            originaltBeregningResultat={resultatstrukturOriginalBehandling}
+          />
+        )}
+        {isOpphor(behandlingresultat.type.kode) && (
+          <VedtakOpphorRevurderingPanel
+            revurderingsAarsakString={revurderingsAarsakString}
+            ytelseTypeKode={ytelseTypeKode}
+            readOnly={readOnly}
+            behandlingsresultat={behandlingresultat}
+            sprakKode={sprakkode}
+            medlemskapFom={medlemskapFom}
+            resultatstruktur={resultatstruktur}
+            beregningErManueltFastsatt={beregningErManueltFastsatt}
+          />
+        )}
 
-            {skalBrukeOverstyrendeFritekstBrev && (
-              <FritekstBrevPanel
-                intl={intl}
-                readOnly={readOnly}
-                sprakkode={sprakkode}
-                previewBrev={previewAutomatiskBrev}
-              />
-            )}
-            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
-              <VedtakRevurderingSubmitPanel
-                begrunnelse={begrunnelse}
-                brodtekst={brødtekst}
-                overskrift={overskrift}
-                previewCallback={previewCallback}
-                formProps={formProps}
-                readOnly={readOnly}
-                ytelseTypeKode={ytelseTypeKode}
-                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-                beregningResultat={resultatstruktur}
-                haveSentVarsel={sendVarselOmRevurdering}
-                aksjonspunkter={aksjonspunkter}
-                originaltBeregningResultat={resultatstrukturOriginalBehandling}
-                behandlingArsaker={behandlingArsaker}
-                behandlingResultat={behandlingresultat}
-              />
-            )}
-          </>
-        </VedtakAksjonspunktPanel>
+        {skalBrukeOverstyrendeFritekstBrev && (
+          <FritekstBrevPanel
+            intl={intl}
+            readOnly={readOnly}
+            sprakkode={sprakkode}
+            previewBrev={previewAutomatiskBrev}
+          />
+        )}
+        {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES && (
+          <VedtakRevurderingSubmitPanel
+            begrunnelse={begrunnelse}
+            brodtekst={brødtekst}
+            overskrift={overskrift}
+            previewCallback={previewCallback}
+            formProps={formProps}
+            readOnly={readOnly}
+            ytelseTypeKode={ytelseTypeKode}
+            skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+            beregningResultat={resultatstruktur}
+            haveSentVarsel={sendVarselOmRevurdering}
+            aksjonspunkter={aksjonspunkter}
+            originaltBeregningResultat={resultatstrukturOriginalBehandling}
+            behandlingArsaker={behandlingArsaker}
+            behandlingResultat={behandlingresultat}
+          />
+        )}
       </>
     );
   }

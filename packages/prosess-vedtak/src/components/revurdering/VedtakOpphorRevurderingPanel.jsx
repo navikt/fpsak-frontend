@@ -23,7 +23,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({
   beregningErManueltFastsatt,
 }) => (
   <div>
-    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       {intl.formatMessage({
         id: ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'

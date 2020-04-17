@@ -48,6 +48,9 @@
   "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImage": "Ingen automatisk vedtaksbrev.",
   "VedtakForm.SvpFritektsBrevModal.ModalDescription": "Informasjonsboks om ingen automatisk vedtaksbrev. Fritekstbrev er nødvendig.",
 
+  "VedtakInnvilgetPanel.RedigerVedtaksbrev": "Rediger vedtaksbrev",
+  "VedtakInnvilgetPanel.AutomatiskVedtaksbrev": "Automatisk vedtaksbrev",
+
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",

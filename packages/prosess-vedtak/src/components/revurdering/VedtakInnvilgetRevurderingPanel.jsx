@@ -63,7 +63,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
     <>
       {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
         <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
           <Normaltekst>
             {intl.formatMessage({ id: resultTextES(beregningResultat, originaltBeregningResultat) })}
             {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
@@ -89,7 +88,6 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       )}
       {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && (
         <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
           <Normaltekst>
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}
             {lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn) !== '' && tilbakekrevingText && '. '}

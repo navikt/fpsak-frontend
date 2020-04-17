@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
+import Lenke from 'nav-frontend-lenker';
+import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/arrow-return.svg';
+import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
+// import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 
 import VedtakFritekstPanel from './VedtakFritekstPanel';
 import { findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
@@ -24,13 +29,28 @@ export const VedtakInnvilgetPanelImpl = ({
   beregningErManueltFastsatt,
 }) => (
   <>
-    <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
-    <Normaltekst>
-      {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
-      {tilbakekrevingText && (
-        `. ${intl.formatMessage({ id: tilbakekrevingText })}`
-      )}
-    </Normaltekst>
+    <Row>
+      <Column xs="3">
+        <Normaltekst>
+          {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
+          {tilbakekrevingText && (
+            `. ${intl.formatMessage({ id: tilbakekrevingText })}`
+          )}
+        </Normaltekst>
+      </Column>
+      <Column xs="3">
+        <Lenke href="#">
+          <span><FormattedMessage id="VedtakInnvilgetPanel.AutomatiskVedtaksbrev" /></span>
+          <FraBeslutterSvg />
+        </Lenke>
+      </Column>
+      <Column xs="3">
+        <Lenke href="#">
+          <Image src={editUtlandIcon} />
+          <span><FormattedMessage id="VedtakInnvilgetPanel.RedigerVedtaksbrev" /></span>
+        </Lenke>
+      </Column>
+    </Row>
     <VerticalSpacer eightPx />
     {beregningErManueltFastsatt && !skalBrukeOverstyrendeFritekstBrev && (
       <VedtakFritekstPanel

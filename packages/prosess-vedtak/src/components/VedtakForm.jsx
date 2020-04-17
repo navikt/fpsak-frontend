@@ -143,86 +143,85 @@ export class VedtakForm extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-        >
-          {visOverstyringKnapp && (
-            <VedtakOverstyrendeKnapp
-              toggleCallback={this.onToggleOverstyring}
-              readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
-              keyName="skalBrukeOverstyrendeFritekstBrev"
-              readOnlyHideEmpty={false}
-            />
-          )}
+        />
+        {visOverstyringKnapp && (
+        <VedtakOverstyrendeKnapp
+          toggleCallback={this.onToggleOverstyring}
+          readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
+          keyName="skalBrukeOverstyrendeFritekstBrev"
+          readOnlyHideEmpty={false}
+        />
+        )}
 
-          {isInnvilget(behandlingresultat.type.kode) && (
-            <VedtakInnvilgetPanel
-              intl={intl}
-              antallBarn={antallBarn}
-              behandlingsresultat={behandlingresultat}
-              readOnly={readOnly}
-              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              ytelseTypeKode={ytelseTypeKode}
-              aksjonspunkter={aksjonspunkter}
-              sprakkode={sprakkode}
-              beregningResultat={resultatstruktur}
-              alleKodeverk={alleKodeverk}
-              tilbakekrevingvalg={tilbakekrevingvalg}
-              simuleringResultat={simuleringResultat}
-              beregningErManueltFastsatt={beregningErManueltFastsatt}
-            />
-          )}
+        {isInnvilget(behandlingresultat.type.kode) && (
+        <VedtakInnvilgetPanel
+          intl={intl}
+          antallBarn={antallBarn}
+          behandlingsresultat={behandlingresultat}
+          readOnly={readOnly}
+          skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+          ytelseTypeKode={ytelseTypeKode}
+          aksjonspunkter={aksjonspunkter}
+          sprakkode={sprakkode}
+          beregningResultat={resultatstruktur}
+          alleKodeverk={alleKodeverk}
+          tilbakekrevingvalg={tilbakekrevingvalg}
+          simuleringResultat={simuleringResultat}
+          beregningErManueltFastsatt={beregningErManueltFastsatt}
+        />
+        )}
 
-          {isAvslag(behandlingresultat.type.kode) && (
-            <VedtakAvslagPanel
-              behandlingStatusKode={behandlingStatusKode}
-              aksjonspunkter={aksjonspunkter}
-              behandlingsresultat={behandlingresultat}
-              readOnly={readOnly}
-              ytelseTypeKode={ytelseTypeKode}
-              sprakkode={sprakkode}
-              alleKodeverk={alleKodeverk}
-              tilbakekrevingvalg={tilbakekrevingvalg}
-              simuleringResultat={simuleringResultat}
-              vilkar={vilkar}
-              beregningErManueltFastsatt={beregningErManueltFastsatt}
-            />
-          )}
+        {isAvslag(behandlingresultat.type.kode) && (
+        <VedtakAvslagPanel
+          behandlingStatusKode={behandlingStatusKode}
+          aksjonspunkter={aksjonspunkter}
+          behandlingsresultat={behandlingresultat}
+          readOnly={readOnly}
+          ytelseTypeKode={ytelseTypeKode}
+          sprakkode={sprakkode}
+          alleKodeverk={alleKodeverk}
+          tilbakekrevingvalg={tilbakekrevingvalg}
+          simuleringResultat={simuleringResultat}
+          vilkar={vilkar}
+          beregningErManueltFastsatt={beregningErManueltFastsatt}
+        />
+        )}
 
-          {skalBrukeOverstyrendeFritekstBrev && (
-            <FritekstBrevPanel
-              intl={intl}
-              readOnly={readOnly}
-              sprakkode={sprakkode}
-              previewBrev={previewAutomatiskBrev}
-            />
-          )}
+        {skalBrukeOverstyrendeFritekstBrev && (
+        <FritekstBrevPanel
+          intl={intl}
+          readOnly={readOnly}
+          sprakkode={sprakkode}
+          previewBrev={previewAutomatiskBrev}
+        />
+        )}
 
-          {kanSendesTilGodkjenning(behandlingStatusKode) && (
-            <Row>
-              <Column xs="12">
-                {!readOnly && (
-                  <Hovedknapp
-                    mini
-                    className={styles.mainButton}
-                    onClick={formProps.handleSubmit}
-                    disabled={behandlingPaaVent || formProps.submitting}
-                    spinner={formProps.submitting}
-                  >
-                    {intl.formatMessage({
-                      id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
-                        ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
-                    })}
-                  </Hovedknapp>
-                )}
-                {skalBrukeOverstyrendeFritekstBrev && skalViseLink && (
-                  <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-                )}
-                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage && (
-                  <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
-                )}
-              </Column>
-            </Row>
-          )}
-        </VedtakAksjonspunktPanel>
+        {kanSendesTilGodkjenning(behandlingStatusKode) && (
+        <Row>
+          <Column xs="12">
+            {!readOnly && (
+            <Hovedknapp
+              mini
+              className={styles.mainButton}
+              onClick={formProps.handleSubmit}
+              disabled={behandlingPaaVent || formProps.submitting}
+              spinner={formProps.submitting}
+            >
+              {intl.formatMessage({
+                id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                  ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
+              })}
+            </Hovedknapp>
+            )}
+            {skalBrukeOverstyrendeFritekstBrev && skalViseLink && (
+            <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
+            )}
+            {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage && (
+            <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
+            )}
+          </Column>
+        </Row>
+        )}
       </>
     );
   }

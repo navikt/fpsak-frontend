@@ -13,7 +13,6 @@ export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlin
 
 export const VedtakAksjonspunktPanelImpl = ({
   intl,
-  children,
   behandlingStatusKode,
   aksjonspunktKoder,
   readOnly,
@@ -22,21 +21,15 @@ export const VedtakAksjonspunktPanelImpl = ({
     <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
     <VerticalSpacer twentyPx />
     <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
-    {children}
   </>
 );
 
 
 VedtakAksjonspunktPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
   readOnly: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
-};
-
-VedtakAksjonspunktPanelImpl.defaultProps = {
-  children: undefined,
 };
 
 export default injectIntl(VedtakAksjonspunktPanelImpl);
