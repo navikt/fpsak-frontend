@@ -1,7 +1,7 @@
 import React, {
   FunctionComponent, useEffect, useRef, useState,
 } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import { useDispatch, useStore, useSelector } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
@@ -72,8 +72,8 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
     ...acc,
     [e.name]: {
       formattedName: format(e.name),
-      data: e.getRestApiData()(store.getState()),
-      isFinished: e.getRestApiFinished()(store.getState()),
+      data: useSelector((state) => e.getRestApiData()(state)),
+      isFinished: useSelector((state) => e.getRestApiFinished()(state)),
     },
   }), {});
 
@@ -85,6 +85,8 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
   const dispatch = useDispatch();
   const ref = useRef<any>();
   useEffect(() => {
+    let cancel = false;
+
     setFetchingData((oldState) => ({
       hasFinishedFetching: false,
       data: oldState.data,
@@ -106,6 +108,12 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
       const params = endpointParams ? endpointParams[e.endpoint.name] : undefined;
       return dispatch(e.endpoint.makeRestApiRequest()(params, meta));
     })).then((data) => {
+      if (cancel) {
+        // eslint-disable-next-line no-console
+        console.warn(`DataFetcher som henter data fra endepunktene ${endpoints.map((e) => e.name).join(', ')
+        } har kjørt unmount før data er ferdighentet. Dette kan være feil!`);
+        return;
+      }
       setFetchingData({
         hasFinishedFetching: true,
         data: endpointsToFetchFrom.reduce((acc, endpoint, index) => ({
@@ -114,6 +122,10 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
         }), {}),
       });
     });
+
+    return () => {
+      cancel = true;
+    };
   }, fetchingTriggers.getTriggerValues());
 
   const hasChanged = fetchingTriggers.hasChanged(ref.current);

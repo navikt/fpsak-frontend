@@ -90,7 +90,7 @@ class BehandlingMenu extends Component {
   hasEnabledNewBehandling() {
     const { rettigheter } = this.props;
     return rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
-    && rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled;
+    && !!rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled;
   }
 
   hasEnabledNewRevurdering() {
@@ -241,6 +241,7 @@ class BehandlingMenu extends Component {
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 saksnummer={saksnummer}
                 behandlingId={behandlingData.id}
+                behandlingVersjon={behandlingData.versjon}
                 behandlingType={behandlingData.type}
                 push={push}
                 submitNyBehandling={createNewBehandling}

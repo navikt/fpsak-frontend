@@ -32,7 +32,7 @@ class CreateNewBehandlingMenuItem extends Component {
 
   submit(formValues) {
     const {
-      saksnummer, behandlingId, submitNyBehandling, push,
+      saksnummer, behandlingId, behandlingVersjon, submitNyBehandling, push,
     } = this.props;
     const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
     const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
@@ -42,8 +42,7 @@ class CreateNewBehandlingMenuItem extends Component {
       ...formValues,
     };
 
-    const erBehandlingValgt = !!behandlingId;
-    submitNyBehandling(push, saksnummer, erBehandlingValgt, isTilbakekreving, data);
+    submitNyBehandling(push, saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data);
     this.hideModal();
   }
 
@@ -99,6 +98,7 @@ CreateNewBehandlingMenuItem.propTypes = {
   ytelseType: kodeverkObjektPropType.isRequired,
   saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number,
+  behandlingVersjon: PropTypes.number,
   push: PropTypes.func.isRequired,
   submitNyBehandling: PropTypes.func.isRequired,
   opprettNyForstegangsBehandlingEnabled: PropTypes.bool.isRequired,
@@ -118,6 +118,7 @@ CreateNewBehandlingMenuItem.propTypes = {
 CreateNewBehandlingMenuItem.defaultProps = {
   behandlingType: undefined,
   uuidForSistLukkede: undefined,
+  behandlingVersjon: undefined,
 };
 
 export default CreateNewBehandlingMenuItem;
