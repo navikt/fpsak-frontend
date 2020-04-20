@@ -1,20 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
+import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import Lenke from 'nav-frontend-lenker';
-import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/arrow-return.svg';
-import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
-// import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 
 import VedtakFritekstPanel from './VedtakFritekstPanel';
-import { findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
 
 export const VedtakInnvilgetPanelImpl = ({
   intl,
@@ -25,33 +18,9 @@ export const VedtakInnvilgetPanelImpl = ({
   sprakkode,
   readOnly,
   skalBrukeOverstyrendeFritekstBrev,
-  tilbakekrevingText,
   beregningErManueltFastsatt,
 }) => (
   <>
-    <Row>
-      <Column xs="3">
-        <Normaltekst>
-          {intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
-          {tilbakekrevingText && (
-            `. ${intl.formatMessage({ id: tilbakekrevingText })}`
-          )}
-        </Normaltekst>
-      </Column>
-      <Column xs="3">
-        <Lenke href="#">
-          <span><FormattedMessage id="VedtakInnvilgetPanel.AutomatiskVedtaksbrev" /></span>
-          <FraBeslutterSvg />
-        </Lenke>
-      </Column>
-      <Column xs="3">
-        <Lenke href="#">
-          <Image src={editUtlandIcon} />
-          <span><FormattedMessage id="VedtakInnvilgetPanel.RedigerVedtaksbrev" /></span>
-        </Lenke>
-      </Column>
-    </Row>
-    <VerticalSpacer eightPx />
     {beregningErManueltFastsatt && !skalBrukeOverstyrendeFritekstBrev && (
       <VedtakFritekstPanel
         readOnly={readOnly}
@@ -88,7 +57,6 @@ VedtakInnvilgetPanelImpl.propTypes = {
   sprakkode: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
-  tilbakekrevingText: PropTypes.string,
   beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
 
@@ -96,11 +64,6 @@ VedtakInnvilgetPanelImpl.defaultProps = {
   beregningResultat: {},
   antallBarn: undefined,
   sprakkode: undefined,
-  tilbakekrevingText: null,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  tilbakekrevingText: findTilbakekrevingText(ownProps),
-});
-
-export default connect(mapStateToProps)(VedtakInnvilgetPanelImpl);
+export default injectIntl(VedtakInnvilgetPanelImpl);

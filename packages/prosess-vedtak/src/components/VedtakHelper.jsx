@@ -15,6 +15,17 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD
   && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
+export const getTilbakekrevingText = (simuleringResultat, tilbakekrevingvalg, alleKodeverk) => {
+  if (tilbakekrevingvalg !== null && tilbakekrevingvalg !== undefined) {
+    if (tilbakekrevingMedInntrekk(tilbakekrevingvalg.videreBehandling.kode, simuleringResultat)) {
+      return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
+    }
+    const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+    return getKodeverkNavn(tilbakekrevingvalg.videreBehandling);
+  }
+  return null;
+};
+
 export const findTilbakekrevingText = createSelector(
   [(ownProps) => ownProps.simuleringResultat,
     (ownProps) => ownProps.tilbakekrevingvalg,

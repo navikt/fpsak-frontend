@@ -44,14 +44,7 @@ const VedtakProsessIndex = ({
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakPanels
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      behandlingTypeKode={behandling.type.kode}
-      behandlingStatus={behandling.status}
-      sprakkode={behandling.sprakkode}
-      behandlingresultat={behandling.behandlingsresultat}
-      behandlingPaaVent={behandling.behandlingPaaVent}
-      behandlingArsaker={behandling.behandlingArsaker}
+      behandling={behandling}
       beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}

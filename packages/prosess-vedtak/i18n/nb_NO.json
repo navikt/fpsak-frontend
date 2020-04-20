@@ -38,11 +38,8 @@
   "VedtakForm.RevurderingFP.ForeldrepengerOpphoerer": "Foreldrepenger opphører f.o.m. {dato}",
   "VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer": "Svangerskapspenger opphører f.o.m. {dato}",
   "VedtakForm.ManuellOverstyring": "Overstyr automatisk brev",
-  "VedtakForm.Brev": "Manuelt brev",
   "VedtakForm.Overskrift": "Overskrift",
   "VedtakForm.Innhold": "Innhold i brev til søker",
-  "VedtakForm.AutomatiskBrev": "Innhold fra det automatisk genererte brevet kan kopieres ut og limes inn i det manuelle brevet",
-  "VedtakForm.AutomatiskBrev.Lenke": "Forhåndsvis automatisk brev",
   "VedtakForm.SvpFritektsBrevModal.Ok": "Ok",
   "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrev": "I denne behandlingen er det ikke automatisk vedtaksbrev. Du må velge 'Overstyr automatisk brev' og skrive fritekstbrev.",
   "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImage": "Ingen automatisk vedtaksbrev.",
@@ -50,6 +47,9 @@
 
   "VedtakInnvilgetPanel.RedigerVedtaksbrev": "Rediger vedtaksbrev",
   "VedtakInnvilgetPanel.AutomatiskVedtaksbrev": "Automatisk vedtaksbrev",
+  "VedtakInnvilgetPanel.ManueltVedtaksbrev": "Manuelt vedtaksbrev",
+  "VedtakInnvilgetPanel.ForhandsvisManueltVedtaksbrev": "Forhåndsvis manuelt brev",
+  "VedtakInnvilgetPanel.Forklaring": "Tekst fra det automatisk genererte brevet kan kopieres og limes inn i det manuelle brevet",
 
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",

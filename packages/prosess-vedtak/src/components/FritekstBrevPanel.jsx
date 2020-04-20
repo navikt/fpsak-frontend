@@ -3,51 +3,55 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
+import Lenke from 'nav-frontend-lenker';
+import Alertstripe from 'nav-frontend-alertstriper';
 
 import { TextAreaField } from '@fpsak-frontend/form';
+import { AvsnittSkiller, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
-import styles from './vedtakForm.less';
+import styles from './fritekstBrevPanel.less';
 
 const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
 const FritekstBrevPanelImpl = ({
-  previewBrev,
+  previewOverstyrtBrev,
   readOnly,
   sprakkode,
+  skalViseLink,
 }) => (
   <>
-    <div className={styles.automatiskBrev}>
-      <Row>
-        <Column xs="12">
-          <FormattedMessage id="VedtakForm.AutomatiskBrev" />
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="6">
-          <a
-            href=""
-            onClick={previewBrev}
-            onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
-            className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
-          >
-            <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />
-          </a>
-        </Column>
-      </Row>
-    </div>
+    <AvsnittSkiller />
+    <VerticalSpacer twentyPx />
     <Row>
-      <Column xs="12">
-        <Undertittel>
-          <FormattedMessage id="VedtakForm.Brev" />
-        </Undertittel>
+      <Column xs="3">
+        <Element>
+          <FormattedMessage id="VedtakInnvilgetPanel.ManueltVedtaksbrev" />
+        </Element>
+      </Column>
+      <Column xs="2">
+        <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
+      </Column>
+      <Column xs="5">
+        {!readOnly && skalViseLink && (
+          <Lenke href="#" onClick={previewOverstyrtBrev}>
+            <span><FormattedMessage id="VedtakInnvilgetPanel.ForhandsvisManueltVedtaksbrev" /></span>
+          </Lenke>
+        )}
       </Column>
     </Row>
+    <hr className={styles.line} />
+    <VerticalSpacer twentyPx />
+    <Alertstripe type="info" form="inline">
+      <Element>
+        <FormattedMessage id="VedtakInnvilgetPanel.Forklaring" />
+      </Element>
+    </Alertstripe>
     <Row>
       <Column xs="12">
         <TextAreaField
@@ -58,11 +62,6 @@ const FritekstBrevPanelImpl = ({
           rows={1}
           readOnly={readOnly}
           className={styles.smallTextArea}
-          badges={[{
-            type: 'fokus',
-            textId: getLanguageCodeFromSprakkode(sprakkode),
-            title: 'Malform.Beskrivelse',
-          }]}
         />
       </Column>
     </Row>
@@ -82,12 +81,9 @@ const FritekstBrevPanelImpl = ({
 
 FritekstBrevPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  previewBrev: PropTypes.func.isRequired,
+  skalViseLink: PropTypes.bool.isRequired,
+  previewOverstyrtBrev: PropTypes.func.isRequired,
   sprakkode: PropTypes.shape().isRequired,
 };
 
-FritekstBrevPanelImpl.defaultProps = {
-};
-
-const FritekstBrevPanel = injectIntl(FritekstBrevPanelImpl);
-export default FritekstBrevPanel;
+export default injectIntl(FritekstBrevPanelImpl);
