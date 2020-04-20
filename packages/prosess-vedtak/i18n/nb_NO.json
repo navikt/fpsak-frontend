@@ -45,11 +45,13 @@
   "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImage": "Ingen automatisk vedtaksbrev.",
   "VedtakForm.SvpFritektsBrevModal.ModalDescription": "Informasjonsboks om ingen automatisk vedtaksbrev. Fritekstbrev er nødvendig.",
 
-  "VedtakInnvilgetPanel.RedigerVedtaksbrev": "Rediger vedtaksbrev",
-  "VedtakInnvilgetPanel.AutomatiskVedtaksbrev": "Automatisk vedtaksbrev",
-  "VedtakInnvilgetPanel.ManueltVedtaksbrev": "Manuelt vedtaksbrev",
-  "VedtakInnvilgetPanel.ForhandsvisManueltVedtaksbrev": "Forhåndsvis manuelt brev",
-  "VedtakInnvilgetPanel.Forklaring": "Tekst fra det automatisk genererte brevet kan kopieres og limes inn i det manuelle brevet",
+  "VedtakFellesPanel.RedigerVedtaksbrev": "Rediger vedtaksbrev",
+  "VedtakFellesPanel.AutomatiskVedtaksbrev": "Automatisk vedtaksbrev",
+  "VedtakFellesPanel.ForkastManueltBrev": "Forkast manuelt brev",
+  "VedtakFellesPanel.Forklaring": "Tekst fra det automatisk genererte brevet kan kopieres og limes inn i det manuelle brevet",
+  
+  "FritekstBrevPanel.ManueltVedtaksbrev": "Manuelt vedtaksbrev",
+  "FritekstBrevPanel.ForhandsvisManueltVedtaksbrev": "Forhåndsvis manuelt brev",
 
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",

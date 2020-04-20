@@ -4,15 +4,17 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import Lenke from 'nav-frontend-lenker';
-import { Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/arrow-return.svg';
+import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
 // import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import {
+  VerticalSpacer, Image, FlexColumn, FlexContainer, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import FritekstBrevPanel from './FritekstBrevPanel';
@@ -46,7 +48,10 @@ export const VedtakFellesPanel = ({
 }) => {
   const [skalBrukeOverstyrendeFritekstBrev, toggleSkalBrukeOverstyrendeFritekstBrev] = useState(behandlingsresultat.vedtaksbrev.kode === 'FRITEKST');
   const onToggleOverstyring = useCallback(() => {
-    toggleSkalBrukeOverstyrendeFritekstBrev(!skalBrukeOverstyrendeFritekstBrev);
+    toggleSkalBrukeOverstyrendeFritekstBrev(true);
+  }, []);
+  const avsluttRedigering = useCallback(() => {
+    toggleSkalBrukeOverstyrendeFritekstBrev(false);
 
     const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
     clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
@@ -77,7 +82,7 @@ export const VedtakFellesPanel = ({
         <Column xs="3">
           {!readOnly && skalViseLink && !erBehandlingEtterKlage && (
             <Lenke href="#" onClick={previewAutomatiskBrev}>
-              <span><FormattedMessage id="VedtakInnvilgetPanel.AutomatiskVedtaksbrev" /></span>
+              <span><FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" /></span>
               <FraBeslutterSvg />
             </Lenke>
           )}
@@ -86,7 +91,7 @@ export const VedtakFellesPanel = ({
           <Column xs="3">
             <Lenke href="#" onClick={onToggleOverstyring}>
               <Image src={editUtlandIcon} />
-              <span><FormattedMessage id="VedtakInnvilgetPanel.RedigerVedtaksbrev" /></span>
+              <span><FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" /></span>
             </Lenke>
           </Column>
         )}
@@ -105,23 +110,36 @@ export const VedtakFellesPanel = ({
       {kanSendesTilGodkjenning(behandlingStatusKode) && (
         <>
           <VerticalSpacer twentyPx />
-          <Row>
-            <Column xs="12">
-              {!readOnly && (
-              <Hovedknapp
-                mini
-                onClick={handleSubmit}
-                disabled={behandlingPaaVent || submitting}
-                spinner={submitting}
-              >
-                {intl.formatMessage({
-                  id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
-                    ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
-                })}
-              </Hovedknapp>
+          <FlexContainer>
+            <FlexRow>
+              <FlexColumn>
+                {!readOnly && (
+                <Hovedknapp
+                  mini
+                  onClick={handleSubmit}
+                  disabled={behandlingPaaVent || submitting}
+                  spinner={submitting}
+                >
+                  {intl.formatMessage({
+                    id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                      ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
+                  })}
+                </Hovedknapp>
+                )}
+              </FlexColumn>
+              {skalBrukeOverstyrendeFritekstBrev && (
+              <FlexColumn>
+                <Knapp
+                  mini
+                  htmlType="button"
+                  onClick={avsluttRedigering}
+                >
+                  <FormattedMessage id="VedtakFellesPanel.ForkastManueltBrev" />
+                </Knapp>
+              </FlexColumn>
               )}
-            </Column>
-          </Row>
+            </FlexRow>
+          </FlexContainer>
         </>
       )}
     </>
@@ -142,12 +160,16 @@ VedtakFellesPanel.propTypes = {
   renderPanel: PropTypes.func.isRequired,
   previewAutomatiskBrev: PropTypes.func.isRequired,
   previewOverstyrtBrev: PropTypes.func.isRequired,
-  tilbakekrevingtekst: PropTypes.string.isRequired,
+  tilbakekrevingtekst: PropTypes.string,
   clearFormFields: PropTypes.func.isRequired,
   sprakkode: PropTypes.shape().isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
+};
+
+VedtakFellesPanel.defaultProps = {
+  tilbakekrevingtekst: undefined,
 };
 
 export default injectIntl(VedtakFellesPanel);

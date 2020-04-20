@@ -1,16 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import { ForhaandsvisningsKnapp } from '../VedtakForm';
-
 import styles from '../vedtakForm.less';
+
+
+export const ForhaandsvisningsKnapp = (props) => {
+  const { previewFunction } = props;
+  return (
+    <a
+      href=""
+      onClick={previewFunction}
+      onKeyDown={(e) => (e.keyCode === 13 ? previewFunction(e) : null)}
+      className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
+    >
+      <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+    </a>
+  );
+};
+
+ForhaandsvisningsKnapp.propTypes = {
+  previewFunction: PropTypes.func.isRequired,
+};
 
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {

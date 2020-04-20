@@ -30,7 +30,7 @@ const FritekstBrevPanelImpl = ({
     <Row>
       <Column xs="3">
         <Element>
-          <FormattedMessage id="VedtakInnvilgetPanel.ManueltVedtaksbrev" />
+          <FormattedMessage id="FritekstBrevPanel.ManueltVedtaksbrev" />
         </Element>
       </Column>
       <Column xs="2">
@@ -39,7 +39,7 @@ const FritekstBrevPanelImpl = ({
       <Column xs="5">
         {!readOnly && skalViseLink && (
           <Lenke href="#" onClick={previewOverstyrtBrev}>
-            <span><FormattedMessage id="VedtakInnvilgetPanel.ForhandsvisManueltVedtaksbrev" /></span>
+            <span><FormattedMessage id="FritekstBrevPanel.ForhandsvisManueltVedtaksbrev" /></span>
           </Lenke>
         )}
       </Column>
@@ -48,7 +48,7 @@ const FritekstBrevPanelImpl = ({
     <VerticalSpacer twentyPx />
     <Alertstripe type="info" form="inline">
       <Element>
-        <FormattedMessage id="VedtakInnvilgetPanel.Forklaring" />
+        <FormattedMessage id="VedtakFellesPanel.Forklaring" />
       </Element>
     </Alertstripe>
     <Row>

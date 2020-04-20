@@ -145,7 +145,6 @@ export const VedtakForm = ({
 VedtakForm.propTypes = {
   behandling: vedtakBehandlingPropType.isRequired,
   resultatstruktur: vedtakBeregningsresultatPropType,
-  intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
   brødtekst: PropTypes.string,
   overskrift: PropTypes.string,

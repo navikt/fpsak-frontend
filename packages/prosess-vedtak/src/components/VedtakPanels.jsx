@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import vedtakBehandlingPropType from '../propTypes/vedtakBehandlingPropType';
@@ -88,7 +87,6 @@ const VedtakPanels = ({
 
 VedtakPanels.propTypes = {
   behandling: vedtakBehandlingPropType.isRequired,
-  sprakkode: kodeverkObjektPropType.isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
   resultatstruktur: vedtakBeregningsresultatPropType,
