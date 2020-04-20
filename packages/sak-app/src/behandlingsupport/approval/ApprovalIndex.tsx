@@ -193,10 +193,13 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
       return null;
     }
 
+    const harKlageEndepunkter = klageData.some((kd) => kd.isEndpointEnabled());
+
     return (
       <DataFetcher
         fetchingTriggers={new DataFetcherTriggers({ behandlingId: behandlingIdentifier.behandlingId, behandlingVersion: selectedBehandlingVersjon }, true)}
-        endpoints={klageData.some((kd) => kd.isEndpointEnabled()) ? klageData : ingenData}
+        key={harKlageEndepunkter ? 0 : 1}
+        endpoints={harKlageEndepunkter ? klageData : ingenData}
         render={(props: {
           totrinnsKlageVurdering?: {
             klageVurdering?: string;
@@ -232,6 +235,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
                   behandlingId: behandlingIdentifier.behandlingId,
                   behandlingVersion: selectedBehandlingVersjon,
                 }, true)}
+                key={revurderingData.some((rd) => rd.isEndpointEnabled()) ? 0 : 1}
                 endpoints={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
                 render={(modalProps: { harRevurderingSammeResultat: boolean }) => (
                   <FatterVedtakApprovalModalSakIndex

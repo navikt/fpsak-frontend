@@ -62,8 +62,6 @@ const formatArbeidsgiver = (arbeidsgiver) => {
   return lagArbeidsgiverNavnOgOrgnrTekst(arbeidsgiver);
 };
 
-const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) => !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some((vd) => !vd);
-
 /**
  * SokersOpplysningspliktForm
  *
@@ -80,7 +78,6 @@ export const SokersOpplysningspliktFormImpl = ({
   hasAksjonspunkt,
   manglendeVedlegg,
   dokumentTypeIds,
-  inntektsmeldingerSomIkkeKommer,
   getKodeverknavn,
   behandlingId,
   behandlingVersjon,
@@ -135,7 +132,7 @@ export const SokersOpplysningspliktFormImpl = ({
                   />
               )}
                 value
-                disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
+                disabled={!hasSoknad}
               />
               <RadioOption label={getLabel(intl)} value={false} />
             </RadioGroupField>
@@ -173,7 +170,6 @@ SokersOpplysningspliktFormImpl.propTypes = {
   behandlingsresultat: PropTypes.shape(),
   manglendeVedlegg: PropTypes.arrayOf(PropTypes.shape()),
   dokumentTypeIds: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  inntektsmeldingerSomIkkeKommer: PropTypes.shape(),
   getKodeverknavn: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -186,7 +182,6 @@ SokersOpplysningspliktFormImpl.defaultProps = {
   hasAksjonspunkt: false,
   behandlingsresultat: {},
   manglendeVedlegg: [],
-  inntektsmeldingerSomIkkeKommer: {},
 };
 
 export const getSortedManglendeVedlegg = createSelector([
@@ -212,6 +207,8 @@ export const buildInitialValues = createSelector(
     const isOpenAksjonspunkt = aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
     const isVilkarGodkjent = soknadExists && vilkarUtfallType.OPPFYLT === status;
 
+    // TODO Mogleg inntektsmeldingerSomIkkeKommer kan fjernast, men trur fjerning av bruken av denne i render er ein midlertidig
+    // fiks og at dette derfor skal brukast etterkvart. Sjå TFP-3076
     const inntektsmeldingerSomIkkeKommer = manglendeVedlegg
       .filter((mv) => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
       .reduce((acc, mv) => ({
@@ -265,7 +262,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       dokumentTypeIds: alleKodeverk[kodeverkTyper.DOKUMENT_TYPE_ID],
       manglendeVedlegg: getSortedManglendeVedlegg(state, ownProps),
       initialValues: buildInitialValues(state, ownProps),
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'hasAksjonspunkt', 'erVilkarOk'),
     };
   };
 };
