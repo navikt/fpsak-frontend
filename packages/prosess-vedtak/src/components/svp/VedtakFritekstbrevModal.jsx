@@ -12,8 +12,8 @@ import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResul
 
 import styles from './vedtakFritekstbrevModal.less';
 
-const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
-  if (readOnly || !erSVP) {
+const isFritekstbrevRequired = (readOnly, behandlingsresultat) => {
+  if (readOnly) {
     return false;
   }
   const erAvslag = behandlingsresultat && isAvslag(behandlingsresultat.type.kode);
@@ -38,9 +38,8 @@ export const VedtakFritekstbrevModal = ({
   intl,
   readOnly,
   behandlingsresultat,
-  erSVP,
 }) => {
-  const fritektsbrevRequired = isFritekstbrevRequired(readOnly, behandlingsresultat, erSVP);
+  const fritektsbrevRequired = isFritekstbrevRequired(readOnly, behandlingsresultat);
   const [showModal, settShowModal] = useState(fritektsbrevRequired);
   return (
     <>
@@ -92,7 +91,6 @@ VedtakFritekstbrevModal.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
-  erSVP: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(VedtakFritekstbrevModal);

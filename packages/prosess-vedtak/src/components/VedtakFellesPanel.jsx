@@ -1,10 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { Element, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import Lenke from 'nav-frontend-lenker';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/arrow-return.svg';
@@ -19,6 +21,8 @@ import { findInnvilgetResultatText, findAvslagResultatText } from './VedtakHelpe
 
 export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlingStatusCode.AVSLUTTET
   || behandlingStatus === behandlingStatusCode.IVERKSETTER_VEDTAK ? 'VedtakForm.vedtak' : 'VedtakForm.ForslagTilVedtak');
+
+const kanSendesTilGodkjenning = (behandlingStatusKode) => behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
 export const VedtakFellesPanel = ({
   intl,
@@ -36,6 +40,9 @@ export const VedtakFellesPanel = ({
   tilbakekrevingtekst,
   clearFormFields,
   erBehandlingEtterKlage,
+  handleSubmit,
+  submitting,
+  behandlingPaaVent,
 }) => {
   const [skalBrukeOverstyrendeFritekstBrev, toggleSkalBrukeOverstyrendeFritekstBrev] = useState(behandlingsresultat.vedtaksbrev.kode === 'FRITEKST');
   const onToggleOverstyring = useCallback(() => {
@@ -55,17 +62,17 @@ export const VedtakFellesPanel = ({
   return (
     <>
       <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
-      <VerticalSpacer twentyPx />
+      <VerticalSpacer eightPx />
       <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
       <Row>
         <Column xs="3">
-          <Normaltekst>
+          <Element>
             {erInnvilget && intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
             {erAvslatt && intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseTypeKode) })}
             {tilbakekrevingtekst && (
               `. ${intl.formatMessage({ id: tilbakekrevingtekst })}`
             )}
-          </Normaltekst>
+          </Element>
         </Column>
         <Column xs="3">
           {!readOnly && skalViseLink && !erBehandlingEtterKlage && (
@@ -95,6 +102,28 @@ export const VedtakFellesPanel = ({
           skalViseLink={skalViseLink}
         />
       )}
+      {kanSendesTilGodkjenning(behandlingStatusKode) && (
+        <>
+          <VerticalSpacer twentyPx />
+          <Row>
+            <Column xs="12">
+              {!readOnly && (
+              <Hovedknapp
+                mini
+                onClick={handleSubmit}
+                disabled={behandlingPaaVent || submitting}
+                spinner={submitting}
+              >
+                {intl.formatMessage({
+                  id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                    ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
+                })}
+              </Hovedknapp>
+              )}
+            </Column>
+          </Row>
+        </>
+      )}
     </>
   );
 };
@@ -107,6 +136,7 @@ VedtakFellesPanel.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
+  erBehandlingEtterKlage: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   renderPanel: PropTypes.func.isRequired,
@@ -115,6 +145,9 @@ VedtakFellesPanel.propTypes = {
   tilbakekrevingtekst: PropTypes.string.isRequired,
   clearFormFields: PropTypes.func.isRequired,
   sprakkode: PropTypes.shape().isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired,
+  behandlingPaaVent: PropTypes.bool.isRequired,
 };
 
 export default injectIntl(VedtakFellesPanel);

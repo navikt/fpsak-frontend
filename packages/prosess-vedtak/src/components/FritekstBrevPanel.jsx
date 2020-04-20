@@ -1,7 +1,6 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
