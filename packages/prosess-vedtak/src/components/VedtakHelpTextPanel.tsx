@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -23,8 +22,12 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
   return helpTexts;
 };
 
+interface OwnProps {
+  readOnly: boolean;
+  aksjonspunktKoder: string[];
+}
 
-export const VedtakHelpTextPanelImpl = ({
+export const VedtakHelpTextPanelImpl: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   readOnly,
   aksjonspunktKoder,
@@ -52,12 +55,5 @@ export const VedtakHelpTextPanelImpl = ({
   }
   return null;
 };
-
-VedtakHelpTextPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
-
 
 export default injectIntl(VedtakHelpTextPanelImpl);

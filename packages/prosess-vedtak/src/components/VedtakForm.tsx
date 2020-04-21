@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, useMemo } from 'react';
 import { connect } from 'react-redux';
+import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
-import { formPropTypes } from 'redux-form';
 
+import {
+  KodeverkMedNavn, Behandling, BeregningsresultatFp, BeregningsresultatEs, Vilkar,
+  Aksjonspunkt, SimuleringResultat, Kodeverk,
+} from '@fpsak-frontend/types';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
-import vedtakBehandlingPropType from '../propTypes/vedtakBehandlingPropType';
-import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
-import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakFellesPanel from './VedtakFellesPanel';
@@ -34,33 +34,41 @@ const getPreviewManueltBrevCallback = (formProps, begrunnelse, brodtekst, oversk
   e.preventDefault();
 };
 
-const isVedtakSubmission = true;
+const erArsakTypeBehandlingEtterKlage = (behandlingArsakTyper = []) => behandlingArsakTyper
+  .map(({ behandlingArsakType }) => behandlingArsakType)
+  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE
+    || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK);
 
-const getPreviewAutomatiskBrevCallback = (begrunnelse, previewCallback) => (e) => {
-  const formValues = {
-    fritekst: begrunnelse,
-    gjelderVedtak: true,
-    vedtaksbrev: {
-      kode: 'AUTOMATISK',
-    },
+interface OwnProps {
+  behandling: Behandling;
+  readOnly: boolean;
+  aksjonspunkter: Aksjonspunkt[];
+  previewCallback: () => void;
+  begrunnelse?: string;
+  brødtekst?: string;
+  overskrift?: string;
+  kanOverstyre?: boolean;
+  ytelseTypeKode: string;
+  resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
+  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  tilbakekrevingvalg?: {
+    videreBehandling: Kodeverk;
   };
-  previewCallback(formValues);
-  e.preventDefault();
-};
+  simuleringResultat?: SimuleringResultat;
+  vilkar?: Vilkar[];
+  beregningErManueltFastsatt: boolean;
+}
 
-export const VedtakForm = ({
+export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
   behandling,
   readOnly,
-  behandlingStatusKode,
   aksjonspunkter,
-  antallBarn,
   previewCallback,
   begrunnelse,
   brødtekst,
   overskrift,
-  aksjonspunktKoder,
   kanOverstyre,
-  erBehandlingEtterKlage,
   ytelseTypeKode,
   resultatstruktur,
   alleKodeverk,
@@ -70,10 +78,15 @@ export const VedtakForm = ({
   beregningErManueltFastsatt,
   ...formProps
 }) => {
-  const { behandlingsresultat } = behandling;
-  const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
+  const {
+    behandlingsresultat, behandlingPaaVent, sprakkode, status,
+  } = behandling;
+
+  const erBehandlingEtterKlage = useMemo(() => erArsakTypeBehandlingEtterKlage(behandling.behandlingArsaker), [behandling.behandlingArsaker]);
+  const aksjonspunktKoder = useMemo(() => aksjonspunkter.map((a) => a.definisjon.kode), [aksjonspunkter]);
+
   const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, true, previewCallback);
-  // const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, false, previewCallback);
+  const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, false, previewCallback);
 
   const tilbakekrevingtekst = getTilbakekrevingText(simuleringResultat, tilbakekrevingvalg, alleKodeverk);
 
@@ -88,30 +101,30 @@ export const VedtakForm = ({
       <VedtakFellesPanel
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={ytelseTypeKode}
-        behandlingStatusKode={behandlingStatusKode}
+        behandlingStatusKode={status.kode}
         aksjonspunktKoder={aksjonspunktKoder}
         readOnly={readOnly}
         kanOverstyre={kanOverstyre}
-        sprakkode={behandling.sprakkode}
-        previewAutomatiskBrev={previewAutomatiskBrev}
+        sprakkode={sprakkode}
+        previewAutomatiskBrev={previewDefaultBrev}
         previewOverstyrtBrev={previewOverstyrtBrev}
         tilbakekrevingtekst={tilbakekrevingtekst}
         erBehandlingEtterKlage={erBehandlingEtterKlage}
         handleSubmit={formProps.handleSubmit}
         submitting={formProps.submitting}
         resetForm={formProps.reset}
-        behandlingPaaVent={behandling.behandlingPaaVent}
+        behandlingPaaVent={behandlingPaaVent}
         renderPanel={(skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt) => {
           if (erInnvilget) {
             return (
               <VedtakInnvilgetPanel
-                antallBarn={antallBarn}
+                antallBarn={resultatstruktur ? resultatstruktur.antallBarn : undefined}
                 behandlingsresultat={behandlingsresultat}
                 readOnly={readOnly}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                 ytelseTypeKode={ytelseTypeKode}
-                sprakkode={behandling.sprakkode}
-                beregningResultat={resultatstruktur}
+                sprakkode={sprakkode}
+                resultatstruktur={resultatstruktur}
                 beregningErManueltFastsatt={beregningErManueltFastsatt}
               />
             );
@@ -119,15 +132,12 @@ export const VedtakForm = ({
 
           return erAvslatt ? (
             <VedtakAvslagPanel
-              behandlingStatusKode={behandlingStatusKode}
-              aksjonspunkter={aksjonspunkter}
+              behandlingStatusKode={status.kode}
               behandlingsresultat={behandlingsresultat}
               readOnly={readOnly}
               ytelseTypeKode={ytelseTypeKode}
-              sprakkode={behandling.sprakkode}
+              sprakkode={sprakkode}
               alleKodeverk={alleKodeverk}
-              tilbakekrevingvalg={tilbakekrevingvalg}
-              simuleringResultat={simuleringResultat}
               vilkar={vilkar}
               beregningErManueltFastsatt={beregningErManueltFastsatt}
             />
@@ -138,52 +148,14 @@ export const VedtakForm = ({
   );
 };
 
-VedtakForm.propTypes = {
-  behandling: vedtakBehandlingPropType.isRequired,
-  resultatstruktur: vedtakBeregningsresultatPropType,
-  begrunnelse: PropTypes.string,
-  brødtekst: PropTypes.string,
-  overskrift: PropTypes.string,
-  antallBarn: PropTypes.number,
-  behandlingStatusKode: PropTypes.string.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  kanOverstyre: PropTypes.bool,
-  erBehandlingEtterKlage: PropTypes.bool.isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  tilbakekrevingvalg: PropTypes.shape(),
-  simuleringResultat: PropTypes.shape(),
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
-  vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  ...formPropTypes,
-};
-
-VedtakForm.defaultProps = {
-  antallBarn: undefined,
-  begrunnelse: undefined,
-  brødtekst: undefined,
-  overskrift: undefined,
-  kanOverstyre: undefined,
-  resultatstruktur: undefined,
-};
-
 export const buildInitialValues = createSelector(
-  [(ownProps) => ownProps.resultatstruktur,
-    (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.behandling],
-  (beregningResultat, aksjonspunkter, behandling) => ({
-    antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
-    aksjonspunktKoder: aksjonspunkter.filter((ap) => ap.kanLoses)
-      .map((ap) => ap.definisjon.kode),
+  [(ownProps: { aksjonspunkter: Aksjonspunkt[] }) => ownProps.aksjonspunkter,
+    (ownProps: { behandling: Behandling }) => ownProps.behandling],
+  (aksjonspunkter, behandling) => ({
+    aksjonspunktKoder: aksjonspunkter.filter((ap) => ap.kanLoses).map((ap) => ap.definisjon.kode),
     overskrift: decodeHtmlEntity(behandling.behandlingsresultat.overskrift),
     brødtekst: decodeHtmlEntity(behandling.behandlingsresultat.fritekstbrev),
   }),
-);
-
-export const getAksjonspunktKoder = createSelector(
-  [(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => aksjonspunkter.map((ap) => ap.definisjon.kode),
 );
 
 const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
@@ -192,34 +164,23 @@ const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
   fritekstBrev: values.brødtekst,
   skalBrukeOverstyrendeFritekstBrev: !!values.brødtekst,
   overskrift: values.overskrift,
-  isVedtakSubmission,
+  isVedtakSubmission: true,
 }));
 
 const formName = 'VedtakForm';
 
-const erArsakTypeBehandlingEtterKlage = createSelector([(ownProps) => ownProps
-  .behandling.behandlingArsaker], (behandlingArsakTyper = []) => behandlingArsakTyper
-  .map(({ behandlingArsakType }) => behandlingArsakType)
-  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
-    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
-
-
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
     ...behandlingFormValueSelector(formName, ownProps.behandling.id, ownProps.behandling.versjon)(
       state,
-      'antallBarn',
-      'begrunnelse',
       'aksjonspunktKoder',
+      'begrunnelse',
       'overskrift',
       'brødtekst',
     ),
-    behandlingStatusKode: ownProps.behandling.status.kode,
-    aksjonspunktKoder: getAksjonspunktKoder(ownProps),
-    erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
   });
 };
 

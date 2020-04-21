@@ -10,7 +10,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VedtakFritekstPanel from './VedtakFritekstPanel';
-import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
+import VedtakAvslagPanel from './VedtakAvslagPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
@@ -115,7 +115,7 @@ describe('<VedtakAvslagPanel>', () => {
   }];
 
   it('skal rendre avslagspanel for engangsstønad', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
+    const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
       vilkar={[soknadVilkar]}
@@ -141,7 +141,7 @@ describe('<VedtakAvslagPanel>', () => {
   });
 
   it('skal rendre avslagspanel uten fritekstpanel for engangsstønad', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
+    const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
       vilkar={vilkarUtenSoknadsfrist}
@@ -167,7 +167,7 @@ describe('<VedtakAvslagPanel>', () => {
   });
 
   it('skal rendre avslagspanel uten fritekstpanel for foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
+    const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
       vilkar={vilkarUtenSoknadsfrist}
@@ -193,7 +193,7 @@ describe('<VedtakAvslagPanel>', () => {
   });
 
   it('skal rendre avslagspanel med fritekstpanel for foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
+    const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
       vilkar={vilkarUtenSoknadsfrist}

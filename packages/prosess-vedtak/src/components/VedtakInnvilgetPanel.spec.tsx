@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { VedtakInnvilgetPanelImpl } from './VedtakInnvilgetPanel';
+import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
@@ -17,7 +17,7 @@ const behandlingsresultat = {
 
 describe('<VedtakInnvilgetPanel>', () => {
   it('skal rendre innvilget panel for engangsstønad', () => {
-    const wrapper = shallowWithIntl(<VedtakInnvilgetPanelImpl
+    const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
       behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
       beregningResultat={{
@@ -50,7 +50,7 @@ describe('<VedtakInnvilgetPanel>', () => {
   });
 
   it('skal rendre innvilget panel for foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<VedtakInnvilgetPanelImpl
+    const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
       behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
       beregningResultat={{

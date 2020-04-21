@@ -15,9 +15,9 @@ describe('<VedtakFritekstbrevModal>', () => {
       behandlingsresultat={{
         type: {
           kode: behandlingResultatType.AVSLATT,
+          kodeverk: '',
         },
       }}
-      erSVP
     />);
     const modal = wrapper.find(Modal);
     const isOpen = modal.prop('isOpen');
@@ -32,9 +32,9 @@ describe('<VedtakFritekstbrevModal>', () => {
       behandlingsresultat={{
         type: {
           kode: behandlingResultatType.OPPHOR,
+          kodeverk: '',
         },
       }}
-      erSVP
     />);
     const modal = wrapper.find(Modal);
     const isOpen = modal.prop('isOpen');
@@ -49,9 +49,9 @@ describe('<VedtakFritekstbrevModal>', () => {
       behandlingsresultat={{
         type: {
           kode: behandlingResultatType.INNVILGET,
+          kodeverk: '',
         },
       }}
-      erSVP
     />);
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(0);
@@ -64,24 +64,9 @@ describe('<VedtakFritekstbrevModal>', () => {
       behandlingsresultat={{
         type: {
           kode: behandlingResultatType.AVSLATT,
+          kodeverk: '',
         },
       }}
-      erSVP
-    />);
-    const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(0);
-  });
-
-  it('skal ikke vise modal når ikke SVP', () => {
-    const wrapper = shallowWithIntl(<VedtakFritekstbrevModal
-      intl={intlMock}
-      readOnly={false}
-      behandlingsresultat={{
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
-      }}
-      erSVP={false}
     />);
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(0);

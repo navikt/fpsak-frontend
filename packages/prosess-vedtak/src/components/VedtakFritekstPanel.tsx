@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
+import { Behandlingsresultat, Kodeverk } from '@fpsak-frontend/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -15,7 +15,14 @@ import styles from './vedtakAvslagPanel.less';
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-const VedtakFritekstPanelImpl = ({
+interface OwnProps {
+  behandlingsresultat: Behandlingsresultat;
+  sprakkode: Kodeverk;
+  readOnly: boolean;
+  labelTextCode: string;
+}
+
+const VedtakFritekstPanelImpl: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   behandlingsresultat,
   sprakkode,
@@ -53,12 +60,4 @@ const VedtakFritekstPanelImpl = ({
   </>
 );
 
-VedtakFritekstPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  labelTextCode: PropTypes.string.isRequired,
-};
-const VedtakFritekstPanel = injectIntl(VedtakFritekstPanelImpl);
-export default VedtakFritekstPanel;
+export default injectIntl(VedtakFritekstPanelImpl);

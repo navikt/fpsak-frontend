@@ -1,4 +1,5 @@
 import Kodeverk from './kodeverkTsType';
+import Behandlingsresultat from './behandlingsresultatTsType';
 
 type Behandling = Readonly<{
   id: number;
@@ -10,9 +11,7 @@ type Behandling = Readonly<{
   venteArsakKode?: string;
   behandlingPaaVent: boolean;
   behandlingHenlagt: boolean;
-  behandlingsresultat?: {
-    type: Kodeverk;
-  };
+  behandlingsresultat?: Behandlingsresultat;
   links: {
     href: string;
     rel: string;

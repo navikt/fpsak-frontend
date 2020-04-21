@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
+import {
+  KodeverkMedNavn, Vilkar, Behandlingsresultat, Kodeverk,
+} from '@fpsak-frontend/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
@@ -13,7 +16,8 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
 import VedtakFritekstPanel from './VedtakFritekstPanel';
 
-export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) => {
+
+export const getAvslagArsak = (vilkar, behandlingsresultat, getKodeverknavn) => {
   const avslatteVilkar = vilkar.filter((v) => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
@@ -22,11 +26,21 @@ export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getK
   return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(behandlingsresultat.avslagsarsak, avslatteVilkar[0].vilkarType.kode)}`;
 };
 
-export const VedtakAvslagPanelImpl = ({
+interface OwnProps {
+  behandlingStatusKode: string;
+  vilkar: Vilkar[];
+  behandlingsresultat: Behandlingsresultat;
+  sprakkode: Kodeverk;
+  readOnly: boolean;
+  ytelseTypeKode: string;
+  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  beregningErManueltFastsatt: boolean;
+}
+
+const VedtakAvslagPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   behandlingStatusKode,
   vilkar,
-  aksjonspunkter,
   behandlingsresultat,
   sprakkode,
   readOnly,
@@ -40,11 +54,11 @@ export const VedtakAvslagPanelImpl = ({
   const textCode = beregningErManueltFastsatt ? 'VedtakForm.Fritekst.Beregningsgrunnlag' : 'VedtakForm.Fritekst';
   return (
     <>
-      {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) && (
+      {getAvslagArsak(vilkar, behandlingsresultat, getKodeverknavn) && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}</Undertekst>
           <Normaltekst>
-            {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn)}
+            {getAvslagArsak(vilkar, behandlingsresultat, getKodeverknavn)}
           </Normaltekst>
           <VerticalSpacer sixteenPx />
         </div>
@@ -61,17 +75,4 @@ export const VedtakAvslagPanelImpl = ({
   );
 };
 
-VedtakAvslagPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
-  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
-};
-
-export default injectIntl(VedtakAvslagPanelImpl);
+export default injectIntl(VedtakAvslagPanel);

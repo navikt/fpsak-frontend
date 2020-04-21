@@ -1,6 +1,7 @@
-import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import React, {
+  FunctionComponent, useState, useCallback, ReactNode,
+} from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import Lenke from 'nav-frontend-lenker';
@@ -11,6 +12,7 @@ import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import { ReactComponent as EditUtlandSvg } from '@fpsak-frontend/assets/images/endre.svg';
+import { Kodeverk, Behandlingsresultat } from '@fpsak-frontend/types';
 import {
   VerticalSpacer, FlexColumn, FlexContainer, FlexRow, OkAvbrytModal, Image,
 } from '@fpsak-frontend/shared-components';
@@ -29,7 +31,26 @@ export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlin
 
 const kanSendesTilGodkjenning = (behandlingStatusKode) => behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
-export const VedtakFellesPanel = ({
+interface OwnProps {
+  behandlingsresultat?: Behandlingsresultat;
+  ytelseTypeKode: string;
+  readOnly: boolean;
+  kanOverstyre: boolean;
+  erBehandlingEtterKlage: boolean;
+  aksjonspunktKoder: string[];
+  behandlingStatusKode: string;
+  renderPanel: (skalBrukeManueltBrev: boolean, erInnvilget: boolean, erAvslatt: boolean) => ReactNode;
+  previewAutomatiskBrev: (e: Event) => void;
+  previewOverstyrtBrev: (e: Event) => void;
+  tilbakekrevingtekst?: string;
+  sprakkode: Kodeverk;
+  resetForm: () => void;
+  handleSubmit: (any) => void;
+  submitting: boolean;
+  behandlingPaaVent: boolean;
+}
+
+export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   behandlingsresultat,
   ytelseTypeKode,
@@ -83,7 +104,7 @@ export const VedtakFellesPanel = ({
             </FlexColumn>
           )}
           <FlexColumn>
-            <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
+            <Undertittel><FormattedMessage id={getTextCode(behandlingStatusKode)} /></Undertittel>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
@@ -122,7 +143,6 @@ export const VedtakFellesPanel = ({
       {renderPanel(skalBrukeManueltBrev, erInnvilget, erAvslatt)}
       {skalBrukeManueltBrev && (
         <FritekstBrevPanel
-          intl={intl}
           readOnly={readOnly}
           sprakkode={sprakkode}
           previewOverstyrtBrev={previewOverstyrtBrev}
@@ -166,31 +186,6 @@ export const VedtakFellesPanel = ({
       )}
     </>
   );
-};
-
-
-VedtakFellesPanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  kanOverstyre: PropTypes.bool.isRequired,
-  erBehandlingEtterKlage: PropTypes.bool.isRequired,
-  aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
-  renderPanel: PropTypes.func.isRequired,
-  previewAutomatiskBrev: PropTypes.func.isRequired,
-  previewOverstyrtBrev: PropTypes.func.isRequired,
-  tilbakekrevingtekst: PropTypes.string,
-  resetForm: PropTypes.func.isRequired,
-  sprakkode: PropTypes.shape().isRequired,
-  handleSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  behandlingPaaVent: PropTypes.bool.isRequired,
-};
-
-VedtakFellesPanel.defaultProps = {
-  tilbakekrevingtekst: undefined,
 };
 
 export default injectIntl(VedtakFellesPanel);

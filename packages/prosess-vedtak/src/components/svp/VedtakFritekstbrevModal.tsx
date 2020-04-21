@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent, useState } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import { Behandlingsresultat } from '@fpsak-frontend/types';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -21,6 +21,11 @@ const isFritekstbrevRequired = (readOnly, behandlingsresultat) => {
   return erAvslag || erOpphor;
 };
 
+interface OwnProps {
+  readOnly: boolean;
+  behandlingsresultat?: Behandlingsresultat;
+}
+
 /**
  * VedtakFritekstbrevModal
  *
@@ -34,7 +39,7 @@ const isFritekstbrevRequired = (readOnly, behandlingsresultat) => {
  * Se https://jira.adeo.no/browse/TFP-738 for mer informasjon.
  *
  */
-export const VedtakFritekstbrevModal = ({
+export const VedtakFritekstbrevModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   readOnly,
   behandlingsresultat,
@@ -49,12 +54,10 @@ export const VedtakFritekstbrevModal = ({
           isOpen={showModal}
           closeButton={false}
           contentLabel="VedtakForm.SvpFritektsBrevModal.ModalDescription"
-          onRequestClose={(event) => {
-            if (event) event.preventDefault();
+          onRequestClose={() => {
             settShowModal(false);
           }}
           shouldCloseOnOverlayClick={false}
-          ariaHideApp={false}
         >
           <Row>
             <Column xs="1">
@@ -85,12 +88,6 @@ export const VedtakFritekstbrevModal = ({
       )}
     </>
   );
-};
-
-VedtakFritekstbrevModal.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
 };
 
 export default injectIntl(VedtakFritekstbrevModal);

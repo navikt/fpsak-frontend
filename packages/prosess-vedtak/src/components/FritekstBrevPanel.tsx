@@ -1,11 +1,11 @@
-import React from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, EtikettLiten } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import Alertstripe from 'nav-frontend-alertstriper';
 
+import { Kodeverk } from '@fpsak-frontend/types';
 import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { AvsnittSkiller, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -19,7 +19,14 @@ const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
-const FritekstBrevPanelImpl = ({
+interface OwnProps {
+  previewOverstyrtBrev: () => void;
+  readOnly: boolean;
+  sprakkode: Kodeverk;
+  skalViseLink: boolean;
+}
+
+const FritekstBrevPanelImpl: FunctionComponent<OwnProps> = ({
   previewOverstyrtBrev,
   readOnly,
   sprakkode,
@@ -89,11 +96,4 @@ const FritekstBrevPanelImpl = ({
   </>
 );
 
-FritekstBrevPanelImpl.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
-  skalViseLink: PropTypes.bool.isRequired,
-  previewOverstyrtBrev: PropTypes.func.isRequired,
-  sprakkode: PropTypes.shape().isRequired,
-};
-
-export default injectIntl(FritekstBrevPanelImpl);
+export default FritekstBrevPanelImpl;

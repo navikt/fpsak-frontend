@@ -1,17 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
+import {
+  Behandlingsresultat, BeregningsresultatFp, BeregningsresultatEs, Kodeverk,
+} from '@fpsak-frontend/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 
 import VedtakFritekstPanel from './VedtakFritekstPanel';
 
-export const VedtakInnvilgetPanelImpl = ({
+interface OwnProps {
+  resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
+  antallBarn?: number;
+  behandlingsresultat: Behandlingsresultat;
+  ytelseTypeKode: string;
+  sprakkode?: Kodeverk;
+  readOnly: boolean;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
+  beregningErManueltFastsatt: boolean;
+}
+
+const VedtakInnvilgetPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
-  beregningResultat,
   behandlingsresultat,
   antallBarn,
   ytelseTypeKode,
@@ -19,6 +31,7 @@ export const VedtakInnvilgetPanelImpl = ({
   readOnly,
   skalBrukeOverstyrendeFritekstBrev,
   beregningErManueltFastsatt,
+  resultatstruktur = {},
 }) => (
   <>
     {beregningErManueltFastsatt && !skalBrukeOverstyrendeFritekstBrev && (
@@ -31,10 +44,10 @@ export const VedtakInnvilgetPanelImpl = ({
     )}
     {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
       <Row>
-        {beregningResultat && (
+        {resultatstruktur && (
           <Column xs="4">
             <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
-            <Element>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Element>
+            <Element>{formatCurrencyWithKr(resultatstruktur.beregnetTilkjentYtelse)}</Element>
           </Column>
         )}
         {antallBarn && (
@@ -48,22 +61,4 @@ export const VedtakInnvilgetPanelImpl = ({
   </>
 );
 
-VedtakInnvilgetPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  beregningResultat: PropTypes.shape(),
-  antallBarn: PropTypes.number,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  ytelseTypeKode: PropTypes.string.isRequired,
-  sprakkode: PropTypes.shape(),
-  readOnly: PropTypes.bool.isRequired,
-  skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
-  beregningErManueltFastsatt: PropTypes.bool.isRequired,
-};
-
-VedtakInnvilgetPanelImpl.defaultProps = {
-  beregningResultat: {},
-  antallBarn: undefined,
-  sprakkode: undefined,
-};
-
-export default injectIntl(VedtakInnvilgetPanelImpl);
+export default injectIntl(VedtakInnvilgetPanel);
