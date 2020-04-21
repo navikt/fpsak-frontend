@@ -1,9 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
+import {
+  KodeverkMedNavn, Vilkar, Kodeverk, Behandlingsresultat,
+} from '@fpsak-frontend/types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -13,14 +15,14 @@ import {
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
+import { hasIkkeOppfyltSoknadsfristvilkar } from '../VedtakHelper';
 
-import styles from './vedtakAvslagPanel.less';
+import styles from './vedtakAvslagArsakOgBegrunnelsePanel.less';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
-export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) => {
+export const getAvslagArsak = (vilkar, behandlingsresultat, getKodeverknavn) => {
   const avslatteVilkar = vilkar.filter((v) => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
@@ -29,12 +31,18 @@ export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getK
   return `${getKodeverknavn(avslatteVilkar[0].vilkarType)}: ${getKodeverknavn(behandlingsresultat.avslagsarsak, avslatteVilkar[0].vilkarType.kode)}`;
 };
 
+interface OwnProps {
+  behandlingStatusKode: string;
+  vilkar?: Vilkar[];
+  behandlingsresultat: Behandlingsresultat;
+  sprakkode: Kodeverk;
+  readOnly: boolean;
+  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+}
 
-export const VedtakAvslagArsakOgBegrunnelsePanel = ({
-  intl,
+const VedtakAvslagArsakOgBegrunnelsePanel: FunctionComponent<OwnProps> = ({
   behandlingStatusKode,
   vilkar,
-  aksjonspunkter,
   behandlingsresultat,
   sprakkode,
   readOnly,
@@ -43,11 +51,11 @@ export const VedtakAvslagArsakOgBegrunnelsePanel = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <>
-      {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) && (
+      {getAvslagArsak(vilkar, behandlingsresultat, getKodeverknavn) && (
         <div>
-          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.ArsakTilAvslag' })}</Undertekst>
+          <Undertekst><FormattedMessage id="VedtakForm.ArsakTilAvslag" /></Undertekst>
           <Normaltekst>
-            {getAvslagArsak(vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn)}
+            {getAvslagArsak(vilkar, behandlingsresultat, getKodeverknavn)}
           </Normaltekst>
           <VerticalSpacer sixteenPx />
         </div>
@@ -58,7 +66,7 @@ export const VedtakAvslagArsakOgBegrunnelsePanel = ({
           <Column xs="7">
             <TextAreaField
               name="begrunnelse"
-              label={intl.formatMessage({ id: 'VedtakForm.Fritekst' })}
+              label={<FormattedMessage id="VedtakForm.Fritekst" />}
               validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
               maxLength={1500}
               readOnly={readOnly}
@@ -74,24 +82,13 @@ export const VedtakAvslagArsakOgBegrunnelsePanel = ({
       {readOnly && behandlingsresultat.avslagsarsakFritekst !== null && (
         <span>
           <VerticalSpacer twentyPx />
-          <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Fritekst' })}</Undertekst>
+          <Undertekst><FormattedMessage id="VedtakForm.Fritekst" /></Undertekst>
           <VerticalSpacer eightPx />
           <div className={styles.fritekstItem}>{decodeHtmlEntity(behandlingsresultat.avslagsarsakFritekst)}</div>
         </span>
       )}
     </>
   );
-};
-
-VedtakAvslagArsakOgBegrunnelsePanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
-  vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  sprakkode: PropTypes.shape().isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
 };
 
 export default VedtakAvslagArsakOgBegrunnelsePanel;

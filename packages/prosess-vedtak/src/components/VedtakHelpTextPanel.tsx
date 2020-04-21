@@ -4,18 +4,19 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { Aksjonspunkt } from '@fpsak-frontend/types';
 
 import styles from './vedtakForm.less';
 
-const findHelpTexts = (intl, aksjonspunktKoder) => {
+const findHelpTexts = (intl, aksjonspunkter) => {
   const helpTexts = [];
-  if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_ANNEN_YTELSE)) {
+  if (aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.VURDERE_ANNEN_YTELSE)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderAnnenYtelse' }));
   }
-  if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.VURDERE_DOKUMENT)) {
+  if (aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.VURDERE_DOKUMENT)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.VurderDokument' }));
   }
-  if (aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)) {
+  if (aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)) {
     helpTexts.push(intl.formatMessage({ id: 'VedtakForm.KontrollerRevurderingsbehandling' }));
   }
 
@@ -24,15 +25,15 @@ const findHelpTexts = (intl, aksjonspunktKoder) => {
 
 interface OwnProps {
   readOnly: boolean;
-  aksjonspunktKoder: string[];
+  aksjonspunkter: Aksjonspunkt[];
 }
 
 export const VedtakHelpTextPanelImpl: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   readOnly,
-  aksjonspunktKoder,
+  aksjonspunkter,
 }) => {
-  const helpTexts = findHelpTexts(intl, aksjonspunktKoder);
+  const helpTexts = findHelpTexts(intl, aksjonspunkter);
   if (!readOnly && helpTexts.length > 0) {
     return (
       <>
@@ -40,7 +41,7 @@ export const VedtakHelpTextPanelImpl: FunctionComponent<OwnProps & WrappedCompon
           {helpTexts}
         </AksjonspunktHelpTextTemp>
         <VerticalSpacer eightPx />
-        {aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)
+        {aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)
         && (
         <Element className={styles.inline}>
           <FormattedMessage id="VedtakForm.HelpText0" />

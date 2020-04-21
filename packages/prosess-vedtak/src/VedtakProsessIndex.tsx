@@ -91,27 +91,24 @@ const VedtakProsessIndex: FunctionComponent<OwnProps> = ({
       )}
       {behandling.type.kode === behandlingType.REVURDERING && (
         <VedtakRevurderingForm
+          behandling={behandling}
           behandlingId={behandling.id}
           behandlingVersjon={behandling.versjon}
-          behandlingresultat={behandling.behandlingsresultat}
-          behandlingStatusKode={behandling.status.kode}
-          sprakkode={behandling.sprakkode}
-          behandlingArsaker={behandling.behandlingArsaker}
           submitCallback={submitCallback}
-          previewCallback={previewCallback}
           readOnly={isReadOnly}
+          previewCallback={previewCallback}
+          tilbakekrevingvalg={tilbakekrevingvalg}
+          simuleringResultat={simuleringResultat}
+          resultatstruktur={resultatstruktur}
+          aksjonspunkter={aksjonspunkter}
           ytelseTypeKode={ytelseTypeKode}
           kanOverstyre={employeeHasAccess}
           alleKodeverk={alleKodeverk}
-          aksjonspunkter={aksjonspunkter}
-          resultatstruktur={resultatstruktur}
+          vilkar={vilkar}
+          beregningErManueltFastsatt={beregningErManueltFastsatt}
           sendVarselOmRevurdering={sendVarselOmRevurdering}
           resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
           medlemskapFom={medlemskap ? medlemskap.fom : undefined}
-          vilkar={vilkar}
-          tilbakekrevingvalg={tilbakekrevingvalg}
-          simuleringResultat={simuleringResultat}
-          beregningErManueltFastsatt={beregningErManueltFastsatt}
         />
       )}
     </RawIntlProvider>

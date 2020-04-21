@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
@@ -84,14 +83,7 @@ const skalKunneForhåndsviseBrev = (behandlingResultat) => {
   return konsekvenserForYtelsen[0].kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && konsekvenserForYtelsen[0].kode !== 'INGEN_ENDRING';
 };
 
-export const getSubmitKnappTekst = createSelector(
-  [(ownProps) => ownProps.aksjonspunkter],
-  (aksjonspunkter) => (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true
-    && ap.toTrinnsBehandling === true) ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak'),
-);
-
 export const VedtakRevurderingSubmitPanelImpl = ({
-  intl,
   beregningResultat,
   previewCallback,
   formProps,
@@ -99,9 +91,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   originaltBeregningResultat,
   skalBrukeOverstyrendeFritekstBrev,
   ytelseTypeKode,
-  readOnly,
   erBehandlingEtterKlage,
-  submitKnappTextId,
   begrunnelse,
   brodtekst,
   overskrift,
@@ -112,18 +102,6 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 
   return (
     <div>
-      <div className={styles.margin} />
-      {!readOnly && (
-        <Hovedknapp
-          mini
-          className={styles.mainButton}
-          onClick={formProps.handleSubmit}
-          disabled={formProps.submitting}
-          spinner={formProps.submitting}
-        >
-          {intl.formatMessage({ id: skalBrukeOverstyrendeFritekstBrev ? 'VedtakForm.TilGodkjenning' : submitKnappTextId })}
-        </Hovedknapp>
-      )}
       {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
           && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && skalBrukeOverstyrendeFritekstBrev && (
           <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
@@ -145,17 +123,14 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 };
 
 VedtakRevurderingSubmitPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   beregningResultat: PropTypes.shape(),
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   originaltBeregningResultat: PropTypes.shape(),
   haveSentVarsel: PropTypes.bool,
-  readOnly: PropTypes.bool.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
-  submitKnappTextId: PropTypes.string.isRequired,
   begrunnelse: PropTypes.string,
   brodtekst: PropTypes.string,
   overskrift: PropTypes.string,
@@ -179,7 +154,6 @@ const erArsakTypeBehandlingEtterKlage = createSelector([(ownProps) => ownProps.b
 
 
 const mapStateToProps = (state, ownProps) => ({
-  submitKnappTextId: getSubmitKnappTekst(ownProps),
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
 });
 

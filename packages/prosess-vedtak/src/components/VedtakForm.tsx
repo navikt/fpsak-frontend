@@ -79,11 +79,10 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
   ...formProps
 }) => {
   const {
-    behandlingsresultat, behandlingPaaVent, sprakkode, status,
+    behandlingsresultat, behandlingPaaVent, sprakkode, status, type,
   } = behandling;
 
   const erBehandlingEtterKlage = useMemo(() => erArsakTypeBehandlingEtterKlage(behandling.behandlingArsaker), [behandling.behandlingArsaker]);
-  const aksjonspunktKoder = useMemo(() => aksjonspunkter.map((a) => a.definisjon.kode), [aksjonspunkter]);
 
   const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, true, previewCallback);
   const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, false, previewCallback);
@@ -100,9 +99,11 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
       )}
       <VedtakFellesPanel
         behandlingsresultat={behandlingsresultat}
+        behandlingType={type}
+        alleKodeverk={alleKodeverk}
         ytelseTypeKode={ytelseTypeKode}
         behandlingStatusKode={status.kode}
-        aksjonspunktKoder={aksjonspunktKoder}
+        aksjonspunkter={aksjonspunkter}
         readOnly={readOnly}
         kanOverstyre={kanOverstyre}
         sprakkode={sprakkode}
