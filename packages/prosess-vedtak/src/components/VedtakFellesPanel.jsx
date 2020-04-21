@@ -9,17 +9,20 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { ReactComponent as FraBeslutterSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
-import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
-// import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
+import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
+import { ReactComponent as EditUtlandSvg } from '@fpsak-frontend/assets/images/endre.svg';
 import {
-  VerticalSpacer, Image, FlexColumn, FlexContainer, FlexRow,
+  VerticalSpacer, FlexColumn, FlexContainer, FlexRow, OkAvbrytModal, Image,
 } from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 
 import FritekstBrevPanel from './FritekstBrevPanel';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 import { findInnvilgetResultatText, findAvslagResultatText } from './VedtakHelper';
+
+import styles from './vedtakFellesPanel.less';
 
 export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlingStatusCode.AVSLUTTET
   || behandlingStatus === behandlingStatusCode.IVERKSETTER_VEDTAK ? 'VedtakForm.vedtak' : 'VedtakForm.ForslagTilVedtak');
@@ -38,23 +41,22 @@ export const VedtakFellesPanel = ({
   previewAutomatiskBrev,
   previewOverstyrtBrev,
   sprakkode,
-  behandlingFormPrefix,
   tilbakekrevingtekst,
-  clearFormFields,
+  resetForm,
   erBehandlingEtterKlage,
   handleSubmit,
   submitting,
   behandlingPaaVent,
 }) => {
-  const [skalBrukeOverstyrendeFritekstBrev, toggleSkalBrukeOverstyrendeFritekstBrev] = useState(behandlingsresultat.vedtaksbrev.kode === 'FRITEKST');
+  const [skalBrukeManueltBrev, toggleSkalBrukeManueltBrev] = useState(behandlingsresultat.vedtaksbrev.kode === 'FRITEKST');
+  const [skalViseModal, toggleVisModal] = useState(false);
   const onToggleOverstyring = useCallback(() => {
-    toggleSkalBrukeOverstyrendeFritekstBrev(true);
+    toggleSkalBrukeManueltBrev(true);
   }, []);
   const avsluttRedigering = useCallback(() => {
-    toggleSkalBrukeOverstyrendeFritekstBrev(false);
-
-    const fields = ['begrunnelse', 'overskrift', 'brødtekst'];
-    clearFormFields(`${behandlingFormPrefix}.VedtakForm`, false, false, ...fields);
+    toggleSkalBrukeManueltBrev(false);
+    toggleVisModal(false);
+    resetForm();
   }, []);
 
   // for lenke:  readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
@@ -66,7 +68,25 @@ export const VedtakFellesPanel = ({
 
   return (
     <>
-      <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
+      <OkAvbrytModal
+        textCode="VedtakFellesPanel.Forkast"
+        okButtonTextCode="VedtakFellesPanel.Ok"
+        showModal={skalViseModal}
+        cancel={() => toggleVisModal(false)}
+        submit={avsluttRedigering}
+      />
+      <FlexContainer>
+        <FlexRow>
+          {(behandlingStatusKode === behandlingStatusCode.AVSLUTTET) && (
+            <FlexColumn>
+              <Image className={styles.status} src={erInnvilget ? innvilgetImage : avslattImage} />
+            </FlexColumn>
+          )}
+          <FlexColumn>
+            <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
       <VerticalSpacer eightPx />
       <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
       <Row>
@@ -80,25 +100,27 @@ export const VedtakFellesPanel = ({
           </Element>
         </Column>
         <Column xs="3">
-          {!readOnly && skalViseLink && !erBehandlingEtterKlage && (
-            <Lenke href="#" onClick={previewAutomatiskBrev}>
-              <span><FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" /></span>
-              <FraBeslutterSvg />
-            </Lenke>
+          {skalViseLink && !erBehandlingEtterKlage && (
+            <>
+              <Lenke href="#" onClick={previewAutomatiskBrev}>
+                <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
+              </Lenke>
+              <PopOutPilSvg className={styles.pil} />
+            </>
           )}
         </Column>
-        {(kanOverstyre || readOnly) && (
+        {(!readOnly && kanOverstyre && !skalBrukeManueltBrev) && (
           <Column xs="3">
-            <Lenke href="#" onClick={onToggleOverstyring}>
-              <Image src={editUtlandIcon} />
-              <span><FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" /></span>
+            <EditUtlandSvg className={styles.blyant} />
+            <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
+              <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
             </Lenke>
           </Column>
         )}
       </Row>
       <VerticalSpacer twentyPx />
-      {renderPanel(skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt)}
-      {skalBrukeOverstyrendeFritekstBrev && (
+      {renderPanel(skalBrukeManueltBrev, erInnvilget, erAvslatt)}
+      {skalBrukeManueltBrev && (
         <FritekstBrevPanel
           intl={intl}
           readOnly={readOnly}
@@ -121,18 +143,18 @@ export const VedtakFellesPanel = ({
                   spinner={submitting}
                 >
                   {intl.formatMessage({
-                    id: !skalBrukeOverstyrendeFritekstBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
+                    id: !skalBrukeManueltBrev && aksjonspunktKoder.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)
                       ? 'VedtakForm.FattVedtak' : 'VedtakForm.TilGodkjenning',
                   })}
                 </Hovedknapp>
                 )}
               </FlexColumn>
-              {skalBrukeOverstyrendeFritekstBrev && (
+              {skalBrukeManueltBrev && (
               <FlexColumn>
                 <Knapp
                   mini
                   htmlType="button"
-                  onClick={avsluttRedigering}
+                  onClick={() => toggleVisModal(true)}
                 >
                   <FormattedMessage id="VedtakFellesPanel.ForkastManueltBrev" />
                 </Knapp>
@@ -151,7 +173,6 @@ VedtakFellesPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
-  behandlingFormPrefix: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
@@ -161,7 +182,7 @@ VedtakFellesPanel.propTypes = {
   previewAutomatiskBrev: PropTypes.func.isRequired,
   previewOverstyrtBrev: PropTypes.func.isRequired,
   tilbakekrevingtekst: PropTypes.string,
-  clearFormFields: PropTypes.func.isRequired,
+  resetForm: PropTypes.func.isRequired,
   sprakkode: PropTypes.shape().isRequired,
   handleSubmit: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,

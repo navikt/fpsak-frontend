@@ -2,10 +2,11 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element } from 'nav-frontend-typografi';
+import { Element, EtikettLiten } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import Alertstripe from 'nav-frontend-alertstriper';
 
+import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { AvsnittSkiller, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
@@ -34,25 +35,33 @@ const FritekstBrevPanelImpl = ({
         </Element>
       </Column>
       <Column xs="2">
-        <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
+        <EtikettLiten>
+          <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
+        </EtikettLiten>
       </Column>
       <Column xs="5">
         {!readOnly && skalViseLink && (
-          <Lenke href="#" onClick={previewOverstyrtBrev}>
-            <span><FormattedMessage id="FritekstBrevPanel.ForhandsvisManueltVedtaksbrev" /></span>
-          </Lenke>
+          <>
+            <Lenke href="#" onClick={previewOverstyrtBrev}>
+              <FormattedMessage id="FritekstBrevPanel.ForhandsvisManueltVedtaksbrev" />
+            </Lenke>
+            <PopOutPilSvg className={styles.pil} />
+          </>
         )}
       </Column>
     </Row>
     <hr className={styles.line} />
     <VerticalSpacer twentyPx />
-    <Alertstripe type="info" form="inline">
-      <Element>
-        <FormattedMessage id="VedtakFellesPanel.Forklaring" />
-      </Element>
-    </Alertstripe>
+    {!readOnly && (
+      <Alertstripe type="info" form="inline">
+        <Element>
+          <FormattedMessage id="VedtakFellesPanel.Forklaring" />
+        </Element>
+      </Alertstripe>
+    )}
+    <VerticalSpacer sixteenPx />
     <Row>
-      <Column xs="12">
+      <Column xs="8">
         <TextAreaField
           name="overskrift"
           label={{ id: 'VedtakForm.Overskrift' }}
@@ -64,14 +73,16 @@ const FritekstBrevPanelImpl = ({
         />
       </Column>
     </Row>
+    <VerticalSpacer sixteenPx />
     <Row>
-      <Column xs="12">
+      <Column xs="8">
         <TextAreaField
           name="brødtekst"
           label={{ id: 'VedtakForm.Innhold' }}
           validate={[required, minLength3, maxLength5000, hasValidText]}
           maxLength={5000}
           readOnly={readOnly}
+          textareaClass={styles.bigTextArea}
         />
       </Column>
     </Row>

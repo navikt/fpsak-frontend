@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { clearFields, formPropTypes } from 'redux-form';
-import { bindActionCreators } from 'redux';
+import { formPropTypes } from 'redux-form';
 
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import vedtakBehandlingPropType from '../propTypes/vedtakBehandlingPropType';
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
@@ -69,8 +68,6 @@ export const VedtakForm = ({
   simuleringResultat,
   vilkar,
   beregningErManueltFastsatt,
-  behandlingFormPrefix,
-  clearFields: clearFormFields,
   ...formProps
 }) => {
   const { behandlingsresultat } = behandling;
@@ -89,7 +86,6 @@ export const VedtakForm = ({
         />
       )}
       <VedtakFellesPanel
-        behandlingFormPrefix={behandlingFormPrefix}
         behandlingsresultat={behandlingsresultat}
         ytelseTypeKode={ytelseTypeKode}
         behandlingStatusKode={behandlingStatusKode}
@@ -99,11 +95,11 @@ export const VedtakForm = ({
         sprakkode={behandling.sprakkode}
         previewAutomatiskBrev={previewAutomatiskBrev}
         previewOverstyrtBrev={previewOverstyrtBrev}
-        clearFormFields={clearFormFields}
         tilbakekrevingtekst={tilbakekrevingtekst}
         erBehandlingEtterKlage={erBehandlingEtterKlage}
         handleSubmit={formProps.handleSubmit}
         submitting={formProps.submitting}
+        resetForm={formProps.reset}
         behandlingPaaVent={behandling.behandlingPaaVent}
         renderPanel={(skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt) => {
           if (erInnvilget) {
@@ -194,7 +190,7 @@ const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
   kode: apCode,
   begrunnelse: values.begrunnelse,
   fritekstBrev: values.brødtekst,
-  skalBrukeOverstyrendeFritekstBrev: values.skalBrukeOverstyrendeFritekstBrev,
+  skalBrukeOverstyrendeFritekstBrev: !!values.brødtekst,
   overskrift: values.overskrift,
   isVedtakSubmission,
 }));
@@ -221,19 +217,12 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       'overskrift',
       'brødtekst',
     ),
-    behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandling.id, ownProps.behandling.versjon),
     behandlingStatusKode: ownProps.behandling.status.kode,
     aksjonspunktKoder: getAksjonspunktKoder(ownProps),
     erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
   });
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators({
-    clearFields,
-  }, dispatch),
-});
-
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(VedtakForm));
