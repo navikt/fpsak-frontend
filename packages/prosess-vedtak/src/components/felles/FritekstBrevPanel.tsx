@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, EtikettLiten } from 'nav-frontend-typografi';
@@ -20,7 +20,7 @@ const maxLength5000 = maxLength(5000);
 const minLength3 = minLength(3);
 
 interface OwnProps {
-  previewOverstyrtBrev: () => void;
+  previewOverstyrtBrev: (e: MouseEvent) => void;
   readOnly: boolean;
   sprakkode: Kodeverk;
   skalViseLink: boolean;

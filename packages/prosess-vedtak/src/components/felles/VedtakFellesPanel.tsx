@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useState, useCallback, ReactNode,
+  FunctionComponent, useState, useCallback, ReactNode, MouseEvent,
 } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Undertittel } from 'nav-frontend-typografi';
@@ -54,8 +54,8 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   behandlingStatusKode: string;
   renderPanel: (skalBrukeManueltBrev: boolean, erInnvilget: boolean, erAvslatt: boolean, erOpphor: boolean) => ReactNode;
-  previewAutomatiskBrev: () => void;
-  previewOverstyrtBrev: () => void;
+  previewAutomatiskBrev: (e: MouseEvent) => void;
+  previewOverstyrtBrev: (e: MouseEvent) => void;
   tilbakekrevingtekst?: string;
   sprakkode: Kodeverk;
   resetForm: () => void;
