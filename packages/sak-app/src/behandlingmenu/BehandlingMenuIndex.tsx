@@ -141,9 +141,10 @@ class BehandlingMenuIndex extends Component<OwnProps> {
 
     return (
       <DataFetcher
+        key={behandlingData.harValgtBehandling ? 0 : 1}
+        endpoints={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
         fetchingTriggers={new DataFetcherTriggers({ behandlingId: behandlingData.id, behandlingVersion: behandlingData.versjon }, false)}
         showOldDataWhenRefetching
-        endpoints={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
         render={(dataProps: { menyhandlingRettigheter?: { harSoknad: boolean }}) => (
           <MenySakIndex
             rettigheter={getMenyRettigheter({
