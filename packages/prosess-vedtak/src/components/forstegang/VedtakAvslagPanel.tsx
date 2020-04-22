@@ -31,8 +31,9 @@ interface OwnProps {
   sprakkode: Kodeverk;
   readOnly: boolean;
   ytelseTypeKode: string;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   beregningErManueltFastsatt: boolean;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
 }
 
 const VedtakAvslagPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -45,6 +46,7 @@ const VedtakAvslagPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
   ytelseTypeKode,
   alleKodeverk,
   beregningErManueltFastsatt,
+  skalBrukeOverstyrendeFritekstBrev,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const fritekstfeltForSoknadsfrist = behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES
@@ -61,7 +63,8 @@ const VedtakAvslagPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
           <VerticalSpacer sixteenPx />
         </div>
       )}
-      {(fritekstfeltForSoknadsfrist || behandlingsresultat.avslagsarsakFritekst || beregningErManueltFastsatt) && (
+      {(!skalBrukeOverstyrendeFritekstBrev
+        && (fritekstfeltForSoknadsfrist || behandlingsresultat.avslagsarsakFritekst || beregningErManueltFastsatt)) && (
         <VedtakFritekstPanel
           readOnly={readOnly}
           sprakkode={sprakkode}

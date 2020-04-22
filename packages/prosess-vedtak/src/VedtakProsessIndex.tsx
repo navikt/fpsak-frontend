@@ -41,8 +41,8 @@ interface OwnProps {
   previewCallback: () => void;
   submitCallback: () => void;
   ytelseTypeKode: string;
-  employeeHasAccess: boolean;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  kanOverstyre: boolean;
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
 }
 
 const VedtakProsessIndex: FunctionComponent<OwnProps> = ({
@@ -60,7 +60,7 @@ const VedtakProsessIndex: FunctionComponent<OwnProps> = ({
   previewCallback,
   submitCallback,
   ytelseTypeKode,
-  employeeHasAccess,
+  kanOverstyre,
   alleKodeverk,
   sendVarselOmRevurdering = false,
 }) => {
@@ -83,7 +83,7 @@ const VedtakProsessIndex: FunctionComponent<OwnProps> = ({
           resultatstruktur={resultatstruktur}
           aksjonspunkter={aksjonspunkter}
           ytelseTypeKode={ytelseTypeKode}
-          kanOverstyre={employeeHasAccess}
+          kanOverstyre={kanOverstyre}
           alleKodeverk={alleKodeverk}
           vilkar={vilkar}
           beregningErManueltFastsatt={beregningErManueltFastsatt}
@@ -102,7 +102,7 @@ const VedtakProsessIndex: FunctionComponent<OwnProps> = ({
           resultatstruktur={resultatstruktur}
           aksjonspunkter={aksjonspunkter}
           ytelseTypeKode={ytelseTypeKode}
-          kanOverstyre={employeeHasAccess}
+          kanOverstyre={kanOverstyre}
           alleKodeverk={alleKodeverk}
           vilkar={vilkar}
           beregningErManueltFastsatt={beregningErManueltFastsatt}

@@ -3,16 +3,16 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import FritekstBrevPanel from './FritekstBrevPanel';
+import ManueltVedtaksbrevPanel from './ManueltVedtaksbrevPanel';
 
-describe('<FritekstBrevPanel>', () => {
+describe('<ManueltVedtaksbrevPanel>', () => {
   const eventCallback = sinon.spy();
   const sprakkode = {
     kode: 'EN',
     kodeverk: '',
   };
   it('skal vise alle felter i readonly modus', () => {
-    const wrapper = shallow(<FritekstBrevPanel
+    const wrapper = shallow(<ManueltVedtaksbrevPanel
       previewOverstyrtBrev={eventCallback}
       readOnly
       sprakkode={sprakkode}

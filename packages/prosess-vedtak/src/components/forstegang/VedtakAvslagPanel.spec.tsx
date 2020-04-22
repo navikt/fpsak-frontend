@@ -69,6 +69,7 @@ describe('<VedtakAvslagPanel>', () => {
       ytelseTypeKode={engangsstonad}
       alleKodeverk={{}}
       beregningErManueltFastsatt={false}
+      skalBrukeOverstyrendeFritekstBrev
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -93,6 +94,7 @@ describe('<VedtakAvslagPanel>', () => {
       ytelseTypeKode={engangsstonad}
       alleKodeverk={{}}
       beregningErManueltFastsatt={false}
+      skalBrukeOverstyrendeFritekstBrev
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -117,6 +119,7 @@ describe('<VedtakAvslagPanel>', () => {
       ytelseTypeKode={foreldrepenger}
       alleKodeverk={{}}
       beregningErManueltFastsatt={false}
+      skalBrukeOverstyrendeFritekstBrev
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -141,6 +144,7 @@ describe('<VedtakAvslagPanel>', () => {
       ytelseTypeKode={foreldrepenger}
       alleKodeverk={{}}
       beregningErManueltFastsatt
+      skalBrukeOverstyrendeFritekstBrev
     />);
 
     const undertekstFields = wrapper.find('Undertekst');

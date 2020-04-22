@@ -21,13 +21,13 @@ describe('<VedtakInnvilgetPanel>', () => {
     const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
       behandlingsresultat={behandlingsresultat as Behandlingsresultat}
-      antallBarn={1}
       ytelseTypeKode={engangsstonad}
       readOnly
       skalBrukeOverstyrendeFritekstBrev
       beregningErManueltFastsatt={false}
       resultatstruktur={{
         beregnetTilkjentYtelse: 100,
+        antallBarn: 1,
       } as BeregningsresultatEs}
     />);
 
@@ -51,7 +51,6 @@ describe('<VedtakInnvilgetPanel>', () => {
     const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
       behandlingsresultat={behandlingsresultat as Behandlingsresultat}
-      antallBarn={1}
       ytelseTypeKode={foreldrepenger}
       readOnly
       skalBrukeOverstyrendeFritekstBrev

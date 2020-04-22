@@ -315,7 +315,7 @@ const prosessStegPanelDefinisjoner = [{
       simuleringResultat,
       beregningsgrunnlag,
       ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
-      employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+      kanOverstyre: rettigheter.kanOverstyreAccess.isEnabled,
     }),
     showComponent: () => true,
     overrideStatus: ({

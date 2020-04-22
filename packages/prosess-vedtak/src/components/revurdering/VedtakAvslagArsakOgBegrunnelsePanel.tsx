@@ -37,7 +37,7 @@ interface OwnProps {
   behandlingsresultat: Behandlingsresultat;
   sprakkode: Kodeverk;
   readOnly: boolean;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
 }
 
 const VedtakAvslagArsakOgBegrunnelsePanel: FunctionComponent<OwnProps> = ({

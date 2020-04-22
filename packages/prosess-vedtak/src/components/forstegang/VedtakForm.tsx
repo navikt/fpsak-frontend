@@ -67,7 +67,7 @@ interface OwnProps {
   kanOverstyre?: boolean;
   ytelseTypeKode: string;
   resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   tilbakekrevingvalg?: {
     videreBehandling: Kodeverk;
   };
@@ -136,7 +136,6 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
           if (erInnvilget) {
             return (
               <VedtakInnvilgetPanel
-                antallBarn={resultatstruktur ? resultatstruktur.antallBarn : undefined}
                 behandlingsresultat={behandlingsresultat}
                 readOnly={readOnly}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
@@ -158,6 +157,7 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
               alleKodeverk={alleKodeverk}
               vilkar={vilkar}
               beregningErManueltFastsatt={beregningErManueltFastsatt}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             />
           ) : null;
         }}

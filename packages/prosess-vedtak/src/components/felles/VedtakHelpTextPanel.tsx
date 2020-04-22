@@ -41,11 +41,10 @@ export const VedtakHelpTextPanelImpl: FunctionComponent<OwnProps & WrappedCompon
           {helpTexts}
         </AksjonspunktHelpTextTemp>
         <VerticalSpacer eightPx />
-        {aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)
-        && (
-        <Element className={styles.inline}>
-          <FormattedMessage id="VedtakForm.HelpText0" />
-        </Element>
+        {aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) && (
+          <Element className={styles.inline}>
+            <FormattedMessage id="VedtakForm.HelpText0" />
+          </Element>
         )}
         <Normaltekst className={styles.inline}><FormattedMessage id="VedtakForm.HelpText1" /></Normaltekst>
         <Element className={styles.inline}><FormattedMessage id="VedtakForm.TilGodkjenning" /></Element>

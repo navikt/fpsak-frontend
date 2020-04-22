@@ -1,19 +1,21 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, EtikettLiten } from 'nav-frontend-typografi';
+import { Element, EtikettLiten, Normaltekst } from 'nav-frontend-typografi';
 import Lenke from 'nav-frontend-lenker';
 import Alertstripe from 'nav-frontend-alertstriper';
 
 import { Kodeverk } from '@fpsak-frontend/types';
 import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import { TextAreaField } from '@fpsak-frontend/form';
-import { AvsnittSkiller, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  FlexContainer, FlexRow, FlexColumn, AvsnittSkiller, VerticalSpacer, EditedIcon,
+} from '@fpsak-frontend/shared-components';
 import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
-import styles from './fritekstBrevPanel.less';
+import styles from './manueltVedtaksbrevPanel.less';
 
 const maxLength200 = maxLength(200);
 const maxLength5000 = maxLength(5000);
@@ -26,7 +28,7 @@ interface OwnProps {
   skalViseLink: boolean;
 }
 
-const FritekstBrevPanelImpl: FunctionComponent<OwnProps> = ({
+const ManueltVedtaksbrevPanel: FunctionComponent<OwnProps> = ({
   previewOverstyrtBrev,
   readOnly,
   sprakkode,
@@ -93,7 +95,22 @@ const FritekstBrevPanelImpl: FunctionComponent<OwnProps> = ({
         />
       </Column>
     </Row>
+    {readOnly && (
+      <>
+        <VerticalSpacer sixteenPx />
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <EditedIcon />
+            </FlexColumn>
+            <FlexColumn>
+              <Normaltekst><FormattedMessage id="FritekstBrevPanel.Endret" /></Normaltekst>
+            </FlexColumn>
+          </FlexRow>
+        </FlexContainer>
+      </>
+    )}
   </>
 );
 
-export default FritekstBrevPanelImpl;
+export default ManueltVedtaksbrevPanel;

@@ -152,7 +152,7 @@ interface OwnProps {
   kanOverstyre?: boolean;
   ytelseTypeKode: string;
   resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   tilbakekrevingvalg?: {
     videreBehandling: Kodeverk;
   };

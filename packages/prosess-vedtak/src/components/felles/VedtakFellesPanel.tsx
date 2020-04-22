@@ -23,7 +23,7 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 
-import FritekstBrevPanel from './FritekstBrevPanel';
+import ManueltVedtaksbrevPanel from './ManueltVedtaksbrevPanel';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 
 import styles from './vedtakFellesPanel.less';
@@ -46,7 +46,7 @@ const finnKnappetekstkode = (behandlingType, skalBrukeManueltBrev, aksjonspunkte
 };
 
 interface OwnProps {
-  behandlingsresultat?: Behandlingsresultat;
+  behandlingsresultat: Behandlingsresultat;
   behandlingType: Kodeverk;
   readOnly: boolean;
   kanOverstyre: boolean;
@@ -85,7 +85,7 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
   behandlingType,
   vedtakstatusTekst,
 }) => {
-  const [skalBrukeManueltBrev, toggleSkalBrukeManueltBrev] = useState(behandlingsresultat.vedtaksbrev.kode === 'FRITEKST');
+  const [skalBrukeManueltBrev, toggleSkalBrukeManueltBrev] = useState(behandlingsresultat.vedtaksbrev && behandlingsresultat.vedtaksbrev.kode === 'FRITEKST');
   const [skalViseModal, toggleVisModal] = useState(false);
   const onToggleOverstyring = useCallback(() => {
     toggleSkalBrukeManueltBrev(true);
@@ -96,13 +96,12 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
     resetForm();
   }, []);
 
-  // for lenke:  readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
   const erInnvilget = isInnvilget(behandlingsresultat.type.kode);
   const erAvslatt = isAvslag(behandlingsresultat.type.kode);
   const erOpphor = isOpphor(behandlingsresultat.type.kode);
 
-  const skalViseLink = (behandlingsresultat.avslagsarsak === null)
-  || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
+  const skalViseLink = !behandlingsresultat.avslagsarsak
+    || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
 
   return (
     <>
@@ -158,7 +157,7 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
       <VerticalSpacer twentyPx />
       {renderPanel(skalBrukeManueltBrev, erInnvilget, erAvslatt, erOpphor)}
       {skalBrukeManueltBrev && (
-        <FritekstBrevPanel
+        <ManueltVedtaksbrevPanel
           readOnly={readOnly}
           sprakkode={sprakkode}
           previewOverstyrtBrev={previewOverstyrtBrev}

@@ -52,6 +52,7 @@
   "VedtakFellesPanel.Forkast": "Dersom du forkaster det manuelle brevet, vil det erstattes av det automatisk genererte brevet",
   "VedtakFellesPanel.Ok": "Forkast manuelt brev",
 
+  "FritekstBrevPanel.Endret": "Endret av saksbehandler",
   "FritekstBrevPanel.ManueltVedtaksbrev": "Manuelt vedtaksbrev",
   "FritekstBrevPanel.ForhandsvisManueltVedtaksbrev": "Forhåndsvis manuelt brev",
 
@@ -65,7 +66,8 @@
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
-
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
+  
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",

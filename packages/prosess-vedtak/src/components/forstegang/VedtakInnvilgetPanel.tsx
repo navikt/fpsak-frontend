@@ -8,12 +8,12 @@ import {
 } from '@fpsak-frontend/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 
 interface OwnProps {
   resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
-  antallBarn?: number;
   behandlingsresultat: Behandlingsresultat;
   ytelseTypeKode: string;
   sprakkode?: Kodeverk;
@@ -25,7 +25,6 @@ interface OwnProps {
 const VedtakInnvilgetPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   behandlingsresultat,
-  antallBarn,
   ytelseTypeKode,
   sprakkode,
   readOnly,
@@ -34,6 +33,21 @@ const VedtakInnvilgetPanel: FunctionComponent<OwnProps & WrappedComponentProps> 
   resultatstruktur = {},
 }) => (
   <>
+    {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && resultatstruktur && (
+      <>
+        <Row>
+          <Column xs="4">
+            <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
+            <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
+          </Column>
+          <Column xs="8">
+            <Undertekst>{intl.formatMessage({ id: 'VedtakForm.AntallBarn' })}</Undertekst>
+            <Element>{resultatstruktur.antallBarn}</Element>
+          </Column>
+        </Row>
+        <VerticalSpacer sixteenPx />
+      </>
+    )}
     {beregningErManueltFastsatt && !skalBrukeOverstyrendeFritekstBrev && (
       <VedtakFritekstPanel
         readOnly={readOnly}
@@ -41,22 +55,6 @@ const VedtakInnvilgetPanel: FunctionComponent<OwnProps & WrappedComponentProps> 
         behandlingsresultat={behandlingsresultat}
         labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
       />
-    )}
-    {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
-      <Row>
-        {resultatstruktur && (
-          <Column xs="4">
-            <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
-            <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
-          </Column>
-        )}
-        {antallBarn && (
-          <Column xs="8">
-            <Undertekst>{intl.formatMessage({ id: 'VedtakForm.AntallBarn' })}</Undertekst>
-            <Element>{antallBarn}</Element>
-          </Column>
-        )}
-      </Row>
     )}
   </>
 );
