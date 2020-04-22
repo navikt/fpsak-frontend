@@ -51,7 +51,7 @@ const erArsakTypeBehandlingEtterKlage = (behandlingArsakTyper = []) => behandlin
 
 const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
   if (revurderingAarsaker === undefined || revurderingAarsaker.length < 1) {
-    return '';
+    return undefined;
   }
   const aarsakTekstList = [];
   const endringFraBrukerAarsak = revurderingAarsaker
@@ -108,8 +108,8 @@ const finnInvilgetRevurderingTekst = (intl, ytelseTypeKode, konsekvenserForYtels
   if (ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD) {
     return intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat, true) });
   }
-  return `${lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}${
-    lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn)}` !== '' && tilbakekrevingText && '. ';
+  const konsekvens = lagKonsekvensForYtelsenTekst(konsekvenserForYtelsen, getKodeverknavn);
+  return `${konsekvens}${konsekvens !== '' ? tilbakekrevingText : '. '}`;
 };
 
 const getOpphorsdato = (resultatstruktur, medlemskapFom, behandlingsresultat) => {
@@ -231,7 +231,7 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
         submitting={formProps.submitting}
         resetForm={formProps.reset}
         behandlingPaaVent={behandlingPaaVent}
-        renderPanel={(_skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt, erOpphor) => {
+        renderPanel={(skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt, erOpphor) => {
           if (erInnvilget) {
             return (
               <VedtakInnvilgetRevurderingPanel
@@ -243,6 +243,7 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
                 sprakKode={sprakkode}
                 behandlingsresultat={behandlingsresultat}
                 beregningErManueltFastsatt={beregningErManueltFastsatt}
+                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
               />
             );
           }

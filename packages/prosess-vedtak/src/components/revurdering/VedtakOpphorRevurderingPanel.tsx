@@ -23,7 +23,7 @@ const VedtakOpphorRevurderingPanel: FunctionComponent<OwnProps> = ({
 }) => (
   <>
     <Undertekst><FormattedMessage id="VedtakForm.RevurderingFP.Aarsak" /></Undertekst>
-    {revurderingsAarsakString !== undefined && (
+    {revurderingsAarsakString && (
       <Normaltekst>
         {revurderingsAarsakString}
       </Normaltekst>

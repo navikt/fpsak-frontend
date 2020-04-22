@@ -8,6 +8,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import {
   Behandlingsresultat, BeregningsresultatFp, BeregningsresultatEs, Kodeverk,
 } from '@fpsak-frontend/types';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 
@@ -20,6 +21,7 @@ interface OwnProps {
   sprakKode: Kodeverk;
   behandlingsresultat: Behandlingsresultat;
   beregningErManueltFastsatt: boolean;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
 }
 
 const VedtakInnvilgetRevurderingPanel: FunctionComponent<OwnProps> = ({
@@ -31,50 +33,49 @@ const VedtakInnvilgetRevurderingPanel: FunctionComponent<OwnProps> = ({
   sprakKode,
   behandlingsresultat,
   beregningErManueltFastsatt,
+  skalBrukeOverstyrendeFritekstBrev,
 }) => (
   <>
     {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
-    <div>
       <Row>
-        {resultatstruktur
-            && (
-            <Column xs="4">
-              <Undertekst><FormattedMessage id="VedtakForm.beregnetTilkjentYtelse" /></Undertekst>
-              <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
-            </Column>
-            )}
-        {antallBarn
-            && (
-            <Column xs="8">
-              <Undertekst><FormattedMessage id="VedtakForm.AntallBarn" /></Undertekst>
-              <Element>{antallBarn}</Element>
-            </Column>
-            )}
+        {resultatstruktur && (
+          <Column xs="4">
+            <Undertekst><FormattedMessage id="VedtakForm.beregnetTilkjentYtelse" /></Undertekst>
+            <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
+          </Column>
+        )}
+        {antallBarn && (
+          <Column xs="8">
+            <Undertekst><FormattedMessage id="VedtakForm.AntallBarn" /></Undertekst>
+            <Element>{antallBarn}</Element>
+          </Column>
+        )}
       </Row>
-    </div>
     )}
     {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && (
-    <div>
-      <Row>
-        <Column xs="4">
-          <Undertekst><FormattedMessage id="VedtakForm.RevurderingFP.Aarsak" /></Undertekst>
-          {revurderingsAarsakString !== undefined
-              && (
-              <Normaltekst>
-                {revurderingsAarsakString}
-              </Normaltekst>
-              )}
-        </Column>
-      </Row>
-      {beregningErManueltFastsatt && (
-      <VedtakFritekstPanel
-        readOnly={readOnly}
-        sprakkode={sprakKode}
-        behandlingsresultat={behandlingsresultat}
-        labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
-      />
-      )}
-    </div>
+      <>
+        {revurderingsAarsakString && (
+          <>
+            <Row>
+              <Column xs="4">
+                <Undertekst><FormattedMessage id="VedtakForm.RevurderingFP.Aarsak" /></Undertekst>
+                <Normaltekst>
+                  {revurderingsAarsakString}
+                </Normaltekst>
+              </Column>
+            </Row>
+            <VerticalSpacer eightPx />
+          </>
+        )}
+        {!skalBrukeOverstyrendeFritekstBrev && beregningErManueltFastsatt && (
+          <VedtakFritekstPanel
+            readOnly={readOnly}
+            sprakkode={sprakKode}
+            behandlingsresultat={behandlingsresultat}
+            labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
+          />
+        )}
+      </>
     )}
   </>
 );

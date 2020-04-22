@@ -3,15 +3,14 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
 import { Behandling, BeregningsresultatEs, Beregningsgrunnlag } from '@fpsak-frontend/types';
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -20,8 +19,6 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
-
-const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
 
 const behandling = {
   id: 1,
@@ -49,7 +46,7 @@ const behandling = {
   behandlingArsaker: [{
     behandlingArsakType: {
       kode: behandlingArsakType.ANNET,
-      kodeverk: '',
+      kodeverk: 'BEHANDLING_AARSAK',
     },
   }],
 };
@@ -71,7 +68,6 @@ const resultatstruktur = {
   antallBarn: 1,
   beregnetTilkjentYtelse: 10000,
 };
-const resultatstrukturOriginalBehandling = {};
 
 export default {
   title: 'prosess/prosess-vedtak',
@@ -550,7 +546,26 @@ export const visAvslåttSvangerskapspengerOgVisModal = () => (
 
 export const visInnvilgetRevurderingForeldrepengerTilGodkjenningForSaksbehandlerUtenOverstyring = () => (
   <VedtakProsessIndex
-    behandling={behandling as Behandling}
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.INNVILGET,
+          kodeverk: '',
+        },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING_OG_UTTAK,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }, {
+          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHORER,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }],
+      },
+    } as Behandling}
     beregningresultatForeldrepenger={resultatstruktur}
     vilkar={vilkar}
     medlemskap={{ fom: '2019-01-01' }}
@@ -573,140 +588,253 @@ export const visGodkjentRevurderingForeldrepengerForSaksbehandlerUtenOverstyring
         kode: behandlingType.REVURDERING,
         kodeverk: '',
       },
+      status: {
+        kode: behandlingStatus.AVSLUTTET,
+        kodeverk: '',
+      },
       behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-          kodeverk: '',
-        },
         type: {
           kode: behandlingResultatType.INNVILGET,
           kodeverk: '',
         },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING_OG_UTTAK,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }, {
+          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHORER,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }],
       },
     } as Behandling}
     beregningresultatForeldrepenger={resultatstruktur}
     vilkar={vilkar}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-        kodeverk: '',
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-        kodeverk: '',
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    aksjonspunkter={[]}
     isReadOnly
-    beregningsresultatOriginalBehandling={resultatstrukturOriginalBehandling}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
     kanOverstyre={false}
     alleKodeverk={alleKodeverk as {}}
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    tilbakekrevingvalg={{
-      videreBehandling: {
-        kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-        kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-      },
-    }}
   />
 );
 
-export const visOpphørtForForeldrepengerRevurdering = () => (
+export const visInnvilgetRevurderingForeldrepengerTilGodkjenningForSaksbehandlerMedOverstyring = () => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
       type: {
         kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.INNVILGET,
+          kodeverk: '',
+        },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING_OG_UTTAK,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }, {
+          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHORER,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }],
+      },
+    } as Behandling}
+    beregningresultatForeldrepenger={resultatstruktur}
+    vilkar={vilkar}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+  />
+);
+
+export const visGodkjentRevurderingForeldrepengerForSaksbehandlerMedOverstyring = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      status: {
+        kode: behandlingStatus.AVSLUTTET,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.INNVILGET,
+          kodeverk: '',
+        },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING_OG_UTTAK,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }, {
+          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHORER,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }],
+      },
+    } as Behandling}
+    beregningresultatForeldrepenger={resultatstruktur}
+    vilkar={vilkar}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+  />
+);
+
+export const visGodkjentRevurderingForeldrepengerMedManueltBrevForSaksbehandlerMedOverstyring = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      status: {
+        kode: behandlingStatus.AVSLUTTET,
+        kodeverk: '',
       },
       behandlingsresultat: {
         vedtaksbrev: {
           kode: 'FRITEKST',
+          kodeverk: '',
         },
+        overskrift: 'Dette er en overskrift',
+        fritekstbrev: 'Dette er innholdet i brevet',
         type: {
-          kode: behandlingResultatType.OPPHOR,
+          kode: behandlingResultatType.INNVILGET,
+          kodeverk: '',
         },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHORER,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }],
+      },
+    } as Behandling}
+    beregningresultatForeldrepenger={resultatstruktur}
+    vilkar={vilkar}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+  />
+);
+
+export const visAvslåttRevurderingForeldrepengerTilGodkjenningForSaksbehandlerMedOverstyring = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.AVSLATT,
+          kodeverk: '',
+        },
+        avslagsarsakFritekst: 'Dette er ein fritekst',
+      },
+    } as Behandling}
+    beregningsresultatOriginalBehandling={{
+      'beregningsresultat-foreldrepenger': {
+        ...resultatstruktur,
       },
     }}
+    vilkar={vilkar}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+  />
+);
+
+export const visGodkjentRevurderingAvslagForForeldrepengerForSaksbehandlerMedOverstyring = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      status: {
+        kode: behandlingStatus.AVSLUTTET,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.AVSLATT,
+          kodeverk: '',
+        },
+      },
+    } as Behandling}
+    beregningsresultatOriginalBehandling={{
+      'beregningsresultat-foreldrepenger': {
+        ...resultatstruktur,
+      },
+    }}
+    vilkar={vilkar}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+  />
+);
+
+export const visOpphørForRevurderingForeldrepengerForSaksbehandlerMedOverstyring = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.OPPHOR,
+          kodeverk: '',
+        },
+      },
+    } as Behandling}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
     isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-  />
-);
-
-export const visInnvilgetForEngangsstønadRevurdering = () => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.REVURDERING,
-      },
-    }}
-    vilkar={vilkar}
-    beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
-  />
-);
-
-export const visAvslåttForEngangsstønadRevurdering = () => (
-  <VedtakProsessIndex
-    behandling={{
-      ...behandling,
-      type: {
-        kode: behandlingType.REVURDERING,
-      },
-      behandlingsresultat: {
-        vedtaksbrev: {
-          kode: 'FRITEKST',
-        },
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
-        avslagsarsak: {
-          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-          kodeverk: kodeverkTyper.AVSLAGSARSAK,
-        },
-      },
-    }}
-    vilkar={[{
-      ...vilkar[0],
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
-      },
-    }]}
-    beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
-    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-    medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
-    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
-    employeeHasAccess={boolean('employeeHasAccess', false)}
-    isReadOnly={boolean('isReadOnly', false)}
-    previewCallback={action('button-click')}
-    submitCallback={action('button-click')}
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as {}}
   />
 );

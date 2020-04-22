@@ -26,6 +26,7 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       behandlingsresultat={{} as Behandlingsresultat}
       beregningErManueltFastsatt={false}
       sprakKode={{ kode: 'nb', kodeverk: '' }}
+      skalBrukeOverstyrendeFritekstBrev
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
@@ -53,6 +54,7 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       behandlingsresultat={{} as Behandlingsresultat}
       sprakKode={{ kode: 'nb', kodeverk: '' }}
       beregningErManueltFastsatt={false}
+      skalBrukeOverstyrendeFritekstBrev
     />);
 
     const undertekstFields = wrapper.find(Undertekst);

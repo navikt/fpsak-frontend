@@ -21,7 +21,7 @@ export const getTilbakekrevingText = (simuleringResultat, tilbakekrevingvalg, al
     const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
     return getKodeverkNavn(tilbakekrevingvalg.videreBehandling);
   }
-  return null;
+  return '';
 };
 
 export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {

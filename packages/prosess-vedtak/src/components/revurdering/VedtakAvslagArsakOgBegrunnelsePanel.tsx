@@ -52,13 +52,13 @@ const VedtakAvslagArsakOgBegrunnelsePanel: FunctionComponent<OwnProps> = ({
   return (
     <>
       {getAvslagArsak(vilkar, behandlingsresultat, getKodeverknavn) && (
-        <div>
+        <>
           <Undertekst><FormattedMessage id="VedtakForm.ArsakTilAvslag" /></Undertekst>
           <Normaltekst>
             {getAvslagArsak(vilkar, behandlingsresultat, getKodeverknavn)}
           </Normaltekst>
           <VerticalSpacer sixteenPx />
-        </div>
+        </>
       )}
       {behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES && hasIkkeOppfyltSoknadsfristvilkar(vilkar) && (
         <Row>
@@ -79,7 +79,7 @@ const VedtakAvslagArsakOgBegrunnelsePanel: FunctionComponent<OwnProps> = ({
           </Column>
         </Row>
       )}
-      {readOnly && behandlingsresultat.avslagsarsakFritekst !== null && (
+      {readOnly && behandlingsresultat.avslagsarsakFritekst && (
         <span>
           <VerticalSpacer twentyPx />
           <Undertekst><FormattedMessage id="VedtakForm.Fritekst" /></Undertekst>
