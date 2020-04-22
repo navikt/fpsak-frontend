@@ -46,6 +46,7 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
       sprakkode={sprakkode}
       readOnly
       alleKodeverk={{}}
+      skalBrukeOverstyrendeFritekstBrev
     />);
 
 

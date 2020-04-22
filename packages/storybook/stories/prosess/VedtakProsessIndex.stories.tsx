@@ -838,3 +838,134 @@ export const visOpphørForRevurderingForeldrepengerForSaksbehandlerMedOverstyrin
     alleKodeverk={alleKodeverk as {}}
   />
 );
+
+export const visInnvilgetForRevurderingForeldrepengerDerBeregningErManueltFastsatt = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.INNVILGET,
+          kodeverk: '',
+        },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING_OG_UTTAK,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }],
+      },
+    } as Behandling}
+    beregningresultatForeldrepenger={resultatstruktur}
+    vilkar={vilkar}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    beregningsgrunnlag={{
+      beregningsgrunnlagPeriode: [{
+        beregningsgrunnlagPrStatusOgAndel: [{
+          overstyrtPrAar: 0,
+        }],
+      }],
+    } as Beregningsgrunnlag}
+  />
+);
+
+export const visAvslåttForRevurderingForeldrepengerDerSøknadsfristvilkåretIkkeErOppfylt = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.AVSLATT,
+          kodeverk: '',
+        },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING_OG_UTTAK,
+          kodeverk: 'KONSEKVENS_FOR_YTELSEN',
+        }],
+        avslagsarsak: {
+          kode: '1007',
+          kodeverk: 'AVSLAGSARSAK',
+        },
+      },
+    } as Behandling}
+    beregningresultatForeldrepenger={resultatstruktur}
+    vilkar={[{
+      lovReferanse: '§§Dette er en lovreferanse',
+      vilkarType: {
+        kode: vilkarType.SOKNADFRISTVILKARET,
+        kodeverk: 'VILKAR_TYPE',
+      },
+      vilkarStatus: {
+        kode: vilkarUtfallType.IKKE_OPPFYLT,
+        kodeverk: 'VILKAR_UTFALL_TYPE',
+      },
+      overstyrbar: true,
+    }]}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    beregningsgrunnlag={{
+      beregningsgrunnlagPeriode: [{
+        beregningsgrunnlagPrStatusOgAndel: [{
+          overstyrtPrAar: 0,
+        }],
+      }],
+    } as Beregningsgrunnlag}
+  />
+);
+
+export const visOpphørForRevurderingForeldrepengerDerBeregningErManueltFastsatt = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+        kodeverk: '',
+      },
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.OPPHOR,
+          kodeverk: '',
+        },
+      },
+    } as Behandling}
+    beregningresultatForeldrepenger={resultatstruktur}
+    vilkar={vilkar}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    isReadOnly={boolean('isReadOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
+    kanOverstyre
+    alleKodeverk={alleKodeverk as {}}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    beregningsgrunnlag={{
+      beregningsgrunnlagPeriode: [{
+        beregningsgrunnlagPrStatusOgAndel: [{
+          overstyrtPrAar: 0,
+        }],
+      }],
+    } as Beregningsgrunnlag}
+  />
+);

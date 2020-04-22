@@ -12,6 +12,7 @@ interface OwnProps {
   readOnly: boolean;
   behandlingsresultat: Behandlingsresultat;
   beregningErManueltFastsatt: boolean;
+  skalBrukeOverstyrendeFritekstBrev: boolean;
 }
 
 const VedtakOpphorRevurderingPanel: FunctionComponent<OwnProps> = ({
@@ -20,6 +21,7 @@ const VedtakOpphorRevurderingPanel: FunctionComponent<OwnProps> = ({
   readOnly,
   behandlingsresultat,
   beregningErManueltFastsatt,
+  skalBrukeOverstyrendeFritekstBrev,
 }) => (
   <>
     <Undertekst><FormattedMessage id="VedtakForm.RevurderingFP.Aarsak" /></Undertekst>
@@ -28,7 +30,7 @@ const VedtakOpphorRevurderingPanel: FunctionComponent<OwnProps> = ({
         {revurderingsAarsakString}
       </Normaltekst>
     )}
-    {beregningErManueltFastsatt && (
+    {!skalBrukeOverstyrendeFritekstBrev && beregningErManueltFastsatt && (
       <VedtakFritekstPanel
         readOnly={readOnly}
         sprakkode={sprakKode}

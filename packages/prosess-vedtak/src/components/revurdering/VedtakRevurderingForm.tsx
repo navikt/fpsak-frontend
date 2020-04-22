@@ -257,6 +257,7 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
                 sprakkode={sprakkode}
                 readOnly={readOnly}
                 alleKodeverk={alleKodeverk}
+                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
               />
             );
           }
@@ -268,6 +269,7 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
               behandlingsresultat={behandlingsresultat}
               sprakKode={sprakkode}
               beregningErManueltFastsatt={beregningErManueltFastsatt}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             />
           ) : null;
         }}

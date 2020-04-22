@@ -38,6 +38,7 @@ interface OwnProps {
   sprakkode: Kodeverk;
   readOnly: boolean;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  skalBrukeOverstyrendeFritekstBrev: boolean;
 }
 
 const VedtakAvslagArsakOgBegrunnelsePanel: FunctionComponent<OwnProps> = ({
@@ -47,6 +48,7 @@ const VedtakAvslagArsakOgBegrunnelsePanel: FunctionComponent<OwnProps> = ({
   sprakkode,
   readOnly,
   alleKodeverk,
+  skalBrukeOverstyrendeFritekstBrev,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -60,24 +62,25 @@ const VedtakAvslagArsakOgBegrunnelsePanel: FunctionComponent<OwnProps> = ({
           <VerticalSpacer sixteenPx />
         </>
       )}
-      {behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES && hasIkkeOppfyltSoknadsfristvilkar(vilkar) && (
-        <Row>
-          <VerticalSpacer sixteenPx />
-          <Column xs="7">
-            <TextAreaField
-              name="begrunnelse"
-              label={<FormattedMessage id="VedtakForm.Fritekst" />}
-              validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              badges={[{
-                type: 'fokus',
-                textId: getLanguageCodeFromSprakkode(sprakkode),
-                title: 'Malform.Beskrivelse',
-              }]}
-            />
-          </Column>
-        </Row>
+      {!skalBrukeOverstyrendeFritekstBrev
+          && behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES && hasIkkeOppfyltSoknadsfristvilkar(vilkar) && (
+          <Row>
+            <VerticalSpacer sixteenPx />
+            <Column xs="7">
+              <TextAreaField
+                name="begrunnelse"
+                label={<FormattedMessage id="VedtakForm.Fritekst" />}
+                validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+                maxLength={1500}
+                readOnly={readOnly}
+                badges={[{
+                  type: 'fokus',
+                  textId: getLanguageCodeFromSprakkode(sprakkode),
+                  title: 'Malform.Beskrivelse',
+                }]}
+              />
+            </Column>
+          </Row>
       )}
       {readOnly && behandlingsresultat.avslagsarsakFritekst && (
         <span>
