@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -13,8 +14,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { buildInitialValues, VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
-import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 describe('<VedtakForm>', () => {
   const sprakkode = {
@@ -587,22 +587,22 @@ describe('<VedtakForm>', () => {
     const aksjonspunkter = [{
       id: 0,
       definisjon: {
-        navn: 'vedtak',
+        kodeverk: '',
         kode: aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
       },
       status: {
-        navn: 'Opprettet',
+        kodeverk: '',
         kode: aksjonspunktStatus.OPPRETTET,
       },
       kanLoses: true,
     }, {
       id: 1,
       definisjon: {
-        navn: 'annen ytelse',
+        kodeverk: '',
         kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
       },
       status: {
-        navn: 'Opprettet',
+        kodeverk: '',
         kode: aksjonspunktStatus.OPPRETTET,
       },
       kanLoses: true,
@@ -610,18 +610,23 @@ describe('<VedtakForm>', () => {
     },
     ];
     const behandlingsresultat = {
-      id: 1,
       type: {
         kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
+        kodeverk: '',
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
       vedtaksbrev: {
         kode: 'FRITEKST',
+        kodeverk: '',
       },
     };
-    const model = buildInitialValues.resultFunc(behandlingStatus.BEHANDLING_UTREDES, undefined, aksjonspunkter, { kode: 'ES' }, behandlingsresultat, sprakkode);
+
+    const behandling = {
+      behandlingsresultat,
+    };
+
+    const model = buildInitialValues.resultFunc(aksjonspunkter as Aksjonspunkt[], behandling as Behandling);
 
     expect(model).to.eql({
       aksjonspunktKoder: ['5018', '5033'],
@@ -636,49 +641,39 @@ describe('<VedtakForm>', () => {
 
   it('skal sette opp initialvalues når en har beregningsresultat', () => {
     const aksjonspunkter = [{
-      id: 1,
+      id: 0,
       definisjon: {
-        navn: 'annen ytelse',
+        kodeverk: '',
         kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
       },
       status: {
-        navn: 'Opprettet',
+        kodeverk: '',
         kode: aksjonspunktStatus.OPPRETTET,
       },
       kanLoses: true,
       erAktivt: true,
     }];
 
-    const beregningResultat = {
-      beregnetTilkjentYtelse: '10000',
-      antallBarn: 2,
-      vedtaksbrev: {
-        kode: 'FRITEKST',
-      },
-    };
     const behandlingsresultat = {
-      id: 1,
       type: {
         kode: BehandlingResultatType.INNVILGET,
-        navn: 'test',
+        kodeverk: '',
       },
       avslagsarsak: null,
       avslagsarsakFritekst: null,
       vedtaksbrev: {
         kode: 'FRITEKST',
+        kodeverk: '',
       },
       overskrift: 'Overskrift',
       fritekstbrev: 'Brødtekst',
     };
 
-    const model = buildInitialValues.resultFunc(
-      behandlingStatus.BEHANDLING_UTREDES,
-      beregningResultat,
-      aksjonspunkter,
-      'ES',
+    const behandling = {
       behandlingsresultat,
-      sprakkode,
-    );
+    };
+
+    const model = buildInitialValues.resultFunc(aksjonspunkter as Aksjonspunkt[], behandling as Behandling);
     expect(model).to.eql({
       aksjonspunktKoder: ['5033'],
       sprakkode,
@@ -688,118 +683,5 @@ describe('<VedtakForm>', () => {
       overskrift: 'Overskrift',
       brødtekst: 'Brødtekst',
     });
-  });
-
-  const previewCallback = sinon.spy();
-  const behandlingsresultat = {
-    id: 1,
-    type: {
-      kode: BehandlingResultatType.INNVILGET,
-      navn: 'test',
-    },
-    avslagsarsak: null,
-    avslagsarsakFritekst: null,
-    vedtaksbrev: {
-      kode: 'FRITEKST',
-    },
-  };
-  const aksjonspunkter = [{
-    id: 1,
-    definisjon: {
-      navn: 'annen ytelse',
-      kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-    },
-    status: {
-      navn: 'Opprettet',
-      kode: aksjonspunktStatus.OPPRETTET,
-    },
-    kanLoses: true,
-    erAktivt: true,
-  }];
-
-
-  it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      kanOverstyre
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
-    const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
-    expect(overstyringsKnapp).to.have.length(1);
-    expect(overstyringsKnapp.prop('readOnly')).to.eql(true);
-    expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
-  });
-
-  it('skal vise avkrysningsboks i skrivemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      kanOverstyre
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      erBehandlingEtterKlage={false}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
-    const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
-    expect(overstyringsKnapp).to.have.length(1);
-    expect(overstyringsKnapp.prop('readOnly')).to.eql(false);
-    expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
-  });
-
-  it('skal ikke vise avkrysningsboks for rolle uten overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<VedtakForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      antallBarn={2}
-      behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingresultat={behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
-      behandlingPaaVent={false}
-      previewCallback={previewCallback}
-      aksjonspunktKoder={aksjonspunktKoder}
-      readOnly={false}
-      isBehandlingReadOnly
-      sprakkode={sprakkode}
-      kanOverstyre={false}
-      erBehandlingEtterKlage={false}
-      skalBrukeOverstyrendeFritekstBrev={false}
-      initialValues={initialValues}
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      alleKodeverk={{}}
-      beregningErManueltFastsatt={false}
-      vilkar={[]}
-    />);
-    const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
-    expect(overstyringsKnapp).to.have.length(0);
   });
 });

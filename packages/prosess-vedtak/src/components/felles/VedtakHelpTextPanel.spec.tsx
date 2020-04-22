@@ -1,16 +1,24 @@
 import React from 'react';
 import { expect } from 'chai';
+
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+import { Aksjonspunkt } from '@fpsak-frontend/types';
+
 import { VedtakHelpTextPanelImpl } from './VedtakHelpTextPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 describe('<VedtakHelpTextPanel>', () => {
   it('skal vise hjelpetekst for vurdering av dokument når en har dette aksjonspunktet', () => {
     const wrapper = shallowWithIntl(<VedtakHelpTextPanelImpl
       intl={intlMock}
-      aksjonspunktKoder={[aksjonspunktCodes.VURDERE_DOKUMENT]}
+      aksjonspunkter={[{
+        definisjon: {
+          kode: aksjonspunktCodes.VURDERE_DOKUMENT,
+          kodeverk: '',
+        },
+      }] as Aksjonspunkt[]}
       readOnly={false}
     />);
 
@@ -24,7 +32,17 @@ describe('<VedtakHelpTextPanel>', () => {
   it('skal vise hjelpetekst for vurdering av dokument og vurdering av annen ytelse når en har disse aksjonspunktetene', () => {
     const wrapper = shallowWithIntl(<VedtakHelpTextPanelImpl
       intl={intlMock}
-      aksjonspunktKoder={[aksjonspunktCodes.VURDERE_ANNEN_YTELSE, aksjonspunktCodes.VURDERE_DOKUMENT]}
+      aksjonspunkter={[{
+        definisjon: {
+          kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+          kodeverk: '',
+        },
+      }, {
+        definisjon: {
+          kode: aksjonspunktCodes.VURDERE_DOKUMENT,
+          kodeverk: '',
+        },
+      }] as Aksjonspunkt[]}
       readOnly={false}
     />);
 
@@ -39,7 +57,12 @@ describe('<VedtakHelpTextPanel>', () => {
   it('skal ikke vise hjelpetekst når en ikke har gitte aksjonspunkter', () => {
     const wrapper = shallowWithIntl(<VedtakHelpTextPanelImpl
       intl={intlMock}
-      aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
+      aksjonspunkter={[{
+        definisjon: {
+          kode: aksjonspunktCodes.FORESLA_VEDTAK,
+          kodeverk: '',
+        },
+      }] as Aksjonspunkt[]}
       readOnly={false}
     />);
 

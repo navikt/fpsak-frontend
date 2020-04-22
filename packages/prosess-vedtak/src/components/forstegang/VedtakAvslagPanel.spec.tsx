@@ -2,93 +2,46 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
+import { Vilkar, Behandlingsresultat } from '@fpsak-frontend/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import VedtakFritekstPanel from './VedtakFritekstPanel';
+
+import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
 
 describe('<VedtakAvslagPanel>', () => {
-  const behandling = ({
-    id: 1,
-    versjon: 1,
-    fagsakId: 1,
-    aksjonspunkter: [],
-    behandlingPaaVent: false,
-    behandlingHenlagt: false,
-    sprakkode: {
-      kode: 'NO',
-      navn: 'norsk',
-    },
-    behandlingsresultat: {
-      id: 1,
-      type: {
-        kode: 'test',
-        navn: 'test',
-      },
-      avslagsarsak: {
-        kode: '1019',
-        navn: 'Manglende dokumentasjon',
-      },
-      avslagsarsakFritekst: null,
-    },
-    vilkar: [{
-      vilkarType: {
-        kode: vilkarType.MEDLEMSKAPSVILKARET,
-        navn: 'Medlemskapsvilkåret',
-      },
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
-        navn: 'test',
-      },
-      lovReferanse: '§ 22-13, 2. ledd',
-    }],
-    status: {
-      kode: behandlingStatus.BEHANDLING_UTREDES,
-      navn: 'test',
-    },
-    type: {
-      kode: 'test',
-      navn: 'test',
-    },
-    opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
-  });
-
   const sprakkode = {
     kode: 'NO',
-    navn: 'norsk',
+    kodeverk: '',
   };
 
-  const vilkarUtenSoknadsfrist = [
-    {
-      vilkarType: {
-        kode: vilkarType.MEDLEMSKAPSVILKARET,
-        navn: 'Medlemskapsvilkåret',
-      },
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
-        navn: 'test',
-      },
-      lovReferanse: '§ 22-13, 2. ledd',
-    }];
+  const vilkarUtenSoknadsfrist = [{
+    vilkarType: {
+      kode: vilkarType.MEDLEMSKAPSVILKARET,
+      kodeverk: '',
+    },
+    vilkarStatus: {
+      kode: vilkarUtfallType.IKKE_OPPFYLT,
+      kodeverk: '',
+    },
+    lovReferanse: '§ 22-13, 2. ledd',
+  }];
 
   const behandlingsresultat = {
     id: 1,
     type: {
       kode: 'test',
-      navn: 'test',
+      kodeverk: '',
     },
     avslagsarsak: {
       kode: '1019',
-      navn: 'Manglende dokumentasjon',
+      kodeverk: '',
     },
     avslagsarsakFritekst: null,
   };
@@ -96,34 +49,23 @@ describe('<VedtakAvslagPanel>', () => {
   const soknadVilkar = {
     vilkarType: {
       kode: vilkarType.SOKNADFRISTVILKARET,
-      navn: 'Søknadsfristvilkåret',
+      kodeverk: '',
     },
     vilkarStatus: {
       kode: vilkarUtfallType.IKKE_OPPFYLT,
-      navn: 'Ikke oppfylt',
+      kodeverk: '',
     },
     lovReferanse: '§ 13-37, 2. ledd',
   };
-
-  const aksjonspunktForBeregning = [{
-    definisjon: {
-      kode: aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-    },
-    status: {
-      kode: aksjonspunktStatus.UTFORT,
-    },
-  }];
 
   it('skal rendre avslagspanel for engangsstønad', () => {
     const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={[soknadVilkar]}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
+      vilkar={[soknadVilkar] as Vilkar[]}
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
-      behandlinger={[behandling]}
       ytelseTypeKode={engangsstonad}
       alleKodeverk={{}}
       beregningErManueltFastsatt={false}
@@ -144,12 +86,10 @@ describe('<VedtakAvslagPanel>', () => {
     const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkarUtenSoknadsfrist}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
+      vilkar={vilkarUtenSoknadsfrist as Vilkar[]}
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
-      behandlinger={[behandling]}
       ytelseTypeKode={engangsstonad}
       alleKodeverk={{}}
       beregningErManueltFastsatt={false}
@@ -170,12 +110,10 @@ describe('<VedtakAvslagPanel>', () => {
     const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkarUtenSoknadsfrist}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
+      vilkar={vilkarUtenSoknadsfrist as Vilkar[]}
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
-      behandlinger={[behandling]}
       ytelseTypeKode={foreldrepenger}
       alleKodeverk={{}}
       beregningErManueltFastsatt={false}
@@ -196,12 +134,10 @@ describe('<VedtakAvslagPanel>', () => {
     const wrapper = shallowWithIntl(<VedtakAvslagPanel.WrappedComponent
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkarUtenSoknadsfrist}
-      aksjonspunkter={aksjonspunktForBeregning}
-      behandlingsresultat={behandlingsresultat}
+      vilkar={vilkarUtenSoknadsfrist as Vilkar[]}
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
-      behandlinger={[behandling]}
       ytelseTypeKode={foreldrepenger}
       alleKodeverk={{}}
       beregningErManueltFastsatt

@@ -1,21 +1,22 @@
 import React from 'react';
 import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import FritekstBrevPanel from './FritekstBrevPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 describe('<FritekstBrevPanel>', () => {
   const eventCallback = sinon.spy();
   const sprakkode = {
     kode: 'EN',
+    kodeverk: '',
   };
   it('skal vise alle felter i readonly modus', () => {
-    const wrapper = shallowWithIntl(<FritekstBrevPanel.WrappedComponent
-      intl={intlMock}
-      previewBrev={eventCallback}
+    const wrapper = shallow(<FritekstBrevPanel
+      previewOverstyrtBrev={eventCallback}
       readOnly
       sprakkode={sprakkode}
+      skalViseLink
     />);
 
     const overskrift = wrapper.find('TextAreaField');

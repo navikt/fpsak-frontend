@@ -9,7 +9,7 @@ import {
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 
-import VedtakFritekstPanel from './VedtakFritekstPanel';
+import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 
 interface OwnProps {
   resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
@@ -47,7 +47,7 @@ const VedtakInnvilgetPanel: FunctionComponent<OwnProps & WrappedComponentProps> 
         {resultatstruktur && (
           <Column xs="4">
             <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
-            <Element>{formatCurrencyWithKr(resultatstruktur.beregnetTilkjentYtelse)}</Element>
+            <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
           </Column>
         )}
         {antallBarn && (

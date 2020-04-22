@@ -10,7 +10,7 @@ import {
   decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 
-import styles from './vedtakAvslagPanel.less';
+import styles from './vedtakFritekstPanel.less';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

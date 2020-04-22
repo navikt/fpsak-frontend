@@ -1,45 +1,28 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { VedtakOpphorRevurderingPanelImpl } from './VedtakOpphorRevurderingPanel';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import { shallow } from 'enzyme';
 
+import { Behandlingsresultat } from '@fpsak-frontend/types';
+
+import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 
 describe('<VedtakOpphorRevurderingPanel>', () => {
   it('skal rendre opphørpanel med avslagsårsak', () => {
-    const vilkar = [{
-      vilkarType: {
-        kode: vilkarType.MEDLEMSKAPSVILKARET,
-        navn: 'Medlemskapsvilkåret',
-      },
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
-        navn: 'test',
-      },
-      lovReferanse: '§ 22-13, 2. ledd',
-    }];
     const behandlingsresultat = {
       id: 1,
       type: {
         kode: 'test',
-        navn: 'test',
+        kodeverk: '',
       },
       avslagsarsak: {
         kode: '1019',
-        navn: 'Manglende dokumentasjon',
+        kodeverk: '',
       },
       avslagsarsakFritekst: null,
     };
-    const wrapper = shallowWithIntl(<VedtakOpphorRevurderingPanelImpl
-      intl={intlMock}
-      vilkar={vilkar}
+    const wrapper = shallow(<VedtakOpphorRevurderingPanel
       readOnly
-      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       revurderingsAarsakString="Test"
       beregningErManueltFastsatt={false}
     />);
@@ -53,36 +36,21 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
     expect(normaltekstFields).to.have.length(2);
   });
   it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
-    const vilkar = [{
-      vilkarType: {
-        kode: vilkarType.MEDLEMSKAPSVILKARET,
-        navn: 'Medlemskapsvilkåret',
-      },
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
-        navn: 'test',
-      },
-      lovReferanse: '§ 22-13, 2. ledd',
-    }];
     const behandlingsresultat = {
       id: 1,
       type: {
         kode: 'test',
-        navn: 'test',
+        kodeverk: '',
       },
       avslagsarsak: {
         kode: '1019',
-        navn: 'Manglende dokumentasjon',
+        kodeverk: '',
       },
       avslagsarsakFritekst: null,
     };
-    const wrapper = shallowWithIntl(<VedtakOpphorRevurderingPanelImpl
-      intl={intlMock}
-      vilkar={vilkar}
+    const wrapper = shallow(<VedtakOpphorRevurderingPanel
       readOnly
-      ytelseTypeKode={fagsakYtelseType.SVANGERSKAPSPENGER}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       revurderingsAarsakString="Test"
       beregningErManueltFastsatt={false}
     />);

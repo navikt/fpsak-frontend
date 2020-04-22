@@ -1,5 +1,3 @@
-import { createSelector } from 'reselect';
-
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -25,22 +23,6 @@ export const getTilbakekrevingText = (simuleringResultat, tilbakekrevingvalg, al
   }
   return null;
 };
-
-export const findTilbakekrevingText = createSelector(
-  [(ownProps) => ownProps.simuleringResultat,
-    (ownProps) => ownProps.tilbakekrevingvalg,
-    (ownProps) => ownProps.alleKodeverk],
-  (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
-    if (tilbakekrevingValg !== null && tilbakekrevingValg !== undefined) {
-      if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
-        return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
-      }
-      const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-      return getKodeverkNavn(tilbakekrevingValg.videreBehandling);
-    }
-    return null;
-  },
-);
 
 export const findInnvilgetResultatText = (behandlingResultatTypeKode, ytelseType) => {
   if (behandlingResultatTypeKode === behandlingResultatType.KLAGE_YTELSESVEDTAK_STADFESTET) {

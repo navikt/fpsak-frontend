@@ -4,7 +4,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { Kodeverk, Behandlingsresultat } from '@fpsak-frontend/types';
 
-import VedtakFritekstPanel from '../VedtakFritekstPanel';
+import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 
 interface OwnProps {
   revurderingsAarsakString?: string;

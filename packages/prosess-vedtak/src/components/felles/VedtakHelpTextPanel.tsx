@@ -6,7 +6,7 @@ import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt } from '@fpsak-frontend/types';
 
-import styles from './vedtakForm.less';
+import styles from './vedtakHelpTextPanel.less';
 
 const findHelpTexts = (intl, aksjonspunkter) => {
   const helpTexts = [];

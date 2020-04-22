@@ -8,9 +8,9 @@ import {
 } from '@fpsak-frontend/types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import VedtakForm from './components/VedtakForm';
+import VedtakForm from './components/forstegang/VedtakForm';
 import VedtakRevurderingForm from './components/revurdering/VedtakRevurderingForm';
-import { skalSkriveFritekstGrunnetFastsettingAvBeregning } from './components/VedtakHelper';
+import { skalSkriveFritekstGrunnetFastsettingAvBeregning } from './components/felles/VedtakHelper';
 import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();

@@ -4,7 +4,6 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { hasIkkeOppfyltSoknadsfristvilkar, hasKlageVurderingSomIkkeErAvvist } from './VedtakHelper';
 
-
 describe('<VedtakHelper>', () => {
   it('hasIkkeOppfyltSoknadsfristvilkar skal returnere true når søknadfristvilkår ikkje er oppfylt', () => {
     const vilkarListe = [{

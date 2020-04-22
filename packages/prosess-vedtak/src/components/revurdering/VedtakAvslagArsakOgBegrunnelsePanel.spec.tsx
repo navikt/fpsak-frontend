@@ -1,27 +1,29 @@
 import React from 'react';
 import { expect } from 'chai';
+import { shallow } from 'enzyme';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
+import { Vilkar, Behandlingsresultat } from '@fpsak-frontend/types';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { VedtakAvslagArsakOgBegrunnelsePanel } from './VedtakAvslagArsakOgBegrunnelsePanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+
+import VedtakAvslagArsakOgBegrunnelsePanel from './VedtakAvslagArsakOgBegrunnelsePanel';
 
 
 describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
   it('skal rendre avslagspanel og textArea når en har ikke oppfylt søknadsfristvilkår', () => {
     const sprakkode = {
       kode: 'NO',
-      navn: 'norsk',
+      kodeverk: '',
     };
     const vilkar = [{
       vilkarType: {
         kode: vilkarType.SOKNADFRISTVILKARET,
+        kodeverk: '',
       },
       vilkarStatus: {
         kode: vilkarUtfallType.IKKE_OPPFYLT,
+        kodeverk: '',
       },
       lovReferanse: '§ 22-13, 2. ledd',
     }];
@@ -29,19 +31,18 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
       id: 1,
       type: {
         kode: 'test',
-        navn: 'test',
+        kodeverk: '',
       },
       avslagsarsak: {
         kode: '1019',
+        kodeverk: '',
       },
       avslagsarsakFritekst: null,
     };
-    const wrapper = shallowWithIntl(<VedtakAvslagArsakOgBegrunnelsePanel
-      intl={intlMock}
+    const wrapper = shallow(<VedtakAvslagArsakOgBegrunnelsePanel
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkar}
-      aksjonspunkter={[]}
-      behandlingsresultat={behandlingsresultat}
+      vilkar={vilkar as Vilkar[]}
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
       alleKodeverk={{}}

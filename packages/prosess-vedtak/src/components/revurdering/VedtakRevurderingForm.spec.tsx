@@ -7,44 +7,42 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VedtakRevurderingFormImpl as UnwrappedForm } from './VedtakRevurderingForm';
-import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
-import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
+import { VedtakRevurderingForm } from './VedtakRevurderingForm';
+import VedtakAvslagArsakOgBegrunnelsePanel from './VedtakAvslagArsakOgBegrunnelsePanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
-import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 
 
-const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
+const createBehandling = (behandlingResultatType) => ({
   id: 1,
   versjon: 123,
   fagsakId: 1,
   aksjonspunkter: [],
   behandlingPaaVent: false,
-  behandlingHenlagt,
+  behandlingHenlagt: false,
   sprakkode: {
     kode: 'NO',
-    navn: 'norsk',
+    kodeverk: '',
   },
   behandlingsresultat: {
     id: 1,
     type: {
       kode: behandlingResultatType,
-      navn: 'test',
+      kodeverk: '',
     },
     avslagsarsak: behandlingResultatType === BehandlingResultatType.AVSLATT ? {
       kode: '1019',
-      navn: 'Manglende dokumentasjon',
+      kodeverk: '',
     } : null,
     avslagsarsakFritekst: null,
   },
   status: {
     kode: behandlingStatus.BEHANDLING_UTREDES,
-    navn: 'test',
+    kodeverk: '',
   },
   type: {
     kode: 'test',
-    navn: 'test',
+    kodeverk: '',
   },
   opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
 });
@@ -64,24 +62,24 @@ describe('<VedtakRevurderingForm>', () => {
 
     revurdering.type = {
       kode: 'BT-004',
-      navn: 'Revurdering',
+      kodeverk: '',
     };
 
     revurdering.aksjonspunkter.push({
       id: 0,
       definisjon: {
-        navn: 'Foreslå vedtak',
+        kodeverk: '',
         kode: aksjonspunktCodes.FORESLA_VEDTAK,
       },
       status: {
-        navn: 'Opprettet',
+        kodeverk: '',
         kode: '',
       },
       kanLoses: true,
       erAktivt: true,
     });
 
-    const wrapper = shallow(<UnwrappedForm
+    const wrapper = shallow(<VedtakRevurderingForm
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
@@ -95,10 +93,8 @@ describe('<VedtakRevurderingForm>', () => {
       beregningErManueltFastsatt={false}
     />);
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(1);
+    expect(wrapper.find(VedtakAvslagArsakOgBegrunnelsePanel)).to.have.length(1);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
   });
 
 
@@ -107,27 +103,28 @@ describe('<VedtakRevurderingForm>', () => {
     const revurdering = createBehandlingAvslag();
 
     revurdering.behandlingsresultat = {
+      ...revurdering.behandlingsresultat,
       id: 1,
       type: {
         kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
+        kodeverk: '',
       },
     };
     revurdering.aksjonspunkter.push({
       id: 0,
       definisjon: {
-        navn: 'Foreslå vedtak',
+        kodeverk: '',
         kode: aksjonspunktCodes.FORESLA_VEDTAK,
       },
       status: {
-        navn: 'Opprettet',
+        kodeverk: 'kodeverk',
         kode: '',
       },
       kanLoses: true,
       erAktivt: true,
     });
 
-    const wrapper = shallow(<UnwrappedForm
+    const wrapper = shallow(<VedtakRevurderingForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={1}
@@ -143,24 +140,23 @@ describe('<VedtakRevurderingForm>', () => {
       beregningErManueltFastsatt={false}
     />);
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
+    expect(wrapper.find(VedtakAvslagArsakOgBegrunnelsePanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
   });
 
   it('skal vise result ved ingen endring, hoved knappen og ikke vise link for forhandsvise brev', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
+      ...revurdering.behandlingsresultat,
       id: 1,
       type: {
         kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
+        kodeverk: '',
       },
     };
 
-    const wrapper = shallow(<UnwrappedForm
+    const wrapper = shallow(<VedtakRevurderingForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={1}
@@ -175,10 +171,8 @@ describe('<VedtakRevurderingForm>', () => {
       beregningErManueltFastsatt={false}
     />);
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
+    expect(wrapper.find(VedtakAvslagArsakOgBegrunnelsePanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
   });
 
 
@@ -186,14 +180,15 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
+      ...revurdering.behandlingsresultat,
       id: 1,
       type: {
         kode: BehandlingResultatType.INNVILGET,
-        navn: 'Innvilget',
+        kodeverk: '',
       },
     };
 
-    const wrapper = shallow(<UnwrappedForm
+    const wrapper = shallow(<VedtakRevurderingForm
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
@@ -209,10 +204,8 @@ describe('<VedtakRevurderingForm>', () => {
       beregningErManueltFastsatt={false}
     />);
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
+    expect(wrapper.find(VedtakAvslagArsakOgBegrunnelsePanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
   });
 
 
@@ -220,7 +213,7 @@ describe('<VedtakRevurderingForm>', () => {
     const previewCallback = sinon.spy();
     const revurdering = createBehandlingOpphor();
 
-    const wrapper = shallow(<UnwrappedForm
+    const wrapper = shallow(<VedtakRevurderingForm
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
@@ -236,10 +229,8 @@ describe('<VedtakRevurderingForm>', () => {
       beregningErManueltFastsatt={false}
     />);
 
-    expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakAvslagRevurderingPanel)).to.have.length(0);
+    expect(wrapper.find(VedtakAvslagArsakOgBegrunnelsePanel)).to.have.length(0);
     expect(wrapper.find(VedtakInnvilgetRevurderingPanel)).to.have.length(0);
     expect(wrapper.find(VedtakOpphorRevurderingPanel)).to.have.length(1);
-    expect(wrapper.find(VedtakRevurderingSubmitPanel)).to.have.length(1);
   });
 });

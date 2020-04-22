@@ -1,49 +1,31 @@
 import React from 'react';
 import { expect } from 'chai';
+import { shallow } from 'enzyme';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { Behandlingsresultat } from '@fpsak-frontend/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { lagKonsekvensForYtelsenTekst, VedtakInnvilgetRevurderingPanelImpl } from './VedtakInnvilgetRevurderingPanel';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
+import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 
 const ytelseType = fagsakYtelseType.ENGANGSSTONAD;
-const getKodeverknavn = (kodeverk) => {
-  if (kodeverk.kode === 'BEREGNING') {
-    return 'Endring i beregning';
-  }
-  if (kodeverk.kode === 'UTTAK') {
-    return 'Endring i uttak';
-  }
-  return '';
-};
 
 describe('<VedtakInnvilgetRevurderingPanel>', () => {
   it('skal rendre innvilget revurdering panel for engangsstønad ingen endring', () => {
-    const originaltBeregningsresultat = {
+    const resultatstruktur = {
       beregnetTilkjentYtelse: 61120,
       satsVerdi: 61120,
       antallBarn: 1,
     };
 
-    const beregningResultat = {
-      beregnetTilkjentYtelse: 61120,
-      satsVerdi: 61120,
-      antallBarn: 1,
-    };
-
-    const wrapper = shallowWithIntl(<VedtakInnvilgetRevurderingPanelImpl
-      intl={intlMock}
+    const wrapper = shallow(<VedtakInnvilgetRevurderingPanel
       antallBarn={1}
-      originaltBeregningResultat={originaltBeregningsresultat}
-      beregningResultat={beregningResultat}
       ytelseTypeKode={ytelseType}
+      resultatstruktur={resultatstruktur}
       readOnly
-      behandlingsresultat={{}}
-      hasOverstyrtVurderingAp={false}
-      alleKodeverk={{}}
+      behandlingsresultat={{} as Behandlingsresultat}
       beregningErManueltFastsatt={false}
+      sprakKode={{ kode: 'nb', kodeverk: '' }}
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
@@ -64,21 +46,12 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
 
 
   it('skal rendre innvilget revurdering panel for engangsstønad endret til avslått', () => {
-    const originaltBeregningsresultat = {
-      beregnetTilkjentYtelse: 61120,
-      satsVerdi: 61120,
-      antallBarn: 1,
-    };
-
-    const wrapper = shallowWithIntl(<VedtakInnvilgetRevurderingPanelImpl
-      intl={intlMock}
+    const wrapper = shallow(<VedtakInnvilgetRevurderingPanel
       antallBarn={1}
-      originaltBeregningResultat={originaltBeregningsresultat}
       ytelseTypeKode={ytelseType}
       readOnly
-      behandlingsresultat={{}}
-      hasOverstyrtVurderingAp={false}
-      alleKodeverk={{}}
+      behandlingsresultat={{} as Behandlingsresultat}
+      sprakKode={{ kode: 'nb', kodeverk: '' }}
       beregningErManueltFastsatt={false}
     />);
 
@@ -94,18 +67,5 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
     const elementFields = wrapper.find(Element);
     expect(elementFields).to.have.length(1);
     expect(elementFields.first().childAt(0).text()).to.eql('1');
-  });
-
-  it('skal lage korrekt tekst for konsekvens for ytelsen', () => {
-    const konsekvenser = [
-      {
-        kode: 'BEREGNING',
-      },
-      {
-        kode: 'UTTAK',
-      },
-    ];
-    const selectorData = lagKonsekvensForYtelsenTekst(konsekvenser, getKodeverknavn);
-    expect(selectorData).to.eql('Endring i beregning og Endring i uttak');
   });
 });

@@ -1,17 +1,18 @@
 import React from 'react';
 import { expect } from 'chai';
 
+import { Behandlingsresultat, BeregningsresultatFp, BeregningsresultatEs } from '@fpsak-frontend/types';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
-const behandlingsresultat = {
+const behandlingsresultat: Partial<Behandlingsresultat> = {
   type: {
     kode: 'INNVILGET',
+    kodeverk: '',
   },
 };
 
@@ -19,18 +20,15 @@ describe('<VedtakInnvilgetPanel>', () => {
   it('skal rendre innvilget panel for engangsstønad', () => {
     const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
-      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      beregningResultat={{
-        beregnetTilkjentYtelse: 100,
-      }}
-      behandlingsresultatTypeKode="test"
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       antallBarn={1}
-      behandlinger={[]}
       ytelseTypeKode={engangsstonad}
-      behandlingsresultat={behandlingsresultat}
-      skalBrukeOverstyrendeFritekstBrev
       readOnly
+      skalBrukeOverstyrendeFritekstBrev
       beregningErManueltFastsatt={false}
+      resultatstruktur={{
+        beregnetTilkjentYtelse: 100,
+      } as BeregningsresultatEs}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -52,18 +50,15 @@ describe('<VedtakInnvilgetPanel>', () => {
   it('skal rendre innvilget panel for foreldrepenger', () => {
     const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
-      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      beregningResultat={{
-        beregnetTilkjentYtelse: 100,
-      }}
-      behandlingsresultatTypeKode="test"
+      behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       antallBarn={1}
-      behandlinger={[]}
       ytelseTypeKode={foreldrepenger}
-      behandlingsresultat={behandlingsresultat}
-      skalBrukeOverstyrendeFritekstBrev
       readOnly
+      skalBrukeOverstyrendeFritekstBrev
       beregningErManueltFastsatt={false}
+      resultatstruktur={{
+        antallBarn: 1,
+      } as BeregningsresultatFp}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');

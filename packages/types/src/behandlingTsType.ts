@@ -30,7 +30,9 @@ type Behandling = Readonly<{
   behandlendeEnhetNavn: string;
   behandlingKoet: boolean;
   toTrinnsBehandling: boolean;
-  behandlingArsaker: {}[];
+  behandlingArsaker: {
+    behandlingArsakType: Kodeverk;
+  }[];
   ansvarligSaksbehandler?: string;
   kanHenleggeBehandling?: boolean;
 }>

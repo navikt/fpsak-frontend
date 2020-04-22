@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
@@ -13,9 +12,8 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
-import VedtakFritekstPanel from './VedtakFritekstPanel';
-
+import { hasIkkeOppfyltSoknadsfristvilkar } from '../felles/VedtakHelper';
+import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 
 export const getAvslagArsak = (vilkar, behandlingsresultat, getKodeverknavn) => {
   const avslatteVilkar = vilkar.filter((v) => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);

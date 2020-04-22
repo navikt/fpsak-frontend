@@ -9,7 +9,7 @@ import {
   Behandlingsresultat, BeregningsresultatFp, BeregningsresultatEs, Kodeverk,
 } from '@fpsak-frontend/types';
 
-import VedtakFritekstPanel from '../VedtakFritekstPanel';
+import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 
 interface OwnProps {
   antallBarn?: number;
@@ -40,7 +40,7 @@ const VedtakInnvilgetRevurderingPanel: FunctionComponent<OwnProps> = ({
             && (
             <Column xs="4">
               <Undertekst><FormattedMessage id="VedtakForm.beregnetTilkjentYtelse" /></Undertekst>
-              <Element>{formatCurrencyWithKr(resultatstruktur.beregnetTilkjentYtelse)}</Element>
+              <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
             </Column>
             )}
         {antallBarn

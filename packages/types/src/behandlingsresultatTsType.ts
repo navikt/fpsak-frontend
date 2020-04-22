@@ -7,6 +7,7 @@ type Behandlingsresultat = Readonly<{
   vedtaksbrev?: Kodeverk;
   avslagsarsak?: Kodeverk;
   avslagsarsakFritekst?: string;
+  konsekvenserForYtelsen?: Kodeverk[];
 }>
 
 export default Behandlingsresultat;

@@ -2,6 +2,7 @@ import React, { FunctionComponent, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import {
   KodeverkMedNavn, Behandling, BeregningsresultatFp, BeregningsresultatEs, Vilkar,
@@ -11,12 +12,13 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 
+import { findInnvilgetResultatText, findAvslagResultatText, getTilbakekrevingText } from '../felles/VedtakHelper';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
-import VedtakFellesPanel from './VedtakFellesPanel';
-import { getTilbakekrevingText } from './VedtakHelper';
-import VedtakFritekstbrevModal from './svp/VedtakFritekstbrevModal';
+import VedtakFellesPanel from '../felles/VedtakFellesPanel';
+import VedtakFritekstbrevModal from '../felles/svp/VedtakFritekstbrevModal';
 
 const getPreviewManueltBrevCallback = (formProps, begrunnelse, brodtekst, overskrift, skalOverstyre, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
@@ -40,6 +42,20 @@ const erArsakTypeBehandlingEtterKlage = (behandlingArsakTyper = []) => behandlin
     || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
     || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK);
 
+
+const finnVedtakstatusTekst = (behandlingsresultat, intl, ytelseTypeKode) => {
+  const erInnvilget = isInnvilget(behandlingsresultat.type.kode);
+  const erAvslatt = isAvslag(behandlingsresultat.type.kode);
+
+  if (erInnvilget) {
+    return intl.formatMessage({ id: findInnvilgetResultatText(behandlingsresultat.type.kode, ytelseTypeKode) });
+  }
+  if (erAvslatt) {
+    return intl.formatMessage({ id: findAvslagResultatText(behandlingsresultat.type.kode, ytelseTypeKode) });
+  }
+  return '';
+};
+
 interface OwnProps {
   behandling: Behandling;
   readOnly: boolean;
@@ -60,7 +76,8 @@ interface OwnProps {
   beregningErManueltFastsatt: boolean;
 }
 
-export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
+export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & WrappedComponentProps> = ({
+  intl,
   behandling,
   readOnly,
   aksjonspunkter,
@@ -83,11 +100,12 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
   } = behandling;
 
   const erBehandlingEtterKlage = useMemo(() => erArsakTypeBehandlingEtterKlage(behandling.behandlingArsaker), [behandling.behandlingArsaker]);
+  const tilbakekrevingtekst = useMemo(() => getTilbakekrevingText(simuleringResultat, tilbakekrevingvalg, alleKodeverk), [
+    simuleringResultat, tilbakekrevingvalg]);
+  const vedtakstatusTekst = useMemo(() => finnVedtakstatusTekst(behandlingsresultat, intl, ytelseTypeKode), [behandlingsresultat]);
 
   const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, true, previewCallback);
   const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, false, previewCallback);
-
-  const tilbakekrevingtekst = getTilbakekrevingText(simuleringResultat, tilbakekrevingvalg, alleKodeverk);
 
   return (
     <>
@@ -98,10 +116,9 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
         />
       )}
       <VedtakFellesPanel
+        vedtakstatusTekst={vedtakstatusTekst}
         behandlingsresultat={behandlingsresultat}
         behandlingType={type}
-        alleKodeverk={alleKodeverk}
-        ytelseTypeKode={ytelseTypeKode}
         behandlingStatusKode={status.kode}
         aksjonspunkter={aksjonspunkter}
         readOnly={readOnly}
@@ -187,4 +204,4 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 
 export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
-})(VedtakForm));
+})(injectIntl(VedtakForm)));

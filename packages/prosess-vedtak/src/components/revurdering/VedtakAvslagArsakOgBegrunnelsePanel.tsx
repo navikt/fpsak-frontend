@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { hasIkkeOppfyltSoknadsfristvilkar } from '../VedtakHelper';
+import { hasIkkeOppfyltSoknadsfristvilkar } from '../felles/VedtakHelper';
 
 import styles from './vedtakAvslagArsakOgBegrunnelsePanel.less';
 
