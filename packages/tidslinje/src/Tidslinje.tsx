@@ -181,8 +181,8 @@ class Tidslinje extends Component<TidslinjeProps> {
             {medsokerKjonnKode
               && (
                 <TimeLineSoker
-                  hovedsokerKjonnKode={hovedsokerKjonnKode}
-                  medsokerKjonnKode={medsokerKjonnKode}
+                  soker1KjonnKode={medsokerKjonnKode}
+                  soker2KjonnKode={hovedsokerKjonnKode}
                 />
               )}
             {!medsokerKjonnKode
