@@ -47,7 +47,7 @@ describe('<VedtakFellesPanel>', () => {
       kanOverstyre
       previewAutomatiskBrev={sinon.spy()}
       previewOverstyrtBrev={sinon.spy()}
-      resetForm={sinon.spy()}
+      clearFormField={sinon.spy()}
       erBehandlingEtterKlage={false}
       handleSubmit={sinon.spy()}
       submitting={false}
@@ -75,7 +75,7 @@ describe('<VedtakFellesPanel>', () => {
       kanOverstyre
       previewAutomatiskBrev={sinon.spy()}
       previewOverstyrtBrev={sinon.spy()}
-      resetForm={sinon.spy()}
+      clearFormField={sinon.spy()}
       erBehandlingEtterKlage={false}
       handleSubmit={sinon.spy()}
       submitting={false}
@@ -101,7 +101,7 @@ describe('<VedtakFellesPanel>', () => {
       kanOverstyre
       previewAutomatiskBrev={sinon.spy()}
       previewOverstyrtBrev={sinon.spy()}
-      resetForm={sinon.spy()}
+      clearFormField={sinon.spy()}
       erBehandlingEtterKlage={false}
       handleSubmit={sinon.spy()}
       submitting={false}

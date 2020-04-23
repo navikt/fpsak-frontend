@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
+import { change, InjectedFormProps } from 'redux-form';
 import { createSelector } from 'reselect';
+import { bindActionCreators } from 'redux';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import {
@@ -11,8 +12,8 @@ import {
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import { findInnvilgetResultatText, findAvslagResultatText, getTilbakekrevingText } from '../felles/VedtakHelper';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -74,6 +75,7 @@ interface OwnProps {
   simuleringResultat?: SimuleringResultat;
   vilkar?: Vilkar[];
   beregningErManueltFastsatt: boolean;
+  clearFormField: (fieldId: string) => void;
 }
 
 export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & WrappedComponentProps> = ({
@@ -93,6 +95,7 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
   simuleringResultat,
   vilkar,
   beregningErManueltFastsatt,
+  clearFormField,
   ...formProps
 }) => {
   const {
@@ -127,7 +130,7 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
         erBehandlingEtterKlage={erBehandlingEtterKlage}
         handleSubmit={formProps.handleSubmit}
         submitting={formProps.submitting}
-        resetForm={formProps.reset}
+        clearFormField={clearFormField}
         renderPanel={(skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt) => {
           if (erInnvilget) {
             return (
@@ -198,6 +201,14 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  ...bindActionCreators({
+    clearFormField: (fieldId) => change(`${getBehandlingFormPrefix(
+      ownProps.behandlingId, ownProps.behandlingVersjon,
+    )}.${formName}`, fieldId, null),
+  }, dispatch),
+});
+
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
   form: formName,
 })(injectIntl(VedtakForm)));

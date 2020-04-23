@@ -54,7 +54,7 @@ interface OwnProps {
   previewAutomatiskBrev: (e: MouseEvent) => void;
   previewOverstyrtBrev: (e: MouseEvent) => void;
   tilbakekrevingtekst?: string;
-  resetForm: () => void;
+  clearFormField: (fieldId: string) => void;
   handleSubmit: (any) => void;
   submitting: boolean;
   vedtakstatusTekst?: string;
@@ -70,11 +70,11 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
   previewAutomatiskBrev,
   previewOverstyrtBrev,
   tilbakekrevingtekst,
-  resetForm,
   erBehandlingEtterKlage,
   handleSubmit,
   submitting,
   vedtakstatusTekst,
+  clearFormField,
 }) => {
   const {
     behandlingsresultat, behandlingPaaVent, sprakkode, status, type,
@@ -88,7 +88,8 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
   const avsluttRedigering = useCallback(() => {
     toggleSkalBrukeManueltBrev(false);
     toggleVisModal(false);
-    resetForm();
+    clearFormField('overskrift');
+    clearFormField('brødtekst');
   }, []);
 
   const erInnvilget = isInnvilget(behandlingsresultat.type.kode);

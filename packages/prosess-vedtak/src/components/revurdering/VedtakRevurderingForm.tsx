@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { InjectedFormProps } from 'redux-form';
+import { change, InjectedFormProps } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import moment from 'moment';
@@ -17,7 +18,7 @@ import {
   Aksjonspunkt, SimuleringResultat, Kodeverk,
 } from '@fpsak-frontend/types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/form';
 
 import vedtakResultType from '../../kodeverk/vedtakResultType';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
@@ -164,6 +165,7 @@ interface OwnProps {
     'beregningsresultat-engangsstonad'?: {};
     'beregningsresultat-foreldrepenger'?: {};
   };
+  clearFormField: (fieldId: string) => void;
 }
 
 export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormProps & WrappedComponentProps> = ({
@@ -185,6 +187,7 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
   beregningErManueltFastsatt,
   medlemskapFom,
   resultatstrukturOriginalBehandling,
+  clearFormField,
   ...formProps
 }) => {
   const {
@@ -226,7 +229,7 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
         erBehandlingEtterKlage={erBehandlingEtterKlage}
         handleSubmit={formProps.handleSubmit}
         submitting={formProps.submitting}
-        resetForm={formProps.reset}
+        clearFormField={clearFormField}
         renderPanel={(skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt, erOpphor) => {
           if (erInnvilget) {
             return (
@@ -309,6 +312,14 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  ...bindActionCreators({
+    clearFormField: (fieldId) => change(`${getBehandlingFormPrefix(
+      ownProps.behandlingId, ownProps.behandlingVersjon,
+    )}.${VEDTAK_REVURDERING_FORM_NAME}`, fieldId, null),
+  }, dispatch),
+});
+
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
   form: VEDTAK_REVURDERING_FORM_NAME,
 })(injectIntl(VedtakRevurderingForm)));
