@@ -59,7 +59,7 @@ interface OwnProps {
   vedtakstatusTekst?: string;
 }
 
-export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   behandling,
   aksjonspunkter,
@@ -134,13 +134,13 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
               <Lenke href="#" onClick={previewAutomatiskBrev}>
                 <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
               </Lenke>
-              <PopOutPilSvg className={styles.pil} />
+              <PopOutPilSvg />
             </>
           )}
         </Column>
         {(!readOnly && kanOverstyre && !skalBrukeManueltBrev) && (
           <Column xs="3">
-            <EditUtlandSvg className={styles.blyant} />
+            <EditUtlandSvg />
             <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
               <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
             </Lenke>
