@@ -1,12 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
+import Alertstripe from 'nav-frontend-alertstriper';
 
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Aksjonspunkt } from '@fpsak-frontend/types';
-
-import styles from './vedtakHelpTextPanel.less';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const findHelpTexts = (intl, aksjonspunkter) => {
   const helpTexts = [];
@@ -28,7 +27,7 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
 }
 
-export const VedtakHelpTextPanelImpl: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const VedtakHelpTextPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   readOnly,
   aksjonspunkter,
@@ -37,23 +36,17 @@ export const VedtakHelpTextPanelImpl: FunctionComponent<OwnProps & WrappedCompon
   if (!readOnly && helpTexts.length > 0) {
     return (
       <>
-        <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnly}>
-          {helpTexts}
-        </AksjonspunktHelpTextTemp>
-        <VerticalSpacer eightPx />
-        {aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST) && (
-          <Element className={styles.inline}>
-            <FormattedMessage id="VedtakForm.HelpText0" />
-          </Element>
-        )}
-        <Normaltekst className={styles.inline}><FormattedMessage id="VedtakForm.HelpText1" /></Normaltekst>
-        <Element className={styles.inline}><FormattedMessage id="VedtakForm.TilGodkjenning" /></Element>
-        <Normaltekst className={styles.inline}><FormattedMessage id="VedtakForm.HelpText2" /></Normaltekst>
-        <VerticalSpacer twentyPx />
+        <VerticalSpacer sixteenPx />
+        <Alertstripe type="info">
+          <Normaltekst><FormattedMessage id="VedtakHelpTextPanel.Vurder" /></Normaltekst>
+          <ul>
+            {helpTexts.map((text) => <li><Normaltekst>{text}</Normaltekst></li>)}
+          </ul>
+        </Alertstripe>
       </>
     );
   }
   return null;
 };
 
-export default injectIntl(VedtakHelpTextPanelImpl);
+export default injectIntl(VedtakHelpTextPanel);

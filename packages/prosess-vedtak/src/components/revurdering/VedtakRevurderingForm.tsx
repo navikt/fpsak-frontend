@@ -188,7 +188,7 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
   ...formProps
 }) => {
   const {
-    behandlingsresultat, behandlingPaaVent, sprakkode, status, type, behandlingArsaker,
+    behandlingsresultat, sprakkode, status, behandlingArsaker,
   } = behandling;
 
   const erBehandlingEtterKlage = useMemo(() => erArsakTypeBehandlingEtterKlage(behandling.behandlingArsaker), [behandling.behandlingArsaker]);
@@ -215,14 +215,11 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
         />
       )}
       <VedtakFellesPanel
+        behandling={behandling}
         vedtakstatusTekst={vedtakstatusTekst}
-        behandlingsresultat={behandlingsresultat}
-        behandlingStatusKode={status.kode}
         aksjonspunkter={aksjonspunkter}
-        behandlingType={type}
         readOnly={readOnly}
         kanOverstyre={kanOverstyre}
-        sprakkode={sprakkode}
         previewAutomatiskBrev={previewDefaultBrev}
         previewOverstyrtBrev={previewOverstyrtBrev}
         tilbakekrevingtekst={tilbakekrevingtekst}
@@ -230,7 +227,6 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
         handleSubmit={formProps.handleSubmit}
         submitting={formProps.submitting}
         resetForm={formProps.reset}
-        behandlingPaaVent={behandlingPaaVent}
         renderPanel={(skalBrukeOverstyrendeFritekstBrev, erInnvilget, erAvslatt, erOpphor) => {
           if (erInnvilget) {
             return (

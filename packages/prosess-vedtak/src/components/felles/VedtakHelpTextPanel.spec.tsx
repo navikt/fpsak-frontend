@@ -6,12 +6,12 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@fpsak-frontend/types';
 
-import { VedtakHelpTextPanelImpl } from './VedtakHelpTextPanel';
+import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 describe('<VedtakHelpTextPanel>', () => {
   it('skal vise hjelpetekst for vurdering av dokument når en har dette aksjonspunktet', () => {
-    const wrapper = shallowWithIntl(<VedtakHelpTextPanelImpl
+    const wrapper = shallowWithIntl(<VedtakHelpTextPanel.WrappedComponent
       intl={intlMock}
       aksjonspunkter={[{
         definisjon: {
@@ -30,7 +30,7 @@ describe('<VedtakHelpTextPanel>', () => {
 
 
   it('skal vise hjelpetekst for vurdering av dokument og vurdering av annen ytelse når en har disse aksjonspunktetene', () => {
-    const wrapper = shallowWithIntl(<VedtakHelpTextPanelImpl
+    const wrapper = shallowWithIntl(<VedtakHelpTextPanel.WrappedComponent
       intl={intlMock}
       aksjonspunkter={[{
         definisjon: {
@@ -55,7 +55,7 @@ describe('<VedtakHelpTextPanel>', () => {
 
 
   it('skal ikke vise hjelpetekst når en ikke har gitte aksjonspunkter', () => {
-    const wrapper = shallowWithIntl(<VedtakHelpTextPanelImpl
+    const wrapper = shallowWithIntl(<VedtakHelpTextPanel.WrappedComponent
       intl={intlMock}
       aksjonspunkter={[{
         definisjon: {

@@ -13,9 +13,7 @@ import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import { ReactComponent as EditUtlandSvg } from '@fpsak-frontend/assets/images/endre.svg';
-import {
-  Kodeverk, Behandlingsresultat, Aksjonspunkt,
-} from '@fpsak-frontend/types';
+import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 import {
   VerticalSpacer, FlexColumn, FlexContainer, FlexRow, OkAvbrytModal, Image,
 } from '@fpsak-frontend/shared-components';
@@ -46,45 +44,41 @@ const finnKnappetekstkode = (behandlingType, skalBrukeManueltBrev, aksjonspunkte
 };
 
 interface OwnProps {
-  behandlingsresultat: Behandlingsresultat;
-  behandlingType: Kodeverk;
+  behandling: Behandling;
   readOnly: boolean;
   kanOverstyre: boolean;
   erBehandlingEtterKlage: boolean;
   aksjonspunkter: Aksjonspunkt[];
-  behandlingStatusKode: string;
   renderPanel: (skalBrukeManueltBrev: boolean, erInnvilget: boolean, erAvslatt: boolean, erOpphor: boolean) => ReactNode;
   previewAutomatiskBrev: (e: MouseEvent) => void;
   previewOverstyrtBrev: (e: MouseEvent) => void;
   tilbakekrevingtekst?: string;
-  sprakkode: Kodeverk;
   resetForm: () => void;
   handleSubmit: (any) => void;
   submitting: boolean;
-  behandlingPaaVent: boolean;
   vedtakstatusTekst?: string;
 }
 
 export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
-  behandlingsresultat,
-  behandlingStatusKode,
+  behandling,
   aksjonspunkter,
   readOnly,
   renderPanel,
   kanOverstyre,
   previewAutomatiskBrev,
   previewOverstyrtBrev,
-  sprakkode,
   tilbakekrevingtekst,
   resetForm,
   erBehandlingEtterKlage,
   handleSubmit,
   submitting,
-  behandlingPaaVent,
-  behandlingType,
   vedtakstatusTekst,
 }) => {
+  const {
+    behandlingsresultat, behandlingPaaVent, sprakkode, status, type,
+  } = behandling;
+
   const [skalBrukeManueltBrev, toggleSkalBrukeManueltBrev] = useState(behandlingsresultat.vedtaksbrev && behandlingsresultat.vedtaksbrev.kode === 'FRITEKST');
   const [skalViseModal, toggleVisModal] = useState(false);
   const onToggleOverstyring = useCallback(() => {
@@ -114,18 +108,17 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
       />
       <FlexContainer>
         <FlexRow>
-          {(behandlingStatusKode === behandlingStatusCode.AVSLUTTET) && (
+          {(status.kode === behandlingStatusCode.AVSLUTTET) && (
             <FlexColumn>
               <Image className={styles.status} src={erInnvilget ? innvilgetImage : avslattImage} />
             </FlexColumn>
           )}
           <FlexColumn>
-            <Undertittel><FormattedMessage id={getTextCode(behandlingStatusKode)} /></Undertittel>
+            <Undertittel><FormattedMessage id={getTextCode(status.kode)} /></Undertittel>
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
       <VerticalSpacer eightPx />
-      <VedtakHelpTextPanel aksjonspunkter={aksjonspunkter} readOnly={readOnly} />
       <Row>
         <Column xs="3">
           <Element>
@@ -154,6 +147,7 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
           </Column>
         )}
       </Row>
+      <VedtakHelpTextPanel aksjonspunkter={aksjonspunkter} readOnly={readOnly} />
       <VerticalSpacer twentyPx />
       {renderPanel(skalBrukeManueltBrev, erInnvilget, erAvslatt, erOpphor)}
       {skalBrukeManueltBrev && (
@@ -164,7 +158,7 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
           skalViseLink={skalViseLink}
         />
       )}
-      {kanSendesTilGodkjenning(behandlingStatusKode) && (
+      {kanSendesTilGodkjenning(status.kode) && (
         <>
           <VerticalSpacer twentyPx />
           <FlexContainer>
@@ -177,7 +171,7 @@ export const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentPro
                     disabled={behandlingPaaVent || submitting}
                     spinner={submitting}
                   >
-                    <FormattedMessage id={finnKnappetekstkode(behandlingType, skalBrukeManueltBrev, aksjonspunkter)} />
+                    <FormattedMessage id={finnKnappetekstkode(type, skalBrukeManueltBrev, aksjonspunkter)} />
                   </Hovedknapp>
                 )}
               </FlexColumn>
