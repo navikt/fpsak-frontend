@@ -9,8 +9,8 @@ import TimeLineSoker from './TimeLineSoker';
 describe('<TimeLineSoker>', () => {
   it('skal teste at TimeLineSoker viser korrekte bilder för korrekte soker', () => {
     const wrapper = mountWithIntl(<TimeLineSoker
-      hovedsokerKjonnKode="K"
-      medsokerKjonnKode="M"
+      soker1KjonnKode="K"
+      soker2KjonnKode="M"
     />);
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(2);
