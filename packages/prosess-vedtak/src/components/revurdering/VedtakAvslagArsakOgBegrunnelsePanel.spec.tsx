@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { FormattedMessage } from 'react-intl';
 
-import { Vilkar, Behandlingsresultat } from '@fpsak-frontend/types';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { Behandlingsresultat } from '@fpsak-frontend/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import VedtakAvslagArsakOgBegrunnelsePanel from './VedtakAvslagArsakOgBegrunnelsePanel';
@@ -16,17 +15,6 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
       kode: 'NO',
       kodeverk: '',
     };
-    const vilkar = [{
-      vilkarType: {
-        kode: vilkarType.SOKNADFRISTVILKARET,
-        kodeverk: '',
-      },
-      vilkarStatus: {
-        kode: vilkarUtfallType.IKKE_OPPFYLT,
-        kodeverk: '',
-      },
-      lovReferanse: '§ 22-13, 2. ledd',
-    }];
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -41,22 +29,15 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
     };
     const wrapper = shallow(<VedtakAvslagArsakOgBegrunnelsePanel
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      vilkar={vilkar as Vilkar[]}
+      vilkar={[]}
       behandlingsresultat={behandlingsresultat as Behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
       alleKodeverk={{}}
-      skalBrukeOverstyrendeFritekstBrev
+      skalBrukeOverstyrendeFritekstBrev={false}
     />);
 
-
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(1);
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til avslag');
-
-    const textArea = wrapper.find('TextAreaField');
-    expect(textArea).to.have.length(1);
-    expect(textArea.prop('name')).is.eql('begrunnelse');
-    expect(textArea.prop('maxLength')).is.eql(1500);
+    const message = wrapper.find(FormattedMessage);
+    expect(message.at(1).prop('id')).is.eql('VedtakForm.UttaksperioderIkkeGyldig');
   });
 });

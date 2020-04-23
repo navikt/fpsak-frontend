@@ -1,9 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import { Behandlingsresultat } from '@fpsak-frontend/types';
 
+import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
 
 describe('<VedtakOpphorRevurderingPanel>', () => {
@@ -28,15 +30,14 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       skalBrukeOverstyrendeFritekstBrev
     />);
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
+    const tekst = wrapper.find(Normaltekst);
+    expect(tekst).to.have.length(1);
+    expect(tekst.childAt(0).text()).to.eql('Test');
 
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
-  it('skal rendre opphørpanel med avslagsårsak før svangerskapspenger', () => {
+
+  it('skal rendre opphørpanel med uten avslagsårsak men med fritekstpanel', () => {
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -52,17 +53,11 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
     const wrapper = shallow(<VedtakOpphorRevurderingPanel
       readOnly
       behandlingsresultat={behandlingsresultat as Behandlingsresultat}
-      revurderingsAarsakString="Test"
-      beregningErManueltFastsatt={false}
-      skalBrukeOverstyrendeFritekstBrev
+      beregningErManueltFastsatt
+      skalBrukeOverstyrendeFritekstBrev={false}
     />);
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(2);
+    expect(wrapper.find(Normaltekst)).to.have.length(0);
+    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });
 });

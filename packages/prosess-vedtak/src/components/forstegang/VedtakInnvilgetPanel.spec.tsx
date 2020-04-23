@@ -1,14 +1,15 @@
 import React from 'react';
 import { expect } from 'chai';
+import { Element } from 'nav-frontend-typografi';
 
-import { Behandlingsresultat, BeregningsresultatFp, BeregningsresultatEs } from '@fpsak-frontend/types';
+import { Behandlingsresultat, BeregningsresultatEs } from '@fpsak-frontend/types';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
-const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
-const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
 const behandlingsresultat: Partial<Behandlingsresultat> = {
   type: {
     kode: 'INNVILGET',
@@ -21,7 +22,7 @@ describe('<VedtakInnvilgetPanel>', () => {
     const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
       behandlingsresultat={behandlingsresultat as Behandlingsresultat}
-      ytelseTypeKode={engangsstonad}
+      ytelseTypeKode={fagsakYtelseType.ENGANGSSTONAD}
       readOnly
       skalBrukeOverstyrendeFritekstBrev
       beregningErManueltFastsatt={false}
@@ -31,45 +32,22 @@ describe('<VedtakInnvilgetPanel>', () => {
       } as BeregningsresultatEs}
     />);
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(3);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(undertekstFields.at(1).childAt(0).text()).to.eql('Beregnet engangsstønad');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Antall barn');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er innvilget');
-
-    const elementFields = wrapper.find('Element');
+    const elementFields = wrapper.find(Element);
     expect(elementFields).to.have.length(2);
     expect(elementFields.first().childAt(0).text()).to.eql('100 kr');
     expect(elementFields.last().childAt(0).text()).to.eql('1');
   });
 
-  it('skal rendre innvilget panel for foreldrepenger', () => {
+  it('skal rendre fritekstpanel for foreldrepenger', () => {
     const wrapper = shallowWithIntl(<VedtakInnvilgetPanel.WrappedComponent
       intl={intlMock}
       behandlingsresultat={behandlingsresultat as Behandlingsresultat}
-      ytelseTypeKode={foreldrepenger}
+      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
       readOnly
-      skalBrukeOverstyrendeFritekstBrev
-      beregningErManueltFastsatt={false}
-      resultatstruktur={{
-        antallBarn: 1,
-      } as BeregningsresultatFp}
+      skalBrukeOverstyrendeFritekstBrev={false}
+      beregningErManueltFastsatt
     />);
 
-    const undertekstFields = wrapper.find('Undertekst');
-    expect(undertekstFields).to.have.length(1);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Foreldrepenger er innvilget');
-
-    const elementFields = wrapper.find('Element');
-    expect(elementFields).to.have.length(0);
+    expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });
 });

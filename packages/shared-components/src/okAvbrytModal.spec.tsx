@@ -4,7 +4,6 @@ import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import Image from './Image';
 
 import OkAvbrytModal from './OkAvbrytModal';
 
@@ -24,10 +23,6 @@ describe('<OkAvbrytModal>', () => {
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('contentLabel')).is.eql('OkAvbrytModal.OpenBehandling');
-
-    const image = wrapper.find(Image);
-    expect(image).to.have.length(1);
-    expect(image.prop('alt')).to.have.length.above(3);
 
     const message = wrapper.find(FormattedMessage);
     expect(message).to.have.length(1);

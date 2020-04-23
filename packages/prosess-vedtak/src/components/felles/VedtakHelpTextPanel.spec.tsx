@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { Aksjonspunkt } from '@fpsak-frontend/types';
 
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
@@ -22,10 +22,9 @@ describe('<VedtakHelpTextPanel>', () => {
       readOnly={false}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
-    expect(helpText.prop('isAksjonspunktOpen')).is.true;
-    expect(helpText.children()).to.have.length(1);
-    expect(helpText.childAt(0).text()).is.eql('Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen');
+    const helpTexts = wrapper.find('li');
+    expect(helpTexts).to.have.length(1);
+    expect(helpTexts.find(Normaltekst).childAt(0).text()).is.eql('Påvirker den åpne Gosys-oppgaven «Vurder dokument» behandlingen?');
   });
 
 
@@ -46,11 +45,10 @@ describe('<VedtakHelpTextPanel>', () => {
       readOnly={false}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
-    expect(helpText.prop('isAksjonspunktOpen')).is.true;
-    expect(helpText.children()).to.have.length(2);
-    expect(helpText.childAt(0).text()).is.eql('Vurder om den åpne oppgaven «Vurder konsekvens for ytelse» påvirker behandlingen');
-    expect(helpText.childAt(1).text()).is.eql('Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen');
+    const helpTexts = wrapper.find('li');
+    expect(helpTexts).to.have.length(2);
+    expect(helpTexts.at(0).find(Normaltekst).childAt(0).text()).is.eql('Påvirker den åpne Gosys-oppgaven «Vurder konsekvens for ytelse» behandlingen?');
+    expect(helpTexts.at(1).find(Normaltekst).childAt(0).text()).is.eql('Påvirker den åpne Gosys-oppgaven «Vurder dokument» behandlingen?');
   });
 
 

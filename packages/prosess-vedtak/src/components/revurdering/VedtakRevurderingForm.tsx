@@ -231,7 +231,6 @@ export const VedtakRevurderingForm: FunctionComponent<OwnProps & InjectedFormPro
           if (erInnvilget) {
             return (
               <VedtakInnvilgetRevurderingPanel
-                antallBarn={ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD ? resultatstruktur.antallBarn : null}
                 ytelseTypeKode={ytelseTypeKode}
                 revurderingsAarsakString={revurderingsAarsakString}
                 readOnly={readOnly}

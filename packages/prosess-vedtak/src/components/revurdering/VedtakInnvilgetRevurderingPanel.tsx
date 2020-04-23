@@ -13,7 +13,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import VedtakFritekstPanel from '../felles/VedtakFritekstPanel';
 
 interface OwnProps {
-  antallBarn?: number;
   ytelseTypeKode: string;
   revurderingsAarsakString?: string;
   readOnly: boolean;
@@ -25,7 +24,6 @@ interface OwnProps {
 }
 
 const VedtakInnvilgetRevurderingPanel: FunctionComponent<OwnProps> = ({
-  antallBarn,
   ytelseTypeKode,
   revurderingsAarsakString,
   readOnly,
@@ -36,20 +34,16 @@ const VedtakInnvilgetRevurderingPanel: FunctionComponent<OwnProps> = ({
   skalBrukeOverstyrendeFritekstBrev,
 }) => (
   <>
-    {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
+    {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && resultatstruktur && (
       <Row>
-        {resultatstruktur && (
-          <Column xs="4">
-            <Undertekst><FormattedMessage id="VedtakForm.beregnetTilkjentYtelse" /></Undertekst>
-            <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
-          </Column>
-        )}
-        {antallBarn && (
-          <Column xs="8">
-            <Undertekst><FormattedMessage id="VedtakForm.AntallBarn" /></Undertekst>
-            <Element>{antallBarn}</Element>
-          </Column>
-        )}
+        <Column xs="4">
+          <Undertekst><FormattedMessage id="VedtakForm.beregnetTilkjentYtelse" /></Undertekst>
+          <Element>{formatCurrencyWithKr((resultatstruktur as BeregningsresultatEs).beregnetTilkjentYtelse)}</Element>
+        </Column>
+        <Column xs="8">
+          <Undertekst><FormattedMessage id="VedtakForm.AntallBarn" /></Undertekst>
+          <Element>{resultatstruktur.antallBarn}</Element>
+        </Column>
       </Row>
     )}
     {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && (
