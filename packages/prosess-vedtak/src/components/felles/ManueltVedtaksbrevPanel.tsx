@@ -6,10 +6,10 @@ import Lenke from 'nav-frontend-lenker';
 import Alertstripe from 'nav-frontend-alertstriper';
 
 import { Kodeverk } from '@fpsak-frontend/types';
-import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
+import popOutPilSvg from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  FlexContainer, FlexRow, FlexColumn, AvsnittSkiller, VerticalSpacer, EditedIcon,
+  FlexContainer, FlexRow, FlexColumn, AvsnittSkiller, VerticalSpacer, EditedIcon, Image,
 } from '@fpsak-frontend/shared-components';
 import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
@@ -54,7 +54,7 @@ const ManueltVedtaksbrevPanel: FunctionComponent<OwnProps> = ({
             <Lenke href="#" onClick={previewOverstyrtBrev}>
               <FormattedMessage id="FritekstBrevPanel.ForhandsvisManueltVedtaksbrev" />
             </Lenke>
-            <PopOutPilSvg className={styles.pil} />
+            <Image src={popOutPilSvg} className={styles.pil} />
           </>
         )}
       </Column>

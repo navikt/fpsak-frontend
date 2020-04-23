@@ -2,7 +2,7 @@ import React, {
   FunctionComponent, useState, useCallback, ReactNode, MouseEvent,
 } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Element, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import Lenke from 'nav-frontend-lenker';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -11,8 +11,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { ReactComponent as PopOutPilSvg } from '@fpsak-frontend/assets/images/pop-out-pil.svg';
-import { ReactComponent as EditUtlandSvg } from '@fpsak-frontend/assets/images/endre.svg';
+import popOutPilSvg from '@fpsak-frontend/assets/images/pop-out-pil.svg';
+import endreSvg from '@fpsak-frontend/assets/images/endre.svg';
+import endreDisabletSvg from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 import {
   VerticalSpacer, FlexColumn, FlexContainer, FlexRow, OkAvbrytModal, Image,
@@ -134,16 +135,28 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
               <Lenke href="#" onClick={previewAutomatiskBrev}>
                 <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
               </Lenke>
-              <PopOutPilSvg />
+              <Image src={popOutPilSvg} className={styles.pil} />
             </>
           )}
         </Column>
-        {(!readOnly && kanOverstyre && !skalBrukeManueltBrev) && (
+        {(kanOverstyre) && (
           <Column xs="3">
-            <EditUtlandSvg />
-            <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
-              <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
-            </Lenke>
+            {!readOnly && !skalBrukeManueltBrev && (
+              <>
+                <Image src={endreSvg} className={styles.blyant} />
+                <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
+                  <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+                </Lenke>
+              </>
+            )}
+            {(readOnly || skalBrukeManueltBrev) && (
+              <>
+                <Image src={endreDisabletSvg} className={styles.blyant} />
+                <Normaltekst className={styles.disabletLink}>
+                  <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+                </Normaltekst>
+              </>
+            )}
           </Column>
         )}
       </Row>
