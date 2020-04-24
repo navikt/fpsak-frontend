@@ -20,7 +20,8 @@ export const FeilutbetalingPerioderFormImpl = ({
   elementId,
   årsaker,
   readOnly,
-  resetFields,
+  onChangeÅrsak,
+  onChangeUnderÅrsak,
 }) => {
   const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
@@ -34,7 +35,7 @@ export const FeilutbetalingPerioderFormImpl = ({
           selectValues={årsaker.map((a) => <option key={a.hendelseType.kode} value={a.hendelseType.kode}>{a.hendelseType.navn}</option>)}
           validate={[required]}
           disabled={readOnly}
-          onChange={() => resetFields(elementId, årsak)}
+          onChange={(event) => onChangeÅrsak(event, elementId, årsak)}
           bredde="m"
           label=""
         />
@@ -44,6 +45,7 @@ export const FeilutbetalingPerioderFormImpl = ({
             selectValues={hendelseUndertyper.map((a) => <option key={a.kode} value={a.kode}>{a.navn}</option>)}
             validate={[required]}
             disabled={readOnly}
+            onChange={(event) => onChangeUnderÅrsak(event, elementId, årsak)}
             bredde="m"
             label=""
           />
@@ -66,7 +68,8 @@ FeilutbetalingPerioderFormImpl.propTypes = {
   årsak: PropTypes.string,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool.isRequired,
-  resetFields: PropTypes.func.isRequired,
+  onChangeÅrsak: PropTypes.func.isRequired,
+  onChangeUnderÅrsak: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

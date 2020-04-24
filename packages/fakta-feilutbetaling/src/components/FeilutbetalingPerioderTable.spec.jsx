@@ -26,7 +26,8 @@ const mockProps = {
   årsaker: [],
   formName: 'FaktaFeilutbetalingForm',
   readOnly: false,
-  resetFields: sinon.spy(),
+  onChangeÅrsak: sinon.spy(),
+  onChangeUnderÅrsak: sinon.spy(),
   behandlingId: 1,
   behandlingVersjon: 1,
 };
