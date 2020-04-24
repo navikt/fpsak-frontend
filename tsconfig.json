@@ -31,6 +31,8 @@
 		"packages/fakta-saken",
 		"packages/konstanter",
 		"packages/prosess-vedtak",
+		"packages/prosess-beregningsresultat",
+		"packages/prosess-vilkar-overstyring",
 		"packages/sak-app",
 		"packages/sak-feilsider",
 		"packages/sak-visittkort",

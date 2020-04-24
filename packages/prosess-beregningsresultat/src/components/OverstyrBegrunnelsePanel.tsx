@@ -1,14 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 
 import VilkarBegrunnelse from './VilkarBegrunnelse';
+
+interface OwnProps {
+  overrideReadOnly: boolean;
+  isBeregningConfirmation?: boolean;
+}
+
 
 /**
  * OverstyrBegrunnelsePanel
  *
  * Presentasjonskomponent. Lar den NAV-ansatte skrive inn en begrunnelse før overstyring av vilkår eller beregning.
  */
-const OverstyrBegrunnelsePanel = ({
+const OverstyrBegrunnelsePanel: FunctionComponent<OwnProps> = ({
   overrideReadOnly,
   isBeregningConfirmation,
 }) => (
@@ -17,11 +22,6 @@ const OverstyrBegrunnelsePanel = ({
     isReadOnly={overrideReadOnly}
   />
 );
-
-OverstyrBegrunnelsePanel.propTypes = {
-  overrideReadOnly: PropTypes.bool.isRequired,
-  isBeregningConfirmation: PropTypes.bool,
-};
 
 OverstyrBegrunnelsePanel.defaultProps = {
   isBeregningConfirmation: false,

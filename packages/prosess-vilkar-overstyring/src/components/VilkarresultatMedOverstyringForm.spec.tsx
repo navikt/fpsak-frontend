@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
-import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
+import { VilkarResultPicker } from '@fpsak-frontend/prosess-felles';
 import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
@@ -40,7 +40,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     expect(normaltekst).to.have.length(1);
     expect(normaltekst.childAt(0).text()).to.eql('§23');
 
-    const vilkarResultatMedBegrunnelse = wrapper.find(VilkarresultatMedBegrunnelse);
-    expect(vilkarResultatMedBegrunnelse).to.have.length(1);
+    const vilkarResultPicker = wrapper.find(VilkarResultPicker);
+    expect(vilkarResultPicker).to.have.length(1);
   });
 });
