@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -16,16 +15,22 @@ const getBegrunnelseTextCode = (readOnly) => (readOnly
   ? 'ProsessStegBegrunnelseTextField.ExplanationRequiredReadOnly'
   : 'ProsessStegBegrunnelseTextField.ExplanationRequired');
 
+interface OwnProps {
+  readOnly: boolean;
+  textCode?: string;
+  useAllWidth?: boolean;
+}
+
 /**
  * ProsessStegBegrunnelseTextField
  *
  * Presentasjonskomponent. Lar den NAV-ansatte skrive inn en begrunnelse før lagring av behandlingspunkter.
  */
-const ProsessStegBegrunnelseTextFieldImpl = ({
+const ProsessStegBegrunnelseTextFieldImpl: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   readOnly,
   textCode,
-  useAllWidth,
+  useAllWidth = false,
 }) => (
   <div className={!useAllWidth ? styles.begrunnelseTextField : ''}>
     <TextAreaField
@@ -39,18 +44,6 @@ const ProsessStegBegrunnelseTextFieldImpl = ({
     />
   </div>
 );
-
-ProsessStegBegrunnelseTextFieldImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  textCode: PropTypes.string,
-  useAllWidth: PropTypes.bool,
-};
-
-ProsessStegBegrunnelseTextFieldImpl.defaultProps = {
-  textCode: undefined,
-  useAllWidth: false,
-};
 
 const ProsessStegBegrunnelseTextField = injectIntl(ProsessStegBegrunnelseTextFieldImpl);
 

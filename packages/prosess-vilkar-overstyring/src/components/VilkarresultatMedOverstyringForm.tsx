@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useCallback } from 'react';
-import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -7,30 +7,23 @@ import { InjectedFormProps } from 'redux-form';
 import {
   Undertittel, Element, EtikettLiten, Normaltekst,
 } from 'nav-frontend-typografi';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 
-import { Kodeverk, Aksjonspunkt } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Kodeverk, Aksjonspunkt } from '@fpsak-frontend/types';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox, EditedIcon,
+  FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { VilkarResultPicker } from '@fpsak-frontend/prosess-felles';
-import { behandlingForm, behandlingFormValueSelector, TextAreaField } from '@fpsak-frontend/form';
+import { OverstyringPanel, VilkarResultPicker } from '@fpsak-frontend/prosess-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine,
-} from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
-
-const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
 
 const isOverridden = (aksjonspunktCodes, aksjonspunktCode) => aksjonspunktCodes.some((code) => code === aksjonspunktCode);
 const isHidden = (kanOverstyre, aksjonspunktCodes, aksjonspunktCode) => !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
@@ -38,7 +31,6 @@ const isHidden = (kanOverstyre, aksjonspunktCodes, aksjonspunktCode) => !isOverr
 interface OwnProps {
   panelTittelKode: string;
   erOverstyrt?: boolean;
-  isReadOnly: boolean;
   overstyringApKode: string;
   lovReferanse?: string;
   isSolvable: boolean;
@@ -54,7 +46,7 @@ interface OwnProps {
   };
   erMedlemskapsPanel: boolean;
   hasAksjonspunkt: boolean;
-  avslagsarsaker: Kodeverk[];
+  avslagsarsaker: KodeverkMedNavn[];
   overrideReadOnly: boolean;
   kanOverstyreAccess: {
     isEnabled: boolean;
@@ -69,11 +61,9 @@ interface OwnProps {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const VilkarresultatMedOverstyringForm: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
-  intl,
+export const VilkarresultatMedOverstyringForm: FunctionComponent<OwnProps & InjectedFormProps> = ({
   panelTittelKode,
   erOverstyrt,
-  isReadOnly,
   overstyringApKode,
   lovReferanse,
   isSolvable,
@@ -155,83 +145,25 @@ export const VilkarresultatMedOverstyringForm: FunctionComponent<OwnProps & Wrap
       </FlexContainer>
       <VerticalSpacer eightPx />
       {(erOverstyrt || hasAksjonspunkt) && (
-      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
-        <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" /></Element>
-        <VerticalSpacer eightPx />
-        <VilkarResultPicker
-          avslagsarsaker={avslagsarsaker}
-          customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-          customVilkarOppfyltText={customVilkarOppfyltText}
+        <OverstyringPanel
+          erOverstyrt={erOverstyrt}
+          isSolvable={isSolvable}
           erVilkarOk={erVilkarOk}
-          readOnly={isReadOnly || !erOverstyrt}
           hasAksjonspunkt={hasAksjonspunkt}
-          erMedlemskapsPanel={erMedlemskapsPanel}
-        />
-        {(erOverstyrt || hasAksjonspunkt) && (
-          <>
-            <VerticalSpacer eightPx />
-            <TextAreaField
-              name="begrunnelse"
-              label={intl.formatMessage({ id: 'VilkarBegrunnelse.Vilkar' })}
-              validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={isReadOnly || !erOverstyrt}
-              placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
-            />
-          </>
-        )}
-        <VerticalSpacer sixteenPx />
-        {!erOverstyrt && (erVilkarOk !== undefined) && (
-          <>
-            <VerticalSpacer fourPx />
-            <FlexRow>
-              <FlexColumn>
-                <EditedIcon />
-              </FlexColumn>
-              <FlexColumn>
-                <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" /></Normaltekst>
-              </FlexColumn>
-            </FlexRow>
-          </>
-        )}
-        {erOverstyrt && (
-        <FlexContainer>
-          <FlexRow>
-            <FlexColumn>
-              <Image src={advarselIkonUrl} />
-            </FlexColumn>
-            <FlexColumn>
-              <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" /></Element>
-            </FlexColumn>
-          </FlexRow>
-          <VerticalSpacer sixteenPx />
-          <FlexRow>
-            <FlexColumn>
-              {!overrideReadOnly && (
-                <Hovedknapp
-                  mini
-                  spinner={formProps.submitting}
-                  disabled={formProps.submitting || !isSolvable || formProps.pristine}
-                >
-                  <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
-                </Hovedknapp>
-              )}
-            </FlexColumn>
-            <FlexColumn>
-              <Knapp
-                htmlType="button"
-                spinner={formProps.submitting}
-                disabled={formProps.submitting}
-                onClick={toggleAv}
-                mini
-              >
-                <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
-              </Knapp>
-            </FlexColumn>
-          </FlexRow>
-        </FlexContainer>
-        )}
-      </AksjonspunktBox>
+          overrideReadOnly={overrideReadOnly}
+          isSubmitting={formProps.submitting}
+          isPristine={formProps.pristine}
+          toggleAv={toggleAv}
+        >
+          <VilkarResultPicker
+            avslagsarsaker={avslagsarsaker}
+            customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
+            customVilkarOppfyltText={customVilkarOppfyltText}
+            erVilkarOk={erVilkarOk}
+            readOnly={overrideReadOnly || !erOverstyrt}
+            erMedlemskapsPanel={erMedlemskapsPanel}
+          />
+        </OverstyringPanel>
       )}
     </form>
   );
@@ -300,7 +232,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 
   return (state, ownProps) => {
     const {
-      behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt, overrideReadOnly,
+      behandlingId, behandlingVersjon, aksjonspunkter, erOverstyrt,
     } = ownProps;
 
     const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === overstyringApKode);
@@ -319,7 +251,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
       customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
       customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
       isSolvable: erOverstyrt || isSolvable,
-      isReadOnly: overrideReadOnly,
       hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,
@@ -330,4 +261,4 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 };
 
 const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringForm);
-export default connect(mapStateToPropsFactory)(injectIntl(form));
+export default connect(mapStateToPropsFactory)(form);

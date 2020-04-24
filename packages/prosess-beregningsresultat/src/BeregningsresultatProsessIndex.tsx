@@ -22,7 +22,7 @@ interface OwnProps {
   kanOverstyreAccess: {
     isEnabled: boolean;
   };
-  toggleOverstyring: () => void;
+  toggleOverstyring: (fn: (oldArray: []) => void) => void;
 }
 
 const BeregningsresultatProsessIndex: FunctionComponent<OwnProps> = ({
@@ -42,7 +42,7 @@ const BeregningsresultatProsessIndex: FunctionComponent<OwnProps> = ({
       aksjonspunkter={aksjonspunkter}
       overrideReadOnly={overrideReadOnly}
       submitCallback={submitCallback}
-      kanOverstyreAccess={kanOverstyreAccess}
+      kanOverstyre={kanOverstyreAccess.isEnabled}
       toggleOverstyring={toggleOverstyring}
     />
   </RawIntlProvider>

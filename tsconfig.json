@@ -32,6 +32,7 @@
 		"packages/konstanter",
 		"packages/prosess-vedtak",
 		"packages/prosess-beregningsresultat",
+		"packages/prosess-felles",
 		"packages/prosess-vilkar-overstyring",
 		"packages/sak-app",
 		"packages/sak-feilsider",

@@ -1,25 +1,22 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useCallback } from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  Normaltekst, Element, Undertekst, Undertittel,
-} from 'nav-frontend-typografi';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
+
+import { BeregningsresultatEs } from '@fpsak-frontend/types';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer, OverstyringKnapp,
 } from '@fpsak-frontend/shared-components';
 import {
-  formatCurrencyWithKr, hasValidInteger, maxValue, minValue, required,
+  formatCurrencyWithKr, hasValidInteger, maxValue, minValue, required, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
-import { InputField, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { InputField, behandlingForm } from '@fpsak-frontend/form';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
-import OverstyrBegrunnelsePanel from './OverstyrBegrunnelsePanel';
-import OverstyrBekreftKnappPanel from './OverstyrBekreftKnappPanel';
-import OverstyrVurderingVelger from './OverstyrVurderingVelger';
+import { OverstyringPanel } from '@fpsak-frontend/prosess-felles';
 
 import styles from './beregningsresultatEngangsstonadForm.less';
 
@@ -28,14 +25,10 @@ const maxValue500000 = maxValue(500000);
 
 interface OwnProps {
   overrideReadOnly: boolean;
-  kanOverstyreAccess: {
-    isEnabled: boolean;
-  };
-  toggleOverstyring: () => void;
-  beregningResultat?: {};
+  kanOverstyre: boolean;
+  toggleOverstyring: (fn: (oldArray: []) => void) => void;
+  behandlingResultatstruktur?: BeregningsresultatEs;
   isOverstyrt?: boolean;
-  isReadOnly?: boolean;
-  aksjonspunktCodes: string[];
 }
 
 /**
@@ -44,86 +37,94 @@ interface OwnProps {
  * Presentasjonskomponent. Viser beregnet engangsstønad. Resultatet kan overstyres av Nav-ansatt
  * med overstyr-rettighet.
  */
-export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
-  intl,
+export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps & InjectedFormProps> = ({
   overrideReadOnly,
-  kanOverstyreAccess,
+  kanOverstyre,
   toggleOverstyring,
-  beregningResultat,
+  behandlingResultatstruktur,
   isOverstyrt,
-  isReadOnly,
-  aksjonspunktCodes,
   ...formProps
 }) => {
-  const [erOverstyrt, toggleOverstyringsknapp] = useState(false);
+  const [erOverstyrt, toggleOverstyringsknapp] = useState(isOverstyrt);
+  const toggleAv = useCallback(() => {
+    toggleOverstyringsknapp(false);
+    formProps.reset();
+    toggleOverstyring((oldArray) => oldArray.filter((code) => code !== aksjonspunktCode.OVERSTYR_BEREGNING));
+  }, []);
+  const togglePa = useCallback(() => {
+    toggleOverstyringsknapp(true);
+    toggleOverstyring((oldArray) => [...oldArray, aksjonspunktCode.OVERSTYR_BEREGNING]);
+  }, []);
+
   return (
     <form onSubmit={formProps.handleSubmit}>
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <Undertittel>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Beregning' })}</Undertittel>
+            <Undertittel><FormattedMessage id="BeregningEngangsstonadForm.Beregning" /></Undertittel>
           </FlexColumn>
-          <FlexColumn>
-            <OverstyringKnapp onClick={toggleOverstyringsknapp} erOverstyrt={false} />
-            <OverstyrVurderingVelger
-              isBeregningOverstyrer
-              aksjonspunktCode={aksjonspunktCode.OVERSTYR_BEREGNING}
-              resetValues={formProps.reset}
-              overrideReadOnly={overrideReadOnly}
-              kanOverstyreAccess={kanOverstyreAccess}
-              aksjonspunktCodes={aksjonspunktCodes}
-              toggleOverstyring={() => toggleOverstyring((oldArray) => [...oldArray, aksjonspunktCode.OVERSTYR_BEREGNING])}
-            />
-          </FlexColumn>
+          {kanOverstyre && (
+            <FlexColumn>
+              <OverstyringKnapp onClick={togglePa} erOverstyrt={erOverstyrt} />
+            </FlexColumn>
+          )}
         </FlexRow>
       </FlexContainer>
       <VerticalSpacer eightPx />
       <Row>
         <Column xs="2">
-          <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Sats' })}</Undertekst>
+          <Undertekst><FormattedMessage id="BeregningEngangsstonadForm.Sats" /></Undertekst>
         </Column>
         <Column xs="2">
-          <Element>{formatCurrencyWithKr(beregningResultat.satsVerdi)}</Element>
+          <Element>{formatCurrencyWithKr(behandlingResultatstruktur.satsVerdi)}</Element>
         </Column>
       </Row>
       <Row>
         <Column xs="2">
-          <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.AntallBarn' })}</Undertekst>
+          <Undertekst><FormattedMessage id="BeregningEngangsstonadForm.AntallBarn" /></Undertekst>
         </Column>
         <Column xs="2">
-          <Element>{beregningResultat.antallBarn}</Element>
+          <Element>{behandlingResultatstruktur.antallBarn}</Element>
         </Column>
       </Row>
       {!erOverstyrt && (
-      <>
-        <Row>
-          <Column xs="3">
-            <hr className={styles.divider} />
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="2">
-            <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.BeregnetEngangsstonad' })}</Undertekst>
-          </Column>
-          <Column xs="2">
-            <Element>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Element>
-          </Column>
-        </Row>
-      </>
+        <>
+          <Row>
+            <Column xs="3">
+              <hr className={styles.divider} />
+            </Column>
+          </Row>
+          <Row>
+            <Column xs="2">
+              <Undertekst><FormattedMessage id="BeregningEngangsstonadForm.BeregnetEngangsstonad" /></Undertekst>
+            </Column>
+            <Column xs="2">
+              <Element>{formatCurrencyWithKr(behandlingResultatstruktur.beregnetTilkjentYtelse)}</Element>
+            </Column>
+          </Row>
+        </>
       )}
       {erOverstyrt && (
-        <Row>
-          <Column xs="3">
-            <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.BeregnetEngangsstonad' })}</Undertekst>
-            {(!isOverstyrt || isReadOnly)
-            && <Normaltekst>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Normaltekst>}
-            {isOverstyrt && !isReadOnly
-            && (
-            <FlexContainer fluid>
+        <>
+          <VerticalSpacer sixteenPx />
+          <OverstyringPanel
+            erOverstyrt={erOverstyrt}
+            isSolvable
+            erVilkarOk
+            hasAksjonspunkt
+            overrideReadOnly={overrideReadOnly}
+            isSubmitting={formProps.submitting}
+            isPristine={formProps.pristine}
+            toggleAv={toggleAv}
+          >
+            <FlexContainer>
               <FlexRow>
                 <FlexColumn>
+                  <Undertekst className={styles.text}><FormattedMessage id="BeregningEngangsstonadForm.BeregnetEngangsstonad" /></Undertekst>
+                </FlexColumn>
+                <FlexColumn>
                   <InputField
-                    name="beregningResultat.beregnetTilkjentYtelse"
+                    name="beregnetTilkjentYtelse"
                     parse={(value) => {
                       const parsedValue = parseInt(value, 10);
                       return Number.isNaN(parsedValue) ? value : parsedValue;
@@ -133,72 +134,53 @@ export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <Normaltekst className={styles.editAdjuster}>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Kroner' })}</Normaltekst>
+                  <Element className={styles.text}><FormattedMessage id="BeregningEngangsstonadForm.Kroner" /></Element>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>
-            )}
-          </Column>
-        </Row>
-      )}
-      {isOverstyrt && (
-      <div>
-        <VerticalSpacer eightPx />
-        <OverstyrBegrunnelsePanel isBeregningConfirmation overrideReadOnly={overrideReadOnly} />
-        <VerticalSpacer sixteenPx />
-        <OverstyrBekreftKnappPanel
-          submitting={formProps.submitting}
-          pristine={formProps.pristine}
-          overrideReadOnly={overrideReadOnly}
-        />
-      </div>
+          </OverstyringPanel>
+        </>
       )}
     </form>
   );
 };
 
 BeregningsresultatEngangsstonadFormImpl.defaultProps = {
-  beregningResultat: {
+  behandlingResultatstruktur: {
     beregnetTilkjentYtelse: 0,
     antallBarn: 0,
     satsVerdi: 0,
   },
   isOverstyrt: false,
-  isReadOnly: false,
 };
 
 const buildInitialValues = createSelector([
-  (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.behandlingResultatstruktur],
-(aksjonspunkter, beregningResultat) => {
+  (_state, ownProps) => ownProps.aksjonspunkter, (_state, ownProps) => ownProps.behandlingResultatstruktur],
+(aksjonspunkter, behandlingResultatstruktur) => {
   const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCode.OVERSTYR_BEREGNING);
   return {
-    beregningResultat,
-    isOverstyrt: aksjonspunkt !== undefined,
-    ...OverstyrBegrunnelsePanel.buildInitialValues(aksjonspunkt),
+    begrunnelse: decodeHtmlEntity(aksjonspunkt && aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : ''),
+    beregnetTilkjentYtelse: behandlingResultatstruktur.beregnetTilkjentYtelse,
   };
 });
 
 const transformValues = (values) => ({
   kode: aksjonspunktCode.OVERSTYR_BEREGNING,
-  beregnetTilkjentYtelse: values.beregningResultat.beregnetTilkjentYtelse,
-  ...OverstyrBegrunnelsePanel.transformValues(values),
+  beregnetTilkjentYtelse: values.beregnetTilkjentYtelse,
+  begrunnelse: values.begrunnelse,
 });
 
 const formName = 'BeregningsresultatEngangsstonadForm';
 
-const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+const mapStateToPropsFactory = (_initialState, staticOwnProps) => {
   const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values)]);
-  const { behandlingId, behandlingVersjon } = staticOwnProps;
-  const aksjonspunktCodes = staticOwnProps.aksjonspunkter.map((a) => a.definisjon.kode);
   return (state, ownProps) => ({
     onSubmit,
-    aksjonspunktCodes,
+    isOverstyrt: !!ownProps.aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCode.OVERSTYR_BEREGNING),
     initialValues: buildInitialValues(state, ownProps),
-    isReadOnly: ownProps.overrideReadOnly,
-    ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'beregningResultat', 'isOverstyrt'),
   });
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
-})(BeregningsresultatEngangsstonadFormImpl)));
+})(BeregningsresultatEngangsstonadFormImpl));
