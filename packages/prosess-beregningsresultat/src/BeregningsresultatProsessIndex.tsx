@@ -33,6 +33,7 @@ const BeregningsresultatProsessIndex: FunctionComponent<OwnProps> = ({
   submitCallback,
   kanOverstyreAccess,
   toggleOverstyring,
+  ...rest
 }) => (
   <RawIntlProvider value={intl}>
     <BeregningsresultatEngangsstonadForm
@@ -44,6 +45,7 @@ const BeregningsresultatProsessIndex: FunctionComponent<OwnProps> = ({
       submitCallback={submitCallback}
       kanOverstyre={kanOverstyreAccess.isEnabled}
       toggleOverstyring={toggleOverstyring}
+      test={rest}
     />
   </RawIntlProvider>
 );

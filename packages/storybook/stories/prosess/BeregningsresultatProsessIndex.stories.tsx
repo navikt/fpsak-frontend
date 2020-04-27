@@ -56,3 +56,20 @@ export const saksbehandlerKanOverstyre = () => (
     toggleOverstyring={action('button-click')}
   />
 );
+
+export const visOverstyrtReadonlyPanel = () => (
+  <BeregningsresultatProsessIndex
+    behandling={behandling as Behandling}
+    beregningresultatEngangsstonad={beregningsresultat}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.OVERSTYR_BEREGNING,
+      },
+      begrunnelse: 'Dette er en begrunnelse',
+    }] as Aksjonspunkt[]}
+    overrideReadOnly={false}
+    submitCallback={action('button-click')}
+    kanOverstyreAccess={{ isEnabled: true }}
+    toggleOverstyring={action('button-click')}
+  />
+);

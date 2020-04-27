@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import { InjectedFormProps } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import {
+  Element, Undertekst, Undertittel, Normaltekst,
+} from 'nav-frontend-typografi';
 
 
 import { BeregningsresultatEs } from '@fpsak-frontend/types';
@@ -45,7 +47,7 @@ export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps
   isOverstyrt,
   ...formProps
 }) => {
-  const [erOverstyrt, toggleOverstyringsknapp] = useState(isOverstyrt);
+  const [erOverstyrt, toggleOverstyringsknapp] = useState(false);
   const toggleAv = useCallback(() => {
     toggleOverstyringsknapp(false);
     formProps.reset();
@@ -63,9 +65,9 @@ export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps
           <FlexColumn>
             <Undertittel><FormattedMessage id="BeregningEngangsstonadForm.Beregning" /></Undertittel>
           </FlexColumn>
-          {kanOverstyre && (
+          {(kanOverstyre || overrideReadOnly) && (
             <FlexColumn>
-              <OverstyringKnapp onClick={togglePa} erOverstyrt={erOverstyrt} />
+              <OverstyringKnapp onClick={togglePa} erOverstyrt={erOverstyrt || !kanOverstyre} />
             </FlexColumn>
           )}
         </FlexRow>
@@ -87,7 +89,7 @@ export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps
           <Element>{behandlingResultatstruktur.antallBarn}</Element>
         </Column>
       </Row>
-      {!erOverstyrt && (
+      {!erOverstyrt && !isOverstyrt && (
         <>
           <Row>
             <Column xs="3">
@@ -104,14 +106,14 @@ export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps
           </Row>
         </>
       )}
-      {erOverstyrt && (
+      {(erOverstyrt || isOverstyrt) && (
         <>
           <VerticalSpacer sixteenPx />
           <OverstyringPanel
             erOverstyrt={erOverstyrt}
             isSolvable
             erVilkarOk
-            hasAksjonspunkt
+            hasAksjonspunkt={isOverstyrt}
             overrideReadOnly={overrideReadOnly}
             isSubmitting={formProps.submitting}
             isPristine={formProps.pristine}
@@ -120,7 +122,9 @@ export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps
             <FlexContainer>
               <FlexRow>
                 <FlexColumn>
-                  <Undertekst className={styles.text}><FormattedMessage id="BeregningEngangsstonadForm.BeregnetEngangsstonad" /></Undertekst>
+                  <Normaltekst className={!erOverstyrt || overrideReadOnly ? '' : styles.text}>
+                    <FormattedMessage id="BeregningEngangsstonadForm.BeregnetEngangsstonad" />
+                  </Normaltekst>
                 </FlexColumn>
                 <FlexColumn>
                   <InputField
@@ -131,10 +135,11 @@ export const BeregningsresultatEngangsstonadFormImpl: FunctionComponent<OwnProps
                     }}
                     validate={[required, hasValidInteger, minValue1, maxValue500000]}
                     bredde="XS"
+                    readOnly={!erOverstyrt || overrideReadOnly}
                   />
                 </FlexColumn>
                 <FlexColumn>
-                  <Element className={styles.text}><FormattedMessage id="BeregningEngangsstonadForm.Kroner" /></Element>
+                  <Element className={!erOverstyrt || overrideReadOnly ? '' : styles.text}><FormattedMessage id="BeregningEngangsstonadForm.Kroner" /></Element>
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>
