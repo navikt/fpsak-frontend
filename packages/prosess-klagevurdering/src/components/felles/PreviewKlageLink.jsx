@@ -20,9 +20,9 @@ const getBrevKode = (klageVurdering, klageVurdertAvKa, skalBenytteFritekstBrevma
     case klageVurderingType.STADFESTE_YTELSESVEDTAK:
       return klageVurdertAvKa ? finnKaKode(skalBenytteFritekstBrevmal) : finnKode(skalBenytteFritekstBrevmal);
     case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
-      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET : dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
-      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET : dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.MEDHOLD_I_KLAGE:
       return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_OMGJORING : dokumentMalType.VEDTAK_MEDHOLD;
     default:
