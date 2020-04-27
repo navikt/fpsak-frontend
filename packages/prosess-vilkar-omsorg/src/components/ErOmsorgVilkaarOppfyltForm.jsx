@@ -38,7 +38,6 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
     titleCode="ErOmsorgVilkaarOppfyltForm.Omsorg"
     isAksjonspunktOpen={!readOnlySubmitButton}
     formName={formProps.form}
-    handleSubmit={formProps.handleSubmit}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     behandlingId={behandlingId}

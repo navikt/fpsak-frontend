@@ -33,7 +33,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     />);
 
     const melding = wrapper.find(FormattedMessage);
-    expect(melding).to.have.length(5);
+    expect(melding).to.have.length(2);
     expect(melding.first().prop('id')).to.eql('Fødsel');
 
     const normaltekst = wrapper.find(EtikettLiten);

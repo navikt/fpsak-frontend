@@ -14,7 +14,7 @@ describe('<ProsessPanelTemplate>', () => {
         handleSubmit={sinon.spy()}
         titleCode="FodselVilkarForm.Fodsel"
         isAksjonspunktOpen
-        formName='testnavn'
+        formName="testnavn"
         readOnlySubmitButton={false}
         isDirty
         readOnly={false}
@@ -35,7 +35,7 @@ describe('<ProsessPanelTemplate>', () => {
         lovReferanse="test lovReferanse"
         titleCode="FodselVilkarForm.Fodsel"
         isAksjonspunktOpen
-        formName='testnavn'
+        formName="testnavn"
         readOnlySubmitButton={false}
         isDirty
         readOnly={false}
