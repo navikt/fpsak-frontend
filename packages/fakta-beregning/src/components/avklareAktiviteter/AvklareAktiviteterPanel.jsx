@@ -5,7 +5,7 @@ import { formPropTypes, initialize as reduxFormInitialize } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Element, Undertittel } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Knapp } from 'nav-frontend-knapper';
 
@@ -21,6 +21,8 @@ import { formNameAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, ge
 import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
+
+import styles from './avklareAktiviteterPanel.less';
 
 const {
   AVKLAR_AKTIVITETER,
@@ -164,7 +166,9 @@ export class AvklareAktiviteterPanelImpl extends Component {
           <FlexContainer>
             <FlexRow>
               <FlexColumn>
-                <Undertittel><FormattedMessage id="AvklarAktivitetPanel.Overskrift" /></Undertittel>
+                <Element className={styles.avsnittOverskrift}>
+                  <FormattedMessage id="AvklarAktivitetPanel.Overskrift" />
+                </Element>
               </FlexColumn>
               {(kanOverstyre || erOverstyrt) && (
                 <FlexColumn>
