@@ -7,11 +7,13 @@
   "BeregningInfoPanel.FormAlternativ.Nei": "Nei",
   "BeregningInfoPanel.NyIArbeidslivet.SelvstendigNaeringsdrivende": "Søker er selvstendig næringsdrivende. Ble søker yrkesaktiv i løpet av de siste tre årene?",
 
+  "AvklarAktivitetPanel.Overskrift": "Aktiviteter i beregningsgrunnlaget",
   "AvklarAktivitetPanel.ButtonText": "Oppdater",
   "AvklarAktivitetPanel.OverstyrText": "Overstyr",
+  "AvklareAktiviteter.Avbryt": "Avbryt",
   "VurderAktiviteterTabell.FullAAPKombinert.Overskrift": "Søker har full AAP (200%) sammen med andre aktiviteter. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
   "VurderAktiviteterTabell.VentelonnVartpenger.Overskrift": "Søker har ventelønn eller vartpenger som siste aktivitet. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
-  "VurderAktiviteterTabell.Overstyrt.Overskrift": "Aktiviteter i beregningsgrunnlaget med skjæringstidspunkt {skjaeringstidspunkt}",
+  "VurderAktiviteterTabell.Overstyrt.Overskrift": "Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
 
   "BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL": "Startet søker som frilanser i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM": "Søker er arbeidstaker og frilanser i samme virksomhet og det er ikke mottatt inntektsmelding(er).",
