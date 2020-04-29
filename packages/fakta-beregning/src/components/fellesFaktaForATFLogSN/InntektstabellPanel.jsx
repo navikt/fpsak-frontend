@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
+import { bindActionCreators } from 'redux';
+import { change } from 'redux-form';
+import { Knapp } from 'nav-frontend-knapper';
 import { Element } from 'nav-frontend-typografi';
 
 import {
   VerticalSpacer, OverstyringKnapp, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
-import { CheckboxField } from '@fpsak-frontend/form';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -36,47 +39,55 @@ export const InntektstabellPanelImpl = ({
   kanOverstyre,
   readOnly,
   aksjonspunkter,
+  reduxFormChange,
+  behandlingFormPrefix,
 }) => {
-  const [erOverstyrt, toggleOverstyring] = useState(false);
+  const [erOverstyrt, setOverstyring] = useState(false);
+  const toggleOverstyring = useCallback(() => {
+    setOverstyring(!erOverstyrt);
+    reduxFormChange(`${behandlingFormPrefix}.vurderFaktaBeregningForm`, MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD, !erOverstyrt);
+  }, [erOverstyrt]);
   return (
     <>
       {children}
       <div className={styles.fadeinTabell}>
         <VerticalSpacer sixteenPx />
-        {false && (
-        <div className={styles.rightAligned}>
-          <CheckboxField
-            key="manuellOverstyring"
-            name={MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}
-            label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
-            readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
-          />
-        </div>
-        )}
         {skalViseTabell && (
-          <div>
+          <>
             <FlexContainer>
               <FlexRow>
                 <FlexColumn>
-                  <Element>
+                  <Element className={styles.avsnittOverskrift}>
                     <FormattedMessage id="InntektstabellPanel.RapporterteInntekter" />
                   </Element>
                 </FlexColumn>
                 {(kanOverstyre || erOverstyrt) && (
+                <FlexColumn>
                   <OverstyringKnapp
-                    onClick={() => toggleOverstyring(true)}
-                    erOverstyrt
+                    onClick={toggleOverstyring}
+                    erOverstyrt={erOverstyrt || hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
                   />
+                </FlexColumn>
                 )}
               </FlexRow>
             </FlexContainer>
+            <VerticalSpacer sixteenPx />
             {hjelpeTekstId && (
               <Element>
                 <FormattedMessage id={hjelpeTekstId} />
               </Element>
             )}
             {tabell}
-          </div>
+            {erOverstyrt && (
+              <Knapp
+                htmlType="button"
+                onClick={toggleOverstyring}
+                mini
+              >
+                <FormattedMessage id="InntektstabellPanel.Avbryt" />
+              </Knapp>
+            )}
+          </>
         )}
       </div>
     </>
@@ -91,6 +102,8 @@ InntektstabellPanelImpl.propTypes = {
   kanOverstyre: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  reduxFormChange: PropTypes.func.isRequired,
+  behandlingFormPrefix: PropTypes.string.isRequired,
 };
 
 InntektstabellPanelImpl.buildInitialValues = (aksjonspunkter) => ({
@@ -108,6 +121,13 @@ const getSkalKunneOverstyre = createSelector([(ownProps) => ownProps.erOverstyre
 
 const mapStateToProps = (state, ownProps) => ({
   kanOverstyre: getSkalKunneOverstyre(ownProps),
+  behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
 });
 
-export default connect(mapStateToProps)(InntektstabellPanelImpl);
+const mapDispatchToProps = (dispatch) => ({
+  ...bindActionCreators({
+    reduxFormChange: change,
+  }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InntektstabellPanelImpl);
