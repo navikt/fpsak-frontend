@@ -26,7 +26,7 @@ const getPreviewManueltBrevCallback = (formProps, begrunnelse, brodtekst, oversk
     const data = {
       fritekst: skalOverstyre ? brodtekst : begrunnelse,
       dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
-      tittel: overskrift,
+      tittel: skalOverstyre ? overskrift : undefined,
       gjelderVedtak: true,
     };
 
