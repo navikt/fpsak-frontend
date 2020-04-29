@@ -28,6 +28,9 @@ const getPreviewManueltBrevCallback = (formProps, begrunnelse, brodtekst, oversk
       dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
       tittel: skalOverstyre ? overskrift : undefined,
       gjelderVedtak: true,
+      vedtaksbrev: !skalOverstyre ? {
+        kode: 'AUTOMATISK',
+      } : undefined,
     };
 
     previewCallback(data);
