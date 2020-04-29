@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Element } from 'nav-frontend-typografi';
 
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  VerticalSpacer, OverstyringKnapp, FlexColumn, FlexContainer, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import PropTypes from 'prop-types';
-import { getFormValuesForBeregning } from '../BeregningFormUtils';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
 import styles from './InntektstabellPanel.less';
@@ -35,35 +36,52 @@ export const InntektstabellPanelImpl = ({
   kanOverstyre,
   readOnly,
   aksjonspunkter,
-  erOverstyrt,
-}) => (
-  <>
-    {children}
-    <div className={styles.fadeinTabell}>
-      <VerticalSpacer sixteenPx />
-      {(kanOverstyre || erOverstyrt) && (
-      <div className={styles.rightAligned}>
-        <CheckboxField
-          key="manuellOverstyring"
-          name={MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}
-          label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
-          readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
-        />
-      </div>
-      )}
-      {skalViseTabell && (
-        <div>
-          {hjelpeTekstId && (
-            <Element>
-              <FormattedMessage id={hjelpeTekstId} />
-            </Element>
-          )}
-          {tabell}
+}) => {
+  const [erOverstyrt, toggleOverstyring] = useState(false);
+  return (
+    <>
+      {children}
+      <div className={styles.fadeinTabell}>
+        <VerticalSpacer sixteenPx />
+        {false && (
+        <div className={styles.rightAligned}>
+          <CheckboxField
+            key="manuellOverstyring"
+            name={MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD}
+            label={{ id: 'VurderFaktaBeregning.ManuellOverstyring' }}
+            readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
+          />
         </div>
-      )}
-    </div>
-  </>
-);
+        )}
+        {skalViseTabell && (
+          <div>
+            <FlexContainer>
+              <FlexRow>
+                <FlexColumn>
+                  <Element>
+                    <FormattedMessage id="InntektstabellPanel.RapporterteInntekter" />
+                  </Element>
+                </FlexColumn>
+                {(kanOverstyre || erOverstyrt) && (
+                  <OverstyringKnapp
+                    onClick={() => toggleOverstyring(true)}
+                    erOverstyrt
+                  />
+                )}
+              </FlexRow>
+            </FlexContainer>
+            {hjelpeTekstId && (
+              <Element>
+                <FormattedMessage id={hjelpeTekstId} />
+              </Element>
+            )}
+            {tabell}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
 InntektstabellPanelImpl.propTypes = {
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
@@ -73,7 +91,6 @@ InntektstabellPanelImpl.propTypes = {
   kanOverstyre: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
-  erOverstyrt: PropTypes.bool.isRequired,
 };
 
 InntektstabellPanelImpl.buildInitialValues = (aksjonspunkter) => ({
@@ -90,7 +107,6 @@ const getSkalKunneOverstyre = createSelector([(ownProps) => ownProps.erOverstyre
 && !aksjonspunkter.some((ap) => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode)));
 
 const mapStateToProps = (state, ownProps) => ({
-  erOverstyrt: getFormValuesForBeregning(state, ownProps)[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD],
   kanOverstyre: getSkalKunneOverstyre(ownProps),
 });
 

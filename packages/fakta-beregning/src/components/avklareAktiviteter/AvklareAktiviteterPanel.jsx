@@ -110,6 +110,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
     super();
     this.state = {
       submitEnabled: false,
+      erOverstyrtKnappTrykket: false,
     };
   }
 
@@ -127,7 +128,13 @@ export class AvklareAktiviteterPanelImpl extends Component {
       reduxFormInitialize: formInitialize, behandlingFormPrefix,
       avklarAktiviteter, aksjonspunkter, alleKodeverk,
     } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${formNameAvklarAktiviteter}`, buildInitialValues(aksjonspunkter, avklarAktiviteter, alleKodeverk, true));
+    const { erOverstyrtKnappTrykket } = this.state;
+    this.setState((state) => ({
+      ...state,
+      erOverstyrtKnappTrykket: !erOverstyrtKnappTrykket,
+    }));
+    formInitialize(`${behandlingFormPrefix}.${formNameAvklarAktiviteter}`, buildInitialValues(aksjonspunkter, avklarAktiviteter,
+      alleKodeverk, !erOverstyrtKnappTrykket));
   }
 
   render() {
@@ -152,6 +159,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
       },
       state: {
         submitEnabled,
+        erOverstyrtKnappTrykket,
       },
     } = this;
 
@@ -174,7 +182,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
                 <FlexColumn>
                   <OverstyringKnapp
                     onClick={() => this.initializeAktiviteter()}
-                    erOverstyrt={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
+                    erOverstyrt={erOverstyrtKnappTrykket || hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
                   />
                 </FlexColumn>
               )}
@@ -242,7 +250,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
                               htmlType="button"
                               spinner={formProps.submitting}
                               disabled={formProps.submitting}
-                              onClick={() => undefined}
+                              onClick={() => this.initializeAktiviteter()}
                               mini
                             >
                               <FormattedMessage id="AvklareAktiviteter.Avbryt" />

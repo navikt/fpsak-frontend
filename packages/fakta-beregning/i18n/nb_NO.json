@@ -59,6 +59,7 @@
   "KunYtelsePanel.OverskriftBesteberegning": "Fastsett månedsbeløp for brutto beregningsgrunnlag etter besteberegning",
   "BeregningInfoPanel.FordelBG.Validation.UlikeAndeler": "Andeler for samme aktivitet må ha ulik inntektskategori",
 
+  "InntektstabellPanel.RapporterteInntekter": "Rapporterte inntekter",
 
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
@@ -67,7 +68,7 @@
 
   "VurderRefusjonForm.ErRefusjonskravGyldig": "{arbeidsgiverVisningsnavn} har minst ett refusjonskrav som har kommet for sent. Skal refusjonskrav som ikke har kommet innen fristen tas med i beregning?",
 
-
+  "OverstyringKnapp.Overstyring": "Overstyr",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
