@@ -171,7 +171,7 @@ const prosessStegPanelDefinisjoner = [{
     }) => ({
       fagsak, simuleringResultat, featureToggles, previewFptilbakeCallback,
     }),
-    showComponent: () => true,
+    showComponent: ({ simuleringResultat }) => !!simuleringResultat,
     overrideStatus: ({ simuleringResultat }) => (simuleringResultat ? vut.OPPFYLT : vut.IKKE_VURDERT),
   }],
 }, {
