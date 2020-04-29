@@ -245,7 +245,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
                               behandlingVersjon={behandlingVersjon}
                             />
                           </FlexColumn>
-                          {!hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && (
+                          {kanOverstyre && !hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && (
                             <FlexColumn>
                               <Knapp
                                 htmlType="button"
