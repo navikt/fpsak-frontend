@@ -190,6 +190,7 @@ const buildInitialValues = createSelector(
     return {
       isOverstyrt: aksjonspunkt !== undefined,
       begrunnelse: decodeHtmlEntity(aksjonspunkt && aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : ''),
+      // @ts-ignore Korleis fikse dette på ein bra måte?
       ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     };
   },
@@ -218,9 +219,11 @@ const getCustomVilkarTextForIkkeOppfylt = createSelector(
 const transformValues = (values, overstyringApKode) => ({
   kode: overstyringApKode,
   begrunnelse: values.begrunnelse,
+  // @ts-ignore Korleis fikse dette på ein bra måte?
   ...VilkarResultPicker.transformValues(values),
 });
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 const validate = (values: { erVilkarOk: boolean; avslagCode: string }) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {

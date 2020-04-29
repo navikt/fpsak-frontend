@@ -142,6 +142,7 @@ const VilkarResultPickerImpl: FunctionComponent<OwnProps & WrappedComponentProps
 
 const VilkarResultPicker = injectIntl(VilkarResultPickerImpl);
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 VilkarResultPicker.validate = (erVilkarOk, avslagCode) => {
   if (erVilkarOk === false && !avslagCode) {
     return {
@@ -151,6 +152,7 @@ VilkarResultPicker.validate = (erVilkarOk, avslagCode) => {
   return {};
 };
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 VilkarResultPicker.buildInitialValues = (behandlingsresultat, aksjonspunkter, status) => {
   const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
@@ -162,6 +164,7 @@ VilkarResultPicker.buildInitialValues = (behandlingsresultat, aksjonspunkter, st
   };
 };
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 VilkarResultPicker.transformValues = (values) => (
   values.erVilkarOk
     ? { erVilkarOk: values.erVilkarOk }

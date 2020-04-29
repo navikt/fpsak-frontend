@@ -74,6 +74,7 @@ describe('<VilkarResultPicker>', () => {
   it('skal feile validering når en har valgt å avvise vilkår men ikke valgt avslagsårsak', () => {
     const erVilkarOk = false;
     const avslagCode = undefined;
+    // @ts-ignore Korleis fikse dette på ein bra måte?
     const errors = VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
     expect(errors.avslagCode).to.eql(isRequiredMessage());
@@ -82,6 +83,7 @@ describe('<VilkarResultPicker>', () => {
   it('skal ikke feile validering når en har valgt både å avvise vilkår og avslagsårsak', () => {
     const erVilkarOk = false;
     const avslagCode = 'VALGT_KODE';
+    // @ts-ignore Korleis fikse dette på ein bra måte?
     const errors = VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
     expect(errors).to.eql({});
@@ -101,6 +103,7 @@ describe('<VilkarResultPicker>', () => {
         kode: vilkarType.FODSELSVILKARET_MOR,
       },
     }];
+    // @ts-ignore Korleis fikse dette på ein bra måte?
     const intielleVerdier = VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, vilkarUtfallType.IKKE_OPPFYLT);
 
     expect(intielleVerdier).to.eql({

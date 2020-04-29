@@ -6,9 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { CheckboxField } from '@fpsak-frontend/form';
-import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
-import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
+import { AksjonspunktHelpText, OverstyringKnapp } from '@fpsak-frontend/shared-components';
 
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '../beregning-test-helper';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-beregning';
@@ -26,7 +24,6 @@ import { formNameAvklarAktiviteter } from '../BeregningFormUtils';
 const {
   AVKLAR_AKTIVITETER,
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
-  VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
 
@@ -208,8 +205,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       reduxFormInitialize={() => {}}
       {...behandlingProps}
     />);
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(1);
+    expect(wrapper.find(OverstyringKnapp)).has.length(1);
   });
 
 
@@ -245,189 +241,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     />);
     const helptext = wrapper.find(AksjonspunktHelpText);
     expect(helptext).has.length(0);
-  });
-
-
-  it('skal vise knapp inne i borderbox når man har andre aksjonspunkt i beregning', () => {
-    const avklarAktiviteter = {
-      aktiviteterTomDatoMapping: [
-        { tom: '2019-02-02', aktiviteter },
-      ],
-    };
-    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } },
-      { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, status: { kode: 'OPPR' } }];
-
-    const wrapper = shallowWithIntl(<AvklareAktiviteterPanelImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
-      hasBegrunnelse={false}
-      submittable
-      isDirty
-      submitEnabled
-      helpText={[]}
-      harAndreAksjonspunkterIPanel
-      erEndret={false}
-      kanOverstyre
-      aksjonspunkter={aksjonspunkter}
-      erOverstyrt={false}
-      erBgOverstyrt={false}
-      behandlingFormPrefix="test"
-      alleKodeverk={alleKodeverk}
-      reduxFormInitialize={() => {}}
-      {...behandlingProps}
-    />);
-    const borderBox = wrapper.find(BorderBox);
-    expect(borderBox).has.length(1);
-    const submitBtn = borderBox.find(FaktaSubmitButton);
-    expect(submitBtn).has.length(1);
-  });
-
-
-  it('skal vise knapp inne i borderbox når man skal overstyre beregningsgrunnlag', () => {
-    const avklarAktiviteter = {
-      aktiviteterTomDatoMapping: [
-        { tom: '2019-02-02', aktiviteter },
-      ],
-    };
-    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } }];
-    const wrapper = shallowWithIntl(<AvklareAktiviteterPanelImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
-      hasBegrunnelse={false}
-      submittable
-      isDirty
-      submitEnabled
-      helpText={[]}
-      harAndreAksjonspunkterIPanel={false}
-      erEndret={false}
-      kanOverstyre
-      aksjonspunkter={aksjonspunkter}
-      erOverstyrt={false}
-      erBgOverstyrt
-      behandlingFormPrefix="test"
-      alleKodeverk={alleKodeverk}
-      reduxFormInitialize={() => {}}
-      {...behandlingProps}
-    />);
-    const borderBox = wrapper.find(BorderBox);
-    expect(borderBox).has.length(1);
-    const submitBtn = borderBox.find(FaktaSubmitButton);
-    expect(submitBtn).has.length(1);
-  });
-
-
-  it('skal vise knapp inne i borderbox når man skal overstyre aktiviteter i beregningsgrunnlaget', () => {
-    const avklarAktiviteter = {
-      aktiviteterTomDatoMapping: [
-        { tom: '2019-02-02', aktiviteter },
-      ],
-    };
-    const aksjonspunkter = [];
-
-    const wrapper = shallowWithIntl(<AvklareAktiviteterPanelImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
-      hasBegrunnelse={false}
-      submittable
-      isDirty
-      submitEnabled
-      helpText={[]}
-      harAndreAksjonspunkterIPanel={false}
-      erEndret={false}
-      kanOverstyre
-      aksjonspunkter={aksjonspunkter}
-      erOverstyrt
-      erBgOverstyrt={false}
-      behandlingFormPrefix="test"
-      alleKodeverk={alleKodeverk}
-      reduxFormInitialize={() => {}}
-      {...behandlingProps}
-    />);
-    const borderBox = wrapper.find(BorderBox);
-    expect(borderBox).has.length(1);
-    const submitBtn = borderBox.find(FaktaSubmitButton);
-    expect(submitBtn).has.length(1);
-  });
-
-
-  it('skal ikkje vise knapp inne i borderbox når man har åpent aksjonspunkt i avklar aktiviteter', () => {
-    const avklarAktiviteter = {
-      aktiviteterTomDatoMapping: [
-        { tom: '2019-02-02', aktiviteter },
-      ],
-    };
-    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
-    const wrapper = shallowWithIntl(<AvklareAktiviteterPanelImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
-      hasBegrunnelse={false}
-      submittable
-      isDirty
-      submitEnabled
-      helpText={[]}
-      harAndreAksjonspunkterIPanel={false}
-      erEndret={false}
-      kanOverstyre
-      aksjonspunkter={aksjonspunkter}
-      erOverstyrt
-      erBgOverstyrt={false}
-      behandlingFormPrefix="test"
-      alleKodeverk={alleKodeverk}
-      reduxFormInitialize={() => {}}
-      {...behandlingProps}
-    />);
-    const borderBox = wrapper.find(BorderBox);
-    expect(borderBox).has.length(1);
-    const submitBtn = borderBox.find(FaktaSubmitButton);
-    expect(submitBtn).has.length(0);
-  });
-
-
-  it('skal ikkje vise knapp inne i borderbox når man har åpent overstyr aksjonspunkt for aktiviteter', () => {
-    const avklarAktiviteter = {
-      aktiviteterTomDatoMapping: [
-        { tom: '2019-02-02', aktiviteter },
-      ],
-    };
-    const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
-    const wrapper = shallowWithIntl(<AvklareAktiviteterPanelImpl
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      readOnly={false}
-      isAksjonspunktClosed={false}
-      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
-      hasBegrunnelse={false}
-      submittable
-      isDirty
-      submitEnabled
-      helpText={[]}
-      harAndreAksjonspunkterIPanel={false}
-      erEndret={false}
-      kanOverstyre
-      aksjonspunkter={aksjonspunkter}
-      erOverstyrt
-      erBgOverstyrt={false}
-      behandlingFormPrefix="test"
-      alleKodeverk={alleKodeverk}
-      reduxFormInitialize={() => {}}
-      {...behandlingProps}
-    />);
-    const borderBox = wrapper.find(BorderBox);
-    expect(borderBox).has.length(1);
-    const submitBtn = borderBox.find(FaktaSubmitButton);
-    expect(submitBtn).has.length(0);
   });
 
   it('skal teste at initial values blir bygget', () => {

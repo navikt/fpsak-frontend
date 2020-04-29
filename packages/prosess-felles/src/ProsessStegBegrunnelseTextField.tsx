@@ -51,10 +51,12 @@ const getBegrunnelse = (aksjonspunkter) => (aksjonspunkter.length > 0 && aksjons
   ? aksjonspunkter[0].begrunnelse
   : '');
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 ProsessStegBegrunnelseTextField.buildInitialValues = (aksjonspunkter) => ({
   begrunnelse: decodeHtmlEntity(getBegrunnelse(aksjonspunkter)),
 });
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 ProsessStegBegrunnelseTextField.transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
 });

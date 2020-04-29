@@ -85,7 +85,7 @@ const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk, har
   const aksjonspunktMedBegrunnelse = findAksjonspunktMedBegrunnelse(aksjonspunkter, AVKLAR_AKTIVITETER);
   const begrunnelse = erOverstyrt ? overstyrAksjonspunktMedBegrunnelse : aksjonspunktMedBegrunnelse;
   return {
-    [MANUELL_OVERSTYRING_FIELD]: harOverstyrt,
+    [MANUELL_OVERSTYRING_FIELD]: erOverstyrt || harOverstyrt,
     aksjonspunkter,
     avklarAktiviteter,
     ...initialValues,
@@ -245,17 +245,19 @@ export class AvklareAktiviteterPanelImpl extends Component {
                               behandlingVersjon={behandlingVersjon}
                             />
                           </FlexColumn>
-                          <FlexColumn>
-                            <Knapp
-                              htmlType="button"
-                              spinner={formProps.submitting}
-                              disabled={formProps.submitting}
-                              onClick={() => this.initializeAktiviteter()}
-                              mini
-                            >
-                              <FormattedMessage id="AvklareAktiviteter.Avbryt" />
-                            </Knapp>
-                          </FlexColumn>
+                          {!hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && (
+                            <FlexColumn>
+                              <Knapp
+                                htmlType="button"
+                                spinner={formProps.submitting}
+                                disabled={formProps.submitting}
+                                onClick={() => this.initializeAktiviteter()}
+                                mini
+                              >
+                                <FormattedMessage id="AvklareAktiviteter.Avbryt" />
+                              </Knapp>
+                            </FlexColumn>
+                          )}
                         </FlexRow>
                       </FlexContainer>
                     </>
