@@ -39,13 +39,15 @@ const finnAksjonspunkterForSteg = (panel: ProsessStegPanelDefinisjon, aksjonspun
 const finnVilkarForSteg = (panel: ProsessStegPanelDefinisjon, vilkar: Vilkar[]) => vilkar
   .filter((v) => panel.vilkarCodes.includes(v.vilkarType.kode));
 
-const skalVisePanel = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => (panel: ProsessStegPanelDefinisjon) => {
+const skalVisePanel = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[],
+  dataForUtledingAvPaneler: {}) => (panel: ProsessStegPanelDefinisjon) => {
   if (panel.showComponent) {
     const data = {
       behandling,
       aksjonspunktDefKoderForSteg: panel.aksjonspunkterCodes,
       aksjonspunkterForSteg: finnAksjonspunkterForSteg(panel, aksjonspunkter),
       vilkarForSteg: finnVilkarForSteg(panel, vilkar),
+      ...dataForUtledingAvPaneler,
     };
     return panel.showComponent(data);
   }
@@ -63,9 +65,9 @@ const skalVisePanel = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], v
   return harAksjonspunkter && harVilkar;
 };
 
-const skalViseProsessSteg = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => (
+const skalViseProsessSteg = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[], dataForUtledingAvPaneler: {}) => (
   panelDefinisjon: ProsessStegDefinisjon,
-) => panelDefinisjon.panels.some(skalVisePanel(behandling, aksjonspunkter, vilkar));
+) => panelDefinisjon.panels.some(skalVisePanel(behandling, aksjonspunkter, vilkar, dataForUtledingAvPaneler));
 
 const brukOverstyringspanelOmApIkkeFinnes = (aksjonspunkter: Aksjonspunkt[]) => (panelDefinisjon: ProsessStegDefinisjon) => {
   const panels = panelDefinisjon.panels
@@ -168,14 +170,14 @@ export const utledProsessStegPaneler = (
 
   return prosessStegPanelDefinisjoner
     .map(brukOverstyringspanelOmApIkkeFinnes(aksjonspunkter))
-    .filter(skalViseProsessSteg(behandling, aksjonspunkter, vilkar))
+    .filter(skalViseProsessSteg(behandling, aksjonspunkter, vilkar, dataForUtledingAvPaneler))
     .map((panelDefinisjon) => {
       const harMinstEttPanelApentAksjonspunkt = panelDefinisjon.panels.some((panel) => panel.aksjonspunkterCodes
         .some((apKode) => overstyrteAksjonspunktKoder.includes(apKode))
           || finnAksjonspunkterForSteg(panel, aksjonspunkter).some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET));
 
       const panelData = panelDefinisjon.panels
-        .filter(skalVisePanel(behandling, aksjonspunkter, vilkar))
+        .filter(skalVisePanel(behandling, aksjonspunkter, vilkar, dataForUtledingAvPaneler))
         .map(lagPanelData(panelDefinisjon, overstyrteAksjonspunktKoder, harMinstEttPanelApentAksjonspunkt, toggleOverstyring,
           isReadOnlyCheck, rettigheter.kanOverstyreAccess, dataForUtleding));
 
