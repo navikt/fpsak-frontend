@@ -88,6 +88,7 @@ type Beregningsgrunnlag = Readonly<{
       arbeidsgiverNavn?: string;
       andelsnr?: number;
       lonnsendringIBeregningsperioden?: boolean;
+      overstyrtPrAar?: number;
     }[];
   }[];
   faktaOmBeregning: FaktaOmBeregning;

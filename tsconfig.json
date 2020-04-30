@@ -30,6 +30,7 @@
 		"packages/fakta-ytelser",
 		"packages/fakta-saken",
 		"packages/konstanter",
+		"packages/prosess-vedtak",
 		"packages/sak-app",
 		"packages/sak-feilsider",
 		"packages/sak-visittkort",

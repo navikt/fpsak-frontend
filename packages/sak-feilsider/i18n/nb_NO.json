@@ -6,5 +6,5 @@
   "UnauthorizedPage.LinkText": "Gå til innloggingssiden",
   "ForbiddenPage.Header": "Du har ikke tilgang til å slå opp denne personen",
   "ForbiddenPage.LinkText": "Gå til forsiden",
-  "ErrorPage.Header": "Det har oppstått en teknisk feil i denne behandlingen. </BR>Meld feilen i Porten. Ta med feilmeldingsteksten."
+  "ErrorPage.Header": "Det har oppstått en teknisk feil i denne behandlingen. {br}Meld feilen i Porten. Ta med feilmeldingsteksten."
 }

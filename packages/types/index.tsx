@@ -1,6 +1,7 @@
 export { default as Aksjonspunkt } from './src/aksjonspunktTsType';
 export { default as Arbeidsforhold } from './src/arbeidsforholdTsType';
 export { default as Behandling } from './src/behandlingTsType';
+export { default as Behandlingsresultat } from './src/behandlingsresultatTsType';
 export { default as Beregningsgrunnlag } from './src/beregningsgrunnlagTsType';
 export { default as BeregningsresultatEs } from './src/beregningsresultatEsTsType';
 export { default as BeregningsresultatFp } from './src/beregningsresultatFpTsType';
@@ -19,3 +20,4 @@ export { default as Ytelsefordeling } from './src/ytelsefordelingTsType';
 export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTsType';
 export { default as Fagsak } from './src/fagsakTsType';
 export { default as FagsakPerson } from './src/fagsakPersonTsType';
+export { default as Medlemskap } from './src/medlemskapTsType';
