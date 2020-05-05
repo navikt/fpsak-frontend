@@ -13,7 +13,7 @@ const intl = createIntl({
 }, cache);
 
 export const skalViseIMeny = (behandlingId, behandlendeEnheter, erKoet, byttBehandlendeEnhetAccess) => !!behandlingId
-  && behandlendeEnheter && !erKoet && byttBehandlendeEnhetAccess.employeeHasAccess;
+  && behandlendeEnheter && !erKoet && byttBehandlendeEnhetAccess.employeeHasAccess && byttBehandlendeEnhetAccess.isEnabled;
 
 export const getMenytekst = () => intl.formatMessage({ id: 'EndreBehandlendeEnhetIndex.ByttBehandlendeEnhet' });
 

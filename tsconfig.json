@@ -35,6 +35,7 @@
 		"packages/sak-feilsider",
 		"packages/sak-meny",
 		"packages/sak-meny-endre-enhet",
+		"packages/sak-meny-henlegg",
 		"packages/sak-meny-sett-pa-vent",
 		"packages/sak-meny-ta-av-vent",
 		"packages/sak-meny-verge",

@@ -14,8 +14,9 @@ import MenySakIndex, {
 import { Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
 import EndreBehandlendeEnhetIndex, { skalViseIMeny, getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
-import MenyTaAvVentIndex, { skalViseIMeny as skalViseTaAvVentMenytekst, getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
-import MenySettPaVentIndex, { skalViseIMeny as skalViseSettPaVentMenytekst, getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
+import MenyTaAvVentIndex, { skalViseIMeny as skalViseTaAvVentIMeny, getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
+import MenySettPaVentIndex, { skalViseIMeny as skalViseSettPaVentIMeny, getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
+import MenyHenleggIndex, { skalViseIMeny as skalViseHenleggIMeny, getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
 import {
@@ -132,6 +133,11 @@ class BehandlingMenuIndex extends Component<OwnProps> {
     }
   }
 
+  goToSearchPage = () => {
+    const { push } = this.props;
+    push('/');
+  }
+
   render() {
     const {
       behandlingData,
@@ -147,7 +153,11 @@ class BehandlingMenuIndex extends Component<OwnProps> {
       behandlendeEnheter,
       saksnummer,
       menyKodeverk,
+      previewHenleggBehandling,
     } = this.props;
+
+    const fjernVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge(location) : undefined;
+    const opprettVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT ? opprettVerge(location) : undefined;
 
     return (
       <DataFetcher
@@ -169,10 +179,12 @@ class BehandlingMenuIndex extends Component<OwnProps> {
           });
           const skalViseEndreBehandlendeEnhet = skalViseIMeny(behandlingData.id,
             behandlendeEnheter, behandlingData.erKoet, rettigheter.byttBehandlendeEnhetAccess);
-          const skalViseTaAvVent = skalViseTaAvVentMenytekst(behandlingData.id, behandlingData.erPaVent, behandlingData.erKoet,
+          const skalViseTaAvVent = skalViseTaAvVentIMeny(behandlingData.id, behandlingData.erPaVent, behandlingData.erKoet,
             rettigheter.gjenopptaBehandlingAccess);
-          const skalViseSettPaVent = skalViseSettPaVentMenytekst(behandlingData.id,
+          const skalViseSettPaVent = skalViseSettPaVentIMeny(behandlingData.id,
             behandlingData.erPaVent, behandlingData.erKoet, rettigheter.settBehandlingPaVentAccess);
+          const skalViseHenlegg = skalViseHenleggIMeny(behandlingData.id, behandlingData.type, behandlingData.kanHenlegge,
+            rettigheter.henleggBehandlingAccess);
           return (
             <>
               <MenySakIndex2
@@ -196,6 +208,21 @@ class BehandlingMenuIndex extends Component<OwnProps> {
                         lukkModal={lukkModal}
                       />
                     )),
+                  new MenyInnslagData(skalViseHenlegg, getHenleggMenytekst())
+                    .medModal((lukkModal) => (
+                      <MenyHenleggIndex
+                        behandlingId={behandlingData.id}
+                        behandlingVersjon={behandlingData.versjon}
+                        previewHenleggBehandling={previewHenleggBehandling}
+                        henleggBehandling={shelveBehandling}
+                        ytelseType={ytelseType}
+                        behandlingType={behandlingData.type}
+                        behandlingUuid={behandlingData.uuid}
+                        menyKodeverk={menyKodeverk}
+                        lukkModal={lukkModal}
+                        gaaTilSokeside={this.goToSearchPage}
+                      />
+                    )),
                   new MenyInnslagData(skalViseEndreBehandlendeEnhet, getMenytekst())
                     .medModal((lukkModal) => (
                       <EndreBehandlendeEnhetIndex
@@ -208,13 +235,13 @@ class BehandlingMenuIndex extends Component<OwnProps> {
                         lukkModal={lukkModal}
                       />
                     )),
-                  new MenyInnslagData(opprettVerge || fjernVerge, getVergeMenytekst(!!opprettVerge))
+                  new MenyInnslagData(opprettVergeFn || fjernVergeFn, getVergeMenytekst(!!opprettVergeFn))
                     .medModal((lukkModal) => (
                       <MenyVergeIndex
                         behandlingId={behandlingData.id}
                         behandlingVersjon={behandlingData.versjon}
-                        fjernVerge={fjernVerge}
-                        opprettVerge={opprettVerge}
+                        fjernVerge={fjernVergeFn}
+                        opprettVerge={opprettVergeFn}
                         push={push}
                         saksnummer={saksnummer}
                         lukkModal={lukkModal}

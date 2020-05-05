@@ -15,7 +15,7 @@ const intl = createIntl({
 }, cache);
 
 export const skalViseIMeny = (behandlingId, erPaVent, erKoet, settBehandlingPaVentAccess) => !!behandlingId
-  && !erPaVent && !erKoet && settBehandlingPaVentAccess.employeeHasAccess;
+  && !erPaVent && !erKoet && settBehandlingPaVentAccess.employeeHasAccess && settBehandlingPaVentAccess.isEnabled;
 
 export const getMenytekst = () => intl.formatMessage({ id: 'MenySettPaVentIndex.BehandlingOnHold' });
 
