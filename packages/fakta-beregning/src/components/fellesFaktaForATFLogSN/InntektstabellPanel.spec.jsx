@@ -1,8 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { CheckboxField } from '@fpsak-frontend/form';
+
+import { OverstyringKnapp } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import { InntektstabellPanelImpl } from './InntektstabellPanel';
 
 const {
@@ -21,32 +23,14 @@ describe('<InntektstabellPanel>', () => {
         aksjonspunkter={[]}
         readOnly={false}
         erOverstyrt={false}
+        reduxFormChange={() => undefined}
+        behandlingFormPrefix="form"
       >
         <span>test1</span>
         <span>test2</span>
       </InntektstabellPanelImpl>,
     );
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(1);
-  });
-
-  it('skal vise checkbox for overstyring for saksbehandler når overstyrt', () => {
-    const wrapper = shallow(
-      <InntektstabellPanelImpl
-        key="inntektstabell"
-        hjelpeTekstId="hjelpetekst"
-        tabell={<span> tabell </span>}
-        kanOverstyre={false}
-        aksjonspunkter={[]}
-        readOnly={false}
-        erOverstyrt
-      >
-        <span>test1</span>
-        <span>test2</span>
-      </InntektstabellPanelImpl>,
-    );
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(1);
+    expect(wrapper.find(OverstyringKnapp)).has.length(1);
   });
 
   it('checkbox skal vere readOnly når man har overstyring aksjonspunkt', () => {
@@ -59,13 +43,15 @@ describe('<InntektstabellPanel>', () => {
         aksjonspunkter={[{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG }, status: { kode: 'OPPR' } }]}
         readOnly={false}
         erOverstyrt={false}
+        reduxFormChange={() => undefined}
+        behandlingFormPrefix="form"
       >
         <span>test1</span>
         <span>test2</span>
       </InntektstabellPanelImpl>,
     );
-    const checkbox = wrapper.find(CheckboxField);
-    expect(checkbox).has.length(1);
-    expect(checkbox.first().prop('readOnly')).to.equal(true);
+    const knapp = wrapper.find(OverstyringKnapp);
+    expect(knapp).has.length(1);
+    expect(knapp.first().prop('erOverstyrt')).to.equal(true);
   });
 });

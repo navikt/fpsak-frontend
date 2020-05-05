@@ -2,6 +2,8 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
+import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 
@@ -33,9 +35,9 @@ export default {
 
 export const saksbehandlerKanIkkeOverstyre = () => (
   <BeregningsresultatProsessIndex
-    behandling={behandling}
+    behandling={behandling as Behandling}
     beregningresultatEngangsstonad={beregningsresultat}
-    aksjonspunkter={aksjonspunkter}
+    aksjonspunkter={aksjonspunkter as Aksjonspunkt[]}
     overrideReadOnly={false}
     submitCallback={action('button-click')}
     kanOverstyreAccess={{ isEnabled: false }}
@@ -45,10 +47,27 @@ export const saksbehandlerKanIkkeOverstyre = () => (
 
 export const saksbehandlerKanOverstyre = () => (
   <BeregningsresultatProsessIndex
-    behandling={behandling}
+    behandling={behandling as Behandling}
     beregningresultatEngangsstonad={beregningsresultat}
-    aksjonspunkter={aksjonspunkter}
+    aksjonspunkter={aksjonspunkter as Aksjonspunkt[]}
     overrideReadOnly={boolean('readOnly', false)}
+    submitCallback={action('button-click')}
+    kanOverstyreAccess={{ isEnabled: true }}
+    toggleOverstyring={action('button-click')}
+  />
+);
+
+export const visOverstyrtReadonlyPanel = () => (
+  <BeregningsresultatProsessIndex
+    behandling={behandling as Behandling}
+    beregningresultatEngangsstonad={beregningsresultat}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.OVERSTYR_BEREGNING,
+      },
+      begrunnelse: 'Dette er en begrunnelse',
+    }] as Aksjonspunkt[]}
+    overrideReadOnly={false}
     submitCallback={action('button-click')}
     kanOverstyreAccess={{ isEnabled: true }}
     toggleOverstyring={action('button-click')}

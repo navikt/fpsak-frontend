@@ -113,59 +113,59 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
       </Column>
     </Row>
     <VerticalSpacer sixteenPx />
-    {!readOnly
-        && (
-        <Row>
-          <Column xs="6">
-            <RadioGroupField name="erVilkarOk" validate={[required]}>
-              <RadioOption
-                label={(
-                  <FormattedMessage
-                    id={findRadioButtonTextCode(true)}
-                    values={{
-                      b: (...chunks) => <b>{chunks}</b>,
-                    }}
-                  />
-                )}
-                value
+    {!readOnly && (
+      <Row>
+        <Column xs="6">
+          <RadioGroupField name="erVilkarOk" validate={[required]}>
+            <RadioOption
+              label={(
+                <FormattedMessage
+                  id={findRadioButtonTextCode(true)}
+                  values={{
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              )}
+              value
+            />
+            <RadioOption
+              label={(
+                <FormattedMessage
+                  id={findRadioButtonTextCode(false)}
+                  values={{
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              )}
+              value={false}
+            />
+          </RadioGroupField>
+        </Column>
+      </Row>
+    )}
+    {readOnly && (
+      <>
+        <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
+          {[<RadioOption
+            key="dummy"
+            label={(
+              <FormattedMessage
+                id={findRadioButtonTextCode(erVilkarOk)}
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
               />
-              <RadioOption
-                label={(
-                  <FormattedMessage
-                    id={findRadioButtonTextCode(false)}
-                    values={{
-                      b: (...chunks) => <b>{chunks}</b>,
-                    }}
-                  />
-                )}
-                value={false}
-              />
-            </RadioGroupField>
-          </Column>
-        </Row>
+                  )}
+            value=""
+          />]}
+        </RadioGroupField>
+        {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak) && (
+          <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>
         )}
-    {readOnly
-        && (
-          <>
-            <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
-              {[<RadioOption
-                key="dummy"
-                label={(
-                  <FormattedMessage
-                    id={findRadioButtonTextCode(erVilkarOk)}
-                    values={{
-                      b: (...chunks) => <b>{chunks}</b>,
-                    }}
-                  />
-                )}
-                value=""
-              />]}
-            </RadioGroupField>
-            {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
-          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
-          </>
-        )}
+      </>
+    )}
     <ProsessStegBegrunnelseTextField readOnly={readOnly} />
+    <VerticalSpacer sixteenPx />
     <ProsessStegSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}

@@ -37,7 +37,8 @@ export const AdopsjonVilkarFormImpl = ({
   <ProsessPanelTemplate
     titleCode="AdopsjonVilkarForm.Adopsjon"
     isAksjonspunktOpen={isApOpen}
-    formProps={formProps}
+    formName={formProps.form}
+    handleSubmit={formProps.handleSubmit}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     bpStatus={status}

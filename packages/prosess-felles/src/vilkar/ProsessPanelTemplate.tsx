@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode, FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
   Undertittel, EtikettLiten, Element, Normaltekst,
@@ -19,19 +18,36 @@ import ProsessStegSubmitButton from '../ProsessStegSubmitButton';
 
 import styles from './prosessPanelTemplate.less';
 
+interface OwnProps {
+  titleCode: string;
+  behandlingId: number;
+  behandlingVersjon: number;
+  lovReferanse?: string;
+  isAksjonspunktOpen: boolean;
+  handleSubmit: () => void;
+  formName: string;
+  readOnlySubmitButton: boolean;
+  originalErVilkarOk?: boolean;
+  rendreFakta?: () => void;
+  readOnly: boolean;
+  isDirty?: boolean;
+  children: ReactNode | ReactNode[];
+}
+
 /*
  * ProsessPanelTemplate
  *
  * Presentasjonskomponent.
  */
-const ProsessPanelTemplate = ({
+const ProsessPanelTemplate: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   lovReferanse,
   titleCode,
   originalErVilkarOk,
   isAksjonspunktOpen,
-  formProps,
+  handleSubmit,
+  formName,
   readOnlySubmitButton,
   readOnly,
   rendreFakta,
@@ -39,7 +55,7 @@ const ProsessPanelTemplate = ({
   children,
 }) => (
   <>
-    <form onSubmit={formProps.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <FlexContainer>
         <FlexRow>
           {originalErVilkarOk !== undefined && (
@@ -85,7 +101,7 @@ const ProsessPanelTemplate = ({
         {children}
         {!readOnly && <VerticalSpacer sixteenPx />}
         <ProsessStegSubmitButton
-          formName={formProps.form}
+          formName={formName}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           isReadOnly={readOnly}
@@ -106,27 +122,5 @@ const ProsessPanelTemplate = ({
     </form>
   </>
 );
-
-ProsessPanelTemplate.propTypes = {
-  titleCode: PropTypes.string.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  lovReferanse: PropTypes.string,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
-  formProps: PropTypes.shape().isRequired,
-  readOnlySubmitButton: PropTypes.bool.isRequired,
-  originalErVilkarOk: PropTypes.bool,
-  rendreFakta: PropTypes.func,
-  readOnly: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool,
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
-
-ProsessPanelTemplate.defaultProps = {
-  lovReferanse: undefined,
-  originalErVilkarOk: undefined,
-  rendreFakta: undefined,
-  isDirty: undefined,
-};
 
 export default ProsessPanelTemplate;

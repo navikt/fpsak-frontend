@@ -86,7 +86,8 @@ export const SokersOpplysningspliktFormImpl = ({
   <ProsessPanelTemplate
     titleCode="SokersOpplysningspliktForm.SokersOpplysningsplikt"
     isAksjonspunktOpen={!readOnlySubmitButton}
-    formProps={formProps}
+    formName={formProps.form}
+    handleSubmit={formProps.handleSubmit}
     isDirty={hasAksjonspunkt ? formProps.dirty : erVilkarOk !== formProps.initialValues.erVilkarOk}
     readOnlySubmitButton={hasSoknad ? readOnlySubmitButton : !formProps.dirty || readOnlySubmitButton}
     readOnly={readOnly}

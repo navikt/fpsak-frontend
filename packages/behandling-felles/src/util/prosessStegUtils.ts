@@ -107,7 +107,8 @@ const lagPanelData = (
   const indekser = opneAksjonspunkter.map((a) => panel.aksjonspunkterCodes.findIndex((ac) => a.definisjon.kode === ac));
   const aksjonspunktHelpTextCodes = panel.aksjonspunkterTextCodes.filter((a, index) => indekser.includes(index));
 
-  // TODO (TOR) Denne overstyringslogikken er spesifikk for VilkarresultatMedOverstyringProsessIndex => flytt dit
+  // TODO (TOR) Denne overstyringslogikken er spesifikk for VilkarresultatMedOverstyringProsessIndex => flytt dit (Hm, blir brukt
+  // av BeregningsresultatProsessIndex i tillegg, så kanskje ikkje så lett?)
   const overstyringsdata = panel.isOverridable ? {
     overrideReadOnly: isReadOnly || (harMinstEttPanelApentAksjonspunkt && !erAksjonspunktOpen),
     erOverstyrt: overstyrteAksjonspunktKoder.some((o) => panel.aksjonspunkterCodes.some((a) => a === o)),
