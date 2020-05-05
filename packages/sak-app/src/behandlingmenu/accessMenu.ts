@@ -8,7 +8,6 @@ import { NavAnsatt, Kodeverk } from '@fpsak-frontend/types';
 
 const kanVeilede = (navAnsatt) => navAnsatt && navAnsatt.kanVeilede;
 const kanSaksbehandle = (navAnsatt) => navAnsatt && navAnsatt.kanSaksbehandle;
-const kanBeslutte = (navAnsatt) => kanSaksbehandle(navAnsatt) && navAnsatt.kanBeslutte;
 const isBehandlingAvTilbakekreving = (type) => (type
   ? (type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING) : false);
 
@@ -124,12 +123,6 @@ export const opneBehandlingForEndringerAccess = (
   opneBehandlingForEndringerAccessSelector(behandlingType, sakstype)(navAnsatt, fagsakStatus, behandlingStatus, behandlingType)
 );
 
-export const fraBeslutterFaneAccess = accessSelector(
-  [kanSaksbehandle, kanBeslutte],
-  [fagsakStatusCode.UNDER_BEHANDLING],
-  [behandlingStatusCode.BEHANDLING_UTREDES],
-);
-
 export const allMenuAccessRights = (
   navAnsatt: NavAnsatt,
   fagsakStatus: Kodeverk,
@@ -145,7 +138,6 @@ export const allMenuAccessRights = (
   settBehandlingPaVentAccess: settBehandlingPaVentAccess(navAnsatt, fagsakStatus, behandlingStatus, harSoknad,
     erIInnhentSoknadopplysningerSteg, behandlingType),
   byttBehandlendeEnhetAccess: byttBehandlendeEnhetAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
-  fraBeslutterFaneAccess: fraBeslutterFaneAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   opprettRevurderingAccess: opprettRevurderingAccess(navAnsatt, fagsakStatus, behandlingStatus, kanRevurderingOpprettes, sakstype, behandlingType),
   opprettNyForstegangsBehandlingAccess: opprettNyForstegangsBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),
   gjenopptaBehandlingAccess: gjenopptaBehandlingAccess(navAnsatt, fagsakStatus, behandlingStatus, behandlingType),

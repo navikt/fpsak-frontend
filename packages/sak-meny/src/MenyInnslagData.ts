@@ -1,0 +1,27 @@
+import { ReactNode } from 'react';
+
+class MenyInnslagData {
+  erSynlig: boolean;
+
+  tekst: string;
+
+  modal: (lukkModal: () => void) => ReactNode;
+
+  constructor(erSynlig, tekst) {
+    this.erSynlig = erSynlig;
+    this.tekst = tekst;
+  }
+
+  medModal = (modal: () => ReactNode) => {
+    this.modal = modal;
+    return this;
+  }
+
+  getErSynlig = () => this.erSynlig
+
+  getTekst = () => this.tekst
+
+  getModal = () => this.modal
+}
+
+export default MenyInnslagData;
