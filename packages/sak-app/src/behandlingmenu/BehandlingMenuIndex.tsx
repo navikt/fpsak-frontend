@@ -17,6 +17,8 @@ import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-fronte
 import MenyTaAvVentIndex, { skalViseIMeny as skalViseTaAvVentIMeny, getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
 import MenySettPaVentIndex, { skalViseIMeny as skalViseSettPaVentIMeny, getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
 import MenyHenleggIndex, { skalViseIMeny as skalViseHenleggIMeny, getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
+import MenyApneForEndringerIndex, { skalViseIMeny as skalViseApneForEndringerIMeny, getMenytekst as getApneForEndringerMenytekst } from '@fpsak-frontend/sak-meny-apne-for-endringer';
+import MenyNyBehandlingIndex, { skalViseIMeny as skalViseNyBehandlingIMeny, getMenytekst as getNyBehandlingMenytekst } from '@fpsak-frontend/sak-meny-ny-behandling';
 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
 import {
@@ -154,6 +156,12 @@ class BehandlingMenuIndex extends Component<OwnProps> {
       saksnummer,
       menyKodeverk,
       previewHenleggBehandling,
+      lagNyBehandling,
+      kanTilbakekrevingOpprettes,
+      uuidForSistLukkede,
+      erTilbakekrevingAktivert,
+      sjekkOmTilbakekrevingKanOpprettes,
+      sjekkOmTilbakekrevingRevurderingKanOpprettes,
     } = this.props;
 
     const fjernVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge(location) : undefined;
@@ -185,6 +193,9 @@ class BehandlingMenuIndex extends Component<OwnProps> {
             behandlingData.erPaVent, behandlingData.erKoet, rettigheter.settBehandlingPaVentAccess);
           const skalViseHenlegg = skalViseHenleggIMeny(behandlingData.id, behandlingData.type, behandlingData.kanHenlegge,
             rettigheter.henleggBehandlingAccess);
+          const skalViseApneForEndringer = skalViseApneForEndringerIMeny(behandlingData.id, behandlingData.erPaVent, behandlingData.erKoet,
+            rettigheter.opneBehandlingForEndringerAccess);
+          const skalViseNyBehandling = skalViseNyBehandlingIMeny(behandlingData.erKoet, rettigheter.ikkeVisOpprettNyBehandling);
           return (
             <>
               <MenySakIndex2
@@ -232,6 +243,36 @@ class BehandlingMenuIndex extends Component<OwnProps> {
                         behandlendeEnhetNavn={behandlingData.behandlendeEnhetNavn}
                         nyBehandlendeEnhet={nyBehandlendeEnhet}
                         behandlendeEnheter={behandlendeEnheter}
+                        lukkModal={lukkModal}
+                      />
+                    )),
+                  new MenyInnslagData(skalViseApneForEndringer, getApneForEndringerMenytekst())
+                    .medModal((lukkModal) => (
+                      <MenyApneForEndringerIndex
+                        behandlingId={behandlingData.id}
+                        behandlingVersjon={behandlingData.versjon}
+                        openBehandlingForChanges={openBehandlingForChanges}
+                        lukkModal={lukkModal}
+                      />
+                    )),
+                  new MenyInnslagData(skalViseNyBehandling, getNyBehandlingMenytekst())
+                    .medModal((lukkModal) => (
+                      <MenyNyBehandlingIndex
+                        behandlingId={behandlingData.id}
+                        behandlingVersjon={behandlingData.versjon}
+                        behandlingType={behandlingData.type}
+                        uuidForSistLukkede={uuidForSistLukkede}
+                        opprettNyForstegangsBehandlingEnabled={rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
+                          && !!rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled}
+                        opprettRevurderingEnabled={rettigheter.opprettRevurderingAccess.employeeHasAccess && rettigheter.opprettRevurderingAccess.isEnabled}
+                        kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
+                        erTilbakekrevingAktivert={erTilbakekrevingAktivert}
+                        push={push}
+                        menyKodeverk={menyKodeverk}
+                        ytelseType={ytelseType}
+                        lagNyBehandling={lagNyBehandling}
+                        sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
+                        sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
                         lukkModal={lukkModal}
                       />
                     )),
@@ -316,7 +357,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   previewHenleggBehandling: previewMessage,
-  createNewBehandling: createNewBehandling(location),
+  lagNyBehandling: createNewBehandling(location),
   hentVergeMenyvalg,
   resetVergeMenyvalg,
   sjekkOmTilbakekrevingKanOpprettes,
