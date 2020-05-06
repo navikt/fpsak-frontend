@@ -8,8 +8,8 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import { getHenleggArsaker, HenleggBehandlingModalImpl } from './HenleggBehandlingModalImpl';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
+import { getHenleggArsaker, HenleggBehandlingModalImpl } from './HenleggBehandlingModal';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<HenleggBehandlingModalImpl>', () => {
   const henleggArsaker = [{

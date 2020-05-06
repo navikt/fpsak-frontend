@@ -6,7 +6,7 @@ import Modal from 'nav-frontend-modal';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import HenlagtBehandlingModal from './HenlagtBehandlingModal';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<HenlagtBehandlingModal>', () => {
   it('skal rendre åpen modal', () => {

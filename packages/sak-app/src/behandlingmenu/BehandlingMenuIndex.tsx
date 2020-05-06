@@ -8,17 +8,23 @@ import { withRouter } from 'react-router-dom';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import MenySakIndex, {
-  MenySakIndex2, MenyInnslagData, MenyKodeverk, MenyBehandlingData, MenyRettigheter,
-} from '@fpsak-frontend/sak-meny';
+import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
 import { Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
 import EndreBehandlendeEnhetIndex, { skalViseIMeny, getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
 import MenyTaAvVentIndex, { skalViseIMeny as skalViseTaAvVentIMeny, getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
 import MenySettPaVentIndex, { skalViseIMeny as skalViseSettPaVentIMeny, getMenytekst as getSettPaVentMenytekst } from '@fpsak-frontend/sak-meny-sett-pa-vent';
 import MenyHenleggIndex, { skalViseIMeny as skalViseHenleggIMeny, getMenytekst as getHenleggMenytekst } from '@fpsak-frontend/sak-meny-henlegg';
-import MenyApneForEndringerIndex, { skalViseIMeny as skalViseApneForEndringerIMeny, getMenytekst as getApneForEndringerMenytekst } from '@fpsak-frontend/sak-meny-apne-for-endringer';
-import MenyNyBehandlingIndex, { skalViseIMeny as skalViseNyBehandlingIMeny, getMenytekst as getNyBehandlingMenytekst } from '@fpsak-frontend/sak-meny-ny-behandling';
+import MenyApneForEndringerIndex, {
+  skalViseIMeny as skalViseApneForEndringerIMeny,
+  getMenytekst as getApneForEndringerMenytekst,
+}
+  from '@fpsak-frontend/sak-meny-apne-for-endringer';
+import MenyNyBehandlingIndex, {
+  skalViseIMeny as skalViseNyBehandlingIMeny,
+  getMenytekst as getNyBehandlingMenytekst,
+}
+  from '@fpsak-frontend/sak-meny-ny-behandling';
 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
 import {
@@ -40,6 +46,9 @@ import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
   hentVergeMenyvalg, resetVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
+import MenyKodeverk from './MenyKodeverk';
+import MenyBehandlingData from './MenyBehandlingData';
+import MenyRettigheter from './MenyRettigheter';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
 const menyDataBehandlingValgt = [fpsakApi.MENYHANDLING_RETTIGHETER];
@@ -93,6 +102,7 @@ interface OwnProps {
   erIInnhentSoknadopplysningerSteg: boolean;
   vergeMenyvalg?: string;
   location: RouteProps['location'];
+  pushLocation: (location: string) => void;
 }
 
 class BehandlingMenuIndex extends Component<OwnProps> {
@@ -136,8 +146,8 @@ class BehandlingMenuIndex extends Component<OwnProps> {
   }
 
   goToSearchPage = () => {
-    const { push } = this.props;
-    push('/');
+    const { pushLocation } = this.props;
+    pushLocation('/');
   }
 
   render() {
@@ -160,8 +170,9 @@ class BehandlingMenuIndex extends Component<OwnProps> {
       kanTilbakekrevingOpprettes,
       uuidForSistLukkede,
       erTilbakekrevingAktivert,
-      sjekkOmTilbakekrevingKanOpprettes,
-      sjekkOmTilbakekrevingRevurderingKanOpprettes,
+      sjekkTilbakeKanOpprettes,
+      sjekkTilbakeRevurdKanOpprettes,
+      pushLocation,
     } = this.props;
 
     const fjernVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge(location) : undefined;
@@ -196,112 +207,110 @@ class BehandlingMenuIndex extends Component<OwnProps> {
           const skalViseApneForEndringer = skalViseApneForEndringerIMeny(behandlingData.id, behandlingData.erPaVent, behandlingData.erKoet,
             rettigheter.opneBehandlingForEndringerAccess);
           const skalViseNyBehandling = skalViseNyBehandlingIMeny(behandlingData.erKoet, rettigheter.ikkeVisOpprettNyBehandling);
+
+          if ((!rettigheter.settBehandlingPaVentAccess.employeeHasAccess
+            && !rettigheter.henleggBehandlingAccess.employeeHasAccess
+            && !rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess
+            && !rettigheter.opprettRevurderingAccess.employeeHasAccess
+            && !rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
+            && !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess) || navAnsatt.kanVeilede) {
+            return null;
+          }
+
+
           return (
-            <>
-              <MenySakIndex2
-                data={[
-                  new MenyInnslagData(skalViseTaAvVent, getTaAvVentMenytekst())
-                    .medModal((lukkModal) => (
-                      <MenyTaAvVentIndex
-                        behandlingId={behandlingData.id}
-                        behandlingVersjon={behandlingData.versjon}
-                        resumeBehandling={resumeBehandling}
-                        lukkModal={lukkModal}
-                      />
-                    )),
-                  new MenyInnslagData(skalViseSettPaVent, getSettPaVentMenytekst())
-                    .medModal((lukkModal) => (
-                      <MenySettPaVentIndex
-                        behandlingId={behandlingData.id}
-                        behandlingVersjon={behandlingData.versjon}
-                        setBehandlingOnHold={setBehandlingOnHold}
-                        ventearsaker={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.VENT_AARSAK)}
-                        lukkModal={lukkModal}
-                      />
-                    )),
-                  new MenyInnslagData(skalViseHenlegg, getHenleggMenytekst())
-                    .medModal((lukkModal) => (
-                      <MenyHenleggIndex
-                        behandlingId={behandlingData.id}
-                        behandlingVersjon={behandlingData.versjon}
-                        previewHenleggBehandling={previewHenleggBehandling}
-                        henleggBehandling={shelveBehandling}
-                        ytelseType={ytelseType}
-                        behandlingType={behandlingData.type}
-                        behandlingUuid={behandlingData.uuid}
-                        menyKodeverk={menyKodeverk}
-                        lukkModal={lukkModal}
-                        gaaTilSokeside={this.goToSearchPage}
-                      />
-                    )),
-                  new MenyInnslagData(skalViseEndreBehandlendeEnhet, getMenytekst())
-                    .medModal((lukkModal) => (
-                      <EndreBehandlendeEnhetIndex
-                        behandlingId={behandlingData.id}
-                        behandlingVersjon={behandlingData.versjon}
-                        behandlendeEnhetId={behandlingData.behandlendeEnhetId}
-                        behandlendeEnhetNavn={behandlingData.behandlendeEnhetNavn}
-                        nyBehandlendeEnhet={nyBehandlendeEnhet}
-                        behandlendeEnheter={behandlendeEnheter}
-                        lukkModal={lukkModal}
-                      />
-                    )),
-                  new MenyInnslagData(skalViseApneForEndringer, getApneForEndringerMenytekst())
-                    .medModal((lukkModal) => (
-                      <MenyApneForEndringerIndex
-                        behandlingId={behandlingData.id}
-                        behandlingVersjon={behandlingData.versjon}
-                        openBehandlingForChanges={openBehandlingForChanges}
-                        lukkModal={lukkModal}
-                      />
-                    )),
-                  new MenyInnslagData(skalViseNyBehandling, getNyBehandlingMenytekst())
-                    .medModal((lukkModal) => (
-                      <MenyNyBehandlingIndex
-                        behandlingId={behandlingData.id}
-                        behandlingVersjon={behandlingData.versjon}
-                        behandlingType={behandlingData.type}
-                        uuidForSistLukkede={uuidForSistLukkede}
-                        opprettNyForstegangsBehandlingEnabled={rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
+            <MenySakIndex
+              data={[
+                new MenyData(skalViseTaAvVent, getTaAvVentMenytekst())
+                  .medModal((lukkModal) => (
+                    <MenyTaAvVentIndex
+                      behandlingId={behandlingData.id}
+                      behandlingVersjon={behandlingData.versjon}
+                      resumeBehandling={resumeBehandling}
+                      lukkModal={lukkModal}
+                    />
+                  )),
+                new MenyData(skalViseSettPaVent, getSettPaVentMenytekst())
+                  .medModal((lukkModal) => (
+                    <MenySettPaVentIndex
+                      behandlingId={behandlingData.id}
+                      behandlingVersjon={behandlingData.versjon}
+                      setBehandlingOnHold={setBehandlingOnHold}
+                      ventearsaker={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.VENT_AARSAK)}
+                      lukkModal={lukkModal}
+                    />
+                  )),
+                new MenyData(skalViseHenlegg, getHenleggMenytekst())
+                  .medModal((lukkModal) => (
+                    <MenyHenleggIndex
+                      behandlingId={behandlingData.id}
+                      behandlingVersjon={behandlingData.versjon}
+                      previewHenleggBehandling={previewHenleggBehandling}
+                      henleggBehandling={shelveBehandling}
+                      ytelseType={ytelseType}
+                      behandlingType={behandlingData.type}
+                      behandlingUuid={behandlingData.uuid}
+                      menyKodeverk={menyKodeverk}
+                      lukkModal={lukkModal}
+                      gaaTilSokeside={this.goToSearchPage}
+                    />
+                  )),
+                new MenyData(skalViseEndreBehandlendeEnhet, getMenytekst())
+                  .medModal((lukkModal) => (
+                    <EndreBehandlendeEnhetIndex
+                      behandlingId={behandlingData.id}
+                      behandlingVersjon={behandlingData.versjon}
+                      behandlendeEnhetId={behandlingData.behandlendeEnhetId}
+                      behandlendeEnhetNavn={behandlingData.behandlendeEnhetNavn}
+                      nyBehandlendeEnhet={nyBehandlendeEnhet}
+                      behandlendeEnheter={behandlendeEnheter}
+                      lukkModal={lukkModal}
+                    />
+                  )),
+                new MenyData(skalViseApneForEndringer, getApneForEndringerMenytekst())
+                  .medModal((lukkModal) => (
+                    <MenyApneForEndringerIndex
+                      behandlingId={behandlingData.id}
+                      behandlingVersjon={behandlingData.versjon}
+                      openBehandlingForChanges={openBehandlingForChanges}
+                      lukkModal={lukkModal}
+                    />
+                  )),
+                new MenyData(skalViseNyBehandling, getNyBehandlingMenytekst())
+                  .medModal((lukkModal) => (
+                    <MenyNyBehandlingIndex
+                      behandlingId={behandlingData.id}
+                      behandlingVersjon={behandlingData.versjon}
+                      behandlingType={behandlingData.type}
+                      uuidForSistLukkede={uuidForSistLukkede}
+                      opprettNyForstegangsBehandlingEnabled={rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
                           && !!rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled}
-                        opprettRevurderingEnabled={rettigheter.opprettRevurderingAccess.employeeHasAccess && rettigheter.opprettRevurderingAccess.isEnabled}
-                        kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
-                        erTilbakekrevingAktivert={erTilbakekrevingAktivert}
-                        push={push}
-                        menyKodeverk={menyKodeverk}
-                        ytelseType={ytelseType}
-                        lagNyBehandling={lagNyBehandling}
-                        sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
-                        sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
-                        lukkModal={lukkModal}
-                      />
-                    )),
-                  new MenyInnslagData(opprettVergeFn || fjernVergeFn, getVergeMenytekst(!!opprettVergeFn))
-                    .medModal((lukkModal) => (
-                      <MenyVergeIndex
-                        behandlingId={behandlingData.id}
-                        behandlingVersjon={behandlingData.versjon}
-                        fjernVerge={fjernVergeFn}
-                        opprettVerge={opprettVergeFn}
-                        push={push}
-                        saksnummer={saksnummer}
-                        lukkModal={lukkModal}
-                      />
-                    )),
-                ]}
-              />
-              <MenySakIndex
-                rettigheter={rettigheter}
-                shelveBehandling={shelveBehandling}
-                setBehandlingOnHold={setBehandlingOnHold}
-                resumeBehandling={resumeBehandling}
-                nyBehandlendeEnhet={nyBehandlendeEnhet}
-                openBehandlingForChanges={openBehandlingForChanges}
-                fjernVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge(location) : undefined}
-                opprettVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT ? opprettVerge(location) : undefined}
-                {...this.props}
-              />
-            </>
+                      opprettRevurderingEnabled={rettigheter.opprettRevurderingAccess.employeeHasAccess && rettigheter.opprettRevurderingAccess.isEnabled}
+                      kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
+                      erTilbakekrevingAktivert={erTilbakekrevingAktivert}
+                      push={pushLocation}
+                      menyKodeverk={menyKodeverk}
+                      ytelseType={ytelseType}
+                      lagNyBehandling={lagNyBehandling}
+                      sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
+                      sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
+                      lukkModal={lukkModal}
+                    />
+                  )),
+                new MenyData(opprettVergeFn || fjernVergeFn, getVergeMenytekst(!!opprettVergeFn))
+                  .medModal((lukkModal) => (
+                    <MenyVergeIndex
+                      behandlingId={behandlingData.id}
+                      behandlingVersjon={behandlingData.versjon}
+                      fjernVerge={fjernVergeFn}
+                      opprettVerge={opprettVergeFn}
+                      push={pushLocation}
+                      saksnummer={saksnummer}
+                      lukkModal={lukkModal}
+                    />
+                  )),
+              ]}
+            />
           );
         }}
       />
@@ -360,9 +369,9 @@ const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
   lagNyBehandling: createNewBehandling(location),
   hentVergeMenyvalg,
   resetVergeMenyvalg,
-  sjekkOmTilbakekrevingKanOpprettes,
-  sjekkOmTilbakekrevingRevurderingKanOpprettes,
-  push,
+  sjekkTilbakeKanOpprettes: sjekkOmTilbakekrevingKanOpprettes,
+  sjekkTilbakeRevurdKanOpprettes: sjekkOmTilbakekrevingRevurderingKanOpprettes,
+  pushLocation: push,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuIndex));

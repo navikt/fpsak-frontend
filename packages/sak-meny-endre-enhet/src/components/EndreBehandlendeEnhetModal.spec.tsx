@@ -3,8 +3,8 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { EndreBehandlendeEnhetModal } from './ChangeBehandlendeEnhetModal';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
+import { EndreBehandlendeEnhetModal } from './EndreBehandlendeEnhetModal';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<ChangeBehandlendeEnhetModal>', () => {
   const behandlendeEnheter = [{

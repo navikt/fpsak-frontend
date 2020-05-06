@@ -11,22 +11,21 @@ import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
-import MenyKodeverk from '../../MenyKodeverk';
 import {
-  CreateNewBehandlingModal, getBehandlingAarsaker, getBehandlingTyper, getEnabledBehandlingstyper,
-} from './CreateNewBehandlingModal';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
+  NyBehandlingModal, getBehandlingAarsaker, getBehandlingTyper, getEnabledBehandlingstyper,
+} from './NyBehandlingModal';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<CreateNewBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();
   const cancelEventCallback = sinon.spy();
-  const menyKodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
+  /* const menyKodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
     .medFpSakKodeverk({})
-    .medFpTilbakeKodeverk({});
+    .medFpTilbakeKodeverk({}); */
 
   it('skal rendre komponent korrekt', () => {
     const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
-    const wrapper = shallowWithIntl(<CreateNewBehandlingModal
+    const wrapper = shallowWithIntl(<NyBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
@@ -39,7 +38,7 @@ describe('<CreateNewBehandlingModal>', () => {
       saksnummer={123}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      menyKodeverk={menyKodeverk}
+      menyKodeverk={{}}
     />);
 
     const modal = wrapper.find(Modal);
@@ -52,7 +51,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
   it('skal bruke submit-callback når en trykker lagre', () => {
     const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
-    const wrapper = shallowWithIntl(<CreateNewBehandlingModal
+    const wrapper = shallowWithIntl(<NyBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={sinon.spy()}
@@ -65,7 +64,7 @@ describe('<CreateNewBehandlingModal>', () => {
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
-      menyKodeverk={menyKodeverk}
+      menyKodeverk={{}}
     />);
 
     const form = wrapper.find('form');
@@ -75,7 +74,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
   it('skal lukke modal ved klikk på avbryt-knapp', () => {
     const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
-    const wrapper = shallowWithIntl(<CreateNewBehandlingModal
+    const wrapper = shallowWithIntl(<NyBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
@@ -88,7 +87,7 @@ describe('<CreateNewBehandlingModal>', () => {
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       saksnummer={123}
-      menyKodeverk={menyKodeverk}
+      menyKodeverk={{}}
     />);
 
     wrapper.find(Knapp).simulate('click');
@@ -98,7 +97,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
-    const wrapper = shallowWithIntl(<CreateNewBehandlingModal
+    const wrapper = shallowWithIntl(<NyBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
@@ -112,7 +111,7 @@ describe('<CreateNewBehandlingModal>', () => {
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
-      menyKodeverk={menyKodeverk}
+      menyKodeverk={{}}
     />);
 
     expect(wrapper.find(CheckboxField)).to.have.length(1);
@@ -121,7 +120,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
   it('skal ikke vise checkbox for behandling etter klage når dokumentinnsyn er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }];
-    const wrapper = shallowWithIntl(<CreateNewBehandlingModal
+    const wrapper = shallowWithIntl(<NyBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
@@ -135,7 +134,7 @@ describe('<CreateNewBehandlingModal>', () => {
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
-      menyKodeverk={menyKodeverk}
+      menyKodeverk={{}}
     />);
 
     expect(wrapper.find(CheckboxField)).to.have.length(0);
@@ -143,7 +142,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
   it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING' }];
-    const wrapper = shallowWithIntl(<CreateNewBehandlingModal
+    const wrapper = shallowWithIntl(<NyBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
@@ -157,7 +156,7 @@ describe('<CreateNewBehandlingModal>', () => {
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
-      menyKodeverk={menyKodeverk}
+      menyKodeverk={{}}
     />);
 
     expect(wrapper.find(SelectField)).to.have.length(2);
@@ -165,7 +164,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
   it('skal ikke vise dropdown for revuderingsårsaker når dokumentinnsyn er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }];
-    const wrapper = shallowWithIntl(<CreateNewBehandlingModal
+    const wrapper = shallowWithIntl(<NyBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
@@ -179,7 +178,7 @@ describe('<CreateNewBehandlingModal>', () => {
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
-      menyKodeverk={menyKodeverk}
+      menyKodeverk={{}}
     />);
 
     expect(wrapper.find(SelectField)).to.have.length(1);
@@ -189,7 +188,6 @@ describe('<CreateNewBehandlingModal>', () => {
     const ytelseType = {
       kode: fagsakYtelseType.FORELDREPENGER,
     };
-    const behandlingArsakerFpSak = [];
     const behandlingArsakerFpTilbake = {
       [kodeverkTyper.BEHANDLING_AARSAK]: [{
         kode: behandlingArsakType.RE_KLAGE_KA,
@@ -207,11 +205,12 @@ describe('<CreateNewBehandlingModal>', () => {
     };
     const bType = behandlingType.TILBAKEKREVING_REVURDERING;
 
+    /* const behandlingArsakerFpSak = [];
     const kodeverk = new MenyKodeverk(bType)
       .medFpSakKodeverk(behandlingArsakerFpSak)
-      .medFpTilbakeKodeverk(behandlingArsakerFpTilbake);
+      .medFpTilbakeKodeverk(behandlingArsakerFpTilbake); */
 
-    const res = getBehandlingAarsaker.resultFunc(ytelseType, kodeverk, bType);
+    const res = getBehandlingAarsaker.resultFunc(ytelseType, {}, bType);
 
     expect(res).to.deep.include.members([
       behandlingArsakerFpTilbake[kodeverkTyper.BEHANDLING_AARSAK][3],
@@ -240,13 +239,13 @@ describe('<CreateNewBehandlingModal>', () => {
         navn: 'feil prosessuell',
       }],
     };
-    const behandlingArsakerFpTilbake = [];
     const bType = behandlingType.REVURDERING;
+    /* const behandlingArsakerFpTilbake = [];
     const kodeverk = new MenyKodeverk(bType)
       .medFpSakKodeverk(behandlingArsakerFpSak)
-      .medFpTilbakeKodeverk(behandlingArsakerFpTilbake);
+      .medFpTilbakeKodeverk(behandlingArsakerFpTilbake); */
 
-    const res = getBehandlingAarsaker.resultFunc(ytelseType, kodeverk, bType);
+    const res = getBehandlingAarsaker.resultFunc(ytelseType, {}, bType);
 
     const aarsaker = behandlingArsakerFpSak[kodeverkTyper.BEHANDLING_AARSAK];
     expect(res).to.deep.include.members([
@@ -271,7 +270,7 @@ describe('<CreateNewBehandlingModal>', () => {
         navn: 'forstegangssoknad',
       }],
     };
-    const kodeverkFpTilbake = {
+    /* const kodeverkFpTilbake = {
       [kodeverkTyper.BEHANDLING_TYPE]: [{
         kode: behandlingType.TILBAKEKREVING,
         navn: 'tilbakekreving',
@@ -279,9 +278,9 @@ describe('<CreateNewBehandlingModal>', () => {
     };
     const kodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
       .medFpSakKodeverk(kodeverkFpSak)
-      .medFpTilbakeKodeverk(kodeverkFpTilbake);
+      .medFpTilbakeKodeverk(kodeverkFpTilbake); */
 
-    const res = getBehandlingTyper.resultFunc(kodeverk);
+    const res = getBehandlingTyper.resultFunc({});
 
     expect(res).to.deep.include.members([
       kodeverkFpSak[kodeverkTyper.BEHANDLING_TYPE][2],
@@ -308,11 +307,11 @@ describe('<CreateNewBehandlingModal>', () => {
         navn: 'tilbakekreving',
       }],
     };
-    const kodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
+    /* const kodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
       .medFpSakKodeverk(behandlingtyperFpSak)
-      .medFpTilbakeKodeverk(behandlingtyperFpTilbake);
+      .medFpTilbakeKodeverk(behandlingtyperFpTilbake); */
 
-    const res = getBehandlingTyper.resultFunc(kodeverk);
+    const res = getBehandlingTyper.resultFunc({});
 
     expect(res).to.deep.include.members([
       behandlingtyperFpSak[kodeverkTyper.BEHANDLING_TYPE][2],

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-class MenyInnslagData {
+class MenyData {
   erSynlig: boolean;
 
   tekst: string;
@@ -24,4 +24,4 @@ class MenyInnslagData {
   getModal = () => this.modal
 }
 
-export default MenyInnslagData;
+export default MenyData;

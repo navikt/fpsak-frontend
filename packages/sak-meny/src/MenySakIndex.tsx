@@ -5,15 +5,16 @@ import {
   FormattedMessage, createIntl, createIntlCache, RawIntlProvider,
 } from 'react-intl';
 import Popover from '@navikt/nap-popover';
-import { Knapp } from 'nav-frontend-knapper';
 import BoxedListWithSelection from '@navikt/boxed-list-with-selection';
+import { Knapp } from 'nav-frontend-knapper';
 
 import { Image } from '@fpsak-frontend/shared-components';
 import openImage from '@fpsak-frontend/assets/images/pil_opp.svg';
 import closedImage from '@fpsak-frontend/assets/images/pil_ned.svg';
 
+import MenyData from './MenyData';
+
 import messages from '../i18n/nb_NO.json';
-import MenyInnslagData from './MenyInnslagData';
 
 const cache = createIntlCache();
 
@@ -23,7 +24,7 @@ const intl = createIntl({
 }, cache);
 
 interface OwnProps {
-  data: MenyInnslagData[];
+  data: MenyData[];
 }
 
 const MenySakIndex: FunctionComponent<OwnProps> = ({
@@ -31,18 +32,19 @@ const MenySakIndex: FunctionComponent<OwnProps> = ({
 }) => {
   const filtrertData = data.filter((d) => d.erSynlig);
 
-  const [visMenyModal, setVisMenyModal] = useState(false);
+  const [visMenySomApen, setVisMenyTilApen] = useState(false);
+  const toggleMenyVisning = useCallback(() => setVisMenyTilApen(!visMenySomApen), [visMenySomApen]);
+
   const [valgtModal, setValgtModal] = useState(-1);
-  const toggleMenyModal = useCallback(() => setVisMenyModal(!visMenyModal), [visMenyModal]);
 
   const menyRef = useRef(null);
   const handleClickOutside = (event) => {
     if (menyRef.current && !menyRef.current.contains(event.target)) {
-      toggleMenyModal();
+      toggleMenyVisning();
     }
   };
   useEffect(() => {
-    if (visMenyModal) {
+    if (visMenySomApen) {
       document.addEventListener('mousedown', handleClickOutside);
     }
     return () => {
@@ -54,28 +56,28 @@ const MenySakIndex: FunctionComponent<OwnProps> = ({
     <RawIntlProvider value={intl}>
       <div ref={menyRef}>
         <Popover
-          popperIsVisible={visMenyModal}
-          renderArrowElement
-          customPopperStyles={{ top: '4px', zIndex: 1 }}
+          popperIsVisible={visMenySomApen}
+          renderArrowElement={false}
+          customPopperStyles={{ top: '2px', zIndex: 1 }}
           popperProps={{
             children: () => (
               <BoxedListWithSelection
                 items={filtrertData.map((d) => ({
                   name: d.tekst,
                 }))}
-                onClick={(index) => { setValgtModal(index); toggleMenyModal(); }}
+                onClick={(index) => { setValgtModal(index); toggleMenyVisning(); }}
               />
             ),
             placement: 'bottom-start',
-            positionFixed: true,
+            positionFixed: false,
           }}
           referenceProps={{
             children: ({ ref }) => (
               <div ref={ref}>
-                <Knapp mini kompakt onClick={toggleMenyModal}>
+                <Knapp mini kompakt onClick={toggleMenyVisning}>
                   <FormattedMessage id="MenySakIndex.Behandlingsmeny" />
                   <span style={{ marginLeft: '5px' }}>
-                    <Image src={visMenyModal ? openImage : closedImage} />
+                    <Image src={visMenySomApen ? openImage : closedImage} />
                   </span>
                 </Knapp>
               </div>
