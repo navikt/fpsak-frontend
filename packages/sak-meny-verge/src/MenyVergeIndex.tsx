@@ -19,8 +19,8 @@ export const getMenytekst = (erOpprettVerge: boolean) => intl.formatMessage({
 interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
-  fjernVerge: (push: () => void, saksnummer: number, behandlingId: number, behandlingVersjon: number) => void;
-  opprettVerge: (push: () => void, saksnummer: number, behandlingId: number, behandlingVersjon: number) => void;
+  fjernVerge?: (push: () => void, saksnummer: number, behandlingId: number, behandlingVersjon: number) => void;
+  opprettVerge?: (push: () => void, saksnummer: number, behandlingId: number, behandlingVersjon: number) => void;
   saksnummer: number;
   push: () => void;
   lukkModal: () => void;

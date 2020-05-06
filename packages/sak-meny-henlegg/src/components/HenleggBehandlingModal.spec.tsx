@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -11,20 +12,21 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { getHenleggArsaker, HenleggBehandlingModalImpl } from './HenleggBehandlingModal';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
 
-describe('<HenleggBehandlingModalImpl>', () => {
+describe('<HenleggBehandlingModal>', () => {
   const henleggArsaker = [{
     kode: 'HENLAGT_SØKNAD_TRUKKET',
-  },
-  {
+    kodeverk: 'ARSAK',
+  }, {
     kode: 'HENLAGT_FEILOPPRETTET',
+    kodeverk: 'ARSAK',
   }, {
     kode: 'MANGLER_BEREGNINGSREGLER',
-  },
-  ];
+    kodeverk: 'ARSAK',
+  }];
 
   it('skal rendre åpen modal', () => {
     const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       previewHenleggBehandling={sinon.spy()}
@@ -36,6 +38,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
       showLink={false}
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
       }}
       behandlingUuid="123"
       behandlingId={123}
@@ -55,32 +58,9 @@ describe('<HenleggBehandlingModalImpl>', () => {
     expect(previewLink).to.have.length(0);
   });
 
-  it('skal rendre lukket modal', () => {
-    const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl
-      showModal={false}
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      previewHenleggBehandling={sinon.spy()}
-      henleggArsaker={henleggArsaker}
-      behandlingTypeKode="BT-002"
-      årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-      begrunnelse="Dette er en begrunnelse"
-      intl={intlMock}
-      showLink
-      ytelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-      }}
-      behandlingUuid="123"
-      behandlingId={123}
-    />);
-
-    const modal = wrapper.find(Modal);
-    expect(modal.prop('isOpen')).is.false;
-  });
-
   it('skal vise nedtrekksliste med behandlingsresultat-typer', () => {
     const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       previewHenleggBehandling={sinon.spy()}
@@ -92,6 +72,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
       showLink
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
       }}
       behandlingUuid="123"
       behandlingId={123}
@@ -155,7 +136,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
 
   it('skal disable knapp for lagring når behandlingsresultat-type og begrunnnelse ikke er valgt', () => {
     const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       previewHenleggBehandling={sinon.spy()}
@@ -165,6 +146,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
       showLink
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
       }}
       behandlingUuid="123"
       behandlingId={123}
@@ -177,7 +159,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
   it('skal bruke submit-callback når en trykker lagre', () => {
     const submitEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={sinon.spy()}
       previewHenleggBehandling={sinon.spy()}
@@ -189,6 +171,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
       showLink
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
       }}
       behandlingUuid="123"
       behandlingId={123}
@@ -202,7 +185,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
   it('skal avbryte redigering ved trykk på avbryt-knapp', () => {
     const cancelEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
       previewHenleggBehandling={sinon.spy()}
@@ -214,6 +197,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
       showLink
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
       }}
       behandlingUuid="123"
       behandlingId={123}
@@ -231,7 +215,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
   it('skal vise forhåndvisningslenke når søknad om henleggelse er trukket', () => {
     const previewEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
       previewHenleggBehandling={previewEventCallback}
@@ -243,6 +227,7 @@ describe('<HenleggBehandlingModalImpl>', () => {
       showLink
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
+        kodeverk: 'FAGSAK_YTELSE_TYPE',
       }}
       behandlingUuid="123"
       behandlingId={123}

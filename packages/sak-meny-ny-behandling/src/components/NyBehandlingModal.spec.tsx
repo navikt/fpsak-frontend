@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 import { Knapp } from 'nav-frontend-knapper';
 
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
@@ -19,26 +20,21 @@ import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
 describe('<CreateNewBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();
   const cancelEventCallback = sinon.spy();
-  /* const menyKodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
-    .medFpSakKodeverk({})
-    .medFpTilbakeKodeverk({}); */
 
   it('skal rendre komponent korrekt', () => {
-    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
       behandlingTyper={behandlingstyper}
-      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
+      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' }]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
-      menyKodeverk={{}}
     />);
 
     const modal = wrapper.find(Modal);
@@ -50,14 +46,14 @@ describe('<CreateNewBehandlingModal>', () => {
   });
 
   it('skal bruke submit-callback når en trykker lagre', () => {
-    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={sinon.spy()}
       intl={intlMock}
       behandlingTyper={behandlingstyper}
-      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
+      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' }]}
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
@@ -73,14 +69,14 @@ describe('<CreateNewBehandlingModal>', () => {
   });
 
   it('skal lukke modal ved klikk på avbryt-knapp', () => {
-    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
       behandlingTyper={behandlingstyper}
-      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
+      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' }]}
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
@@ -96,15 +92,15 @@ describe('<CreateNewBehandlingModal>', () => {
 
 
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
-    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
       behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.FORSTEGANGSSOKNAD}
-      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
+      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' }]}
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
@@ -119,15 +115,15 @@ describe('<CreateNewBehandlingModal>', () => {
 
 
   it('skal ikke vise checkbox for behandling etter klage når dokumentinnsyn er valgt', () => {
-    const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }];
+    const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
       behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.DOKUMENTINNSYN}
-      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
+      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' }]}
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
@@ -141,15 +137,15 @@ describe('<CreateNewBehandlingModal>', () => {
   });
 
   it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
-    const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING' }];
+    const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
       behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.REVURDERING}
-      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
+      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE', kodeverk: 'ARSAK' }]}
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
@@ -163,9 +159,9 @@ describe('<CreateNewBehandlingModal>', () => {
   });
 
   it('skal ikke vise dropdown for revuderingsårsaker når dokumentinnsyn er valgt', () => {
-    const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }];
+    const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}

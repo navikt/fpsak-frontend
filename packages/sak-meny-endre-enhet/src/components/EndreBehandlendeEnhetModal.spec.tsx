@@ -2,7 +2,10 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
+
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import { EndreBehandlendeEnhetModal } from './EndreBehandlendeEnhetModal';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meny';
 
@@ -15,10 +18,9 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
 
   it('skal rendre åpen modal', () => {
     const wrapper = shallowWithIntl(<EndreBehandlendeEnhetModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
-      handleEnhetChange={sinon.spy()}
-      cancelEvent={sinon.spy()}
+      lukkModal={sinon.spy()}
       behandlendeEnheter={behandlendeEnheter}
       gjeldendeBehandlendeEnhetId="002"
       gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -38,30 +40,11 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     expect(button.prop('disabled')).is.false;
   });
 
-  it('skal rendre lukket modal', () => {
-    const wrapper = shallowWithIntl(<EndreBehandlendeEnhetModal
-      showModal={false}
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      handleEnhetChange={sinon.spy()}
-      behandlendeEnheter={behandlendeEnheter}
-      gjeldendeBehandlendeEnhetId="002"
-      gjeldendeBehandlendeEnhetNavn="Oslo"
-      nyEnhet="Test"
-      begrunnelse="Dette er en begrunnelse"
-      intl={intlMock}
-    />);
-
-    const modal = wrapper.find(Modal);
-    expect(modal.prop('isOpen')).is.false;
-  });
-
   it('skal vise nedtrekksliste med behandlende enheter', () => {
     const wrapper = shallowWithIntl(<EndreBehandlendeEnhetModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      handleEnhetChange={sinon.spy()}
+      lukkModal={sinon.spy()}
       behandlendeEnheter={behandlendeEnheter}
       gjeldendeBehandlendeEnhetId="002"
       gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -79,10 +62,9 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
 
   it('skal disable knapp for lagring når ny behandlende enhet og begrunnnelse ikke er valgt', () => {
     const wrapper = shallowWithIntl(<EndreBehandlendeEnhetModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      handleEnhetChange={sinon.spy()}
+      lukkModal={sinon.spy()}
       behandlendeEnheter={behandlendeEnheter}
       gjeldendeBehandlendeEnhetId="002"
       gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -96,10 +78,9 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
   it('skal bruke submit-callback når en trykker ok', () => {
     const submitEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<EndreBehandlendeEnhetModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={submitEventCallback}
-      cancelEvent={sinon.spy()}
-      handleEnhetChange={sinon.spy()}
+      lukkModal={sinon.spy()}
       behandlendeEnheter={behandlendeEnheter}
       gjeldendeBehandlendeEnhetId="002"
       gjeldendeBehandlendeEnhetNavn="Oslo"
@@ -116,10 +97,9 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
   it('skal avbryte redigering ved trykk på avbryt-knapp', () => {
     const cancelEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<EndreBehandlendeEnhetModal
-      showModal
+      {...reduxFormPropsMock}
       handleSubmit={sinon.spy()}
-      cancelEvent={cancelEventCallback}
-      handleEnhetChange={sinon.spy()}
+      lukkModal={cancelEventCallback}
       behandlendeEnheter={behandlendeEnheter}
       gjeldendeBehandlendeEnhetId="002"
       gjeldendeBehandlendeEnhetNavn="Oslo"

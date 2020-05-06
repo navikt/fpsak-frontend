@@ -49,12 +49,11 @@ const EndreBehandlendeEnhetIndex: FunctionComponent<OwnProps> = ({
     .filter((enhet) => enhet.enhetId !== behandlendeEnhetId), [behandlendeEnheter]);
 
   const submit = useCallback((formValues) => {
-    const nyEnhet = filtrerteBehandlendeEnheter[formValues.nyEnhet];
     const values = {
       behandlingVersjon,
       behandlingId,
-      enhetNavn: nyEnhet.enhetNavn,
-      enhetId: nyEnhet.enhetId,
+      enhetNavn: formValues.nyEnhet.enhetNavn,
+      enhetId: formValues.nyEnhet.enhetId,
       begrunnelse: formValues.begrunnelse,
     };
     nyBehandlendeEnhet(values);

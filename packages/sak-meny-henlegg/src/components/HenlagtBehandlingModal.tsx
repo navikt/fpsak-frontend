@@ -33,7 +33,6 @@ const HenlagtBehandlingModal: FunctionComponent<OwnProps & WrappedComponentProps
     contentLabel={intl.formatMessage({ id: 'HenlagtBehandlingModal.ModalDescription' })}
     onRequestClose={closeEvent}
     shouldCloseOnOverlayClick={false}
-    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

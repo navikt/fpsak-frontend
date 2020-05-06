@@ -38,7 +38,6 @@ const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandlin
 };
 
 interface OwnProps {
-  showModal: boolean;
   cancelEvent: () => void;
   previewHenleggBehandling: () => void;
   behandlingUuid?: string;
@@ -58,7 +57,6 @@ interface OwnProps {
  * Ved å angi årsak og begrunnelse og trykke på 'Henlegg behandling' blir behandlingen henlagt og avsluttet.
  */
 export const HenleggBehandlingModalImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
-  showModal,
   handleSubmit,
   cancelEvent,
   previewHenleggBehandling,
@@ -74,12 +72,11 @@ export const HenleggBehandlingModalImpl: FunctionComponent<OwnProps & WrappedCom
 }) => (
   <Modal
     className={styles.modal}
-    isOpen={showModal}
+    isOpen
     closeButton={false}
     contentLabel={intl.formatMessage({ id: 'HenleggBehandlingModal.ModalDescription' })}
     onRequestClose={cancelEvent}
     shouldCloseOnOverlayClick={false}
-    ariaHideApp={false}
   >
     <form onSubmit={handleSubmit}>
       <div>

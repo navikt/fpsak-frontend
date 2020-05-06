@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
 
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { SelectField } from '@fpsak-frontend/form';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
@@ -14,6 +15,7 @@ describe('<SettBehandlingPaVentModal>', () => {
     const cancelEventCallback = sinon.spy();
 
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
+      {...reduxFormPropsMock}
       intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
@@ -37,6 +39,7 @@ describe('<SettBehandlingPaVentModal>', () => {
     const cancelEventCallback = sinon.spy();
 
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
+      {...reduxFormPropsMock}
       intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
@@ -56,6 +59,7 @@ describe('<SettBehandlingPaVentModal>', () => {
   it('skal lukke modal ved klikk på avbryt-knapp', () => {
     const cancelEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
+      {...reduxFormPropsMock}
       intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={cancelEventCallback}
@@ -73,6 +77,7 @@ describe('<SettBehandlingPaVentModal>', () => {
 
   it('skal ikke disable knapp for lagring når frist er en gyldig fremtidig dato', () => {
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
+      {...reduxFormPropsMock}
       intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
@@ -90,6 +95,7 @@ describe('<SettBehandlingPaVentModal>', () => {
 
   it('skal disable knapp for lagring når frist er en ugyldig dato', () => {
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
+      {...reduxFormPropsMock}
       intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
@@ -107,6 +113,7 @@ describe('<SettBehandlingPaVentModal>', () => {
 
   it('skal disable knapp for lagring når frist er en historisk dato', () => {
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
+      {...reduxFormPropsMock}
       intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
@@ -124,6 +131,7 @@ describe('<SettBehandlingPaVentModal>', () => {
 
   it('skal være obligatorisk å velge årsak', () => {
     const wrapper = shallowWithIntl(<SettBehandlingPaVentModal
+      {...reduxFormPropsMock}
       intl={intlMock}
       handleSubmit={sinon.spy()}
       cancelEvent={sinon.spy()}
