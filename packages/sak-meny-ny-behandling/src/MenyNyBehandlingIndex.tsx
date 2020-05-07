@@ -28,8 +28,8 @@ interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  lagNyBehandling: (push, saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data) => void;
-  push: () => void;
+  lagNyBehandling: (push: (location: string) => void, saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data) => void;
+  push: (location: string) => void;
   menyKodeverk: {};
   opprettNyForstegangsBehandlingEnabled: boolean;
   opprettRevurderingEnabled: boolean;

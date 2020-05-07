@@ -12,7 +12,7 @@ class MenyData {
     this.tekst = tekst;
   }
 
-  medModal = (modal: () => ReactNode) => {
+  medModal = (modal: (lukkModal: () => void) => ReactNode) => {
     this.modal = modal;
     return this;
   }
