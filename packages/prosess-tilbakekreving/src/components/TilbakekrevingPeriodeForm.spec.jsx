@@ -56,6 +56,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       behandlingVersjon={1}
       beregnBelop={() => undefined}
       intl={intlMock}
+      vilkarsVurdertePerioder={[]}
       {...reduxFormPropsMock}
     />);
 
