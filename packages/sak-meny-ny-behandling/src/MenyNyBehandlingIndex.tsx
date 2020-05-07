@@ -2,7 +2,7 @@ import React, { FunctionComponent, useCallback } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Kodeverk } from '@fpsak-frontend/types';
+import { Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import NyBehandlingModal from './components/NyBehandlingModal';
 
@@ -28,12 +28,16 @@ interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  lagNyBehandling: (push: (location: string) => void, saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data) => void;
-  push: (location: string) => void;
-  menyKodeverk: {};
+  lagNyBehandling: (saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data) => void;
+  behandlingstyper: KodeverkMedNavn[];
+  tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
+  revurderingArsaker: KodeverkMedNavn[];
   opprettNyForstegangsBehandlingEnabled: boolean;
   opprettRevurderingEnabled: boolean;
-  kanTilbakekrevingOpprettes: boolean;
+  kanTilbakekrevingOpprettes: {
+    kanBehandlingOpprettes: boolean;
+    kanRevurderingOpprettes: boolean;
+  };
   uuidForSistLukkede?: string;
   erTilbakekrevingAktivert: boolean;
   sjekkOmTilbakekrevingKanOpprettes: (params: {
@@ -53,8 +57,9 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   behandlingVersjon,
   behandlingType,
   lagNyBehandling,
-  push,
-  menyKodeverk,
+  behandlingstyper,
+  tilbakekrevingRevurderingArsaker,
+  revurderingArsaker,
   opprettNyForstegangsBehandlingEnabled,
   opprettRevurderingEnabled,
   kanTilbakekrevingOpprettes,
@@ -73,7 +78,7 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
       ...formValues,
     };
 
-    lagNyBehandling(push, saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data);
+    lagNyBehandling(saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data);
 
     lukkModal();
   }, [behandlingId, behandlingVersjon]);
@@ -86,7 +91,9 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
         submitCallback={submit}
         hasEnabledCreateNewBehandling={opprettNyForstegangsBehandlingEnabled}
         hasEnabledCreateRevurdering={opprettRevurderingEnabled}
-        menyKodeverk={menyKodeverk}
+        behandlingstyper={behandlingstyper}
+        tilbakekrevingRevurderingArsaker={tilbakekrevingRevurderingArsaker}
+        revurderingArsaker={revurderingArsaker}
         kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
         behandlingType={behandlingType}
         behandlingId={behandlingId}

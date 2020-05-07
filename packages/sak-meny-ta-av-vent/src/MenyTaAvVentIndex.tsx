@@ -24,7 +24,7 @@ export const getMenytekst = () => intl.formatMessage({ id: 'MenyTaAvVentIndex.Re
 interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
-  resumeBehandling: (params: {
+  taBehandlingAvVent: (params: {
     behandlingId: number;
     behandlingVersjon: number;
   }) => void;
@@ -34,11 +34,11 @@ interface OwnProps {
 const MenyTaAvVentIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
-  resumeBehandling,
+  taBehandlingAvVent,
   lukkModal,
 }) => {
   const submit = useCallback(() => {
-    resumeBehandling({
+    taBehandlingAvVent({
       behandlingId,
       behandlingVersjon,
     });

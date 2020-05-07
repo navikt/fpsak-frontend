@@ -6,7 +6,6 @@ import { Knapp } from 'nav-frontend-knapper';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -184,147 +183,104 @@ describe('<CreateNewBehandlingModal>', () => {
     const ytelseType = {
       kode: fagsakYtelseType.FORELDREPENGER,
     };
-    const behandlingArsakerFpTilbake = {
-      [kodeverkTyper.BEHANDLING_AARSAK]: [{
-        kode: behandlingArsakType.RE_KLAGE_KA,
-        navn: 'RE_KLAGE_KA',
-      }, {
-        kode: behandlingArsakType.RE_KLAGE_NFP,
-        navn: 'RE_KLAGE_KA',
-      }, {
-        kode: behandlingArsakType.RE_VILKÅR,
-        navn: 'Nye opplysninger om vilkårsvurdering',
-      }, {
-        kode: behandlingArsakType.RE_FORELDELSE,
-        navn: 'Nye opplysninger om foreldelse',
-      }],
-    };
+    const behandlingArsakerFpTilbake = [{
+      kode: behandlingArsakType.RE_KLAGE_KA,
+      navn: 'RE_KLAGE_KA',
+    }, {
+      kode: behandlingArsakType.RE_KLAGE_NFP,
+      navn: 'RE_KLAGE_KA',
+    }, {
+      kode: behandlingArsakType.RE_VILKÅR,
+      navn: 'Nye opplysninger om vilkårsvurdering',
+    }, {
+      kode: behandlingArsakType.RE_FORELDELSE,
+      navn: 'Nye opplysninger om foreldelse',
+    }];
     const bType = behandlingType.TILBAKEKREVING_REVURDERING;
 
-    /* const behandlingArsakerFpSak = [];
-    const kodeverk = new MenyKodeverk(bType)
-      .medFpSakKodeverk(behandlingArsakerFpSak)
-      .medFpTilbakeKodeverk(behandlingArsakerFpTilbake); */
+    const behandlingArsakerFpSak = [];
 
-    const res = getBehandlingAarsaker.resultFunc(ytelseType, {}, bType);
+    const res = getBehandlingAarsaker.resultFunc(ytelseType, behandlingArsakerFpSak, behandlingArsakerFpTilbake, bType);
 
     expect(res).to.deep.include.members([
-      behandlingArsakerFpTilbake[kodeverkTyper.BEHANDLING_AARSAK][3],
-      behandlingArsakerFpTilbake[kodeverkTyper.BEHANDLING_AARSAK][2]]);
+      behandlingArsakerFpTilbake[3],
+      behandlingArsakerFpTilbake[2]]);
   });
 
   it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype REVURDERING', () => {
     const ytelseType = {
       kode: fagsakYtelseType.REVURDERING,
     };
-    const behandlingArsakerFpSak = {
-      [kodeverkTyper.BEHANDLING_AARSAK]: [{
-        kode: behandlingArsakType.ANNET,
-        navn: 'annet',
-      }, {
-        kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-        navn: 'feil i lovandvendelse',
-      }, {
-        kode: behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
-        navn: 'feil eller endret fakta',
-      }, {
-        kode: behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
-        navn: 'feil regelverksforstaelse',
-      }, {
-        kode: behandlingArsakType.FEIL_PROSESSUELL,
-        navn: 'feil prosessuell',
-      }],
-    };
+    const behandlingArsakerFpSak = [{
+      kode: behandlingArsakType.ANNET,
+      navn: 'annet',
+    }, {
+      kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+      navn: 'feil i lovandvendelse',
+    }, {
+      kode: behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
+      navn: 'feil eller endret fakta',
+    }, {
+      kode: behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
+      navn: 'feil regelverksforstaelse',
+    }, {
+      kode: behandlingArsakType.FEIL_PROSESSUELL,
+      navn: 'feil prosessuell',
+    }];
     const bType = behandlingType.REVURDERING;
-    /* const behandlingArsakerFpTilbake = [];
-    const kodeverk = new MenyKodeverk(bType)
-      .medFpSakKodeverk(behandlingArsakerFpSak)
-      .medFpTilbakeKodeverk(behandlingArsakerFpTilbake); */
+    const behandlingArsakerFpTilbake = [];
 
-    const res = getBehandlingAarsaker.resultFunc(ytelseType, {}, bType);
+    const res = getBehandlingAarsaker.resultFunc(ytelseType, behandlingArsakerFpSak, behandlingArsakerFpTilbake, bType);
 
-    const aarsaker = behandlingArsakerFpSak[kodeverkTyper.BEHANDLING_AARSAK];
     expect(res).to.deep.include.members([
-      aarsaker[0],
-      aarsaker[2],
-      aarsaker[1],
-      aarsaker[4],
-      aarsaker[3],
+      behandlingArsakerFpSak[0],
+      behandlingArsakerFpSak[2],
+      behandlingArsakerFpSak[1],
+      behandlingArsakerFpSak[4],
+      behandlingArsakerFpSak[3],
     ]);
   });
 
   it('skal finne filtrere behandlingstyper for kun fpsak', () => {
-    const kodeverkFpSak = {
-      [kodeverkTyper.BEHANDLING_TYPE]: [{
-        kode: behandlingType.TILBAKEKREVING,
-        navn: 'tilbakekreving',
-      }, {
-        kode: behandlingType.REVURDERING,
-        navn: 'revurdering',
-      }, {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-        navn: 'forstegangssoknad',
-      }],
-    };
-    /* const kodeverkFpTilbake = {
-      [kodeverkTyper.BEHANDLING_TYPE]: [{
-        kode: behandlingType.TILBAKEKREVING,
-        navn: 'tilbakekreving',
-      }],
-    };
-    const kodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
-      .medFpSakKodeverk(kodeverkFpSak)
-      .medFpTilbakeKodeverk(kodeverkFpTilbake); */
+    const kodeverkFpSak = [{
+      kode: behandlingType.TILBAKEKREVING,
+      navn: 'tilbakekreving',
+      kodeverk: 'BEHANDLING_TYPE',
+    }, {
+      kode: behandlingType.REVURDERING,
+      navn: 'revurdering',
+      kodeverk: 'BEHANDLING_TYPE',
+    }, {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+      navn: 'forstegangssoknad',
+      kodeverk: 'BEHANDLING_TYPE',
+    }];
 
-    const res = getBehandlingTyper.resultFunc({});
+    const res = getBehandlingTyper.resultFunc(kodeverkFpSak);
 
     expect(res).to.deep.include.members([
-      kodeverkFpSak[kodeverkTyper.BEHANDLING_TYPE][2],
-      kodeverkFpSak[kodeverkTyper.BEHANDLING_TYPE][1],
-    ]);
-  });
-
-  it('skal finne filtrere behandlingstyper for både fpsak og fptilbake', () => {
-    const behandlingtyperFpSak = {
-      [kodeverkTyper.BEHANDLING_TYPE]: [{
-        kode: behandlingType.TILBAKEKREVING,
-        navn: 'tilbakekreving',
-      }, {
-        kode: behandlingType.REVURDERING,
-        navn: 'revurdering',
-      }, {
-        kode: behandlingType.FORSTEGANGSSOKNAD,
-        navn: 'forstegangssoknad',
-      }],
-    };
-    const behandlingtyperFpTilbake = {
-      [kodeverkTyper.BEHANDLING_TYPE]: [{
-        kode: behandlingType.TILBAKEKREVING,
-        navn: 'tilbakekreving',
-      }],
-    };
-    /* const kodeverk = new MenyKodeverk({ kode: behandlingType.FORSTEGANGSSOKNAD })
-      .medFpSakKodeverk(behandlingtyperFpSak)
-      .medFpTilbakeKodeverk(behandlingtyperFpTilbake); */
-
-    const res = getBehandlingTyper.resultFunc({});
-
-    expect(res).to.deep.include.members([
-      behandlingtyperFpSak[kodeverkTyper.BEHANDLING_TYPE][2],
-      behandlingtyperFpSak[kodeverkTyper.BEHANDLING_TYPE][1],
-      behandlingtyperFpTilbake[kodeverkTyper.BEHANDLING_TYPE][0],
+      kodeverkFpSak[2],
+      kodeverkFpSak[1],
     ]);
   });
 
   it('skal filtrere bort tilbakekreving når denne ikke kan lages', () => {
     const behandlingstyper = [{
       kode: behandlingType.TILBAKEKREVING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.TILBAKEKREVING_REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.FORSTEGANGSSOKNAD,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }];
     const hasEnabledCreateNewBehandling = true;
     const hasEnabledCreateRevurdering = true;
@@ -347,12 +303,20 @@ describe('<CreateNewBehandlingModal>', () => {
   it('skal filtrere bort tilbakekreving-revurdering når denne ikke kan lages', () => {
     const behandlingstyper = [{
       kode: behandlingType.TILBAKEKREVING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.TILBAKEKREVING_REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.FORSTEGANGSSOKNAD,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }];
     const hasEnabledCreateNewBehandling = true;
     const hasEnabledCreateRevurdering = true;
@@ -375,12 +339,20 @@ describe('<CreateNewBehandlingModal>', () => {
   it('skal filtrere bort førstegangsbehandling når denne ikke kan lages', () => {
     const behandlingstyper = [{
       kode: behandlingType.TILBAKEKREVING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.TILBAKEKREVING_REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.FORSTEGANGSSOKNAD,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }];
     const hasEnabledCreateNewBehandling = false;
     const hasEnabledCreateRevurdering = true;
@@ -403,12 +375,20 @@ describe('<CreateNewBehandlingModal>', () => {
   it('skal filtrere bort revurdering når denne ikke kan lages', () => {
     const behandlingstyper = [{
       kode: behandlingType.TILBAKEKREVING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.TILBAKEKREVING_REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.FORSTEGANGSSOKNAD,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }, {
       kode: behandlingType.REVURDERING,
+      navn: '',
+      kodeverk: 'BEHANDLING_TYPE',
     }];
     const hasEnabledCreateNewBehandling = true;
     const hasEnabledCreateRevurdering = false;

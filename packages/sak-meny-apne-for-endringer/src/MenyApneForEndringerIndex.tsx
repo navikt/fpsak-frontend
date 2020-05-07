@@ -21,7 +21,7 @@ export const getMenytekst = () => intl.formatMessage({ id: 'MenyApneForEndringer
 interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
-  openBehandlingForChanges: (params: {
+  apneBehandlingForEndringer: (params: {
     behandlingId: number;
     behandlingVersjon: number;
   }) => void;
@@ -31,7 +31,7 @@ interface OwnProps {
 const MenyApneForEndringerIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
-  openBehandlingForChanges,
+  apneBehandlingForEndringer,
   lukkModal,
 }) => {
   const submit = useCallback(() => {
@@ -39,7 +39,7 @@ const MenyApneForEndringerIndex: FunctionComponent<OwnProps> = ({
       behandlingId,
       behandlingVersjon,
     };
-    openBehandlingForChanges(params);
+    apneBehandlingForEndringer(params);
 
     lukkModal();
   }, [behandlingId, behandlingVersjon]);

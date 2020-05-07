@@ -17,29 +17,21 @@ export const getMenytekst = (erOpprettVerge: boolean) => intl.formatMessage({
 });
 
 interface OwnProps {
-  behandlingId?: number;
-  behandlingVersjon?: number;
-  fjernVerge?: (push: (location: string) => void, saksnummer: number, behandlingId: number, behandlingVersjon: number) => void;
-  opprettVerge?: (push: (location: string) => void, saksnummer: number, behandlingId: number, behandlingVersjon: number) => void;
-  saksnummer: number;
-  push: (location: string) => void;
+  fjernVerge?: () => void;
+  opprettVerge?: () => void;
   lukkModal: () => void;
 }
 
 const MenyVergeIndex: FunctionComponent<OwnProps> = ({
   fjernVerge,
   opprettVerge,
-  saksnummer,
-  behandlingId,
-  behandlingVersjon,
-  push,
   lukkModal,
 }) => {
   const submit = useCallback(() => {
     lukkModal();
     const operasjon = opprettVerge || fjernVerge;
-    return operasjon(push, saksnummer, behandlingId, behandlingVersjon);
-  }, [opprettVerge, fjernVerge, push, saksnummer, behandlingId, behandlingVersjon]);
+    return operasjon();
+  }, [opprettVerge, fjernVerge]);
 
   return (
     <RawIntlProvider value={intl}>

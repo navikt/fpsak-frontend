@@ -14,7 +14,7 @@ describe('<MenySettPaVentIndex>', () => {
     const wrapper = shallowWithIntl(<MenySettPaVentIndex
       behandlingId={3}
       behandlingVersjon={1}
-      setBehandlingOnHold={setBehandlingOnHoldCallback}
+      settBehandlingPaVent={setBehandlingOnHoldCallback}
       ventearsaker={[]}
       lukkModal={lukkModalCallback}
     />);

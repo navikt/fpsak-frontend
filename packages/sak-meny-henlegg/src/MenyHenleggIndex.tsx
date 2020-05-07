@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback, useState } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Kodeverk } from '@fpsak-frontend/types';
+import { Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import HenleggBehandlingModal from './components/HenleggBehandlingModal';
@@ -40,11 +40,11 @@ interface OwnProps {
     årsakKode: string;
     begrunnelse: string;
   }) => Promise<any>;
-  previewHenleggBehandling: () => void;
+  forhandsvisHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
   ytelseType: Kodeverk;
   behandlingType: Kodeverk;
   behandlingUuid: string;
-  menyKodeverk: {};
+  behandlingResultatTyper: KodeverkMedNavn[];
   gaaTilSokeside: () => void;
   lukkModal: () => void;
 }
@@ -53,11 +53,11 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   henleggBehandling,
-  previewHenleggBehandling,
+  forhandsvisHenleggBehandling,
   ytelseType,
   behandlingType,
   behandlingUuid,
-  menyKodeverk,
+  behandlingResultatTyper,
   gaaTilSokeside,
   lukkModal,
 }) => {
@@ -82,12 +82,12 @@ const MenyHenleggIndex: FunctionComponent<OwnProps> = ({
           showModal
           onSubmit={submit}
           cancelEvent={lukkModal}
-          previewHenleggBehandling={previewHenleggBehandling}
+          previewHenleggBehandling={forhandsvisHenleggBehandling}
           behandlingId={behandlingId}
           ytelseType={ytelseType}
           behandlingType={behandlingType}
           behandlingUuid={behandlingUuid}
-          menyKodeverk={menyKodeverk}
+          behandlingResultatTyper={behandlingResultatTyper}
         />
       )}
       {erHenlagt && (

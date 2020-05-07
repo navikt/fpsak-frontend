@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useCallback } from 'react';
 import { createSelector } from 'reselect';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
+import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
 import { Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
@@ -42,35 +43,54 @@ import {
   sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
 import MenyKodeverk from './MenyKodeverk';
-import MenyRettigheter from './MenyRettigheter';
 import Rettigheter from './rettigheterTsType';
+
+const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
+  bType.FORSTEGANGSSOKNAD,
+  bType.KLAGE,
+  bType.REVURDERING,
+  bType.DOKUMENTINNSYN,
+  bType.ANKE,
+  bType.TILBAKEKREVING,
+  bType.TILBAKEKREVING_REVURDERING,
+];
 
 interface OwnProps {
   saksnummer: number;
   behandlingId?: number;
   behandlingVersion?: number;
-  uuid?: string;
-  erKoet: boolean;
-  erPaVent: boolean;
   behandlingType: Kodeverk;
-  kanHenlegge: boolean;
-  navAnsatt: NavAnsatt;
   ytelseType: Kodeverk;
-  pushLocation: (location: string) => void;
+  fjernVerge: () => void;
+  opprettVerge: () => void;
+  erTilbakekrevingAktivert: boolean;
+}
+
+interface StateProps {
   behandlendeEnheter: {
     enhetId: string;
     enhetNavn: string;
   }[];
-  fjernVerge: () => void;
-  opprettVerge: () => void;
+  navAnsatt: NavAnsatt;
+  kanTilbakekrevingOpprettes: {
+    kanBehandlingOpprettes: boolean;
+    kanRevurderingOpprettes: boolean;
+  };
+  erTilbakekrevingAktivert: boolean;
+  uuid?: string;
+  uuidForSistLukkede?: string;
+  menyKodeverk: MenyKodeverk;
+  erKoet: boolean;
+  erPaVent: boolean;
   behandlendeEnhetId: string;
   behandlendeEnhetNavn: string;
-  menyKodeverk: MenyKodeverk;
-  previewHenleggBehandling: () => void;
-  lagNyBehandling: () => void;
-  kanTilbakekrevingOpprettes: boolean;
-  uuidForSistLukkede?: string;
-  erTilbakekrevingAktivert: boolean;
+  kanHenlegge: boolean;
+  rettigheter: Rettigheter;
+}
+
+interface DispatchProps {
+  previewHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
+  lagNyBehandling: (saksnummer: string, behandlingId: number, behandlingVersion: number, isTilbakekreving: boolean, params: {}) => void;
   sjekkTilbakeKanOpprettes: (params: {
     saksnummer: number;
     uuid: string;
@@ -78,10 +98,12 @@ interface OwnProps {
   sjekkTilbakeRevurdKanOpprettes: (params: {
     behandlingId: number;
   }) => void;
-  rettigheter: Rettigheter;
+  pushLocation: (location: string) => void;
 }
 
-const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
+type Props = OwnProps & StateProps & DispatchProps;
+
+const BehandlingMenuIndex: FunctionComponent<Props> = ({
   saksnummer,
   behandlingId,
   behandlingVersion,
@@ -127,7 +149,7 @@ const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             <MenyTaAvVentIndex
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersion}
-              resumeBehandling={resumeBehandling}
+              taBehandlingAvVent={resumeBehandling}
               lukkModal={lukkModal}
             />
           )),
@@ -136,7 +158,7 @@ const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             <MenySettPaVentIndex
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersion}
-              setBehandlingOnHold={setBehandlingOnHold}
+              settBehandlingPaVent={setBehandlingOnHold}
               ventearsaker={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.VENT_AARSAK)}
               lukkModal={lukkModal}
             />
@@ -146,12 +168,12 @@ const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             <MenyHenleggIndex
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersion}
-              previewHenleggBehandling={previewHenleggBehandling}
+              forhandsvisHenleggBehandling={previewHenleggBehandling}
               henleggBehandling={shelveBehandling}
               ytelseType={ytelseType}
               behandlingType={behandlingType}
               behandlingUuid={uuid}
-              menyKodeverk={menyKodeverk}
+              behandlingResultatTyper={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)}
               lukkModal={lukkModal}
               gaaTilSokeside={gaaTilSokeside}
             />
@@ -174,7 +196,7 @@ const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
             <MenyApneForEndringerIndex
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersion}
-              openBehandlingForChanges={openBehandlingForChanges}
+              apneBehandlingForEndringer={openBehandlingForChanges}
               lukkModal={lukkModal}
             />
           )),
@@ -191,8 +213,10 @@ const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
               opprettRevurderingEnabled={rettigheter.opprettRevurderingAccess.employeeHasAccess && rettigheter.opprettRevurderingAccess.isEnabled}
               kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
               erTilbakekrevingAktivert={erTilbakekrevingAktivert}
-              push={pushLocation}
-              menyKodeverk={menyKodeverk}
+              behandlingstyper={menyKodeverk
+                .getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE)}
+              tilbakekrevingRevurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(bType.TILBAKEKREVING_REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)}
+              revurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(bType.REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)}
               ytelseType={ytelseType}
               lagNyBehandling={lagNyBehandling}
               sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
@@ -203,12 +227,8 @@ const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
         new MenyData(opprettVerge || fjernVerge, getVergeMenytekst(!!opprettVerge))
           .medModal((lukkModal) => (
             <MenyVergeIndex
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersion}
               fjernVerge={fjernVerge}
               opprettVerge={opprettVerge}
-              push={pushLocation}
-              saksnummer={saksnummer}
               lukkModal={lukkModal}
             />
           )),
@@ -241,7 +261,7 @@ const getMenyRettigheter = createSelector([
   getBehandlingErPapirsoknad,
   getBehandlingType,
   (_state, ownProps) => ownProps.menyhandlingRettigheter,
-], (navAnsatt,
+], (navAnsatt: NavAnsatt,
   fagsakStatus,
   kanRevurderingOpprettes,
   skalBehandlesAvInfotrygd,
@@ -249,11 +269,11 @@ const getMenyRettigheter = createSelector([
   behandlingStatus,
   erIInnhentSoknadopplysningerSteg,
   behandlingType,
-  menyhandlingRettigheter) => new MenyRettigheter(allMenuAccessRights(navAnsatt, fagsakStatus,
+  menyhandlingRettigheter) => allMenuAccessRights(navAnsatt, fagsakStatus,
   kanRevurderingOpprettes, skalBehandlesAvInfotrygd,
-  sakstype, behandlingStatus, menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false, erIInnhentSoknadopplysningerSteg, behandlingType)));
+  sakstype, behandlingStatus, menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false, erIInnhentSoknadopplysningerSteg, behandlingType));
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps): StateProps => ({
   behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
   navAnsatt: getNavAnsatt(state),
   kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
@@ -269,9 +289,9 @@ const mapStateToProps = (state, ownProps) => ({
   rettigheter: getMenyRettigheter(state, ownProps),
 });
 
-const mapDispatchToProps = (dispatch, { location }) => bindActionCreators({
+const mapDispatchToProps = (dispatch: Dispatch, { location }): DispatchProps => bindActionCreators({
   previewHenleggBehandling: previewMessage,
-  lagNyBehandling: createNewBehandling(location),
+  lagNyBehandling: createNewBehandling(location, push),
   sjekkTilbakeKanOpprettes: sjekkOmTilbakekrevingKanOpprettes,
   sjekkTilbakeRevurdKanOpprettes: sjekkOmTilbakekrevingRevurderingKanOpprettes,
   pushLocation: push,

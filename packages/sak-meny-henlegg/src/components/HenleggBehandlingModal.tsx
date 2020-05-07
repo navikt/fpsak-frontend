@@ -9,12 +9,11 @@ import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { Kodeverk } from '@fpsak-frontend/types';
+import { Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import styles from './henleggBehandlingModal.less';
 
@@ -43,10 +42,13 @@ interface OwnProps {
   behandlingUuid?: string;
   ytelseType: Kodeverk;
   behandlingId?: number;
-  showLink: boolean;
-  henleggArsaker: Kodeverk[];
+}
+
+interface StateProps {
   årsakKode?: string;
   begrunnelse?: string;
+  henleggArsaker: Kodeverk[];
+  showLink: boolean;
   behandlingTypeKode: string;
 }
 
@@ -56,7 +58,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises når saksbehandler valger 'Henlegg behandling og avslutt'.
  * Ved å angi årsak og begrunnelse og trykke på 'Henlegg behandling' blir behandlingen henlagt og avsluttet.
  */
-export const HenleggBehandlingModalImpl: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const HenleggBehandlingModalImpl: FunctionComponent<OwnProps & StateProps & WrappedComponentProps & InjectedFormProps> = ({
   handleSubmit,
   cancelEvent,
   previewHenleggBehandling,
@@ -154,9 +156,14 @@ const henleggArsakerPerBehandlingType = {
     behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER],
 };
 
+interface Props {
+  behandlingResultatTyper: KodeverkMedNavn[];
+  behandlingType: Kodeverk;
+}
+
 export const getHenleggArsaker = createSelector([
-  (ownProps) => ownProps.menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE),
-  (ownProps) => ownProps.behandlingType],
+  (ownProps: Props) => ownProps.behandlingResultatTyper,
+  (ownProps: Props) => ownProps.behandlingType],
 (behandlingResultatTyper, bType) => {
   const typerForBehandlingType = henleggArsakerPerBehandlingType[bType.kode];
   const typer = typerForBehandlingType || henleggArsakerPerBehandlingType.OTHER;
@@ -175,7 +182,7 @@ const getShowLink = createSelector([
 });
 
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state, ownProps): StateProps => ({
   årsakKode: formValueSelector('HenleggBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('HenleggBehandlingModal')(state, 'begrunnelse'),
   henleggArsaker: getHenleggArsaker(ownProps),
@@ -187,4 +194,5 @@ const HenleggBehandlingModal = reduxForm({
   form: 'HenleggBehandlingModal',
 })(HenleggBehandlingModalImpl);
 
+// @ts-ignore Fiks denne
 export default connect(mapStateToProps)(injectIntl(HenleggBehandlingModal));

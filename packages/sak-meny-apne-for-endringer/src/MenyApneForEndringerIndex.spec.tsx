@@ -15,7 +15,7 @@ describe('<MenyApneForEndringerIndex>', () => {
     const wrapper = shallowWithIntl(<MenyApneForEndringerIndex
       behandlingId={3}
       behandlingVersjon={1}
-      openBehandlingForChanges={apneForEndringerCallback}
+      apneBehandlingForEndringer={apneForEndringerCallback}
       lukkModal={lukkModalCallback}
     />);
 

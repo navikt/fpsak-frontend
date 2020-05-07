@@ -12,11 +12,10 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { KodeverkMedNavn } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
 import styles from './nyBehandlingModal.less';
 
@@ -88,12 +87,11 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
       contentLabel={intl.formatMessage({ id: 'MenyNyBehandlingIndex.ModalDescription' })}
       onRequestClose={cancelEvent}
       shouldCloseOnOverlayClick={false}
-      ariaHideApp={false}
     >
       <form onSubmit={handleSubmit}>
         <Row>
           <Column xs="1">
-            <Image className={styles.image} altCode="MenyNyBehandlingIndex.OpprettNyForstegangsbehandling" src={innvilgetImageUrl} />
+            <Image className={styles.image} src={innvilgetImageUrl} />
             <div className={styles.divider} />
           </Column>
           <Column xs="11">
@@ -194,12 +192,13 @@ const tilbakekrevingRevurderingArsaker = [
 ];
 
 export const getBehandlingAarsaker = createSelector([
-  (state, ownProps) => ownProps.ytelseType,
-  (state, ownProps) => ownProps.menyKodeverk,
+  (_state, ownProps) => ownProps.ytelseType,
+  (_state, ownProps) => ownProps.revurderingArsaker,
+  (_state, ownProps) => ownProps.tilbakekrevingRevurderingArsaker,
   (state) => formValueSelector(formName)(state, 'behandlingType')],
-(ytelseType, menyKodeverk, valgtBehandlingType) => {
+(ytelseType, alleRevurderingArsaker, alleTilbakekrevingRevurderingArsaker, valgtBehandlingType) => {
   if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
-    return menyKodeverk.getKodeverkForBehandlingstype(bType.TILBAKEKREVING_REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
+    return alleTilbakekrevingRevurderingArsaker
       .filter((ba) => tilbakekrevingRevurderingArsaker.includes(ba.kode))
       .sort((ba1, ba2) => ba1.navn.localeCompare(ba2.navn));
   }
@@ -211,7 +210,7 @@ export const getBehandlingAarsaker = createSelector([
     if (isSvangerskap) {
       manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
     }
-    return menyKodeverk.getKodeverkForBehandlingstype(bType.REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
+    return alleRevurderingArsaker
       .filter((bat) => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
       .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
   }
@@ -219,32 +218,36 @@ export const getBehandlingAarsaker = createSelector([
   return [];
 });
 
-const BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES = [
-  bType.FORSTEGANGSSOKNAD,
-  bType.KLAGE,
-  bType.REVURDERING,
-  bType.DOKUMENTINNSYN,
-  bType.ANKE,
-  bType.TILBAKEKREVING,
-  bType.TILBAKEKREVING_REVURDERING,
-];
 
-export const getBehandlingTyper = createSelector([(ownProps) => ownProps.menyKodeverk], (menyKodeverk) => menyKodeverk
-  .getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE)
-  .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)));
+interface Props {
+  behandlingstyper: KodeverkMedNavn[];
+  hasEnabledCreateNewBehandling: boolean;
+  hasEnabledCreateRevurdering: boolean;
+  kanTilbakekrevingOpprettes?: {
+    kanBehandlingOpprettes: boolean;
+    kanRevurderingOpprettes: boolean;
+  };
+  behandlingType: Kodeverk;
+}
+
+export const getBehandlingTyper = createSelector([(ownProps: Props) => ownProps.behandlingstyper],
+  (behandlingstyper) => behandlingstyper.sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)));
 
 export const getEnabledBehandlingstyper = createSelector([
   getBehandlingTyper,
   (ownProps) => ownProps.hasEnabledCreateNewBehandling,
   (ownProps) => ownProps.hasEnabledCreateRevurdering,
   (ownProps) => ownProps.kanTilbakekrevingOpprettes],
-(behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, kanTilbakekrevingOpprettes = {}) => behandlingstyper
+(behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, kanTilbakekrevingOpprettes = {
+  kanBehandlingOpprettes: false,
+  kanRevurderingOpprettes: false,
+}) => behandlingstyper
   .filter((b) => (b.kode === bType.TILBAKEKREVING ? kanTilbakekrevingOpprettes.kanBehandlingOpprettes : true))
   .filter((b) => (b.kode === bType.TILBAKEKREVING_REVURDERING ? kanTilbakekrevingOpprettes.kanRevurderingOpprettes : true))
   .filter((b) => (b.kode === bType.FORSTEGANGSSOKNAD ? hasEnabledCreateNewBehandling : true))
   .filter((b) => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)));
 
-const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector([(ownProps) => ownProps.behandlingType],
+const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector([(ownProps: Props) => ownProps.behandlingType],
   (behandlingType) => behandlingType && (behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING));
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { RouteProps } from 'react-router';
+import { push } from 'connected-react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk } from '@fpsak-frontend/types';
@@ -36,6 +37,7 @@ interface OwnProps {
   resetVerge: () => void;
   vergeMenyvalg: string;
   location: RouteProps['location'];
+  pushLocation: (location: string) => void;
 }
 
 const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
@@ -48,6 +50,7 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
   resetVerge,
   vergeMenyvalg,
   location,
+  pushLocation,
 }) => {
   const ref = useRef<{ behandlingId: number; behandlingVersion: number}>();
   useEffect(() => {
@@ -64,8 +67,10 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
     };
   }, [behandlingId, behandlingVersion]);
 
-  const fjernVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge(location) : undefined;
-  const opprettVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT ? opprettVerge(location) : undefined;
+  const fjernVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN
+    ? fjernVerge(location, pushLocation, saksnummer, behandlingId, behandlingVersion) : undefined;
+  const opprettVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT
+    ? opprettVerge(location, pushLocation, saksnummer, behandlingId, behandlingVersion) : undefined;
 
 
   return (
@@ -108,6 +113,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   hentVerge: hentVergeMenyvalg,
   resetVerge: resetVergeMenyvalg,
+  pushLocation: push,
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuDataResolver));

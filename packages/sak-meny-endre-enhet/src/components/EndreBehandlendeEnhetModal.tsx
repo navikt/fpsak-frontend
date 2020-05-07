@@ -24,6 +24,9 @@ interface OwnProps {
   }[];
   gjeldendeBehandlendeEnhetId?: string;
   gjeldendeBehandlendeEnhetNavn?: string;
+}
+
+interface StateProps {
   nyEnhet?: string;
   begrunnelse?: string;
 }
@@ -34,7 +37,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises når saksbehandler valger 'Bytt behandlende enhet'.
  * Ved å angi ny enhet og begrunnelse og trykke på 'OK' blir behandlende enhet endret.
  */
-export const EndreBehandlendeEnhetModal: FunctionComponent<OwnProps & WrappedComponentProps & InjectedFormProps> = ({
+export const EndreBehandlendeEnhetModal: FunctionComponent<OwnProps & StateProps & WrappedComponentProps & InjectedFormProps> = ({
   intl,
   handleSubmit,
   lukkModal,
@@ -123,7 +126,7 @@ export const EndreBehandlendeEnhetModal: FunctionComponent<OwnProps & WrappedCom
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state): StateProps => ({
   nyEnhet: formValueSelector('ChangeBehandlendeEnhetModal')(state, 'nyEnhet'),
   begrunnelse: formValueSelector('ChangeBehandlendeEnhetModal')(state, 'begrunnelse'),
 });

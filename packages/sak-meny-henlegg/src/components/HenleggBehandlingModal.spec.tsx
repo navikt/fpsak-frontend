@@ -90,45 +90,57 @@ describe('<HenleggBehandlingModal>', () => {
 
   const behandlingResultatTyper = [{
     kode: behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
+    kodeverk: 'BEHANDLING_RESULT_TYPE',
+    navn: '',
   }, {
     kode: behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    kodeverk: 'BEHANDLING_RESULT_TYPE',
+    navn: '',
   }, {
     kode: behandlingResultatType.HENLAGT_INNSYN_TRUKKET,
+    kodeverk: 'BEHANDLING_RESULT_TYPE',
+    navn: '',
   }, {
     kode: behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
+    kodeverk: 'BEHANDLING_RESULT_TYPE',
+    navn: '',
   }, {
     kode: behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
+    kodeverk: 'BEHANDLING_RESULT_TYPE',
+    navn: '',
   }, {
     kode: behandlingResultatType.MANGLER_BEREGNINGSREGLER,
+    kodeverk: 'BEHANDLING_RESULT_TYPE',
+    navn: '',
   }];
 
   it('skal bruke behandlingsresultat-typer for klage', () => {
-    const behandlingsType = { kode: behandlingType.KLAGE };
+    const behandlingsType = { kode: behandlingType.KLAGE, kodeverk: 'BEHANDLING_TYPE' };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
     expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_KLAGE_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
   it('skal bruke behandlingsresultat-typer for innsyn', () => {
-    const behandlingsType = { kode: behandlingType.DOKUMENTINNSYN };
+    const behandlingsType = { kode: behandlingType.DOKUMENTINNSYN, kodeverk: 'BEHANDLING_TYPE' };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
     expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
   it('skal bruke behandlingsresultat-typer for tilbakekreving', () => {
-    const behandlingsType = { kode: behandlingType.TILBAKEKREVING };
+    const behandlingsType = { kode: behandlingType.TILBAKEKREVING, kodeverk: 'BEHANDLING_TYPE' };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
     expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
   it('skal bruke behandlingsresultat-typer for revudering', () => {
-    const behandlingsType = { kode: behandlingType.REVURDERING };
+    const behandlingsType = { kode: behandlingType.REVURDERING, kodeverk: 'BEHANDLING_TYPE' };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
     expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
       behandlingResultatType.HENLAGT_SOKNAD_MANGLER]);
   });
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling', () => {
-    const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD };
+    const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD, kodeverk: 'BEHANDLING_TYPE' };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
     expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
       behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER]);

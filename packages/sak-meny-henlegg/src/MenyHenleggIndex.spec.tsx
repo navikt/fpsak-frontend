@@ -19,7 +19,7 @@ describe('<MenyHenleggIndex>', () => {
       behandlingId={3}
       behandlingVersjon={1}
       henleggBehandling={henleggBehandlingCallback}
-      previewHenleggBehandling={sinon.spy()}
+      forhandsvisHenleggBehandling={sinon.spy()}
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
         kodeverk: 'FAGSAK_YTELSE_TYPE',
@@ -29,7 +29,7 @@ describe('<MenyHenleggIndex>', () => {
         kodeverk: 'BEHANDLING_TYPE',
       }}
       behandlingUuid="2323"
-      menyKodeverk={{}}
+      behandlingResultatTyper={[]}
       gaaTilSokeside={sinon.spy()}
       lukkModal={lukkModalCallback}
     />);

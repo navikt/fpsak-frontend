@@ -22,7 +22,7 @@ export const getMenytekst = () => intl.formatMessage({ id: 'MenySettPaVentIndex.
 interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
-  setBehandlingOnHold: (params: {
+  settBehandlingPaVent: (params: {
     behandlingVersjon: number;
     behandlingId: number;
     frist: string;
@@ -35,7 +35,7 @@ interface OwnProps {
 const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
-  setBehandlingOnHold,
+  settBehandlingPaVent,
   ventearsaker,
   lukkModal,
 }) => {
@@ -46,7 +46,7 @@ const MenySettPaVentIndex: FunctionComponent<OwnProps> = ({
       frist: formValues.frist,
       ventearsak: formValues.ventearsak,
     };
-    setBehandlingOnHold(values);
+    settBehandlingPaVent(values);
 
     lukkModal();
   }, [behandlingId, behandlingVersjon]);

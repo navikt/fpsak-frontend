@@ -68,7 +68,7 @@ describe('BehandlingMenu-reducer', () => {
     const params = { behandlingType: 'revurdering' };
     const isTilbakekreving = false;
 
-    return store.dispatch(createNewBehandling(locationMock)(push, fagsak.saksnummer, 1, 2, isTilbakekreving, params))
+    return store.dispatch(createNewBehandling(locationMock, push)(fagsak.saksnummer, 1, 2, isTilbakekreving, params))
       .then(() => {
         expect(store.getActions()).to.have.length(7);
         const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
@@ -120,7 +120,7 @@ describe('BehandlingMenu-reducer', () => {
     const params = { behandlingType: 'revurdering' };
     const isTilbakekreving = false;
 
-    return store.dispatch(createNewBehandling(locationMock)(push, 1, 1, 2, isTilbakekreving, params))
+    return store.dispatch(createNewBehandling(locationMock, push)(1, 1, 2, isTilbakekreving, params))
       .then(() => {
         expect(store.getActions()).to.have.length(4);
         const [requestStartedAction, requestFinishedAction] = store.getActions();

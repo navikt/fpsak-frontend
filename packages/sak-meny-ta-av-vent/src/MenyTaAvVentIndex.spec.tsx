@@ -15,7 +15,7 @@ describe('<MenyTaAvVentIndex>', () => {
     const wrapper = shallowWithIntl(<MenyTaAvVentIndex
       behandlingId={3}
       behandlingVersjon={1}
-      resumeBehandling={resumeBehandlingCallback}
+      taBehandlingAvVent={resumeBehandlingCallback}
       lukkModal={lukkModalCallback}
     />);
 

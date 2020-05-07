@@ -63,6 +63,7 @@ const EndreBehandlendeEnhetIndex: FunctionComponent<OwnProps> = ({
   return (
     <RawIntlProvider value={intl}>
       <EndreBehandlendeEnhetModal
+        // @ts-ignore Fiks denne
         lukkModal={lukkModal}
         behandlendeEnheter={filtrerteBehandlendeEnheter}
         gjeldendeBehandlendeEnhetId={behandlendeEnhetId}
