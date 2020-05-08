@@ -15,7 +15,7 @@ const intl = createIntl({
 export const skalViseIMeny = (behandlingId, behandlendeEnheter, erKoet, byttBehandlendeEnhetAccess) => !!behandlingId
   && behandlendeEnheter && !erKoet && byttBehandlendeEnhetAccess.employeeHasAccess && byttBehandlendeEnhetAccess.isEnabled;
 
-export const getMenytekst = () => intl.formatMessage({ id: 'EndreBehandlendeEnhetIndex.ByttBehandlendeEnhet' });
+export const getMenytekst = () => intl.formatMessage({ id: 'MenyEndreBehandlendeEnhetIndex.ByttBehandlendeEnhet' });
 
 interface OwnProps {
   behandlingId?: number;
@@ -36,7 +36,7 @@ interface OwnProps {
   lukkModal: () => void;
 }
 
-const EndreBehandlendeEnhetIndex: FunctionComponent<OwnProps> = ({
+const MenyEndreBehandlendeEnhetIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   behandlendeEnhetId,
@@ -74,4 +74,4 @@ const EndreBehandlendeEnhetIndex: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default EndreBehandlendeEnhetIndex;
+export default MenyEndreBehandlendeEnhetIndex;

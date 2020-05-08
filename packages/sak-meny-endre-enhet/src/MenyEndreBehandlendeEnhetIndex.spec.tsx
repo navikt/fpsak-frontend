@@ -4,14 +4,14 @@ import { expect } from 'chai';
 
 import EndreBehandlendeEnhetModal from './components/EndreBehandlendeEnhetModal';
 import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-meny';
-import EndreBehandlendeEnhetIndex from './EndreBehandlendeEnhetIndex';
+import MenyEndreBehandlendeEnhetIndex from './MenyEndreBehandlendeEnhetIndex';
 
-describe('<EndreBehandlendeEnhetIndex>', () => {
+describe('<MenyEndreBehandlendeEnhetIndex>', () => {
   it('skal vise modal og så lagre ny enhet', () => {
     const nyBehandlendeEnhetCallback = sinon.spy();
     const lukkModalCallback = sinon.spy();
 
-    const wrapper = shallowWithIntl(<EndreBehandlendeEnhetIndex
+    const wrapper = shallowWithIntl(<MenyEndreBehandlendeEnhetIndex
       behandlingId={3}
       behandlingVersjon={1}
       behandlendeEnhetId="NAVV"

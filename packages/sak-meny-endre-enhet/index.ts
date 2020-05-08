@@ -1,1 +1,1 @@
-export { default, skalViseIMeny, getMenytekst } from './src/EndreBehandlendeEnhetIndex';
+export { default, skalViseIMeny, getMenytekst } from './src/MenyEndreBehandlendeEnhetIndex';
