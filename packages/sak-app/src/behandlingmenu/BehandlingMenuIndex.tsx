@@ -71,7 +71,7 @@ interface StateProps {
     enhetId: string;
     enhetNavn: string;
   }[];
-  navAnsatt: NavAnsatt;
+  kanVeilede: boolean;
   kanTilbakekrevingOpprettes: {
     kanBehandlingOpprettes: boolean;
     kanRevurderingOpprettes: boolean;
@@ -102,7 +102,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-const BehandlingMenuIndex: FunctionComponent<Props> = ({
+export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   saksnummer,
   behandlingId,
   behandlingVersion,
@@ -111,7 +111,7 @@ const BehandlingMenuIndex: FunctionComponent<Props> = ({
   erPaVent,
   behandlingType,
   kanHenlegge,
-  navAnsatt,
+  kanVeilede,
   ytelseType,
   fjernVerge,
   opprettVerge,
@@ -134,7 +134,7 @@ const BehandlingMenuIndex: FunctionComponent<Props> = ({
     && !rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess
     && !rettigheter.opprettRevurderingAccess.employeeHasAccess
     && !rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
-    && !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess) || navAnsatt.kanVeilede) {
+    && !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess) || kanVeilede) {
     return null;
   }
 
@@ -223,7 +223,7 @@ const BehandlingMenuIndex: FunctionComponent<Props> = ({
               lukkModal={lukkModal}
             />
           )),
-        new MenyData(opprettVerge || fjernVerge, getVergeMenytekst(!!opprettVerge))
+        new MenyData(!!opprettVerge || !!fjernVerge, getVergeMenytekst(!!opprettVerge))
           .medModal((lukkModal) => (
             <MenyVergeIndex
               fjernVerge={fjernVerge}
@@ -274,7 +274,7 @@ const getMenyRettigheter = createSelector([
 
 const mapStateToProps = (state, ownProps): StateProps => ({
   behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
-  navAnsatt: getNavAnsatt(state),
+  kanVeilede: getNavAnsatt(state).kanVeilede,
   kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
   erTilbakekrevingAktivert: getEnabledApplicationContexts(state).includes(ApplicationContextPath.FPTILBAKE),
   uuid: ownProps.behandlingId ? getBehandlingerUuidsMappedById(state)[ownProps.behandlingId] : undefined,

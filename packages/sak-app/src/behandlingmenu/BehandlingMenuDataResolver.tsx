@@ -1,8 +1,8 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { RouteProps } from 'react-router';
+import { bindActionCreators, Dispatch } from 'redux';
 import { push } from 'connected-react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -28,19 +28,25 @@ const VERGE_MENYVALG = {
 };
 
 interface OwnProps {
+  location: RouteProps['location'];
+}
+
+interface StateProps {
   saksnummer: number;
   ytelseType: Kodeverk;
   behandlingId?: number;
   behandlingVersion?: number;
   behandlingType?: Kodeverk;
+  vergeMenyvalg: string;
+}
+
+interface DispatchProps {
   hentVerge: (params: { behandlingId: number; saksnummer: string }) => void;
   resetVerge: () => void;
-  vergeMenyvalg: string;
-  location: RouteProps['location'];
   pushLocation: (location: string) => void;
 }
 
-const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
+const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
   saksnummer,
   ytelseType,
   behandlingId,
@@ -98,7 +104,7 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state): StateProps => {
   const vergeMenyvalg = fpsakApi.VERGE_MENYVALG.getRestApiData()(state);
   const behandlingType = getBehandlingType(state);
   return {
@@ -112,7 +118,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => bindActionCreators({
   hentVerge: hentVergeMenyvalg,
   resetVerge: resetVergeMenyvalg,
   pushLocation: push,
