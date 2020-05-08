@@ -55,6 +55,10 @@ interface OwnProps {
   createAddButtonInsteadOfImageLink?: boolean;
 }
 
+const finnFeilmelding = (intl, meta) => (Array.isArray(meta.error)
+  ? intl.formatMessage({ id: meta.error[0].id }, meta.error[0].values)
+  : intl.formatMessage({ id: meta.error.id }, meta.error.values));
+
 /**
  * PeriodFieldArray
  *
@@ -77,7 +81,7 @@ const PeriodFieldArray: FunctionComponent<OwnProps & WrappedComponentProps> = ({
 }) => (
   <NavFieldGroup
     title={titleTextCode ? intl.formatMessage({ id: titleTextCode }) : undefined}
-    errorMessage={showErrorMessage(meta) ? intl.formatMessage({ id: meta.error.id }, meta.error.values) : null}
+    errorMessage={showErrorMessage(meta) ? finnFeilmelding(intl, meta) : null}
   >
     {fields.map((periodeElementFieldId, index) => children(periodeElementFieldId, index, getRemoveButton(index, fields)))}
     {shouldShowAddButton && (
