@@ -90,6 +90,8 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps> = ({
           menyhandlingRettigheter={dataProps.menyhandlingRettigheter}
           fjernVerge={fjernVergeFn}
           opprettVerge={opprettVergeFn}
+          location={location}
+          pushLocation={pushLocation}
         />
       )}
     />

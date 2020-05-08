@@ -2,7 +2,6 @@ import React, { FunctionComponent, useCallback } from 'react';
 import { createSelector } from 'reselect';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -64,6 +63,7 @@ interface OwnProps {
   fjernVerge: () => void;
   opprettVerge: () => void;
   erTilbakekrevingAktivert: boolean;
+  pushLocation: (location: string) => void;
 }
 
 interface StateProps {
@@ -98,7 +98,6 @@ interface DispatchProps {
   sjekkTilbakeRevurdKanOpprettes: (params: {
     behandlingId: number;
   }) => void;
-  pushLocation: (location: string) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -281,20 +280,19 @@ const mapStateToProps = (state, ownProps): StateProps => ({
   uuid: ownProps.behandlingId ? getBehandlingerUuidsMappedById(state)[ownProps.behandlingId] : undefined,
   uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
   menyKodeverk: getMenyKodeverk(state),
-  erKoet: erBehandlingPaVent(state),
-  erPaVent: erBehandlingKoet(state),
+  erKoet: erBehandlingKoet(state),
+  erPaVent: erBehandlingPaVent(state),
   behandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
   behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
   kanHenlegge: getKanHenleggeBehandling(state),
   rettigheter: getMenyRettigheter(state, ownProps),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, { location }): DispatchProps => bindActionCreators({
+const mapDispatchToProps = (dispatch: Dispatch, { location, pushLocation }): DispatchProps => bindActionCreators({
   previewHenleggBehandling: previewMessage,
-  lagNyBehandling: createNewBehandling(location, push),
+  lagNyBehandling: createNewBehandling(location, pushLocation),
   sjekkTilbakeKanOpprettes: sjekkOmTilbakekrevingKanOpprettes,
   sjekkTilbakeRevurdKanOpprettes: sjekkOmTilbakekrevingRevurderingKanOpprettes,
-  pushLocation: push,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuIndex);
