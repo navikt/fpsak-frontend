@@ -31,10 +31,7 @@ describe('<MenyEndreBehandlendeEnhetIndex>', () => {
     expect(modal).to.have.length(1);
 
     modal.prop('onSubmit')({
-      nyEnhet: {
-        enhetNavn: 'TEST ENHET',
-        enhetId: 'TEST',
-      },
+      nyEnhet: '0',
       begrunnelse: 'Dette er en begrunnelse',
     });
 
