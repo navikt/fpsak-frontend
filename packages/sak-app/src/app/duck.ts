@@ -59,8 +59,21 @@ reducerRegistry.register(reducerName, appReducer);
 const getAppContext = (state) => state.default[reducerName];
 const getDisabledApplicationContexts = createSelector([getAppContext], (appContext) => appContext.disabledApplicationContexts);
 
+const DEFAULT_NAV_ANSATT = {
+  brukernavn: '',
+  kanBehandleKode6: false,
+  kanBehandleKode7: false,
+  kanBehandleKodeEgenAnsatt: false,
+  kanBeslutte: false,
+  kanOverstyre: false,
+  kanSaksbehandle: false,
+  kanVeilede: false,
+  navn: '',
+};
+
 /* Selectors */
-export const getNavAnsatt = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()], (navAnsattData) => navAnsattData || {});
+export const getNavAnsatt = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()], (navAnsattData:
+  NavAnsatt): NavAnsatt => navAnsattData || DEFAULT_NAV_ANSATT);
 export const getNavAnsattName = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.navn);
 export const getFunksjonellTid = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.funksjonellTid);
 export const getFeatureToggles = createSelector([fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData: { featureToggles: {}}) => (ftData

@@ -42,7 +42,7 @@
   "ToTrinnsForm.Beregning.VurderBesteberegning": "Det er vurdert om beregningsgrunnlaget skal fordeles etter besteberegning.",
   "ToTrinnsForm.Beregning.VurderMilitærSiviltjeneste": "Det er vurdert om søker har hatt militær -eller siviltjeneste i opptjeningsperioden",
   "ToTrinnsForm.Beregning.VurderRefusjonskrav": "Det er vurdert om refusjonskrav om er fremsatt etter fristen skal tas med i beregning.",
-
+  "ToTrinnsForm.Beregning.VilkarOverstyrt": "Beregning er overstyrt",
   "ToTrinnsForm.Godkjenn": "Godkjenn vedtaket",
   "ToTrinnsForm.SendTilbake": "Send til saksbehandler",
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",

@@ -3192,6 +3192,16 @@
     nav-frontend-typografi "^2.0.16"
     nav-frontend-typografi-style "^1.0.17"
 
+"@navikt/boxed-list-with-selection@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@navikt/boxed-list-with-selection/-/boxed-list-with-selection-1.0.1.tgz#a36dc767125d21794daab6710e3c76d5b46e85d8"
+  integrity sha512-pKbm4gxWkyOoSUlr0/2eS4KT9RRdxkA15dexFXVTD7i8ocMOHHxW6jNLlK2/xXHHEiDuKRMZavOOv+77hTU4ow==
+  dependencies:
+    "@navikt/boxed-list" "1.0.2"
+    "@navikt/nap-bem-utils" "1.0.1"
+    nav-frontend-typografi "^2.0.16"
+    nav-frontend-typografi-style "^1.0.17"
+
 "@navikt/boxed-list@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@navikt/boxed-list/-/boxed-list-1.0.2.tgz#9b9d4142b13184bdc39d1ad99baa9a1ee04213ec"

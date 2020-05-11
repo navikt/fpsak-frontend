@@ -21,7 +21,7 @@ import {
 import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
-import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';
+import BehandlingMenuDataResolver from '../behandlingmenu/BehandlingMenuDataResolver';
 import fpsakApi from '../data/fpsakApi';
 import {
   getFagsakYtelseType,
@@ -119,7 +119,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
               dekningsgrad={dekningsgrad}
               fagsakStatus={fagsakStatus}
               alleKodeverk={alleKodeverk}
-              renderBehandlingMeny={() => <BehandlingMenuIndex />}
+              renderBehandlingMeny={() => <BehandlingMenuDataResolver />}
               renderBehandlingVelger={() => (
                 <BehandlingVelgerSakIndex
                   behandlinger={alleBehandlinger}
