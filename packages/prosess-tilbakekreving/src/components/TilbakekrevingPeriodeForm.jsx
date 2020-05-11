@@ -74,12 +74,6 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     andelSomTilbakekreves: undefined,
   };
 
-  constructor(props) {
-    super(props);
-
-    this.onEndrePeriodeForKopi = this.onEndrePeriodeForKopi.bind(this);
-  }
-
   resetFields = () => {
     const {
       behandlingFormPrefix, clearFields: clearFormFields, valgtVilkarResultatType,
@@ -166,7 +160,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       ...formProps
     } = this.props;
     const { showModal } = this.state;
-    const vurdertePerioder = vilkarsVurdertePerioder.filter((per) => !per.erForeldet && per.valgtVilkarResultatType !== undefined);
+    const vurdertePerioder = vilkarsVurdertePerioder.filter((per) => !per.erForeldet && per.valgtVilkarResultatType != null);
     return (
       <div className={styles.container}>
         <TilbakekrevingTimelineData
