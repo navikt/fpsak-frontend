@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
@@ -64,7 +65,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     expect(wrapper.find(ForeldetFormPanel)).to.have.length(1);
   });
 
-  it('skal vise panel for periode', () => {
+  it('skal teste kopiering av vilkårsvudering for periode', () => {
     const periode = {
       erForeldet: false,
       begrunnelse: null,
@@ -113,6 +114,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       },
     ];
 
+    const changeValue = sinon.spy();
     const wrapper = shallow(<TilbakekrevingPeriodeFormImpl
       periode={periode}
       data={periode}
@@ -137,6 +139,7 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       intl={intlMock}
       vilkarsVurdertePerioder={vilkårsPerioder}
       {...reduxFormPropsMock}
+      change={changeValue}
     />);
 
     // Tester om nedtrekksmenyen for perioder som kan kopieres vises
@@ -144,6 +147,20 @@ describe('<TilbakekrevingPeriodeForm>', () => {
     expect(selectField).to.have.lengthOf(1);
     const values = selectField.props().selectValues;
     expect(values).to.have.lengthOf(2);
+
+    selectField.props().onChange({
+      preventDefault: () => {},
+      target: {
+        value: '2020-03-15_2020-03-31',
+      },
+    }, vilkårsPerioder);
+
+    const changeValueCalls = changeValue.getCalls();
+    expect(changeValueCalls).to.have.length(4);
+    expect(changeValueCalls[0].args[1]).to.be.eql(vilkårsPerioder[1].valgtVilkarResultatType);
+    expect(changeValueCalls[1].args[1]).to.be.eql(vilkårsPerioder[1].begrunnelse);
+    expect(changeValueCalls[2].args[1]).to.be.eql(vilkårsPerioder[1].vurderingBegrunnelse);
+    expect(changeValueCalls[3].args[1]).to.be.eql(vilkårsPerioder[1][vilkarResultat.FORSTO_BURDE_FORSTAATT]);
   });
 
   // TODO (TOR) Skriv fleire testar
