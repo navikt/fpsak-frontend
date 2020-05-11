@@ -71,7 +71,8 @@ describe('<FagsakSearchIndex>', () => {
     />);
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
-    fagsakSearchIndex.prop('selectFagsakCallback')('', fagsak.saksnummer);
+    const velgFagsak = fagsakSearchIndex.prop('selectFagsakCallback') as (event: {}, saksnummer: number) => undefined;
+    velgFagsak('', fagsak.saksnummer);
 
     expect(pushCallback.calledOnce).to.be.true;
     const { args } = pushCallback.getCalls()[0];
