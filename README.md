@@ -9,7 +9,7 @@ Monorepo for Frontend kode for vl-foreldrepenger.
 ## Storybook
 https://navikt.github.io/fpsak-frontend
 
-## Komme i gang
+## For å komme i gang
 ````
 yarn install
 yarn dev
