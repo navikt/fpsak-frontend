@@ -37,7 +37,8 @@ export const ErForeldreansvarVilkaarOppfyltForm = ({
   <ProsessPanelTemplate
     titleCode="ErForeldreansvarVilkaarOppfyltForm.Foreldreansvar"
     isAksjonspunktOpen={!readOnlySubmitButton}
-    formProps={formProps}
+    formName={formProps.form}
+    handleSubmit={formProps.handleSubmit}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     behandlingId={behandlingId}

@@ -53,6 +53,7 @@ describe('<ProsessStegBegrunnelseTextField>', () => {
     const aksjonspunkter = [{
       begrunnelse: 'test &amp;',
     }];
+    // @ts-ignore Korleis fikse dette på ein bra måte?
     const initalValues = ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter);
     expect(initalValues).is.eql({ begrunnelse: 'test &' });
   });

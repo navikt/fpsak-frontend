@@ -9,7 +9,7 @@ import { isRequiredMessage } from '@fpsak-frontend/utils';
 import VilkarResultPicker from './VilkarResultPicker';
 
 describe('<VilkarResultPicker>', () => {
-  const avslagsarsaker = [{ kode: 'TEST', navn: 'test' }];
+  const avslagsarsaker = [{ kode: 'TEST', navn: 'test', kodeverk: '' }];
 
   it('skal vise komponent med radioknapper', () => {
     const wrapper = shallowWithIntl(<VilkarResultPicker.WrappedComponent
@@ -17,7 +17,6 @@ describe('<VilkarResultPicker>', () => {
       avslagsarsaker={avslagsarsaker}
       erVilkarOk
       readOnly={false}
-      hasAksjonspunkt
     />);
     expect(wrapper.find('RadioOption')).to.have.length(2);
   });
@@ -30,7 +29,6 @@ describe('<VilkarResultPicker>', () => {
       erVilkarOk={false}
       customVilkarIkkeOppfyltText={{ id: textId, values: { test: 'testvalue' } }}
       readOnly={false}
-      hasAksjonspunkt
     />);
 
     expect(wrapper.find('RadioOption').at(1).prop('label').props.id).to.equal(textId);
@@ -42,7 +40,6 @@ describe('<VilkarResultPicker>', () => {
       avslagsarsaker={avslagsarsaker}
       erVilkarOk
       readOnly={false}
-      hasAksjonspunkt
     />);
 
     expect(wrapper.find('SelectField')).to.have.length(0);
@@ -54,7 +51,6 @@ describe('<VilkarResultPicker>', () => {
       avslagsarsaker={avslagsarsaker}
       erVilkarOk
       readOnly={false}
-      hasAksjonspunkt
     />);
 
     expect(wrapper.find('SelectField')).to.have.length(0);
@@ -66,7 +62,6 @@ describe('<VilkarResultPicker>', () => {
       avslagsarsaker={avslagsarsaker}
       erVilkarOk={false}
       readOnly={false}
-      hasAksjonspunkt
     />);
 
     const select = wrapper.find('SelectField');
@@ -79,6 +74,7 @@ describe('<VilkarResultPicker>', () => {
   it('skal feile validering når en har valgt å avvise vilkår men ikke valgt avslagsårsak', () => {
     const erVilkarOk = false;
     const avslagCode = undefined;
+    // @ts-ignore Korleis fikse dette på ein bra måte?
     const errors = VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
     expect(errors.avslagCode).to.eql(isRequiredMessage());
@@ -87,6 +83,7 @@ describe('<VilkarResultPicker>', () => {
   it('skal ikke feile validering når en har valgt både å avvise vilkår og avslagsårsak', () => {
     const erVilkarOk = false;
     const avslagCode = 'VALGT_KODE';
+    // @ts-ignore Korleis fikse dette på ein bra måte?
     const errors = VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
     expect(errors).to.eql({});
@@ -106,6 +103,7 @@ describe('<VilkarResultPicker>', () => {
         kode: vilkarType.FODSELSVILKARET_MOR,
       },
     }];
+    // @ts-ignore Korleis fikse dette på ein bra måte?
     const intielleVerdier = VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, vilkarUtfallType.IKKE_OPPFYLT);
 
     expect(intielleVerdier).to.eql({

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -13,16 +12,25 @@ const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields
   return (!isDirty && hasEmptyRequiredFields) || hasEmptyRequiredFields;
 };
 
+interface OwnProps {
+  isReadOnly: boolean;
+  isSubmittable: boolean;
+  isSubmitting: boolean;
+  isDirty: boolean;
+  hasEmptyRequiredFields: boolean;
+  textCode?: string;
+}
+
 /**
  * ProsessStegSubmitButton
  */
-export const ProsessStegSubmitButton = ({
+export const ProsessStegSubmitButton: FunctionComponent<OwnProps> = ({
   isReadOnly,
   isSubmittable,
   isSubmitting,
   isDirty,
   hasEmptyRequiredFields,
-  textCode,
+  textCode = 'SubmitButton.ConfirmInformation',
 }) => (
   <>
     {!isReadOnly
@@ -38,19 +46,6 @@ export const ProsessStegSubmitButton = ({
       )}
   </>
 );
-
-ProsessStegSubmitButton.propTypes = {
-  isReadOnly: PropTypes.bool.isRequired,
-  isSubmittable: PropTypes.bool.isRequired,
-  isSubmitting: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
-  hasEmptyRequiredFields: PropTypes.bool.isRequired,
-  textCode: PropTypes.string,
-};
-
-ProsessStegSubmitButton.defaultProps = {
-  textCode: 'SubmitButton.ConfirmInformation',
-};
 
 const mapStateToProps = (state, ownProps) => {
   const { behandlingId, behandlingVersjon } = ownProps;

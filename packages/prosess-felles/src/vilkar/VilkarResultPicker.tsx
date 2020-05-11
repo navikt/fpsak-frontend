@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
@@ -15,6 +14,7 @@ import {
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
+import { KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import styles from './vilkarResultPicker.less';
 
@@ -25,19 +25,34 @@ const findRadioButtonTextCode = (customVilkarText, isVilkarOk) => {
   return isVilkarOk ? 'VilkarResultPicker.VilkarOppfylt' : 'VilkarResultPicker.VilkarIkkeOppfylt';
 };
 
+interface OwnProps {
+  avslagsarsaker?: KodeverkMedNavn[];
+  erVilkarOk?: boolean;
+  customVilkarIkkeOppfyltText?: {
+    id: string;
+    values?: {};
+  };
+  customVilkarOppfyltText?: {
+    id: string;
+    values?: {};
+  };
+  readOnly: boolean;
+  erMedlemskapsPanel?: boolean;
+}
+
 /**
  * VilkarResultPicker
  *
  * Presentasjonskomponent. Lar NAV-ansatt velge om vilkåret skal oppfylles eller avvises.
  */
-const VilkarResultPickerImpl = ({
+const VilkarResultPickerImpl: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   avslagsarsaker,
   erVilkarOk,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
   readOnly,
-  erMedlemskapsPanel,
+  erMedlemskapsPanel = false,
 }) => (
   <div className={styles.container}>
     <VerticalSpacer sixteenPx />
@@ -125,43 +140,19 @@ const VilkarResultPickerImpl = ({
   </div>
 );
 
-VilkarResultPickerImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
-  })),
-  customVilkarIkkeOppfyltText: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    values: PropTypes.shape(),
-  }),
-  customVilkarOppfyltText: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    values: PropTypes.shape(),
-  }),
-  erVilkarOk: PropTypes.bool,
-  readOnly: PropTypes.bool.isRequired,
-  erMedlemskapsPanel: PropTypes.bool,
-};
-
-VilkarResultPickerImpl.defaultProps = {
-  erVilkarOk: undefined,
-  customVilkarIkkeOppfyltText: undefined,
-  customVilkarOppfyltText: undefined,
-  erMedlemskapsPanel: false,
-  avslagsarsaker: undefined,
-};
-
 const VilkarResultPicker = injectIntl(VilkarResultPickerImpl);
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 VilkarResultPicker.validate = (erVilkarOk, avslagCode) => {
-  const errors = {};
   if (erVilkarOk === false && !avslagCode) {
-    errors.avslagCode = isRequiredMessage();
+    return {
+      avslagCode: isRequiredMessage(),
+    };
   }
-  return errors;
+  return {};
 };
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 VilkarResultPicker.buildInitialValues = (behandlingsresultat, aksjonspunkter, status) => {
   const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
@@ -173,6 +164,7 @@ VilkarResultPicker.buildInitialValues = (behandlingsresultat, aksjonspunkter, st
   };
 };
 
+// @ts-ignore Korleis fikse dette på ein bra måte?
 VilkarResultPicker.transformValues = (values) => (
   values.erVilkarOk
     ? { erVilkarOk: values.erVilkarOk }
