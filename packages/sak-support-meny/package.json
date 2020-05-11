@@ -8,7 +8,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
-    "react-intl": "^4.4.0"
+    "react-intl": "^4.5.3"
   },
   "devDependencies": {}
 }

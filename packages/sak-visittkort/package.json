@@ -10,14 +10,14 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/types": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/nap-person-card": "1.1.1",
-    "moment": "^2.24.0",
+    "@navikt/nap-person-card": "1.1.4",
+    "moment": "^2.25.3",
     "nav-frontend-etiketter": "1.0.31",
     "nav-frontend-etiketter-style": "0.3.20",
     "nav-frontend-typografi": "2.0.18",
     "nav-frontend-typografi-style": "1.0.19",
     "react": "^16.13.1",
-    "react-intl": "^4.4.0"
+    "react-intl": "^4.5.3"
   },
   "devDependencies": {}
 }

@@ -7,7 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/types": "1.0.0",
-    "moment": "^2.24.0"
+    "moment": "^2.25.3"
   },
   "devDependencies": {}
 }
