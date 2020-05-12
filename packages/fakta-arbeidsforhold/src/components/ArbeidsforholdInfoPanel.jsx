@@ -45,7 +45,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
   readOnly,
   hasOpenAksjonspunkter,
   skalKunneLeggeTilNyeArbeidsforhold,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   behandlingId,
@@ -67,7 +66,6 @@ export const ArbeidsforholdInfoPanelImpl = ({
         hasAksjonspunkter={aksjonspunkter.length > 0}
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         alleKodeverk={alleKodeverk}
         behandlingId={behandlingId}
@@ -93,7 +91,6 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,

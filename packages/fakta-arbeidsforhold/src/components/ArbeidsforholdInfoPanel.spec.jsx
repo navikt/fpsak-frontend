@@ -32,7 +32,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         skalKunneLeggeTilNyeArbeidsforhold={false}
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
@@ -53,7 +52,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         skalKunneLeggeTilNyeArbeidsforhold
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
@@ -74,7 +72,6 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         readOnly={false}
         hasOpenAksjonspunkter={false}
         skalKunneLeggeTilNyeArbeidsforhold
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding
         behandlingId={1}
         behandlingVersjon={1}
         alleKodeverk={{}}
