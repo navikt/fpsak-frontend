@@ -1,0 +1,12 @@
+{
+  "MenyNyBehandlingIndex.NyForstegangsbehandling": "Opprett ny behandling",
+
+  "MenyNyBehandlingIndex.ModalDescription": "Ny behandling",
+  "MenyNyBehandlingIndex.OpprettRevurdering": "Revurderingsbehandling",
+  "MenyNyBehandlingIndex.OpprettNyForstegangsbehandling": "Opprett ny behandling",
+  "MenyNyBehandlingIndex.NyBehandlingEtterKlage": "Behandlingen opprettes som et resultat av klagebehandling",
+  "MenyNyBehandlingIndex.Ok": "OK",
+  "MenyNyBehandlingIndex.Avbryt": "Avbryt",
+  "MenyNyBehandlingIndex.SelectBehandlingTypePlaceholder": "Velg",
+  "MenyNyBehandlingIndex.SelectBehandlingArsakTypePlaceholder": "Velg årsak"
+}

@@ -36,7 +36,8 @@ export const SvangerskapVilkarFormImpl = ({
   <ProsessPanelTemplate
     titleCode="SvangerskapVilkarForm.Svangerskap"
     isAksjonspunktOpen={isApOpen}
-    formProps={formProps}
+    formName={formProps.form}
+    handleSubmit={formProps.handleSubmit}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     behandlingId={behandlingId}

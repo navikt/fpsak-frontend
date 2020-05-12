@@ -12,7 +12,6 @@ interface OwnProps {
   twentyPx?: boolean;
   thirtyTwoPx?: boolean;
   fourtyPx?: boolean;
-  dashed?: boolean;
 }
 
 /**
@@ -27,7 +26,6 @@ const VerticalSpacer: FunctionComponent<OwnProps> = ({
   twentyPx = false,
   thirtyTwoPx = false,
   fourtyPx = false,
-  dashed = false,
 }) => (
   <div className={classNames({
     fourPx,
@@ -36,7 +34,6 @@ const VerticalSpacer: FunctionComponent<OwnProps> = ({
     twentyPx,
     thirtyTwoPx,
     fourtyPx,
-    dashed,
   })}
   />
 );

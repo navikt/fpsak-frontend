@@ -39,7 +39,8 @@ export const FodselVilkarFormImpl = ({
   <ProsessPanelTemplate
     titleCode="FodselVilkarForm.Fodsel"
     isAksjonspunktOpen={isApOpen}
-    formProps={formProps}
+    formName={formProps.form}
+    handleSubmit={formProps.handleSubmit}
     isDirty={formProps.dirty}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}

@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearFields, formPropTypes, FormSection } from 'redux-form';
+import {
+  clearFields, formPropTypes, FormSection, change,
+} from 'redux-form';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import moment from 'moment';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import {
-  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector,
+  RadioGroupField, RadioOption, TextAreaField, behandlingForm, behandlingFormValueSelector, SelectField,
 } from '@fpsak-frontend/form';
 import {
-  formatCurrencyNoKr, hasValidText, maxLength, minLength, required,
+  formatCurrencyNoKr, hasValidText, maxLength, minLength, required, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import {
   AdvarselModal, FlexColumn, FlexRow, VerticalSpacer,
@@ -61,6 +64,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     behandlingVersjon: PropTypes.number.isRequired,
     beregnBelop: PropTypes.func.isRequired,
     intl: PropTypes.shape().isRequired,
+    vilkarsVurdertePerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     ...formPropTypes,
   };
 
@@ -114,6 +118,22 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     formProps.handleSubmit();
   };
 
+  onEndrePeriodeForKopi = (event, vurdertePerioder) => {
+    const { change: changeValue } = this.props;
+
+    const fomTom = event.target.value.split('_');
+    const kopierDenne = vurdertePerioder.find((per) => per.fom === fomTom[0] && per.tom === fomTom[1]);
+    const vilkårResultatType = kopierDenne.valgtVilkarResultatType;
+    const resultatType = kopierDenne[vilkårResultatType];
+
+    changeValue('valgtVilkarResultatType', vilkårResultatType, true, false);
+    changeValue('begrunnelse', kopierDenne.begrunnelse, true, false);
+    changeValue('vurderingBegrunnelse', kopierDenne.vurderingBegrunnelse, true, false);
+    changeValue(vilkårResultatType, resultatType);
+
+    event.preventDefault();
+  }
+
   render() {
     const {
       valgtVilkarResultatType,
@@ -136,9 +156,11 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       behandlingVersjon,
       beregnBelop,
       intl,
+      vilkarsVurdertePerioder,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
+    const vurdertePerioder = vilkarsVurdertePerioder.filter((per) => !per.erForeldet && per.valgtVilkarResultatType != null);
     return (
       <div className={styles.container}>
         <TilbakekrevingTimelineData
@@ -165,6 +187,29 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
         ))}
         <TilbakekrevingAktivitetTabell ytelser={data.ytelser} />
         <VerticalSpacer twentyPx />
+        {!readOnly && !data.erForeldet && vurdertePerioder.length > 0 && (
+          <>
+            <Row>
+              <Column md="10">
+                <Element>
+                  <FormattedMessage id="TilbakekrevingPeriodeForm.KopierVilkårsvurdering" />
+                </Element>
+                <SelectField
+                  name="perioderForKopi"
+                  selectValues={vurdertePerioder.map((per) => {
+                    const perId = `${per.fom}_${per.tom}`;
+                    const perValue = `${moment(per.fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(per.tom).format(DDMMYYYY_DATE_FORMAT)}`;
+                    return <option key={perId} value={perId}>{perValue}</option>;
+                  })}
+                  onChange={(event) => this.onEndrePeriodeForKopi(event, vurdertePerioder)}
+                  bredde="m"
+                  label=""
+                />
+              </Column>
+            </Row>
+            <VerticalSpacer twentyPx />
+          </>
+        )}
         <Row>
           <Column md={data.erForeldet ? '12' : '6'}>
             <Row>
@@ -289,6 +334,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
+    change,
   }, dispatch),
 });
 

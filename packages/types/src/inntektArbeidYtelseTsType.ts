@@ -24,7 +24,6 @@ type InntektArbeidYtelse = Readonly<{
   }[];
   arbeidsforhold?: Arbeidsforhold[];
   skalKunneLeggeTilNyeArbeidsforhold: boolean;
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: boolean;
 }>
 
 export default InntektArbeidYtelse;

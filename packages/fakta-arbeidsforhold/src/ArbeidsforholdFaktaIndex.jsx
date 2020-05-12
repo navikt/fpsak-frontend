@@ -31,7 +31,6 @@ const ArbeidsforholdFaktaIndex = ({
       behandlingVersjon={behandling.versjon}
       arbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding}
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}

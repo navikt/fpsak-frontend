@@ -6,7 +6,6 @@ ENV APP_DIR="/app" \
 	APP_URL_FPTILBAKE="http://fptilbake" \
 	APP_URL_FPOPPDRAG="http://fpoppdrag" \
 	APP_URL_FPSAK="http://fpsak"
-ENV TZ=Europe/Oslo
 #FPSAK spesifkk
 COPY dist /app/fpsak/
 COPY k8s/proxy.nginx      /nginx/proxy.nginx

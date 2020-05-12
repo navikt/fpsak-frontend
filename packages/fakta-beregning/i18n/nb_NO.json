@@ -7,11 +7,13 @@
   "BeregningInfoPanel.FormAlternativ.Nei": "Nei",
   "BeregningInfoPanel.NyIArbeidslivet.SelvstendigNaeringsdrivende": "Søker er selvstendig næringsdrivende. Ble søker yrkesaktiv i løpet av de siste tre årene?",
 
+  "AvklarAktivitetPanel.Overskrift": "Aktiviteter i beregningsgrunnlaget",
   "AvklarAktivitetPanel.ButtonText": "Oppdater",
   "AvklarAktivitetPanel.OverstyrText": "Overstyr",
+  "AvklareAktiviteter.Avbryt": "Avbryt",
   "VurderAktiviteterTabell.FullAAPKombinert.Overskrift": "Søker har full AAP (200%) sammen med andre aktiviteter. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
   "VurderAktiviteterTabell.VentelonnVartpenger.Overskrift": "Søker har ventelønn eller vartpenger som siste aktivitet. Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
-  "VurderAktiviteterTabell.Overstyrt.Overskrift": "Aktiviteter i beregningsgrunnlaget med skjæringstidspunkt {skjaeringstidspunkt}",
+  "VurderAktiviteterTabell.Overstyrt.Overskrift": "Skjæringstidspunkt for beregning {skjaeringstidspunkt}",
 
   "BeregningInfoPanel.VurderOgFastsettATFL.ErSokerNyoppstartetFL": "Startet søker som frilanser i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM": "Søker er arbeidstaker og frilanser i samme virksomhet og det er ikke mottatt inntektsmelding(er).",
@@ -26,6 +28,7 @@
 
   "BeregningInfoPanel.VurderBestebergning.HarBesteberegning" : "Søker har hatt dagpenger i opptjeningsperioden. Skal dette fordeles etter besteberegning?",
 
+  "InntektstabellPanel.Avbryt": "Avbryt overstyring",
 
   "BeregningInfoPanel.FastsettBBFodendeKvinne.RegnarkNavet": "Finn regneark på navet",
   "BeregningInfoPanel.FordelingBG.Sum": "Sum",
@@ -57,6 +60,7 @@
   "KunYtelsePanel.OverskriftBesteberegning": "Fastsett månedsbeløp for brutto beregningsgrunnlag etter besteberegning",
   "BeregningInfoPanel.FordelBG.Validation.UlikeAndeler": "Andeler for samme aktivitet må ha ulik inntektskategori",
 
+  "InntektstabellPanel.RapporterteInntekter": "Rapporterte inntekter",
 
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
@@ -65,7 +69,7 @@
 
   "VurderRefusjonForm.ErRefusjonskravGyldig": "{arbeidsgiverVisningsnavn} har minst ett refusjonskrav som har kommet for sent. Skal refusjonskrav som ikke har kommet innen fristen tas med i beregning?",
 
-
+  "OverstyringKnapp.Overstyring": "Overstyr",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",

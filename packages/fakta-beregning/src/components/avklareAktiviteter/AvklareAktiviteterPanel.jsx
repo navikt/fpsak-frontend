@@ -7,23 +7,22 @@ import { bindActionCreators } from 'redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
+import { Knapp } from 'nav-frontend-knapper';
 
 import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import {
-  AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer,
+  AksjonspunktHelpTextTemp, VerticalSpacer, OverstyringKnapp, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { CheckboxField, getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
+import { getBehandlingFormPrefix, behandlingForm } from '@fpsak-frontend/form';
 
 import { formNameAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, getFormValuesForAvklarAktiviteter } from '../BeregningFormUtils';
 import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
-
 import styles from './avklareAktiviteterPanel.less';
-
 
 const {
   AVKLAR_AKTIVITETER,
@@ -74,7 +73,7 @@ const getHelpTextsAvklarAktiviteter = createSelector(
 
 const skalViseSubmitKnappEllerBegrunnelse = (aksjonspunkter, erOverstyrt) => hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || erOverstyrt;
 
-const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk) => {
+const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk, harOverstyrt = false) => {
   const harAvklarAksjonspunkt = hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
   const erOverstyrt = hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
   let initialValues = {};
@@ -86,7 +85,7 @@ const buildInitialValues = (aksjonspunkter, avklarAktiviteter, alleKodeverk) => 
   const aksjonspunktMedBegrunnelse = findAksjonspunktMedBegrunnelse(aksjonspunkter, AVKLAR_AKTIVITETER);
   const begrunnelse = erOverstyrt ? overstyrAksjonspunktMedBegrunnelse : aksjonspunktMedBegrunnelse;
   return {
-    [MANUELL_OVERSTYRING_FIELD]: erOverstyrt,
+    [MANUELL_OVERSTYRING_FIELD]: erOverstyrt || harOverstyrt,
     aksjonspunkter,
     avklarAktiviteter,
     ...initialValues,
@@ -111,6 +110,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
     super();
     this.state = {
       submitEnabled: false,
+      erOverstyrtKnappTrykket: false,
     };
   }
 
@@ -128,7 +128,13 @@ export class AvklareAktiviteterPanelImpl extends Component {
       reduxFormInitialize: formInitialize, behandlingFormPrefix,
       avklarAktiviteter, aksjonspunkter, alleKodeverk,
     } = this.props;
-    formInitialize(`${behandlingFormPrefix}.${formNameAvklarAktiviteter}`, buildInitialValues(aksjonspunkter, avklarAktiviteter, alleKodeverk));
+    const { erOverstyrtKnappTrykket } = this.state;
+    this.setState((state) => ({
+      ...state,
+      erOverstyrtKnappTrykket: !erOverstyrtKnappTrykket,
+    }));
+    formInitialize(`${behandlingFormPrefix}.${formNameAvklarAktiviteter}`, buildInitialValues(aksjonspunkter, avklarAktiviteter,
+      alleKodeverk, !erOverstyrtKnappTrykket));
   }
 
   render() {
@@ -153,6 +159,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
       },
       state: {
         submitEnabled,
+        erOverstyrtKnappTrykket,
       },
     } = this;
 
@@ -164,79 +171,100 @@ export class AvklareAktiviteterPanelImpl extends Component {
     return (
       <>
         <form onSubmit={formProps.handleSubmit}>
-          {(kanOverstyre || erOverstyrt)
-          && (
-            <div className={styles.rightAligned}>
-              <CheckboxField
-                key="manuellOverstyring"
-                name={MANUELL_OVERSTYRING_FIELD}
-                label={{ id: 'AvklareAktiviteter.ManuellOverstyring' }}
-                readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
-                onChange={() => this.initializeAktiviteter()}
-              />
-            </div>
-          )}
-          {(hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || kanOverstyre || erOverstyrt)
-      && (
-        <div>
-          {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
-          && <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpTextTemp>}
-          {erOverstyrt && (
-          <Element>
-            <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
-          </Element>
-          )}
-
-          {formProps.error && (
-            <>
-              <VerticalSpacer sixteenPx />
-              <AlertStripe type="feil">
-                <FormattedMessage id={formProps.error} />
-              </AlertStripe>
-            </>
-          )}
-
-          <VerticalSpacer twentyPx />
-          <BorderBox>
-            {avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping
-          && (
-            <VurderAktiviteterPanel
-              aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
-              readOnly={readOnly}
-              isAksjonspunktClosed={isAksjonspunktClosed}
-              erOverstyrt={erOverstyrt}
-              alleKodeverk={alleKodeverk}
-              values={formValues}
-              harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
-            />
-          )}
-            <VerticalSpacer twentyPx />
-            {skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
-              <>
-                <FaktaBegrunnelseTextField
-                  name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
-                  isDirty={formProps.dirty}
-                  isSubmittable={submittable}
-                  isReadOnly={readOnly}
-                  hasBegrunnelse={hasBegrunnelse}
-                />
-                {skalViseSubmitknappInneforBorderBox
-              && (
-              <FaktaSubmitButton
-                buttonText={intl.formatMessage({ id: erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText' })}
-                formName={formProps.form}
-                isSubmittable={submittable && submitEnabled && !formProps.error}
-                isReadOnly={readOnly}
-                hasOpenAksjonspunkter={!isAksjonspunktClosed}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-              />
+          <FlexContainer>
+            <FlexRow>
+              <FlexColumn>
+                <Element className={styles.avsnittOverskrift}>
+                  <FormattedMessage id="AvklarAktivitetPanel.Overskrift" />
+                </Element>
+              </FlexColumn>
+              {(kanOverstyre || erOverstyrt) && (
+                <FlexColumn>
+                  <OverstyringKnapp
+                    onClick={() => this.initializeAktiviteter()}
+                    erOverstyrt={erOverstyrtKnappTrykket || hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) || readOnly}
+                  />
+                </FlexColumn>
               )}
-              </>
-            )}
-          </BorderBox>
-            {!(skalViseSubmitknappInneforBorderBox) && skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt)
-              && (
+            </FlexRow>
+          </FlexContainer>
+          <VerticalSpacer sixteenPx />
+          {(hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || kanOverstyre || erOverstyrt) && (
+            <>
+              {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && (
+                <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpTextTemp>
+              )}
+              {formProps.error && (
+                <>
+                  <VerticalSpacer sixteenPx />
+                  <AlertStripe type="feil">
+                    <FormattedMessage id={formProps.error} />
+                  </AlertStripe>
+                </>
+              )}
+              {erOverstyrt && (
+              <Element>
+                <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
+              </Element>
+              )}
+              <VerticalSpacer twentyPx />
+              {avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping && (
+                <VurderAktiviteterPanel
+                  aktiviteterTomDatoMapping={avklarAktiviteter.aktiviteterTomDatoMapping}
+                  readOnly={readOnly}
+                  isAksjonspunktClosed={isAksjonspunktClosed}
+                  erOverstyrt={erOverstyrt}
+                  alleKodeverk={alleKodeverk}
+                  values={formValues}
+                  harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
+                />
+              )}
+              <VerticalSpacer twentyPx />
+              {skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
+                <>
+                  <FaktaBegrunnelseTextField
+                    name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
+                    isDirty={formProps.dirty}
+                    isSubmittable={submittable}
+                    isReadOnly={readOnly}
+                    hasBegrunnelse={hasBegrunnelse}
+                  />
+                  {skalViseSubmitknappInneforBorderBox && (
+                    <>
+                      <VerticalSpacer twentyPx />
+                      <FlexContainer>
+                        <FlexRow>
+                          <FlexColumn>
+                            <FaktaSubmitButton
+                              buttonText={intl.formatMessage({ id: erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText' })}
+                              formName={formProps.form}
+                              isSubmittable={submittable && submitEnabled && !formProps.error}
+                              isReadOnly={readOnly}
+                              hasOpenAksjonspunkter={!isAksjonspunktClosed}
+                              behandlingId={behandlingId}
+                              behandlingVersjon={behandlingVersjon}
+                            />
+                          </FlexColumn>
+                          {kanOverstyre && !hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter) && (
+                            <FlexColumn>
+                              <Knapp
+                                htmlType="button"
+                                spinner={formProps.submitting}
+                                disabled={formProps.submitting}
+                                onClick={() => this.initializeAktiviteter()}
+                                mini
+                              >
+                                <FormattedMessage id="AvklareAktiviteter.Avbryt" />
+                              </Knapp>
+                            </FlexColumn>
+                          )}
+                        </FlexRow>
+                      </FlexContainer>
+                    </>
+                  )}
+                </>
+              )}
+              {!(skalViseSubmitknappInneforBorderBox) && skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
                 <>
                   <VerticalSpacer twentyPx />
                   <FaktaSubmitButton
@@ -250,11 +278,10 @@ export class AvklareAktiviteterPanelImpl extends Component {
                   />
                 </>
               )}
-        </div>
-      )}
+            </>
+          )}
         </form>
-        {harAndreAksjonspunkterIPanel
-      && <VerticalSpacer twentyPx />}
+        {harAndreAksjonspunkterIPanel && <VerticalSpacer twentyPx />}
       </>
     );
   }
