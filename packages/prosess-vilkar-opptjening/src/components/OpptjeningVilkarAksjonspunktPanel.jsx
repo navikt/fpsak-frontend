@@ -38,7 +38,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   <ProsessPanelTemplate
     titleCode="OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret"
     isAksjonspunktOpen={isApOpen}
-    formProps={formProps}
+    formName={formProps.form}
+    handleSubmit={formProps.handleSubmit}
     isDirty={formProps.dirty}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}

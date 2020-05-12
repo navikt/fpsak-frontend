@@ -56,7 +56,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -83,7 +82,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -106,7 +104,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -130,7 +127,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -156,7 +152,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -181,7 +176,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -203,7 +197,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -239,7 +232,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -296,7 +288,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -501,7 +492,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -548,7 +538,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -595,7 +584,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -642,7 +630,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -689,7 +676,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -736,7 +722,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -760,7 +745,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -784,7 +768,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -835,7 +818,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}
@@ -892,7 +874,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       behandlingId={1}
       behandlingVersjon={1}
       alleKodeverk={{}}

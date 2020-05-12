@@ -17,7 +17,8 @@ const mockProps = {
   elementId: 0,
   årsaker: [],
   readOnly: false,
-  resetFields: sinon.spy(),
+  onChangeÅrsak: sinon.spy(),
+  onChangeUnderÅrsak: sinon.spy(),
 };
 
 describe('<FeilutbetalingPerioderFormImpl>', () => {

@@ -10,7 +10,7 @@ const findNewBehandlingId = (behandlingerResponse) => {
   return sortedBehandlinger[0].id;
 };
 
-export const createNewBehandling = (location) => (push, saksnummer, behandlingId,
+export const createNewBehandling = (location, push) => (saksnummer, behandlingId,
   behandlingVersion, isTilbakekreving, params) => (dispatch) => dispatch((isTilbakekreving
   ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params))
   .then((response) => {
@@ -55,7 +55,7 @@ export const nyBehandlendeEnhet = (params: {}) => behandlingEventHandler.endreBe
 
 export const openBehandlingForChanges = (params: {}) => behandlingEventHandler.opneBehandlingForEndringer(params);
 
-export const opprettVerge = (location) => (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.opprettVerge({
+export const opprettVerge = (location, push, saksnummer, behandlingId, versjon) => () => behandlingEventHandler.opprettVerge({
   behandlingId,
   behandlingVersjon: versjon,
 }).then(() => push(getLocationWithDefaultProsessStegAndFakta({
@@ -63,7 +63,7 @@ export const opprettVerge = (location) => (push, saksnummer, behandlingId, versj
   pathname: pathToBehandling(saksnummer, behandlingId),
 })));
 
-export const fjernVerge = (location) => (push, saksnummer, behandlingId, versjon) => behandlingEventHandler.fjernVerge({
+export const fjernVerge = (location, push, saksnummer, behandlingId, versjon) => () => behandlingEventHandler.fjernVerge({
   behandlingId,
   behandlingVersjon: versjon,
 }).then(() => push(getLocationWithDefaultProsessStegAndFakta({

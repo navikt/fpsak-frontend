@@ -28,8 +28,7 @@ interface ResponseDataLink {
 /**
  * RequestProcess
  *
- * Denne klassen utfører et spesifikt kall mot en URL. Tilbyr automatisk henting av data
- * fra "links" i kall-responsen. Håndterer også "long-polling".
+ * Denne klassen utfører et spesifikt kall mot en URL. Håndterer også "long-polling".
  *
  * En starter prosess med run og avbryter med cancel.
  */

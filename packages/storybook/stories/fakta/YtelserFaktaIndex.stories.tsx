@@ -33,7 +33,6 @@ const inntektArbeidYtelse = {
     }],
   }],
   skalKunneLeggeTilNyeArbeidsforhold: true,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
 };
 
 export default {

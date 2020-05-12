@@ -12,8 +12,8 @@ import Kjønnkode from '@fpsak-frontend/types/src/Kjønnkode';
 import styles from './timeLineSoker.less';
 
 interface TimeLineSokerProps {
-  hovedsokerKjonnKode: Kjønnkode;
-  medsokerKjonnKode: Kjønnkode;
+  soker1KjonnKode: Kjønnkode;
+  soker2KjonnKode: Kjønnkode;
 }
 
 const getKjønn = (kode) => {
@@ -35,8 +35,8 @@ const getKjønn = (kode) => {
  * Presentationskomponent. Viser korrekt ikon for soker/medsoker
  */
 const TimeLineSoker: React.FunctionComponent<TimeLineSokerProps> = ({
-  hovedsokerKjonnKode,
-  medsokerKjonnKode,
+  soker1KjonnKode,
+  soker2KjonnKode,
 }) => {
   const intl = useIntl();
   return (
@@ -44,17 +44,17 @@ const TimeLineSoker: React.FunctionComponent<TimeLineSokerProps> = ({
       <Row>
         <Image
           className={styles.iconHovedsoker}
-          src={getKjønn(hovedsokerKjonnKode).src}
+          src={getKjønn(soker1KjonnKode).src}
           alt={intl.formatMessage({ id: 'Person.ImageText' })}
-          tooltip={intl.formatMessage({ id: getKjønn(hovedsokerKjonnKode).title })}
+          tooltip={intl.formatMessage({ id: getKjønn(soker1KjonnKode).title })}
         />
       </Row>
       <Row>
         <Image
           className={styles.iconMedsoker}
-          src={getKjønn(medsokerKjonnKode).src}
+          src={getKjønn(soker2KjonnKode).src}
           alt={intl.formatMessage({ id: 'Person.ImageText' })}
-          tooltip={intl.formatMessage({ id: getKjønn(medsokerKjonnKode).title })}
+          tooltip={intl.formatMessage({ id: getKjønn(soker2KjonnKode).title })}
         />
       </Row>
     </div>
