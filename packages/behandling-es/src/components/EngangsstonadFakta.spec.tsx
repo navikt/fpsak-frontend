@@ -62,7 +62,6 @@ describe('<EngangsstonadFakta>', () => {
   const vilkar = [];
   const inntektArbeidYtelse = {
     skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
     relatertTilgrensendeYtelserForAnnenForelder: [],
   };
 

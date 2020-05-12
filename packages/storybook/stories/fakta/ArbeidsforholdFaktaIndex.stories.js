@@ -59,7 +59,6 @@ export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
         mottattDatoInntektsmelding: undefined,
       }],
       skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
     })}
     aksjonspunkter={[{
       definisjon: {
@@ -88,7 +87,6 @@ export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
     inntektArbeidYtelse={object('inntektArbeidYtelse', {
       arbeidsforhold: [],
       skalKunneLeggeTilNyeArbeidsforhold: true,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
     })}
     aksjonspunkter={[{
       definisjon: {
@@ -117,7 +115,6 @@ export const visPanelUtenAksjonspunkter = () => (
     inntektArbeidYtelse={object('inntektArbeidYtelse', {
       arbeidsforhold: [arbeidsforhold],
       skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
     })}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
@@ -147,7 +144,6 @@ export const visPanelForPermisjon = () => (
         }],
       }],
       skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
     })}
     aksjonspunkter={[{
       definisjon: {
@@ -196,7 +192,6 @@ export const visPanelForFlerePermisjoner = () => (
         }],
       }],
       skalKunneLeggeTilNyeArbeidsforhold: false,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
     })}
     aksjonspunkter={[{
       definisjon: {

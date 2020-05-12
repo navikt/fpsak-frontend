@@ -53,7 +53,6 @@ export const PersonArbeidsforholdDetailForm = ({
   arbeidsforhold,
   arbeidsforholdHandlingVerdi,
   skalKunneLeggeTilNyeArbeidsforhold,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
@@ -72,7 +71,7 @@ export const PersonArbeidsforholdDetailForm = ({
         behandlingVersjon={behandlingVersjon}
       />
     )}
-    { (skalKunneLageArbeidsforholdBasertPaInntektsmelding || arbeidsforhold.kanOppretteNyttArbforFraIM) && (
+    { (arbeidsforhold.kanOppretteNyttArbforFraIM) && (
       <LeggTilArbeidsforholdFelter
         readOnly={readOnly}
         formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
@@ -131,7 +130,7 @@ export const PersonArbeidsforholdDetailForm = ({
           />
         )}
         { arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD && harErstattetEttEllerFlere
-          && !skalKunneLageArbeidsforholdBasertPaInntektsmelding && (
+          && !arbeidsforhold.kanOppretteNyttArbforFraIM && (
           <Normaltekst>
             <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
           </Normaltekst>
@@ -152,7 +151,6 @@ PersonArbeidsforholdDetailForm.propTypes = {
   arbeidsforhold: arbeidsforholdPropType.isRequired,
   arbeidsforholdHandlingVerdi: PropTypes.string,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
