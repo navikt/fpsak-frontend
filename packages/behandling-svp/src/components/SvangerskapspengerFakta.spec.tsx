@@ -62,7 +62,6 @@ describe('<SvangerskapspengerFakta>', () => {
   const vilkar = [];
   const inntektArbeidYtelse = {
     skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
     relatertTilgrensendeYtelserForAnnenForelder: [],
   };
 
