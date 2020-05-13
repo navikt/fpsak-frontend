@@ -10,7 +10,6 @@ env:
   NAMESPACE: t4
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/fpsak-frontend
-  TZ: "Europe/Oslo"
 
 jobs:
   build:
