@@ -68,11 +68,13 @@ module.exports = async ({ config, mode }) => {
       }, {
         loader: 'less-loader',
         options: {
-          modules: true,
-          localIdentName: '[name]_[local]_[contenthash:base64:5]',
-          modifyVars: {
-            nodeModulesPath: '~',
-            coreModulePath: '~',
+          lessOptions: {
+            modules: true,
+            localIdentName: '[name]_[local]_[contenthash:base64:5]',
+            modifyVars: {
+              nodeModulesPath: '~',
+              coreModulePath: '~',
+            },
           },
         },
       }],
@@ -91,9 +93,11 @@ module.exports = async ({ config, mode }) => {
       }, {
         loader: 'less-loader',
         options: {
-          modifyVars: {
-            nodeModulesPath: '~',
-            coreModulePath: '~',
+          lessOptions: {
+            modifyVars: {
+              nodeModulesPath: '~',
+              coreModulePath: '~',
+            },
           },
         },
       }],

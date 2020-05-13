@@ -7,10 +7,10 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import {
-  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import PersonAksjonspunktText from './PersonAksjonspunktText';
 import PersonNyttEllerErstattArbeidsforholdPanel from './PersonNyttEllerErstattArbeidsforholdPanel';
@@ -53,13 +53,12 @@ export const PersonArbeidsforholdDetailForm = ({
   arbeidsforhold,
   arbeidsforholdHandlingVerdi,
   skalKunneLeggeTilNyeArbeidsforhold,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
   ...formProps
 }) => (
-  <ElementWrapper>
+  <>
     <Element><FormattedMessage id="PersonArbeidsforholdDetailForm.Header" /></Element>
     <PermisjonPeriode arbeidsforhold={arbeidsforhold} />
     <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} alleKodeverk={alleKodeverk} />
@@ -72,7 +71,7 @@ export const PersonArbeidsforholdDetailForm = ({
         behandlingVersjon={behandlingVersjon}
       />
     )}
-    { (skalKunneLageArbeidsforholdBasertPaInntektsmelding || arbeidsforhold.kanOppretteNyttArbforFraIM) && (
+    { (arbeidsforhold.kanOppretteNyttArbforFraIM) && (
       <LeggTilArbeidsforholdFelter
         readOnly={readOnly}
         formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
@@ -131,14 +130,14 @@ export const PersonArbeidsforholdDetailForm = ({
           />
         )}
         { arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD && harErstattetEttEllerFlere
-          && !skalKunneLageArbeidsforholdBasertPaInntektsmelding && (
+          && !arbeidsforhold.kanOppretteNyttArbforFraIM && (
           <Normaltekst>
             <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
           </Normaltekst>
         )}
       </Column>
     </Row>
-  </ElementWrapper>
+  </>
 );
 
 PersonArbeidsforholdDetailForm.propTypes = {
@@ -152,7 +151,6 @@ PersonArbeidsforholdDetailForm.propTypes = {
   arbeidsforhold: arbeidsforholdPropType.isRequired,
   arbeidsforholdHandlingVerdi: PropTypes.string,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,

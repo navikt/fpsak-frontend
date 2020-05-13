@@ -1,4 +1,5 @@
 import Kodeverk from './kodeverkTsType';
+import Behandlingsresultat from './behandlingsresultatTsType';
 
 type Behandling = Readonly<{
   id: number;
@@ -10,9 +11,7 @@ type Behandling = Readonly<{
   venteArsakKode?: string;
   behandlingPaaVent: boolean;
   behandlingHenlagt: boolean;
-  behandlingsresultat?: {
-    type: Kodeverk;
-  };
+  behandlingsresultat?: Behandlingsresultat;
   links: {
     href: string;
     rel: string;
@@ -22,6 +21,20 @@ type Behandling = Readonly<{
   taskStatus?: {
     readOnly: boolean;
   };
+  opprettet: string;
+  avsluttet?: string;
+  erAktivPapirsoknad: boolean;
+  gjeldendeVedtak: boolean;
+  sprakkode: Kodeverk;
+  behandlendeEnhetId: string;
+  behandlendeEnhetNavn: string;
+  behandlingKoet: boolean;
+  toTrinnsBehandling: boolean;
+  behandlingArsaker: {
+    behandlingArsakType: Kodeverk;
+  }[];
+  ansvarligSaksbehandler?: string;
+  kanHenleggeBehandling?: boolean;
 }>
 
 export default Behandling;

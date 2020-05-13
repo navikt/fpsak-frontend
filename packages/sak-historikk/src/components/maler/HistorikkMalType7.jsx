@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import {
   findEndretFeltNavn, findEndretFeltVerdi, findHendelseText, findIdForOpplysningCode, findResultatText,
@@ -14,7 +12,7 @@ import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const HistorikkMalType7 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn, createLocationForSkjermlenke,
 }) => {
   const formatChangedField = (endretFelt) => {
     const fieldName = findEndretFeltNavn(endretFelt, intl);
@@ -26,13 +24,14 @@ const HistorikkMalType7 = ({
     if (endretFelt.fraVerdi !== null) {
       return (
         <div>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.7.ChangedFromTo"
             values={{
               sub1,
               sub2,
               fromValue,
               toValue,
+              b: (...chunks) => <b>{chunks}</b>,
             }}
           />
         </div>
@@ -43,6 +42,7 @@ const HistorikkMalType7 = ({
 
   return (
     historikkinnslagDeler
+      .sort((a, b) => !a.skjermlenke - !b.skjermlenke)
       .map((historikkinnslagDel, historikkinnslagDelIndex) => (
         <div key={
           `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
@@ -53,9 +53,9 @@ const HistorikkMalType7 = ({
             && (
               <Element>
                 <NavLink
-                  to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                  to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
                 >
-                  {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
+                  {getKodeverknavn(historikkinnslagDel.skjermlenke)}
                 </NavLink>
               </Element>
             )}
@@ -70,7 +70,15 @@ const HistorikkMalType7 = ({
               .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
 
             {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger
-              .map((opplysning) => (<FormattedHTMLMessage id={findIdForOpplysningCode(opplysning)} values={{ antallBarn: opplysning.tilVerdi }} />))}
+              .map((opplysning) => (
+                <FormattedMessage
+                  id={findIdForOpplysningCode(opplysning)}
+                  values={{
+                    antallBarn: opplysning.tilVerdi,
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              ))}
 
             {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
@@ -97,6 +105,7 @@ HistorikkMalType7.propTypes = {
   intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType7);

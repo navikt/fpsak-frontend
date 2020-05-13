@@ -50,6 +50,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO]: 'ToTrinnsForm.Medlemskap.OverstyrtStartdato',
 
   [aksjonspunktCodes.FORESLA_VEDTAK]: 'ToTrinnsForm.Vedtak.Fritekstbrev',
+  [aksjonspunktCodes.FORESLA_VEDTAK_MANUELT]: 'ToTrinnsForm.Vedtak.Fritekstbrev',
 
   [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'TotrinnsForm.Uttak.AvklarManglendeUttaksperiode',
   [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: 'ToTrinnsForm.Omsorg.VurderOmsorg',
@@ -57,7 +58,6 @@ const totrinnskontrollaksjonspunktTextCodes = {
 
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD]: 'ToTrinnsForm.Uttak.Dod',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST]: 'ToTrinnsForm.Uttak.Soknadsfrist',
-  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP]: 'ToTrinnsForm.Uttak.Medlemskap',
   [aksjonspunktCodes.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE]: 'ToTrinnsForm.Uttak.Klage',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN]:
     'ToTrinnsForm.Uttak.FordelingStonadsperioder',
@@ -73,5 +73,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret',
 
 };
+
+export const totrinnsTilbakekrevingkontrollaksjonspunktTextCodes = {};
 
 export default totrinnskontrollaksjonspunktTextCodes;

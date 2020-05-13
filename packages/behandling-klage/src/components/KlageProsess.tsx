@@ -6,9 +6,9 @@ import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  FagsakInfo, prosessStegHooks, FatterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
+  FagsakInfo, Rettigheter, prosessStegHooks, FatterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, NavAnsatt, Behandling } from '@fpsak-frontend/types';
+import { Kodeverk, KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -23,13 +23,14 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   opneSokeside: () => void;
   dispatch: Dispatch;
+  skalBenytteFritekstBrevmal: boolean;
   alleBehandlinger: {
     id: number;
     type: Kodeverk;
@@ -93,25 +94,27 @@ const KlageProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside,
   alleBehandlinger,
   dispatch,
+  skalBenytteFritekstBrevmal,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const dataTilUtledingAvFpPaneler = {
     alleBehandlinger,
+    skalBenytteFritekstBrevmal,
     klageVurdering: data.klageVurdering,
     saveKlageText: useCallback(saveKlageText(dispatch, behandling, data.aksjonspunkter), [behandling.versjon]),
     previewCallback: useCallback(previewCallback(dispatch, fagsak, behandling), [behandling.versjon]),
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
+    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
 
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
   const [visModalKlageBehandling, toggleKlageModal] = useState(false);

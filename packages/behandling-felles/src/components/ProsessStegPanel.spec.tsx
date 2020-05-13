@@ -2,8 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { Behandling } from '@fpsak-frontend/types';
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -94,6 +97,7 @@ describe('<ProsessStegPanel>', () => {
       isReadOnly: false,
       panelData: [],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const wrapper = shallow(
@@ -103,7 +107,7 @@ describe('<ProsessStegPanel>', () => {
         behandling={{
           ...behandling,
           behandlingHenlagt: true,
-        }}
+        } as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -125,13 +129,14 @@ describe('<ProsessStegPanel>', () => {
       isReadOnly: false,
       panelData: [],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const wrapper = shallow(
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -149,6 +154,7 @@ describe('<ProsessStegPanel>', () => {
     const valgtPanel = {
       ...fellesProsessStegData,
       urlCode: bpc.INNGANGSVILKAR,
+      prosessStegTittelKode: 'TEST',
       erStegBehandlet: true,
       isReadOnly: false,
       panelData: [{
@@ -173,7 +179,7 @@ describe('<ProsessStegPanel>', () => {
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -205,13 +211,14 @@ describe('<ProsessStegPanel>', () => {
         aksjonspunktHelpTextCodes: [],
       }],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const wrapper = shallow(
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={sinon.spy()}
@@ -250,11 +257,12 @@ describe('<ProsessStegPanel>', () => {
         aksjonspunktHelpTextCodes: [],
       }],
       aksjonspunkter,
+      prosessStegTittelKode: 'TEST',
     };
 
     const lagringSideeffekterCallback = sinon.spy();
     const makeRestApiRequest = sinon.spy();
-    const behandlingApi = {
+    const behandlingApi: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
@@ -265,12 +273,12 @@ describe('<ProsessStegPanel>', () => {
       <ProsessStegPanel
         valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         lagringSideeffekterCallback={lagringSideeffekterCallback}
-        behandlingApi={behandlingApi}
-        dispatch={dispatch}
+        behandlingApi={behandlingApi as {[name: string]: EndpointOperations}}
+        dispatch={dispatch as Dispatch}
       />,
     );
 

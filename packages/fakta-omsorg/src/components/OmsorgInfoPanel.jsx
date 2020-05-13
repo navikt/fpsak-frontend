@@ -7,9 +7,8 @@ import { FormattedMessage } from 'react-intl';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
-import {
-  behandlingForm, FaktaBegrunnelseTextField, behandlingFormValueSelector, FaktaSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import omsorgAksjonspunkterPropType from '../propTypes/omsorgAksjonspunkterPropType';
 import omsorgPersonopplysningerPropType from '../propTypes/omsorgPersonopplysningerPropType';

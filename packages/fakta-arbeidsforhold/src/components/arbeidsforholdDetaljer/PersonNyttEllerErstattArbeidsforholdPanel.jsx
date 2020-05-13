@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 
 import { required } from '@fpsak-frontend/utils';
-import { ArrowBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { ArrowBox } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
@@ -26,7 +26,7 @@ const PersonNyttEllerErstattArbeidsforholdPanel = ({
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
   >
-    <ElementWrapper>
+    <>
       <ArrowBox alignLeft>
         <RadioGroupField
           name="erNyttArbeidsforhold"
@@ -60,7 +60,7 @@ const PersonNyttEllerErstattArbeidsforholdPanel = ({
           />
         )}
       </ArrowBox>
-    </ElementWrapper>
+    </>
   </BehandlingFormFieldCleaner>
 );
 

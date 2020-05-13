@@ -7,7 +7,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import {
-  Kodeverk, Personopplysninger, FamilieHendelseSamling, Fagsak,
+  Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
 } from '@fpsak-frontend/types';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 
@@ -26,11 +26,11 @@ const utledKjonn = (kjonn) => {
 
 interface OwnProps {
   fagsak: Fagsak;
-  personopplysninger?: Personopplysninger;
-  familieHendelse: FamilieHendelseSamling;
-  lenkeTilAnnenPart?: string;
-  alleKodeverk: {[key: string]: [Kodeverk]};
+  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   sprakkode: Kodeverk;
+  personopplysninger?: Personopplysninger;
+  familieHendelse?: FamilieHendelseSamling;
+  lenkeTilAnnenPart?: string;
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({

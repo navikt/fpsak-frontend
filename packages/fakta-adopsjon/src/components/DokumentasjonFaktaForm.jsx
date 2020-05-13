@@ -6,10 +6,9 @@ import { connect } from 'react-redux';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import { DatepickerField } from '@fpsak-frontend/form';
-import { behandlingFormValueSelector, FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import { DatepickerField, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
@@ -101,7 +100,7 @@ const DokumentasjonFaktaFormImpl = ({
                   <Image
                     className={styles.image}
                     alt={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
-                    title={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
+                    tooltip={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
                     src={advarselImageUrl}
                   />
                 )}

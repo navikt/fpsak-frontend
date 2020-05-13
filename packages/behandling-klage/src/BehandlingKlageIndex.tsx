@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner,
+  FagsakInfo, Rettigheter, DataFetcherBehandlingData, DataFetcherTriggers, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import FetchedData from './types/fetchedDataTsType';
 import klageApi, { reduxRestApi, KlageBehandlingApiKeys } from './data/klageBehandlingApi';
@@ -18,10 +18,9 @@ const klageData = [klageApi.AKSJONSPUNKTER, klageApi.VILKAR, klageApi.KLAGE_VURD
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -30,13 +29,15 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  alleBehandlinger: [{
+  skalBenytteFritekstBrevmal: boolean;
+  alleBehandlinger: {
     id: number;
-    type: Kodeverk;
-    avsluttet?: string;
-    status: Kodeverk;
     uuid: string;
-  }];
+    type: Kodeverk;
+    status: Kodeverk;
+    opprettet: string;
+    avsluttet?: string;
+  }[];
 }
 
 interface StateProps {
@@ -90,13 +91,14 @@ class BehandlingKlageIndex extends PureComponent<Props> {
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       settPaVent,
       hentBehandling,
       opneSokeside,
       alleBehandlinger,
+      skalBenytteFritekstBrevmal,
     } = this.props;
 
     if (!behandling) {
@@ -107,7 +109,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
 
     return (
       <DataFetcherBehandlingData
-        behandlingVersion={behandling.versjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={klageData}
         showOldDataWhenRefetching
         render={(dataProps: FetchedData, isFinished) => (
@@ -118,7 +120,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
               fetchedData={dataProps}
               fagsak={fagsak}
               kodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
@@ -126,6 +128,7 @@ class BehandlingKlageIndex extends PureComponent<Props> {
               hentBehandling={hentBehandling}
               opneSokeside={opneSokeside}
               alleBehandlinger={alleBehandlinger}
+              skalBenytteFritekstBrevmal={skalBenytteFritekstBrevmal}
             />
           </>
         )}

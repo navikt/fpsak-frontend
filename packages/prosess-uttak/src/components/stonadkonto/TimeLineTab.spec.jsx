@@ -30,8 +30,8 @@ describe('<TimeLineTab>', () => {
     const formattedMessage = wrapper.find('FormattedMessage');
     expect(formattedMessage.at(0).props().id).to.equal('TimeLineTab.Stonadinfo.ForeldrepengerFF');
 
-    const formattedHtmlMessage = wrapper.find('FormattedHTMLMessage');
-    expect(formattedHtmlMessage.at(0).props().values.ukerVerdi).to.equal(6);
-    expect(formattedHtmlMessage.at(0).props().values.dagerVerdi).to.equal(0);
+    const FormattedMessage = wrapper.find('FormattedMessage');
+    expect(FormattedMessage.at(1).props().values.ukerVerdi).to.equal(6);
+    expect(FormattedMessage.at(1).props().values.dagerVerdi).to.equal(0);
   });
 });

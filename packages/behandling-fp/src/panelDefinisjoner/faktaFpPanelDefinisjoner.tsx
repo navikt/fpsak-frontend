@@ -17,7 +17,7 @@ import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import OmsorgFaktaIndex from '@fpsak-frontend/fakta-omsorg';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/konstanter';
 
 import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
 
@@ -128,7 +128,7 @@ const faktaPanelDefinisjoner = [{
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
     aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO,
   ],
-  endpoints: [fpBehandlingApi.MEDLEMSKAP, fpBehandlingApi.MEDLEMSKAP_V2],
+  endpoints: [fpBehandlingApi.MEDLEMSKAP],
   renderComponent: (props) => <MedlemskapFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
   getData: ({

@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 import { ApprovalPanel, mapPropsToContext } from './ApprovalPanel';
@@ -113,6 +114,29 @@ describe('<ApprovalPanel>', () => {
       [createAksjonspunkt(aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN)],
   });
 
+  const getTilbakekrevingsSkjermlenkeContexts = () => [
+    {
+      skjermlenkeType: 'TILBAKEKREVING',
+      totrinnskontrollAksjonspunkter:
+        [createAksjonspunkt(aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING)],
+    },
+    {
+      skjermlenkeType: 'FORELDELSE',
+      totrinnskontrollAksjonspunkter:
+        [createAksjonspunkt(aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE)],
+    },
+    {
+      skjermlenkeType: 'VEDTAK',
+      totrinnskontrollAksjonspunkter:
+        [createAksjonspunkt(aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK)],
+    },
+    {
+      skjermlenkeType: 'FAKTA_OM_FEILUTBETALING',
+      totrinnskontrollAksjonspunkter:
+        [createAksjonspunkt(aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING)],
+    },
+  ];
+
   it('skal mappe aksjonspunkter til context-objekt når aksjonspunkter hentes frå rest-tjeneste', () => {
     const totrinnskontrollAksjonspunkter = [
       getTotrinnsaksjonspunkterFoedsel(),
@@ -127,7 +151,7 @@ describe('<ApprovalPanel>', () => {
 
     const nextProps = getNextProps(totrinnskontrollAksjonspunkter, behandlingStatus.FATTER_VEDTAK);
     const skjemalenkeTyper = getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter);
-    const context = mapPropsToContext(true, nextProps, skjemalenkeTyper);
+    const context = mapPropsToContext(true, nextProps, skjemalenkeTyper, () => 'url');
     expect(context)
       .to
       .have
@@ -231,6 +255,7 @@ describe('<ApprovalPanel>', () => {
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       disableGodkjennKnapp={false}
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -242,6 +267,51 @@ describe('<ApprovalPanel>', () => {
       .to
       .have
       .length(3);
+
+    const toTrinnsForm = wrapper.find(ToTrinnsForm);
+    expect(toTrinnsForm)
+      .to
+      .have
+      .length(1);
+  });
+
+  it('skal vise sorterte approvals for tilbakekrevingsbehandling', () => {
+    const behandling = getBehandling();
+    const totrinnskontrollSkjermlenkecontexts = getTilbakekrevingsSkjermlenkeContexts();
+
+    const wrapper = shallowWithIntl(<ApprovalPanel
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingStatus={behandling.status}
+      onSubmit={sinon.spy()}
+      readOnly={false}
+      forhandsvisVedtaksbrev={sinon.spy()}
+      isForeldrepengerFagsak
+      behandlingKlageVurdering={{}}
+      alleKodeverk={{}}
+      erBehandlingEtterKlage={false}
+      erKlageWithKA={false}
+      erKlage={false}
+      toTrinnsBehandling={behandling.toTrinnsBehandling}
+      aksjonspunkter={[]}
+      resetApproval={sinon.spy()}
+      location={{ pathname: 'test' }}
+      totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkecontexts}
+      skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollSkjermlenkecontexts)}
+      disableGodkjennKnapp={false}
+      erTilbakekreving
+      createLocationForSkjermlenke={() => 'url'}
+    />);
+
+    const approvals = wrapper.state('approvals');
+    expect(approvals)
+      .to
+      .have
+      .length(4);
+    expect(approvals[0].contextCode).equals('FAKTA_OM_FEILUTBETALING');
+    expect(approvals[1].contextCode).equals('FORELDELSE');
+    expect(approvals[2].contextCode).equals('TILBAKEKREVING');
+    expect(approvals[3].contextCode).equals('VEDTAK');
 
     const toTrinnsForm = wrapper.find(ToTrinnsForm);
     expect(toTrinnsForm)
@@ -272,6 +342,7 @@ describe('<ApprovalPanel>', () => {
       totrinnskontrollSkjermlenkeContext={undefined}
       skjemalenkeTyper={[]}
       disableGodkjennKnapp={false}
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -320,6 +391,7 @@ describe('<ApprovalPanel>', () => {
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       disableGodkjennKnapp={false}
+      createLocationForSkjermlenke={() => 'url'}
     />);
 
     const approvals = wrapper.state('approvals');

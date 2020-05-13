@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix, ErrorTypes } from '@fpsak-frontend/fp-felles';
+import { ErrorTypes } from '@fpsak-frontend/rest-api';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 import {
-  Kodeverk, NavAnsatt, Aksjonspunkt, Behandling,
+  KodeverkMedNavn, Aksjonspunkt, Behandling,
 } from '@fpsak-frontend/types';
 
 import papirsoknadApi, { reduxRestApi, PapirsoknadApiKeys } from './data/papirsoknadApi';
@@ -25,9 +26,8 @@ interface DataProps {
 interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
-  location: {};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
@@ -84,7 +84,7 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
     const {
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       settPaVent,
       hentBehandling,
       behandling,
@@ -101,7 +101,7 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
 
     return (
       <DataFetcherBehandlingData
-        behandlingVersion={behandling.versjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         showOldDataWhenRefetching
         endpoints={papirsoknadData}
         render={(dataProps: DataProps, isFinished) => (
@@ -112,7 +112,7 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
               aksjonspunkter={dataProps.aksjonspunkter}
               fagsak={fagsak}
               kodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}
               lagreAksjonspunkt={lagreAksjonspunkt}

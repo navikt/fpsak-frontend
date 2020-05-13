@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
 import Modal from 'nav-frontend-modal';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
@@ -11,7 +10,6 @@ describe('<SoknadRegistrertModal>', () => {
   it('skal vise modal for registrert søknad', () => {
     const wrapper = shallowWithIntl(<SoknadRegistrertModal
       isOpen
-      onRequestClose={sinon.spy()}
       intl={intlMock}
     />);
 

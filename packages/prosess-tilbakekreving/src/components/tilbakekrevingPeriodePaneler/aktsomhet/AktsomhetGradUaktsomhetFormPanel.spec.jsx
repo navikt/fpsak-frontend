@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 
@@ -19,7 +20,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
   }];
 
   it('skal måtte velge om en skal tilbakekreve beløp når totalbeløpet er under 4 rettsgebyr når grad er simpel uaktsom', () => {
-    const wrapper = shallow(<AktsomhetGradUaktsomhetFormPanel
+    const wrapper = shallow(<AktsomhetGradUaktsomhetFormPanel.WrappedComponent
       harGrunnerTilReduksjon
       readOnly={false}
       handletUaktsomhetGrad={aktsomhet.SIMPEL_UAKTSOM}
@@ -28,6 +29,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       harMerEnnEnYtelse
       feilutbetalingBelop={100}
       erTotalBelopUnder4Rettsgebyr
+      intl={intlMock}
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(1);
@@ -35,7 +37,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
   });
 
   it('skal ikke måtte velge om en skal tilbakekreve beløp når totalbeløpet er under 4 rettsgebyr med grad er ulik simpel uaktsom', () => {
-    const wrapper = shallow(<AktsomhetGradUaktsomhetFormPanel
+    const wrapper = shallow(<AktsomhetGradUaktsomhetFormPanel.WrappedComponent
       harGrunnerTilReduksjon
       readOnly={false}
       handletUaktsomhetGrad={aktsomhet.GROVT_UAKTSOM}
@@ -44,6 +46,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       harMerEnnEnYtelse
       feilutbetalingBelop={100}
       erTotalBelopUnder4Rettsgebyr
+      intl={intlMock}
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
@@ -52,7 +55,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
   });
 
   it('skal ikke måtte velge om en skal tilbakekreve beløp når totalbeløpet er over 4 rettsgebyr med grad er lik simpel uaktsom', () => {
-    const wrapper = shallow(<AktsomhetGradUaktsomhetFormPanel
+    const wrapper = shallow(<AktsomhetGradUaktsomhetFormPanel.WrappedComponent
       harGrunnerTilReduksjon
       readOnly={false}
       handletUaktsomhetGrad={aktsomhet.SIMPEL_UAKTSOM}
@@ -61,6 +64,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
       harMerEnnEnYtelse
       feilutbetalingBelop={100}
       erTotalBelopUnder4Rettsgebyr={false}
+      intl={intlMock}
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(0);

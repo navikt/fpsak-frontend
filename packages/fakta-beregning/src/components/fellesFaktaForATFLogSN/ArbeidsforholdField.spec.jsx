@@ -12,6 +12,7 @@ import { ArbeidsforholdFieldImpl } from './ArbeidsforholdField';
 const arbeidsforhold1 = {
   arbeidsgiverNavn: 'Sopra Steria AS',
   arbeidsgiverId: '233647823',
+  arbeidsgiverIdVisning: '233647823',
   startdato: '01.01.1967',
   opphoersdato: null,
   arbeidsforholdId: null,

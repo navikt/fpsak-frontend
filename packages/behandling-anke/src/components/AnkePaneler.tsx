@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, BehandlingPaVent, SettPaVentParams, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import AnkeProsess from './AnkeProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -13,8 +13,8 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   fetchedData: FetchedData;
-  navAnsatt: NavAnsatt;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  rettigheter: Rettigheter;
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -32,7 +32,7 @@ const AnkePaneler: FunctionComponent<OwnProps> = ({
   fagsak,
   behandling,
   fetchedData,
-  navAnsatt,
+  rettigheter,
   alleKodeverk,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -53,13 +53,12 @@ const AnkePaneler: FunctionComponent<OwnProps> = ({
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <AnkeProsess
         data={fetchedData}
         fagsak={fagsak}
         behandling={behandling}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import OmsorgFaktaForm from './OmsorgFaktaForm';
 
 describe('<OmsorgFaktaForm>', () => {
@@ -49,7 +49,7 @@ describe('<OmsorgFaktaForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    const formattedMessage = wrapper.find(FormattedHTMLMessage);
+    const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.first().prop('id')).to.eql('OmsorgFaktaForm.OppgittAleneomsorg');
   });
@@ -65,7 +65,7 @@ describe('<OmsorgFaktaForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    const formattedMessage = wrapper.find(FormattedHTMLMessage);
+    const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.first().prop('id')).to.eql('OmsorgFaktaForm.OppgittIkkeOmsorg');
   });

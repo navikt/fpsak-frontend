@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import { Dispatch } from 'redux';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { Behandling, Kodeverk } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import ProsessStegData from '../types/prosessStegDataTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
-import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
+import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBehandlingData';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 import prosessStegHooks from '../util/prosessStegHooks';
@@ -18,7 +18,7 @@ import prosessStegHooks from '../util/prosessStegHooks';
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   valgtProsessSteg?: ProsessStegData;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;
@@ -55,7 +55,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
             <FadingPanel>
               <DataFetcherBehandlingData
                 key={valgtProsessSteg.panelData[0].code}
-                behandlingVersion={behandling.versjon}
+                fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
                 endpoints={valgtProsessSteg.panelData[0].endpoints}
                 render={(dataProps) => valgtProsessSteg.panelData[0].renderComponent({
                   ...dataProps,

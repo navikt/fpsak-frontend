@@ -80,7 +80,7 @@ const DocumentList = ({
                 className={styles.image}
                 src={directionImage}
                 alt={intl.formatMessage({ id: directionTextCode })}
-                title={intl.formatMessage({ id: directionTextCode })}
+                tooltip={intl.formatMessage({ id: directionTextCode })}
                 tabIndex="0"
               />
             </TableColumn>
@@ -91,7 +91,7 @@ const DocumentList = ({
               <Image
                 className={styles.image}
                 src={erIBrukImageUrl}
-                tooltip={{ header: <Normaltekst><FormattedMessage id="DocumentList.IBruk" /></Normaltekst> }}
+                tooltip={<FormattedMessage id="DocumentList.IBruk" />}
                 tabIndex="0"
               />
               )}
@@ -99,7 +99,7 @@ const DocumentList = ({
             <TableColumn>
               {isTextMoreThan25char(document.gjelderFor)
               && (
-                <Tooltip header={<Normaltekst>{document.gjelderFor}</Normaltekst>}>
+                <Tooltip content={<Normaltekst>{document.gjelderFor}</Normaltekst>} alignLeft>
                   {trimText(document.gjelderFor)}
                 </Tooltip>
               )}

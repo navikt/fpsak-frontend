@@ -3,11 +3,9 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks,
+  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, DataFetcherTriggers, faktaHooks, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';
@@ -19,9 +17,9 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
-  fpsakKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  fpsakKodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
   dispatch: Dispatch;
@@ -32,7 +30,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   data,
   fagsak,
   behandling,
-  navAnsatt,
+  rettigheter,
   alleKodeverk,
   fpsakKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
@@ -48,7 +46,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvTilbakekrevingPaneler,
-    fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, 'default', intl);
+    behandling, rettigheter, aksjonspunkter, hasFetchError, 'default', intl);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, 'default', overstyringApCodes, tilbakekrevingApi, dispatch);
@@ -58,7 +56,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingData
           key={valgtPanel.urlCode}
-          behandlingVersion={behandling.versjon}
+          fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
           endpoints={valgtPanel.endpoints}
           render={(dataProps) => valgtPanel.renderComponent({
             ...dataProps,

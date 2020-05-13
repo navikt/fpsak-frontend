@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { FaktaGruppe, getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/form';
+import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import arbeidsforholdHandling from '../kodeverk/arbeidsforholdHandling';
@@ -207,7 +207,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
   updateArbeidsforhold(values) {
     const { selectedArbeidsforhold } = this.state;
-    const { arbeidsforhold, skalKunneLageArbeidsforholdBasertPaInntektsmelding } = this.props;
+    const { arbeidsforhold } = this.props;
 
     const brukMedJustertPeriode = values.arbeidsforholdHandlingField === arbeidsforholdHandling.OVERSTYR_TOM;
 
@@ -236,7 +236,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       fortsettBehandlingUtenInntektsmelding,
       inntektMedTilBeregningsgrunnlag,
       brukPermisjon,
-      basertPaInntektsmelding: !!(skalKunneLageArbeidsforholdBasertPaInntektsmelding || selectedArbeidsforhold.kanOppretteNyttArbforFraIM),
+      basertPaInntektsmelding: !!selectedArbeidsforhold.kanOppretteNyttArbforFraIM,
     };
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
@@ -313,7 +313,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       arbeidsforhold,
       aktivtArbeidsforholdTillatUtenIM,
       skalKunneLeggeTilNyeArbeidsforhold,
-      skalKunneLageArbeidsforholdBasertPaInntektsmelding,
       alleMerknaderFraBeslutter,
       behandlingId,
       behandlingVersjon,
@@ -357,7 +356,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
               cancelArbeidsforhold={this.cancelArbeidsforhold}
               aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
               skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-              skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
               alleKodeverk={alleKodeverk}
@@ -380,7 +378,6 @@ PersonArbeidsforholdPanelImpl.propTypes = {
   reduxFormInitialize: PropTypes.func.isRequired,
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
-  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,

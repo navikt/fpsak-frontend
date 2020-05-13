@@ -57,4 +57,29 @@ describe('<FordelingHelpText>', () => {
     const string = createFordelArbeidsforholdString(arbeidsforholdListe, textCase.REFUSJON, fn);
     expect(string).to.eql('Sopra Steria (123456789)...6789 f.o.m. 01.01.2016 - t.o.m. 01.01.2026');
   });
+
+  const arbeidsforholdMedEndringISøktYtelse = {
+    arbeidsgiverNavn: 'Sopra Steria',
+    arbeidsforholdId: '987654321',
+    arbeidsgiverId: '123456789',
+    eksternArbeidsforholdId: '56789',
+    permisjon: {
+      permisjonFom: '2016-01-01',
+      permisjonTom: '2018-10-01',
+    },
+    perioderMedGraderingEllerRefusjon: [
+      {
+        erGradering: false,
+        erRefusjon: false,
+        erSøktYtelse: true,
+        fom: '2016-01-01',
+        tom: '2026-01-01',
+      },
+    ],
+  };
+
+  it('skal lage endret arbeidsforhold for endring i ytelse', () => {
+    const string = createFordelArbeidsforholdString([arbeidsforholdMedEndringISøktYtelse], textCase.ENDRING_YTELSE, fn);
+    expect(string).to.eql('Sopra Steria (123456789)...6789 f.o.m. 01.01.2016 - t.o.m. 01.01.2026');
+  });
 });

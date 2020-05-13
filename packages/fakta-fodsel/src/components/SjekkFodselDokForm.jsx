@@ -6,12 +6,14 @@ import { FieldArray, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Column } from 'nav-frontend-grid';
 
+import { FaktaBegrunnelseTextField, isFieldEdited } from '@fpsak-frontend/fakta-felles';
 import {
-  isFieldEdited, behandlingForm, behandlingFormValueSelector, FaktaGruppe, FaktaBegrunnelseTextField,
-} from '@fpsak-frontend/fp-felles';
-import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+  ArrowBox, VerticalSpacer, FaktaGruppe,
+} from '@fpsak-frontend/shared-components';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -57,7 +59,7 @@ export const SjekkFodselDokForm = ({
   familiehendelseOriginalBehandling,
   alleMerknaderFraBeslutter,
 }) => (
-  <ElementWrapper>
+  <>
     <FodselSammenligningIndex
       behandlingsTypeKode={behandlingTypeKode}
       avklartBarn={avklartBarn}
@@ -98,7 +100,7 @@ export const SjekkFodselDokForm = ({
     </FaktaGruppe>
     <VerticalSpacer sixteenPx />
     <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
-  </ElementWrapper>
+  </>
 );
 
 SjekkFodselDokForm.propTypes = {

@@ -1,17 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Container } from 'nav-frontend-grid';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import EngangsstonadPapirsoknadIndex from '@fpsak-frontend/papirsoknad-es';
 import ForeldrepengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-fp';
 import SvangerskapspengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-svp';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
 import { FagsakInfo } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk } from '@fpsak-frontend/types';
+import { KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 
@@ -19,7 +19,7 @@ import styles from './registrerPapirsoknadPanel.less';
 
 interface OwnProps {
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: Kodeverk[]};
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   readOnly: boolean;
   setSoknadData: (SoknadData) => void;
   soknadData: SoknadData;
@@ -37,13 +37,15 @@ const RegistrerPapirsoknadPanel: FunctionComponent<OwnProps> = ({
   lagreFullstendig,
 }) => (
   <>
-    <Panel className={styles.panelWithActionNeeded}>
+    <Panel className={styles.panel}>
       <Container fluid>
         <Undertittel><FormattedMessage id="Registrering.RegistrereSoknad" /></Undertittel>
         <VerticalSpacer sixteenPx />
-        <AksjonspunktHelpText isAksjonspunktOpen={!readOnly}>
-          {[<FormattedMessage key="regOpplysninger" id="Registrering.RegistrerAlleOpplysninger" />]}
-        </AksjonspunktHelpText>
+        {!readOnly && (
+          <AksjonspunktHelpTextHTML>
+            <FormattedMessage key="regOpplysninger" id="Registrering.RegistrerAlleOpplysninger" />
+          </AksjonspunktHelpTextHTML>
+        )}
         <VerticalSpacer sixteenPx />
         <VerticalSpacer sixteenPx />
         <SoknadTypePickerForm

@@ -4,7 +4,7 @@ import { EtikettInfo } from 'nav-frontend-etiketter';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { FodselSammenligningPanel } from './FodselSammenligningPanel';
+import FodselSammenligningPanel from './FodselSammenligningPanel';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
 import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderingPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-fakta-fodsel-sammenligning';

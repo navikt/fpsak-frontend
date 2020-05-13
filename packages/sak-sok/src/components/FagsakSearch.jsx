@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { PersonIndex } from '@fpsak-frontend/person-info';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import SearchForm from './SearchForm';
 import FagsakList from './FagsakList';
+import PersonInfo from './person/PersonInfo';
 
 import styles from './fagsakSearch.less';
 
@@ -38,8 +38,8 @@ const FagsakSearch = ({
       <Normaltekst className={styles.label}><FormattedMessage id="FagsakSearch.ZeroSearchResults" /></Normaltekst>
     )}
 
-    {fagsaker.length > 1 && (
-      <PersonIndex person={fagsaker[0].person} />
+    {fagsaker.length > 1 && fagsaker[0].person && (
+      <PersonInfo person={fagsaker[0].person} />
     )}
 
     <VerticalSpacer eightPx />

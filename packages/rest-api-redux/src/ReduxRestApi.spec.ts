@@ -7,7 +7,7 @@ import ReduxRestApi from './ReduxRestApi';
 describe('ReduxRestApi', () => {
   it('skal bruke samme konfig som en annen request', () => {
     const configs = [
-      new RequestConfig('BEHANDLING', '/api/behandling', { linksToFetchAutomatically: ['vedtak'] }),
+      new RequestConfig('BEHANDLING', '/api/behandling'),
       new RequestConfig('LAGRE_AP', undefined, { saveResponseIn: 'BEHANDLING' }),
     ];
 
@@ -16,7 +16,6 @@ describe('ReduxRestApi', () => {
     expect(requestConfig.configs[0].config).to.eql(configs[0].config);
     expect(requestConfig.configs[1].config).to.eql({
       ...configs[1].config,
-      linksToFetchAutomatically: ['vedtak'],
     });
   });
 

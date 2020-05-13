@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { isBehandlingFormDirty, getBehandlingFormInitialValues, getBehandlingFormValues } from '@fpsak-frontend/fp-felles';
+import { isBehandlingFormDirty, getBehandlingFormInitialValues, getBehandlingFormValues } from '@fpsak-frontend/form';
 
 export const formNameAvklarAktiviteter = 'avklarAktiviteterForm';
 

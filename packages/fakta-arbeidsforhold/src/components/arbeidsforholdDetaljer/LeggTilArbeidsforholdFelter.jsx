@@ -6,7 +6,7 @@ import {
   DDMMYYYY_DATE_FORMAT, hasValidDate, hasValidInteger, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
-import { FlexContainer, FlexRow, FlexColumn } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
 import BehandlingFormFieldCleaner from '../../util/BehandlingFormFieldCleaner';
 
@@ -17,7 +17,8 @@ import styles from './leggTilArbeidsforholdFelter.less';
 // ----------------------------------------------------------------------------------
 const sluttdatoErrorMsg = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }]);
 const startdatoErrorMsg = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeOrEqual' }, { dato }]);
-const formatDate = (dato) => moment(dato).format(DDMMYYYY_DATE_FORMAT);
+const formatDate = (dato) => moment(dato)
+  .format(DDMMYYYY_DATE_FORMAT);
 
 // ----------------------------------------------------------------------------------
 // Component : LeggTilArbeidsforholdFelter
@@ -69,8 +70,9 @@ const LeggTilArbeidsforholdFelter = ({
           <InputField
             name="stillingsprosent"
             label={{ id: 'PersonArbeidsforholdDetailForm.Stillingsprosent' }}
-            validate={[required, minValue(0), maxValue(100), hasValidInteger]}
+            validate={[required, minValue(1), maxValue(100), hasValidInteger]}
             readOnly={readOnly}
+            defaultValue={100}
             bredde="S"
             parse={(value) => {
               const parsedValue = parseInt(value, 10);

@@ -1,6 +1,4 @@
-import { Kodeverk } from '@fpsak-frontend/types';
-
-import FagsakPerson from './fagsakPersonTsType';
+import { Kodeverk, FagsakPerson } from '@fpsak-frontend/types';
 
 type FagsakInfo = Readonly<{
   saksnummer: number;

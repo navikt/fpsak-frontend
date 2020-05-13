@@ -62,22 +62,29 @@ const renderNavInput = renderNavField(NavInput);
 const NormalizeOnBlurField = createNormalizeOnBlurField(reduxFormField);
 
 const DecimalField = ({
-  name, type, label, validate, readOnly, isEdited, normalizeOnBlur, ...otherProps
-}) => (
-  <NormalizeOnBlurField
-    name={name}
-    validate={validate}
-    component={readOnly ? ReadOnlyField : renderNavInput}
-    type={type}
-    label={label}
-    normalizeOnBlur={normalizeOnBlur}
-    {...otherProps}
-    readOnly={readOnly}
-    readOnlyHideEmpty
-    isEdited={isEdited}
-    autoComplete="off"
-  />
-);
+  name, type, label, validate, readOnly, isEdited, normalizeOnBlur, alignRightCenterOnReadOnly, ...otherProps
+}) => {
+  const other = readOnly ? {
+    ...otherProps,
+    alignRightCenterOnReadOnly,
+  } : otherProps;
+
+  return (
+    <NormalizeOnBlurField
+      name={name}
+      validate={validate}
+      component={readOnly ? ReadOnlyField : renderNavInput}
+      type={type}
+      label={label}
+      normalizeOnBlur={normalizeOnBlur}
+      {...other}
+      readOnly={readOnly}
+      readOnlyHideEmpty
+      isEdited={isEdited}
+      autoComplete="off"
+    />
+  );
+};
 
 DecimalField.propTypes = {
   name: PropTypes.string.isRequired,
@@ -87,6 +94,7 @@ DecimalField.propTypes = {
   readOnly: PropTypes.bool,
   isEdited: PropTypes.bool,
   normalizeOnBlur: PropTypes.func.isRequired,
+  alignRightCenterOnReadOnly: PropTypes.bool,
 };
 
 DecimalField.defaultProps = {
@@ -95,6 +103,7 @@ DecimalField.defaultProps = {
   readOnly: false,
   label: '',
   isEdited: false,
+  alignRightCenterOnReadOnly: false,
 };
 
 export default DecimalField;

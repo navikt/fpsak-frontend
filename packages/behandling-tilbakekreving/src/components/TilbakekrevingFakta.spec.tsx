@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FaktaPanel } from '@fpsak-frontend/behandling-felles';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -30,7 +31,7 @@ describe('<TilbakekrevingFakta>', () => {
       personnummer: '12345',
     },
   };
-  const behandling = {
+  const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
     status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
@@ -42,16 +43,15 @@ describe('<TilbakekrevingFakta>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [{
     definisjon: { kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING, kodeverk: 'test' },
@@ -108,10 +108,11 @@ describe('<TilbakekrevingFakta>', () => {
         data={{
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
+        fpsakKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         hasFetchError={false}
         dispatch={sinon.spy()}
@@ -134,10 +135,11 @@ describe('<TilbakekrevingFakta>', () => {
         data={{
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
+        fpsakKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         hasFetchError={false}
         dispatch={sinon.spy()}

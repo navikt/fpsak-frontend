@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Element, Normaltekst, Undertekst, EtikettLiten,
 } from 'nav-frontend-typografi';
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -59,7 +59,7 @@ const lagIntroTilEndringspanel = (naring) => {
   }
   return (
     <span>
-      <FormattedHTMLMessage id={hendelseTekst} values={{ dato: dateFormat(hendelseDato) }} />
+      <FormattedMessage id={hendelseTekst} values={{ dato: dateFormat(hendelseDato), b: (...chunks) => <b>{chunks}</b> }} />
     </span>
   );
 };

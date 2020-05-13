@@ -5,10 +5,11 @@ import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import {
-  Behandling, NavAnsatt, Aksjonspunkt, Vilkar,
+  Behandling, Aksjonspunkt, Vilkar,
 } from '@fpsak-frontend/types';
 
 import FagsakInfo from '../types/fagsakInfoTsType';
+import Rettigheter from '../types/rettigheterTsType';
 import ProsessStegDefinisjon from '../types/prosessStegDefinisjonTsType';
 import ProsessStegData from '../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
@@ -20,7 +21,7 @@ const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDefinisjon[],
   panelData: {},
   fagsak: FagsakInfo,
-  navAnsatt: NavAnsatt,
+  rettigheter: Rettigheter,
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
@@ -39,7 +40,7 @@ const useProsessStegPaneler = (
   }, [behandling.versjon]);
 
   const prosessStegPaneler = useMemo(() => utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    overstyrteAksjonspunktKoder, fagsak, navAnsatt, behandling, aksjonspunkter, vilkar, hasFetchError),
+    overstyrteAksjonspunktKoder, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError),
   [behandling.versjon, overstyrteAksjonspunktKoder]);
 
   const valgtPanel = useMemo(() => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),

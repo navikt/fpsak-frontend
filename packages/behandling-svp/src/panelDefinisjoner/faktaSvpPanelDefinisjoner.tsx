@@ -13,7 +13,7 @@ import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-tilrettelegging';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/konstanter';
 
 import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
 
@@ -67,14 +67,14 @@ const faktaPanelDefinisjoner = [{
   endpoints: [svpBehandlingApi.SVANGERSKAPSPENGER_TILRETTELEGGING],
   renderComponent: (props) => <FodselOgTilretteleggingFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ inntektArbeidYtelse }) => ({ inntektArbeidYtelse }),
+  getData: ({ rettigheter, inntektArbeidYtelse }) => ({ erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled, inntektArbeidYtelse }),
 }, {
   urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
   textCode: 'MedlemskapInfoPanel.Medlemskap',
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
     aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, aksjonspunktCodes.AVKLAR_OPPHOLDSRETT, aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO],
-  endpoints: [svpBehandlingApi.MEDLEMSKAP, svpBehandlingApi.MEDLEMSKAP_V2],
+  endpoints: [svpBehandlingApi.MEDLEMSKAP],
   renderComponent: (props) => <MedlemskapFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
   getData: ({

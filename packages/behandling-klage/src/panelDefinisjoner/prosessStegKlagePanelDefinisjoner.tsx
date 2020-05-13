@@ -7,9 +7,9 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
-
+import { ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 
 const getVedtakStatus = (behandlingsresultat, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
@@ -54,10 +54,13 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.BEHANDLE_KLAGE_NFP],
     renderComponent: (props) => <KlagevurderingProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ saveKlageText, klageVurdering, previewCallback }) => ({
+    getData: ({
+      saveKlageText, klageVurdering, previewCallback, skalBenytteFritekstBrevmal,
+    }) => ({
       saveKlage: saveKlageText,
       klageVurdering,
       previewCallback,
+      skalBenytteFritekstBrevmal,
     }),
   }],
 }, {
@@ -79,10 +82,13 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.BEHANDLE_KLAGE_NK],
     renderComponent: (props) => <KlagevurderingProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ saveKlageText, klageVurdering, previewCallback }) => ({
+    getData: ({
+      saveKlageText, klageVurdering, previewCallback, skalBenytteFritekstBrevmal,
+    }) => ({
       saveKlage: saveKlageText,
       klageVurdering,
       previewCallback,
+      skalBenytteFritekstBrevmal,
     }),
   }],
 }, {
@@ -92,21 +98,25 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL],
     renderComponent: (props) => <VedtakKlageProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ previewCallback, klageVurdering }) => ({
+    getData: ({ previewCallback, klageVurdering, skalBenytteFritekstBrevmal }) => ({
       previewVedtakCallback: previewCallback,
       klageVurdering,
+      skalBenytteFritekstBrevmal,
     }),
     overrideStatus: ({
       behandling, aksjonspunkterForSteg,
     }) => getVedtakStatus(
       behandling.behandlingsresultat, aksjonspunkterForSteg,
     ),
+    vilkarCodes: [],
+    isOverridable: false,
+    endpoints: [],
   }],
 }];
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...PANEL_ATTRIBUTTER,
     ...p,
   })),

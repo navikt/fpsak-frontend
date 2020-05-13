@@ -6,9 +6,8 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
 import {
-  formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber, required,
+  formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { skjermlenkeCodes } from '@fpsak-frontend/konstanter';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 
 import styles from './approvalPanel.less';
 
-export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) => {
+const sorterteSkjermlenkeCodesForTilbakekreving = [
+  skjermlenkeCodes.FAKTA_OM_FEILUTBETALING,
+  skjermlenkeCodes.FORELDELSE,
+  skjermlenkeCodes.TILBAKEKREVING,
+  skjermlenkeCodes.VEDTAK,
+];
+
+const sorterTilbakekrevingContext = (approvals) => (
+  sorterteSkjermlenkeCodesForTilbakekreving
+    .map((s) => approvals.find((el) => el.contextCode === s.kode))
+    .filter((s) => s)
+);
+
+export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke) => {
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
     if (props.behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && props.totrinnskontrollSkjermlenkeContext) {
@@ -25,11 +38,15 @@ export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper) =
         const skjermlenkeTypeKodeverk = skjemalenkeTyper.find((skjemalenkeType) => skjemalenkeType.kode === context.skjermlenkeType);
         return {
           contextCode: context.skjermlenkeType,
-          skjermlenke: createLocationForHistorikkItems(props.location, context.skjermlenkeType),
+          skjermlenke: createLocationForSkjermlenke(props.location, context.skjermlenkeType),
           skjermlenkeNavn: skjermlenkeTypeKodeverk.navn,
           aksjonspunkter: context.totrinnskontrollAksjonspunkter,
         };
       });
+      if (props.erTilbakekreving) {
+        return totrinnsContext ? sorterTilbakekrevingContext(totrinnsContext) : null;
+      }
+
       return totrinnsContext || null;
     }
   }
@@ -49,19 +66,21 @@ export class ApprovalPanel extends Component {
     };
 
     const {
-      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper,
+      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper, createLocationForSkjermlenke,
     } = props;
     if (totrinnskontrollSkjermlenkeContext || totrinnskontrollReadOnlySkjermlenkeContext) {
       this.state = {
         ...this.state,
-        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper),
+        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke),
       };
     }
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.totrinnskontrollSkjermlenkeContext || nextProps.totrinnskontrollReadOnlySkjermlenkeContext) {
-      this.setState({ approvals: mapPropsToContext(nextProps.toTrinnsBehandling, nextProps, nextProps.skjemalenkeTyper) });
+      this.setState({
+        approvals: mapPropsToContext(nextProps.toTrinnsBehandling, nextProps, nextProps.skjemalenkeTyper, nextProps.createLocationForSkjermlenke),
+      });
     }
   }
 
@@ -92,7 +111,6 @@ export class ApprovalPanel extends Component {
       erTilbakekreving,
     } = this.props;
     const { approvals } = this.state;
-
     return (
       <>
         {approvals && approvals.length > 0
@@ -131,7 +149,12 @@ export class ApprovalPanel extends Component {
                 : (
                   <div>
                     <div className={styles.resultatFraGodkjenningTextContainer}>
-                      <FormattedHTMLMessage id="ToTrinnsForm.LøstAksjonspunkt" />
+                      <FormattedMessage
+                        id="ToTrinnsForm.LøstAksjonspunkt"
+                        values={{
+                          b: (...chunks) => <b>{chunks}</b>,
+                        }}
+                      />
                     </div>
                     <div>
                       <ToTrinnsFormReadOnly
@@ -140,6 +163,7 @@ export class ApprovalPanel extends Component {
                         behandlingKlageVurdering={behandlingKlageVurdering}
                         behandlingStatus={behandlingStatus}
                         alleKodeverk={alleKodeverk}
+                        erTilbakekreving={erTilbakekreving}
                       />
                     </div>
                   </div>
@@ -172,6 +196,7 @@ ApprovalPanel.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   erTilbakekreving: PropTypes.bool,
 };
 

@@ -6,9 +6,9 @@ import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
+  FagsakInfo, Rettigheter, prosessStegHooks, IverksetterVedtakStatusModal, ProsessStegPanel, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, NavAnsatt, Behandling } from '@fpsak-frontend/types';
+import { Kodeverk, KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import AnkeBehandlingModal from './AnkeBehandlingModal';
@@ -22,8 +22,8 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -93,7 +93,7 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
@@ -111,7 +111,7 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
+    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visModalAnkeBehandling, toggleAnkeModal] = useState(false);

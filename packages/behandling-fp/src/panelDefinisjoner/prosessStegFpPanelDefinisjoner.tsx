@@ -18,11 +18,12 @@ import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
+import { ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 
 import findStatusForVedtak from './vedtakStatusUtlederFp';
 import api from '../data/fpBehandlingApi';
@@ -245,7 +246,7 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Uttak',
   panels: [{
     aksjonspunkterCodes: [ac.FASTSETT_UTTAKPERIODER, ac.OVERSTYRING_AV_UTTAKPERIODER, ac.TILKNYTTET_STORTINGET, ac.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE,
-      ac.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP, ac.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN, ac.KONTROLLER_OPPLYSNINGER_OM_DØD,
+      ac.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN, ac.KONTROLLER_OPPLYSNINGER_OM_DØD,
       ac.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST, ac.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET, ac.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT],
     endpoints: [api.FAKTA_ARBEIDSFORHOLD, api.FAMILIEHENDELSE, api.UTTAK_PERIODE_GRENSE],
     renderComponent: (props) => <UttakProsessIndex {...props} />,
@@ -314,7 +315,7 @@ const prosessStegPanelDefinisjoner = [{
       simuleringResultat,
       beregningsgrunnlag,
       ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
-      employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+      kanOverstyre: rettigheter.kanOverstyreAccess.isEnabled,
     }),
     showComponent: () => true,
     overrideStatus: ({
@@ -327,7 +328,7 @@ const prosessStegPanelDefinisjoner = [{
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...PANEL_ATTRIBUTTER,
     ...p,
   })),

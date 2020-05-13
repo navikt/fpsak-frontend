@@ -3,12 +3,10 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
 
 import {
-  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, faktaHooks,
+  FagsakInfo, Rettigheter, FaktaPanel, DataFetcherBehandlingData, DataFetcherTriggers, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import esBehandlingApi from '../data/esBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaEsPanelDefinisjoner';
@@ -20,8 +18,8 @@ interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
@@ -35,7 +33,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   data,
   fagsak,
   behandling,
-  navAnsatt,
+  rettigheter,
   alleKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
@@ -53,7 +51,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
-    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvEsPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvEsPaneler, behandling, rettigheter, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 
@@ -65,7 +63,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingData
           key={valgtPanel.urlCode}
-          behandlingVersion={behandling.versjon}
+          fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
           endpoints={valgtPanel.endpoints}
           render={(dataProps) => valgtPanel.renderComponent({
             ...dataProps,

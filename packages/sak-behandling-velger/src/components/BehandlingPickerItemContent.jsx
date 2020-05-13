@@ -6,7 +6,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 
 import {
-  FlexContainer, FlexRow, FlexColumn, DateLabel, TimeLabel, Image, VerticalSpacer,
+  FlexContainer, FlexRow, FlexColumn, DateLabel, TimeLabel, Image, VerticalSpacer, Tooltip,
 } from '@fpsak-frontend/shared-components';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
@@ -148,8 +148,9 @@ const BehandlingPickerItemContent = ({
             <Image
               className={styles.starImage}
               src={stjerneImg}
-              tooltip={{ header: <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" /></Normaltekst> }}
+              tooltip={<FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" />}
               tabIndex="0"
+              alignTooltipLeft
             />
           )}
         </FlexColumn>
@@ -205,7 +206,9 @@ const BehandlingPickerItemContent = ({
         </FlexColumn>
         <FlexColumn className={styles.pushRightCorner}>
           <Normaltekst className={styles.inline}><FormattedMessage id="BehandlingPickerItemContent.Enhet" /></Normaltekst>
-          <Normaltekst className={styles.inline} title={behandlendeEnhetNavn}>{behandlendeEnhetId}</Normaltekst>
+          <Tooltip content={behandlendeEnhetNavn} alignLeft>
+            <Normaltekst className={styles.inline}>{behandlendeEnhetId}</Normaltekst>
+          </Tooltip>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>

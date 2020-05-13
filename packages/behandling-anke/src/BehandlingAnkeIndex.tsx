@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner,
+  FagsakInfo, Rettigheter, DataFetcherBehandlingData, DataFetcherTriggers, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
 import AnkePaneler from './components/AnkePaneler';
@@ -18,10 +18,9 @@ const ankeData = [ankeApi.AKSJONSPUNKTER, ankeApi.VILKAR, ankeApi.ANKE_VURDERING
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
-  kodeverk: {[key: string]: Kodeverk[]};
+  rettigheter: Rettigheter;
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -87,7 +86,7 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
       forrigeBehandling,
       oppdaterBehandlingVersjon,
       fagsak,
-      navAnsatt,
+      rettigheter,
       kodeverk,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
@@ -105,7 +104,7 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
 
     return (
       <DataFetcherBehandlingData
-        behandlingVersion={behandling.versjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={ankeData}
         showOldDataWhenRefetching
         render={(dataProps: FetchedData, isFinished) => (
@@ -115,7 +114,7 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
               behandling={isFinished ? behandling : forrigeBehandling}
               fetchedData={dataProps}
               fagsak={fagsak}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               alleKodeverk={kodeverk}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}

@@ -4,6 +4,7 @@ import sinon from 'sinon';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { omit } from '@fpsak-frontend/utils';
+import { Behandling } from '@fpsak-frontend/types';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
   ProsessStegPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal, ProsessStegContainer,
@@ -18,6 +19,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import FetchedData from '../types/fetchedDataTsType';
 
 import EngangsstonadProsess from './EngangsstonadProsess';
 
@@ -47,16 +49,15 @@ describe('<EngangsstonadProsess>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [{
     definisjon: { kode: aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, kodeverk: 'test' },
@@ -80,15 +81,21 @@ describe('<EngangsstonadProsess>', () => {
     },
   };
 
+  const fetchedData: Partial<FetchedData> = {
+    aksjonspunkter,
+    vilkar,
+    soknad,
+  };
+
   it('skal vise alle aktuelle prosessSteg i meny', () => {
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -133,11 +140,11 @@ describe('<EngangsstonadProsess>', () => {
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -164,11 +171,11 @@ describe('<EngangsstonadProsess>', () => {
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -227,16 +234,22 @@ describe('<EngangsstonadProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
-        behandling={vedtakBehandling}
+        behandling={vedtakBehandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -273,16 +286,22 @@ describe('<EngangsstonadProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -319,16 +338,22 @@ describe('<EngangsstonadProsess>', () => {
 
     const opneSokeside = sinon.spy();
 
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter: vedtakAksjonspunkter,
+      vilkar,
+      soknad,
+    };
+
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter: vedtakAksjonspunkter, vilkar, soknad }}
+        data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{
           [kodeverkTyper.AVSLAGSARSAK]: [],
         }}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -352,11 +377,11 @@ describe('<EngangsstonadProsess>', () => {
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="default"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -383,11 +408,11 @@ describe('<EngangsstonadProsess>', () => {
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="vedtak"
         valgtFaktaSteg="default"
         hasFetchError={false}
@@ -414,11 +439,11 @@ describe('<EngangsstonadProsess>', () => {
     const wrapper = shallowWithIntl(
       <EngangsstonadProsess.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, soknad }}
+        data={fetchedData as FetchedData}
         fagsak={fagsak}
-        behandling={behandling}
+        behandling={behandling as Behandling}
         alleKodeverk={{}}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg="simulering"
         valgtFaktaSteg="default"
         hasFetchError={false}

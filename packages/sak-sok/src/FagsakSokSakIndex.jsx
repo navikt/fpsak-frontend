@@ -13,6 +13,9 @@ const intl = createIntl({
   messages,
 }, cache);
 
+/*
+ * NB! Denne komponenten blir kun brukt lokalt. I alle andre miljø brukes FPLOS
+ */
 const FagsakSokSakIndex = ({
   fagsaker,
   searchFagsakCallback,

@@ -2,11 +2,14 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/konstanter';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -62,16 +65,15 @@ describe('<faktaHooks>', () => {
       personopplysninger: 'test_personopplysninger',
       inntektArbeidYtelse: 'test_inntektArbeidYtelse',
     };
-    const navAnsatt = {
-      brukernavn: 'Espen Utvikler',
-      navn: 'Espen Utvikler',
-      kanVeilede: false,
-      kanSaksbehandle: true,
-      kanOverstyre: false,
-      kanBeslutte: false,
-      kanBehandleKode6: false,
-      kanBehandleKode7: false,
-      kanBehandleKodeEgenAnsatt: false,
+    const rettigheter = {
+      writeAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
+      kanOverstyreAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
     };
     const aksjonspunkter = [{
       definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
@@ -83,7 +85,7 @@ describe('<faktaHooks>', () => {
     const valgtFaktaSteg = 'default';
     const intl = { formatMessage: (data) => data.id };
 
-    const wrapper = testHook(() => faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt,
+    const wrapper = testHook(() => faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling as Behandling, rettigheter,
       aksjonspunkter, hasFetchError, valgtFaktaSteg, intl));
     const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 
@@ -146,14 +148,14 @@ describe('<faktaHooks>', () => {
     const makeRestApiRequest = sinon.spy();
     const overstyringApCodes = [];
     const valgtProsessSteg = 'default';
-    const behandlingApi = {
+    const behandlingApi: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
     };
 
-    const wrapper = testHook(() => faktaHooks.useCallbacks(paneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl,
-      valgtProsessSteg, overstyringApCodes, behandlingApi, dispatch));
+    const wrapper = testHook(() => faktaHooks.useCallbacks(paneler, fagsak, behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+      valgtProsessSteg, overstyringApCodes, behandlingApi as {[name: string]: EndpointOperations}, dispatch as Dispatch));
     const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 
     velgFaktaPanelCallback(0);

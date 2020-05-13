@@ -11,8 +11,6 @@ import { skalValidereMotBeregningsgrunnlag } from '../BgFordelingUtils';
 
 import styles from './fordelBeregningsgrunnlagForm.less';
 
-const ElementWrapper = ({ children }) => children;
-
 const fordelBGFieldArrayNamePrefix = 'fordelBGPeriode';
 
 export const getFieldNameKey = (index) => (fordelBGFieldArrayNamePrefix + index);
@@ -100,7 +98,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
     return (
       <BorderBox className={styles.lessPadding}>
         {slaaSammenPerioder(perioder, bgPerioder).map((periode, index) => (
-          <ElementWrapper key={fordelBGFieldArrayNamePrefix + periode.fom}>
+          <React.Fragment key={fordelBGFieldArrayNamePrefix + periode.fom}>
             <VerticalSpacer eightPx />
             <FordelBeregningsgrunnlagPeriodePanel
               readOnly={readOnly}
@@ -116,7 +114,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
               behandlingType={behandlingType}
             />
             <VerticalSpacer eightPx />
-          </ElementWrapper>
+          </React.Fragment>
         ))}
       </BorderBox>
     );
@@ -147,9 +145,11 @@ FordelBeregningsgrunnlagForm.validate = (values, fordelBGPerioder, beregningsgru
     for (let i = 0; i < perioderSlattSammen.length; i += 1) {
       const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, perioderSlattSammen[i].fom);
       const periode = values[getFieldNameKey(i)];
-      const periodeDato = { fom: perioderSlattSammen[i], tom: perioderSlattSammen[i] };
+      const fordelPeriode = perioderSlattSammen[i];
+      const skalValidereRefusjon = fordelPeriode && fordelPeriode.skalKunneEndreRefusjon;
+      const periodeDato = { fom: fordelPeriode, tom: fordelPeriode };
       errors[getFieldNameKey(i)] = FordelBeregningsgrunnlagPeriodePanel.validate(periode, sumIPeriode,
-        skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, grunnbeløp, periodeDato);
+        skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, grunnbeløp, periodeDato, skalValidereRefusjon);
     }
   }
   return errors;

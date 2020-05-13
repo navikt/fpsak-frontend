@@ -28,8 +28,7 @@ interface ResponseDataLink {
 /**
  * RequestProcess
  *
- * Denne klassen utfører et spesifikt kall mot en URL. Tilbyr automatisk henting av data
- * fra "links" i kall-responsen. Håndterer også "long-polling".
+ * Denne klassen utfører et spesifikt kall mot en URL. Håndterer også "long-polling".
  *
  * En starter prosess med run og avbryter med cancel.
  */
@@ -125,7 +124,7 @@ class RequestProcess {
         return { payload: CANCELLED };
       }
 
-      const responseData = response.data;
+      const responseData = 'data' in response ? response.data : undefined;
       this.notify(EventType.REQUEST_FINISHED, responseData, this.isPollingRequest);
       return responseData ? { payload: responseData } : { payload: undefined };
     } catch (error) {

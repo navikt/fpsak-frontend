@@ -19,7 +19,8 @@ const FeilutbetalingPerioderTable = ({
   formName,
   årsaker,
   readOnly,
-  resetFields,
+  onChangeÅrsak,
+  onChangeUnderÅrsak,
   behandlingId,
   behandlingVersjon,
 }) => (
@@ -37,7 +38,8 @@ const FeilutbetalingPerioderTable = ({
           formName={formName}
           årsaker={årsaker}
           readOnly={readOnly}
-          resetFields={resetFields}
+          onChangeÅrsak={onChangeÅrsak}
+          onChangeUnderÅrsak={onChangeUnderÅrsak}
           key={`formIndex${index + 1}`}
         />
       ))}
@@ -50,7 +52,8 @@ FeilutbetalingPerioderTable.propTypes = {
   formName: PropTypes.string.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool.isRequired,
-  resetFields: PropTypes.func.isRequired,
+  onChangeÅrsak: PropTypes.func.isRequired,
+  onChangeUnderÅrsak: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
 };

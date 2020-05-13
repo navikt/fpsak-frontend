@@ -13,7 +13,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { guid } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
 
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
@@ -252,12 +252,11 @@ export const transformValues = (values, aksjonspunkter) => {
 const buildInitalValues = createSelector([
   (ownProps) => ownProps.soknad,
   (ownProps) => ownProps.fagsakPerson,
-  (ownProps) => ownProps.medlemskapV2,
-  (ownProps) => ownProps.medlemskap.fom],
-(soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
+  (ownProps) => ownProps.medlemskap],
+(soknad, person, medlem = {}) => ({
   soknad,
   person,
-  gjeldendeFom,
+  gjeldendeFom: medlem.fom,
   medlemskapPerioder: medlem.medlemskapPerioder || [],
   inntekter: medlem.inntekt,
   perioder: (medlem.perioder || []).map((periode) => ({

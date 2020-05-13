@@ -11,7 +11,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { hasValidDecimal, maxValue } from '@fpsak-frontend/utils';
+import { hasValidDecimal, maxValue, required } from '@fpsak-frontend/utils';
 import {
   CheckboxField, DatepickerField, DecimalField, InputField, SelectField,
 } from '@fpsak-frontend/form';
@@ -127,6 +127,7 @@ export const RenderGraderingPeriodeFieldArray = ({
                     name={`${periodeElementFieldId}.arbeidskategoriType`}
                     bredde="m"
                     selectValues={mapArbeidskategori(arbeidskategoriTyper)}
+                    validate={[required]}
                   />
                 </FlexColumn>
                 <FlexColumn>

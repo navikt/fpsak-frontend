@@ -1,10 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { Dispatch } from 'redux';
 
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -13,6 +15,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { Behandling } from '@fpsak-frontend/types';
 
 import {
   utledProsessStegPaneler, getBekreftAksjonspunktCallback, formaterPanelerForProsessmeny, finnValgtPanel,
@@ -109,16 +112,15 @@ describe('<prosessStegUtils>', () => {
     const ekstraPanelData = {
       soknad: 'test_soknad',
     };
-    const navAnsatt = {
-      brukernavn: 'Espen Utvikler',
-      navn: 'Espen Utvikler',
-      kanVeilede: false,
-      kanSaksbehandle: true,
-      kanOverstyre: false,
-      kanBeslutte: false,
-      kanBehandleKode6: false,
-      kanBehandleKode7: false,
-      kanBehandleKodeEgenAnsatt: false,
+    const rettigheter = {
+      writeAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
+      kanOverstyreAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
     };
 
     const hasFetchError = false;
@@ -127,7 +129,7 @@ describe('<prosessStegUtils>', () => {
 
     // ACT
     const prosessStegPaneler = utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunktKoder,
-      fagsak, navAnsatt, behandling, aksjonspunkter, vilkar, hasFetchError);
+      fagsak, behandling as Behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(prosessStegPaneler).to.have.length(1);
     const paneler = [{
@@ -195,6 +197,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'opplysningsplikt',
+      prosessStegTittelKode: 'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
     }, testPanelData];
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
@@ -234,6 +237,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'vedtak',
+      prosessStegTittelKode: 'Behandlingspunkt.Vedtak',
     }];
     const erBehandlingHenlagt = true;
     const apentFaktaPanelInfo = undefined;
@@ -273,6 +277,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'vedtak',
+      prosessStegTittelKode: 'Behandlingspunkt.Vedtak',
     }];
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = { urlCode: 'FODSEL', textCode: 'Fakta.Test' };
@@ -312,6 +317,7 @@ describe('<prosessStegUtils>', () => {
       ],
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'vedtak',
+      prosessStegTittelKode: 'Behandlingspunkt.Vedtak',
     }];
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
@@ -372,7 +378,7 @@ describe('<prosessStegUtils>', () => {
   it('skal lagre aksjonspunkt', () => {
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
-    const api = {
+    const api: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
@@ -382,7 +388,10 @@ describe('<prosessStegUtils>', () => {
     };
     const lagringSideEffectsCallback = sinon.spy();
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
+    const callback = getBekreftAksjonspunktCallback(
+      dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling as Behandling, aksjonspunkter,
+      api as {[name: string]: EndpointOperations},
+    );
     const aksjonspunktModeller = [{
       kode: aksjonspunkter[0].definisjon.kode,
     }];
@@ -406,7 +415,7 @@ describe('<prosessStegUtils>', () => {
   it('skal lagre overstyrt aksjonspunkt', () => {
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
-    const api = {
+    const api: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
@@ -416,7 +425,8 @@ describe('<prosessStegUtils>', () => {
     };
     const lagringSideEffectsCallback = sinon.spy();
 
-    const callback = getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
+    const callback = getBekreftAksjonspunktCallback(dispatch as Dispatch, lagringSideEffectsCallback, fagsak, behandling as Behandling, aksjonspunkter,
+      api as {[name: string]: EndpointOperations});
 
     const aksjonspunktModeller = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,

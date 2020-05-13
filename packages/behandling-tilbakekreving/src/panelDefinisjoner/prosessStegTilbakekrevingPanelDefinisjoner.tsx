@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { getAlleMerknaderFraBeslutter } from '@fpsak-frontend/behandling-felles';
+import { getAlleMerknaderFraBeslutter, ProsessStegPanelDefinisjon } from '@fpsak-frontend/behandling-felles';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import VedtakResultatType from '../kodeverk/vedtakResultatType';
@@ -81,12 +81,14 @@ const prosessStegPanelDefinisjoner = [{
     }),
     showComponent: () => true,
     overrideStatus: getVedtakStatus,
+    vilkarCodes: [],
+    isOverridable: false,
   }],
 }];
 
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
-  panels: def.panels.map((p) => ({
+  panels: (def.panels as ProsessStegPanelDefinisjon[]).map((p) => ({
     ...PANEL_ATTRIBUTTER,
     ...p,
   })),

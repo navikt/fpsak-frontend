@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 
@@ -21,7 +21,7 @@ export const VirksomhetRegnskapPanel = ({
   harRegnskapsforer,
   readOnly,
 }) => (
-  <ElementWrapper>
+  <>
     <Undertekst><FormattedMessage id="Registrering.VirksomhetRegnskapPanel.Accountant" /></Undertekst>
     <VerticalSpacer fourPx />
     <RadioGroupField name="harRegnskapsforer" readOnly={readOnly}>
@@ -30,29 +30,29 @@ export const VirksomhetRegnskapPanel = ({
     </RadioGroupField>
     {harRegnskapsforer
     && (
-    <ElementWrapper>
-      <Row>
-        <Column xs="6">
-          <ArrowBox>
-            <InputField
-              name="navnRegnskapsforer"
-              readOnly={readOnly}
-              validate={[required]}
-              label={<FormattedMessage id="Registrering.VirksomhetRegnskapPanel.AccountantName" />}
-            />
-            <InputField
-              name="tlfRegnskapsforer"
-              readOnly={readOnly}
-              validate={[required]}
-              label={<FormattedMessage id="Registrering.VirksomhetRegnskapPanel.AccountantPhone" />}
-            />
-          </ArrowBox>
-        </Column>
-      </Row>
-      <VerticalSpacer sixteenPx />
-    </ElementWrapper>
+      <>
+        <Row>
+          <Column xs="6">
+            <ArrowBox>
+              <InputField
+                name="navnRegnskapsforer"
+                readOnly={readOnly}
+                validate={[required]}
+                label={<FormattedMessage id="Registrering.VirksomhetRegnskapPanel.AccountantName" />}
+              />
+              <InputField
+                name="tlfRegnskapsforer"
+                readOnly={readOnly}
+                validate={[required]}
+                label={<FormattedMessage id="Registrering.VirksomhetRegnskapPanel.AccountantPhone" />}
+              />
+            </ArrowBox>
+          </Column>
+        </Row>
+        <VerticalSpacer sixteenPx />
+      </>
     )}
-  </ElementWrapper>
+  </>
 
 );
 

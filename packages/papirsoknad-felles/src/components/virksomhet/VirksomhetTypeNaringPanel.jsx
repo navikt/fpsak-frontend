@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import naringsvirksomhetType from '@fpsak-frontend/kodeverk/src/naringsvirksomhetType';
@@ -29,12 +29,12 @@ export const VirksomhetTypeNaringPanel = ({
   readOnly,
   naringvirksomhetTyper,
 }) => (
-  <ElementWrapper>
+  <>
     <Undertekst><FormattedMessage id="Registrering.VirksomhetNaeringTypePanel.Title" /></Undertekst>
     <VerticalSpacer fourPx />
     {naringvirksomhetTyper.sort((a, b) => naringsvirksomhetTypeOrder[a.kode] > naringsvirksomhetTypeOrder[b.kode])
       .map((nv) => <CheckboxField name={nv.kode} key={nv.kode} label={nv.navn} readOnly={readOnly} />)}
-  </ElementWrapper>
+  </>
 );
 
 const getFilteredNaringsvirksomhetTypes = createSelector(

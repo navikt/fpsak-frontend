@@ -1,10 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
+
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+
+import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 import GrunnlagForAarsinntektPanelAT, { GrunnlagForAarsinntektPanelATImpl as UnwrappedForm } from './GrunnlagForAarsinntektPanelAT';
 
 const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, erTilkommetAndel, stillingsNavn, stillingsProsent) => ({

@@ -1,6 +1,6 @@
 import EventType from './eventType';
 
-type EventCallback = (data?: any, type?: string) => Promise<string>
+type EventCallback = (data?: any, type?: string, isAsync?: boolean) => Promise<string>
 
 /**
  * NotificationMapper

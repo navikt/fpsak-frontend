@@ -1,16 +1,49 @@
 import React, {
   FunctionComponent, useEffect, useRef, useState,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useStore, useSelector } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { isObjectEmpty } from '@fpsak-frontend/utils';
 
+// TODO (TOR) Denne er no lik komponenten DataFetcher. Fjern ein av dei og legg i ny pakke
+
 const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
+export class DataFetcherTriggers {
+  triggers = {}
+
+  isRequiredForInitiallFetching = false
+
+  constructor(triggers, isRequiredForInitiallFetching) {
+    this.triggers = triggers;
+    this.isRequiredForInitiallFetching = isRequiredForInitiallFetching;
+  }
+
+  getTriggers = () => this.triggers;
+
+  getTriggerValues = () => Object.values(this.triggers);
+
+  shouldFetch = (previousTriggerValues, cacheParams) => {
+    // Skal rehente når triggerverdi har endret seg fra en verdi(ulik undefined) til en annen
+    if (previousTriggerValues && Object.keys(this.triggers).some((key) => previousTriggerValues[key] !== undefined
+      && previousTriggerValues[key] !== this.triggers[key])) {
+      return true;
+    }
+    // Skal ikke rehente når siste henting er gjort med udefinerte triggere.
+    if (!this.isRequiredForInitiallFetching && cacheParams && Object.keys(this.triggers).every((key) => !cacheParams[key] && !cacheParams[key])) {
+      return false;
+    }
+    // Skal hente data om dette er første forsøk eller rehente om triggere har endret seg
+    return !cacheParams || Object.keys(this.triggers).some((key) => cacheParams[key] !== this.triggers[key]);
+  }
+
+  hasChanged = (previousTriggerValues) => previousTriggerValues && Object.keys(this.triggers).some((key) => previousTriggerValues[key] !== this.triggers[key])
+}
+
 interface OwnProps {
-  behandlingVersion: number;
+  fetchingTriggers: DataFetcherTriggers;
   render: (data: {}, isFinished: boolean) => any;
   endpoints: EndpointOperations[];
   endpointParams?: {};
@@ -18,13 +51,13 @@ interface OwnProps {
   showComponent?: boolean;
 }
 
-const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
+const DataFetcher: FunctionComponent<OwnProps> = ({
+  fetchingTriggers,
   render,
   endpoints,
   endpointParams,
   showOldDataWhenRefetching = false,
   showComponent = true,
-  behandlingVersion,
 }) => {
   if (!showComponent) {
     return null;
@@ -35,13 +68,14 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
     data: {},
   });
 
+  const store = useStore();
+
   const endpointData = endpoints.reduce((acc, e) => ({
     ...acc,
     [e.name]: {
       formattedName: format(e.name),
       data: useSelector((state) => e.getRestApiData()(state)),
       isFinished: useSelector((state) => e.getRestApiFinished()(state)),
-      cacheParams: useSelector((state) => e.getRestApiCacheParams()(state)),
     },
   }), {});
 
@@ -51,25 +85,37 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
   }));
 
   const dispatch = useDispatch();
-  const ref = useRef<number>();
+  const ref = useRef<any>();
   useEffect(() => {
+    let cancel = false;
+
     setFetchingData((oldState) => ({
       hasFinishedFetching: false,
       data: oldState.data,
     }));
 
-    ref.current = behandlingVersion;
-    const endpointsToFetchFrom = activeEndpointsData.filter((e) => !e.cacheParams || e.cacheParams.behandlingVersion !== behandlingVersion);
+    const state = store.getState();
+
+    const endpointsToFetchFrom = activeEndpointsData.filter((e) => fetchingTriggers
+      .shouldFetch(ref.current, e.endpoint.getRestApiCacheParams()(state)));
+
+    ref.current = fetchingTriggers.getTriggers();
 
     const meta = {
       keepData: showOldDataWhenRefetching,
-      cacheParams: { behandlingVersion },
+      cacheParams: ref.current,
     };
 
     Promise.all(endpointsToFetchFrom.map((e) => {
       const params = endpointParams ? endpointParams[e.endpoint.name] : undefined;
       return dispatch(e.endpoint.makeRestApiRequest()(params, meta));
     })).then((data) => {
+      if (cancel) {
+        // eslint-disable-next-line no-console
+        console.warn(`DataFetcherBehandlingData som henter data fra endepunktene ${endpoints.map((e) => e.name).join(', ')
+        } har kjørt unmount før data er ferdighentet. Dette kan være feil!`);
+        return;
+      }
       setFetchingData({
         hasFinishedFetching: true,
         data: endpointsToFetchFrom.reduce((acc, endpoint, index) => ({
@@ -78,9 +124,13 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
         }), {}),
       });
     });
-  }, [behandlingVersion]);
 
-  const hasChanged = ref.current !== behandlingVersion;
+    return () => {
+      cancel = true;
+    };
+  }, fetchingTriggers.getTriggerValues());
+
+  const hasChanged = fetchingTriggers.hasChanged(ref.current);
   const hasFinishedFetching = fetchingData.hasFinishedFetching && activeEndpointsData.every((e) => e.isFinished);
 
   if (hasFinishedFetching && !hasChanged) {
@@ -98,4 +148,4 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
   return <LoadingPanel />;
 };
 
-export default DataFetcherBehandlingData;
+export default DataFetcher;

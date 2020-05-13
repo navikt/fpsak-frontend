@@ -3,13 +3,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 import {
-  Behandling, Kodeverk, NavAnsatt,
-} from '@fpsak-frontend/types';
-import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
@@ -22,9 +20,8 @@ const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
-  navAnsatt: NavAnsatt;
+  rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
   valgtFaktaSteg?: string;
@@ -34,14 +31,13 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  harApenRevurdering: boolean;
   featureToggles: {};
 }
 
 interface StateProps {
   behandling?: Behandling;
   forrigeBehandling?: Behandling;
-  kodeverk?: {[key: string]: [Kodeverk]};
+  kodeverk?: {[key: string]: KodeverkMedNavn[]};
   hasFetchError: boolean;
 }
 
@@ -100,7 +96,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
-      navAnsatt,
+      rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
       valgtFaktaSteg,
@@ -119,7 +115,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
 
     return (
       <DataFetcherBehandlingData
-        behandlingVersion={behandling.versjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={engansstonadData}
         showOldDataWhenRefetching
         render={(dataProps: FetchedData, isFinished) => (
@@ -130,7 +126,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
               fetchedData={dataProps}
               fagsak={fagsak}
               alleKodeverk={kodeverk}
-              navAnsatt={navAnsatt}
+              rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
               valgtFaktaSteg={valgtFaktaSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -148,13 +144,13 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state): StateProps => ({
   behandling: esBehandlingApi.BEHANDLING_ES.getRestApiData()(state),
   forrigeBehandling: esBehandlingApi.BEHANDLING_ES.getRestApiPreviousData()(state),
   hasFetchError: !!esBehandlingApi.BEHANDLING_ES.getRestApiError()(state),
 });
 
-const getResetRestApiContext = () => (dispatch) => {
+const getResetRestApiContext = () => (dispatch: Dispatch) => {
   Object.values(EsBehandlingApiKeys)
     .forEach((value) => {
       dispatch(esBehandlingApi[value].resetRestApi()());
@@ -178,4 +174,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingEngangsstonadIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingEngangsstonadIndex);

@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 
 import { CheckboxField, DecimalField, SelectField } from '@fpsak-frontend/form';
 import {
-  calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, hasValidDecimal, maxValue, notDash, required,
+  calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, hasValidDecimal, maxValue, notDash, required, getKodeverknavnFn,
 } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './uttakActivity.less';
@@ -75,7 +74,7 @@ const typePeriode = (selectedItem, kontoIkkeSatt, getKodeverknavn) => {
   if (selectedItem.utsettelseType.kode === '-' && !kontoIkkeSatt) {
     returnText = (<FormattedMessage id="UttakActivity.Uttak" />);
   } else if (selectedItem.utsettelseType.kode !== '-') {
-    returnText = (<FormattedHTMLMessage id="UttakActivity.Utsettelse" values={{ utsettelseType: getKodeverknavn(selectedItem.utsettelseType) }} />);
+    returnText = (<FormattedMessage id="UttakActivity.Utsettelse" values={{ utsettelseType: getKodeverknavn(selectedItem.utsettelseType) }} />);
   } else if (kontoIkkeSatt) {
     returnText = (<FormattedMessage id="UttakActivity.IngenKonto" />);
   }
@@ -86,16 +85,16 @@ const isInnvilgetText = (selectedItemData, getKodeverknavn) => {
   let returnText = '';
   if (periodeIsInnvilget(selectedItemData)) {
     returnText = (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="UttakActivity.InnvilgelseAarsak"
-        values={{ innvilgelseAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak) }}
+        values={{ innvilgelseAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak), b: (...chunks) => <b>{chunks}</b> }}
       />
     );
   } else {
     returnText = (
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="UttakActivity.IkkeOppfyltAarsak"
-        values={{ avslagAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak) }}
+        values={{ avslagAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak), b: (...chunks) => <b>{chunks}</b> }}
       />
     );
   }

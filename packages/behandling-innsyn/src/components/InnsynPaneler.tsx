@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import { Kodeverk, NavAnsatt, Behandling } from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import InnsynProsess from './InnsynProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -13,8 +13,8 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   fetchedData: FetchedData;
-  kodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -28,7 +28,7 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
   behandling,
   fetchedData,
   kodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
@@ -47,14 +47,13 @@ const InnsynPaneler: FunctionComponent<OwnProps> = ({
         kodeverk={kodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <InnsynProsess
         fagsak={fagsak}
         behandling={behandling}
         data={fetchedData}
         alleKodeverk={kodeverk}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}

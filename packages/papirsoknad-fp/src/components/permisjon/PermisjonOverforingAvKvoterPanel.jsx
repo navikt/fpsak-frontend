@@ -6,9 +6,7 @@ import { formValueSelector, FieldArray } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
-import {
-  ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
@@ -54,7 +52,7 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
   const selectValues = mapArsaker(overtaKvoteReasons, soknadData.getForeldreType() === foreldreType.MOR, intl);
 
   return (
-    <ElementWrapper>
+    <>
       <Element><FormattedMessage id="Registrering.Permisjon.OverforingAvKvote.OvertaKvoten" /></Element>
       <VerticalSpacer sixteenPx />
       <CheckboxField
@@ -72,7 +70,7 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
             readOnly={readOnly}
           />
         )}
-    </ElementWrapper>
+    </>
   );
 };
 

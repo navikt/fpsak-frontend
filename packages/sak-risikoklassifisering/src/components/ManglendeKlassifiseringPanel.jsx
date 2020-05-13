@@ -1,5 +1,5 @@
 import React from 'react';
-import { Panel } from 'nav-frontend-paneler';
+import Panel from 'nav-frontend-paneler';
 
 import manglendeKlassifiseringIkon from '@fpsak-frontend/assets/images/behandle_disable.svg';
 

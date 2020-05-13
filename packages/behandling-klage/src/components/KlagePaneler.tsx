@@ -2,9 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import { Behandling, Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
+import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import KlageProsess from './KlageProsess';
 import FetchedData from '../types/fetchedDataTsType';
@@ -13,21 +13,23 @@ interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   fetchedData: FetchedData;
-  kodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  kodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
-  alleBehandlinger: [{
+  skalBenytteFritekstBrevmal: boolean;
+  alleBehandlinger: {
     id: number;
-    type: Kodeverk;
-    avsluttet?: string;
-    status: Kodeverk;
     uuid: string;
-  }];
+    type: Kodeverk;
+    status: Kodeverk;
+    opprettet: string;
+    avsluttet?: string;
+  }[];
 }
 
 const KlagePaneler: FunctionComponent<OwnProps> = ({
@@ -35,7 +37,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   behandling,
   fetchedData,
   kodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
@@ -43,6 +45,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   hentBehandling,
   opneSokeside,
   alleBehandlinger,
+  skalBenytteFritekstBrevmal,
 }) => {
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
@@ -55,13 +58,12 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
         kodeverk={kodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <KlageProsess
         data={fetchedData}
         fagsak={fagsak}
         behandling={behandling}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
@@ -69,6 +71,7 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
         alleBehandlinger={alleBehandlinger}
         dispatch={dispatch}
         alleKodeverk={kodeverk}
+        skalBenytteFritekstBrevmal={skalBenytteFritekstBrevmal}
       />
     </>
   );

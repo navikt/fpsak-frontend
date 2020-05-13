@@ -3,23 +3,26 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
-  getKodeverknavnFn,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, ProsessPanelTemplate,
+} from '@fpsak-frontend/prosess-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
+import {
+  DDMMYYYY_DATE_FORMAT, isObject, required, getKodeverknavnFn,
+} from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import {
+  behandlingForm, behandlingFormValueSelector, RadioGroupField, RadioOption,
+} from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 
@@ -31,7 +34,14 @@ const aktørPrefix = 'aktør_';
 const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
 const getLabel = (intl) => (
   <div>
-    <div><FormattedHTMLMessage id={findRadioButtonTextCode(false)} /></div>
+    <div>
+      <FormattedMessage
+        id={findRadioButtonTextCode(false)}
+        values={{
+          b: (...chunks) => <b>{chunks}</b>,
+        }}
+      />
+    </div>
     <div>{intl.formatMessage({ id: 'SokersOpplysningspliktForm.VilkarIkkeOppfyltMerInfo' })}</div>
   </div>
 );
@@ -52,8 +62,6 @@ const formatArbeidsgiver = (arbeidsgiver) => {
   return lagArbeidsgiverNavnOgOrgnrTekst(arbeidsgiver);
 };
 
-const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) => !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some((vd) => !vd);
-
 /**
  * SokersOpplysningspliktForm
  *
@@ -70,7 +78,6 @@ export const SokersOpplysningspliktFormImpl = ({
   hasAksjonspunkt,
   manglendeVedlegg,
   dokumentTypeIds,
-  inntektsmeldingerSomIkkeKommer,
   getKodeverknavn,
   behandlingId,
   behandlingVersjon,
@@ -79,7 +86,8 @@ export const SokersOpplysningspliktFormImpl = ({
   <ProsessPanelTemplate
     titleCode="SokersOpplysningspliktForm.SokersOpplysningsplikt"
     isAksjonspunktOpen={!readOnlySubmitButton}
-    formProps={formProps}
+    formName={formProps.form}
+    handleSubmit={formProps.handleSubmit}
     isDirty={hasAksjonspunkt ? formProps.dirty : erVilkarOk !== formProps.initialValues.erVilkarOk}
     readOnlySubmitButton={hasSoknad ? readOnlySubmitButton : !formProps.dirty || readOnlySubmitButton}
     readOnly={readOnly}
@@ -111,7 +119,7 @@ export const SokersOpplysningspliktFormImpl = ({
         </Row>
       </>
     )}
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
     {!readOnly && (
       <>
         <VerticalSpacer sixteenPx />
@@ -120,12 +128,12 @@ export const SokersOpplysningspliktFormImpl = ({
             <RadioGroupField name="erVilkarOk" validate={[required]}>
               <RadioOption
                 label={(
-                  <FormattedHTMLMessage
+                  <FormattedMessage
                     id={findRadioButtonTextCode(true)}
                   />
               )}
                 value
-                disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
+                disabled={!hasSoknad}
               />
               <RadioOption label={getLabel(intl)} value={false} />
             </RadioGroupField>
@@ -163,7 +171,6 @@ SokersOpplysningspliktFormImpl.propTypes = {
   behandlingsresultat: PropTypes.shape(),
   manglendeVedlegg: PropTypes.arrayOf(PropTypes.shape()),
   dokumentTypeIds: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  inntektsmeldingerSomIkkeKommer: PropTypes.shape(),
   getKodeverknavn: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -176,7 +183,6 @@ SokersOpplysningspliktFormImpl.defaultProps = {
   hasAksjonspunkt: false,
   behandlingsresultat: {},
   manglendeVedlegg: [],
-  inntektsmeldingerSomIkkeKommer: {},
 };
 
 export const getSortedManglendeVedlegg = createSelector([
@@ -202,6 +208,8 @@ export const buildInitialValues = createSelector(
     const isOpenAksjonspunkt = aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
     const isVilkarGodkjent = soknadExists && vilkarUtfallType.OPPFYLT === status;
 
+    // TODO Mogleg inntektsmeldingerSomIkkeKommer kan fjernast, men trur fjerning av bruken av denne i render er ein midlertidig
+    // fiks og at dette derfor skal brukast etterkvart. Sjå TFP-3076
     const inntektsmeldingerSomIkkeKommer = manglendeVedlegg
       .filter((mv) => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
       .reduce((acc, mv) => ({
@@ -214,7 +222,7 @@ export const buildInitialValues = createSelector(
       erVilkarOk: isOpenAksjonspunkt && soknadExists ? undefined : isVilkarGodkjent,
       aksjonspunktKode: aksjonspunkt ? aksjonspunkt.definisjon.kode : aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST,
       hasAksjonspunkt: aksjonspunkt !== undefined,
-      ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+      ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
     };
   },
 );
@@ -231,7 +239,7 @@ const transformValues = (values, manglendeVedlegg) => {
       aktørId: ag.aktørId,
       brukerHarSagtAtIkkeKommer: values.inntektsmeldingerSomIkkeKommer[lagArbeidsgiverKey(ag)],
     }), {}),
-    ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+    ...ProsessStegBegrunnelseTextField.transformValues(values),
   };
 };
 
@@ -255,7 +263,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       dokumentTypeIds: alleKodeverk[kodeverkTyper.DOKUMENT_TYPE_ID],
       manglendeVedlegg: getSortedManglendeVedlegg(state, ownProps),
       initialValues: buildInitialValues(state, ownProps),
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'hasAksjonspunkt', 'erVilkarOk'),
     };
   };
 };

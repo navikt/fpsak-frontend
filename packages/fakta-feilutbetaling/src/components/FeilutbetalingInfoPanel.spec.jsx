@@ -104,10 +104,8 @@ describe('<FeilutbetalingInfoPanel>', () => {
       {...reduxFormPropsMock}
       feilutbetaling={feilutbetalingFakta}
       intl={intlMock}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       readOnly={false}
-      openInfoPanels={['feilutbetaling']}
       submitCallback={sinon.spy()}
       årsaker={[]}
       merknaderFraBeslutter={{

@@ -10,11 +10,13 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe, AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
-  behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe,
-  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+  behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix,
+  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
+
 import { omit } from '@fpsak-frontend/utils';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
@@ -235,6 +237,7 @@ export class TilbakekrevingFormImpl extends Component {
                     behandlingVersjon={behandlingVersjon}
                     alleKodeverk={alleKodeverk}
                     beregnBelop={beregnBelop}
+                    vilkarsVurdertePerioder={vilkarsVurdertePerioder}
                   />
                 )}
             </>
@@ -248,7 +251,7 @@ export class TilbakekrevingFormImpl extends Component {
               <VerticalSpacer twentyPx />
             </>
           )}
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             formName={TILBAKEKREVING_FORM_NAME}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
@@ -38,21 +37,22 @@ const buildEndretFeltText = (endredeFelter, getKodeverknavn) => {
     const årsakVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
     const fraVerdi = `${getKodeverknavn({ kode: årsakVerdi, kodeverk: årsakFelt.klFraVerdi })} ${underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''}`;
     const tilVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
-    return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.endretFelt" values={{ fraVerdi, tilVerdi }} />;
+    return <FormattedMessage id="Historikk.Template.Feilutbetaling.endretFelt" values={{ fraVerdi, tilVerdi, b: (...chunks) => <b>{chunks}</b> }} />;
   }
   const feltVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
-  return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.sattFelt" values={{ feltVerdi }} />;
+  return <FormattedMessage id="Historikk.Template.Feilutbetaling.sattFelt" values={{ feltVerdi, b: (...chunks) => <b>{chunks}</b> }} />;
 };
 
 const HistorikkMalTypeFeilutbetaling = ({
   historikkinnslagDeler,
   behandlingLocation,
   getKodeverknavn,
+  createLocationForSkjermlenke,
 }) => (
   <div>
     <Element>
       <NavLink
-        to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+        to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
         onClick={scrollUp}
       >
         {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
@@ -60,11 +60,12 @@ const HistorikkMalTypeFeilutbetaling = ({
     </Element>
     {historikkinnslagDeler.map((historikkinnslagDel, index) => (historikkinnslagDel.endredeFelter ? (
       <div key={`historikkinnslagDel${index + 1}`}>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.Feilutbetaling.FaktaFeilutbetalingPeriode"
           values={{
             periodeFom: finnFomOpplysning(historikkinnslagDel.opplysninger),
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
+            b: (...chunks) => <b>{chunks}</b>,
           }}
         />
         <Normaltekst>
@@ -86,6 +87,7 @@ HistorikkMalTypeFeilutbetaling.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalTypeFeilutbetaling);

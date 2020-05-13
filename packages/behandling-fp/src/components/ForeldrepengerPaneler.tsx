@@ -2,11 +2,9 @@ import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, Rettigheter, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
-import {
-  Kodeverk, NavAnsatt, Behandling,
-} from '@fpsak-frontend/types';
+import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
 import ForeldrepengerProsess from './ForeldrepengerProsess';
 import ForeldrepengerFakta from './ForeldrepengerFakta';
@@ -16,8 +14,8 @@ interface OwnProps {
   fetchedData: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  alleKodeverk: {[key: string]: Kodeverk[]};
-  navAnsatt: NavAnsatt;
+  alleKodeverk: {[key: string]: KodeverkMedNavn[]};
+  rettigheter: Rettigheter;
   valgtProsessSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
@@ -29,12 +27,17 @@ interface OwnProps {
   featureToggles: {};
 }
 
+interface FaktaPanelInfo {
+  urlCode: string;
+  textCode: string;
+}
+
 const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
   behandling,
   alleKodeverk,
-  navAnsatt,
+  rettigheter,
   valgtProsessSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
@@ -45,7 +48,7 @@ const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
   hasFetchError,
   featureToggles,
 }) => {
-  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState();
+  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState<FaktaPanelInfo>();
   // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
   const dispatch = useDispatch();
 
@@ -57,14 +60,13 @@ const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
         kodeverk={alleKodeverk}
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
-        navAnsatt={navAnsatt}
       />
       <ForeldrepengerProsess
         data={fetchedData}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={alleKodeverk}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         valgtProsessSteg={valgtProsessSteg}
         valgtFaktaSteg={valgtFaktaSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
@@ -80,7 +82,7 @@ const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
         data={fetchedData}
         fagsak={fagsak}
         alleKodeverk={alleKodeverk}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         hasFetchError={hasFetchError}
         valgtFaktaSteg={valgtFaktaSteg}
         valgtProsessSteg={valgtProsessSteg}

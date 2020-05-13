@@ -1,8 +1,11 @@
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { expect } from 'chai';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import React from 'react';
+import { expect } from 'chai';
+import Panel from 'nav-frontend-paneler';
+
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
 
@@ -36,7 +39,7 @@ describe('BeregningsresultatPanel', () => {
       vilkaarBG={vilkaarBG}
       halvGVerdi={98866}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const rows = panel.find('Row');
     expect(rows).to.have.length(3);
     const andelRow = rows.first();
@@ -57,7 +60,7 @@ describe('BeregningsresultatPanel', () => {
       vilkaarBG={vilkaarBG}
       halvGVerdi={98866}
     />);
-    const panel = wrapper.find('PanelBase');
+    const panel = wrapper.find(Panel);
     const rows = panel.find('Row');
     expect(rows).to.have.length(5);
     const andelRow = rows.first();
@@ -67,8 +70,8 @@ describe('BeregningsresultatPanel', () => {
     expect(andelText).to.equal(tableData.rowsAndeler[0].ledetekst);
     expect(formatCurrencyNoKr(andelVerdi)).to.equal(formatCurrencyNoKr(tableData.rowsAndeler[0].verdi));
     const sumRow = rows.last();
-    const sumText = sumRow.find('FormattedHTMLMessage').props().id;
-    const sumTextTall = sumRow.find('FormattedHTMLMessage').props().values.dagSats;
+    const sumText = sumRow.find('FormattedMessage').props().id;
+    const sumTextTall = sumRow.find('FormattedMessage').props().values.dagSats;
     const sumVerdi = sumRow.find('Normaltekst').last().childAt(0).text();
     expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.DagsatsNy');
     expect(sumTextTall).to.equal(formatCurrencyNoKr(400));

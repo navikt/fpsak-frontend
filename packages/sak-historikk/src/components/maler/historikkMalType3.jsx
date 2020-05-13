@@ -6,7 +6,6 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText } from './felles/historikkUtils';
@@ -20,7 +19,6 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]: 'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
   [aksjonspunktCodes.OMSORGSOVERTAKELSE]: 'Historikk.OmsorgOgForeldreansvarInfoPanel.Omsorg',
   [aksjonspunktCodes.TILLEGGSOPPLYSNINGER]: 'Historikk.TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
-  [aksjonspunktCodes.MEDLEMSKAP]: 'Historikk.MedlemskapInfoPanel.Medlemskap',
   [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: 'Historikk.Behandlingspunkt.Opptjeningsvilkaret',
   [aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET]: 'HistorikkEndretFeltVerdiType.ApplicationInformation',
   [aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD]: 'Historikk.RegistrerePapirSoknadAksPkt',
@@ -63,7 +61,6 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.FASTSETT_UTTAKPERIODER]: 'Historikk.Fastsett.Manuelt',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD]: 'Historikk.OpplysningerOmDod',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST]: 'Historikk.OpplysningerOmSoknadsfrist',
-  [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP]: 'Historikk.OpplysningerOmMedlemskap',
   [aksjonspunktCodes.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE]: 'Historikk.OpplysningerOmKlage',
   [aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN]:
     'Historikk.OpplysningerOmFordelingStonadsperiode',
@@ -87,12 +84,16 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'Historikk.FaktaUttak.VurderAnnenForelder',
 };
 
+const tilbakekrevingsAksjonspunktCodesToTextCode = {};
+
 const scrollUp = () => {
   window.scroll(0, 0);
 };
 
-const formaterAksjonspunkt = (aksjonspunkt, intl) => {
-  const aksjonspktText = aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
+const formaterAksjonspunkt = (aksjonspunkt, intl, erTilbakekreving) => {
+  const aksjonspktText = erTilbakekreving
+    ? tilbakekrevingsAksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode]
+    : aksjonspunktCodesToTextCode[aksjonspunkt.aksjonspunktKode];
   const { formatMessage } = intl;
 
   if (aksjonspunkt.godkjent) {
@@ -119,6 +120,8 @@ const HistorikkMalType3 = ({
   behandlingLocation,
   intl,
   getKodeverknavn,
+  erTilbakekreving,
+  createLocationForSkjermlenke,
 }) => (
   <div>
     {historikkinnslagDeler && historikkinnslagDeler.map((historikkinnslagDel, index) => (
@@ -133,7 +136,7 @@ const HistorikkMalType3 = ({
           ? (
             <Element>
               <NavLink
-                to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
                 onClick={scrollUp}
               >
                 {getKodeverknavn(historikkinnslagDel.skjermlenke)}
@@ -143,7 +146,7 @@ const HistorikkMalType3 = ({
           : null}
         {historikkinnslagDel.aksjonspunkter && historikkinnslagDel.aksjonspunkter.map((aksjonspunkt) => (
           <div key={aksjonspunkt.aksjonspunktKode}>
-            {formaterAksjonspunkt(aksjonspunkt, intl)}
+            {formaterAksjonspunkt(aksjonspunkt, intl, erTilbakekreving)}
             <VerticalSpacer fourPx />
           </div>
         ))}
@@ -156,7 +159,13 @@ HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
+  erTilbakekreving: PropTypes.bool,
+};
+
+HistorikkMalType3.defaultProps = {
+  erTilbakekreving: false,
 };
 
 export default injectIntl(HistorikkMalType3);

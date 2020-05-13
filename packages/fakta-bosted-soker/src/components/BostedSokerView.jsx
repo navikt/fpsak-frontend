@@ -10,6 +10,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import { getAddresses } from '@fpsak-frontend/utils';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import Region from '@fpsak-frontend/kodeverk/src/region';
+import { Tooltip } from '@fpsak-frontend/shared-components';
 
 import bostedSokerPersonopplysningerPropType from '../propTypes/bostedSokerPersonopplysningerPropType';
 
@@ -56,39 +57,42 @@ export const BostedSokerView = ({
         {getPersonstatus(personopplysninger)
           && (
           <div className={styles.etikettMargin}>
-            <Etikettfokus
-              className={getPersonstatus(personopplysninger).kode === personstatusType.DOD ? styles.dodEtikett : ''}
-              type="fokus"
-              typo="undertekst"
-              title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
-            >
-              {getPersonstatus(personopplysninger).kode === personstatusType.UDEFINERT ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
-                : personstatusTypes.find((s) => s.kode === getPersonstatus(personopplysninger).kode).navn}
-            </Etikettfokus>
+            <Tooltip content={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })} alignBottom>
+              <Etikettfokus
+                className={getPersonstatus(personopplysninger).kode === personstatusType.DOD ? styles.dodEtikett : ''}
+                type="fokus"
+                typo="undertekst"
+              >
+                {getPersonstatus(personopplysninger).kode === personstatusType.UDEFINERT ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
+                  : personstatusTypes.find((s) => s.kode === getPersonstatus(personopplysninger).kode).navn}
+              </Etikettfokus>
+            </Tooltip>
           </div>
           )}
         {personopplysninger.sivilstand
           && (
           <div className={styles.etikettMargin}>
-            <Etikettfokus
-              type="fokus"
-              typo="undertekst"
-              title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}
-            >
-              {sivilstandTypes.find((s) => s.kode === personopplysninger.sivilstand.kode).navn}
-            </Etikettfokus>
+            <Tooltip content={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })} alignBottom>
+              <Etikettfokus
+                type="fokus"
+                typo="undertekst"
+              >
+                {sivilstandTypes.find((s) => s.kode === personopplysninger.sivilstand.kode).navn}
+              </Etikettfokus>
+            </Tooltip>
           </div>
           )}
         {(personopplysninger.region && personopplysninger.region.kode !== Region.UDEFINERT)
           && (
           <div className={styles.etikettMargin}>
-            <Etikettfokus
-              type="fokus"
-              typo="undertekst"
-              title={intl.formatMessage({ id: 'BostedSokerView.Region' })}
-            >
-              {regionTypes.find((r) => r.kode === personopplysninger.region.kode).navn}
-            </Etikettfokus>
+            <Tooltip content={intl.formatMessage({ id: 'BostedSokerView.Region' })} alignBottom>
+              <Etikettfokus
+                type="fokus"
+                typo="undertekst"
+              >
+                {regionTypes.find((r) => r.kode === personopplysninger.region.kode).navn}
+              </Etikettfokus>
+            </Tooltip>
           </div>
           )}
       </Column>

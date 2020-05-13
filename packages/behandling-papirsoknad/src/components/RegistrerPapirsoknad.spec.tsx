@@ -14,6 +14,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { BehandlingPaVent } from '@fpsak-frontend/behandling-felles';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
+import { Behandling } from '@fpsak-frontend/types';
 
 import RegistrerPapirsoknad from './RegistrerPapirsoknad';
 import SoknadRegistrertModal from './SoknadRegistrertModal';
@@ -58,26 +59,25 @@ const behandling = {
   links: [],
 };
 
-const navAnsatt = {
-  brukernavn: 'bruker',
-  kanBehandleKode6: false,
-  kanBehandleKode7: false,
-  kanBehandleKodeEgenAnsatt: false,
-  kanBeslutte: false,
-  kanOverstyre: false,
-  kanSaksbehandle: true,
-  kanVeilede: false,
-  navn: 'Petra',
+const rettigheter = {
+  writeAccess: {
+    isEnabled: true,
+    employeeHasAccess: true,
+  },
+  kanOverstyreAccess: {
+    isEnabled: true,
+    employeeHasAccess: true,
+  },
 };
 
 describe('<RegistrerPapirsoknad>', () => {
   it('skal rendre komponenter', () => {
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={sinon.spy()}
@@ -93,12 +93,15 @@ describe('<RegistrerPapirsoknad>', () => {
   it('skal rendre komponenter som readonly når veileder', () => {
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={{
-        ...navAnsatt,
-        kanVeilede: true,
+      rettigheter={{
+        ...rettigheter,
+        writeAccess: {
+          isEnabled: false,
+          employeeHasAccess: false,
+        },
       }}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
@@ -115,10 +118,10 @@ describe('<RegistrerPapirsoknad>', () => {
       behandling={{
         ...behandling,
         behandlingPaaVent: true,
-      }}
+      } as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={sinon.spy()}
@@ -134,10 +137,10 @@ describe('<RegistrerPapirsoknad>', () => {
   it('skal sette nye søknadsdata', () => {
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={sinon.spy()}
@@ -158,7 +161,7 @@ describe('<RegistrerPapirsoknad>', () => {
     const lagreAksjonspunkt = sinon.spy();
     const wrapper = shallow(<RegistrerPapirsoknad
       fagsak={fagsak}
-      behandling={behandling}
+      behandling={behandling as Behandling}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER,
@@ -172,7 +175,7 @@ describe('<RegistrerPapirsoknad>', () => {
         erAktivt: true,
       }]}
       kodeverk={{}}
-      navAnsatt={navAnsatt}
+      rettigheter={rettigheter}
       settPaVent={sinon.spy()}
       hentBehandling={sinon.spy()}
       lagreAksjonspunkt={lagreAksjonspunkt}

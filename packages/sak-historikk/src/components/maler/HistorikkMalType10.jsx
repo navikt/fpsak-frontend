@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
-
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
 import historikkinnslagType from '../../kodeverk/historikkinnslagType';
 import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
@@ -19,7 +17,7 @@ const scrollUp = () => {
 };
 
 const HistorikkMalType10 = ({
-  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr, getKodeverknavn,
+  historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, originType, saksNr, getKodeverknavn, createLocationForSkjermlenke,
 }) => {
   const historikkFromToValues = (endretFelt, fieldName) => {
     const fromValue = findEndretFeltVerdi(endretFelt, endretFelt.fraVerdi, intl);
@@ -45,12 +43,13 @@ const HistorikkMalType10 = ({
     }
     return (
       <div>
-        <FormattedHTMLMessage
+        <FormattedMessage
           id={messageId}
           values={{
             fieldName,
             fromValue,
             toValue,
+            b: (...chunks) => <b>{chunks}</b>,
           }}
         />
       </div>
@@ -67,7 +66,7 @@ const HistorikkMalType10 = ({
 
       return (
         <div>
-          <FormattedHTMLMessage
+          <FormattedMessage
             id="Historikk.Template.10.ChangedFromToTrekkdager"
             values={{
               fieldName,
@@ -75,6 +74,7 @@ const HistorikkMalType10 = ({
               fromValueDays,
               toValueWeeks,
               toValueDays,
+              b: (...chunks) => <b>{chunks}</b>,
             }}
           />
         </div>
@@ -114,7 +114,7 @@ const HistorikkMalType10 = ({
         && (
         <Element>
           <NavLink
-            to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+            to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
             onClick={scrollUp}
           >
             {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
@@ -124,22 +124,24 @@ const HistorikkMalType10 = ({
 
         {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.OVST_UTTAK
         && (
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.10.OverstyrtVurderingPeriode"
           values={{
             periodeFom: finnFomOpplysning(historikkinnslagDel.opplysninger),
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
+            b: (...chunks) => <b>{chunks}</b>,
           }}
         />
         )}
 
         {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.FASTSATT_UTTAK
         && (
-        <FormattedHTMLMessage
+        <FormattedMessage
           id="Historikk.Template.10.ManuellVurderingPeriode"
           values={{
             periodeFom: finnFomOpplysning(historikkinnslagDel.opplysninger),
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
+            b: (...chunks) => <b>{chunks}</b>,
           }}
         />
         )}
@@ -175,6 +177,7 @@ HistorikkMalType10.propTypes = {
   originType: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default injectIntl(HistorikkMalType10);

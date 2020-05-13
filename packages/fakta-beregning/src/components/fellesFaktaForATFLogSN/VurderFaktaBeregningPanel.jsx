@@ -4,11 +4,13 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
-import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { FaktaBegrunnelseTextField, behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { behandlingForm } from '@fpsak-frontend/form';
+
 import FaktaForATFLOgSNPanel, {
   getBuildInitialValuesFaktaForATFLOgSN,
   transformValuesFaktaForATFLOgSN,
@@ -104,7 +106,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
       },
     } = this;
     return (
-      <ElementWrapper>
+      <>
         {!(hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter)) && (
         <form onSubmit={formProps.handleSubmit}>
           {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
@@ -146,7 +148,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
           )}
         </form>
         )}
-      </ElementWrapper>
+      </>
     );
   }
 }

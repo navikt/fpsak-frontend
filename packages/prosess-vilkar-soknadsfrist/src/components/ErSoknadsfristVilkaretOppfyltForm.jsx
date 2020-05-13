@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -12,18 +12,18 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
+import { ISO_DATE_FORMAT, required, getKodeverknavnFn } from '@fpsak-frontend/utils';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  DateLabel, ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+  RadioGroupField, RadioOption, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/form';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
-} from '@fpsak-frontend/fp-felles';
+  ProsessStegBegrunnelseTextField, ProsessStegSubmitButton,
+} from '@fpsak-frontend/prosess-felles';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
@@ -113,29 +113,60 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
       </Column>
     </Row>
     <VerticalSpacer sixteenPx />
-    {!readOnly
-        && (
-        <Row>
-          <Column xs="6">
-            <RadioGroupField name="erVilkarOk" validate={[required]}>
-              <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(true)} />} value />
-              <RadioOption label={<FormattedHTMLMessage id={findRadioButtonTextCode(false)} />} value={false} />
-            </RadioGroupField>
-          </Column>
-        </Row>
-        )}
-    {readOnly
-        && (
-        <ElementWrapper>
-          <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
-            {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
+    {!readOnly && (
+      <Row>
+        <Column xs="6">
+          <RadioGroupField name="erVilkarOk" validate={[required]}>
+            <RadioOption
+              label={(
+                <FormattedMessage
+                  id={findRadioButtonTextCode(true)}
+                  values={{
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              )}
+              value
+            />
+            <RadioOption
+              label={(
+                <FormattedMessage
+                  id={findRadioButtonTextCode(false)}
+                  values={{
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              )}
+              value={false}
+            />
           </RadioGroupField>
-          {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
-          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
-        </ElementWrapper>
+        </Column>
+      </Row>
+    )}
+    {readOnly && (
+      <>
+        <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
+          {[<RadioOption
+            key="dummy"
+            label={(
+              <FormattedMessage
+                id={findRadioButtonTextCode(erVilkarOk)}
+                values={{
+                  b: (...chunks) => <b>{chunks}</b>,
+                }}
+              />
+                  )}
+            value=""
+          />]}
+        </RadioGroupField>
+        {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak) && (
+          <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>
         )}
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-    <BehandlingspunktSubmitButton
+      </>
+    )}
+    <ProsessStegBegrunnelseTextField readOnly={readOnly} />
+    <VerticalSpacer sixteenPx />
+    <ProsessStegSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
@@ -175,13 +206,13 @@ export const buildInitialValues = createSelector([
   (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.status],
 (aksjonspunkter, status) => ({
   erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
-  ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+  ...ProsessStegBegrunnelseTextField.buildInitialValues(aksjonspunkter),
 }));
 
 const transformValues = (values, aksjonspunkter) => ({
   erVilkarOk: values.erVilkarOk,
   kode: aksjonspunkter[0].definisjon.kode,
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  ...ProsessStegBegrunnelseTextField.transformValues(values),
 });
 
 const findDate = createSelector([

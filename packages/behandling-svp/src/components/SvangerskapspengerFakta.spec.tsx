@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FaktaPanel, DataFetcherBehandlingData } from '@fpsak-frontend/behandling-felles';
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -12,6 +13,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import FetchedData from '../types/fetchedDataTsType';
 
 import SvangerskapspengerFakta from './SvangerskapspengerFakta';
 
@@ -29,7 +31,7 @@ describe('<SvangerskapspengerFakta>', () => {
       personnummer: '12345',
     },
   };
-  const behandling = {
+  const behandling: Partial<Behandling> = {
     id: 1,
     versjon: 2,
     status: { kode: behandlingStatus.BEHANDLING_UTREDES, kodeverk: 'test' },
@@ -41,16 +43,15 @@ describe('<SvangerskapspengerFakta>', () => {
     behandlingHenlagt: false,
     links: [],
   };
-  const navAnsatt = {
-    brukernavn: 'Espen Utvikler',
-    navn: 'Espen Utvikler',
-    kanVeilede: false,
-    kanSaksbehandle: true,
-    kanOverstyre: false,
-    kanBeslutte: false,
-    kanBehandleKode6: false,
-    kanBehandleKode7: false,
-    kanBehandleKodeEgenAnsatt: false,
+  const rettigheter = {
+    writeAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
+    kanOverstyreAccess: {
+      isEnabled: true,
+      employeeHasAccess: true,
+    },
   };
   const aksjonspunkter = [{
     definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'test' },
@@ -61,18 +62,22 @@ describe('<SvangerskapspengerFakta>', () => {
   const vilkar = [];
   const inntektArbeidYtelse = {
     skalKunneLeggeTilNyeArbeidsforhold: true,
-    skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
     relatertTilgrensendeYtelserForAnnenForelder: [],
+  };
+
+  const fetchedData: Partial<FetchedData> = {
+    aksjonspunkter,
+    vilkar,
   };
 
   it('skal rendre faktapaneler og sidemeny korrekt', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
-        behandling={behandling}
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
@@ -100,10 +105,10 @@ describe('<SvangerskapspengerFakta>', () => {
     const wrapper = shallowWithIntl(
       <SvangerskapspengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar }}
-        behandling={behandling}
+        data={fetchedData as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         valgtFaktaSteg="default"
@@ -127,13 +132,19 @@ describe('<SvangerskapspengerFakta>', () => {
   });
 
   it('skal rendre faktapanel korrekt', () => {
+    const fetchedDataLocal: Partial<FetchedData> = {
+      aksjonspunkter,
+      vilkar,
+      inntektArbeidYtelse,
+    };
+
     const wrapper = shallowWithIntl(
       <SvangerskapspengerFakta.WrappedComponent
         intl={intlMock}
-        data={{ aksjonspunkter, vilkar, inntektArbeidYtelse }}
-        behandling={behandling}
+        data={fetchedDataLocal as FetchedData}
+        behandling={behandling as Behandling}
         fagsak={fagsak}
-        navAnsatt={navAnsatt}
+        rettigheter={rettigheter}
         alleKodeverk={{}}
         oppdaterProsessStegOgFaktaPanelIUrl={sinon.spy()}
         valgtFaktaSteg="default"
@@ -145,7 +156,7 @@ describe('<SvangerskapspengerFakta>', () => {
     );
 
     const dataFetcher = wrapper.find(DataFetcherBehandlingData);
-    expect(dataFetcher.prop('behandlingVersion')).is.eql(behandling.versjon);
+    expect(dataFetcher.prop('fetchingTriggers').triggers.behandlingVersion).is.eql(behandling.versjon);
     expect(dataFetcher.prop('endpoints')).is.eql([]);
 
     const arbeidsforholdPanel = dataFetcher.renderProp('render')({}).find(ArbeidsforholdFaktaIndex);

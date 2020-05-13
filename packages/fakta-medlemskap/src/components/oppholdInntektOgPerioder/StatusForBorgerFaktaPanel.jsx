@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, behandlingFormValueSelector } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 /**
  * StatusForBorgerFaktaPanel
@@ -48,7 +47,14 @@ const StatusForBorgerFaktaPanelImpl = ({
           >
             <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.HarOppholdsrett' }} value />
             <RadioOption
-              label={<FormattedHTMLMessage id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett" />}
+              label={(
+                <FormattedMessage
+                  id="StatusForBorgerFaktaPanel.HarIkkeOppholdsrett"
+                  values={{
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              )}
               value={false}
             />
           </RadioGroupField>
@@ -70,7 +76,14 @@ const StatusForBorgerFaktaPanelImpl = ({
           >
             <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.HarLovligOpphold' }} value />
             <RadioOption
-              label={<FormattedHTMLMessage id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold" />}
+              label={(
+                <FormattedMessage
+                  id="StatusForBorgerFaktaPanel.HarIkkeLovligOpphold"
+                  values={{
+                    b: (...chunks) => <b>{chunks}</b>,
+                  }}
+                />
+              )}
               value={false}
             />
           </RadioGroupField>

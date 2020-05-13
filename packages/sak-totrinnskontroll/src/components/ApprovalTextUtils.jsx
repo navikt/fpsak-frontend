@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -11,7 +11,7 @@ import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 
-import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
+import totrinnskontrollaksjonspunktTextCodes, { totrinnsTilbakekrevingkontrollaksjonspunktTextCodes } from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
@@ -31,18 +31,28 @@ export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforhol
   const formattedMessages = [];
   const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
-    formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon" />);
+    formattedMessages.push(<FormattedMessage
+      id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIPermisjon"
+      values={{
+        b: (...chunks) => <b>{chunks}</b>,
+      }}
+    />);
     return formattedMessages;
   }
   if (arbeidforholdDto.brukPermisjon === false) {
-    formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon" />);
+    formattedMessages.push(<FormattedMessage
+      id="ToTrinnsForm.FaktaOmArbeidsforhold.SoekerErIkkeIPermisjon"
+      values={{
+        b: (...chunks) => <b>{chunks}</b>,
+      }}
+    />);
     if (kode === arbeidsforholdHandlingType.BRUK) {
       return formattedMessages;
     }
   }
   const type = arbeidsforholdHandlingTyper.find((t) => t.kode === kode);
   const melding = type !== undefined && type !== null ? type.navn : '';
-  formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding" values={{ melding }} />);
+  formattedMessages.push(<FormattedMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding" values={{ melding, b: (...chunks) => <b>{chunks}</b> }} />);
   return formattedMessages;
 };
 
@@ -50,12 +60,13 @@ const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => a
   const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
   return (
     <>
-      <FormattedHTMLMessage
+      <FormattedMessage
         id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
         values={{
           orgnavn: arbeidforholdDto.navn,
           orgnummer: arbeidforholdDto.organisasjonsnummer,
           arbeidsforholdId: arbeidforholdDto.arbeidsforholdId ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}` : '',
+          b: (...chunks) => <b>{chunks}</b>,
         }}
       />
       { formattedMessages.map((formattedMessage) => (
@@ -106,6 +117,15 @@ const buildOpptjeningText = (aksjonspunkt) => aksjonspunkt.opptjeningAktiviteter
 
 const getTextFromAksjonspunktkode = (aksjonspunkt) => {
   const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
+  return aksjonspunktTextId ? (
+    <FormattedMessage
+      id={aksjonspunktTextId}
+    />
+  ) : null;
+};
+
+const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt) => {
+  const aksjonspunktTextId = totrinnsTilbakekrevingkontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
   return aksjonspunktTextId ? (
     <FormattedMessage
       id={aksjonspunktTextId}
@@ -192,8 +212,9 @@ export const getAksjonspunktTextSelector = createSelector(
   [(ownProps) => ownProps.isForeldrepengerFagsak,
     (ownProps) => ownProps.behandlingKlageVurdering,
     (ownProps) => ownProps.behandlingStatus,
-    (ownProps) => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE]],
-  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => (aksjonspunkt) => {
+    (ownProps) => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE],
+    (ownProps) => ownProps.erTilbakekreving],
+  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper, erTilbakekreving) => (aksjonspunkt) => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);
     }
@@ -218,6 +239,9 @@ export const getAksjonspunktTextSelector = createSelector(
     }
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD) {
       return buildArbeidsforholdText(aksjonspunkt, arbeidsforholdHandlingTyper);
+    }
+    if (erTilbakekreving) {
+      return [getTextFromTilbakekrevingAksjonspunktkode(aksjonspunkt)];
     }
     return [getTextFromAksjonspunktkode(aksjonspunkt)];
   },

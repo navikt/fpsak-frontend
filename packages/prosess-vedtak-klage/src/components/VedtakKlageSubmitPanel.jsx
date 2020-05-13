@@ -16,29 +16,35 @@ export const isMedholdIKlage = (
   klageVurderingResultatNFP, klageVurderingResultatNK,
 ) => medholdIKlage(klageVurderingResultatNFP) || medholdIKlage(klageVurderingResultatNK);
 
-const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
+const finnKaKode = (skalBenytteFritekstBrevmal) => (skalBenytteFritekstBrevmal
+  ? dokumentMalType.KLAGE_STADFESTET : dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK);
+
+const finnKode = (skalBenytteFritekstBrevmal) => (skalBenytteFritekstBrevmal
+  ? dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK);
+
+const getBrevKode = (klageVurdering, klageVurdertAvKa, skalBenytteFritekstBrevmal) => {
   switch (klageVurdering) {
     case klageVurderingType.STADFESTE_YTELSESVEDTAK:
-      return klageVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
+      return klageVurdertAvKa ? finnKaKode(skalBenytteFritekstBrevmal) : finnKode(skalBenytteFritekstBrevmal);
     case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
-      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET : dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
-      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET : dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
     case klageVurderingType.MEDHOLD_I_KLAGE:
-      return dokumentMalType.VEDTAK_MEDHOLD;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_OMGJORING : dokumentMalType.VEDTAK_MEDHOLD;
     case klageVurderingType.AVVIS_KLAGE:
-      return dokumentMalType.KLAGE_AVVIST_DOK;
+      return skalBenytteFritekstBrevmal ? dokumentMalType.KLAGE_AVVIST : dokumentMalType.KLAGE_AVVIST_DOK;
     default:
       return null;
   }
 };
 
-const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat) => (e) => {
+const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback, klageResultat, skalBenytteFritekstBrevmal) => (e) => {
   const klageVurdertAvNK = klageResultat.klageVurdertAv === 'NFP';
   const data = {
     fritekst: begrunnelse || '',
     mottaker: '',
-    brevmalkode: getBrevKode(klageResultat.klageVurdering, klageVurdertAvNK),
+    brevmalkode: getBrevKode(klageResultat.klageVurdering, klageVurdertAvNK, skalBenytteFritekstBrevmal),
     klageVurdertAv: klageResultat.klageVurdertAv,
     erOpphevet: klageResultat.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
   };
@@ -58,8 +64,9 @@ export const VedtakKlageSubmitPanelImpl = ({
   klageResultat,
   formProps,
   readOnly,
+  skalBenytteFritekstBrevmal,
 }) => {
-  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageResultat);
+  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback, klageResultat, skalBenytteFritekstBrevmal);
 
   return (
     <Row>
@@ -97,6 +104,7 @@ VedtakKlageSubmitPanelImpl.propTypes = {
   klageResultat: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
+  skalBenytteFritekstBrevmal: PropTypes.bool.isRequired,
 };
 
 VedtakKlageSubmitPanelImpl.defaultProps = {

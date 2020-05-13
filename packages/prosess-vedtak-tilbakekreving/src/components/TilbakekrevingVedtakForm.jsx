@@ -9,12 +9,12 @@ import { omit } from '@fpsak-frontend/utils';
 import {
   FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import {
-  behandlingForm, isBehandlingFormSubmitting, isBehandlingFormDirty, hasBehandlingFormErrorsOfType,
-  BehandlingspunktSubmitButton, getBehandlingFormValues,
-} from '@fpsak-frontend/fp-felles';
-
+  behandlingForm, isBehandlingFormSubmitting, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, getBehandlingFormValues,
+} from '@fpsak-frontend/form';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+
 import underavsnittType from '../kodeverk/avsnittType';
 import vedtaksbrevAvsnittPropType from '../propTypes/vedtaksbrevAvsnittPropType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
@@ -73,7 +73,7 @@ export const TilbakekrevingVedtakFormImpl = ({
     <FlexContainer fluid>
       <FlexRow>
         <FlexColumn>
-          <BehandlingspunktSubmitButton
+          <ProsessStegSubmitButton
             textCode="TilbakekrevingVedtakForm.TilGodkjenning"
             formName={formName}
             behandlingId={behandlingId}

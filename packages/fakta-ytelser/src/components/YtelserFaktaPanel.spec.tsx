@@ -30,6 +30,7 @@ describe('<YtelserFaktaPanel>', () => {
           saksNummer: '1312880731101',
         }],
       }],
+      skalKunneLeggeTilNyeArbeidsforhold: true,
     };
 
     const wrapper = shallow(<YtelserFaktaPanel
@@ -87,6 +88,7 @@ describe('<YtelserFaktaPanel>', () => {
           saksNummer: '1312880731101',
         }],
       }],
+      skalKunneLeggeTilNyeArbeidsforhold: true,
     };
 
     const wrapper = shallow(<YtelserFaktaPanel

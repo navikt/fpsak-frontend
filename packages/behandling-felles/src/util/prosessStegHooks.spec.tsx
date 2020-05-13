@@ -2,13 +2,15 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-
+import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -18,7 +20,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import prosessStegHooks from './prosessStegHooks';
 
-const HookWrapper = ({ callback }) => <div values={callback()} />;
+const HookWrapper = ({ callback }) => <div data-values={callback()} />;
 
 const testHook = (callback) => shallow(<HookWrapper callback={callback} />);
 
@@ -83,16 +85,15 @@ describe('<prosessStegHooks>', () => {
     const ekstraPanelData = {
       soknad: 'test_soknad',
     };
-    const navAnsatt = {
-      brukernavn: 'Espen Utvikler',
-      navn: 'Espen Utvikler',
-      kanVeilede: false,
-      kanSaksbehandle: true,
-      kanOverstyre: false,
-      kanBeslutte: false,
-      kanBehandleKode6: false,
-      kanBehandleKode7: false,
-      kanBehandleKodeEgenAnsatt: false,
+    const rettigheter = {
+      writeAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
+      kanOverstyreAccess: {
+        isEnabled: true,
+        employeeHasAccess: true,
+      },
     };
 
     const apentFaktaPanelInfo = undefined;
@@ -103,12 +104,12 @@ describe('<prosessStegHooks>', () => {
 
     // ACT
     const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
-      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, navAnsatt, behandling,
+      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, rettigheter, behandling as Behandling,
       aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
     ));
-    const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values(
-      wrapper.find('div').prop('values'),
-    ).reduce((acc, value) => [...acc, value], []);
+    const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
+      ...wrapper.find('div').prop('data-values'),
+    }).reduce((acc, value) => [...acc, value], []);
 
     const paneler = [{
       aksjonspunkter,
@@ -156,6 +157,7 @@ describe('<prosessStegHooks>', () => {
   it('skal velge første prosess-steg', () => {
     const prosessStegPaneler = [{
       urlCode: 'opplysningsplikt',
+      prosessStegTittelKode: 'TEST',
       label: 'Behandlingspunkt.Opplysningsplikt',
       aksjonspunkter,
       erStegBehandlet: true,
@@ -188,8 +190,8 @@ describe('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'default';
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
-      behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
-    const prosessStegVelger = wrapper.find('div').prop('values');
+      behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
+    const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
     prosessStegVelger(0);
 
@@ -204,6 +206,7 @@ describe('<prosessStegHooks>', () => {
     const prosessStegPaneler = [{
       urlCode: 'opplysningsplikt',
       label: 'Behandlingspunkt.Opplysningsplikt',
+      prosessStegTittelKode: 'TEST',
       aksjonspunkter,
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
@@ -235,8 +238,8 @@ describe('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'opplysningsplikt';
 
     const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
-      behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
-    const prosessStegVelger = wrapper.find('div').prop('values');
+      behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
+    const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
     prosessStegVelger(0);
 
@@ -251,6 +254,7 @@ describe('<prosessStegHooks>', () => {
     const prosessStegPanel = {
       urlCode: 'opplysningsplikt',
       label: 'Behandlingspunkt.Opplysningsplikt',
+      prosessStegTittelKode: 'TEST',
       aksjonspunkter,
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
@@ -280,16 +284,17 @@ describe('<prosessStegHooks>', () => {
 
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
-    const lagringSideEffectsCallback = () => {};
-    const behandlingApi = {
+    const lagringSideEffectsCallback = () => () => {};
+    const behandlingApi: Partial<{[name: string]: Partial<EndpointOperations>}> = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
     };
 
-    const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi,
-      lagringSideEffectsCallback, dispatch, prosessStegPanel));
-    const bekreftAksjonspunkt = wrapper.find('div').prop('values');
+    const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling as Behandling,
+      behandlingApi as {[name: string]: EndpointOperations},
+      lagringSideEffectsCallback, dispatch as Dispatch, prosessStegPanel));
+    const bekreftAksjonspunkt = wrapper.find('div').prop('data-values') as (number) => void;
 
     bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
 

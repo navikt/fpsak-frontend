@@ -11,10 +11,10 @@ import {
 } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+import { featureToggle } from '@fpsak-frontend/konstanter';
 import {
-  featureToggle, getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector,
-} from '@fpsak-frontend/fp-felles';
-import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+  RadioGroupField, RadioOption, TextAreaField, getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -44,12 +44,9 @@ const simuleringAksjonspunkter = [
 const formName = 'AvregnigForm';
 const IKKE_SEND = 'IKKE_SEND';
 
-const createHelptextTooltip = (isForeldrepenger) => ({
-  header: (
-    <Normaltekst>
-      <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
-    </Normaltekst>),
-});
+const createHelptextTooltip = (isForeldrepenger) => (
+  <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
+);
 
 const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
   if (!simuleringResultat) {

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
@@ -18,6 +17,7 @@ export const HistorikkMalTypeForeldelse = ({
   historikkinnslagDeler,
   behandlingLocation,
   getKodeverknavn,
+  createLocationForSkjermlenke,
 }) => {
   if (historikkinnslagDeler.length === 0) {
     return null;
@@ -26,7 +26,7 @@ export const HistorikkMalTypeForeldelse = ({
     <div>
       <Element>
         <NavLink
-          to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
+          to={createLocationForSkjermlenke(behandlingLocation, historikkinnslagDeler[0].skjermlenke.kode)}
           onClick={scrollUp}
         >
           {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
@@ -40,7 +40,7 @@ export const HistorikkMalTypeForeldelse = ({
         return (
           <div key={periodeFom + periodeTom}>
             <Normaltekst>
-              <FormattedHTMLMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
+              <FormattedMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom, b: (...chunks) => <b>{chunks}</b> }} />
             </Normaltekst>
             {endredeFelter && endredeFelter.map((felt) => {
               const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
@@ -48,9 +48,14 @@ export const HistorikkMalTypeForeldelse = ({
               return (
                 <React.Fragment key={endretFeltNavn.kode}>
                   <Normaltekst>
-                    <FormattedHTMLMessage
+                    <FormattedMessage
                       id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                      values={{ navn: getKodeverknavn(endretFeltNavn), fraVerdi, tilVerdi }}
+                      values={{
+                        navn: getKodeverknavn(endretFeltNavn),
+                        fraVerdi,
+                        tilVerdi,
+                        b: (...chunks) => <b>{chunks}</b>,
+                      }}
                     />
                   </Normaltekst>
                   <VerticalSpacer eightPx />
@@ -73,6 +78,7 @@ HistorikkMalTypeForeldelse.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  createLocationForSkjermlenke: PropTypes.func.isRequired,
 };
 
 export default HistorikkMalTypeForeldelse;

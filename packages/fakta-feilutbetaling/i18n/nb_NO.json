@@ -16,10 +16,9 @@
   "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
   "FeilutbetalingInfoPanel.Confirm": "Bekreft og fortsett",
   "FeilutbetalingInfoPanel.IkkeVarslet": "Ikke varslet",
+  "FeilutbetalingInfoPanel.BehandlePerioderSamlet": "Behandle alle perioder samlet",
 
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
-  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
-  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
