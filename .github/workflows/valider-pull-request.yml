@@ -5,7 +5,6 @@ jobs:
     name: Valider pull request
     runs-on: ubuntu-latest
     steps:
-      -
       - name: Hente kode
         uses: actions/checkout@v1
       - name: Sette opp Node
