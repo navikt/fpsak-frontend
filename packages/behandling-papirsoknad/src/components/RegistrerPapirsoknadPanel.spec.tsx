@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
@@ -49,7 +49,7 @@ describe('<RegistrerPapirsoknadPanel>', () => {
       lagreUfullstendig={sinon.spy()}
       lagreFullstendig={sinon.spy()}
     />);
-    expect(wrapper.find(AksjonspunktHelpText)).to.have.length(1);
+    expect(wrapper.find(AksjonspunktHelpTextHTML)).to.have.length(1);
     expect(wrapper.find(SoknadTypePickerForm)).to.have.length(1);
     expect(wrapper.find(EngangsstonadPapirsoknadIndex)).to.have.length(1);
     expect(wrapper.find(ForeldrepengerPapirsoknadIndex)).to.have.length(0);

@@ -1,4 +1,4 @@
-export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
+export { default as DataFetcherBehandlingData, DataFetcherTriggers } from './src/DataFetcherBehandlingData';
 export { default as BehandlingPaVent } from './src/components/paVent/BehandlingPaVent';
 export { default as ProsessStegContainer } from './src/components/ProsessStegContainer';
 export { default as MargMarkering } from './src/components/MargMarkering';

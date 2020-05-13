@@ -6,7 +6,7 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
 
@@ -115,7 +115,7 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
 
     return (
       <DataFetcherBehandlingData
-        behandlingVersion={behandling.versjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={svangerskapspengerData}
         showOldDataWhenRefetching
         render={(dataProps: FetchedData, isFinished) => (

@@ -156,7 +156,7 @@ describe('<EngangsstonadFakta>', () => {
     );
 
     const dataFetcher = wrapper.find(DataFetcherBehandlingData);
-    expect(dataFetcher.prop('behandlingVersion')).is.eql(behandling.versjon);
+    expect(dataFetcher.prop('fetchingTriggers').triggers.behandlingVersion).is.eql(behandling.versjon);
     expect(dataFetcher.prop('endpoints')).is.eql([]);
 
     const arbeidsforholdPanel = dataFetcher.renderProp('render')({}).find(ArbeidsforholdFaktaIndex);

@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import { Fagsak } from '@fpsak-frontend/types';
 import { ErrorTypes } from '@fpsak-frontend/rest-api';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import FagsakSearchIndex, { getSearchFagsakerAccessDenied } from './FagsakSearchIndex';
@@ -43,7 +43,7 @@ describe('<FagsakSearchIndex>', () => {
   const fagsaker = [fagsak, fagsak2];
 
   it('skal sette opp søkeskjermbilde for fagsaker', () => {
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
+    const wrapper = shallow(<FagsakSearchIndex.WrappedComponent
       fagsaker={fagsaker as Fagsak[]}
       push={sinon.spy()}
       searchFagsaker={sinon.spy()}
@@ -60,7 +60,7 @@ describe('<FagsakSearchIndex>', () => {
 
   it('skal gå til valgt fagsak', () => {
     const pushCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
+    const wrapper = shallow(<FagsakSearchIndex.WrappedComponent
       fagsaker={fagsaker as Fagsak[]}
       push={pushCallback}
       searchFagsaker={sinon.spy()}
@@ -71,7 +71,8 @@ describe('<FagsakSearchIndex>', () => {
     />);
 
     const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
-    fagsakSearchIndex.prop('selectFagsakCallback')('', fagsak.saksnummer);
+    const velgFagsak = fagsakSearchIndex.prop('selectFagsakCallback') as (event: {}, saksnummer: number) => undefined;
+    velgFagsak('', fagsak.saksnummer);
 
     expect(pushCallback.calledOnce).to.be.true;
     const { args } = pushCallback.getCalls()[0];
@@ -81,7 +82,7 @@ describe('<FagsakSearchIndex>', () => {
 
   it('skal gå direkte til fagsak når søkeresultatet returnerer kun en fagsak', () => {
     const pushCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
+    const wrapper = shallow(<FagsakSearchIndex.WrappedComponent
       push={pushCallback}
       searchFagsaker={sinon.spy()}
       searchResultReceived={false}
@@ -105,7 +106,7 @@ describe('<FagsakSearchIndex>', () => {
 
   it('skal ikke gå direkte til fagsak når søkeresultatet returnerer flere fagsaker', () => {
     const pushCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<FagsakSearchIndex.WrappedComponent
+    const wrapper = shallow(<FagsakSearchIndex.WrappedComponent
       push={pushCallback}
       searchFagsaker={sinon.spy()}
       searchResultReceived={false}

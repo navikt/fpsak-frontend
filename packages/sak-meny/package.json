@@ -8,11 +8,11 @@
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@navikt/boxed-list-with-selection": "1.0.1",
-    "@navikt/nap-popover": "1.0.4",
+    "@navikt/nap-popover": "1.0.6",
     "nav-frontend-knapper": "2.0.1",
     "nav-frontend-knapper-style": "0.3.35",
     "react": "^16.13.1",
-    "react-intl": "^4.4.0"
+    "react-intl": "^4.5.3"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

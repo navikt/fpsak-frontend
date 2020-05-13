@@ -6,14 +6,14 @@
   "private": true,
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.25.3",
     "nav-frontend-grid": "1.0.27",
     "nav-frontend-grid-style": "0.2.20",
     "nav-frontend-typografi": "2.0.18",
     "nav-frontend-typografi-style": "1.0.19",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-intl": "^4.4.0",
+    "react-intl": "^4.5.3",
     "react-visjs-timeline": "^1.6.0",
     "vis-timeline": "6.3.5"
   },

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
@@ -37,6 +37,8 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
   vurderingTypes,
   alleMerknaderFraBeslutter,
 }) => {
+  const sorterteVurderingstyper = useMemo(() => vurderingTypes.sort((a, b) => a.navn.localeCompare(b.navn)));
+
   if (!fixedMedlemskapPerioder || fixedMedlemskapPerioder.length === 0) {
     return (
       <FaktaGruppe titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation">
@@ -80,7 +82,7 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
       <FlexRow>
         <FlexColumn>
           <RadioGroupField name="medlemskapManuellVurderingType.kode" validate={[required]} readOnly={readOnly} isEdited={isPeriodAksjonspunktClosed}>
-            {vurderingTypes.map((type) => <RadioOption key={type.kode} value={type.kode} label={type.navn} />)}
+            {sorterteVurderingstyper.map((type) => <RadioOption key={type.kode} value={type.kode} label={type.navn} />)}
           </RadioGroupField>
         </FlexColumn>
       </FlexRow>

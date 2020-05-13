@@ -9,8 +9,8 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "@navikt/boxed-list-with-links": "1.0.4",
-    "@navikt/nap-header": "1.0.9",
-    "@navikt/nap-popover": "1.0.4",
+    "@navikt/nap-header": "1.0.10",
+    "@navikt/nap-popover": "1.0.6",
     "@navikt/nap-system-button": "1.0.0",
     "@navikt/nap-user-panel": "1.0.0",
     "nav-frontend-core": "4.0.12",
@@ -19,16 +19,16 @@
     "nav-frontend-js-utils": "^1.0.8",
     "nav-frontend-knapper": "2.0.1",
     "nav-frontend-knapper-style": "0.3.35",
-    "nav-frontend-lukknapp": "1.0.25",
+    "nav-frontend-lukknapp": "1.0.26",
     "nav-frontend-lukknapp-style": "0.2.22",
-    "nav-frontend-modal": "1.0.33",
-    "nav-frontend-modal-style": "0.3.32",
-    "nav-frontend-paneler-style": "0.3.18",
+    "nav-frontend-modal": "1.0.34",
+    "nav-frontend-modal-style": "0.3.33",
+    "nav-frontend-paneler-style": "0.3.19",
     "nav-frontend-typografi": "2.0.18",
     "nav-frontend-typografi-style": "1.0.19",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-intl": "^4.4.0"
+    "react-intl": "^4.5.3"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0"

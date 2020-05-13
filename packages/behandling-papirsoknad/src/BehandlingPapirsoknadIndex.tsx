@@ -7,7 +7,7 @@ import { ErrorTypes } from '@fpsak-frontend/rest-api';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 import {
   KodeverkMedNavn, Aksjonspunkt, Behandling,
@@ -101,7 +101,7 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
 
     return (
       <DataFetcherBehandlingData
-        behandlingVersion={behandling.versjon}
+        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         showOldDataWhenRefetching
         endpoints={papirsoknadData}
         render={(dataProps: DataProps, isFinished) => (

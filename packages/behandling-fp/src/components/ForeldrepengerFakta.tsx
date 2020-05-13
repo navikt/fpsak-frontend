@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, Rettigheter, FaktaPanel, DataFetcherBehandlingData, faktaHooks,
+  FagsakInfo, Rettigheter, FaktaPanel, DataFetcherBehandlingData, DataFetcherTriggers, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
@@ -64,7 +64,7 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingData
           key={valgtPanel.urlCode}
-          behandlingVersion={behandling.versjon}
+          fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
           endpoints={valgtPanel.endpoints}
           render={(dataProps) => valgtPanel.renderComponent({
             ...dataProps,
