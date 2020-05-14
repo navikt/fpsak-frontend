@@ -36,6 +36,7 @@ interface OwnProps {
   skalBrukeOverstyrendeFritekstBrev: boolean;
 }
 
+
 const VedtakAvslagPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   behandlingStatusKode,

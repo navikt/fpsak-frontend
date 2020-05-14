@@ -7,7 +7,7 @@ import { Behandlingsresultat, Kodeverk } from '@fpsak-frontend/types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
+  decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfCustomFunctionIsTrue,
 } from '@fpsak-frontend/utils';
 
 import styles from './vedtakFritekstPanel.less';
@@ -21,6 +21,14 @@ interface OwnProps {
   readOnly: boolean;
   labelTextCode: string;
 }
+
+const isBegrunnelseRequired = (allValues, props) => {
+  if (allValues.beregningErManueltFastsatt === true) {
+    return true;
+  }
+  return !props.pristine;
+};
+const requiredCustom = requiredIfCustomFunctionIsTrue(isBegrunnelseRequired);
 
 const VedtakFritekstPanelImpl: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
@@ -37,7 +45,7 @@ const VedtakFritekstPanelImpl: FunctionComponent<OwnProps & WrappedComponentProp
           <TextAreaField
             name="begrunnelse"
             label={intl.formatMessage({ id: labelTextCode })}
-            validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+            validate={[requiredCustom, minLength3, maxLength1500, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}
             badges={[{
