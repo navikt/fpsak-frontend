@@ -170,8 +170,10 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
 
 export const buildInitialValues = createSelector(
   [(ownProps: { aksjonspunkter: Aksjonspunkt[] }) => ownProps.aksjonspunkter,
-    (ownProps: { behandling: Behandling }) => ownProps.behandling],
-  (aksjonspunkter, behandling) => ({
+    (ownProps: { behandling: Behandling }) => ownProps.behandling,
+    ((ownProps: { beregningErManueltFastsatt: boolean }) => ownProps.beregningErManueltFastsatt)],
+  (aksjonspunkter, behandling, beregningErManueltFastsatt) => ({
+    beregningErManueltFastsatt,
     aksjonspunktKoder: aksjonspunkter.filter((ap) => ap.kanLoses).map((ap) => ap.definisjon.kode),
     overskrift: decodeHtmlEntity(behandling.behandlingsresultat.overskrift),
     brødtekst: decodeHtmlEntity(behandling.behandlingsresultat.fritekstbrev),
