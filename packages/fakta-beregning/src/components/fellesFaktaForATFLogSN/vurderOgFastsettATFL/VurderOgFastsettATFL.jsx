@@ -17,7 +17,8 @@ import transformValuesArbeidUtenInntektsmelding from './forms/ArbeidUtenInntekts
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 import {
-  skalRedigereInntektForAndel, mapAndelToField, erOverstyring, getSkalRedigereInntekt, INNTEKT_FIELD_ARRAY_NAME, skalFastsetteInntektForSN,
+  skalRedigereInntektForAndel, mapAndelToField, erOverstyring, erOverstyringAvBeregningsgrunnlag,
+  getSkalRedigereInntekt, INNTEKT_FIELD_ARRAY_NAME, skalFastsetteInntektForSN,
 } from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import InntektFieldArray from '../InntektFieldArray';
@@ -113,6 +114,7 @@ const VurderOgFastsettATFL = ({
   aksjonspunkter,
   alleKodeverk,
   erOverstyrer,
+  erOverstyrt,
 }) => (
   <div>
     <InntektstabellPanel
@@ -173,6 +175,7 @@ const VurderOgFastsettATFL = ({
           isAksjonspunktClosed={isAksjonspunktClosed}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          erOverstyrt={erOverstyrt}
         />
       )}
     </InntektstabellPanel>
@@ -285,6 +288,7 @@ VurderOgFastsettATFL.propTypes = {
   erOverstyrer: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
+  erOverstyrt: PropTypes.bool.isRequired,
 };
 
 export const skalFastsettInntektForArbeidstaker = createSelector([
@@ -330,6 +334,7 @@ const getSkalViseTabell = createSelector([
 });
 
 const mapStateToProps = (state, ownProps) => ({
+  erOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),
   skalFastsetteAT: skalFastsettInntektForArbeidstaker(state, ownProps),
   skalFastsetteFL: skalFastsettInntektForFrilans(state, ownProps),
   skalHaBesteberegning: getFormValuesForBeregning(state, ownProps)[besteberegningField] === true,

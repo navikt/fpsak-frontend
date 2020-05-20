@@ -7,6 +7,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/konstanter';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
@@ -16,6 +17,9 @@ import styles from '../kunYtelse/kunYtelseBesteberegningPanel.less';
 
 export const besteberegningField = 'vurderbesteberegningField';
 
+const {
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+} = aksjonspunktCodes;
 
 /**
  * VurderBesteberegningPanel
@@ -27,6 +31,7 @@ export const besteberegningField = 'vurderbesteberegningField';
 const VurderBesteberegningPanelImpl = ({
   readOnly,
   isAksjonspunktClosed,
+  erOverstyrt,
 }) => (
   <div>
     <Row>
@@ -37,7 +42,7 @@ const VurderBesteberegningPanelImpl = ({
         <VerticalSpacer eightPx />
         <RadioGroupField
           name={besteberegningField}
-          readOnly={readOnly}
+          readOnly={readOnly || erOverstyrt}
           isEdited={isAksjonspunktClosed}
         >
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Ja" />} value />
@@ -61,16 +66,23 @@ const VurderBesteberegningPanelImpl = ({
 VurderBesteberegningPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  erOverstyrt: PropTypes.bool.isRequired,
 };
 
 
-VurderBesteberegningPanelImpl.buildInitialValues = (vurderBesteberegning, faktaOmBeregningTilfeller) => {
+VurderBesteberegningPanelImpl.buildInitialValues = (aksjonspunkter, vurderBesteberegning, faktaOmBeregningTilfeller, erOverstyrt) => {
   if (!(faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
     || faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
     return {};
   }
   if (!vurderBesteberegning) {
     return {};
+  }
+  const erOverstyring = aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG) !== undefined || erOverstyrt;
+  if (erOverstyring) {
+    return {
+      [besteberegningField]: false,
+    };
   }
   return {
     [besteberegningField]: vurderBesteberegning.skalHaBesteberegning,

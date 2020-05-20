@@ -1,8 +1,12 @@
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import VurderBesteberegningForm, { besteberegningField } from './VurderBesteberegningForm';
 
+const {
+  OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
+} = aksjonspunktCodes;
 
 describe('<VurderBesteberegning>', () => {
   it('skal ikkje validere om man ikkje har tilfelle', () => {
@@ -20,10 +24,30 @@ describe('<VurderBesteberegning>', () => {
       skalHaBesteberegning: false,
       andeler: [{ andelsnr: 1, aktivitetStatus: { kode: 'AT' } }],
     };
-    const initialValues = VurderBesteberegningForm.buildInitialValues(vurderBesteberegning, [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING]);
+    const initialValues = VurderBesteberegningForm.buildInitialValues([],
+      vurderBesteberegning, [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING], false);
     expect(initialValues[besteberegningField]).to.equal(false);
   });
 
+  it('skal bygge initial values med overstyrt aksjonspunkt', () => {
+    const vurderBesteberegning = {
+      skalHaBesteberegning: null,
+      andeler: [{ andelsnr: 1, aktivitetStatus: { kode: 'AT' } }],
+    };
+    const initialValues = VurderBesteberegningForm.buildInitialValues([{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSGRUNNLAG } }],
+      vurderBesteberegning, [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING], false);
+    expect(initialValues[besteberegningField]).to.equal(false);
+  });
+
+  it('skal bygge initial values om det er overstyrt', () => {
+    const vurderBesteberegning = {
+      skalHaBesteberegning: null,
+      andeler: [{ andelsnr: 1, aktivitetStatus: { kode: 'AT' } }],
+    };
+    const initialValues = VurderBesteberegningForm.buildInitialValues([], vurderBesteberegning,
+      [faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING], true);
+    expect(initialValues[besteberegningField]).to.equal(false);
+  });
 
   it('skal transform values', () => {
     const values = {};

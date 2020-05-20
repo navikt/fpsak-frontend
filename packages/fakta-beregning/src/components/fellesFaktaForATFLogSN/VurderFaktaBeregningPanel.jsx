@@ -181,7 +181,7 @@ export const transformValuesVurderFaktaBeregning = (values) => {
 };
 
 export const buildInitialValuesVurderFaktaBeregning = createSelector(
-  [(ownProps) => ownProps.aksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
+  [(state, ownProps) => ownProps.aksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
   (aksjonspunkter, buildInitialValuesTilfeller) => ({
     aksjonspunkter,
     ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
@@ -203,7 +203,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = (values) => initialProps.submitCallback(transformValuesVurderFaktaBeregning(values));
   const validate = (values) => validateVurderFaktaBeregning(values);
   return (state, ownProps) => {
-    const initialValues = buildInitialValuesVurderFaktaBeregning(ownProps);
+    const initialValues = buildInitialValuesVurderFaktaBeregning(state, ownProps);
     return ({
       initialValues,
       onSubmit,
@@ -217,4 +217,5 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
 
 export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formNameVurderFaktaBeregning,
+  enableReinitialize: true,
 })(VurderFaktaBeregningPanelImpl));
