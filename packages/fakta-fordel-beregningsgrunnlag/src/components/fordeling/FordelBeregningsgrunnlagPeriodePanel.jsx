@@ -111,11 +111,13 @@ const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   if (!bgAndel) {
     return null;
   }
+  const bortfaltNaturalytelse = bgAndel.bortfaltNaturalytelse === null || bgAndel.bortfaltNaturalytelse === undefined ? 0 : bgAndel.bortfaltNaturalytelse;
+  const tilkommetNaturalytelse = bgAndel.tilkommetNaturalytelse === null || bgAndel.tilkommetNaturalytelse === undefined ? 0 : bgAndel.tilkommetNaturalytelse;
   if (bgAndel.overstyrtPrAar || bgAndel.overstyrtPrAar === 0) {
-    return formatCurrencyNoKr(bgAndel.overstyrtPrAar);
+    return formatCurrencyNoKr(bgAndel.overstyrtPrAar + bortfaltNaturalytelse - tilkommetNaturalytelse);
   }
   if (bgAndel.beregnetPrAar || bgAndel.beregnetPrAar === 0) {
-    return formatCurrencyNoKr(bgAndel.beregnetPrAar);
+    return formatCurrencyNoKr(bgAndel.beregnetPrAar + bortfaltNaturalytelse - tilkommetNaturalytelse);
   }
   return null;
 };
