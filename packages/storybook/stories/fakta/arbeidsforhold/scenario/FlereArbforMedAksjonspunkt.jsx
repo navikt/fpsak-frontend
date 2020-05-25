@@ -1,4 +1,7 @@
-const iay = {
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
+export const iay = {
   inntektsmeldinger: [
     {
       arbeidsgiver: 'KIWI',
@@ -279,4 +282,14 @@ const iay = {
   skalKunneLageArbeidsforholdBasertPaInntektsmelding: true,
 };
 
-export default iay;
+export const ap = {
+  definisjon: {
+    kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+  },
+  status: {
+    kode: aksjonspunktStatus.OPPRETTET,
+  },
+  begrunnelse: undefined,
+  kanLoses: true,
+  erAktivt: true,
+};
