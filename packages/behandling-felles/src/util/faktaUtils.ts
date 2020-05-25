@@ -26,7 +26,7 @@ export const utledFaktaPaneler = (
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   return faktaPanelDefinisjoner
-    .filter((panelDef) => panelDef.skalViseKomponent(apCodes, utvidetEkstraPanelData))
+    .filter((panelDef) => panelDef.skalVisePanel(apCodes, utvidetEkstraPanelData))
     .map((panelDef) => {
       const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
       const harApneAksjonspunkter = filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);

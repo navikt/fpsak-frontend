@@ -15,6 +15,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
+import FaktaPanelDef from './FaktaPanelDef';
 import {
   utledFaktaPaneler, finnValgtPanel, formaterPanelerForSidemeny, getBekreftAksjonspunktCallback, DEFAULT_FAKTA_KODE, DEFAULT_PROSESS_STEG_KODE,
 } from './faktaUtils';
@@ -46,16 +47,28 @@ describe('<faktaPanelUtils>', () => {
     links: [],
   };
 
+  class ArbeidsforholdFaktaPanelDef extends FaktaPanelDef {
+    getUrlKode = () => faktaPanelCodes.ARBEIDSFORHOLD
+
+    getTekstKode = () => 'ArbeidsforholdInfoPanel.Title'
+
+    getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]
+
+    getKomponent = (props) => <ArbeidsforholdFaktaIndex {...props} />
+
+    getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger
+
+    getData = ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse })
+  }
+  class TestFaktaPanelDef extends FaktaPanelDef {
+    getUrlKode = () => 'test'
+
+    getTekstKode = () => 'Test.Title'
+
+    getKomponent = () => <div>test</div>
+  }
+
   it('skal utlede faktapanel', () => {
-    const faktaPanelDefinisjoner = [{
-      urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD],
-      endpoints: [],
-      renderComponent: (props) => <ArbeidsforholdFaktaIndex {...props} />,
-      showComponent: ({ personopplysninger }) => personopplysninger,
-      getData: ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse }),
-    }];
     const ekstraPanelData = {
       personopplysninger: 'test_personopplysninger',
       inntektArbeidYtelse: 'test_inntektArbeidYtelse',
@@ -78,14 +91,13 @@ describe('<faktaPanelUtils>', () => {
     }];
     const hasFetchError = false;
 
-    const faktaPaneler = utledFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling as Behandling, rettigheter, aksjonspunkter, hasFetchError);
+    const panelDef = new ArbeidsforholdFaktaPanelDef();
+
+    const faktaPaneler = utledFaktaPaneler([panelDef], ekstraPanelData, behandling as Behandling, rettigheter, aksjonspunkter, hasFetchError);
 
     expect(faktaPaneler).to.have.length(1);
     expect(faktaPaneler[0]).to.eql({
-      urlCode: 'arbeidsforhold',
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      endpoints: [],
-      renderComponent: faktaPanelDefinisjoner[0].renderComponent,
+      panelDef,
       harApneAksjonspunkter: true,
       komponentData: {
         aksjonspunkter: [aksjonspunkter[0]],
@@ -114,18 +126,15 @@ describe('<faktaPanelUtils>', () => {
   };
 
   it('skal finne ut at valgt faktapanel er panelet med åpent aksjonspunkt', () => {
+    const panelDef = new ArbeidsforholdFaktaPanelDef();
+    const panelDef2 = new TestFaktaPanelDef();
+
     const paneler = [{
-      urlCode: 'arbeidsforhold',
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      endpoints: [],
-      renderComponent: () => undefined,
+      panelDef,
       harApneAksjonspunkter: false,
       komponentData,
     }, {
-      urlCode: 'test',
-      textCode: 'Test.Title',
-      endpoints: [],
-      renderComponent: () => undefined,
+      panelDef: panelDef2,
       harApneAksjonspunkter: true,
       komponentData,
     }];
@@ -133,84 +142,73 @@ describe('<faktaPanelUtils>', () => {
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.urlCode).to.eql(paneler[1].urlCode);
+    expect(valgtPanel.panelDef.getUrlKode()).to.eql(paneler[1].panelDef.getUrlKode());
   });
 
   it('skal finne ut at valgt faktapanel er første panel når det ikke finnes åpne aksjonspunkter', () => {
+    const panelDef = new ArbeidsforholdFaktaPanelDef();
+    const panelDef2 = new TestFaktaPanelDef();
     const paneler = [{
-      urlCode: 'arbeidsforhold',
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      endpoints: [],
+      panelDef,
       harApneAksjonspunkter: false,
-      renderComponent: () => undefined,
       komponentData,
     }, {
-      urlCode: 'test',
-      textCode: 'Test.Title',
-      endpoints: [],
+      panelDef: panelDef2,
       harApneAksjonspunkter: false,
-      renderComponent: () => undefined,
       komponentData,
     }];
+
     const valgtFaktaPanelKode = DEFAULT_FAKTA_KODE;
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.urlCode).to.eql(paneler[0].urlCode);
+    expect(valgtPanel.panelDef.getUrlKode()).to.eql(paneler[0].panelDef.getUrlKode());
   });
 
   it('skal finne faktapanel som er satt i URL', () => {
+    const panelDef = new ArbeidsforholdFaktaPanelDef();
+    const panelDef2 = new TestFaktaPanelDef();
     const paneler = [{
-      urlCode: 'arbeidsforhold',
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      endpoints: [],
+      panelDef,
       harApneAksjonspunkter: false,
-      renderComponent: () => undefined,
       komponentData,
     }, {
-      urlCode: 'test',
-      textCode: 'Test.Title',
-      endpoints: [],
+      panelDef: panelDef2,
       harApneAksjonspunkter: false,
-      renderComponent: () => undefined,
       komponentData,
     }];
-    const valgtFaktaPanelKode = paneler[1].urlCode;
+    const valgtFaktaPanelKode = paneler[1].panelDef.getUrlKode();
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.urlCode).to.eql(paneler[1].urlCode);
+    expect(valgtPanel.panelDef.getUrlKode()).to.eql(paneler[1].panelDef.getUrlKode());
   });
 
   it('skal formatere paneler for sidemeny', () => {
+    const panelDef = new ArbeidsforholdFaktaPanelDef();
+    const panelDef2 = new TestFaktaPanelDef();
     const paneler = [{
-      urlCode: 'arbeidsforhold',
-      textCode: 'ArbeidsforholdInfoPanel.Title',
+      panelDef,
       harApneAksjonspunkter: false,
-      endpoints: [],
-      renderComponent: () => undefined,
       komponentData,
     }, {
-      urlCode: 'test',
-      textCode: 'Test.Title',
+      panelDef: panelDef2,
       harApneAksjonspunkter: true,
-      endpoints: [],
-      renderComponent: () => undefined,
       komponentData,
     }];
     const intl = {
       formatMessage: (o) => o.id,
     };
-    const valgtFaktaPanelKode = paneler[1].urlCode;
+    const valgtFaktaPanelKode = paneler[1].panelDef.getUrlKode();
 
     const formatertePaneler = formaterPanelerForSidemeny(intl, paneler, valgtFaktaPanelKode);
 
     expect(formatertePaneler).to.eql([{
-      tekst: paneler[0].textCode,
+      tekst: paneler[0].panelDef.getTekstKode(),
       erAktiv: false,
       harAksjonspunkt: false,
     }, {
-      tekst: paneler[1].textCode,
+      tekst: paneler[1].panelDef.getTekstKode(),
       erAktiv: true,
       harAksjonspunkt: true,
     }]);

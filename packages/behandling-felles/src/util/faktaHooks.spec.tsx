@@ -16,6 +16,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
+import FaktaPanelDef from './FaktaPanelDef';
 import faktaHooks from './faktaHooks';
 import { DEFAULT_FAKTA_KODE } from './faktaUtils';
 
@@ -51,16 +52,22 @@ describe('<faktaHooks>', () => {
     links: [],
   };
 
+  class TestFaktaPanelDef extends FaktaPanelDef {
+    getUrlKode = () => faktaPanelCodes.ARBEIDSFORHOLD
+
+    getTekstKode = () => 'ArbeidsforholdInfoPanel.Title'
+
+    getAksjonspunktKoder = () => [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]
+
+    getKomponent = (props) => <ArbeidsforholdFaktaIndex {...props} />
+
+    getOverstyrVisningAvKomponent = ({ personopplysninger }) => personopplysninger
+
+    getData = ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse })
+  }
+
   it('skal utlede faktapaneler og valgt panel', () => {
-    const faktaPanelDefinisjoner = [{
-      urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD],
-      endpoints: [],
-      renderComponent: (props) => <ArbeidsforholdFaktaIndex {...props} />,
-      showComponent: ({ personopplysninger }) => personopplysninger,
-      getData: ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse }),
-    }];
+    const panelDef = new TestFaktaPanelDef();
     const ekstraPanelData = {
       personopplysninger: 'test_personopplysninger',
       inntektArbeidYtelse: 'test_inntektArbeidYtelse',
@@ -85,15 +92,12 @@ describe('<faktaHooks>', () => {
     const valgtFaktaSteg = 'default';
     const intl = { formatMessage: (data) => data.id };
 
-    const wrapper = testHook(() => faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, ekstraPanelData, behandling as Behandling, rettigheter,
+    const wrapper = testHook(() => faktaHooks.useFaktaPaneler([panelDef], ekstraPanelData, behandling as Behandling, rettigheter,
       aksjonspunkter, hasFetchError, valgtFaktaSteg, intl));
     const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 
     const paneler = [{
-      urlCode: 'arbeidsforhold',
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      endpoints: [],
-      renderComponent: faktaPanelDefinisjoner[0].renderComponent,
+      panelDef,
       harApneAksjonspunkter: true,
       komponentData: {
         aksjonspunkter: [aksjonspunkter[0]],
@@ -124,11 +128,10 @@ describe('<faktaHooks>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
+
+    const panelDef = new TestFaktaPanelDef();
     const paneler = [{
-      urlCode: 'arbeidsforhold',
-      textCode: 'ArbeidsforholdInfoPanel.Title',
-      endpoints: [],
-      renderComponent: () => undefined,
+      panelDef,
       harApneAksjonspunkter: true,
       komponentData: {
         aksjonspunkter: [aksjonspunkter[0]],

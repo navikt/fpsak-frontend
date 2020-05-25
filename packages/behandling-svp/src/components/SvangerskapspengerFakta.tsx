@@ -63,10 +63,10 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
     return (
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingData
-          key={valgtPanel.urlCode}
+          key={valgtPanel.panelDef.getUrlKode()}
           fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-          endpoints={valgtPanel.endpoints}
-          render={(dataProps) => valgtPanel.renderComponent({
+          endpoints={valgtPanel.panelDef.getEndepunkter()}
+          render={(dataProps) => valgtPanel.panelDef.getKomponent({
             ...dataProps,
             behandling,
             alleKodeverk,

@@ -1,5 +1,6 @@
-import React from 'react';
+import FeilutbetalingFaktaPanelDef from './faktaPaneler/FeilutbetalingFaktaPanelDef';
 
+<<<<<<< HEAD
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { faktaPanelCodes } from '@fpsak-frontend/konstanter';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
@@ -28,5 +29,10 @@ const faktaPanelDefinisjoner = [{
   showComponent: () => false,
   getData: () => ({}),
 }];
+=======
+const faktaPanelDefinisjoner = [
+  new FeilutbetalingFaktaPanelDef(),
+];
+>>>>>>> FIX div
 
 export default faktaPanelDefinisjoner;
