@@ -62,7 +62,6 @@ describe('<VedtakForm>', () => {
       readOnly={false}
       aksjonspunkter={aksjonspunkter}
       previewCallback={previewCallback}
-      kanOverstyre
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
       resultatstruktur={{
         antallBarn: 2,
@@ -111,7 +110,6 @@ describe('<VedtakForm>', () => {
       readOnly={false}
       aksjonspunkter={aksjonspunkter}
       previewCallback={previewCallback}
-      kanOverstyre
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
       resultatstruktur={{
         antallBarn: 2,

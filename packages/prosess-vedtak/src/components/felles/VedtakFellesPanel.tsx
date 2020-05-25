@@ -31,7 +31,7 @@ export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlin
 const kanSendesTilGodkjenning = (behandlingStatusKode) => behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
 const finnKnappetekstkode = (behandlingType, aksjonspunkter) => {
-  if (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true && ap.toTrinnsBehandling === true)) {
+  if (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt && ap.toTrinnsBehandling)) {
     return 'VedtakForm.TilGodkjenning';
   }
 
@@ -41,7 +41,6 @@ const finnKnappetekstkode = (behandlingType, aksjonspunkter) => {
 interface OwnProps {
   behandling: Behandling;
   readOnly: boolean;
-  kanOverstyre: boolean;
   erBehandlingEtterKlage: boolean;
   aksjonspunkter: Aksjonspunkt[];
   renderPanel: (skalBrukeManueltBrev: boolean, erInnvilget: boolean, erAvslatt: boolean, erOpphor: boolean) => ReactNode;

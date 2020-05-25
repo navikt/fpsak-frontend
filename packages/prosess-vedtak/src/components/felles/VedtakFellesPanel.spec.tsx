@@ -44,7 +44,6 @@ describe('<VedtakFellesPanel>', () => {
       aksjonspunkter={[]}
       readOnly={false}
       renderPanel={() => <div>test</div>}
-      kanOverstyre
       previewAutomatiskBrev={sinon.spy()}
       previewOverstyrtBrev={sinon.spy()}
       clearFormField={sinon.spy()}
@@ -72,7 +71,6 @@ describe('<VedtakFellesPanel>', () => {
       aksjonspunkter={[]}
       readOnly={false}
       renderPanel={() => <div>test</div>}
-      kanOverstyre
       previewAutomatiskBrev={sinon.spy()}
       previewOverstyrtBrev={sinon.spy()}
       clearFormField={sinon.spy()}
@@ -98,7 +96,6 @@ describe('<VedtakFellesPanel>', () => {
       aksjonspunkter={[]}
       readOnly={false}
       renderPanel={() => <span>test</span>}
-      kanOverstyre
       previewAutomatiskBrev={sinon.spy()}
       previewOverstyrtBrev={sinon.spy()}
       clearFormField={sinon.spy()}
