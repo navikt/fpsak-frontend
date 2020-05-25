@@ -133,7 +133,7 @@ FordelBeregningsgrunnlagForm.propTypes = {
 
 export const finnSumIPeriode = (bgPerioder, fom) => {
   const periode = bgPerioder.find((p) => p.beregningsgrunnlagPeriodeFom === fom);
-  return periode.bruttoPrAar;
+  return periode.bruttoInkludertBortfaltNaturalytelsePrAar;
 };
 
 FordelBeregningsgrunnlagForm.validate = (values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn) => {
@@ -182,6 +182,7 @@ const getAndelsnr = (aktivitet) => {
 export const mapTilFastsatteVerdier = (aktivitet, skalHaBesteberegning) => ({
   refusjonPrÅr: aktivitet.skalKunneEndreRefusjon ? removeSpacesFromNumber(aktivitet.refusjonskrav) : null,
   fastsattÅrsbeløp: removeSpacesFromNumber(aktivitet.fastsattBelop),
+  fastsattÅrsbeløpInklNaturalytelse: removeSpacesFromNumber(aktivitet.fastsattBelop),
   inntektskategori: aktivitet.inntektskategori,
   skalHaBesteberegning,
 });
