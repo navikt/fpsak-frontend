@@ -7,9 +7,10 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import arbeidsforholdKilder from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/arbeidsforholdKilder';
 
-import withReduxProvider from '../../decorators/withRedux';
+import { iay as flereArbfor, ap as apFlereArbfor } from './scenario/FlereArbforMedAksjonspunkt';
+import withReduxProvider from '../../../decorators/withRedux';
 
-import alleKodeverk from '../mocks/alleKodeverk.json';
+import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -204,6 +205,21 @@ export const visPanelForFlerePermisjoner = () => (
       kanLoses: true,
       erAktivt: true,
     }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+  />
+);
+
+export const visPanelForFlereArbeidsforholdMedAksjonspunkt = () => (
+  <ArbeidsforholdFaktaIndex
+    behandling={behandling}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', flereArbfor)}
+    aksjonspunkter={[apFlereArbfor]}
     alleKodeverk={alleKodeverk}
     alleMerknaderFraBeslutter={{
       [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
