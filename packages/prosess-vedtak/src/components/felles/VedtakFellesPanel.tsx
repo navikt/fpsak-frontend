@@ -7,8 +7,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import Lenke from 'nav-frontend-lenker';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import popOutPilSvg from '@fpsak-frontend/assets/images/pop-out-pil.svg';
@@ -32,16 +30,12 @@ export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlin
 
 const kanSendesTilGodkjenning = (behandlingStatusKode) => behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
-const finnKnappetekstkode = (behandlingType, skalBrukeManueltBrev, aksjonspunkter) => {
-  if (behandlingType.kode === BehandlingType.REVURDERING && !skalBrukeManueltBrev) {
-    return aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-      ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak';
+const finnKnappetekstkode = (behandlingType, aksjonspunkter) => {
+  if (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true && ap.toTrinnsBehandling === true)) {
+    return 'VedtakForm.TilGodkjenning';
   }
 
-  if (!skalBrukeManueltBrev && aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)) {
-    return 'VedtakForm.FattVedtak';
-  }
-  return 'VedtakForm.TilGodkjenning';
+  return 'VedtakForm.FattVedtak';
 };
 
 interface OwnProps {
@@ -66,7 +60,6 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
   aksjonspunkter,
   readOnly,
   renderPanel,
-  kanOverstyre,
   previewAutomatiskBrev,
   previewOverstyrtBrev,
   tilbakekrevingtekst,
@@ -140,26 +133,24 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
             </>
           )}
         </Column>
-        {(kanOverstyre) && (
-          <Column xs="3">
-            {!readOnly && !skalBrukeManueltBrev && (
-              <>
-                <Image src={endreSvg} className={styles.blyant} />
-                <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
-                  <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
-                </Lenke>
-              </>
-            )}
-            {(readOnly || skalBrukeManueltBrev) && (
-              <>
-                <Image src={endreDisabletSvg} className={styles.blyant} />
-                <Normaltekst className={styles.disabletLink}>
-                  <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
-                </Normaltekst>
-              </>
-            )}
-          </Column>
-        )}
+        <Column xs="3">
+          {!readOnly && !skalBrukeManueltBrev && (
+          <>
+            <Image src={endreSvg} className={styles.blyant} />
+            <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
+              <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+            </Lenke>
+          </>
+          )}
+          {(readOnly || skalBrukeManueltBrev) && (
+          <>
+            <Image src={endreDisabletSvg} className={styles.blyant} />
+            <Normaltekst className={styles.disabletLink}>
+              <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+            </Normaltekst>
+          </>
+          )}
+        </Column>
       </Row>
       <VedtakHelpTextPanel aksjonspunkter={aksjonspunkter} readOnly={readOnly} />
       <VerticalSpacer twentyPx />
@@ -185,7 +176,7 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
                     disabled={behandlingPaaVent || submitting}
                     spinner={submitting}
                   >
-                    <FormattedMessage id={finnKnappetekstkode(type, skalBrukeManueltBrev, aksjonspunkter)} />
+                    <FormattedMessage id={finnKnappetekstkode(type, aksjonspunkter)} />
                   </Hovedknapp>
                 )}
               </FlexColumn>
