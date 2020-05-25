@@ -1,13 +1,9 @@
-import { ReactNode } from 'react';
-
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { Aksjonspunkt } from '@fpsak-frontend/types';
 
+import FaktaPanelDef from '../util/FaktaPanelDef';
+
 interface FaktaPanelUtledet {
-  urlCode: string;
-  textCode: string;
-  endpoints: EndpointOperations[];
-  renderComponent: (props: {}) => ReactNode;
+  panelDef: FaktaPanelDef;
   harApneAksjonspunkter: boolean;
   komponentData: {
     aksjonspunkter: Aksjonspunkt[];

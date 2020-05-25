@@ -8,7 +8,7 @@ import readOnlyUtils from './readOnlyUtils';
 import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import Rettigheter from '../types/rettigheterTsType';
-import FaktaPanelDefinisjon from '../types/faktaPanelDefinisjonTsType';
+import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from '../types/faktaPanelUtledetTsType';
 import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
 
@@ -16,7 +16,7 @@ export const DEFAULT_FAKTA_KODE = 'default';
 export const DEFAULT_PROSESS_STEG_KODE = 'default';
 
 export const utledFaktaPaneler = (
-  faktaPanelDefinisjoner: FaktaPanelDefinisjon[],
+  faktaPanelDefinisjoner: FaktaPanelDef[],
   ekstraPanelData: {},
   behandling: Behandling,
   rettigheter: Rettigheter,
@@ -26,15 +26,12 @@ export const utledFaktaPaneler = (
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   return faktaPanelDefinisjoner
-    .filter((panel) => panel.aksjonspunkterCodes.some((a) => apCodes.includes(a)) || panel.showComponent(utvidetEkstraPanelData))
-    .map((panel) => {
-      const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panel.aksjonspunkterCodes.includes(ap.definisjon.kode));
+    .filter((panelDef) => panelDef.skalViseKomponent(apCodes, utvidetEkstraPanelData))
+    .map((panelDef) => {
+      const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
       const harApneAksjonspunkter = filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
       return {
-        urlCode: panel.urlCode,
-        textCode: panel.textCode,
-        endpoints: panel.endpoints,
-        renderComponent: panel.renderComponent,
+        panelDef,
         harApneAksjonspunkter,
         komponentData: {
           aksjonspunkter: filtrerteAksjonspunkter,
@@ -42,7 +39,7 @@ export const utledFaktaPaneler = (
           submittable: !filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) || filtrerteAksjonspunkter.some((ap) => ap.kanLoses),
           harApneAksjonspunkter,
           alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(behandling, filtrerteAksjonspunkter),
-          ...panel.getData(utvidetEkstraPanelData),
+          ...panelDef.getData(utvidetEkstraPanelData),
         },
       };
     });
@@ -54,15 +51,15 @@ export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPane
     return index !== -1 ? faktaPaneler[index] : faktaPaneler[0];
   }
   if (valgtFaktaPanelKode) {
-    return faktaPaneler.find((i) => i.urlCode === valgtFaktaPanelKode);
+    return faktaPaneler.find((i) => i.panelDef.getUrlKode() === valgtFaktaPanelKode);
   }
   return faktaPaneler.length > 0 ? faktaPaneler[0] : undefined;
 };
 
 export const formaterPanelerForSidemeny = (intl, faktaPaneler: FaktaPanelUtledet[], valgtFaktaPanelKode: string):
 FaktaPanelFaktaPanelMenyRadMeny[] => faktaPaneler.map((panel) => ({
-  tekst: intl.formatMessage({ id: panel.textCode }),
-  erAktiv: panel.urlCode === valgtFaktaPanelKode,
+  tekst: intl.formatMessage({ id: panel.panelDef.getTekstKode() }),
+  erAktiv: panel.panelDef.getUrlKode() === valgtFaktaPanelKode,
   harAksjonspunkt: panel.harApneAksjonspunkter,
 }));
 

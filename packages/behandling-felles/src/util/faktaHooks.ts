@@ -9,12 +9,12 @@ import {
 } from './faktaUtils';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import Rettigheter from '../types/rettigheterTsType';
-import FaktaPanelDefinisjon from '../types/faktaPanelDefinisjonTsType';
+import FaktaPanelDef from './FaktaPanelDef';
 import FaktaPanelUtledet from '../types/faktaPanelUtledetTsType';
 import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
 
 const useFaktaPaneler = (
-  faktaPanelDefinisjoner: FaktaPanelDefinisjon[],
+  faktaPanelDefinisjoner: FaktaPanelDef[],
   panelData: {},
   behandling: Behandling,
   rettigheter: Rettigheter,
@@ -29,7 +29,7 @@ const useFaktaPaneler = (
 
   const valgtPanel = useMemo(() => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode), [behandling.versjon, valgtFaktaPanelKode]);
 
-  const urlCode = valgtPanel ? valgtPanel.urlCode : undefined;
+  const urlCode = valgtPanel ? valgtPanel.panelDef.getUrlKode() : undefined;
   const formaterteFaktaPaneler = useMemo(() => formaterPanelerForSidemeny(intl, faktaPaneler, urlCode),
     [behandling.versjon, urlCode]);
 
@@ -44,7 +44,7 @@ const useFaktaAksjonspunktNotifikator = (
   useEffect(() => {
     const panelMedApentAp = faktaPaneler.find((p) => p.harApneAksjonspunkter);
     if (panelMedApentAp) {
-      setApentFaktaPanel({ urlCode: panelMedApentAp.urlCode, textCode: panelMedApentAp.textCode });
+      setApentFaktaPanel({ urlCode: panelMedApentAp.panelDef.getUrlKode(), textCode: panelMedApentAp.panelDef.getTekstKode() });
     } else {
       setApentFaktaPanel(undefined);
     }
@@ -61,7 +61,7 @@ const useCallbacks = (
   behandlingApi: {[name: string]: EndpointOperations},
   dispatch: Dispatch,
 ) => {
-  const velgFaktaPanelCallback = useCallback((index) => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].urlCode),
+  const velgFaktaPanelCallback = useCallback((index) => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].panelDef.getUrlKode()),
     [behandling.versjon, valgtProsessSteg]);
 
   const bekreftAksjonspunktCallback = useCallback(getBekreftAksjonspunktCallback(dispatch, fagsak, behandling,
