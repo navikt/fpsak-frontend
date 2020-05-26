@@ -22,6 +22,7 @@ interface OwnProps {
   rettigheter: Rettigheter;
   hasFetchError: boolean;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
+  valgtFaktaSteg?: string;
   dispatch: Dispatch;
 }
 
@@ -34,6 +35,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   alleKodeverk,
   fpsakKodeverk,
   oppdaterProsessStegOgFaktaPanelIUrl,
+  valgtFaktaSteg,
   hasFetchError,
   dispatch,
 }) => {
@@ -46,7 +48,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvTilbakekrevingPaneler,
-    behandling, rettigheter, aksjonspunkter, hasFetchError, 'default', intl);
+    behandling, rettigheter, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, 'default', overstyringApCodes, tilbakekrevingApi, dispatch);

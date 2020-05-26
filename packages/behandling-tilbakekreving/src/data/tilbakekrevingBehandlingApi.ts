@@ -22,6 +22,9 @@ export const TilbakekrevingBehandlingApiKeys = {
   BEREGNE_BELØP: 'BEREGNE_BELØP',
   TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
   PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
+  VERGE: 'VERGE',
+  VERGE_OPPRETT: 'VERGE_OPPRETT',
+  VERGE_FJERN: 'VERGE_FJERN',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -46,6 +49,9 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('sett-behandling-pa-vent', TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD)
   .withRel('endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
   .withRel('lagre-aksjonspunkter', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
+  .withRel('soeker-verge', TilbakekrevingBehandlingApiKeys.VERGE)
+  .withRel('opprett-verge', TilbakekrevingBehandlingApiKeys.VERGE_OPPRETT, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
+  .withRel('fjern-verge', TilbakekrevingBehandlingApiKeys.VERGE_FJERN, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
 
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV)
 

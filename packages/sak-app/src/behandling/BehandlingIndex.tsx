@@ -239,6 +239,7 @@ export class BehandlingIndex extends Component<OwnProps> {
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               harApenRevurdering={fagsakBehandlingerInfo
                 .some((b) => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== behandlingStatus.AVSLUTTET)}
+              valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
             />
           </ErrorBoundary>

@@ -93,7 +93,7 @@ RegistrereVergeInfoPanelImpl.defaultProps = {
 const buildInitialValues = createSelector([
   (ownProps) => ownProps.verge,
   (ownProps) => ownProps.aksjonspunkter], (verge, aksjonspunkter) => ({
-  ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
+  ...FaktaBegrunnelseTextField.buildInitialValuesForVerge(aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0], verge),
   ...RegistrereVergeFaktaForm.buildInitialValues(verge || {}),
 }));
 

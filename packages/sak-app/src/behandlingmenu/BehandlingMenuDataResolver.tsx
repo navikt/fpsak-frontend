@@ -18,7 +18,8 @@ import {
 } from './duck';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
 
-const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
+const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING,
+  BehandlingType.TILBAKEKREVING, BehandlingType.TILBAKEKREVING_REVURDERING];
 const menyDataBehandlingValgt = [fpsakApi.MENYHANDLING_RETTIGHETER];
 const menyData = [];
 

@@ -37,16 +37,16 @@ const FaktaBegrunnelseTextField = ({
   return (
     <RawIntlProvider value={intl}>
       {(isSubmittable || hasBegrunnelse) && (
-      <div className={styles.begrunnelseTextField}>
-        <TextAreaField
-          name={name}
-          label={isReadOnly ? '' : textAreaLabel}
-          validate={[required, minLength3, maxLength1500, hasValidText]}
-          textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
-          maxLength={1500}
-          readOnly={isReadOnly}
-        />
-      </div>
+        <div className={styles.begrunnelseTextField}>
+          <TextAreaField
+            name={name}
+            label={isReadOnly ? '' : textAreaLabel}
+            validate={[required, minLength3, maxLength1500, hasValidText]}
+            textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
+            maxLength={1500}
+            readOnly={isReadOnly}
+          />
+        </div>
       )}
     </RawIntlProvider>
   );
@@ -76,6 +76,10 @@ const getBegrunnelse = (aksjonspunkt) => {
 
 FaktaBegrunnelseTextField.buildInitialValues = (aksjonspunkt, begrunnelseFieldName = 'begrunnelse') => ({
   [begrunnelseFieldName]: decodeHtmlEntity(getBegrunnelse(aksjonspunkt)),
+});
+
+FaktaBegrunnelseTextField.buildInitialValuesForVerge = (aksjonspunkt, verge, begrunnelseFieldName = 'begrunnelse') => ({
+  [begrunnelseFieldName]: decodeHtmlEntity(verge ? verge.begrunnelse : getBegrunnelse(aksjonspunkt, verge)),
 });
 
 FaktaBegrunnelseTextField.transformValues = (values, name = 'begrunnelse') => ({
