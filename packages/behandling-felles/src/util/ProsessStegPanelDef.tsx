@@ -38,7 +38,7 @@ export abstract class ProsessStegPanelerDef {
   public finnVilkarForSteg = (vilkar: Vilkar[]) => vilkar
     .filter((v) => this.getVilkarKoder().includes(v.vilkarType.kode));
 
-  private skalBrukeOverstyringspanel = (aksjonspunkter: Aksjonspunkt[]) => this.getOverstyringspanelDef()
+  public skalBrukeOverstyringspanel = (aksjonspunkter: Aksjonspunkt[]) => this.getOverstyringspanelDef()
     && !this.getAksjonspunktKoder().some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac))
 
   public skalVisePanel = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => {

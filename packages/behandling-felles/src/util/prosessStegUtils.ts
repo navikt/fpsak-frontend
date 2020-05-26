@@ -45,7 +45,10 @@ const lagPanelData = (
     aksjonspunkter: Aksjonspunkt[];
     vilkar: Vilkar[];
   },
-) => (panelDef: ProsessStegPanelerDef) => {
+) => (panelDefinisjon: ProsessStegPanelerDef) => {
+  const skalBrukeOverstyringspanel = panelDefinisjon.skalBrukeOverstyringspanel(dataForUtledingAvPanel.aksjonspunkter);
+  const panelDef = skalBrukeOverstyringspanel ? panelDefinisjon.getOverstyringspanelDef() : panelDefinisjon;
+
   const aksjonspunkterForSteg = panelDef.finnAksjonspunkterForSteg(dataForUtledingAvPanel.aksjonspunkter);
   const vilkarForSteg = panelDef.finnVilkarForSteg(dataForUtledingAvPanel.vilkar);
 
