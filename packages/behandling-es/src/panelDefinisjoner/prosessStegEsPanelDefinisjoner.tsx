@@ -187,7 +187,7 @@ const prosessStegPanelDefinisjoner = [{
     endpoints: [api.TILBAKEKREVINGVALG, api.SEND_VARSEL_OM_REVURDERING, api.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING, api.MEDLEMSKAP],
     renderComponent: (props) => <VedtakProsessIndex {...props} />,
     getData: ({
-      previewCallback, rettigheter, aksjonspunkter, vilkar, beregningresultatEngangsstonad, simuleringResultat,
+      previewCallback, aksjonspunkter, vilkar, beregningresultatEngangsstonad, simuleringResultat,
     }) => ({
       previewCallback,
       aksjonspunkter,
@@ -195,7 +195,6 @@ const prosessStegPanelDefinisjoner = [{
       beregningresultatEngangsstonad,
       simuleringResultat,
       ytelseTypeKode: fagsakYtelseType.ENGANGSSTONAD,
-      kanOverstyre: rettigheter.kanOverstyreAccess.isEnabled,
     }),
     showComponent: () => true,
     overrideStatus: ({

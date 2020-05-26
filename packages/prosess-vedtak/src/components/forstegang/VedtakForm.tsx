@@ -68,7 +68,6 @@ interface OwnProps {
   begrunnelse?: string;
   brødtekst?: string;
   overskrift?: string;
-  kanOverstyre?: boolean;
   ytelseTypeKode: string;
   resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
@@ -90,7 +89,6 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
   begrunnelse,
   brødtekst,
   overskrift,
-  kanOverstyre,
   ytelseTypeKode,
   resultatstruktur,
   alleKodeverk,
@@ -126,7 +124,6 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
         vedtakstatusTekst={vedtakstatusTekst}
         aksjonspunkter={aksjonspunkter}
         readOnly={readOnly}
-        kanOverstyre={kanOverstyre}
         previewAutomatiskBrev={previewDefaultBrev}
         previewOverstyrtBrev={previewOverstyrtBrev}
         tilbakekrevingtekst={tilbakekrevingtekst}
