@@ -10,15 +10,15 @@ import {
 
 import FagsakInfo from '../types/fagsakInfoTsType';
 import Rettigheter from '../types/rettigheterTsType';
-import ProsessStegDefinisjon from '../types/prosessStegDefinisjonTsType';
 import ProsessStegData from '../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 import {
   utledProsessStegPaneler, finnValgtPanel, formaterPanelerForProsessmeny, getBekreftAksjonspunktCallback,
 } from './prosessStegUtils';
+import { ProsessStegPanelDef } from './ProsessStegPanelDef';
 
 const useProsessStegPaneler = (
-  prosessStegPanelDefinisjoner: ProsessStegDefinisjon[],
+  prosessStegPanelDefinisjoner: ProsessStegPanelDef[],
   panelData: {},
   fagsak: FagsakInfo,
   rettigheter: Rettigheter,
