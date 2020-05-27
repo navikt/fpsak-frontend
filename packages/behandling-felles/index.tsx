@@ -14,9 +14,9 @@ export { default as readOnlyUtils } from './src/util/readOnlyUtils';
 export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerknaderFraBeslutter';
 export { default as faktaHooks } from './src/util/fakta/faktaHooks';
 export { default as FaktaPanelDef } from './src/util/fakta/FaktaPanelDef';
-export { default as prosessStegHooks } from './src/util/prosessStegHooks';
-export { ProsessStegPanelDef, ProsessStegPanelerDef } from './src/util/ProsessStegPanelDef';
-export { default as ProsessStegOverstyringPanelDef } from './src/util/ProsessStegOverstyringPanelDef';
+export { default as prosessStegHooks } from './src/util/prosessSteg/prosessStegHooks';
+export { ProsessStegPanelDef, ProsessStegPanelerDef } from './src/util/prosessSteg/ProsessStegPanelDef';
+export { default as ProsessStegOverstyringPanelDef } from './src/util/prosessSteg/ProsessStegOverstyringPanelDef';
 
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
 export { default as Rettigheter } from './src/types/rettigheterTsType';

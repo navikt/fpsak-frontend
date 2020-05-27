@@ -13,7 +13,7 @@ import InngangsvilkarPanel from './InngangsvilkarPanel';
 import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBehandlingData';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
-import prosessStegHooks from '../util/prosessStegHooks';
+import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
 
 interface OwnProps {
   fagsak: FagsakInfo;

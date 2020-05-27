@@ -10,11 +10,11 @@ import {
   Behandling, Aksjonspunkt, Vilkar,
 } from '@fpsak-frontend/types';
 
-import readOnlyUtils from './readOnlyUtils';
-import FagsakInfo from '../types/fagsakInfoTsType';
-import ProsessStegData from '../types/prosessStegDataTsType';
-import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
-import Rettigheter from '../types/rettigheterTsType';
+import readOnlyUtils from '../readOnlyUtils';
+import FagsakInfo from '../../types/fagsakInfoTsType';
+import ProsessStegData from '../../types/prosessStegDataTsType';
+import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
+import Rettigheter from '../../types/rettigheterTsType';
 import { ProsessStegPanelDef, ProsessStegPanelerDef } from './ProsessStegPanelDef';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';

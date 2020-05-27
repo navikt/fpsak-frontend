@@ -8,10 +8,10 @@ import {
   Behandling, Aksjonspunkt, Vilkar,
 } from '@fpsak-frontend/types';
 
-import FagsakInfo from '../types/fagsakInfoTsType';
-import Rettigheter from '../types/rettigheterTsType';
-import ProsessStegData from '../types/prosessStegDataTsType';
-import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
+import FagsakInfo from '../../types/fagsakInfoTsType';
+import Rettigheter from '../../types/rettigheterTsType';
+import ProsessStegData from '../../types/prosessStegDataTsType';
+import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import {
   utledProsessStegPaneler, finnValgtPanel, formaterPanelerForProsessmeny, getBekreftAksjonspunktCallback,
 } from './prosessStegUtils';
