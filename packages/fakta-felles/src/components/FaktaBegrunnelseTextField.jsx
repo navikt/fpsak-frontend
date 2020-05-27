@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  createIntl, createIntlCache, RawIntlProvider,
-} from 'react-intl';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import {
   decodeHtmlEntity, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -76,10 +74,6 @@ const getBegrunnelse = (aksjonspunkt) => {
 
 FaktaBegrunnelseTextField.buildInitialValues = (aksjonspunkt, begrunnelseFieldName = 'begrunnelse') => ({
   [begrunnelseFieldName]: decodeHtmlEntity(getBegrunnelse(aksjonspunkt)),
-});
-
-FaktaBegrunnelseTextField.buildInitialValuesForVerge = (aksjonspunkt, verge, begrunnelseFieldName = 'begrunnelse') => ({
-  [begrunnelseFieldName]: decodeHtmlEntity(verge && verge.begrunnelse ? verge.begrunnelse : getBegrunnelse(aksjonspunkt)),
 });
 
 FaktaBegrunnelseTextField.transformValues = (values, name = 'begrunnelse') => ({
