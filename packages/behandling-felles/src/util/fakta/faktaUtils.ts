@@ -1,16 +1,13 @@
 import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 
-import readOnlyUtils from './readOnlyUtils';
-import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
-import FagsakInfo from '../types/fagsakInfoTsType';
-import Rettigheter from '../types/rettigheterTsType';
+import FagsakInfo from '../../types/fagsakInfoTsType';
+import Rettigheter from '../../types/rettigheterTsType';
 import FaktaPanelDef from './FaktaPanelDef';
-import FaktaPanelUtledet from '../types/faktaPanelUtledetTsType';
-import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
+import FaktaPanelMenyRad from '../../types/faktaPanelMenyRadTsType';
+import FaktaPanelUtledet from './FaktaPanelUtledet';
 
 export const DEFAULT_FAKTA_KODE = 'default';
 export const DEFAULT_PROSESS_STEG_KODE = 'default';
@@ -21,46 +18,30 @@ export const utledFaktaPaneler = (
   behandling: Behandling,
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
-  hasFetchError: boolean,
 ): FaktaPanelUtledet[] => {
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   return faktaPanelDefinisjoner
     .filter((panelDef) => panelDef.skalVisePanel(apCodes, utvidetEkstraPanelData))
-    .map((panelDef) => {
-      const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panelDef.getAksjonspunktKoder().includes(ap.definisjon.kode));
-      const harApneAksjonspunkter = filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
-      return {
-        panelDef,
-        harApneAksjonspunkter,
-        komponentData: {
-          aksjonspunkter: filtrerteAksjonspunkter,
-          readOnly: readOnlyUtils.erReadOnly(behandling, filtrerteAksjonspunkter, [], rettigheter, hasFetchError),
-          submittable: !filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) || filtrerteAksjonspunkter.some((ap) => ap.kanLoses),
-          harApneAksjonspunkter,
-          alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(behandling, filtrerteAksjonspunkter),
-          ...panelDef.getData(utvidetEkstraPanelData),
-        },
-      };
-    });
+    .map((panelDef) => new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter));
 };
 
 export const finnValgtPanel = (faktaPaneler: FaktaPanelUtledet[], valgtFaktaPanelKode: string): FaktaPanelUtledet => {
   if (valgtFaktaPanelKode === DEFAULT_FAKTA_KODE) {
-    const index = faktaPaneler.findIndex((i) => i.harApneAksjonspunkter);
+    const index = faktaPaneler.findIndex((i) => i.getHarApneAksjonspunkter());
     return index !== -1 ? faktaPaneler[index] : faktaPaneler[0];
   }
   if (valgtFaktaPanelKode) {
-    return faktaPaneler.find((i) => i.panelDef.getUrlKode() === valgtFaktaPanelKode);
+    return faktaPaneler.find((i) => i.getUrlKode() === valgtFaktaPanelKode);
   }
   return faktaPaneler.length > 0 ? faktaPaneler[0] : undefined;
 };
 
 export const formaterPanelerForSidemeny = (intl, faktaPaneler: FaktaPanelUtledet[], valgtFaktaPanelKode: string):
-FaktaPanelFaktaPanelMenyRadMeny[] => faktaPaneler.map((panel) => ({
-  tekst: intl.formatMessage({ id: panel.panelDef.getTekstKode() }),
-  erAktiv: panel.panelDef.getUrlKode() === valgtFaktaPanelKode,
-  harAksjonspunkt: panel.harApneAksjonspunkter,
+FaktaPanelMenyRad[] => faktaPaneler.map((panel) => ({
+  tekst: intl.formatMessage({ id: panel.getTekstKode() }),
+  erAktiv: panel.getUrlKode() === valgtFaktaPanelKode,
+  harAksjonspunkt: panel.getHarApneAksjonspunkter(),
 }));
 
 export const getBekreftAksjonspunktCallback = (

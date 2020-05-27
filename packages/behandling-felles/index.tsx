@@ -12,9 +12,9 @@ export { default as FatterVedtakStatusModal } from './src/components/vedtak/Fatt
 
 export { default as readOnlyUtils } from './src/util/readOnlyUtils';
 export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerknaderFraBeslutter';
-export { default as faktaHooks } from './src/util/faktaHooks';
+export { default as faktaHooks } from './src/util/fakta/faktaHooks';
+export { default as FaktaPanelDef } from './src/util/fakta/FaktaPanelDef';
 export { default as prosessStegHooks } from './src/util/prosessStegHooks';
-export { default as FaktaPanelDef } from './src/util/FaktaPanelDef';
 export { ProsessStegPanelDef, ProsessStegPanelerDef } from './src/util/ProsessStegPanelDef';
 export { default as ProsessStegOverstyringPanelDef } from './src/util/ProsessStegOverstyringPanelDef';
 

@@ -18,6 +18,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import FaktaPanelDef from './FaktaPanelDef';
 import faktaHooks from './faktaHooks';
+import FaktaPanelUtledet from './FaktaPanelUtledet';
 import { DEFAULT_FAKTA_KODE } from './faktaUtils';
 
 const HookWrapper = ({ callback }) => <div {...callback()} />;
@@ -88,32 +89,28 @@ describe('<faktaHooks>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const hasFetchError = false;
     const valgtFaktaSteg = 'default';
     const intl = { formatMessage: (data) => data.id };
 
     const wrapper = testHook(() => faktaHooks.useFaktaPaneler([panelDef], ekstraPanelData, behandling as Behandling, rettigheter,
-      aksjonspunkter, hasFetchError, valgtFaktaSteg, intl));
+      aksjonspunkter, valgtFaktaSteg, intl));
     const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 
-    const paneler = [{
-      panelDef,
+    expect(faktaPaneler[0].getPanelDef()).to.eql(panelDef);
+    expect(faktaPaneler[0].getHarApneAksjonspunkter()).is.true;
+    expect(faktaPaneler[0].getKomponentData(rettigheter, ekstraPanelData, false)).to.eql({
+      aksjonspunkter: [aksjonspunkter[0]],
+      readOnly: false,
+      submittable: true,
       harApneAksjonspunkter: true,
-      komponentData: {
-        aksjonspunkter: [aksjonspunkter[0]],
-        readOnly: false,
-        submittable: true,
-        harApneAksjonspunkter: true,
-        alleMerknaderFraBeslutter: {
-          [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
-        },
-        personopplysninger: ekstraPanelData.personopplysninger,
-        inntektArbeidYtelse: ekstraPanelData.inntektArbeidYtelse,
+      alleMerknaderFraBeslutter: {
+        [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
       },
-    }];
+      personopplysninger: ekstraPanelData.personopplysninger,
+      inntektArbeidYtelse: ekstraPanelData.inntektArbeidYtelse,
+    });
 
-    expect(faktaPaneler).to.eql(paneler);
-    expect(valgtPanel).to.eql(paneler[0]);
+    expect(valgtPanel.getUrlKode()).to.eql(faktaPaneler[0].getUrlKode());
     expect(formaterteFaktaPaneler).to.eql([{
       erAktiv: true,
       harAksjonspunkt: true,
@@ -130,21 +127,8 @@ describe('<faktaHooks>', () => {
     }];
 
     const panelDef = new TestFaktaPanelDef();
-    const paneler = [{
-      panelDef,
-      harApneAksjonspunkter: true,
-      komponentData: {
-        aksjonspunkter: [aksjonspunkter[0]],
-        readOnly: false,
-        submittable: true,
-        harApneAksjonspunkter: true,
-        alleMerknaderFraBeslutter: {
-          [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
-        },
-        personopplysninger: {},
-        inntektArbeidYtelse: {},
-      },
-    }];
+
+    const panelUtledet = new FaktaPanelUtledet(panelDef, aksjonspunkter, behandling);
 
     const dispatch = () => Promise.resolve();
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
@@ -157,7 +141,7 @@ describe('<faktaHooks>', () => {
       },
     };
 
-    const wrapper = testHook(() => faktaHooks.useCallbacks(paneler, fagsak, behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+    const wrapper = testHook(() => faktaHooks.useCallbacks([panelUtledet], fagsak, behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg, overstyringApCodes, behandlingApi as {[name: string]: EndpointOperations}, dispatch as Dispatch));
     const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = Object.values(wrapper.find('div').props()).reduce((acc, value) => [...acc, value], []);
 

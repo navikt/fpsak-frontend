@@ -52,7 +52,7 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
-    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, behandling, rettigheter, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, behandling, rettigheter, aksjonspunkter, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 
@@ -63,15 +63,15 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
     return (
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingData
-          key={valgtPanel.panelDef.getUrlKode()}
+          key={valgtPanel.getUrlKode()}
           fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-          endpoints={valgtPanel.panelDef.getEndepunkter()}
-          render={(dataProps) => valgtPanel.panelDef.getKomponent({
+          endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+          render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
             ...dataProps,
             behandling,
             alleKodeverk,
             submitCallback: bekreftAksjonspunktCallback,
-            ...valgtPanel.komponentData,
+            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
           })}
         />
       </FaktaPanel>

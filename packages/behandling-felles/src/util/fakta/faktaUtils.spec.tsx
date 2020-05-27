@@ -16,11 +16,12 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import FaktaPanelDef from './FaktaPanelDef';
+import FaktaPanelUtledet from './FaktaPanelUtledet';
 import {
   utledFaktaPaneler, finnValgtPanel, formaterPanelerForSidemeny, getBekreftAksjonspunktCallback, DEFAULT_FAKTA_KODE, DEFAULT_PROSESS_STEG_KODE,
 } from './faktaUtils';
 
-describe('<faktaPanelUtils>', () => {
+describe('<faktaUtils>', () => {
   const fagsak = {
     saksnummer: 123456,
     fagsakYtelseType: { kode: fagsakYtelseType.FORELDREPENGER, kodeverk: 'test' },
@@ -89,128 +90,107 @@ describe('<faktaPanelUtils>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const hasFetchError = false;
 
     const panelDef = new ArbeidsforholdFaktaPanelDef();
 
-    const faktaPaneler = utledFaktaPaneler([panelDef], ekstraPanelData, behandling as Behandling, rettigheter, aksjonspunkter, hasFetchError);
+    const faktaPaneler = utledFaktaPaneler([panelDef], ekstraPanelData, behandling as Behandling, rettigheter, aksjonspunkter);
 
     expect(faktaPaneler).to.have.length(1);
-    expect(faktaPaneler[0]).to.eql({
-      panelDef,
+    expect(faktaPaneler[0].getPanelDef()).to.eql(panelDef);
+    expect(faktaPaneler[0].getHarApneAksjonspunkter()).is.true;
+    expect(faktaPaneler[0].getKomponentData(rettigheter, ekstraPanelData, false)).to.eql({
+      aksjonspunkter: [aksjonspunkter[0]],
+      readOnly: false,
+      submittable: true,
       harApneAksjonspunkter: true,
-      komponentData: {
-        aksjonspunkter: [aksjonspunkter[0]],
-        readOnly: false,
-        submittable: true,
-        harApneAksjonspunkter: true,
-        alleMerknaderFraBeslutter: {
-          [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
-        },
-        personopplysninger: ekstraPanelData.personopplysninger,
-        inntektArbeidYtelse: ekstraPanelData.inntektArbeidYtelse,
+      alleMerknaderFraBeslutter: {
+        [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
       },
+      personopplysninger: ekstraPanelData.personopplysninger,
+      inntektArbeidYtelse: ekstraPanelData.inntektArbeidYtelse,
     });
   });
-
-  const komponentData = {
-    aksjonspunkter: [],
-    readOnly: false,
-    submittable: true,
-    harApneAksjonspunkter: true,
-    alleMerknaderFraBeslutter: {
-      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
-    },
-    personopplysninger: {},
-    inntektArbeidYtelse: {},
-  };
 
   it('skal finne ut at valgt faktapanel er panelet med åpent aksjonspunkt', () => {
     const panelDef = new ArbeidsforholdFaktaPanelDef();
     const panelDef2 = new TestFaktaPanelDef();
 
-    const paneler = [{
-      panelDef,
-      harApneAksjonspunkter: false,
-      komponentData,
-    }, {
-      panelDef: panelDef2,
-      harApneAksjonspunkter: true,
-      komponentData,
+    const aksjonspunkter = [{
+      definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
+      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+      kanLoses: true,
+      erAktivt: true,
     }];
+
+    const paneler = [
+      new FaktaPanelUtledet(panelDef2, behandling, []),
+      new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter),
+    ];
     const valgtFaktaPanelKode = DEFAULT_FAKTA_KODE;
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.panelDef.getUrlKode()).to.eql(paneler[1].panelDef.getUrlKode());
+    expect(valgtPanel.getUrlKode()).to.eql(paneler[1].getUrlKode());
   });
 
   it('skal finne ut at valgt faktapanel er første panel når det ikke finnes åpne aksjonspunkter', () => {
     const panelDef = new ArbeidsforholdFaktaPanelDef();
     const panelDef2 = new TestFaktaPanelDef();
-    const paneler = [{
-      panelDef,
-      harApneAksjonspunkter: false,
-      komponentData,
-    }, {
-      panelDef: panelDef2,
-      harApneAksjonspunkter: false,
-      komponentData,
-    }];
+    const paneler = [
+      new FaktaPanelUtledet(panelDef, behandling, []),
+      new FaktaPanelUtledet(panelDef2, behandling, []),
+    ];
 
     const valgtFaktaPanelKode = DEFAULT_FAKTA_KODE;
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.panelDef.getUrlKode()).to.eql(paneler[0].panelDef.getUrlKode());
+    expect(valgtPanel.getUrlKode()).to.eql(paneler[0].getUrlKode());
   });
 
   it('skal finne faktapanel som er satt i URL', () => {
     const panelDef = new ArbeidsforholdFaktaPanelDef();
     const panelDef2 = new TestFaktaPanelDef();
-    const paneler = [{
-      panelDef,
-      harApneAksjonspunkter: false,
-      komponentData,
-    }, {
-      panelDef: panelDef2,
-      harApneAksjonspunkter: false,
-      komponentData,
-    }];
-    const valgtFaktaPanelKode = paneler[1].panelDef.getUrlKode();
+    const paneler = [
+      new FaktaPanelUtledet(panelDef, behandling, []),
+      new FaktaPanelUtledet(panelDef2, behandling, []),
+    ];
+
+    const valgtFaktaPanelKode = paneler[1].getUrlKode();
 
     const valgtPanel = finnValgtPanel(paneler, valgtFaktaPanelKode);
 
-    expect(valgtPanel.panelDef.getUrlKode()).to.eql(paneler[1].panelDef.getUrlKode());
+    expect(valgtPanel.getUrlKode()).to.eql(paneler[1].getUrlKode());
   });
 
   it('skal formatere paneler for sidemeny', () => {
     const panelDef = new ArbeidsforholdFaktaPanelDef();
     const panelDef2 = new TestFaktaPanelDef();
-    const paneler = [{
-      panelDef,
-      harApneAksjonspunkter: false,
-      komponentData,
-    }, {
-      panelDef: panelDef2,
-      harApneAksjonspunkter: true,
-      komponentData,
+    const aksjonspunkter = [{
+      definisjon: { kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, kodeverk: 'BEHANDLING_DEF' },
+      status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
+      kanLoses: true,
+      erAktivt: true,
     }];
+    const paneler = [
+      new FaktaPanelUtledet(panelDef, behandling, aksjonspunkter),
+      new FaktaPanelUtledet(panelDef2, behandling, []),
+    ];
     const intl = {
       formatMessage: (o) => o.id,
     };
-    const valgtFaktaPanelKode = paneler[1].panelDef.getUrlKode();
+    const valgtFaktaPanelKode = paneler[0].getUrlKode();
 
     const formatertePaneler = formaterPanelerForSidemeny(intl, paneler, valgtFaktaPanelKode);
 
     expect(formatertePaneler).to.eql([{
-      tekst: paneler[0].panelDef.getTekstKode(),
-      erAktiv: false,
-      harAksjonspunkt: false,
-    }, {
-      tekst: paneler[1].panelDef.getTekstKode(),
+      tekst: paneler[0].getTekstKode(),
       erAktiv: true,
       harAksjonspunkt: true,
+    }, {
+      tekst: paneler[1].getTekstKode(),
+      erAktiv: false,
+      harAksjonspunkt: false,
     }]);
   });
 
