@@ -79,7 +79,7 @@ FaktaBegrunnelseTextField.buildInitialValues = (aksjonspunkt, begrunnelseFieldNa
 });
 
 FaktaBegrunnelseTextField.buildInitialValuesForVerge = (aksjonspunkt, verge, begrunnelseFieldName = 'begrunnelse') => ({
-  [begrunnelseFieldName]: decodeHtmlEntity(verge ? verge.begrunnelse : getBegrunnelse(aksjonspunkt)),
+  [begrunnelseFieldName]: decodeHtmlEntity(verge && verge.begrunnelse ? verge.begrunnelse : getBegrunnelse(aksjonspunkt)),
 });
 
 FaktaBegrunnelseTextField.transformValues = (values, name = 'begrunnelse') => ({

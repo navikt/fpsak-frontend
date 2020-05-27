@@ -25,7 +25,7 @@ import {
   getBehandlingVersjon,
   getBehandlingSprak,
   getUrlBehandlingId,
-  getBehandlingType, harTilbakekrevingVerge,
+  getBehandlingType, finnesVerge,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
@@ -127,7 +127,7 @@ const mapStateToProps = (state) => ({
   alleKodeverk: getAlleFpSakKodeverk(state),
   sprakkode: getBehandlingSprak(state),
   fagsak: getSelectedFagsak(state),
-  harVerge: harTilbakekrevingVerge(state),
+  harVerge: finnesVerge(state),
 });
 
 export default trackRouteParam({

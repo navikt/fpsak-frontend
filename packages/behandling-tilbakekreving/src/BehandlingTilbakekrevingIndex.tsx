@@ -15,7 +15,7 @@ import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
 import FetchedData from './types/fetchedDataTsType';
 
 const tilbakekrevingData = [tilbakekrevingApi.AKSJONSPUNKTER, tilbakekrevingApi.FEILUTBETALING_FAKTA,
-  tilbakekrevingApi.VERGE, tilbakekrevingApi.PERIODER_FORELDELSE, tilbakekrevingApi.BEREGNINGSRESULTAT];
+  tilbakekrevingApi.PERIODER_FORELDELSE, tilbakekrevingApi.BEREGNINGSRESULTAT];
 
 interface OwnProps {
   behandlingId: number;
