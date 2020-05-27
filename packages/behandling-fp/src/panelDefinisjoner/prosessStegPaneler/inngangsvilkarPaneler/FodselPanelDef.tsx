@@ -4,10 +4,9 @@ import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelerDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../../../data/fpBehandlingApi';
-import OverstyringPanelDef from '../overstyring/OverstyringPanelDef';
 
 class FodselPanelDef extends ProsessStegPanelerDef {
   getId = () => 'FODSEL'
@@ -39,7 +38,7 @@ class FodselPanelDef extends ProsessStegPanelerDef {
 
   getData = () => ({ ytelseTypeKode: fagsakYtelseType.FORELDREPENGER })
 
-  getOverstyringspanelDef = () => new OverstyringPanelDef(
+  getOverstyringspanelDef = () => new ProsessStegOverstyringPanelDef(
     this,
     aksjonspunktCodes.OVERSTYR_FODSELSVILKAR,
     aksjonspunktCodes.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR,

@@ -1,11 +1,10 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
-import OverstyringPanelDef from './overstyring/OverstyringPanelDef';
+import { ProsessStegPanelDef, ProsessStegPanelerDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
 class PanelDef extends ProsessStegPanelerDef {
-  overstyringDef = new OverstyringPanelDef(this);
+  overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getKomponent = (props) => this.overstyringDef.getKomponent(props)
 

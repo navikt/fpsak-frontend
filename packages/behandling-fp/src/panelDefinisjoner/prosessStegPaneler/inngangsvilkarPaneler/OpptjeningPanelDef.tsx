@@ -3,10 +3,9 @@ import React from 'react';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelerDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../../../data/fpBehandlingApi';
-import OverstyringPanelDef from '../overstyring/OverstyringPanelDef';
 
 class OpptjeningPanelDef extends ProsessStegPanelerDef {
   getId = () => 'OPPTJENINGSVILKARET'
@@ -36,7 +35,7 @@ class OpptjeningPanelDef extends ProsessStegPanelerDef {
     lovReferanse: vilkarForSteg[0].lovReferanse,
   })
 
-  getOverstyringspanelDef = () => new OverstyringPanelDef(
+  getOverstyringspanelDef = () => new ProsessStegOverstyringPanelDef(
     this,
     aksjonspunktCodes.OVERSTYRING_AV_OPPTJENINGSVILKARET,
   )

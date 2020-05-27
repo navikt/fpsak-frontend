@@ -3,10 +3,9 @@ import React from 'react';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelerDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../../../data/fpBehandlingApi';
-import OverstyringPanelDef from '../overstyring/OverstyringPanelDef';
 
 class AdopsjonPanelDef extends ProsessStegPanelerDef {
   getId = () => 'ADOPSJON'
@@ -37,7 +36,7 @@ class AdopsjonPanelDef extends ProsessStegPanelerDef {
 
   getData = ({ vilkarForSteg }) => ({ vilkar: vilkarForSteg })
 
-  getOverstyringspanelDef = () => new OverstyringPanelDef(
+  getOverstyringspanelDef = () => new ProsessStegOverstyringPanelDef(
     this,
     aksjonspunktCodes.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP,
   )

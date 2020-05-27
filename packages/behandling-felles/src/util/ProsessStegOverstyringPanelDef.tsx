@@ -3,7 +3,8 @@ import React from 'react';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
-import { ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+
+import { ProsessStegPanelerDef } from './ProsessStegPanelDef';
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
   const apKoder = aksjonspunkterForSteg.map((ap) => ap.definisjon.kode);
@@ -18,7 +19,7 @@ const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) => (vilkarTypeKod
   : avslagsarsaker[vilkarTypeKode]);
 
 
-class OverstyringPanelDef extends ProsessStegPanelerDef {
+class ProsessStegOverstyringPanelDef extends ProsessStegPanelerDef {
   overtyrtPanel: ProsessStegPanelerDef
 
   aksjonspunktKoder: string[]
@@ -54,4 +55,4 @@ class OverstyringPanelDef extends ProsessStegPanelerDef {
   getAksjonspunktKoder = () => this.aksjonspunktKoder;
 }
 
-export default OverstyringPanelDef;
+export default ProsessStegOverstyringPanelDef;
