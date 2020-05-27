@@ -3,8 +3,8 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';
 import tilbakekrevingApi from '../../data/tilbakekrevingBehandlingApi';
@@ -23,7 +23,7 @@ class PanelDef extends ProsessStegPanelerDef {
   }
 
   getAksjonspunktKoder = () => [
-    aksjonspunktCodes.FORESLA_VEDTAK,
+    aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK,
   ]
 
   getEndepunkter = () => [
@@ -33,7 +33,7 @@ class PanelDef extends ProsessStegPanelerDef {
   getData = ({ behandling, beregningsresultat, fetchPreviewVedtaksbrev }) => ({
     beregningsresultat,
     fetchPreviewVedtaksbrev,
-    aksjonspunktKodeForeslaVedtak: aksjonspunktCodes.FORESLA_VEDTAK,
+    aksjonspunktKodeForeslaVedtak: aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK,
     isBehandlingHenlagt: behandling.behandlingHenlagt,
   })
 }

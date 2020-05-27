@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
+import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -18,6 +18,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
+import { ProsessStegPanelDef, ProsessStegPanelerDef } from './ProsessStegPanelDef';
 import prosessStegHooks from './prosessStegHooks';
 
 const HookWrapper = ({ callback }) => <div data-values={callback()} />;
@@ -65,22 +66,35 @@ describe('<prosessStegHooks>', () => {
   }];
 
   it('skal utlede prosesstegpaneler, valgt panel og paneler formatert for meny', () => {
-    const prosessStegPanelDefinisjoner = [{
-      urlCode: bpc.OPPLYSNINGSPLIKT,
-      textCode: 'Behandlingspunkt.Opplysningsplikt',
-      panels: [{
-        aksjonspunkterCodes: [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU],
-        aksjonspunkterTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger', 'SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
-        vilkarCodes: [vilkarType.SOKERSOPPLYSNINGSPLIKT],
-        endpoints: [],
-        getData: ({ soknad }) => ({ soknad }),
-        showComponent: undefined,
-        renderComponent: (props) => <div {...props} />,
-        overrideStatus: undefined,
-        isOverridable: false,
-        overridePanel: undefined,
-      }],
-    }];
+    class PanelDef extends ProsessStegPanelerDef {
+      getKomponent = (props) => <div {...props} />
+
+      getAksjonspunktKoder = () => [
+        aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+      ]
+
+      getAksjonspunktTekstkoder = () => [
+        'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
+      ]
+
+      getVilkarKoder = () => [
+        vilkarType.SOKERSOPPLYSNINGSPLIKT,
+      ]
+
+      getData = ({ soknad }) => ({
+        soknad,
+      })
+    }
+
+    const panelDef = new PanelDef();
+
+    class OpplysningspliktProsessStegPanelDef extends ProsessStegPanelDef {
+      getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT
+
+      getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt'
+
+      getPanelDefinisjoner = () => [panelDef]
+    }
 
     const ekstraPanelData = {
       soknad: 'test_soknad',
@@ -104,7 +118,7 @@ describe('<prosessStegHooks>', () => {
 
     // ACT
     const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
-      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, rettigheter, behandling as Behandling,
+      [new OpplysningspliktProsessStegPanelDef()], ekstraPanelData, fagsak, rettigheter, behandling as Behandling,
       aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
     ));
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
@@ -135,7 +149,7 @@ describe('<prosessStegHooks>', () => {
           status: vilkarUtfallType.IKKE_VURDERT,
           vilkar,
         },
-        renderComponent: prosessStegPanelDefinisjoner[0].panels[0].renderComponent,
+        renderComponent: panelDef.getKomponent,
         status: vilkarUtfallType.IKKE_VURDERT,
       },
       ],

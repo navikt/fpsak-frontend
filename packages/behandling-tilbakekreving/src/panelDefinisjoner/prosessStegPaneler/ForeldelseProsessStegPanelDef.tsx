@@ -4,7 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { getAlleMerknaderFraBeslutter, ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
 
 class PanelDef extends ProsessStegPanelerDef {
@@ -15,7 +15,7 @@ class PanelDef extends ProsessStegPanelerDef {
   getOverstyrtStatus = ({ perioderForeldelse }) => (perioderForeldelse ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT);
 
   getAksjonspunktKoder = () => [
-    aksjonspunktCodes.VURDER_FORELDELSE,
+    aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE,
   ]
 
   getData = ({

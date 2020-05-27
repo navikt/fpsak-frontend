@@ -3,8 +3,8 @@ import React from 'react';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getAlleMerknaderFraBeslutter, ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import tilbakekrevingApi from '../../data/tilbakekrevingBehandlingApi';
 
@@ -14,7 +14,7 @@ class PanelDef extends ProsessStegPanelerDef {
   getOverstyrVisningAvKomponent = () => true
 
   getAksjonspunktKoder = () => [
-    aksjonspunktCodes.VURDER_TILBAKEKREVING,
+    aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
   ]
 
   getEndepunkter = () => [

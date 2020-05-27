@@ -8,7 +8,7 @@ import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/beha
 class PanelDef extends ProsessStegPanelerDef {
   getKomponent = (props) => <AnkeMerknaderProsessIndex {...props} />
 
-  getOverstyrVisningAvKomponent = ({ vilkarForSteg }) => vilkarForSteg.length > 0
+  getOverstyrVisningAvKomponent = () => true
 
   getAksjonspunktKoder = () => [
     aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
