@@ -6,8 +6,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelerDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
-import fpBehandlingApi from '../../../data/fpBehandlingApi';
-
 class FodselPanelDef extends ProsessStegPanelerDef {
   getId = () => 'FODSEL'
 
@@ -28,12 +26,6 @@ class FodselPanelDef extends ProsessStegPanelerDef {
   getVilkarKoder = () => [
     vilkarType.FODSELSVILKARET_MOR,
     vilkarType.FODSELSVILKARET_FAR,
-  ]
-
-  getEndepunkter = () => [
-    fpBehandlingApi.FAMILIEHENDELSE,
-    fpBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING,
-    fpBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING,
   ]
 
   getData = () => ({ ytelseTypeKode: fagsakYtelseType.FORELDREPENGER })

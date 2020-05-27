@@ -234,6 +234,7 @@ describe('<ForeldrepengerProsess>', () => {
     };
 
     const panel = wrapper.find(ProsessStegPanel);
+    console.log(panel.prop('valgtProsessSteg').panelData[0]);
     expect(omit(panel.prop('valgtProsessSteg').panelData[0], 'renderComponent')).is.eql(panelData);
     expect(omit(panel.prop('valgtProsessSteg'), 'panelData')).is.eql(data);
   });

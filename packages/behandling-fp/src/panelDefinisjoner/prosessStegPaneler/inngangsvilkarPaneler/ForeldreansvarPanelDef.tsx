@@ -5,8 +5,6 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
 
-import fpBehandlingApi from '../../../data/fpBehandlingApi';
-
 class ForeldreansvarPanelDef extends ProsessStegPanelerDef {
   getId = () => 'FORELDREANSVARSVILKARET'
 
@@ -31,12 +29,6 @@ class ForeldreansvarPanelDef extends ProsessStegPanelerDef {
   getVilkarKoder = () => [
     vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
     vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
-  ]
-
-  getEndepunkter = () => [
-    fpBehandlingApi.FAMILIEHENDELSE,
-    fpBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING,
-    fpBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING,
   ]
 
   getData = ({ vilkarForSteg }) => ({

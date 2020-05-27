@@ -7,8 +7,6 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
 
-import fpBehandlingApi from '../../data/fpBehandlingApi';
-
 class PanelDef extends ProsessStegPanelerDef {
   getKomponent = (props) => <SokersOpplysningspliktVilkarProsessIndex {...props} />
 
@@ -30,10 +28,6 @@ class PanelDef extends ProsessStegPanelerDef {
 
   getVilkarKoder = () => [
     vilkarType.SOKERSOPPLYSNINGSPLIKT,
-  ]
-
-  getEndepunkter = () => [
-    fpBehandlingApi.MEDLEMSKAP,
   ]
 
   getData = ({ soknad }) => ({

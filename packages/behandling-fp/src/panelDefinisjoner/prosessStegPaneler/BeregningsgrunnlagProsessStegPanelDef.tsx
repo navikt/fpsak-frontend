@@ -6,8 +6,6 @@ import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
 
-import fpBehandlingApi from '../../data/fpBehandlingApi';
-
 class PanelDef extends ProsessStegPanelerDef {
   getKomponent = (props) => <BeregningsgrunnlagProsessIndex {...props} />
 
@@ -23,12 +21,6 @@ class PanelDef extends ProsessStegPanelerDef {
 
   getVilkarKoder = () => [
     vilkarType.BEREGNINGSGRUNNLAGVILKARET,
-  ]
-
-  getEndepunkter = () => [
-    fpBehandlingApi.FAMILIEHENDELSE,
-    fpBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING,
-    fpBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING,
   ]
 
   getOverstyrVisningAvKomponent = () => true
