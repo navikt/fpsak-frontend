@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Behandling } from '@fpsak-frontend/types';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
   ProsessStegPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
@@ -87,9 +87,8 @@ describe('<ForeldrepengerProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -111,52 +110,51 @@ describe('<ForeldrepengerProsess>', () => {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Opplysningsplikt',
+      labelId: 'Behandlingspunkt.Opplysningsplikt',
       type: 'default',
     }, {
       isActive: true,
       isDisabled: false,
       isFinished: false,
-      label: 'Inngangsvilkår',
+      labelId: 'Behandlingspunkt.Inngangsvilkar',
       type: 'warning',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Beregning',
+      labelId: 'Behandlingspunkt.Beregning',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Uttak',
+      labelId: 'Behandlingspunkt.Uttak',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Tilkjent ytelse',
+      labelId: 'Behandlingspunkt.TilkjentYtelse',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Simulering',
+      labelId: 'Behandlingspunkt.Avregning',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Vedtak',
+      labelId: 'Behandlingspunkt.Vedtak',
       type: 'default',
     }]);
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -185,9 +183,8 @@ describe('<ForeldrepengerProsess>', () => {
   });
 
   it('skal vise prosesspanel for inngangsvilkår siden det er et åpent aksjonspunkt for adopsjon', () => {
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -232,9 +229,8 @@ describe('<ForeldrepengerProsess>', () => {
       soknad,
     };
 
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={vedtakBehandling as Behandling}
@@ -284,9 +280,8 @@ describe('<ForeldrepengerProsess>', () => {
       soknad,
     };
 
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -336,9 +331,8 @@ describe('<ForeldrepengerProsess>', () => {
       soknad,
     };
 
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -366,9 +360,8 @@ describe('<ForeldrepengerProsess>', () => {
 
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -397,9 +390,8 @@ describe('<ForeldrepengerProsess>', () => {
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
     const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -428,9 +420,8 @@ describe('<ForeldrepengerProsess>', () => {
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
     const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <ForeldrepengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <ForeldrepengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}

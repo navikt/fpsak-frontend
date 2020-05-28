@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
 import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -102,9 +102,8 @@ describe('<TilbakekrevingProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <TilbakekrevingProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <TilbakekrevingProsess
         data={{
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}
@@ -127,28 +126,27 @@ describe('<TilbakekrevingProsess>', () => {
       isActive: false,
       isDisabled: false,
       isFinished: true,
-      label: 'Foreldelse',
+      labelId: 'Behandlingspunkt.Foreldelse',
       type: 'success',
     }, {
       isActive: true,
       isDisabled: false,
       isFinished: false,
-      label: 'Tilbakekreving',
+      labelId: 'Behandlingspunkt.Tilbakekreving',
       type: 'warning',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Vedtak',
+      labelId: 'Behandlingspunkt.Vedtak',
       type: 'danger',
     }]);
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <TilbakekrevingProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <TilbakekrevingProsess
         data={{
           aksjonspunkter, perioderForeldelse, beregningsresultat, feilutbetalingFakta,
         }}

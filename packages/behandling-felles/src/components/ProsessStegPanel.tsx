@@ -22,7 +22,7 @@ interface OwnProps {
   valgtProsessSteg?: ProsessStegPanelUtledet;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;
-  lagringSideeffekterCallback: (aksjonspunktModeller: []) => any;
+  lagringSideeffekterCallback: (aksjonspunktModeller: [{ kode: string; isVedtakSubmission?: boolean; sendVarsel?: boolean }]) => any;
   behandlingApi: {[name: string]: EndpointOperations};
   dispatch: Dispatch;
 }

@@ -141,7 +141,7 @@ describe('<prosessStegUtils>', () => {
 
     // ACT
     const prosessStegPaneler = utledProsessStegPaneler([new OpplysningspliktProsessStegPanelDef()], ekstraPanelData,
-      toggleOverstyring, overstyrteAksjonspunktKoder, fagsak, behandling as Behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
+      toggleOverstyring, overstyrteAksjonspunktKoder, behandling as Behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError);
 
     expect(prosessStegPaneler).to.have.length(1);
     const panel = prosessStegPaneler[0];
@@ -216,19 +216,18 @@ describe('<prosessStegUtils>', () => {
       toggleOverstyring, kanOverstyreAccess, []);
     const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
 
-    const intl = { formatMessage: (data) => data.id };
-    const formatertePaneler = formaterPanelerForProsessmeny([utledetTestPanel, utledetPanel], intl, 'opplysningsplikt');
+    const formatertePaneler = formaterPanelerForProsessmeny([utledetTestPanel, utledetPanel], 'opplysningsplikt');
     expect(formatertePaneler).to.eql([{
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Behandlingspunkt.Test',
+      labelId: 'Behandlingspunkt.Test',
       type: 'default',
     }, {
       isActive: true,
       isDisabled: false,
       isFinished: false,
-      label: 'Behandlingspunkt.Opplysningsplikt',
+      labelId: 'Behandlingspunkt.Opplysningsplikt',
       type: 'warning',
     }]);
   });

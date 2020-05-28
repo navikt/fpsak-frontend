@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 
@@ -85,8 +84,7 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtak
   };
 };
 
-const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -115,7 +113,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps>
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo);
+    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, valgtProsessSteg, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
@@ -161,4 +159,4 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps>
   );
 };
 
-export default injectIntl(ForeldrepengerProsess);
+export default ForeldrepengerProsess;

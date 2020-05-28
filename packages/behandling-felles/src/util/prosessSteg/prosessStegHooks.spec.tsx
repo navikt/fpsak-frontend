@@ -117,12 +117,11 @@ describe('<prosessStegHooks>', () => {
 
     const hasFetchError = false;
     const valgtProsessSteg = 'default';
-    const intl = { formatMessage: (data) => data.id };
 
     // ACT
     const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
       [new OpplysningspliktProsessStegPanelDef()], ekstraPanelData, fagsak, rettigheter, behandling as Behandling,
-      aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
+      aksjonspunkter, vilkar, hasFetchError, valgtProsessSteg, apentFaktaPanelInfo,
     ));
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values({
       ...wrapper.find('div').prop('data-values'),
@@ -135,7 +134,7 @@ describe('<prosessStegHooks>', () => {
       isActive: true,
       isDisabled: false,
       isFinished: false,
-      label: 'Behandlingspunkt.Opplysningsplikt',
+      labelId: 'Behandlingspunkt.Opplysningsplikt',
       type: StepType.warning,
     }]);
   });

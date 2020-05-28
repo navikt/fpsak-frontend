@@ -21,22 +21,12 @@ export const utledProsessStegPaneler = (
   dataForUtledingAvPaneler: {},
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
   overstyrteAksjonspunktKoder: string[],
-  fagsak: FagsakInfo,
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
   rettigheter: Rettigheter,
   hasFetchError: boolean,
 ): ProsessStegPanelUtledet[] => {
-  const dataForUtleding = {
-    ...dataForUtledingAvPaneler,
-    fagsak,
-    behandling,
-    aksjonspunkter,
-    vilkar,
-    rettigheter,
-  };
-
   const isReadOnlyCheck = (aksjonspunkterForPanel, vilkarForPanel) => readOnlyUtils.erReadOnly(
     behandling, aksjonspunkterForPanel, vilkarForPanel, rettigheter, hasFetchError,
   );
@@ -47,7 +37,7 @@ export const utledProsessStegPaneler = (
       const delPaneler = prosessStegDef.getPanelDefinisjoner()
         .filter((panelDef: ProsessStegDelPanelDef) => panelDef.skalVisePanel(behandling, aksjonspunkter, vilkar))
         .map((panelDef) => new ProsessStegDelPanelUtledet(
-          prosessStegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, dataForUtleding, toggleOverstyring, rettigheter.kanOverstyreAccess,
+          prosessStegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, dataForUtledingAvPaneler, toggleOverstyring, rettigheter.kanOverstyreAccess,
           overstyrteAksjonspunktKoder,
         ));
       return new ProsessStegPanelUtledet(prosessStegDef, delPaneler);
@@ -94,12 +84,11 @@ const finnProsessmenyType = (
 
 export const formaterPanelerForProsessmeny = (
   prosessStegPaneler: ProsessStegPanelUtledet[],
-  intl,
   valgtProsessStegPanelKode?: string,
 ): ProsessStegMenyRad[] => prosessStegPaneler.map((panel) => {
   const type = finnProsessmenyType(panel.getStatus(), panel.getErAksjonspunktOpen());
   return {
-    label: intl.formatMessage({ id: panel.getTekstKode() }),
+    labelId: panel.getTekstKode(),
     isActive: panel.getUrlKode() === valgtProsessStegPanelKode,
     isDisabled: false,
     isFinished: type === StepType.success,

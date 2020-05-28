@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -84,8 +83,7 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtak
   };
 };
 
-const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -111,7 +109,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvSvpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo);
+    dataTilUtledingAvSvpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, valgtProsessSteg, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
@@ -157,4 +155,4 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
   );
 };
 
-export default injectIntl(SvangerskapspengerProsess);
+export default SvangerskapspengerProsess;

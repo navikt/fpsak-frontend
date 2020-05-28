@@ -26,12 +26,19 @@ const useProsessStegPaneler = (
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
   hasFetchError: boolean,
-  intl,
   valgtProsessSteg?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
 ): [ProsessStegPanelUtledet[], ProsessStegPanelUtledet, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
-  const ekstraPanelData = { ...panelData, overstyrteAksjonspunktKoder };
+  const ekstraPanelData = {
+    ...panelData,
+    fagsak,
+    behandling,
+    aksjonspunkter,
+    vilkar,
+    rettigheter,
+    overstyrteAksjonspunktKoder,
+  };
 
   useEffect(() => {
     if (overstyrteAksjonspunktKoder.length > 0) {
@@ -40,14 +47,14 @@ const useProsessStegPaneler = (
   }, [behandling.versjon]);
 
   const prosessStegPaneler = useMemo(() => utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    overstyrteAksjonspunktKoder, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError),
+    overstyrteAksjonspunktKoder, behandling, aksjonspunkter, vilkar, rettigheter, hasFetchError),
   [behandling.versjon, overstyrteAksjonspunktKoder]);
 
   const valgtPanel = useMemo(() => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
     [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo]);
 
   const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
-  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, intl, urlCode),
+  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, urlCode),
     [behandling.versjon, urlCode, overstyrteAksjonspunktKoder]);
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
