@@ -14,7 +14,7 @@ import styles from './faktaPanel.less';
 interface OwnProps {
   paneler: FaktaPanelMenyRad[];
   onClick?: (index: number) => void;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({

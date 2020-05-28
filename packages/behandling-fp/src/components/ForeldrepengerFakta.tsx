@@ -51,7 +51,7 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
     fagsak, behandling, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag, hasFetchError,
   };
 
-  const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
+  const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks
     .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, behandling, rettigheter, aksjonspunkter, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
@@ -59,21 +59,23 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, fpBehandlingApi, dispatch);
 
-  if (valgtPanel) {
+  if (sidemenyPaneler.length > 0) {
     return (
-      <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
-        <DataFetcherBehandlingData
-          key={valgtPanel.getUrlKode()}
-          fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-          endpoints={valgtPanel.getPanelDef().getEndepunkter()}
-          render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
-            ...dataProps,
-            behandling,
-            alleKodeverk,
-            submitCallback: bekreftAksjonspunktCallback,
-            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
-          })}
-        />
+      <FaktaPanel paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
+        {valgtPanel && (
+          <DataFetcherBehandlingData
+            key={valgtPanel.getUrlKode()}
+            fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+            endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+            render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
+              ...dataProps,
+              behandling,
+              alleKodeverk,
+              submitCallback: bekreftAksjonspunktCallback,
+              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
+            })}
+          />
+        )}
       </FaktaPanel>
     );
   }

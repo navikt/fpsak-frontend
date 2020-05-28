@@ -58,21 +58,23 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, esBehandlingApi, dispatch);
 
-  if (valgtPanel) {
+  if (sidemenyPaneler.length > 0) {
     return (
       <FaktaPanel paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
-        <DataFetcherBehandlingData
-          key={valgtPanel.getUrlKode()}
-          fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-          endpoints={valgtPanel.getPanelDef().getEndepunkter()}
-          render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
-            ...dataProps,
-            behandling,
-            alleKodeverk,
-            submitCallback: bekreftAksjonspunktCallback,
-            ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvEsPaneler, hasFetchError),
-          })}
-        />
+        {valgtPanel && (
+          <DataFetcherBehandlingData
+            key={valgtPanel.getUrlKode()}
+            fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+            endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+            render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
+              ...dataProps,
+              behandling,
+              alleKodeverk,
+              submitCallback: bekreftAksjonspunktCallback,
+              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvEsPaneler, hasFetchError),
+            })}
+          />
+        )}
       </FaktaPanel>
     );
   }
