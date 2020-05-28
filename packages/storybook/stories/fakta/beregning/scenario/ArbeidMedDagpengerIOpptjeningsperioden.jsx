@@ -139,22 +139,7 @@ export const beregningsgrunnlag = {
 };
 
 
-export const aksjonspunkt = [{
-  definisjon: { kode: '7003', kodeverk: 'AKSJONSPUNKT_DEF' },
-  status: { kode: 'UTFO', kodeverk: 'AKSJONSPUNKT_STATUS' },
-  begrunnelse: null,
-  vilkarType: null,
-  toTrinnsBehandling: false,
-  toTrinnsBehandlingGodkjent: null,
-  vurderPaNyttArsaker: null,
-  besluttersBegrunnelse: null,
-  aksjonspunktType: { kode: 'AUTO', kodeverk: 'AKSJONSPUNKT_TYPE' },
-  kanLoses: false,
-  erAktivt: true,
-  fristTid: '2020-02-10T00:00:00',
-  endretTidspunkt: '2020-02-03T12:19:52.486',
-  endretAv: 'im-just-a-fake-code',
-},
+export const aksjonspunkt = [
 {
   definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },
   status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
