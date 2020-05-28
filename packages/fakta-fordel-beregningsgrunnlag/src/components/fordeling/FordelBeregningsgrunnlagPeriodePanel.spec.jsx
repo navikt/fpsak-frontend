@@ -33,7 +33,7 @@ const arbeidsforholdEtterStp = {
 };
 
 const lagArbeidstakerAndelEtterStp = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
+  beregnetPrAar, fordeltPrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
   arbeidsforhold: arbeidsforholdEtterStp,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
@@ -43,7 +43,7 @@ const lagArbeidstakerAndelEtterStp = (andelsnr, lagtTilAvSaksbehandler, fordelin
   lagtTilAvSaksbehandler,
   fordelingForrigeBehandlingPrAar,
   beregnetPrAar,
-  fastsattForrigePrAar,
+  fordeltPrAar,
   refusjonskravPrAar,
   belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar,
@@ -64,7 +64,7 @@ const getKodeverknavn = (kodeverk) => {
 };
 
 const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
+  beregnetPrAar, fordeltPrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
   arbeidsforhold,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
@@ -73,15 +73,15 @@ const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrige
   andelsnr,
   lagtTilAvSaksbehandler,
   fordelingForrigeBehandlingPrAar,
+  fordeltPrAar,
   beregnetPrAar,
-  fastsattForrigePrAar,
   refusjonskravPrAar,
   belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar,
 });
 
 const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, andelIArbeid) => ({
+  beregnetPrAar, fordeltPrAar, andelIArbeid) => ({
   arbeidsforhold,
   aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
   inntektskategori: { kode: 'SN' },
@@ -90,7 +90,7 @@ const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
   lagtTilAvSaksbehandler,
   fordelingForrigeBehandlingPrAar,
   beregnetPrAar,
-  fastsattForrigePrAar,
+  fordeltPrAar,
   refusjonskravPrAar: null,
   belopFraInntektsmeldingPrAar: null,
   refusjonskravFraInntektsmeldingPrAar: null,
@@ -98,7 +98,7 @@ const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
 
 
 const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, andelIArbeid) => ({
+  beregnetPrAar, fordeltPrAar, andelIArbeid) => ({
   aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },
   inntektskategori: { kode: 'SN' },
   andelIArbeid,
@@ -106,7 +106,7 @@ const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
   lagtTilAvSaksbehandler,
   fordelingForrigeBehandlingPrAar,
   beregnetPrAar,
-  fastsattForrigePrAar,
+  fordeltPrAar,
   refusjonskravPrAar: null,
   belopFraInntektsmeldingPrAar: null,
   refusjonskravFraInntektsmeldingPrAar: null,
@@ -115,7 +115,8 @@ const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
 describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
   it('skal sette initial values', () => {
     const periode = {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
       skalKunneEndreRefusjon: true,
       fordelBeregningsgrunnlagAndeler: [
         lagArbeidstakerAndel(1, false, 10000, 10000, null, 10000, 10000, 10000, [0, 20]),
@@ -216,7 +217,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
       expect(initialValue.arbeidsforholdId).to.equal('321378huda7e2');
       expect(initialValue.arbeidsperiodeFom).to.equal('2017-01-01');
       expect(initialValue.arbeidsperiodeTom).to.equal('2018-01-01');
-      expect(initialValue.harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
+      expect(initialValue.skalRedigereInntekt).to.equal(true);
     });
     const SNAndel = initialValues.filter(({ aktivitetStatus }) => aktivitetStatus === 'SN');
     expect(SNAndel).to.have.length(1);
@@ -225,7 +226,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(SNAndel[0].nyAndel).to.equal(false);
     expect(SNAndel[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(SNAndel[0].inntektskategori).to.equal('SN');
-    expect(SNAndel[0].harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
+    expect(SNAndel[0].skalRedigereInntekt).to.equal(true);
 
     const andelerEtterStp = initialValues.filter(({ nyttArbeidsforhold }) => nyttArbeidsforhold);
 
@@ -238,7 +239,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     expect(andelerEtterStp[0].arbeidsforholdId).to.equal('321378huda7e2');
     expect(andelerEtterStp[0].arbeidsperiodeFom).to.equal('2018-05-01');
     expect(andelerEtterStp[0].arbeidsperiodeTom).to.equal('2019-01-01');
-    expect(andelerEtterStp[0].harPeriodeAarsakGraderingEllerRefusjon).to.equal(true);
+    expect(andelerEtterStp[0].skalRedigereInntekt).to.equal(true);
 
     expect(initialValues[0].andelsnr).to.equal(1);
     expect(initialValues[0].andelIArbeid).to.equal('0 - 20');

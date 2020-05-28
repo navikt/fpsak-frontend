@@ -55,7 +55,6 @@ const lagBGAndel = (andelsnr, aktivitetstatuskode, beregnet) => ({
   beregningsperiodeFom: '2019-06-01',
   beregningsperiodeTom: '2019-08-31',
   beregnetPrAar: beregnet,
-  fastsattForrigePrAar: null,
   overstyrtPrAar: null,
   bruttoPrAar: beregnet,
   andelsnr,
@@ -246,7 +245,6 @@ const lagFordelingsandel = (andelsnr, status, ref, fordelt) => ({
   },
   andelIArbeid: [0],
   belopFraInntektsmeldingPrAar: null,
-  fastsattForrigePrAar: null,
   fordelingForrigeBehandlingPrAar: null,
   fordeltPrAar: fordelt,
   inntektskategori: {
@@ -262,7 +260,8 @@ const lagFordelingsandel = (andelsnr, status, ref, fordelt) => ({
 const lagFordelPeriode = (fordelAndeler, fom, tom, graderingEllerRef, skalKunneEndreRef) => ({
   fom,
   fordelBeregningsgrunnlagAndeler: fordelAndeler,
-  harPeriodeAarsakGraderingEllerRefusjon: graderingEllerRef,
+  skalRedigereInntekt: graderingEllerRef,
+  skalPreutfyllesMedBeregningsgrunnlag: false,
   skalKunneEndreRefusjon: skalKunneEndreRef,
   tom,
 });
