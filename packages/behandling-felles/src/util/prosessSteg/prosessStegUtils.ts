@@ -36,10 +36,11 @@ export const utledProsessStegPaneler = (
     .map((prosessStegDef: ProsessStegPanelDef) => {
       const delPaneler = prosessStegDef.getPanelDefinisjoner()
         .filter((panelDef: ProsessStegDelPanelDef) => panelDef.skalVisePanel(behandling, aksjonspunkter, vilkar))
-        .map((panelDef) => new ProsessStegDelPanelUtledet(
-          prosessStegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, dataForUtledingAvPaneler, toggleOverstyring, rettigheter.kanOverstyreAccess,
-          overstyrteAksjonspunktKoder,
-        ));
+        .map((panelDef: ProsessStegDelPanelDef) => {
+          const pDef = panelDef.skalBrukeOverstyringspanel(aksjonspunkter) ? panelDef.getOverstyringspanelDef() : panelDef;
+          return new ProsessStegDelPanelUtledet(prosessStegDef, pDef, isReadOnlyCheck, aksjonspunkter, vilkar,
+            dataForUtledingAvPaneler, toggleOverstyring, rettigheter.kanOverstyreAccess, overstyrteAksjonspunktKoder);
+        });
       return new ProsessStegPanelUtledet(prosessStegDef, delPaneler);
     });
 };
