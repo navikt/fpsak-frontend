@@ -1,10 +1,10 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelerDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDelPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../../../data/esBehandlingApi';
 
-class MedlemskapPanelDef extends ProsessStegPanelerDef {
+class MedlemskapPanelDef extends ProsessStegDelPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getId = () => 'MEDLEMSKAP'

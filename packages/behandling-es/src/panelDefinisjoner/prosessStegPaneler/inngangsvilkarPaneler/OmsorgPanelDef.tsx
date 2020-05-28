@@ -3,9 +3,9 @@ import React from 'react';
 import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class OmsorgPanelDef extends ProsessStegPanelerDef {
+class OmsorgPanelDef extends ProsessStegDelPanelDef {
   getId = () => 'OMSORG'
 
   getTekstKode = () => 'Inngangsvilkar.Omsorgsvilkaret'

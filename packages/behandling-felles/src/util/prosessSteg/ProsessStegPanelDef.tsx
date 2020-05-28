@@ -4,7 +4,7 @@ import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { Aksjonspunkt, Vilkar, Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-export abstract class ProsessStegPanelerDef {
+export abstract class ProsessStegDelPanelDef {
   public getId = () => ''
 
   public getTekstKode = () => ''
@@ -28,7 +28,7 @@ export abstract class ProsessStegPanelerDef {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getData = (_data: any): any => ({})
 
-  public getOverstyringspanelDef = (): ProsessStegPanelerDef => undefined
+  public getOverstyringspanelDef = (): ProsessStegDelPanelDef => undefined
 
   public finnAksjonspunkterForSteg = (aksjonspunkter: Aksjonspunkt[]) => {
     const panelDef = this.skalBrukeOverstyringspanel(aksjonspunkter) ? this.getOverstyringspanelDef() : this;
@@ -80,7 +80,7 @@ export abstract class ProsessStegPanelDef {
 
   public abstract getTekstKode(): string
 
-  public abstract getPanelDefinisjoner(): ProsessStegPanelerDef[]
+  public abstract getPanelDefinisjoner(): ProsessStegDelPanelDef[]
 
   public skalViseMinstEttPanelForSteg = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => this.getPanelDefinisjoner()
     .some((pDef) => pDef.skalVisePanel(behandling, aksjonspunkter, vilkar))

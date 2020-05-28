@@ -4,7 +4,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 
-import { ProsessStegPanelerDef } from './ProsessStegPanelDef';
+import { ProsessStegDelPanelDef } from './ProsessStegPanelDef';
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
   const apKoder = aksjonspunkterForSteg.map((ap) => ap.definisjon.kode);
@@ -19,8 +19,8 @@ const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) => (vilkarTypeKod
   : avslagsarsaker[vilkarTypeKode]);
 
 
-class ProsessStegOverstyringPanelDef extends ProsessStegPanelerDef {
-  overtyrtPanel: ProsessStegPanelerDef
+class ProsessStegOverstyringPanelDef extends ProsessStegDelPanelDef {
+  overtyrtPanel: ProsessStegDelPanelDef
 
   aksjonspunktKoder: string[]
 
@@ -42,7 +42,13 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelerDef {
   getKomponent = (props) => <VilkarresultatMedOverstyringProsessIndex {...props} />
 
   getData = ({
-    vilkarForSteg, alleKodeverk, overstyrteAksjonspunktKoder, prosessStegTekstKode,
+    vilkarForSteg,
+    alleKodeverk,
+    overstyrteAksjonspunktKoder,
+    prosessStegTekstKode,
+    overrideReadOnly,
+    kanOverstyreAccess,
+    toggleOverstyring,
   }) => ({
     avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
     erOverstyrt: overstyrteAksjonspunktKoder.some((o) => this.getAksjonspunktKoder().some((a) => a === o)),
@@ -50,6 +56,9 @@ class ProsessStegOverstyringPanelDef extends ProsessStegPanelerDef {
     panelTittelKode: this.getTekstKode() ? this.getTekstKode() : prosessStegTekstKode,
     erMedlemskapsPanel: this.getId() === 'MEDLEMSKAP',
     lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
+    overrideReadOnly,
+    kanOverstyreAccess,
+    toggleOverstyring,
   })
 
   getAksjonspunktKoder = () => this.aksjonspunktKoder;

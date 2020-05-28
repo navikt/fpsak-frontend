@@ -4,11 +4,11 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../../data/esBehandlingApi';
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <SoknadsfristVilkarProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [

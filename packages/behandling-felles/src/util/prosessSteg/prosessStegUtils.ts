@@ -3,97 +3,18 @@ import { Dispatch } from 'redux';
 import { StepType } from '@navikt/nap-process-menu/dist/Step';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import {
-  Behandling, Aksjonspunkt, Vilkar,
-} from '@fpsak-frontend/types';
+import { Behandling, Aksjonspunkt, Vilkar } from '@fpsak-frontend/types';
 
 import readOnlyUtils from '../readOnlyUtils';
 import FagsakInfo from '../../types/fagsakInfoTsType';
-import ProsessStegData from '../../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from './ProsessStegPanelDef';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from './ProsessStegPanelDef';
+import { ProsessStegDelPanelUtledet, ProsessStegPanelUtledet } from './ProsessStegPanelUtledet';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';
-
-const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
-  if (vilkar.length > 0) {
-    const vilkarStatusCodes = vilkar.map((v) => v.vilkarStatus.kode);
-    if (vilkarStatusCodes.some((vsc) => vsc === vilkarUtfallType.IKKE_VURDERT)) {
-      return vilkarUtfallType.IKKE_VURDERT;
-    }
-    return vilkarStatusCodes.every((vsc) => vsc === vilkarUtfallType.OPPFYLT) ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_OPPFYLT;
-  }
-
-  if (aksjonspunkter.length > 0) {
-    return aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) ? vilkarUtfallType.IKKE_VURDERT : vilkarUtfallType.OPPFYLT;
-  }
-  return vilkarUtfallType.IKKE_VURDERT;
-};
-
-const lagPanelData = (
-  prosessStegDef: ProsessStegPanelDef,
-  overstyrteAksjonspunktKoder: string[],
-  harMinstEttPanelApentAksjonspunkt: boolean,
-  toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
-  isReadOnlyCheck: (aksjonspunkterForSteg: Aksjonspunkt[], vilkarForSteg: Vilkar[]) => boolean,
-  kanOverstyreAccess: {},
-  dataForUtledingAvPanel: {
-    aksjonspunkter: Aksjonspunkt[];
-    vilkar: Vilkar[];
-  },
-) => (panelDefinisjon: ProsessStegPanelerDef) => {
-  const skalBrukeOverstyringspanel = panelDefinisjon.skalBrukeOverstyringspanel(dataForUtledingAvPanel.aksjonspunkter);
-  const panelDef = skalBrukeOverstyringspanel ? panelDefinisjon.getOverstyringspanelDef() : panelDefinisjon;
-
-  const aksjonspunkterForSteg = panelDef.finnAksjonspunkterForSteg(dataForUtledingAvPanel.aksjonspunkter);
-  const vilkarForSteg = panelDef.finnVilkarForSteg(dataForUtledingAvPanel.vilkar);
-
-  const dataForUtledingAvStatus = { ...dataForUtledingAvPanel, aksjonspunkterForSteg, vilkarForSteg };
-  const overstyrtStatus = panelDef.getOverstyrtStatus(dataForUtledingAvStatus);
-  const status = overstyrtStatus || finnStatus(vilkarForSteg, aksjonspunkterForSteg);
-
-  const opneAksjonspunkter = aksjonspunkterForSteg.filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses);
-  const erAksjonspunktOpen = panelDef.getAksjonspunktKoder().some((a) => overstyrteAksjonspunktKoder.includes(a))
-      || opneAksjonspunkter.length > 0;
-
-  const isReadOnly = isReadOnlyCheck(aksjonspunkterForSteg, vilkarForSteg);
-
-  const indekser = opneAksjonspunkter.map((a) => panelDef.getAksjonspunktKoder().findIndex((ac) => a.definisjon.kode === ac));
-  const aksjonspunktHelpTextCodes = panelDef.getAksjonspunktTekstkoder().filter((a, index) => indekser.includes(index));
-
-  return {
-    status,
-    isReadOnly,
-    code: panelDef.getId() ? panelDef.getId() : prosessStegDef.getUrlKode(),
-    endpoints: panelDef.getEndepunkter(),
-    renderComponent: panelDef.getKomponent,
-    aksjonspunkter: aksjonspunkterForSteg,
-    isAksjonspunktOpen: erAksjonspunktOpen,
-    aksjonspunktHelpTextCodes,
-    komponentData: {
-      status,
-      isReadOnly,
-      readOnlySubmitButton: (!(aksjonspunkterForSteg.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === status),
-      aksjonspunkter: aksjonspunkterForSteg,
-      vilkar: vilkarForSteg,
-      isAksjonspunktOpen: erAksjonspunktOpen,
-      overrideReadOnly: isReadOnly || (harMinstEttPanelApentAksjonspunkt && !erAksjonspunktOpen),
-      kanOverstyreAccess,
-      toggleOverstyring,
-      ...panelDef.getData({
-        ...dataForUtledingAvPanel,
-        aksjonspunkterForSteg,
-        vilkarForSteg,
-        overstyrteAksjonspunktKoder,
-        prosessStegTekstKode: prosessStegDef.getTekstKode(),
-      }),
-    },
-  };
-};
 
 export const utledProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegPanelDef[],
@@ -106,11 +27,7 @@ export const utledProsessStegPaneler = (
   vilkar: Vilkar[],
   rettigheter: Rettigheter,
   hasFetchError: boolean,
-) => {
-  const isReadOnlyCheck = (aksjonspunkterForSteg, vilkarForSteg) => readOnlyUtils.erReadOnly(
-    behandling, aksjonspunkterForSteg, vilkarForSteg, rettigheter, hasFetchError,
-  );
-
+): ProsessStegPanelUtledet[] => {
   const dataForUtleding = {
     ...dataForUtledingAvPaneler,
     fagsak,
@@ -120,44 +37,29 @@ export const utledProsessStegPaneler = (
     rettigheter,
   };
 
+  const isReadOnlyCheck = (aksjonspunkterForPanel, vilkarForPanel) => readOnlyUtils.erReadOnly(
+    behandling, aksjonspunkterForPanel, vilkarForPanel, rettigheter, hasFetchError,
+  );
+
   return prosessStegPanelDefinisjoner
-    .filter((prosessStegDef) => prosessStegDef.skalViseMinstEttPanelForSteg(behandling, aksjonspunkter, vilkar))
-    .map((prosessStegDef) => {
-      const harMinstEttPanelApentAksjonspunkt = prosessStegDef.harMinstEttApentAksjonspunkt(aksjonspunkter, overstyrteAksjonspunktKoder);
-
-      const panelData = prosessStegDef.getPanelDefinisjoner()
-        .filter((pDef) => pDef.skalVisePanel(behandling, aksjonspunkter, vilkar))
-        .map(lagPanelData(prosessStegDef, overstyrteAksjonspunktKoder, harMinstEttPanelApentAksjonspunkt, toggleOverstyring,
-          isReadOnlyCheck, rettigheter.kanOverstyreAccess, dataForUtleding));
-
-      const harStatusIkkeVurdert = panelData.some((p) => p.status === vilkarUtfallType.IKKE_VURDERT);
-      const harStatusAvslatt = panelData.some((p) => p.status === vilkarUtfallType.IKKE_OPPFYLT);
-      const harStatusOppfylt = panelData.some((p) => p.status === vilkarUtfallType.OPPFYLT);
-      const tempStatus = harStatusOppfylt && !harStatusIkkeVurdert ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT;
-      const status = harStatusAvslatt ? vilkarUtfallType.IKKE_OPPFYLT : tempStatus;
-
-      const harUlikeStatuserIPanela = harStatusIkkeVurdert && harStatusOppfylt && !harStatusAvslatt;
-      const erAksjonspunktOpen = harUlikeStatuserIPanela || panelData.some((p) => p.isAksjonspunktOpen);
-
-      return {
-        urlCode: prosessStegDef.getUrlKode(),
-        erStegBehandlet: status !== vilkarUtfallType.IKKE_VURDERT || erAksjonspunktOpen,
-        prosessStegTittelKode: prosessStegDef.getTekstKode(),
-        isAksjonspunktOpen: erAksjonspunktOpen,
-        isReadOnly: panelData.every((p) => p.isReadOnly),
-        aksjonspunkter: panelData.filter((pd) => pd.aksjonspunkter).reduce((acc, pd) => [...acc, ...pd.aksjonspunkter], []),
-        status,
-        panelData,
-      };
+    .filter((prosessStegDef: ProsessStegPanelDef) => prosessStegDef.skalViseMinstEttPanelForSteg(behandling, aksjonspunkter, vilkar))
+    .map((prosessStegDef: ProsessStegPanelDef) => {
+      const delPaneler = prosessStegDef.getPanelDefinisjoner()
+        .filter((panelDef: ProsessStegDelPanelDef) => panelDef.skalVisePanel(behandling, aksjonspunkter, vilkar))
+        .map((panelDef) => new ProsessStegDelPanelUtledet(
+          prosessStegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, dataForUtleding, toggleOverstyring, rettigheter.kanOverstyreAccess,
+          overstyrteAksjonspunktKoder,
+        ));
+      return new ProsessStegPanelUtledet(prosessStegDef, delPaneler);
     });
 };
 
 export const finnValgtPanel = (
-  prosessStegPaneler: ProsessStegData[],
+  prosessStegPaneler: ProsessStegPanelUtledet[],
   erBehandlingHenlagt: boolean,
   valgtProsessStegPanelKode?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
-) => {
+): ProsessStegPanelUtledet => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
     if (erBehandlingHenlagt) {
       return prosessStegPaneler[prosessStegPaneler.length - 1];
@@ -165,20 +67,20 @@ export const finnValgtPanel = (
     if (apentFaktaPanelInfo) {
       return undefined;
     }
-    const index = prosessStegPaneler.findIndex((i) => i.isAksjonspunktOpen);
+    const index = prosessStegPaneler.findIndex((i) => i.getErAksjonspunktOpen());
     if (index !== -1) {
       return prosessStegPaneler[index];
     }
     const sistePanel = prosessStegPaneler[prosessStegPaneler.length - 1];
-    return sistePanel.erStegBehandlet ? sistePanel : undefined;
+    return sistePanel.getErStegBehandlet() ? sistePanel : undefined;
   }
-  return prosessStegPaneler.find((i) => i.urlCode === valgtProsessStegPanelKode);
+  return prosessStegPaneler.find((i) => i.getUrlKode() === valgtProsessStegPanelKode);
 };
 
 const finnProsessmenyType = (
   status: vilkarUtfallType.OPPFYLT | vilkarUtfallType.IKKE_OPPFYLT | vilkarUtfallType.IKKE_VURDERT,
   harApentAksjonspunkt: boolean,
-) => {
+): StepType => {
   if (harApentAksjonspunkt) {
     return StepType.warning;
   }
@@ -191,14 +93,14 @@ const finnProsessmenyType = (
 };
 
 export const formaterPanelerForProsessmeny = (
-  prosessStegPaneler: ProsessStegData[],
+  prosessStegPaneler: ProsessStegPanelUtledet[],
   intl,
   valgtProsessStegPanelKode?: string,
 ): ProsessStegMenyRad[] => prosessStegPaneler.map((panel) => {
-  const type = finnProsessmenyType(panel.status, panel.isAksjonspunktOpen);
+  const type = finnProsessmenyType(panel.getStatus(), panel.getErAksjonspunktOpen());
   return {
-    label: intl.formatMessage({ id: panel.prosessStegTittelKode }),
-    isActive: panel.urlCode === valgtProsessStegPanelKode,
+    label: intl.formatMessage({ id: panel.getTekstKode() }),
+    isActive: panel.getUrlKode() === valgtProsessStegPanelKode,
     isDisabled: false,
     isFinished: type === StepType.success,
     type,

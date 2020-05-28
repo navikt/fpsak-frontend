@@ -4,11 +4,11 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../../data/esBehandlingApi';
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <AvregningProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [

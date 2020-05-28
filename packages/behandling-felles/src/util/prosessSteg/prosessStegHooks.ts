@@ -10,12 +10,12 @@ import {
 
 import FagsakInfo from '../../types/fagsakInfoTsType';
 import Rettigheter from '../../types/rettigheterTsType';
-import ProsessStegData from '../../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import {
   utledProsessStegPaneler, finnValgtPanel, formaterPanelerForProsessmeny, getBekreftAksjonspunktCallback,
 } from './prosessStegUtils';
 import { ProsessStegPanelDef } from './ProsessStegPanelDef';
+import { ProsessStegPanelUtledet } from './ProsessStegPanelUtledet';
 
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegPanelDef[],
@@ -29,7 +29,7 @@ const useProsessStegPaneler = (
   intl,
   valgtProsessSteg?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
-): [ProsessStegData[], ProsessStegData, ProsessStegMenyRad[]] => {
+): [ProsessStegPanelUtledet[], ProsessStegPanelUtledet, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const ekstraPanelData = { ...panelData, overstyrteAksjonspunktKoder };
 
@@ -46,7 +46,7 @@ const useProsessStegPaneler = (
   const valgtPanel = useMemo(() => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
     [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo]);
 
-  const urlCode = valgtPanel ? valgtPanel.urlCode : undefined;
+  const urlCode = valgtPanel ? valgtPanel.getUrlKode() : undefined;
   const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(prosessStegPaneler, intl, urlCode),
     [behandling.versjon, urlCode, overstyrteAksjonspunktKoder]);
 
@@ -54,16 +54,16 @@ const useProsessStegPaneler = (
 };
 
 const useProsessStegVelger = (
-  prosessStegPaneler: ProsessStegData[],
+  prosessStegPaneler: ProsessStegPanelUtledet[],
   valgtFaktaSteg: string,
   behandling: Behandling,
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void,
   valgtProsessSteg: string,
-  valgtPanel?: ProsessStegData,
+  valgtPanel?: ProsessStegPanelUtledet,
 ) => useCallback((index) => {
-  const { urlCode } = prosessStegPaneler[index];
+  const urlCode = prosessStegPaneler[index].getUrlKode();
 
-  const erNyvalgtPanelDetSammeSomForrige = valgtPanel && valgtPanel.urlCode === urlCode;
+  const erNyvalgtPanelDetSammeSomForrige = valgtPanel && valgtPanel.getUrlKode() === urlCode;
   const erNyvalgtPanelUlikForrige = urlCode !== valgtProsessSteg;
 
   const nyvalgtProsessSteg = !erNyvalgtPanelDetSammeSomForrige && (!valgtProsessSteg || erNyvalgtPanelUlikForrige) ? urlCode : undefined;
@@ -76,11 +76,11 @@ const useBekreftAksjonspunkt = (
   behandlingApi: {[name: string]: EndpointOperations},
   lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
   dispatch: Dispatch,
-  valgtPanel?: ProsessStegData,
+  valgtPanel?: ProsessStegPanelUtledet,
 ) => useCallback((
   aksjonspunktModels,
 ) => getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak,
-  behandling, valgtPanel ? valgtPanel.aksjonspunkter : [], behandlingApi)(aksjonspunktModels),
+  behandling, valgtPanel ? valgtPanel.getAksjonspunkter() : [], behandlingApi)(aksjonspunktModels),
 [behandling.versjon, valgtPanel]);
 
 const useOppdateringAvBehandlingsversjon = (behandlingVersjon: number, oppdaterBehandlingVersjon: (versjon: number) => void) => {

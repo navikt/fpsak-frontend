@@ -5,9 +5,9 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <BeregningsresultatProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [

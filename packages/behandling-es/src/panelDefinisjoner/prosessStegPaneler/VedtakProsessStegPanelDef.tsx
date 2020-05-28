@@ -4,12 +4,12 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import findStatusForVedtak from '../vedtakStatusUtlederEs';
 import esBehandlingApi from '../../data/esBehandlingApi';
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <VedtakProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [

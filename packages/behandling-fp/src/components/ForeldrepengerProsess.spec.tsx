@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { omit } from '@fpsak-frontend/utils';
 import { Behandling } from '@fpsak-frontend/types';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
@@ -205,38 +204,12 @@ describe('<ForeldrepengerProsess>', () => {
       />,
     );
 
-    const panelData = {
-      code: 'ADOPSJON',
-      endpoints: [],
-      aksjonspunkter,
-      isAksjonspunktOpen: true,
-      aksjonspunktHelpTextCodes: ['AdopsjonVilkarForm.VurderGjelderSammeBarn'],
-      isReadOnly: false,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      komponentData: {
-        status: vilkarUtfallType.IKKE_VURDERT,
-        isReadOnly: false,
-        readOnlySubmitButton: false,
-        aksjonspunkter,
-        vilkar,
-        isAksjonspunktOpen: true,
-      },
-    };
-
-    const data = {
-      urlCode: 'inngangsvilkar',
-      erStegBehandlet: true,
-      prosessStegTittelKode: 'Behandlingspunkt.Inngangsvilkar',
-      isAksjonspunktOpen: true,
-      isReadOnly: false,
-      aksjonspunkter,
-      status: vilkarUtfallType.IKKE_VURDERT,
-    };
-
     const panel = wrapper.find(ProsessStegPanel);
-    console.log(panel.prop('valgtProsessSteg').panelData[0]);
-    expect(omit(panel.prop('valgtProsessSteg').panelData[0], 'renderComponent')).is.eql(panelData);
-    expect(omit(panel.prop('valgtProsessSteg'), 'panelData')).is.eql(data);
+    const utledetPanel = panel.prop('valgtProsessSteg');
+    expect(utledetPanel.getUrlKode()).is.eql('inngangsvilkar');
+    expect(utledetPanel.getErAksjonspunktOpen()).is.true;
+    expect(utledetPanel.getErReadOnly()).is.false;
+    expect(utledetPanel.getStatus()).is.eql(vilkarUtfallType.IKKE_VURDERT);
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', () => {
@@ -444,8 +417,8 @@ describe('<ForeldrepengerProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('vedtak');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewCallback;
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('vedtak');
+    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });
@@ -475,8 +448,8 @@ describe('<ForeldrepengerProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('simulering');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewFptilbakeCallback;
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('simulering');
+    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewFptilbakeCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });

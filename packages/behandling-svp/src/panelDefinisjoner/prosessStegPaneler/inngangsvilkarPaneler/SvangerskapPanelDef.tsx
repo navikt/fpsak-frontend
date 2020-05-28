@@ -2,10 +2,10 @@ import React from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
 
-class SvangerskapPanelDef extends ProsessStegPanelerDef {
+class SvangerskapPanelDef extends ProsessStegDelPanelDef {
   getId = () => 'SVANGERSKAP'
 
   getTekstKode = () => 'Inngangsvilkar.Svangerskapsvilkaret'

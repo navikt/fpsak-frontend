@@ -4,7 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import svpBehandlingApi from '../../data/svpBehandlingApi';
 
@@ -23,7 +23,7 @@ const getStatusFromResultatstruktur = (resultatstruktur) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <TilkjentYtelseProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [

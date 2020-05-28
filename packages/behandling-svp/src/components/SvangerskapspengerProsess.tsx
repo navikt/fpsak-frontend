@@ -121,7 +121,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg, behandling,
     oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
-  const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
+  const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
     ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionSVP'),
   [behandling.versjon]);
 

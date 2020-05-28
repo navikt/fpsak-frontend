@@ -4,9 +4,9 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <FormkravProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [

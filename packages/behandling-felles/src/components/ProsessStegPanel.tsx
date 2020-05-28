@@ -1,12 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { Dispatch } from 'redux';
 
-import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
+import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
-import ProsessStegData from '../types/prosessStegDataTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
@@ -14,12 +13,13 @@ import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBe
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
+import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegPanelUtledet';
 
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
-  valgtProsessSteg?: ProsessStegData;
+  valgtProsessSteg?: ProsessStegPanelUtledet;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;
   lagringSideeffekterCallback: (aksjonspunktModeller: []) => any;
@@ -38,53 +38,58 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   behandlingApi,
   dispatch,
 }) => {
-  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.urlCode === bpc.VEDTAK;
+  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtProsessSteg && valgtProsessSteg.getUrlKode() === prosessStegCodes.VEDTAK;
+  if (erHenlagtOgVedtakStegValgt) {
+    return <BehandlingHenlagtPanel />;
+  }
+  if (!valgtProsessSteg) {
+    return null;
+  }
+  if (!valgtProsessSteg.getErStegBehandlet() && valgtProsessSteg.getUrlKode()) {
+    return <ProsessStegIkkeBehandletPanel />;
+  }
+
   const bekreftAksjonspunktCallback = prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi, lagringSideeffekterCallback,
     dispatch, valgtProsessSteg);
 
+  const delPaneler = valgtProsessSteg.getDelPaneler();
+
   return (
     <>
-      {valgtProsessSteg && valgtProsessSteg.erStegBehandlet && !erHenlagtOgVedtakStegValgt && (
+      {valgtProsessSteg.getErStegBehandlet() && (
         <MargMarkering
           behandlingStatus={behandling.status}
-          aksjonspunkter={valgtProsessSteg.aksjonspunkter}
-          isReadOnly={valgtProsessSteg.isReadOnly}
-          visAksjonspunktMarkering={valgtProsessSteg.panelData.length === 1}
+          aksjonspunkter={valgtProsessSteg.getAksjonspunkter()}
+          isReadOnly={valgtProsessSteg.getErReadOnly()}
+          visAksjonspunktMarkering={delPaneler.length === 1}
         >
-          {valgtProsessSteg.panelData.length === 1 && (
+          {delPaneler.length === 1 && (
             <FadingPanel>
               <DataFetcherBehandlingData
-                key={valgtProsessSteg.panelData[0].code}
+                key={valgtProsessSteg.getUrlKode()}
                 fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-                endpoints={valgtProsessSteg.panelData[0].endpoints}
-                render={(dataProps) => valgtProsessSteg.panelData[0].renderComponent({
+                endpoints={delPaneler[0].getProsessStegDelPanelDef().getEndepunkter()}
+                render={(dataProps) => delPaneler[0].getProsessStegDelPanelDef().getKomponent({
                   ...dataProps,
                   behandling,
                   alleKodeverk,
                   submitCallback: bekreftAksjonspunktCallback,
-                  ...valgtProsessSteg.panelData[0].komponentData,
+                  ...delPaneler[0].getKomponentData(),
                 })}
               />
             </FadingPanel>
           )}
-          {valgtProsessSteg.panelData.length > 1 && (
+          {delPaneler.length > 1 && (
             <InngangsvilkarPanel
               behandling={behandling}
               alleKodeverk={alleKodeverk}
-              prosessStegData={valgtProsessSteg.panelData}
+              prosessStegData={delPaneler}
               submitCallback={bekreftAksjonspunktCallback}
               apentFaktaPanelInfo={apentFaktaPanelInfo}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
             />
           )}
         </MargMarkering>
-      )}
-      {erHenlagtOgVedtakStegValgt && (
-        <BehandlingHenlagtPanel />
-      )}
-      {(valgtProsessSteg && valgtProsessSteg.urlCode
-        && !valgtProsessSteg.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
-        <ProsessStegIkkeBehandletPanel />
       )}
     </>
   );

@@ -5,9 +5,9 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { getAlleMerknaderFraBeslutter, ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { getAlleMerknaderFraBeslutter, ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <ForeldelseProsessIndex {...props} />
 
   getOverstyrVisningAvKomponent = () => true

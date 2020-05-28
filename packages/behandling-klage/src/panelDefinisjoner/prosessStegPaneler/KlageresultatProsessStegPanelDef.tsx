@@ -6,7 +6,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
 
 const getVedtakStatus = (behandlingsresultat, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
@@ -21,7 +21,7 @@ const getVedtakStatus = (behandlingsresultat, aksjonspunkter) => {
   return vilkarUtfallType.OPPFYLT;
 };
 
-class PanelDef extends ProsessStegPanelerDef {
+class PanelDef extends ProsessStegDelPanelDef {
   getKomponent = (props) => <VedtakKlageProsessIndex {...props} />
 
   getOverstyrVisningAvKomponent = () => true

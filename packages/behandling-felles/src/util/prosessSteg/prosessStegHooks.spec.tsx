@@ -18,7 +18,8 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import { ProsessStegPanelDef, ProsessStegPanelerDef } from './ProsessStegPanelDef';
+import { ProsessStegPanelDef, ProsessStegDelPanelDef } from './ProsessStegPanelDef';
+import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from './ProsessStegPanelUtledet';
 import prosessStegHooks from './prosessStegHooks';
 
 const HookWrapper = ({ callback }) => <div data-values={callback()} />;
@@ -65,37 +66,39 @@ describe('<prosessStegHooks>', () => {
     overstyrbar: false,
   }];
 
+  const kanOverstyreAccess = { isEnabled: false, employeeHasAccess: false };
+
+  class PanelDef extends ProsessStegDelPanelDef {
+    getKomponent = (props) => <div {...props} />
+
+    getAksjonspunktKoder = () => [
+      aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
+    ]
+
+    getAksjonspunktTekstkoder = () => [
+      'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
+    ]
+
+    getVilkarKoder = () => [
+      vilkarType.SOKERSOPPLYSNINGSPLIKT,
+    ]
+
+    getData = ({ soknad }) => ({
+      soknad,
+    })
+  }
+
+  const panelDef = new PanelDef();
+
+  class OpplysningspliktProsessStegPanelDef extends ProsessStegPanelDef {
+    getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT
+
+    getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt'
+
+    getPanelDefinisjoner = () => [panelDef]
+  }
+
   it('skal utlede prosesstegpaneler, valgt panel og paneler formatert for meny', () => {
-    class PanelDef extends ProsessStegPanelerDef {
-      getKomponent = (props) => <div {...props} />
-
-      getAksjonspunktKoder = () => [
-        aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU,
-      ]
-
-      getAksjonspunktTekstkoder = () => [
-        'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-      ]
-
-      getVilkarKoder = () => [
-        vilkarType.SOKERSOPPLYSNINGSPLIKT,
-      ]
-
-      getData = ({ soknad }) => ({
-        soknad,
-      })
-    }
-
-    const panelDef = new PanelDef();
-
-    class OpplysningspliktProsessStegPanelDef extends ProsessStegPanelDef {
-      getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT
-
-      getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt'
-
-      getPanelDefinisjoner = () => [panelDef]
-    }
-
     const ekstraPanelData = {
       soknad: 'test_soknad',
     };
@@ -125,40 +128,9 @@ describe('<prosessStegHooks>', () => {
       ...wrapper.find('div').prop('data-values'),
     }).reduce((acc, value) => [...acc, value], []);
 
-    const paneler = [{
-      aksjonspunkter,
-      erStegBehandlet: true,
-      isAksjonspunktOpen: true,
-      isReadOnly: true,
-      prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
-        aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        isReadOnly: true,
-        komponentData: {
-          aksjonspunkter,
-          isAksjonspunktOpen: true,
-          isReadOnly: true,
-          readOnlySubmitButton: false,
-          soknad: ekstraPanelData.soknad,
-          status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
-        },
-        renderComponent: panelDef.getKomponent,
-        status: vilkarUtfallType.IKKE_VURDERT,
-      },
-      ],
-      status: vilkarUtfallType.IKKE_VURDERT,
-      urlCode: 'opplysningsplikt',
-    }];
-
-    expect(prosessStegPaneler).to.eql(paneler);
-    expect(valgtPanel).to.eql(paneler[0]);
+    expect(prosessStegPaneler).has.length(1);
+    const panel = prosessStegPaneler[0];
+    expect(valgtPanel).to.eql(panel);
     expect(formaterteProsessStegPaneler).to.eql([{
       isActive: true,
       isDisabled: false,
@@ -169,41 +141,18 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal velge første prosess-steg', () => {
-    const prosessStegPaneler = [{
-      urlCode: 'opplysningsplikt',
-      prosessStegTittelKode: 'TEST',
-      label: 'Behandlingspunkt.Opplysningsplikt',
-      aksjonspunkter,
-      erStegBehandlet: true,
-      isAksjonspunktOpen: true,
-      isReadOnly: true,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
-        aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        isReadOnly: true,
-        renderComponent: () => <div>test</div>,
-        status: vilkarUtfallType.IKKE_VURDERT,
-        komponentData: {
-          aksjonspunkter,
-          isAksjonspunktOpen: true,
-          isReadOnly: true,
-          readOnlySubmitButton: false,
-          status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
-        },
-      }],
-    }];
+    const isReadOnlyCheck = () => false;
+    const toggleOverstyring = () => undefined;
+    const stegDef = new OpplysningspliktProsessStegPanelDef();
+    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+
     const valgtFaktaSteg = 'default';
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const valgtProsessSteg = 'default';
 
-    const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
+    const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger([utledetPanel], valgtFaktaSteg,
       behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
     const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
@@ -217,41 +166,18 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal skjule prosess-steg når en velger steg som allerede vises', () => {
-    const prosessStegPaneler = [{
-      urlCode: 'opplysningsplikt',
-      label: 'Behandlingspunkt.Opplysningsplikt',
-      prosessStegTittelKode: 'TEST',
-      aksjonspunkter,
-      erStegBehandlet: true,
-      isAksjonspunktOpen: true,
-      isReadOnly: true,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
-        aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        isReadOnly: true,
-        renderComponent: () => <div>test</div>,
-        status: vilkarUtfallType.IKKE_VURDERT,
-        komponentData: {
-          aksjonspunkter,
-          isAksjonspunktOpen: true,
-          isReadOnly: true,
-          readOnlySubmitButton: false,
-          status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
-        },
-      }],
-    }];
+    const isReadOnlyCheck = () => false;
+    const toggleOverstyring = () => undefined;
+    const stegDef = new OpplysningspliktProsessStegPanelDef();
+    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+
     const valgtFaktaSteg = 'default';
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
     const valgtProsessSteg = 'opplysningsplikt';
 
-    const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg,
+    const wrapper = testHook(() => prosessStegHooks.useProsessStegVelger([utledetPanel], valgtFaktaSteg,
       behandling as Behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg));
     const prosessStegVelger = wrapper.find('div').prop('data-values') as (number) => void;
 
@@ -265,36 +191,12 @@ describe('<prosessStegHooks>', () => {
   });
 
   it('skal bekrefte aksjonspunkt', () => {
-    const prosessStegPanel = {
-      urlCode: 'opplysningsplikt',
-      label: 'Behandlingspunkt.Opplysningsplikt',
-      prosessStegTittelKode: 'TEST',
-      aksjonspunkter,
-      erStegBehandlet: true,
-      isAksjonspunktOpen: true,
-      isReadOnly: true,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      panelData: [{
-        aksjonspunktHelpTextCodes: [
-          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
-        ],
-        aksjonspunkter,
-        code: 'opplysningsplikt',
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        isReadOnly: true,
-        renderComponent: () => <div>test</div>,
-        status: vilkarUtfallType.IKKE_VURDERT,
-        komponentData: {
-          aksjonspunkter,
-          isAksjonspunktOpen: true,
-          isReadOnly: true,
-          readOnlySubmitButton: false,
-          status: vilkarUtfallType.IKKE_VURDERT,
-          vilkar,
-        },
-      }],
-    };
+    const isReadOnlyCheck = () => false;
+    const toggleOverstyring = () => undefined;
+    const stegDef = new OpplysningspliktProsessStegPanelDef();
+    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
 
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
@@ -307,7 +209,7 @@ describe('<prosessStegHooks>', () => {
 
     const wrapper = testHook(() => prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling as Behandling,
       behandlingApi as {[name: string]: EndpointOperations},
-      lagringSideEffectsCallback, dispatch as Dispatch, prosessStegPanel));
+      lagringSideEffectsCallback, dispatch as Dispatch, utledetPanel));
     const bekreftAksjonspunkt = wrapper.find('div').prop('data-values') as (number) => void;
 
     bekreftAksjonspunkt([{ kode: aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU }]);
