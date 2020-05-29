@@ -114,7 +114,7 @@ export class ProsessStegDelPanelUtledet {
         aksjonspunkterForSteg: aksjonspunkterForPanel,
         vilkarForSteg: vilkarForPanel,
         overstyrteAksjonspunktKoder: this.overstyrteAksjonspunktKoder,
-        prosessStegTekstKode: this.prosessStegDelPanelDef.getTekstKode(),
+        prosessStegTekstKode: this.prosessStegDelPanelDef.getTekstKode() || this.prosessStegPanelDef.getTekstKode(),
         overrideReadOnly: erReadOnly || (harMinstEttPanelApentAksjonspunkt && !erAksjonspunktOpent),
         kanOverstyreAccess: this.kanOverstyreAccess,
         toggleOverstyring: this.toggleOverstyring,

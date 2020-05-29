@@ -22,8 +22,16 @@ class PanelDef extends ProsessStegDelPanelDef {
 
   getOverstyrtStatus = ({ beregningresultatEngangsstonad }) => (beregningresultatEngangsstonad ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT)
 
-  getData = ({ beregningresultatEngangsstonad }) => ({
+  getData = ({
     beregningresultatEngangsstonad,
+    overrideReadOnly,
+    kanOverstyreAccess,
+    toggleOverstyring,
+  }) => ({
+    beregningresultatEngangsstonad,
+    overrideReadOnly,
+    kanOverstyreAccess,
+    toggleOverstyring,
   })
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -22,24 +22,26 @@ const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) => (vilkarTypeKod
 class ProsessStegOverstyringPanelDef extends ProsessStegDelPanelDef {
   overtyrtPanel: ProsessStegDelPanelDef
 
-  aksjonspunktKoder: string[]
+  aksjonspunktKoder?: string[]
 
   constructor(overtyrtPanel, ...aksjonspunktKoder) {
     super();
     this.overtyrtPanel = overtyrtPanel;
-    this.aksjonspunktKoder = aksjonspunktKoder;
+    this.aksjonspunktKoder = aksjonspunktKoder.length > 0 ? aksjonspunktKoder : undefined;
   }
 
-  getId = () => this.overtyrtPanel.getId()
+  getId = (): string => this.overtyrtPanel.getId()
 
-  getTekstKode = () => this.overtyrtPanel.getTekstKode()
+  getTekstKode = (): string => this.overtyrtPanel.getTekstKode()
 
-  getVilkarKoder = () => this.overtyrtPanel.getVilkarKoder()
+  getAksjonspunktKoder = (): string[] => this.aksjonspunktKoder || this.overtyrtPanel.getAksjonspunktKoder();
 
-  getOverstyrVisningAvKomponent = ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }) => vilkarForSteg.length > 0
+  getVilkarKoder = (): string[] => this.overtyrtPanel.getVilkarKoder()
+
+  getOverstyrVisningAvKomponent = ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }): boolean => vilkarForSteg.length > 0
     && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg)
 
-  getKomponent = (props) => <VilkarresultatMedOverstyringProsessIndex {...props} />
+  getKomponent = (props): ReactNode => <VilkarresultatMedOverstyringProsessIndex {...props} />
 
   getData = ({
     vilkarForSteg,
@@ -49,7 +51,7 @@ class ProsessStegOverstyringPanelDef extends ProsessStegDelPanelDef {
     overrideReadOnly,
     kanOverstyreAccess,
     toggleOverstyring,
-  }) => ({
+  }): any => ({
     avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
     erOverstyrt: overstyrteAksjonspunktKoder.some((o) => this.getAksjonspunktKoder().some((a) => a === o)),
     overstyringApKode: this.getAksjonspunktKoder()[0],
@@ -60,8 +62,6 @@ class ProsessStegOverstyringPanelDef extends ProsessStegDelPanelDef {
     kanOverstyreAccess,
     toggleOverstyring,
   })
-
-  getAksjonspunktKoder = () => this.aksjonspunktKoder;
 }
 
 export default ProsessStegOverstyringPanelDef;
