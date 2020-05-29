@@ -51,7 +51,7 @@ export abstract class ProsessStegPanelDef {
   public getEndepunkter = (): EndpointOperations[] => []
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public getOverstyrVisningAvKomponent = (_data: any): boolean => false
+  protected getOverstyrVisningAvKomponent = (_data: any): boolean => false
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getOverstyrtStatus = (_data: any): boolean => undefined
