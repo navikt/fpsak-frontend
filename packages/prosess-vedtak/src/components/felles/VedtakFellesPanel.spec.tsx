@@ -104,6 +104,6 @@ describe('<VedtakFellesPanel>', () => {
       submitting={false}
     />);
 
-    expect(wrapper.find('span')).to.have.length(1);
+    expect(wrapper.find('span')).to.have.length(3);
   });
 });
