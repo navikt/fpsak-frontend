@@ -4,9 +4,9 @@ import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDelPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class FodselPanelDef extends ProsessStegDelPanelDef {
+class FodselPanelDef extends ProsessStegPanelDef {
   getId = () => 'FODSEL'
 
   getTekstKode = () => 'Inngangsvilkar.Fodselsvilkaret'

@@ -3,11 +3,11 @@ import React from 'react';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../../data/fpBehandlingApi';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <CheckPersonStatusIndex {...props} />
 
   getAksjonspunktKoder = () => [
@@ -23,7 +23,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class SaksopplysningerProsessStegPanelDef extends ProsessStegPanelDef {
+class SaksopplysningerProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.SAKSOPPLYSNINGER
 
   getTekstKode = () => 'Behandlingspunkt.Saksopplysninger'

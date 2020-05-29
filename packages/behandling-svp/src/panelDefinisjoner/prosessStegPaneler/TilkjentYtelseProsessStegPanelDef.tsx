@@ -4,7 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import svpBehandlingApi from '../../data/svpBehandlingApi';
 
@@ -23,7 +23,7 @@ const getStatusFromResultatstruktur = (resultatstruktur) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <TilkjentYtelseProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [
@@ -50,7 +50,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class TilkjentYtelseProsessStegPanelDef extends ProsessStegPanelDef {
+class TilkjentYtelseProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.TILKJENT_YTELSE
 
   getTekstKode = () => 'Behandlingspunkt.TilkjentYtelse'

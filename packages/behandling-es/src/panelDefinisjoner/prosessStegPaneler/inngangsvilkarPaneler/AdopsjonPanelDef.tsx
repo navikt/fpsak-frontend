@@ -3,9 +3,9 @@ import React from 'react';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDelPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class AdopsjonPanelDef extends ProsessStegDelPanelDef {
+class AdopsjonPanelDef extends ProsessStegPanelDef {
   getId = () => 'ADOPSJON'
 
   getTekstKode = () => 'Inngangsvilkar.Adopsjonsvilkaret'

@@ -3,9 +3,9 @@ import React from 'react';
 import AnkeProsessIndex from '@fpsak-frontend/prosess-anke';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <AnkeProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [
@@ -25,7 +25,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class AnkeBehandlingProsessStegPanelDef extends ProsessStegPanelDef {
+class AnkeBehandlingProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.ANKEBEHANDLING
 
   getTekstKode = () => 'Behandlingspunkt.Ankebehandling'

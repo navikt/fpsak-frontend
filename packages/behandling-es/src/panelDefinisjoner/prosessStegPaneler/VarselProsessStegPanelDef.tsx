@@ -3,11 +3,11 @@ import React from 'react';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../../data/esBehandlingApi';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <VarselOmRevurderingProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [
@@ -28,7 +28,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class VarselProsessStegPanelDef extends ProsessStegPanelDef {
+class VarselProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.VARSEL
 
   getTekstKode = () => 'Behandlingspunkt.CheckVarselRevurdering'

@@ -1,9 +1,9 @@
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   overstyringDef = new ProsessStegOverstyringPanelDef(this);
 
   getKomponent = (props) => this.overstyringDef.getKomponent(props)
@@ -21,7 +21,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   getData = (data) => this.overstyringDef.getData(data)
 }
 
-class FortsattMedlemskapProsessStegPanelDef extends ProsessStegPanelDef {
+class FortsattMedlemskapProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.FORTSATTMEDLEMSKAP
 
   getTekstKode = () => 'Behandlingspunkt.FortsattMedlemskap'

@@ -3,11 +3,11 @@ import React from 'react';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../../data/fpBehandlingApi';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <VurderSoknadsfristForeldrepengerIndex {...props} />
 
   getAksjonspunktKoder = () => [
@@ -21,7 +21,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   getData = ({ soknad }) => ({ soknad })
 }
 
-class SoknadsfristProsessStegPanelDef extends ProsessStegPanelDef {
+class SoknadsfristProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.SOEKNADSFRIST
 
   getTekstKode = () => 'Behandlingspunkt.Soknadsfristvilkaret'

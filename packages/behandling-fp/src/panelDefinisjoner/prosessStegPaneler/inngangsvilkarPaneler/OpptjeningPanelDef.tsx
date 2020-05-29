@@ -3,11 +3,11 @@ import React from 'react';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDelPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef, ProsessStegOverstyringPanelDef } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../../../data/fpBehandlingApi';
 
-class OpptjeningPanelDef extends ProsessStegDelPanelDef {
+class OpptjeningPanelDef extends ProsessStegPanelDef {
   getId = () => 'OPPTJENINGSVILKARET'
 
   getTekstKode = () => 'Inngangsvilkar.Opptjeningsvilkaret'

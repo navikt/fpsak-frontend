@@ -18,8 +18,8 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from './ProsessStegPanelDef';
-import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from './ProsessStegPanelUtledet';
+import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
+import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
 
 const HookWrapper = ({ callback }) => <div data-values={callback()} />;
@@ -68,7 +68,7 @@ describe('<prosessStegHooks>', () => {
 
   const kanOverstyreAccess = { isEnabled: false, employeeHasAccess: false };
 
-  class PanelDef extends ProsessStegDelPanelDef {
+  class PanelDef extends ProsessStegPanelDef {
     getKomponent = (props) => <div {...props} />
 
     getAksjonspunktKoder = () => [
@@ -90,7 +90,7 @@ describe('<prosessStegHooks>', () => {
 
   const panelDef = new PanelDef();
 
-  class OpplysningspliktProsessStegPanelDef extends ProsessStegPanelDef {
+  class OpplysningspliktProsessStegPanelDef extends ProsessStegDef {
     getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT
 
     getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt'

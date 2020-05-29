@@ -12,8 +12,8 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '../util/prosessSteg/ProsessStegPanelDef';
-import { ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegPanelUtledet';
+import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
+import { ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 
@@ -44,7 +44,7 @@ describe('<InngangsvilkarPanel>', () => {
   }];
 
   const lagPanelDef = (id, aksjonspunktKoder, aksjonspunktTekstKoder) => {
-    class PanelDef extends ProsessStegDelPanelDef {
+    class PanelDef extends ProsessStegPanelDef {
       getId = () => ''
 
       getKomponent = (props) => <div {...props} />
@@ -57,7 +57,7 @@ describe('<InngangsvilkarPanel>', () => {
   };
 
   const lagStegDef = (urlKode, panelDef) => {
-    class StegPanelDef extends ProsessStegPanelDef {
+    class StegPanelDef extends ProsessStegDef {
       getUrlKode = () => urlKode
 
       getTekstKode = () => urlKode

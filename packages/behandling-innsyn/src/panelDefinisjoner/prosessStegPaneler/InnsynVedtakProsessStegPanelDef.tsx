@@ -6,7 +6,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
 const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
   const harApentAksjonpunkt = aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
@@ -16,7 +16,7 @@ const getVedtakStatus = (innsynResultatType, aksjonspunkter) => {
   return innsynResultatType.kode === innsynResultatTypeKV.INNVILGET ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_OPPFYLT;
 };
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <VedtakInnsynProsessIndex {...props} />
 
   getOverstyrVisningAvKomponent = () => true
@@ -42,7 +42,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class InnsynVedtakProsessStegPanelDef extends ProsessStegPanelDef {
+class InnsynVedtakProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.VEDTAK
 
   getTekstKode = () => 'Behandlingspunkt.Vedtak'

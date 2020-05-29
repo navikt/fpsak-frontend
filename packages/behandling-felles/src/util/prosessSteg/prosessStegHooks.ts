@@ -14,11 +14,11 @@ import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import {
   utledProsessStegPaneler, finnValgtPanel, formaterPanelerForProsessmeny, getBekreftAksjonspunktCallback,
 } from './prosessStegUtils';
-import { ProsessStegPanelDef } from './ProsessStegPanelDef';
-import { ProsessStegPanelUtledet } from './ProsessStegPanelUtledet';
+import { ProsessStegDef } from './ProsessStegDef';
+import { ProsessStegPanelUtledet } from './ProsessStegUtledet';
 
 const useProsessStegPaneler = (
-  prosessStegPanelDefinisjoner: ProsessStegPanelDef[],
+  prosessStegPanelDefinisjoner: ProsessStegDef[],
   panelData: {},
   fagsak: FagsakInfo,
   rettigheter: Rettigheter,

@@ -7,7 +7,7 @@ import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
  */
 abstract class FaktaPanelDef {
   /**
-   * Kode som blir vist som query-param i URL. Denne koden skal defineres i faktaPanelCodes
+   * Kode som blir vist som query-param i URL. Denne koden skal defineres i @see faktaPanelCodes
    */
   public abstract getUrlKode(): string
 
@@ -39,7 +39,7 @@ abstract class FaktaPanelDef {
   protected getOverstyrVisningAvKomponent = (_data: any): boolean => false
 
   /**
-   * Data som skal sendes med til komponent
+   * Data som skal sendes med til komponent. Dette er data som frontend allerede har tilgang til (Trenger ikke hente på nytt)
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public getData = (_data: any): any => ({})

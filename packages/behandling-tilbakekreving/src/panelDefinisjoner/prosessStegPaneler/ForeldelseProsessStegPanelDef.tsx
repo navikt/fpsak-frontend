@@ -5,9 +5,9 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { getAlleMerknaderFraBeslutter, ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { getAlleMerknaderFraBeslutter, ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <ForeldelseProsessIndex {...props} />
 
   getOverstyrVisningAvKomponent = () => true
@@ -28,7 +28,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class ForeldelseProsessStegPanelDef extends ProsessStegPanelDef {
+class ForeldelseProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.FORELDELSE
 
   getTekstKode = () => 'Behandlingspunkt.Foreldelse'

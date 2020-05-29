@@ -6,7 +6,7 @@ import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-fr
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
-import { ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegPanelUtledet';
+import { ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBehandlingData';
 
 import styles from './inngangsvilkarPanel.less';

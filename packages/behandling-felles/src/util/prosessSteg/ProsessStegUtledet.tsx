@@ -4,7 +4,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Aksjonspunkt, Vilkar } from '@fpsak-frontend/types';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from './ProsessStegPanelDef';
+import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 
 const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   if (vilkar.length > 0) {
@@ -22,9 +22,9 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
 };
 
 export class ProsessStegDelPanelUtledet {
-  prosessStegPanelDef: ProsessStegPanelDef;
+  prosessStegPanelDef: ProsessStegDef;
 
-  prosessStegDelPanelDef: ProsessStegDelPanelDef
+  prosessStegDelPanelDef: ProsessStegPanelDef
 
   isReadOnlyCheck: (aksjonspunkterForPanel: Aksjonspunkt[], vilkarForPanel: Vilkar[]) => boolean
 
@@ -41,8 +41,8 @@ export class ProsessStegDelPanelUtledet {
   overstyrteAksjonspunktKoder: string[]
 
   constructor(
-    prosessStegPanelDef: ProsessStegPanelDef,
-    prosessStegDelPanelDef: ProsessStegDelPanelDef,
+    prosessStegPanelDef: ProsessStegDef,
+    prosessStegDelPanelDef: ProsessStegPanelDef,
     isReadOnlyCheck: (aksjonspunkterForPanel: Aksjonspunkt[], vilkarForPanel: Vilkar[]) => boolean,
     aksjonspunkter: Aksjonspunkt[],
     vilkar: Vilkar[],
@@ -124,11 +124,11 @@ export class ProsessStegDelPanelUtledet {
 }
 
 export class ProsessStegPanelUtledet {
-  prosessStegPanelDef: ProsessStegPanelDef;
+  prosessStegPanelDef: ProsessStegDef;
 
   delPaneler: ProsessStegDelPanelUtledet[];
 
-  constructor(prosessStegPanelDef: ProsessStegPanelDef, delPaneler: ProsessStegDelPanelUtledet[]) {
+  constructor(prosessStegPanelDef: ProsessStegDef, delPaneler: ProsessStegDelPanelUtledet[]) {
     this.prosessStegPanelDef = prosessStegPanelDef;
     this.delPaneler = delPaneler;
   }

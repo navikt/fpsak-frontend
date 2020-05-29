@@ -21,8 +21,8 @@ import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegPanel from './ProsessStegPanel';
 import MargMarkering from './MargMarkering';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '../util/prosessSteg/ProsessStegPanelDef';
-import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegPanelUtledet';
+import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
+import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
 describe('<ProsessStegPanel>', () => {
   const fagsak = {
@@ -73,7 +73,7 @@ describe('<ProsessStegPanel>', () => {
   const toggleOverstyring = () => undefined;
 
   const lagPanelDef = (id, aksjonspunktKoder, aksjonspunktTekstKoder) => {
-    class PanelDef extends ProsessStegDelPanelDef {
+    class PanelDef extends ProsessStegPanelDef {
       getId = () => ''
 
       getKomponent = (props) => <div {...props} />
@@ -86,7 +86,7 @@ describe('<ProsessStegPanel>', () => {
   };
 
   const lagStegDef = (urlKode, panelDefs) => {
-    class StegPanelDef extends ProsessStegPanelDef {
+    class StegPanelDef extends ProsessStegDef {
       getUrlKode = () => urlKode
 
       getTekstKode = () => urlKode

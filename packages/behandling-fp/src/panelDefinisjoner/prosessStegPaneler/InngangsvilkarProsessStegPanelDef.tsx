@@ -1,5 +1,5 @@
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
-import { ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef } from '@fpsak-frontend/behandling-felles';
 
 import FodselPanelDef from './inngangsvilkarPaneler/FodselPanelDef';
 import AdopsjonPanelDef from './inngangsvilkarPaneler/AdopsjonPanelDef';
@@ -8,7 +8,7 @@ import MedlemskapPanelDef from './inngangsvilkarPaneler/MedlemskapPanelDef';
 import ForeldreansvarPanelDef from './inngangsvilkarPaneler/ForeldreansvarPanelDef';
 import OpptjeningPanelDef from './inngangsvilkarPaneler/OpptjeningPanelDef';
 
-class InngangsvilkarProsessStegPanelDef extends ProsessStegPanelDef {
+class InngangsvilkarProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.INNGANGSVILKAR
 
   getTekstKode = () => 'Behandlingspunkt.Inngangsvilkar'

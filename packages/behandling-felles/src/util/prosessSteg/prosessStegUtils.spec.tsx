@@ -17,11 +17,11 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { Behandling } from '@fpsak-frontend/types';
 
-import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from './ProsessStegPanelUtledet';
+import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from './ProsessStegUtledet';
 import {
   utledProsessStegPaneler, getBekreftAksjonspunktCallback, formaterPanelerForProsessmeny, finnValgtPanel,
 } from './prosessStegUtils';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from './ProsessStegPanelDef';
+import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
 
 describe('<prosessStegUtils>', () => {
   const fagsak = {
@@ -68,7 +68,7 @@ describe('<prosessStegUtils>', () => {
   const isReadOnlyCheck = () => false;
   const toggleOverstyring = () => undefined;
 
-  class TestPanelDef extends ProsessStegDelPanelDef {
+  class TestPanelDef extends ProsessStegPanelDef {
     getKomponent = (props) => <div {...props} />
 
     getAksjonspunktKoder = () => [
@@ -78,7 +78,7 @@ describe('<prosessStegUtils>', () => {
 
   const testPanelDef = new TestPanelDef();
 
-  class TestProsessStegPanelDef extends ProsessStegPanelDef {
+  class TestProsessStegPanelDef extends ProsessStegDef {
     getUrlKode = () => 'test'
 
     getTekstKode = () => 'Behandlingspunkt.Test'
@@ -91,7 +91,7 @@ describe('<prosessStegUtils>', () => {
     toggleOverstyring, kanOverstyreAccess, []);
   const utledetTestPanel = new ProsessStegPanelUtledet(testStegDef, [utledetTestDelPanel]);
 
-  class PanelDef extends ProsessStegDelPanelDef {
+  class PanelDef extends ProsessStegPanelDef {
     getKomponent = (props) => <div {...props} />
 
     getAksjonspunktKoder = () => [
@@ -113,7 +113,7 @@ describe('<prosessStegUtils>', () => {
 
   const panelDef = new PanelDef();
 
-  class OpplysningspliktProsessStegPanelDef extends ProsessStegPanelDef {
+  class OpplysningspliktProsessStegPanelDef extends ProsessStegDef {
     getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT
 
     getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt'

@@ -4,7 +4,7 @@ import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import fpBehandlingApi from '../../data/fpBehandlingApi';
@@ -33,7 +33,7 @@ const getStatusFromUttakresultat = (uttaksresultat, aksjonspunkter) => {
   return vilkarUtfallType.IKKE_OPPFYLT;
 };
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <UttakProsessIndex {...props} />
 
   getAksjonspunktKoder = () => [
@@ -72,7 +72,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class UttakProsessStegPanelDef extends ProsessStegPanelDef {
+class UttakProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.UTTAK
 
   getTekstKode = () => 'Behandlingspunkt.Uttak'

@@ -5,9 +5,9 @@ import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <SokersOpplysningspliktVilkarProsessIndex {...props} />
 
   getOverstyrVisningAvKomponent = ({ behandling, aksjonspunkterForSteg }) => {
@@ -35,7 +35,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class OpplysningspliktProsessStegPanelDef extends ProsessStegPanelDef {
+class OpplysningspliktProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.OPPLYSNINGSPLIKT
 
   getTekstKode = () => 'Behandlingspunkt.Opplysningsplikt'

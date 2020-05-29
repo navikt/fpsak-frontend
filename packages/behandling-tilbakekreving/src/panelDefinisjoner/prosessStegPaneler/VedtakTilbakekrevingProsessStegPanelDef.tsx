@@ -3,13 +3,13 @@ import React from 'react';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegDef, ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';
 import tilbakekrevingApi from '../../data/tilbakekrevingBehandlingApi';
 
-class PanelDef extends ProsessStegDelPanelDef {
+class PanelDef extends ProsessStegPanelDef {
   getKomponent = (props) => <VedtakTilbakekrevingProsessIndex {...props} />
 
   getOverstyrVisningAvKomponent = () => true
@@ -38,7 +38,7 @@ class PanelDef extends ProsessStegDelPanelDef {
   })
 }
 
-class VedtakTilbakekrevingProsessStegPanelDef extends ProsessStegPanelDef {
+class VedtakTilbakekrevingProsessStegPanelDef extends ProsessStegDef {
   getUrlKode = () => prosessStegCodes.VEDTAK
 
   getTekstKode = () => 'Behandlingspunkt.Vedtak'

@@ -11,13 +11,13 @@ import readOnlyUtils from '../readOnlyUtils';
 import FagsakInfo from '../../types/fagsakInfoTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
-import { ProsessStegPanelDef, ProsessStegDelPanelDef } from './ProsessStegPanelDef';
-import { ProsessStegDelPanelUtledet, ProsessStegPanelUtledet } from './ProsessStegPanelUtledet';
+import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
+import { ProsessStegDelPanelUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';
 
 export const utledProsessStegPaneler = (
-  prosessStegPanelDefinisjoner: ProsessStegPanelDef[],
+  prosessStegPanelDefinisjoner: ProsessStegDef[],
   dataForUtledingAvPaneler: {},
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
   overstyrteAksjonspunktKoder: string[],
@@ -32,11 +32,11 @@ export const utledProsessStegPaneler = (
   );
 
   return prosessStegPanelDefinisjoner
-    .filter((prosessStegDef: ProsessStegPanelDef) => prosessStegDef.skalViseMinstEttPanelForSteg(behandling, aksjonspunkter, vilkar))
-    .map((prosessStegDef: ProsessStegPanelDef) => {
+    .filter((prosessStegDef: ProsessStegDef) => prosessStegDef.skalViseProsessSteg(behandling, aksjonspunkter, vilkar))
+    .map((prosessStegDef: ProsessStegDef) => {
       const delPaneler = prosessStegDef.getPanelDefinisjoner()
-        .filter((panelDef: ProsessStegDelPanelDef) => panelDef.skalVisePanel(behandling, aksjonspunkter, vilkar))
-        .map((panelDef: ProsessStegDelPanelDef) => {
+        .filter((panelDef: ProsessStegPanelDef) => panelDef.skalVisePanel(behandling, aksjonspunkter, vilkar))
+        .map((panelDef: ProsessStegPanelDef) => {
           const pDef = panelDef.skalBrukeOverstyringspanel(aksjonspunkter) ? panelDef.getOverstyringspanelDef() : panelDef;
           return new ProsessStegDelPanelUtledet(prosessStegDef, pDef, isReadOnlyCheck, aksjonspunkter, vilkar,
             dataForUtledingAvPaneler, toggleOverstyring, rettigheter.kanOverstyreAccess, overstyrteAksjonspunktKoder);

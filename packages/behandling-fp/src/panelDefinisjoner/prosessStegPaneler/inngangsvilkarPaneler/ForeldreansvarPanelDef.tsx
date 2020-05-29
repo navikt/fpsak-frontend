@@ -3,9 +3,9 @@ import React from 'react';
 import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ProsessStegDelPanelDef } from '@fpsak-frontend/behandling-felles';
+import { ProsessStegPanelDef } from '@fpsak-frontend/behandling-felles';
 
-class ForeldreansvarPanelDef extends ProsessStegDelPanelDef {
+class ForeldreansvarPanelDef extends ProsessStegPanelDef {
   getId = () => 'FORELDREANSVARSVILKARET'
 
   getTekstKode = () => 'Inngangsvilkar.Foreldreansvar'

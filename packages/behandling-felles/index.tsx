@@ -15,7 +15,7 @@ export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerkn
 export { default as faktaHooks } from './src/util/fakta/faktaHooks';
 export { default as FaktaPanelDef } from './src/util/fakta/FaktaPanelDef';
 export { default as prosessStegHooks } from './src/util/prosessSteg/prosessStegHooks';
-export { ProsessStegPanelDef, ProsessStegDelPanelDef } from './src/util/prosessSteg/ProsessStegPanelDef';
+export { ProsessStegDef, ProsessStegPanelDef } from './src/util/prosessSteg/ProsessStegDef';
 export { default as ProsessStegOverstyringPanelDef } from './src/util/prosessSteg/ProsessStegOverstyringPanelDef';
 
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
