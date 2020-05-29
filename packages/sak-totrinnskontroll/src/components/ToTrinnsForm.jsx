@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/form';
@@ -22,6 +23,17 @@ const allSelected = (formState) => formState
   .reduce((a, b) => a.concat(b.aksjonspunkter), [])
   .every((ap) => ap.totrinnskontrollGodkjent !== null);
 
+
+const harIkkeKonsekvenserForYtelsen = (behandlingResultat, ...konsekvenserForYtelsenKoder) => {
+  if (!behandlingResultat) {
+    return true;
+  }
+  const { konsekvenserForYtelsen } = behandlingResultat;
+  if (!Array.isArray(konsekvenserForYtelsen) || konsekvenserForYtelsen.length !== 1) {
+    return true;
+  }
+  return !konsekvenserForYtelsenKoder.some((kode) => kode === konsekvenserForYtelsen[0].kode);
+};
 
 /*
   * ToTrinnsForm
@@ -41,6 +53,7 @@ export const ToTrinnsFormImpl = ({
   alleKodeverk,
   disableGodkjennKnapp,
   erTilbakekreving,
+  behandlingsresultat,
   ...formProps
 }) => {
   if (formState.length !== totrinnskontrollContext.length) {
@@ -48,6 +61,10 @@ export const ToTrinnsFormImpl = ({
   }
 
   const erKlage = !!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK;
+
+  const harIkkeKonsekvensForYtelse = useMemo(() => harIkkeKonsekvenserForYtelsen(behandlingsresultat,
+    konsekvensForYtelsen.ENDRING_I_FORDELING_AV_YTELSEN, konsekvensForYtelsen.INGEN_ENDRING), [behandlingsresultat]);
+
 
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
@@ -98,7 +115,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving && (
+        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving && harIkkeKonsekvensForYtelse && (
           <>
             <VerticalSpacer eightPx />
             <button
@@ -123,6 +140,7 @@ ToTrinnsFormImpl.propTypes = {
   klageVurderingResultatNFP: PropTypes.shape(),
   klageVurderingResultatNK: PropTypes.shape(),
   behandlingKlageVurdering: PropTypes.shape(),
+  behandlingsresultat: PropTypes.shape(),
   erBehandlingEtterKlage: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
@@ -130,6 +148,7 @@ ToTrinnsFormImpl.propTypes = {
 };
 
 ToTrinnsFormImpl.defaultProps = {
+  behandlingsresultat: undefined,
   klageVurderingResultatNFP: undefined,
   klageVurderingResultatNK: undefined,
   totrinnskontrollContext: [],

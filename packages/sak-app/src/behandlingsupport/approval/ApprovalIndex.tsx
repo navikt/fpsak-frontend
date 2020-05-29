@@ -212,6 +212,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
             <TotrinnskontrollSakIndex
               behandlingId={behandlingIdentifier.behandlingId}
               behandlingVersjon={selectedBehandlingVersjon}
+              behandlingsresultat={behandlingsresultat}
               behandlingStatus={behandlingStatus}
               totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
               totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
