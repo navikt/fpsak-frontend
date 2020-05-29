@@ -21,10 +21,10 @@ const finnStatus = (vilkar: Vilkar[], aksjonspunkter: Aksjonspunkt[]) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-export class ProsessStegDelPanelUtledet {
-  prosessStegPanelDef: ProsessStegDef;
+export class ProsessStegPanelUtledet {
+  prosessStegDef: ProsessStegDef;
 
-  prosessStegDelPanelDef: ProsessStegPanelDef
+  prosessStegPanelDef: ProsessStegPanelDef
 
   isReadOnlyCheck: (aksjonspunkterForPanel: Aksjonspunkt[], vilkarForPanel: Vilkar[]) => boolean
 
@@ -41,8 +41,8 @@ export class ProsessStegDelPanelUtledet {
   overstyrteAksjonspunktKoder: string[]
 
   constructor(
-    prosessStegPanelDef: ProsessStegDef,
-    prosessStegDelPanelDef: ProsessStegPanelDef,
+    prosessStegDef: ProsessStegDef,
+    prosessStegPanelDef: ProsessStegPanelDef,
     isReadOnlyCheck: (aksjonspunkterForPanel: Aksjonspunkt[], vilkarForPanel: Vilkar[]) => boolean,
     aksjonspunkter: Aksjonspunkt[],
     vilkar: Vilkar[],
@@ -51,8 +51,8 @@ export class ProsessStegDelPanelUtledet {
     kanOverstyreAccess: { isEnabled: boolean; employeeHasAccess: boolean },
     overstyrteAksjonspunktKoder: string[],
   ) {
+    this.prosessStegDef = prosessStegDef;
     this.prosessStegPanelDef = prosessStegPanelDef;
-    this.prosessStegDelPanelDef = prosessStegDelPanelDef;
     this.isReadOnlyCheck = isReadOnlyCheck;
     this.aksjonspunkter = aksjonspunkter;
     this.vilkar = vilkar;
@@ -62,33 +62,33 @@ export class ProsessStegDelPanelUtledet {
     this.overstyrteAksjonspunktKoder = overstyrteAksjonspunktKoder;
   }
 
-  public getId = () => this.prosessStegDelPanelDef.getId()
+  public getId = () => this.prosessStegPanelDef.getId()
 
-  public getProsessStegDelPanelDef = () => this.prosessStegDelPanelDef
+  public getProsessStegDelPanelDef = () => this.prosessStegPanelDef
 
-  public getAksjonspunkterForPanel = () => this.prosessStegDelPanelDef.finnAksjonspunkterForSteg(this.aksjonspunkter)
+  public getAksjonspunkterForPanel = () => this.prosessStegPanelDef.finnAksjonspunkterForSteg(this.aksjonspunkter)
 
-  private getVilkarForPanel = () => this.prosessStegDelPanelDef.finnVilkarForSteg(this.vilkar)
+  private getVilkarForPanel = () => this.prosessStegPanelDef.finnVilkarForSteg(this.vilkar)
 
   public getStatus = () => {
-    const overstyrtStatus = this.prosessStegDelPanelDef.getOverstyrtStatus({
+    const overstyrtStatus = this.prosessStegPanelDef.getOverstyrtStatus({
       ...this.panelData,
       aksjonspunkterForSteg: this.getAksjonspunkterForPanel(),
       vilkarForSteg: this.getVilkarForPanel(),
     });
-    const vilkarForSteg = this.prosessStegDelPanelDef.finnVilkarForSteg(this.vilkar);
+    const vilkarForSteg = this.prosessStegPanelDef.finnVilkarForSteg(this.vilkar);
     return overstyrtStatus || finnStatus(vilkarForSteg, this.getAksjonspunkterForPanel());
   }
 
   public getAksjonspunktHjelpetekster = () => {
     const opneAksjonspunkter = this.getAksjonspunkterForPanel().filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses);
-    const indekser = opneAksjonspunkter.map((a) => this.prosessStegDelPanelDef.getAksjonspunktKoder().findIndex((ac) => a.definisjon.kode === ac));
-    return this.prosessStegDelPanelDef.getAksjonspunktTekstkoder().filter((a, index) => indekser.includes(index));
+    const indekser = opneAksjonspunkter.map((a) => this.prosessStegPanelDef.getAksjonspunktKoder().findIndex((ac) => a.definisjon.kode === ac));
+    return this.prosessStegPanelDef.getAksjonspunktTekstkoder().filter((a, index) => indekser.includes(index));
   }
 
   public getErAksjonspunktOpen = (): boolean => {
     const opneAksjonspunkter = this.getAksjonspunkterForPanel().filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses);
-    return this.prosessStegDelPanelDef.getAksjonspunktKoder().some((a) => this.overstyrteAksjonspunktKoder.includes(a))
+    return this.prosessStegPanelDef.getAksjonspunktKoder().some((a) => this.overstyrteAksjonspunktKoder.includes(a))
         || opneAksjonspunkter.length > 0;
   }
 
@@ -100,7 +100,7 @@ export class ProsessStegDelPanelUtledet {
     const erAksjonspunktOpent = this.getErAksjonspunktOpen();
     const vilkarForPanel = this.getVilkarForPanel();
     const erReadOnly = this.getErReadOnly();
-    const harMinstEttPanelApentAksjonspunkt = this.prosessStegPanelDef.harMinstEttApentAksjonspunkt(this.aksjonspunkter, this.overstyrteAksjonspunktKoder);
+    const harMinstEttPanelApentAksjonspunkt = this.prosessStegDef.harMinstEttApentAksjonspunkt(this.aksjonspunkter, this.overstyrteAksjonspunktKoder);
 
     return {
       status,
@@ -109,12 +109,12 @@ export class ProsessStegDelPanelUtledet {
       aksjonspunkter: aksjonspunkterForPanel,
       vilkar: vilkarForPanel,
       isAksjonspunktOpen: erAksjonspunktOpent,
-      ...this.prosessStegDelPanelDef.getData({
+      ...this.prosessStegPanelDef.getData({
         ...this.panelData,
         aksjonspunkterForSteg: aksjonspunkterForPanel,
         vilkarForSteg: vilkarForPanel,
         overstyrteAksjonspunktKoder: this.overstyrteAksjonspunktKoder,
-        prosessStegTekstKode: this.prosessStegDelPanelDef.getTekstKode() || this.prosessStegPanelDef.getTekstKode(),
+        prosessStegTekstKode: this.prosessStegPanelDef.getTekstKode() || this.prosessStegDef.getTekstKode(),
         overrideReadOnly: erReadOnly || (harMinstEttPanelApentAksjonspunkt && !erAksjonspunktOpent),
         kanOverstyreAccess: this.kanOverstyreAccess,
         toggleOverstyring: this.toggleOverstyring,
@@ -123,21 +123,21 @@ export class ProsessStegDelPanelUtledet {
   }
 }
 
-export class ProsessStegPanelUtledet {
-  prosessStegPanelDef: ProsessStegDef;
+export class ProsessStegUtledet {
+  prosessStegDef: ProsessStegDef;
 
-  delPaneler: ProsessStegDelPanelUtledet[];
+  paneler: ProsessStegPanelUtledet[];
 
-  constructor(prosessStegPanelDef: ProsessStegDef, delPaneler: ProsessStegDelPanelUtledet[]) {
-    this.prosessStegPanelDef = prosessStegPanelDef;
-    this.delPaneler = delPaneler;
+  constructor(prosessStegDef: ProsessStegDef, paneler: ProsessStegPanelUtledet[]) {
+    this.prosessStegDef = prosessStegDef;
+    this.paneler = paneler;
   }
 
-  public getUrlKode = (): string => this.prosessStegPanelDef.getUrlKode()
+  public getUrlKode = (): string => this.prosessStegDef.getUrlKode()
 
-  public getTekstKode = (): string => this.prosessStegPanelDef.getTekstKode()
+  public getTekstKode = (): string => this.prosessStegDef.getTekstKode()
 
-  private harMinstEttDelPanelStatus = (vuType: string): boolean => this.delPaneler.some((p) => p.getStatus() === vuType)
+  private harMinstEttDelPanelStatus = (vuType: string): boolean => this.paneler.some((p) => p.getStatus() === vuType)
 
   public getStatus = () => {
     const harStatusIkkeVurdert = this.harMinstEttDelPanelStatus(vilkarUtfallType.IKKE_VURDERT);
@@ -150,15 +150,15 @@ export class ProsessStegPanelUtledet {
     const harUlikeStatuserIPanelene = this.harMinstEttDelPanelStatus(vilkarUtfallType.IKKE_VURDERT)
       && this.harMinstEttDelPanelStatus(vilkarUtfallType.IKKE_OPPFYLT)
       && !this.harMinstEttDelPanelStatus(vilkarUtfallType.IKKE_OPPFYLT);
-    return harUlikeStatuserIPanelene || this.delPaneler.some((p) => p.getErAksjonspunktOpen());
+    return harUlikeStatuserIPanelene || this.paneler.some((p) => p.getErAksjonspunktOpen());
   }
 
   public getErStegBehandlet = (): boolean => this.getStatus() !== vilkarUtfallType.IKKE_VURDERT || this.getErAksjonspunktOpen()
 
-  public getAksjonspunkter = (): Aksjonspunkt[] => this.delPaneler
+  public getAksjonspunkter = (): Aksjonspunkt[] => this.paneler
     .filter((pd) => pd.getAksjonspunkterForPanel()).reduce((acc, pd) => [...acc, ...pd.getAksjonspunkterForPanel()], [])
 
-  public getErReadOnly = (): boolean => this.delPaneler.every((p) => p.getErReadOnly())
+  public getErReadOnly = (): boolean => this.paneler.every((p) => p.getErReadOnly())
 
-  public getDelPaneler = (): ProsessStegDelPanelUtledet[] => this.delPaneler
+  public getDelPaneler = (): ProsessStegPanelUtledet[] => this.paneler
 }

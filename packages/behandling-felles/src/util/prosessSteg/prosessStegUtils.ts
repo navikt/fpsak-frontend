@@ -12,7 +12,7 @@ import FagsakInfo from '../../types/fagsakInfoTsType';
 import ProsessStegMenyRad from '../../types/prosessStegMenyRadTsType';
 import Rettigheter from '../../types/rettigheterTsType';
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
-import { ProsessStegDelPanelUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
+import { ProsessStegPanelUtledet, ProsessStegUtledet } from './ProsessStegUtledet';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';
 
@@ -26,7 +26,7 @@ export const utledProsessStegPaneler = (
   vilkar: Vilkar[],
   rettigheter: Rettigheter,
   hasFetchError: boolean,
-): ProsessStegPanelUtledet[] => {
+): ProsessStegUtledet[] => {
   const isReadOnlyCheck = (aksjonspunkterForPanel, vilkarForPanel) => readOnlyUtils.erReadOnly(
     behandling, aksjonspunkterForPanel, vilkarForPanel, rettigheter, hasFetchError,
   );
@@ -38,19 +38,19 @@ export const utledProsessStegPaneler = (
         .filter((panelDef: ProsessStegPanelDef) => panelDef.skalVisePanel(behandling, aksjonspunkter, vilkar))
         .map((panelDef: ProsessStegPanelDef) => {
           const pDef = panelDef.skalBrukeOverstyringspanel(aksjonspunkter) ? panelDef.getOverstyringspanelDef() : panelDef;
-          return new ProsessStegDelPanelUtledet(prosessStegDef, pDef, isReadOnlyCheck, aksjonspunkter, vilkar,
+          return new ProsessStegPanelUtledet(prosessStegDef, pDef, isReadOnlyCheck, aksjonspunkter, vilkar,
             dataForUtledingAvPaneler, toggleOverstyring, rettigheter.kanOverstyreAccess, overstyrteAksjonspunktKoder);
         });
-      return new ProsessStegPanelUtledet(prosessStegDef, delPaneler);
+      return new ProsessStegUtledet(prosessStegDef, delPaneler);
     });
 };
 
 export const finnValgtPanel = (
-  prosessStegPaneler: ProsessStegPanelUtledet[],
+  prosessStegPaneler: ProsessStegUtledet[],
   erBehandlingHenlagt: boolean,
   valgtProsessStegPanelKode?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
-): ProsessStegPanelUtledet => {
+): ProsessStegUtledet => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
     if (erBehandlingHenlagt) {
       return prosessStegPaneler[prosessStegPaneler.length - 1];
@@ -84,7 +84,7 @@ const finnProsessmenyType = (
 };
 
 export const formaterPanelerForProsessmeny = (
-  prosessStegPaneler: ProsessStegPanelUtledet[],
+  prosessStegPaneler: ProsessStegUtledet[],
   valgtProsessStegPanelKode?: string,
 ): ProsessStegMenyRad[] => prosessStegPaneler.map((panel) => {
   const type = finnProsessmenyType(panel.getStatus(), panel.getErAksjonspunktOpen());

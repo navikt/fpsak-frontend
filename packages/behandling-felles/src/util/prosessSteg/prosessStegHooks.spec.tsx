@@ -19,7 +19,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import { ProsessStegDef, ProsessStegPanelDef } from './ProsessStegDef';
-import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from './ProsessStegUtledet';
+import { ProsessStegUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
 import prosessStegHooks from './prosessStegHooks';
 
 const HookWrapper = ({ callback }) => <div data-values={callback()} />;
@@ -143,9 +143,9 @@ describe('<prosessStegHooks>', () => {
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
-    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+    const utledetDelPanel = new ProsessStegPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+    const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const valgtFaktaSteg = 'default';
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
@@ -168,9 +168,9 @@ describe('<prosessStegHooks>', () => {
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
-    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+    const utledetDelPanel = new ProsessStegPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+    const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const valgtFaktaSteg = 'default';
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
@@ -193,9 +193,9 @@ describe('<prosessStegHooks>', () => {
     const isReadOnlyCheck = () => false;
     const toggleOverstyring = () => undefined;
     const stegDef = new OpplysningspliktProsessStegPanelDef();
-    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+    const utledetDelPanel = new ProsessStegPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+    const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();

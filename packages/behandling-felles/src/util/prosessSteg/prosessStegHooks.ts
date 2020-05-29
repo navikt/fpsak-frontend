@@ -15,7 +15,7 @@ import {
   utledProsessStegPaneler, finnValgtPanel, formaterPanelerForProsessmeny, getBekreftAksjonspunktCallback,
 } from './prosessStegUtils';
 import { ProsessStegDef } from './ProsessStegDef';
-import { ProsessStegPanelUtledet } from './ProsessStegUtledet';
+import { ProsessStegUtledet } from './ProsessStegUtledet';
 
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
@@ -28,7 +28,7 @@ const useProsessStegPaneler = (
   hasFetchError: boolean,
   valgtProsessSteg?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
-): [ProsessStegPanelUtledet[], ProsessStegPanelUtledet, ProsessStegMenyRad[]] => {
+): [ProsessStegUtledet[], ProsessStegUtledet, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const ekstraPanelData = {
     ...panelData,
@@ -61,12 +61,12 @@ const useProsessStegPaneler = (
 };
 
 const useProsessStegVelger = (
-  prosessStegPaneler: ProsessStegPanelUtledet[],
+  prosessStegPaneler: ProsessStegUtledet[],
   valgtFaktaSteg: string,
   behandling: Behandling,
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void,
   valgtProsessSteg: string,
-  valgtPanel?: ProsessStegPanelUtledet,
+  valgtPanel?: ProsessStegUtledet,
 ) => useCallback((index) => {
   const urlCode = prosessStegPaneler[index].getUrlKode();
 
@@ -83,7 +83,7 @@ const useBekreftAksjonspunkt = (
   behandlingApi: {[name: string]: EndpointOperations},
   lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
   dispatch: Dispatch,
-  valgtPanel?: ProsessStegPanelUtledet,
+  valgtPanel?: ProsessStegUtledet,
 ) => useCallback((
   aksjonspunktModels,
 ) => getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak,

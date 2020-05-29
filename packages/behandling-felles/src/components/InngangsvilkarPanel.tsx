@@ -6,7 +6,7 @@ import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-fr
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 
-import { ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBehandlingData';
 
 import styles from './inngangsvilkarPanel.less';
@@ -14,7 +14,7 @@ import styles from './inngangsvilkarPanel.less';
 interface OwnProps {
   behandling: Behandling;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
-  prosessStegData: ProsessStegDelPanelUtledet[];
+  prosessStegData: ProsessStegPanelUtledet[];
   submitCallback: (data: {}) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;

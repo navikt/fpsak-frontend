@@ -13,7 +13,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
-import { ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 
@@ -73,17 +73,17 @@ describe('<InngangsvilkarPanel>', () => {
 
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
     const fodselStegDef = lagStegDef('FODSEL', fodselPanelDef);
-    const utledetFodselDelPanel = new ProsessStegDelPanelUtledet(fodselStegDef, fodselPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(fodselStegDef, fodselPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
 
     const medlemskapPanelDef = lagPanelDef('MEDLSEMSKAP', [], ['MEDLSEMSKAP.TEKST']);
     const medlemskapStegDef = lagStegDef('MEDLSEMSKAP', medlemskapPanelDef);
-    const utledetMedlemskapDelPanel = new ProsessStegDelPanelUtledet(medlemskapStegDef, medlemskapPanelDef, isReadOnlyCheck, [], [], {},
+    const utledetMedlemskapDelPanel = new ProsessStegPanelUtledet(medlemskapStegDef, medlemskapPanelDef, isReadOnlyCheck, [], [], {},
       toggleOverstyring, kanOverstyreAccess, []);
 
     const opptjeningPanelDef = lagPanelDef('OPPTJENING', [], ['OPPTJENING.TEKST']);
     const opptjeningStegDef = lagStegDef('OPPTJENING', opptjeningPanelDef);
-    const utledetOpptjeningDelPanel = new ProsessStegDelPanelUtledet(opptjeningStegDef, opptjeningPanelDef, isReadOnlyCheck, [], [], {},
+    const utledetOpptjeningDelPanel = new ProsessStegPanelUtledet(opptjeningStegDef, opptjeningPanelDef, isReadOnlyCheck, [], [], {},
       toggleOverstyring, kanOverstyreAccess, []);
 
     const prosessStegData = [utledetFodselDelPanel, utledetMedlemskapDelPanel, utledetOpptjeningDelPanel];
@@ -118,7 +118,7 @@ describe('<InngangsvilkarPanel>', () => {
 
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
     const fodselStegDef = lagStegDef('FODSEL', fodselPanelDef);
-    const utledetFodselDelPanel = new ProsessStegDelPanelUtledet(fodselStegDef, fodselPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(fodselStegDef, fodselPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
 
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();

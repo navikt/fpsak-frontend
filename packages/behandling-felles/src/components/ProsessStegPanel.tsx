@@ -13,13 +13,13 @@ import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBe
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
-import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import { ProsessStegUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
-  valgtProsessSteg?: ProsessStegPanelUtledet;
+  valgtProsessSteg?: ProsessStegUtledet;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl?: (punktnavn?: string, faktanavn?: string) => void;
   lagringSideeffekterCallback: (aksjonspunktModeller: [{ kode: string; isVedtakSubmission?: boolean; sendVarsel?: boolean }]) => any;

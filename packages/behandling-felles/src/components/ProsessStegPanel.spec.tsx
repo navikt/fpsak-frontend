@@ -22,7 +22,7 @@ import ProsessStegPanel from './ProsessStegPanel';
 import MargMarkering from './MargMarkering';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
-import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
+import { ProsessStegUtledet, ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
 describe('<ProsessStegPanel>', () => {
   const fagsak = {
@@ -99,9 +99,9 @@ describe('<ProsessStegPanel>', () => {
   it('skal vise panel for henlagt behandling når valgt panel er vedtakspanelet og behandling er henlagt', () => {
     const vedtakPanelDef = lagPanelDef(prosessStegCodes.VEDTAK, [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['VEDTAK.TEKST']);
     const vedtakStegDef = lagStegDef(prosessStegCodes.VEDTAK, [vedtakPanelDef]);
-    const utledetVedtakDelPanel = new ProsessStegDelPanelUtledet(vedtakStegDef, vedtakPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+    const utledetVedtakDelPanel = new ProsessStegPanelUtledet(vedtakStegDef, vedtakPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetVedtakSteg = new ProsessStegPanelUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
+    const utledetVedtakSteg = new ProsessStegUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
 
     const wrapper = shallow(
       <ProsessStegPanel
@@ -127,9 +127,9 @@ describe('<ProsessStegPanel>', () => {
   it('skal vise panel for steg ikke behandlet når steget ikke er behandlet og saken ikke er henlagt', () => {
     const vedtakPanelDef = lagPanelDef(prosessStegCodes.VEDTAK, [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['VEDTAK.TEKST']);
     const vedtakStegDef = lagStegDef(prosessStegCodes.VEDTAK, [vedtakPanelDef]);
-    const utledetVedtakDelPanel = new ProsessStegDelPanelUtledet(vedtakStegDef, vedtakPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+    const utledetVedtakDelPanel = new ProsessStegPanelUtledet(vedtakStegDef, vedtakPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetVedtakSteg = new ProsessStegPanelUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
+    const utledetVedtakSteg = new ProsessStegUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
 
     const wrapper = shallow(
       <ProsessStegPanel
@@ -160,11 +160,11 @@ describe('<ProsessStegPanel>', () => {
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
     const omsorgPanelDef = lagPanelDef('OMSORG', [], ['OMSORG.TEKST']);
     const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef, omsorgPanelDef]);
-    const utledetFodselDelPanel = new ProsessStegDelPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetOmsorgDelPanel = new ProsessStegDelPanelUtledet(inngangsvilkarStegDef, omsorgPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+    const utledetOmsorgDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, omsorgPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetInngangsvilkarSteg = new ProsessStegPanelUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel, utledetOmsorgDelPanel]);
+    const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel, utledetOmsorgDelPanel]);
 
     const wrapper = shallow(
       <ProsessStegPanel
@@ -197,9 +197,9 @@ describe('<ProsessStegPanel>', () => {
     }];
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
     const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef]);
-    const utledetFodselDelPanel = new ProsessStegDelPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetInngangsvilkarSteg = new ProsessStegPanelUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel]);
+    const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel]);
 
 
     const wrapper = shallow(
@@ -234,11 +234,11 @@ describe('<ProsessStegPanel>', () => {
     const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
     const omsorgPanelDef = lagPanelDef('OMSORG', [], ['OMSORG.TEKST']);
     const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef, omsorgPanelDef]);
-    const utledetFodselDelPanel = new ProsessStegDelPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetOmsorgDelPanel = new ProsessStegDelPanelUtledet(inngangsvilkarStegDef, omsorgPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+    const utledetOmsorgDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, omsorgPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetInngangsvilkarSteg = new ProsessStegPanelUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel, utledetOmsorgDelPanel]);
+    const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel, utledetOmsorgDelPanel]);
 
     const lagringSideeffekterCallback = sinon.spy();
     const makeRestApiRequest = sinon.spy();

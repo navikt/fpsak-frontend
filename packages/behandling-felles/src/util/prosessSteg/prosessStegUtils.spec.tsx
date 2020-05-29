@@ -17,7 +17,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { Behandling } from '@fpsak-frontend/types';
 
-import { ProsessStegPanelUtledet, ProsessStegDelPanelUtledet } from './ProsessStegUtledet';
+import { ProsessStegUtledet, ProsessStegPanelUtledet } from './ProsessStegUtledet';
 import {
   utledProsessStegPaneler, getBekreftAksjonspunktCallback, formaterPanelerForProsessmeny, finnValgtPanel,
 } from './prosessStegUtils';
@@ -87,9 +87,9 @@ describe('<prosessStegUtils>', () => {
   }
 
   const testStegDef = new TestProsessStegPanelDef();
-  const utledetTestDelPanel = new ProsessStegDelPanelUtledet(testStegDef, testPanelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+  const utledetTestDelPanel = new ProsessStegPanelUtledet(testStegDef, testPanelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
     toggleOverstyring, kanOverstyreAccess, []);
-  const utledetTestPanel = new ProsessStegPanelUtledet(testStegDef, [utledetTestDelPanel]);
+  const utledetTestPanel = new ProsessStegUtledet(testStegDef, [utledetTestDelPanel]);
 
   class PanelDef extends ProsessStegPanelDef {
     getKomponent = (props) => <div {...props} />
@@ -176,9 +176,9 @@ describe('<prosessStegUtils>', () => {
 
   it('skal vise valgt panel', () => {
     const stegDef = new OpplysningspliktProsessStegPanelDef();
-    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+    const utledetDelPanel = new ProsessStegPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+    const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
@@ -199,9 +199,9 @@ describe('<prosessStegUtils>', () => {
 
   it('skal vise panel som har åpent aksjonspunkt', () => {
     const stegDef = new OpplysningspliktProsessStegPanelDef();
-    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+    const utledetDelPanel = new ProsessStegPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+    const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
 
@@ -212,9 +212,9 @@ describe('<prosessStegUtils>', () => {
 
   it('skal formatere paneler for prosessmeny', () => {
     const stegDef = new OpplysningspliktProsessStegPanelDef();
-    const utledetDelPanel = new ProsessStegDelPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
+    const utledetDelPanel = new ProsessStegPanelUtledet(stegDef, panelDef, isReadOnlyCheck, aksjonspunkter, vilkar, {},
       toggleOverstyring, kanOverstyreAccess, []);
-    const utledetPanel = new ProsessStegPanelUtledet(stegDef, [utledetDelPanel]);
+    const utledetPanel = new ProsessStegUtledet(stegDef, [utledetDelPanel]);
 
     const formatertePaneler = formaterPanelerForProsessmeny([utledetTestPanel, utledetPanel], 'opplysningsplikt');
     expect(formatertePaneler).to.eql([{
