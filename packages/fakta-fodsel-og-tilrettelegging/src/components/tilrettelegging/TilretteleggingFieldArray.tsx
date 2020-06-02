@@ -12,7 +12,7 @@ import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  hasValidDecimal, maxValue, minValue, required,
+  hasValidDecimal, maxValue, minValue, required, hasValidDate,
 } from '@fpsak-frontend/utils';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import { Kodeverk } from '@fpsak-frontend/types';
@@ -138,9 +138,8 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                   <DatepickerField
                     readOnly={readOnly}
                     name={`${fieldId}.fom`}
-                    defaultValue={null}
                     label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Dato' })}
-                    validate={[required]}
+                    validate={[hasValidDate, required]}
                   />
                 </FlexColumn>
                 {tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING && (
