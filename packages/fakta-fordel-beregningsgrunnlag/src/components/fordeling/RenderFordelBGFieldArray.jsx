@@ -312,7 +312,6 @@ const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, s
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelBG.Sum" />
     </TableColumn>
-    <TableColumn />
     {erRevurdering
     && (
     <TableColumn>
