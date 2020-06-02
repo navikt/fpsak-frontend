@@ -42,7 +42,7 @@ const FagsakSokSakIndex: FunctionComponent<OwnProps> = ({
       fagsaker={fagsaker}
       searchFagsakCallback={searchFagsakCallback}
       searchResultReceived={searchResultReceived}
-      selectFagsakCallback={selectFagsakCallback as () => void}
+      selectFagsakCallback={selectFagsakCallback}
       searchStarted={searchStarted}
       searchResultAccessDenied={searchResultAccessDenied}
       alleKodeverk={alleKodeverk}

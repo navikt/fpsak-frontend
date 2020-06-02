@@ -27,7 +27,7 @@ const DokumenterSakIndex: FunctionComponent<OwnProps> = ({
   <RawIntlProvider value={intl}>
     <DocumentList
       documents={documents}
-      selectDocumentCallback={selectDocumentCallback as () => void}
+      selectDocumentCallback={selectDocumentCallback}
       behandlingId={behandlingId}
     />
   </RawIntlProvider>

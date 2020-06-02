@@ -46,7 +46,7 @@ const getDirectionText = (document) => {
 interface OwnProps {
   documents: Dokument[];
   behandlingId?: number;
-  selectDocumentCallback: () => void;
+  selectDocumentCallback: (e: Event, id: number, dokument: Dokument) => void;
 }
 
 /**
