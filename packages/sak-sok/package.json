@@ -7,6 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
+    "@fpsak-frontend/types": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "nav-frontend-core": "4.0.12",
     "nav-frontend-grid": "1.0.27",
@@ -15,7 +16,6 @@
     "nav-frontend-knapper-style": "0.3.35",
     "nav-frontend-typografi": "2.0.18",
     "nav-frontend-typografi-style": "1.0.19",
-    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-intl": "^4.5.3",
     "react-redux": "^7.2.0",

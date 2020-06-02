@@ -9,7 +9,7 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 
-import { Kodeverk } from '@fpsak-frontend/types';
+import { Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
 import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
@@ -41,7 +41,7 @@ interface OwnProps {
   recipients?: string[];
   ventearsaker?: Kodeverk[];
   behandlingTypeKode: string;
-  revurderingVarslingArsak: Kodeverk[];
+  revurderingVarslingArsak: KodeverkMedNavn[];
 }
 
 interface DispatchProps {

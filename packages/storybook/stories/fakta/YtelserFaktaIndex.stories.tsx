@@ -44,7 +44,7 @@ export default {
 export const visYtelserForHovedsøker = () => (
   <YtelserFaktaIndex
     inntektArbeidYtelse={inntektArbeidYtelse}
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
   />
 );
 
@@ -62,6 +62,6 @@ export const visYtelserForHovedsøkerOgAnnenPart = () => (
         }],
       }],
     }}
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
   />
 );

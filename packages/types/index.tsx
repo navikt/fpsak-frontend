@@ -21,3 +21,4 @@ export { FamilieHendelse, FamilieHendelseSamling } from './src/familieHendelseTs
 export { default as Fagsak } from './src/fagsakTsType';
 export { default as FagsakPerson } from './src/fagsakPersonTsType';
 export { default as Medlemskap } from './src/medlemskapTsType';
+export { default as Risikoklassifisering } from './src/risikoklassifiseringTsType';
