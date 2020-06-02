@@ -6,6 +6,8 @@ import {
 import ErrorFormatter from './ErrorFormatter';
 
 class ErrorHandler {
+  errorFormatter: ErrorFormatter;
+
   constructor() {
     this.errorFormatter = new ErrorFormatter();
   }

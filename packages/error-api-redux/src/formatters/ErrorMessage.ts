@@ -1,5 +1,13 @@
 class ErrorMessage {
-  static withMessage(message, type) {
+  text: string
+
+  code: string
+
+  params: any
+
+  type: any
+
+  static withMessage(message: string, type?: any) {
     const errorMessage = new ErrorMessage();
     errorMessage.text = message;
     if (type !== undefined) {
@@ -8,7 +16,7 @@ class ErrorMessage {
     return errorMessage;
   }
 
-  static withMessageCode(messageCode, params, type) {
+  static withMessageCode(messageCode: string, params: any, type?: any) {
     const errorMessage = new ErrorMessage();
     errorMessage.code = messageCode;
     errorMessage.params = params;

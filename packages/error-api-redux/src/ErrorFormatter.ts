@@ -6,8 +6,12 @@ import RestGatewayTimeoutOrNotFoundFormatter from './formatters/RestGatewayTimeo
 const defaultFormatter = new DefaultFormatter();
 const formatters = [new RestTimeoutFormatter(), new RestHaltedOrDelayedFormatter(), new RestGatewayTimeoutOrNotFoundFormatter(), defaultFormatter];
 
+interface ErrorMessage {
+  type: string;
+}
+
 class ErrorFormatter {
-  format = (errorMessages, crashMessage) => {
+  format = (errorMessages: ErrorMessage[], crashMessage?: string) => {
     const allErrorMessages = [];
     if (crashMessage) {
       allErrorMessages.push(defaultFormatter.format(crashMessage));

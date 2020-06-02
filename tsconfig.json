@@ -17,6 +17,7 @@
 	"include": [
 		"packages/rest-api",
 		"packages/rest-api-redux",
+		"packages/error-api-redux",
 		"packages/behandling-felles",
 		"packages/behandling-innsyn",
 		"packages/behandling-klage",

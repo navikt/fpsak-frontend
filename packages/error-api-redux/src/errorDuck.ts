@@ -28,7 +28,16 @@ const initialState = {
   crashMessage: undefined,
 };
 
-export const errorReducer = (state = initialState, action = {}) => {
+interface ActionTsType {
+  type?: string;
+  data?: any;
+}
+interface StateTsType {
+  errorMessages: any;
+  crashMessage?: string;
+}
+
+export const errorReducer = (state: StateTsType = initialState, action: ActionTsType = {}) => {
   switch (action.type) {
     case ADD_ERROR_MESSAGE:
       return {

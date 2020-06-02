@@ -1,9 +1,16 @@
 import ErrorMessage from './ErrorMessage';
+import Formatter from './Formatter';
 
-class DefaultFormatter {
+interface ErrorData {
+  feilmelding?: string;
+  message?: string;
+  type?: any;
+}
+
+class DefaultFormatter implements Formatter<ErrorData | string> {
   isOfType = () => true
 
-  format = (errorData) => {
+  format = (errorData: ErrorData | string) => {
     if (typeof errorData === 'string') {
       return ErrorMessage.withMessage(errorData);
     }
