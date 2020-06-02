@@ -11,11 +11,11 @@ import { Behandling } from '@fpsak-frontend/types';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
+import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 
 import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
-import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 
 describe('<InngangsvilkarPanel>', () => {
   const behandling = {
@@ -106,9 +106,9 @@ describe('<InngangsvilkarPanel>', () => {
 
     const columns = wrapper.find(Column);
     expect(columns).to.have.length(2);
-    const column1 = columns.first().find(DataFetcherBehandlingData);
+    const column1 = columns.first().find(DataFetcher);
     expect(column1).to.have.length(2);
-    const column2 = columns.last().find(DataFetcherBehandlingData);
+    const column2 = columns.last().find(DataFetcher);
     expect(column2).to.have.length(1);
   });
 

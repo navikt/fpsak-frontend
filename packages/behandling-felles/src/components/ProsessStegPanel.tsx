@@ -2,14 +2,14 @@ import React, { FunctionComponent } from 'react';
 import { Dispatch } from 'redux';
 
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
-import { FadingPanel } from '@fpsak-frontend/shared-components';
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { FadingPanel, LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
 import FagsakInfo from '../types/fagsakInfoTsType';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
-import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBehandlingData';
+
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 import prosessStegHooks from '../util/prosessSteg/prosessStegHooks';
@@ -65,10 +65,11 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
         >
           {delPaneler.length === 1 && (
             <FadingPanel>
-              <DataFetcherBehandlingData
+              <DataFetcher
                 key={valgtProsessSteg.getUrlKode()}
                 fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
                 endpoints={delPaneler[0].getProsessStegDelPanelDef().getEndepunkter()}
+                loadingPanel={<LoadingPanel />}
                 render={(dataProps) => delPaneler[0].getProsessStegDelPanelDef().getKomponent({
                   ...dataProps,
                   behandling,

@@ -3,9 +3,11 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, DataFetcherTriggers, faktaHooks, Rettigheter,
+  FagsakInfo, FaktaPanel, faktaHooks, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaTilbakekrevingPanelDefinisjoner';
@@ -65,10 +67,11 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
     return (
       <FaktaPanel paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && (
-          <DataFetcherBehandlingData
+          <DataFetcher
             key={valgtPanel.getUrlKode()}
             fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
             endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+            loadingPanel={<LoadingPanel />}
             render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
               ...dataProps,
               behandling,

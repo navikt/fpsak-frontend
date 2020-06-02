@@ -3,10 +3,12 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, FaktaPanel, DataFetcherBehandlingData, DataFetcherTriggers, faktaHooks, Rettigheter,
+  FagsakInfo, FaktaPanel, faktaHooks, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import svpBehandlingApi from '../data/svpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaSvpPanelDefinisjoner';
@@ -63,10 +65,11 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
     return (
       <FaktaPanel paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && (
-          <DataFetcherBehandlingData
+          <DataFetcher
             key={valgtPanel.getUrlKode()}
             fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
             endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+            loadingPanel={<LoadingPanel />}
             render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
               ...dataProps,
               behandling,

@@ -4,11 +4,12 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData, Rettigheter,
+  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 import TilbakekrevingPaneler from './components/TilbakekrevingPaneler';
@@ -113,10 +114,11 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingData
+      <DataFetcher
         fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={tilbakekrevingData}
         showOldDataWhenRefetching
+        loadingPanel={<LoadingPanel />}
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />

@@ -5,9 +5,9 @@ import { Column, Row } from 'nav-frontend-grid';
 import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
 import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
-import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBehandlingData';
 
 import styles from './inngangsvilkarPanel.less';
 
@@ -30,10 +30,11 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
 }) => {
   const filteredPanels = prosessStegData.filter((stegData) => stegData.getKomponentData);
   const panels = filteredPanels.map((stegData) => (
-    <DataFetcherBehandlingData
+    <DataFetcher
       key={stegData.getId()}
       fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
       endpoints={stegData.getProsessStegDelPanelDef().getEndepunkter()}
+      loadingPanel={<div>test</div>}
       render={(dataProps) => stegData.getProsessStegDelPanelDef().getKomponent({
         ...dataProps,
         behandling,

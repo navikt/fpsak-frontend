@@ -5,7 +5,6 @@ import sinon from 'sinon';
 import { Dispatch } from 'redux';
 
 import { Behandling } from '@fpsak-frontend/types';
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -14,8 +13,8 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { DataFetcher, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
-import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegPanel from './ProsessStegPanel';
@@ -184,7 +183,7 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
 
     expect(wrapper.find(InngangsvilkarPanel)).to.have.length(1);
-    expect(wrapper.find(DataFetcherBehandlingData)).to.have.length(0);
+    expect(wrapper.find(DataFetcher)).to.have.length(0);
   });
 
   it('skal vise kun vise ett panel', () => {
@@ -219,7 +218,7 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(ProsessStegIkkeBehandletPanel)).to.have.length(0);
     expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
 
-    expect(wrapper.find(DataFetcherBehandlingData)).to.have.length(1);
+    expect(wrapper.find(DataFetcher)).to.have.length(1);
     expect(wrapper.find(InngangsvilkarPanel)).to.have.length(0);
   });
 

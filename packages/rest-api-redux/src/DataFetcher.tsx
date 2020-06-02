@@ -1,12 +1,11 @@
-import React, {
-  FunctionComponent, useEffect, useRef, useState,
+import {
+  FunctionComponent, useEffect, useRef, useState, ReactNode,
 } from 'react';
 import { useDispatch, useStore, useSelector } from 'react-redux';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { isObjectEmpty } from '@fpsak-frontend/utils';
+import EndpointOperations from './redux/EndpointOperations';
 
+const isObjectEmpty = (object) => Object.keys(object).length === 0;
 const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
 export class DataFetcherTriggers {
@@ -47,6 +46,7 @@ interface OwnProps {
   endpointParams?: {};
   showOldDataWhenRefetching?: boolean;
   showComponent?: boolean;
+  loadingPanel: ReactNode;
 }
 
 const DataFetcher: FunctionComponent<OwnProps> = ({
@@ -56,6 +56,7 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
   endpointParams,
   showOldDataWhenRefetching = false,
   showComponent = true,
+  loadingPanel,
 }) => {
   if (!showComponent) {
     return null;
@@ -143,7 +144,7 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
     return render(fetchingData.data, false);
   }
 
-  return <LoadingPanel />;
+  return loadingPanel;
 };
 
 export default DataFetcher;

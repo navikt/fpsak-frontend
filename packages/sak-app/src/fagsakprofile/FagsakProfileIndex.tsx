@@ -10,15 +10,14 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { Kodeverk, KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
 import {
   getLocationWithDefaultProsessStegAndFakta,
   pathToBehandling,
   pathToBehandlinger,
 } from '../app/paths';
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuDataResolver from '../behandlingmenu/BehandlingMenuDataResolver';
@@ -107,6 +106,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
         }}
         showOldDataWhenRefetching
         endpoints={enabledApis}
+        loadingPanel={<LoadingPanel />}
         render={(dataProps) => {
           const alleBehandlinger = getAlleBehandlinger(dataProps);
           if (shouldRedirectToBehandlinger) {
@@ -141,6 +141,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
         endpoints={risikoklassifiseringData}
         showOldDataWhenRefetching
         render={(dataProps) => <RisikoklassifiseringIndex {...dataProps} />}
+        loadingPanel={<LoadingPanel />}
       />
     </div>
   );

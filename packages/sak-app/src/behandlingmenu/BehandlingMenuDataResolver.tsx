@@ -7,12 +7,13 @@ import { push } from 'connected-react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import { getSelectedSaksnummer, getFagsakYtelseType } from '../fagsak/fagsakSelectors';
 import { getBehandlingVersjon, getBehandlingType, getSelectedBehandlingId } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import {
   hentVergeMenyvalg, resetVergeMenyvalg, fjernVerge, opprettVerge,
 } from './duck';
@@ -86,6 +87,7 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
       endpoints={behandlingId ? menyDataBehandlingValgt : menyData}
       fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion }, false)}
       showOldDataWhenRefetching
+      loadingPanel={<LoadingPanel />}
       render={(dataProps: { menyhandlingRettigheter?: { harSoknad: boolean }}) => (
         <BehandlingMenuIndex
           saksnummer={saksnummer}

@@ -7,13 +7,13 @@ import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
+import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 
 import {
   getLocationWithDefaultProsessStegAndFakta,
   pathToBehandling,
   pathToBehandlinger,
 } from '../app/paths';
-import DataFetcher from '../app/DataFetcher';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 describe('<FagsakProfileIndex>', () => {
