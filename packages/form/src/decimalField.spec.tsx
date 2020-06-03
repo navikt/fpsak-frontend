@@ -27,6 +27,7 @@ describe('<DecimalField>', () => {
         normalizeOnBlur={
           (value) => (Number.isNaN(value)
             ? value
+            // @ts-ignore Fiks
             : parseFloat(value).toFixed(2))
         }
       />,
@@ -45,6 +46,7 @@ describe('<DecimalField>', () => {
         normalizeOnBlur={
           (value) => (Number.isNaN(value)
             ? value
+            // @ts-ignore Fiks
             : parseFloat(value).toFixed(2))
         }
       />,
@@ -64,6 +66,7 @@ describe('<DecimalField>', () => {
         normalizeOnBlur={
           (value) => (Number.isNaN(value)
             ? value
+            // @ts-ignore Fiks
             : parseFloat(value).toFixed(2))
         }
       />,

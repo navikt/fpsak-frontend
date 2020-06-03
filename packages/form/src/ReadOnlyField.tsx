@@ -1,21 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { EditedIcon } from '@fpsak-frontend/shared-components';
-import Label, { labelPropType } from './Label';
+
+import Label from './Label';
+import LabelType from './LabelType';
 
 import styles from './readOnlyField.less';
 
-const hasValue = (value) => value !== undefined && value !== null && value !== '';
+export interface ReadOnlyFieldProps {
+  label?: LabelType;
+  input: { value: string | number };
+  isEdited?: boolean;
+  type?: string;
+  renderReadOnlyValue?: (value: any) => any;
+  alignRightCenterOnReadOnly?: boolean;
+}
 
-export const ReadOnlyField = ({
+const hasValue = (value: string | number) => value !== undefined && value !== null && value !== '';
+
+export const ReadOnlyField: FunctionComponent<ReadOnlyFieldProps> = ({
   label,
   input,
   isEdited,
   type,
   alignRightCenterOnReadOnly,
-}) => {
+}): JSX.Element => {
   if (!hasValue(input.value)) {
     return null;
   }
@@ -31,16 +41,6 @@ export const ReadOnlyField = ({
       </div>
     </div>
   );
-};
-
-ReadOnlyField.propTypes = {
-  label: labelPropType,
-  input: PropTypes.shape({
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }).isRequired,
-  isEdited: PropTypes.bool,
-  type: PropTypes.string,
-  alignRightCenterOnReadOnly: PropTypes.bool,
 };
 
 ReadOnlyField.defaultProps = {

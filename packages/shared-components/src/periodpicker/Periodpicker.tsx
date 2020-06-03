@@ -20,6 +20,7 @@ interface OwnProps {
   feil?: { feilmelding?: string };
   disabled?: boolean;
   disabledDays?: {};
+  hideLabel?: boolean;
 }
 
 interface StateProps {

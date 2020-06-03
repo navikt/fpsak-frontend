@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { Field } from 'redux-form';
 import moment from 'moment';
 
@@ -8,9 +7,23 @@ import { Datepicker } from '@fpsak-frontend/shared-components';
 
 import renderNavField from './renderNavField';
 import ReadOnlyField from './ReadOnlyField';
-import { labelPropType } from './Label';
+import LabelType from './LabelType';
 
-const isoToDdMmYyyy = (string) => {
+interface DatepickerFieldProps {
+  name: string;
+  label?: LabelType;
+  readOnly?: boolean;
+  format?: (value: string) => string;
+  parse?: (value: string) => string;
+  isEdited?: boolean;
+  validate?: (((text: any) => ({ id: string; length?: undefined }
+    | { length: any; id?: undefined })[])
+    | ((value: any) => { id: string }[])
+    | ((text: any) => ({ id: string; text?: undefined }
+    | { text: any; id?: undefined })[]))[];
+}
+
+const isoToDdMmYyyy = (string: string): string => {
   const parsedDate = moment(string, ISO_DATE_FORMAT, true);
   if (parsedDate.isValid()) {
     return parsedDate.format(DDMMYYYY_DATE_FORMAT);
@@ -18,7 +31,7 @@ const isoToDdMmYyyy = (string) => {
   return string;
 };
 
-const acceptedFormatToIso = (string) => {
+const acceptedFormatToIso = (string: string): string => {
   const validDate = ACCEPTED_DATE_INPUT_FORMATS
     .map((format) => moment(string, format, true))
     .find((parsedDate) => parsedDate.isValid());
@@ -30,7 +43,7 @@ const acceptedFormatToIso = (string) => {
 
 export const RenderDatepickerField = renderNavField(Datepicker);
 
-const DatepickerField = ({
+const DatepickerField: FunctionComponent<DatepickerFieldProps> = ({
   name, label, readOnly, format, parse, isEdited, ...otherProps
 }) => (
   <Field
@@ -45,15 +58,6 @@ const DatepickerField = ({
     isEdited={isEdited}
   />
 );
-
-DatepickerField.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: labelPropType,
-  readOnly: PropTypes.bool,
-  format: PropTypes.func,
-  parse: PropTypes.func,
-  isEdited: PropTypes.bool,
-};
 
 DatepickerField.defaultProps = {
   label: '',

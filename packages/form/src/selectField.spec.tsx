@@ -14,7 +14,7 @@ const selectValues = [
 ];
 
 const MockForm = reduxForm({ form: 'mock' })(({ handleSubmit, children }) => <form onSubmit={handleSubmit}>{children}</form>);
-const mountFieldInForm = (field, initialValues) => mount(
+const mountFieldInForm = (field, initialValues?: object) => mount(
   <Provider store={createStore(combineReducers({ form: formReducer }))}>
     <IntlProvider locale="nb-NO" messages={messages}>
       <MockForm initialValues={initialValues}>

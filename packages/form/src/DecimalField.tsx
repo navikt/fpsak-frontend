@@ -1,15 +1,36 @@
-import React, { Component } from 'react';
+import React, { ReactNode, Component, FunctionComponent } from 'react';
 import { Field as reduxFormField } from 'redux-form';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Input as NavInput } from 'nav-frontend-skjema';
+
 import renderNavField from './renderNavField';
 import ReadOnlyField from './ReadOnlyField';
-import { labelPropType } from './Label';
+import LabelType from './LabelType';
+
+interface DecimalFieldProps {
+  name: string;
+  type?: string;
+  className?: string;
+  label?: LabelType;
+  validate?: (((text: any) => ({ id: string; length?: undefined }
+    | { length: any; id?: undefined })[])
+    | ((value: any) => { id: string }[])
+    | ((text: any) => ({ id: string; text?: undefined }
+    | { text: any; id?: undefined })[]))[];
+  readOnly?: boolean;
+  isEdited?: boolean;
+  normalizeOnBlur: (value: number) => number;
+  alignRightCenterOnReadOnly?: boolean;
+  onChange?: (elmt: ReactNode, value: number) => void;
+}
 
 const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
-  class FieldComponent extends Component {
-    constructor(props) {
+  interface FieldComponent {
+    normalizeOnBlur: (value: any) => void;
+    component?: () => reduxFormField;
+  }
+  class FieldComponent extends Component<FieldComponent & WrappedComponentProps> {
+    constructor(props: FieldComponent & WrappedComponentProps) {
       super(props);
       this.blurHandler = this.blurHandler.bind(this);
     }
@@ -19,6 +40,7 @@ const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
       return (
         <Comp
           {...props}
+          // @ts-ignore TODO Fiks
           input={{
             ...input,
             onBlur: (event) => {
@@ -42,15 +64,6 @@ const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
     }
   }
 
-  FieldComponent.propTypes = {
-    normalizeOnBlur: PropTypes.func.isRequired,
-    component: PropTypes.func,
-    intl: PropTypes.shape().isRequired,
-  };
-  FieldComponent.defaultProps = {
-    component: undefined,
-  };
-
   const FieldComponentWithIntl = injectIntl(FieldComponent);
 
   FieldComponentWithIntl.WrappedComponent = FieldComponent;
@@ -61,7 +74,7 @@ const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
 const renderNavInput = renderNavField(NavInput);
 const NormalizeOnBlurField = createNormalizeOnBlurField(reduxFormField);
 
-const DecimalField = ({
+const DecimalField: FunctionComponent<DecimalFieldProps> = ({
   name, type, label, validate, readOnly, isEdited, normalizeOnBlur, alignRightCenterOnReadOnly, ...otherProps
 }) => {
   const other = readOnly ? {
@@ -73,6 +86,7 @@ const DecimalField = ({
     <NormalizeOnBlurField
       name={name}
       validate={validate}
+      // @ts-ignore TODO Fiks
       component={readOnly ? ReadOnlyField : renderNavInput}
       type={type}
       label={label}
@@ -84,17 +98,6 @@ const DecimalField = ({
       autoComplete="off"
     />
   );
-};
-
-DecimalField.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string,
-  label: labelPropType,
-  validate: PropTypes.arrayOf(PropTypes.func),
-  readOnly: PropTypes.bool,
-  isEdited: PropTypes.bool,
-  normalizeOnBlur: PropTypes.func.isRequired,
-  alignRightCenterOnReadOnly: PropTypes.bool,
 };
 
 DecimalField.defaultProps = {

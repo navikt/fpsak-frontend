@@ -423,5 +423,5 @@ const shouldValidate = ({
 
 export default connect(mapStateToProps)(behandlingForm({
   form: FODSEL_TILRETTELEGGING_FORM,
-  shouldValidate: () => shouldValidate,
+  shouldValidate,
 })(FodselOgTilretteleggingFaktaForm));

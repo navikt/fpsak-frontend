@@ -81,9 +81,8 @@ const ManueltVedtaksbrevPanel: FunctionComponent<OwnProps> = ({
           label={{ id: 'VedtakForm.Overskrift' }}
           validate={[required, minLength3, maxLength200, hasValidText]}
           maxLength={200}
-          rows={1}
           readOnly={readOnly}
-          className={styles.smallTextArea}
+          textareaClass={styles.smallTextArea}
         />
       </Column>
     </Row>

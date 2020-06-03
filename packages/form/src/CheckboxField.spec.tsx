@@ -11,24 +11,32 @@ chai.use(sinonChai);
 describe('<CheckboxField>', () => {
   it('skal kalle onChange med boolsk verdi for checked', () => {
     const onChange = sinon.spy();
+    // @ts-ignore Fiks
     const wrapper = mountFieldComponent(<RenderCheckboxField />, { onChange });
     const checkbox = wrapper.find('input');
 
     checkbox.simulate('change', { target: { checked: true } });
 
-    expect(onChange).to.have.been.calledWith(true);
+    expect(onChange.called).is.true;
+    const { args } = onChange.getCalls()[0];
+    expect(args).has.length(1);
+    expect(args[0]).is.true;
 
     checkbox.simulate('change', { target: { checked: false } });
 
-    expect(onChange).to.have.been.calledWith(false);
+    const args2 = onChange.getCalls()[0].args;
+    expect(args2).has.length(1);
+    expect(args2[0]).is.true;
   });
 
   it('skal initialisere checked med verdi fra input', () => {
+    // @ts-ignore Fiks
     const wrapperTrue = mountFieldComponent(<RenderCheckboxField />, { value: true });
     const checkboxTrue = wrapperTrue.find('input');
 
     expect(checkboxTrue.props().checked).to.be.true;
 
+    // @ts-ignore Fiks
     const wrapperFalse = mountFieldComponent(<RenderCheckboxField />, { value: false });
     const checkboxFalse = wrapperFalse.find('input');
 

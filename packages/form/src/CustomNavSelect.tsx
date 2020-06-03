@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Select as NavSelect } from 'nav-frontend-skjema';
 
-class CustomNavSelect extends Component {
-  constructor() {
-    super();
+interface CustomNavSelectProps {
+  selectValues: React.ReactElement[];
+  placeholder?: React.ReactNode;
+  value?: React.ReactNode;
+  hideValueOnDisable?: boolean;
+  disabled?: boolean;
+  label: string;
+}
+
+class CustomNavSelect extends Component<CustomNavSelectProps> {
+  selectElement: any;
+
+  static defaultProps = {
+    hideValueOnDisable: false,
+    disabled: false,
+  };
+
+  constructor(props: CustomNavSelectProps) {
+    super(props);
     this.getOptionValues = this.getOptionValues.bind(this);
     this.checkCorrespondingOptionForValue = this.checkCorrespondingOptionForValue.bind(this);
     this.handleSelectRef = this.handleSelectRef.bind(this);
@@ -19,14 +34,14 @@ class CustomNavSelect extends Component {
     this.checkCorrespondingOptionForValue();
   }
 
-  getOptionValues() {
+  getOptionValues(): React.ReactNode[] {
     const { props: { selectValues } } = this;
     return selectValues
       .map((option) => option.props)
       .map((props = {}) => props.value);
   }
 
-  selectedValue(value) {
+  selectedValue(value): any {
     const selectedValue = this.getOptionValues().find((optionValue) => optionValue === value);
 
     return selectedValue || '';
@@ -41,7 +56,7 @@ class CustomNavSelect extends Component {
     }
   }
 
-  handleSelectRef(selectRef) {
+  handleSelectRef(selectRef?: any) {
     if (selectRef) {
       this.selectElement = selectRef;
     }
@@ -68,20 +83,5 @@ class CustomNavSelect extends Component {
     );
   }
 }
-
-CustomNavSelect.propTypes = {
-  selectValues: PropTypes.arrayOf(PropTypes.node).isRequired,
-  placeholder: PropTypes.node,
-  value: PropTypes.node,
-  hideValueOnDisable: PropTypes.bool,
-  disabled: PropTypes.bool,
-};
-
-CustomNavSelect.defaultProps = {
-  placeholder: null,
-  value: undefined,
-  hideValueOnDisable: false,
-  disabled: false,
-};
 
 export default CustomNavSelect;

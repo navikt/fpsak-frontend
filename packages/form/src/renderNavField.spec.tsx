@@ -16,20 +16,20 @@ describe('renderNavField', () => {
   it('skal ikke vise feil i utgangspunktet', () => {
     const meta = { ...metaMock, submitFailed: false, error: [{ id: 'feil1' }] };
 
-    const wrapper = shallow(<RenderedMockField input={inputMock} meta={meta} intl={intl} />);
+    const wrapper = shallow(<RenderedMockField input={inputMock} meta={meta} intl={intl} label="" />);
     const mockField = wrapper.find(MockField);
 
     expect(mockField).to.have.length(1);
-    expect(mockField.at(0).props().feil).to.be.undefined;
+    expect(mockField.at(0).prop('feil')).to.be.undefined;
   });
 
   it('skal vise feil hvis submit har feilet', () => {
     const meta = { ...metaMock, submitFailed: true, error: [{ id: 'feil1' }] };
 
-    const wrapper = shallow(<RenderedMockField input={inputMock} meta={meta} intl={intl} />);
+    const wrapper = shallow(<RenderedMockField input={inputMock} meta={meta} intl={intl} label="" />);
     const mockField = wrapper.find(MockField);
 
     expect(mockField).to.have.length(1);
-    expect(mockField.at(0).props().feil).to.eql(FORMATTED_MESSAGE);
+    expect(mockField.at(0).prop('feil')).to.eql(FORMATTED_MESSAGE);
   });
 });

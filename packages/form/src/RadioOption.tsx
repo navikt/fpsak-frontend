@@ -1,12 +1,27 @@
-/* eslint-disable react/forbid-prop-types */
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode, ReactNodeArray, FunctionComponent } from 'react';
 import { Radio as NavRadio } from 'nav-frontend-skjema';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import Label, { labelPropType } from './Label';
+import Label from './Label';
+import LabelType from './LabelType';
 
-export const RadioOption = ({
+export interface RadioOptionProps {
+  name?: string;
+  label: LabelType;
+  value: string[] | string | number | boolean;
+  actualValue?: string[] | string | number;
+  className?: string;
+  disabled?: boolean;
+  groupDisabled?: boolean;
+  onChange?: (value: string[] | string | number | boolean) => void;
+  children?: ReactNode | ReactNodeArray;
+  style?: object;
+  manualHideChildren?: boolean;
+  dataId?: string;
+  wrapperClassName?: string;
+}
+
+export const RadioOption: FunctionComponent<RadioOptionProps> = ({
   name,
   className,
   label,
@@ -18,50 +33,37 @@ export const RadioOption = ({
   children,
   style,
   manualHideChildren,
+  dataId,
+  wrapperClassName,
 }) => {
   const stringifiedValue = JSON.stringify(value);
   const actualStringifiedValue = JSON.stringify(actualValue);
   const checked = stringifiedValue === actualStringifiedValue;
   return (
-    <div style={style}>
+    <div style={style} className={wrapperClassName}>
       <NavRadio
         name={name}
         className={className}
         label={<Label input={label} typographyElement={Normaltekst} />}
+        // @ts-ignore TODO Fjern denne. Må fjerna bruken av bolske verdiar som value
         value={value}
         checked={checked}
         disabled={disabled || groupDisabled}
         onChange={() => onChange(value)}
+        data-id={dataId}
       />
       {(checked || manualHideChildren) && children}
     </div>
   );
 };
 
-RadioOption.propTypes = {
-  name: PropTypes.string,
-  label: labelPropType,
-  value: PropTypes.any.isRequired,
-  actualValue: PropTypes.any,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-  groupDisabled: PropTypes.bool,
-  onChange: PropTypes.func,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
-  style: PropTypes.shape(),
-  manualHideChildren: PropTypes.bool,
-};
 
 RadioOption.defaultProps = {
   name: '',
-  label: undefined,
   className: '',
   disabled: false,
   groupDisabled: false,
-  actualValue: undefined,
   onChange: () => undefined,
-  children: undefined,
-  style: undefined,
   manualHideChildren: false,
 };
 

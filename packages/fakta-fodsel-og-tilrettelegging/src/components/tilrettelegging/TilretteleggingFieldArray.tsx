@@ -151,6 +151,7 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                         name={`${fieldId}.stillingsprosent`}
                         label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Stillingsprosent' })}
                         validate={[required, minValue0, maxValue100, hasValidDecimal]}
+                        // @ts-ignore TODO Fiks denne!
                         normalizeOnBlur={(value) => (new RegExp(/^-?\d+\.?\d*$/).test(value) ? parseFloat(value).toFixed(2) : value)}
                         onChange={(_elmt, value) => {
                           const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsforhold, value);
