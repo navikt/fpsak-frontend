@@ -98,6 +98,7 @@ export class ApprovalPanel extends Component {
     const {
       behandlingId,
       behandlingVersjon,
+      behandlingsresultat,
       behandlingStatus,
       location,
       readOnly,
@@ -130,6 +131,7 @@ export class ApprovalPanel extends Component {
                     <ToTrinnsForm
                       behandlingId={behandlingId}
                       behandlingVersjon={behandlingVersjon}
+                      behandlingsresultat={behandlingsresultat}
                       totrinnskontrollContext={approvals}
                       initialValues={{ approvals }}
                       onSubmit={onSubmit}
@@ -194,6 +196,7 @@ ApprovalPanel.propTypes = {
     klageVurderingOmgjoer: PropTypes.string,
   }),
   alleKodeverk: PropTypes.shape().isRequired,
+  behandlingsresultat: PropTypes.shape(),
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
@@ -205,6 +208,7 @@ ApprovalPanel.defaultProps = {
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
   behandlingKlageVurdering: undefined,
   erTilbakekreving: false,
+  behandlingsresultat: undefined,
 };
 
 export default ApprovalPanel;
