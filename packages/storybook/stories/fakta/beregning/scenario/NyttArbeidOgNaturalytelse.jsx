@@ -484,7 +484,8 @@ export const beregningsgrunnlag = {
             kode: 'ARBEID',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: false,
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
         skalKunneEndreRefusjon: false,
       }, {
         fom: '2019-12-16',
@@ -549,7 +550,8 @@ export const beregningsgrunnlag = {
             kode: 'ARBEID',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: false,
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
         skalKunneEndreRefusjon: false,
       }, {
         fom: '2020-02-03',
@@ -646,7 +648,8 @@ export const beregningsgrunnlag = {
             kode: 'ARBEID',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
         skalKunneEndreRefusjon: false,
       }],
       arbeidsforholdTilFordeling: [{

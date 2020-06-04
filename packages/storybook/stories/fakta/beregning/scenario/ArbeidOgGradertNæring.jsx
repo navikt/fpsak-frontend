@@ -490,7 +490,8 @@ export const beregningsgrunnlag = {
             kode: 'NÆRING',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: false,
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
         skalKunneEndreRefusjon: false,
       }, {
         fom: '2019-11-04',
@@ -553,7 +554,8 @@ export const beregningsgrunnlag = {
             kode: 'NÆRING',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
         skalKunneEndreRefusjon: false,
       }, {
         fom: '2019-12-10',
@@ -616,7 +618,8 @@ export const beregningsgrunnlag = {
             kode: 'NÆRING',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: true,
         skalKunneEndreRefusjon: false,
       }],
       arbeidsforholdTilFordeling: [{

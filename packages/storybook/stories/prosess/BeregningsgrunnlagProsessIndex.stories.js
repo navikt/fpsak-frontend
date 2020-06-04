@@ -96,7 +96,6 @@ const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegr
   beregningsperiodeFom: '2019-06-01',
   beregningsperiodeTom: '2019-08-31',
   beregnetPrAar,
-  fastsattForrigePrAar: null,
   overstyrtPrAar,
   bruttoPrAar: overstyrtPrAar || beregnetPrAar,
   avkortetPrAar: 360000,

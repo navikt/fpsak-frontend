@@ -34,11 +34,20 @@ const getKodeverknavn = (kodeverk) => {
 };
 
 describe('<BgFordelingUtils>', () => {
-  it('skal sette riktig fastsatt beløp for andel i periode med gradering eller refusjon og fastsatt beregnetPrÅr', () => {
-    const beregnetPrMnd = 10000;
-    const fastsattForrige = 50000;
-    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige);
-    expect(fastsattBelop).to.equal(formatCurrencyNoKr(beregnetPrMnd));
+  it('skal sette riktig fastsatt beløp for andel i periode fastsatt bruttoPrAar og fordeltPrAar', () => {
+    const fordeltPrAar = 10000;
+    const bruttoPrAar = 50000;
+    const skalPreutfylleMedBeregningsgrunnlag = true;
+    const fastsattBelop = settFastsattBelop(fordeltPrAar, bruttoPrAar, skalPreutfylleMedBeregningsgrunnlag);
+    expect(fastsattBelop).to.equal(formatCurrencyNoKr(fordeltPrAar));
+  });
+
+  it('skal sette riktig fastsatt beløp for andel i periode uten fordeltBeløp og med brutto', () => {
+    const fordeltPrAar = null;
+    const bruttoPrAar = 50000;
+    const skalPreutfylleMedBeregningsgrunnlag = true;
+    const fastsattBelop = settFastsattBelop(fordeltPrAar, bruttoPrAar, skalPreutfylleMedBeregningsgrunnlag);
+    expect(fastsattBelop).to.equal(formatCurrencyNoKr(bruttoPrAar));
   });
 
   it('skal returnere tom streng om ingen andeler i arbeid', () => {
@@ -138,7 +147,7 @@ describe('<BgFordelingUtils>', () => {
     const andelFieldValue = {
       ...andelValuesMedInntektsmelding,
       refusjonskravFraInntektsmelding: 30000,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
     };
     const bg = {
       beregningsgrunnlagPeriode: [
@@ -173,9 +182,9 @@ describe('<BgFordelingUtils>', () => {
   });
 
 
-  it('skal mappe fastsattBeløp til beløp om andel har periodeårsak', () => {
+  it('skal mappe fastsattBeløp til beløp om inntekt skal redigeres', () => {
     const andel = {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
       readOnlyBelop: '20 000',
     };
@@ -183,9 +192,9 @@ describe('<BgFordelingUtils>', () => {
     expect(belop).to.equal(10000);
   });
 
-  it('skal mappe readOnlyBelop til beløp om andel ikkje har periodeårsak', () => {
+  it('skal mappe readOnlyBelop til beløp om inntekt ikke skal redigeres', () => {
     const andel = {
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
       fastsattBelop: '10 000',
       readOnlyBelop: '20 000',
     };

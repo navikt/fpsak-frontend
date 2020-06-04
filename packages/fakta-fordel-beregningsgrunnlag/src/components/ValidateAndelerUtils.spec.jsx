@@ -558,19 +558,19 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal ikkje gi error om fastsatt beløp er lik oppgitt sum', () => {
     const values = [{
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '20 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
     },
     ];
@@ -581,24 +581,24 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje gi error om fastsatt beløp og read only beløp er lik sum', () => {
     const values = [{
       andelsnr: 1,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
       readOnlyBelop: '50 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       andelsnr: 2,
       fastsattBelop: '20 000',
       readOnlyBelop: '100 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
       andelsnr: 3,
       fastsattBelop: '40 000',
       readOnlyBelop: '10 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
       andelsnr: 4,
       fastsattBelop: '15 000',
       readOnlyBelop: '10 000',

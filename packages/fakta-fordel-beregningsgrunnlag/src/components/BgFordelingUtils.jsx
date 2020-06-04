@@ -40,22 +40,15 @@ const createAndelnavn = (andel, harKunYtelse, getKodeverknavn) => {
   return getKodeverknavn(andel.aktivitetStatus);
 };
 
-export const finnFastsattPrAar = (fordeltPrAar,
-  fastsattForrigePrAar) => {
-  if (!nullOrUndefined(fordeltPrAar)) {
-    return fordeltPrAar;
-  }
-  return nullOrUndefined(fastsattForrigePrAar) ? null : fastsattForrigePrAar;
-};
+export const finnFastsattPrAar = (fordeltPrAar) => (nullOrUndefined(fordeltPrAar) ? null : fordeltPrAar);
 
-export const settFastsattBelop = (fordeltPrAar,
-  fastsattForrigePrAar) => {
-  const fastsatt = finnFastsattPrAar(fordeltPrAar,
-    fastsattForrigePrAar);
+export const settFastsattBelop = (fordeltPrAar, bruttoPrAar,
+  skalPreutfyllesMedBeregningsgrunnlag) => {
+  const fastsatt = finnFastsattPrAar(fordeltPrAar);
   if (fastsatt !== null) {
     return formatCurrencyNoKr(fastsatt);
   }
-  return '';
+  return skalPreutfyllesMedBeregningsgrunnlag && !nullOrUndefined(bruttoPrAar) ? formatCurrencyNoKr(bruttoPrAar) : '';
 };
 
 const finnArbeidsgiverId = (arbeidsforhold) => {
@@ -137,7 +130,7 @@ export const skalValidereMotBeregningsgrunnlag = (beregningsgrunnlag) => (andel)
 
 export const mapToBelop = (andel) => {
   const { fastsattBelop, readOnlyBelop } = andel;
-  if (andel.harPeriodeAarsakGraderingEllerRefusjon) {
+  if (andel.skalRedigereInntekt) {
     return fastsattBelop ? removeSpacesFromNumber(fastsattBelop) : 0;
   }
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;
