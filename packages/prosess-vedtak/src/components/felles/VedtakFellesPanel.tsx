@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 import Lenke from 'nav-frontend-lenker';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
@@ -128,44 +127,50 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
         </FlexRow>
       </FlexContainer>
       <VerticalSpacer eightPx />
-      <Row>
-        <Column xs="3">
-          <Element>
-            {vedtakstatusTekst}
-            {tilbakekrevingtekst && (
-              `. ${intl.formatMessage({ id: tilbakekrevingtekst })}`
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn className={styles.space}>
+            <Element>
+              {vedtakstatusTekst}
+              {tilbakekrevingtekst && (
+                `. ${intl.formatMessage({ id: tilbakekrevingtekst })}`
+              )}
+            </Element>
+          </FlexColumn>
+          <FlexColumn className={styles.space}>
+            {skalViseLink && !erBehandlingEtterKlage && harIkkeKonsekvensForYtelse && (
+              <>
+                <Lenke href="#" onClick={previewAutomatiskBrev}>
+                  <span>
+                    <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
+                  </span>
+                  <Image src={popOutPilSvg} className={styles.pil} />
+                </Lenke>
+              </>
             )}
-          </Element>
-        </Column>
-        <Column xs="3">
-          {skalViseLink && !erBehandlingEtterKlage && harIkkeKonsekvensForYtelse && (
+          </FlexColumn>
+          <FlexColumn>
+            {!readOnly && !skalBrukeManueltBrev && (
             <>
-              <Lenke href="#" onClick={previewAutomatiskBrev}>
-                <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
+              <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
+                <Image src={endreSvg} className={styles.blyant} />
+                <span>
+                  <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+                </span>
               </Lenke>
-              <Image src={popOutPilSvg} className={styles.pil} />
             </>
-          )}
-        </Column>
-        <Column xs="3">
-          {!readOnly && !skalBrukeManueltBrev && (
-          <>
-            <Image src={endreSvg} className={styles.blyant} />
-            <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
-              <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
-            </Lenke>
-          </>
-          )}
-          {(readOnly || skalBrukeManueltBrev) && (
-          <>
-            <Image src={endreDisabletSvg} className={styles.blyant} />
-            <Normaltekst className={styles.disabletLink}>
-              <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
-            </Normaltekst>
-          </>
-          )}
-        </Column>
-      </Row>
+            )}
+            {(readOnly || skalBrukeManueltBrev) && (
+            <>
+              <Image src={endreDisabletSvg} className={styles.blyant} />
+              <Normaltekst className={styles.disabletLink}>
+                <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+              </Normaltekst>
+            </>
+            )}
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
       <VedtakHelpTextPanel aksjonspunkter={aksjonspunkter} readOnly={readOnly} />
       <VerticalSpacer twentyPx />
       {renderPanel(skalBrukeManueltBrev, erInnvilget, erAvslatt, erOpphor)}
