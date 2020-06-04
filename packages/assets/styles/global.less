@@ -1,6 +1,8 @@
 @import '@{coreModulePath}nav-frontend-core/less/core';
 @import './dayPicker';
 
+/* TODO Mesteparten i denne fila bør ikkje ligga her */
+
 html {
   height: 100%;
 }
@@ -31,37 +33,6 @@ som fra core/og muligen import fra alla andra komponenter
   color: @navMorkGra;
   font-size: 0.8rem;
   font-style: italic;
-}
-
-:global(.lenke) {
-  background: none;
-  border: 0;
-  border-bottom: solid 1px @navGra40;
-  color: @navBla;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: none;
-
-  &:hover,
-  &--hover {
-    border-bottom-color: @navBla;
-  }
-
-  &:focus,
-  &--focus {
-    background-color: @orangeFocus;
-    outline: none;
-  }
-
-  &:active,
-  &--active {
-    border-bottom-color: @navDypBla;
-    color: @navDypBla;
-  }
-
-  &--frittstaende {
-    border-bottom: 0;
-  }
 }
 
 :global(.skjemaelement > .skjemaelement) {

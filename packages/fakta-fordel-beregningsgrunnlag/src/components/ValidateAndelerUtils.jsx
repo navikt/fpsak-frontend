@@ -233,7 +233,7 @@ export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, 
   const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skalValidereMotBeregningsgrunnlagPrAar,
     skalValidereMellomAAPOgArbeidsgiver, getKodeverknavn);
   const arrayErrors = values.map((andelFieldValues) => {
-    if (!andelFieldValues.harPeriodeAarsakGraderingEllerRefusjon) {
+    if (!andelFieldValues.skalRedigereInntekt) {
       return null;
     }
     return validateAndelFields(andelFieldValues, periodeDato);

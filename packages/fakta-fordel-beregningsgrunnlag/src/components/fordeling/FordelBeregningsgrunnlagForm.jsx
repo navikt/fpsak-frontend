@@ -17,7 +17,7 @@ export const getFieldNameKey = (index) => (fordelBGFieldArrayNamePrefix + index)
 
 const harPeriodeSomKanKombineresMedForrige = (periode, bgPerioder, fordelPeriode, periodeList) => {
   const forrigeEndringPeriode = periodeList[periodeList.length - 1];
-  if (fordelPeriode.harPeriodeAarsakGraderingEllerRefusjon !== forrigeEndringPeriode.harPeriodeAarsakGraderingEllerRefusjon) {
+  if (fordelPeriode.skalRedigereInntekt !== forrigeEndringPeriode.skalRedigereInntekt) {
     return false;
   }
   if (periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.ENDRING_I_REFUSJONSKRAV)
@@ -106,7 +106,7 @@ export class FordelBeregningsgrunnlagForm extends Component {
               fom={periode.fom}
               tom={periode.tom}
               open={openPanels ? openPanels.filter((panel) => panel === periode.fom).length > 0 : false}
-              harPeriodeAarsakGraderingEllerRefusjon={periode.harPeriodeAarsakGraderingEllerRefusjon}
+              skalRedigereInntekt={periode.skalRedigereInntekt}
               isAksjonspunktClosed={isAksjonspunktClosed}
               showPanel={this.showPanel}
               beregningsgrunnlag={beregningsgrunnlag}
@@ -219,8 +219,8 @@ export const transformPerioder = (fordelBGPerioder, values, bgPerioder) => {
   const fordelBeregningsgrunnlagPerioder = [];
   const kombinertePerioder = slaaSammenPerioder(fordelBGPerioder, bgPerioder);
   for (let index = 0; index < kombinertePerioder.length; index += 1) {
-    const { harPeriodeAarsakGraderingEllerRefusjon } = kombinertePerioder[index];
-    if (harPeriodeAarsakGraderingEllerRefusjon) {
+    const { skalRedigereInntekt } = kombinertePerioder[index];
+    if (skalRedigereInntekt) {
       lagPerioderForSubmit(values, index, kombinertePerioder[index], fordelBGPerioder)
         .forEach((p) => fordelBeregningsgrunnlagPerioder.push(p));
     }

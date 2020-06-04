@@ -19,7 +19,7 @@ const andel1 = {
   andelsnr: 1,
   fastsattBelop: null,
   readOnlyBelop: '10 000',
-  harPeriodeAarsakGraderingEllerRefusjon: true,
+  skalRedigereInntekt: true,
   inntektskategori: 'ARBEIDSTAKER',
   nyAndel: false,
   skalKunneEndreRefusjon: false,
@@ -33,7 +33,7 @@ const andel2 = {
   andelsnr: 2,
   fastsattBelop: '20 000',
   readOnlyBelop: '10 000',
-  harPeriodeAarsakGraderingEllerRefusjon: true,
+  skalRedigereInntekt: true,
   skalKunneEndreRefusjon: false,
   refusjonskrav: '10 000',
   inntektskategori: 'ARBEIDSTAKER',
@@ -108,21 +108,24 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     const periode1 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
       skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode2 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
       skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode3 = {
       fordelBeregningsgrunnlagAndeler: [fordelAndel, fordelAndel2],
       fom: '2019-06-02',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
       skalKunneEndreRefusjon: false,
       tom: null,
     };
@@ -199,7 +202,11 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om kun en periode i grunnlag', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019', beregningsgrunnlagPeriodeTom: null, periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
@@ -212,10 +219,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om andre periode har naturalytelse tilkommet', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -235,10 +250,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om andre periode har naturalytelse bortfalt', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -258,10 +281,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om andre periode har avsluttet arbeidsforhold uten endring i bruttoPrÅr', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -283,10 +314,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har avsluttet arbeidsforhold med endring i bruttoPrÅr', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -310,10 +349,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har opphør av gradering', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -337,10 +384,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har opphør av refusjon', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: false,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -364,10 +419,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har endring i refusjon', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: false,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -391,10 +454,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har gradering', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019',
+      tom: '01-02-2019',
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     },
     {
-      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019',
+      tom: null,
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
+      skalRedigereInntekt: true,
+      skalPreutfyllesMedBeregningsgrunnlag: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -501,8 +572,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     }];
     const fordelBGPerioder = [
-      { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-06-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true },
+      {
+        fom: '2018-01-01',
+        tom: '2018-06-01',
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-06-02',
+        tom: null,
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
     ];
     const values = {};
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];
@@ -548,9 +629,24 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
     const fordelBGPerioder = [
-      { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: true },
-      { fom: '2018-06-02', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: true },
-      { fom: '2018-10-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false },
+      {
+        fom: '2018-01-01',
+        tom: '2018-06-01',
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-06-02',
+        tom: '2018-10-01',
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-10-02',
+        tom: null,
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
 
     ];
     const values = {};
@@ -618,9 +714,24 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     }];
     const fordelBGPerioder = [
-      { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-06-02', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: true },
-      { fom: '2018-10-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true },
+      {
+        fom: '2018-01-01',
+        tom: '2018-06-01',
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-06-02',
+        tom: '2018-10-01',
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-10-02',
+        tom: null,
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
 
     ];
     const values = {};
@@ -694,10 +805,30 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
       periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
     const fordelBGPerioder = [
-      { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
-      { fom: '2018-06-02', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: true },
-      { fom: '2018-10-02', tom: '2018-11-01', harPeriodeAarsakGraderingEllerRefusjon: true },
-      { fom: '2018-11-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false },
+      {
+        fom: '2018-01-01',
+        tom: '2018-06-01',
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-06-02',
+        tom: '2018-10-01',
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-10-02',
+        tom: '2018-11-01',
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
+      {
+        fom: '2018-11-02',
+        tom: null,
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
+      },
     ];
     const values = {};
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];

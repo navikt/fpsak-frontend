@@ -490,7 +490,8 @@ export const beregningsgrunnlag = {
             kode: 'NÆRING',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: false,
+        skalRedigereInntekt: false,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
         skalKunneEndreRefusjon: false,
       }, {
         fom: '2019-11-04',
@@ -553,7 +554,8 @@ export const beregningsgrunnlag = {
             kode: 'NÆRING',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: false,
         skalKunneEndreRefusjon: false,
       }, {
         fom: '2019-12-10',
@@ -616,7 +618,8 @@ export const beregningsgrunnlag = {
             kode: 'NÆRING',
           },
         }],
-        harPeriodeAarsakGraderingEllerRefusjon: true,
+        skalRedigereInntekt: true,
+        skalPreutfyllesMedBeregningsgrunnlag: true,
         skalKunneEndreRefusjon: false,
       }],
       arbeidsforholdTilFordeling: [{
@@ -639,19 +642,19 @@ export const beregningsgrunnlag = {
 };
 
 export const aksjonspunkt = [
-{
-  definisjon: { kode: '5046', kodeverk: 'AKSJONSPUNKT_DEF' },
-  status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
-  begrunnelse: null,
-  vilkarType: null,
-  toTrinnsBehandling: true,
-  toTrinnsBehandlingGodkjent: null,
-  vurderPaNyttArsaker: null,
-  besluttersBegrunnelse: null,
-  aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-  kanLoses: true,
-  erAktivt: true,
-  fristTid: null,
-  endretTidspunkt: null,
-  endretAv: null,
-}];
+  {
+    definisjon: { kode: '5046', kodeverk: 'AKSJONSPUNKT_DEF' },
+    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    begrunnelse: null,
+    vilkarType: null,
+    toTrinnsBehandling: true,
+    toTrinnsBehandlingGodkjent: null,
+    vurderPaNyttArsaker: null,
+    besluttersBegrunnelse: null,
+    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    kanLoses: true,
+    erAktivt: true,
+    fristTid: null,
+    endretTidspunkt: null,
+    endretAv: null,
+  }];

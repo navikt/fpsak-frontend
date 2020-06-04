@@ -42,8 +42,7 @@ const defaultBGFordeling = (periodeUtenAarsak) => ({
   lagtTilAvSaksbehandler: true,
   refusjonskravFraInntektsmelding: 0,
   belopFraInntektsmelding: null,
-  kanRedigereInntekt: true,
-  harPeriodeAarsakGraderingEllerRefusjon: !periodeUtenAarsak,
+  skalRedigereInntekt: !periodeUtenAarsak,
 });
 
 const fieldLabel = (index, labelId) => {
@@ -99,7 +98,7 @@ const summerFordeling = (fields) => {
   let index = 0;
   for (index; index < fields.length; index += 1) {
     const field = fields.get(index);
-    if (field.harPeriodeAarsakGraderingEllerRefusjon) {
+    if (field.skalRedigereInntekt) {
       sum += field.fastsattBelop ? Number(removeSpacesFromNumber(field.fastsattBelop)) : 0;
     } else {
       sum += field.readOnlyBelop ? Number(removeSpacesFromNumber(field.readOnlyBelop)) : 0;
@@ -461,7 +460,7 @@ RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregni
       return { _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} /> };
     }
   }
-  if (sumIPeriode !== undefined && sumIPeriode !== null && values.some((andel) => andel.harPeriodeAarsakGraderingEllerRefusjon === true)) {
+  if (sumIPeriode !== undefined && sumIPeriode !== null && values.some((andel) => andel.skalRedigereInntekt === true)) {
     const fastsattBelopError = validateSumFastsattBelop(values, sumIPeriode);
     if (fastsattBelopError) {
       return { _error: <FormattedMessage id={fastsattBelopError[0].id} values={fastsattBelopError[1]} /> };
