@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="13px" viewBox="0 0 32 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.2 (51160) - http://www.bohemiancoding.com/sketch -->
+    <title>Splitt</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Splitt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-6" stroke="#0067C5">
+            <path d="M0.5,0.5 L0.5,12.5 L8,12.5 C8.82842712,12.5 9.5,11.8284271 9.5,11 L9.5,2 C9.5,1.17157288 8.82842712,0.5 8,0.5 L0.5,0.5 Z" id="Rectangle-8-Copy-6"></path>
+            <path d="M22.5,0.5 L22.5,12.5 L30,12.5 C30.8284271,12.5 31.5,11.8284271 31.5,11 L31.5,2 C31.5,1.17157288 30.8284271,0.5 30,0.5 L22.5,0.5 Z" id="Rectangle-8-Copy-5" transform="translate(27.000000, 6.500000) scale(-1, 1) translate(-27.000000, -6.500000) "></path>
+            <g id="Group-5-Copy" transform="translate(11.000000, 4.000000)">
+                <path d="M0.5,2.5 L9.5,2.5" id="Line-4"></path>
+                <path d="M7.5,0.5 L9.5,2.5" id="Line-5" stroke-linecap="round"></path>
+                <path d="M7.5,2.5 L9.5,4.5" id="Line-5-Copy-13" stroke-linecap="round" transform="translate(8.500000, 3.500000) scale(1, -1) translate(-8.500000, -3.500000) "></path>
+                <path d="M0.5,0.5 L2.5,2.5" id="Line-5-Copy-17" stroke-linecap="round" transform="translate(1.500000, 1.500000) scale(-1, 1) translate(-1.500000, -1.500000) "></path>
+                <path d="M0.5,2.5 L2.5,4.5" id="Line-5-Copy-16" stroke-linecap="round" transform="translate(1.500000, 3.500000) scale(-1, -1) translate(-1.500000, -3.500000) "></path>
+            </g>
+        </g>
+    </g>
+</svg>
