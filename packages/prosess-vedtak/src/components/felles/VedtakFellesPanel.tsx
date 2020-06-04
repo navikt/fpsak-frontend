@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useState, useCallback, ReactNode, MouseEvent,
+  FunctionComponent, useMemo, useState, useCallback, ReactNode, MouseEvent,
 } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Undertittel, Normaltekst } from 'nav-frontend-typografi';
@@ -8,6 +8,7 @@ import Lenke from 'nav-frontend-lenker';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import popOutPilSvg from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import endreSvg from '@fpsak-frontend/assets/images/endre.svg';
@@ -36,6 +37,17 @@ const finnKnappetekstkode = (behandlingType, aksjonspunkter) => {
   }
 
   return 'VedtakForm.FattVedtak';
+};
+
+const harIkkeKonsekvenserForYtelsen = (behandlingResultat, ...konsekvenserForYtelsenKoder) => {
+  if (!behandlingResultat) {
+    return true;
+  }
+  const { konsekvenserForYtelsen } = behandlingResultat;
+  if (!Array.isArray(konsekvenserForYtelsen) || konsekvenserForYtelsen.length !== 1) {
+    return true;
+  }
+  return !konsekvenserForYtelsenKoder.some((kode) => kode === konsekvenserForYtelsen[0].kode);
 };
 
 interface OwnProps {
@@ -91,6 +103,9 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
   const skalViseLink = !behandlingsresultat.avslagsarsak
     || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
 
+  const harIkkeKonsekvensForYtelse = useMemo(() => harIkkeKonsekvenserForYtelsen(behandlingsresultat,
+    konsekvensForYtelsen.ENDRING_I_FORDELING_AV_YTELSEN, konsekvensForYtelsen.INGEN_ENDRING), [behandlingsresultat]);
+
   return (
     <>
       <OkAvbrytModal
@@ -123,7 +138,7 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
           </Element>
         </Column>
         <Column xs="3">
-          {skalViseLink && !erBehandlingEtterKlage && (
+          {skalViseLink && !erBehandlingEtterKlage && harIkkeKonsekvensForYtelse && (
             <>
               <Lenke href="#" onClick={previewAutomatiskBrev}>
                 <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
