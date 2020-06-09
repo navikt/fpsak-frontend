@@ -9,6 +9,7 @@ import {
   Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
 } from '@fpsak-frontend/types';
 
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
@@ -20,7 +21,11 @@ import { behandlingerPath, pathToAnnenPart } from '../app/paths';
 import FagsakResolver from './FagsakResolver';
 import FagsakGrid from './components/FagsakGrid';
 import {
-  getSelectedBehandlingId, getBehandlingVersjon, getBehandlingSprak, getUrlBehandlingId,
+  getSelectedBehandlingId,
+  getBehandlingVersjon,
+  getBehandlingSprak,
+  getUrlBehandlingId,
+  getBehandlingType, finnesVerge,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
@@ -30,16 +35,20 @@ const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER, fpsakApi.BEHANDLING
 const ingenEndepunkter = [];
 
 const finnLenkeTilAnnenPart = (annenPartBehandling) => pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);
+const erTilbakekreving = (behandlingType) => behandlingType && (BehandlingType.TILBAKEKREVING === behandlingType.kode
+  || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
 interface OwnProps {
   harValgtBehandling: boolean;
   behandlingId?: number;
   behandlingVersjon?: number;
+  behandlingType?: Kodeverk;
   selectedSaksnummer: number;
   requestPendingMessage?: string;
   alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   sprakkode?: Kodeverk;
   fagsak?: Fagsak;
+  harVerge: boolean;
 }
 
 interface DataProps {
@@ -64,9 +73,11 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
   requestPendingMessage,
   behandlingId,
   behandlingVersjon,
+  behandlingType,
   alleKodeverk,
   sprakkode,
   fagsak,
+  harVerge,
 }) => (
   <>
     <FagsakResolver key={selectedSaksnummer}>
@@ -94,6 +105,7 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
                   alleKodeverk={alleKodeverk}
                   sprakkode={sprakkode}
                   fagsak={fagsak}
+                  harTilbakekrevingVerge={erTilbakekreving(behandlingType) && harVerge}
                 />
               )}
             />
@@ -109,11 +121,13 @@ const mapStateToProps = (state) => ({
   harValgtBehandling: !!getUrlBehandlingId(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
+  behandlingType: getBehandlingType(state),
   selectedSaksnummer: getSelectedSaksnummer(state),
   requestPendingMessage: getRequestPollingMessage(state),
   alleKodeverk: getAlleFpSakKodeverk(state),
   sprakkode: getBehandlingSprak(state),
   fagsak: getSelectedFagsak(state),
+  harVerge: finnesVerge(state),
 });
 
 export default trackRouteParam({

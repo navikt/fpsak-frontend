@@ -3,7 +3,9 @@ import React from 'react';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { faktaPanelCodes } from '@fpsak-frontend/konstanter';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
+import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 
 const faktaPanelDefinisjoner = [{
@@ -16,6 +18,15 @@ const faktaPanelDefinisjoner = [{
   getData: ({ feilutbetalingFakta, fagsak, fpsakKodeverk }) => (
     { feilutbetalingFakta, fagsakYtelseTypeKode: fagsak.fagsakYtelseType.kode, fpsakKodeverk }
   ),
+},
+{
+  urlCode: faktaPanelCodes.VERGE,
+  textCode: 'RegistrereVergeInfoPanel.Info',
+  aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_VERGE],
+  endpoints: [tilbakekrevingApi.VERGE],
+  renderComponent: (props) => <VergeFaktaIndex {...props} />,
+  showComponent: () => false,
+  getData: () => ({}),
 }];
 
 export default faktaPanelDefinisjoner;

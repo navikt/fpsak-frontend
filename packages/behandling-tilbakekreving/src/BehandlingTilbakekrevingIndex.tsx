@@ -23,6 +23,7 @@ interface OwnProps {
   rettigheter: Rettigheter;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
+  valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
@@ -48,6 +49,8 @@ interface DispatchProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   hentKodeverk: () => Promise<any>;
+  opprettVerge: (params: {}) => Promise<any>;
+  fjernVerge: (params: {}) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
   destroyReduxForm: (form: string) => void;
 }
@@ -58,6 +61,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId, hentKodeverk,
+      opprettVerge, fjernVerge,
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
@@ -66,6 +70,8 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
         .then(() => hentBehandling({ behandlingId }, { keepData: true })),
       taBehandlingAvVent: (params) => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: (params) => henleggBehandling(params),
+      opprettVerge: (params) => opprettVerge(params),
+      fjernVerge: (params) => fjernVerge(params),
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
@@ -92,6 +98,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
       rettigheter,
       oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
+      valgtFaktaSteg,
       settPaVent,
       hentBehandling,
       opneSokeside,
@@ -121,6 +128,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
               fpsakKodeverk={fpsakKodeverk}
               rettigheter={rettigheter}
               valgtProsessSteg={valgtProsessSteg}
+              valgtFaktaSteg={valgtFaktaSteg}
               oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
@@ -159,6 +167,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     settPaVent: tilbakekrevingApi.UPDATE_ON_HOLD.makeRestApiRequest(),
     hentBehandling: tilbakekrevingApi.BEHANDLING_TILBAKE.makeRestApiRequest(),
     hentKodeverk: tilbakekrevingApi.TILBAKE_KODEVERK.makeRestApiRequest(),
+    opprettVerge: tilbakekrevingApi.VERGE_OPPRETT.makeRestApiRequest(),
+    fjernVerge: tilbakekrevingApi.VERGE_FJERN.makeRestApiRequest(),
     resetRestApiContext: getResetRestApiContext,
     destroyReduxForm: destroy,
   }, dispatch),

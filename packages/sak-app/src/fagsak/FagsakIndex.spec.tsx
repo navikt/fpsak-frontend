@@ -13,6 +13,7 @@ describe('<FagsakIndex>', () => {
       harValgtBehandling
       selectedSaksnummer={123}
       alleKodeverk={{}}
+      harVerge={false}
     />);
 
     const fagsakResolver = wrapper.find(FagsakResolver);
@@ -21,7 +22,7 @@ describe('<FagsakIndex>', () => {
   });
 
   it('skal rendre modal for oppdatering av saksopplysninger', () => {
-    const wrapper = shallow(<FagsakIndex selectedSaksnummer={123} harValgtBehandling alleKodeverk={{}} />);
+    const wrapper = shallow(<FagsakIndex selectedSaksnummer={123} harValgtBehandling alleKodeverk={{}} harVerge={false} />);
 
     expect(wrapper.find(DataFetchPendingModal)).to.have.length(0);
 

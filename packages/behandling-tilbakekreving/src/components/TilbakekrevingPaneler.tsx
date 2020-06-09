@@ -18,6 +18,7 @@ interface OwnProps {
   fpsakKodeverk: {[key: string]: KodeverkMedNavn[]};
   rettigheter: Rettigheter;
   valgtProsessSteg?: string;
+  valgtFaktaSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
@@ -35,6 +36,7 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
   fpsakKodeverk,
   rettigheter,
   valgtProsessSteg,
+  valgtFaktaSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
@@ -77,6 +79,7 @@ const TilbakekrevingPaneler: FunctionComponent<OwnProps> = ({
         rettigheter={rettigheter}
         alleKodeverk={kodeverk}
         fpsakKodeverk={fpsakKodeverk}
+        valgtFaktaSteg={valgtFaktaSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         hasFetchError={hasFetchError}
         dispatch={dispatch}

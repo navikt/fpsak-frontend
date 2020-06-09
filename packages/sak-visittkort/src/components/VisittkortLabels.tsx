@@ -14,44 +14,48 @@ import styles from './visittkortLabels.less';
 
 interface OwnProps {
   personopplysninger: Personopplysninger;
+  harTilbakekrevingVerge: boolean;
 }
 
 const VisittkortLabels: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   personopplysninger,
+  harTilbakekrevingVerge,
 }) => {
-  const erSokerUnder18 = useMemo(() => moment().diff(personopplysninger.fodselsdato, 'years') < 18, [personopplysninger]);
+  const erSokerUnder18 = useMemo(() => personopplysninger && moment().diff(personopplysninger.fodselsdato, 'years') < 18, [personopplysninger]);
+  const harVerge = (personopplysninger ? (personopplysninger.harVerge && !personopplysninger.dodsdato)
+    : harTilbakekrevingVerge);
   return (
     <>
-      {personopplysninger.dodsdato && (
+      {personopplysninger && personopplysninger.dodsdato && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.DodTittel' })} alignBottom>
           <EtikettInfo className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Dod" values={{ dato: dateFormat(personopplysninger.dodsdato) }} />
           </EtikettInfo>
         </Tooltip>
       )}
-      {personopplysninger.diskresjonskode === diskresjonskodeType.KODE6 && !personopplysninger.dodsdato && (
+      {personopplysninger && personopplysninger.diskresjonskode === diskresjonskodeType.KODE6 && !personopplysninger.dodsdato && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon6Tittel' })} alignBottom>
           <EtikettAdvarsel className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Diskresjon6" />
           </EtikettAdvarsel>
         </Tooltip>
       )}
-      {personopplysninger.diskresjonskode === diskresjonskodeType.KODE7 && !personopplysninger.dodsdato && (
+      {personopplysninger && personopplysninger.diskresjonskode === diskresjonskodeType.KODE7 && !personopplysninger.dodsdato && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Diskresjon7Tittel' })} alignBottom>
           <EtikettFokus className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Diskresjon7" />
           </EtikettFokus>
         </Tooltip>
       )}
-      {personopplysninger.harVerge && !personopplysninger.dodsdato && (
+      {harVerge && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.VergeTittel' })} alignBottom>
           <EtikettInfo className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Verge" />
           </EtikettInfo>
         </Tooltip>
       )}
-      {erSokerUnder18 && (
+      {personopplysninger && erSokerUnder18 && (
         <Tooltip content={intl.formatMessage({ id: 'VisittkortLabels.Under18Tittel' })} alignBottom>
           <EtikettInfo className={styles.etikett}>
             <FormattedMessage id="VisittkortLabels.Under18" />
