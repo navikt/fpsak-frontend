@@ -6,10 +6,10 @@ import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import opptjeningAktivitetTyper from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import {
-  RadioGroupField, RadioOption,
+  RadioGroupField, RadioOption, DatepickerField,
 } from '@fpsak-frontend/form';
 import {
-  Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
+  Table, TableRow, TableColumn, PeriodLabel, EditedIcon, DateLabel,
 } from '@fpsak-frontend/shared-components';
 import { createVisningsnavnForAktivitet } from '../ArbeidsforholdHelper';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
@@ -51,9 +51,23 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, er
       </Normaltekst>
     </TableColumn>
     <TableColumn>
+      {!erOverstyrt
+      && (
       <Normaltekst>
         <PeriodLabel dateStringFom={aktivitet.fom} dateStringTom={aktivitet.tom} />
       </Normaltekst>
+      )}
+      {erOverstyrt
+      && (
+        <>
+          <DateLabel dateString={aktivitet.fom} />
+          <DatepickerField
+            name={`${lagAktivitetFieldId(aktivitet)}.tom`}
+            validate={[required]}
+            readOnly={readOnly}
+          />
+        </>
+      )}
     </TableColumn>
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
@@ -177,15 +191,15 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
 
 
 VurderAktiviteterTabell.transformValues = (values, aktiviteter) => aktiviteter
-  .filter((aktivitet) => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
+  .filter((aktivitet) => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false || values[lagAktivitetFieldId(aktivitet)].tom != null)
   .map((aktivitet) => ({
     oppdragsgiverOrg: aktivitet.aktørIdString ? null : aktivitet.arbeidsgiverId,
     arbeidsforholdRef: aktivitet.arbeidsforholdId,
     fom: aktivitet.fom,
-    tom: aktivitet.tom,
+    tom: values[lagAktivitetFieldId(aktivitet)].tom != null ? values[lagAktivitetFieldId(aktivitet)].tom : aktivitet.tom,
     opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
     arbeidsgiverIdentifikator: aktivitet.aktørIdString ? aktivitet.aktørIdString : null,
-    skalBrukes: false,
+    skalBrukes: values[lagAktivitetFieldId(aktivitet)].skalBrukes,
   }));
 
 VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initialValues) => {
