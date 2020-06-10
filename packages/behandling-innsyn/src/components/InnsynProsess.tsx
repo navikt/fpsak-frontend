@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useState, useCallback,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -55,8 +54,7 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleOppdatereFag
   };
 };
 
-const InnsynProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const InnsynProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -77,7 +75,7 @@ const InnsynProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
+    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, valgtProsessSteg);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const lagringSideeffekterCallback = getLagringSideeffekter(toggleIverksetterVedtakModal, toggleSkalOppdatereFagsakContext,
@@ -111,4 +109,4 @@ const InnsynProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   );
 };
 
-export default injectIntl(InnsynProsess);
+export default InnsynProsess;

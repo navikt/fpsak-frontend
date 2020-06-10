@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateAktoer: updateAktoerCreator,
-  removeErrorMessage: errorHandler.removeErrorMessage,
+  removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(requireProps(['aktoerId'], <LoadingPanel />)(AktoerResolver));

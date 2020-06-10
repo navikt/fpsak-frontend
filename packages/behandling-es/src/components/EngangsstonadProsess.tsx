@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 
@@ -84,8 +83,7 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtak
   };
 };
 
-const EngangsstonadProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -112,7 +110,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps & WrappedComponentProps> 
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvEsPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo);
+    dataTilUtledingAvEsPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, valgtProsessSteg, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
@@ -122,7 +120,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps & WrappedComponentProps> 
   const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg, behandling,
     oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, valgtPanel);
 
-  const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
+  const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.getStatus() === vilkarUtfallType.OPPFYLT
     ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionES'),
   [behandling.versjon]);
 
@@ -158,4 +156,4 @@ const EngangsstonadProsess: FunctionComponent<OwnProps & WrappedComponentProps> 
   );
 };
 
-export default injectIntl(EngangsstonadProsess);
+export default EngangsstonadProsess;

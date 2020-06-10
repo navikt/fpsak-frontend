@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
+import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 
-import DataFetcher from '../../app/DataFetcher';
 import { DocumentIndex } from './DocumentIndex';
 
 describe('<DocumentIndex>', () => {

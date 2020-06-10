@@ -5,11 +5,17 @@ import { Textarea as NavTextarea } from 'nav-frontend-skjema';
 import EtikettFokus from 'nav-frontend-etiketter';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import { labelPropType } from '@fpsak-frontend/form/src/Label';
 import renderNavField from '@fpsak-frontend/form/src/renderNavField';
 import styles from './textAreaField.less';
 import ReadOnlyField from './ReadOnlyField';
 
+const labelPropType = PropTypes.oneOfType([
+  PropTypes.node,
+  PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    args: PropTypes.shape(),
+  }),
+]);
 
 const TextAreaWithBadge = ({
   badges,

@@ -1,7 +1,7 @@
-interface FaktaPanelFaktaPanelMenyRadMeny {
+interface FaktaPanelMenyRad {
   tekst: string;
   erAktiv: boolean;
   harAksjonspunkt: boolean;
 }
 
-export default FaktaPanelFaktaPanelMenyRadMeny;
+export default FaktaPanelMenyRad;

@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -87,8 +86,7 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleAnkeModal, t
   };
 };
 
-const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const AnkeProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -111,7 +109,7 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
+    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, valgtProsessSteg);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visModalAnkeBehandling, toggleAnkeModal] = useState(false);
@@ -155,4 +153,4 @@ const AnkeProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   );
 };
 
-export default injectIntl(AnkeProsess);
+export default AnkeProsess;

@@ -7,8 +7,9 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
 import {
-  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
 import EngangsstonadPaneler from './components/EngangsstonadPaneler';
@@ -114,10 +115,11 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingData
+      <DataFetcher
         fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={engansstonadData}
         showOldDataWhenRefetching
+        loadingPanel={<LoadingPanel />}
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />

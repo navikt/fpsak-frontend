@@ -7,9 +7,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
-import DataFetcher from '../../app/DataFetcher';
 import { ApprovalIndex } from './ApprovalIndex';
 
 describe('<ApprovalIndex>', () => {

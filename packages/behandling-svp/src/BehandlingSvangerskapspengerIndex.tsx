@@ -4,11 +4,12 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import svpBehandlingApi, { reduxRestApi, SvpBehandlingApiKeys } from './data/svpBehandlingApi';
 import SvangerskapspengerPaneler from './components/SvangerskapspengerPaneler';
@@ -114,10 +115,11 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingData
+      <DataFetcher
         fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={svangerskapspengerData}
         showOldDataWhenRefetching
+        loadingPanel={<LoadingPanel />}
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />

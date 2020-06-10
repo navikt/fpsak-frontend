@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import { Behandling } from '@fpsak-frontend/types';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
@@ -81,9 +81,8 @@ describe('<InnsynProsess>', () => {
   const innsynDokumenter = [];
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <InnsynProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <InnsynProsess
         data={{
           aksjonspunkter, vilkar, innsyn, innsynDokumenter,
         }}
@@ -104,22 +103,21 @@ describe('<InnsynProsess>', () => {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Behandle innsyn',
+      labelId: 'Behandlingspunkt.Innsyn',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Vedtak',
+      labelId: 'Behandlingspunkt.Vedtak',
       type: 'default',
     }]);
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <InnsynProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <InnsynProsess
         data={{
           aksjonspunkter, vilkar, innsyn, innsynDokumenter,
         }}

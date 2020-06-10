@@ -12,12 +12,12 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { featureToggle } from '@fpsak-frontend/konstanter';
 import { NavAnsatt, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
-import { requireProps } from '@fpsak-frontend/shared-components';
+import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
-import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../../app/duck';
@@ -200,6 +200,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
         fetchingTriggers={new DataFetcherTriggers({ behandlingId: behandlingIdentifier.behandlingId, behandlingVersion: selectedBehandlingVersjon }, true)}
         key={harKlageEndepunkter ? 0 : 1}
         endpoints={harKlageEndepunkter ? klageData : ingenData}
+        loadingPanel={<LoadingPanel />}
         render={(props: {
           totrinnsKlageVurdering?: {
             klageVurdering?: string;
@@ -238,6 +239,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
                 }, true)}
                 key={revurderingData.some((rd) => rd.isEndpointEnabled()) ? 0 : 1}
                 endpoints={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
+                loadingPanel={<LoadingPanel />}
                 render={(modalProps: { harRevurderingSammeResultat: boolean }) => (
                   <FatterVedtakApprovalModalSakIndex
                     showModal={showBeslutterModal}

@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
-import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import ApplicationContextPath from '../../behandling/ApplicationContextPath';
 import { getEnabledApplicationContexts } from '../../app/duck';
 import fpsakApi from '../../data/fpsakApi';
@@ -74,6 +74,7 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
       endpointParams={{ [fpsakApi.HISTORY_FPSAK.name]: { saksnummer }, [fpsakApi.HISTORY_FPTILBAKE.name]: { saksnummer } }}
       showOldDataWhenRefetching
       endpoints={enabledContexts}
+      loadingPanel={<LoadingPanel />}
       render={(props: { historyFpsak: History[]; historyFptilbake?: History[] }) => sortAndTagTilbakekreving(props)
         .map((innslag) => (
           <HistorikkSakIndex

@@ -7,14 +7,14 @@ import {
 } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
-import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
+import FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';
 
 import styles from './faktaPanel.less';
 
 interface OwnProps {
-  paneler: FaktaPanelFaktaPanelMenyRadMeny[];
+  paneler: FaktaPanelMenyRad[];
   onClick?: (index: number) => void;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({

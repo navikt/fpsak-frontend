@@ -3,10 +3,12 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, Rettigheter, FaktaPanel, DataFetcherBehandlingData, DataFetcherTriggers, faktaHooks,
+  FagsakInfo, Rettigheter, FaktaPanel, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaFpPanelDefinisjoner';
@@ -51,29 +53,32 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
     fagsak, behandling, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag, hasFetchError,
   };
 
-  const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
-    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, behandling, rettigheter, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
+  const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, behandling, rettigheter, aksjonspunkter, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, fpBehandlingApi, dispatch);
 
-  if (valgtPanel) {
+  if (sidemenyPaneler.length > 0) {
     return (
-      <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
-        <DataFetcherBehandlingData
-          key={valgtPanel.urlCode}
-          fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-          endpoints={valgtPanel.endpoints}
-          render={(dataProps) => valgtPanel.renderComponent({
-            ...dataProps,
-            behandling,
-            alleKodeverk,
-            submitCallback: bekreftAksjonspunktCallback,
-            ...valgtPanel.komponentData,
-          })}
-        />
+      <FaktaPanel paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
+        {valgtPanel && (
+          <DataFetcher
+            key={valgtPanel.getUrlKode()}
+            fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+            endpoints={valgtPanel.getPanelDef().getEndepunkter()}
+            loadingPanel={<LoadingPanel />}
+            render={(dataProps) => valgtPanel.getPanelDef().getKomponent({
+              ...dataProps,
+              behandling,
+              alleKodeverk,
+              submitCallback: bekreftAksjonspunktCallback,
+              ...valgtPanel.getKomponentData(rettigheter, dataTilUtledingAvFpPaneler, hasFetchError),
+            })}
+          />
+        )}
       </FaktaPanel>
     );
   }

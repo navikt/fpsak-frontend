@@ -2,9 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import Label, { labelPropType } from '@fpsak-frontend/form/src/Label';
+import Label from '@fpsak-frontend/form/src/Label';
 import EditedIcon from './EditedIcon';
 import styles from './readOnlyField.less';
+
+const labelPropType = PropTypes.oneOfType([
+  PropTypes.node,
+  PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    args: PropTypes.shape(),
+  }),
+]);
 
 const hasValue = (value) => value !== undefined && value !== null && value !== '';
 

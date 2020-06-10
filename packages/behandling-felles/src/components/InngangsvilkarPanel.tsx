@@ -5,16 +5,16 @@ import { Column, Row } from 'nav-frontend-grid';
 import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
-import { ProsessStegPanelData } from '../types/prosessStegDataTsType';
-import DataFetcherBehandlingData, { DataFetcherTriggers } from '../DataFetcherBehandlingData';
+import { ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
 import styles from './inngangsvilkarPanel.less';
 
 interface OwnProps {
   behandling: Behandling;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
-  prosessStegData: ProsessStegPanelData[];
+  prosessStegData: ProsessStegPanelUtledet[];
   submitCallback: (data: {}) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -28,25 +28,26 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
   apentFaktaPanelInfo,
   oppdaterProsessStegOgFaktaPanelIUrl,
 }) => {
-  const filteredPanels = prosessStegData.filter((stegData) => stegData.renderComponent);
+  const filteredPanels = prosessStegData.filter((stegData) => stegData.getKomponentData);
   const panels = filteredPanels.map((stegData) => (
-    <DataFetcherBehandlingData
-      key={stegData.code}
+    <DataFetcher
+      key={stegData.getId()}
       fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-      endpoints={stegData.endpoints}
-      render={(dataProps) => stegData.renderComponent({
+      endpoints={stegData.getProsessStegDelPanelDef().getEndepunkter()}
+      loadingPanel={<div>test</div>}
+      render={(dataProps) => stegData.getProsessStegDelPanelDef().getKomponent({
         ...dataProps,
         behandling,
         alleKodeverk,
         submitCallback,
-        ...stegData.komponentData,
+        ...stegData.getKomponentData(),
       })}
     />
   ));
 
   const aksjonspunktTekstKoder = useMemo(() => filteredPanels
-    .filter((p) => p.isAksjonspunktOpen && p.aksjonspunktHelpTextCodes.length > 0)
-    .reduce((acc, p) => [...acc, p.aksjonspunktHelpTextCodes], []),
+    .filter((p) => p.getErAksjonspunktOpen() && p.getAksjonspunktHjelpetekster().length > 0)
+    .reduce((acc, p) => [...acc, p.getAksjonspunktHjelpetekster()], []),
   [filteredPanels]);
 
   const oppdaterUrl = useCallback((evt) => {
@@ -54,7 +55,7 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
     evt.preventDefault();
   }, [apentFaktaPanelInfo]);
 
-  const erIkkeFerdigbehandlet = useMemo(() => filteredPanels.some((p) => p.status === vilkarUtfallType.IKKE_VURDERT), [behandling.versjon]);
+  const erIkkeFerdigbehandlet = useMemo(() => filteredPanels.some((p) => p.getStatus() === vilkarUtfallType.IKKE_VURDERT), [behandling.versjon]);
 
   return (
     <FadingPanel>

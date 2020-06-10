@@ -8,10 +8,11 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
-import { Kodeverk } from '@fpsak-frontend/types';
+import { Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from '../../kodeverk/duck';
@@ -41,7 +42,7 @@ interface OwnProps {
   recipients?: string[];
   ventearsaker?: Kodeverk[];
   behandlingTypeKode: string;
-  revurderingVarslingArsak: Kodeverk[];
+  revurderingVarslingArsak: KodeverkMedNavn[];
 }
 
 interface DispatchProps {
@@ -198,6 +199,7 @@ export class MessagesIndex extends Component<OwnProps & DispatchProps, StateProp
           }, true)}
           key={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? 0 : 1}
           endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
+          loadingPanel={<LoadingPanel />}
           render={(props: DataProps) => (
             <MeldingerSakIndex
               submitCallback={this.submitCallback}

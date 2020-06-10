@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { Aksjonspunkt, NavAnsatt } from '@fpsak-frontend/types';
+import { Aksjonspunkt, NavAnsatt, Risikoklassifisering } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 
@@ -32,7 +32,7 @@ interface OwnProps {
   readOnly: boolean;
   behandlingIdentifier?: BehandlingIdentifier;
   behandlingVersjon?: number;
-  kontrollresultat?: {};
+  kontrollresultat?: Risikoklassifisering;
   risikoAksjonspunkt?: Aksjonspunkt;
 }
 

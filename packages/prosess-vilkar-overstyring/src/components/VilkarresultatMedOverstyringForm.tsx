@@ -263,5 +263,5 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   };
 };
 
-const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringForm);
+const form = behandlingForm({ form: 'VilkarresultatMedOverstyringForm', enableReinitialize: true })(VilkarresultatMedOverstyringForm);
 export default connect(mapStateToPropsFactory)(form);

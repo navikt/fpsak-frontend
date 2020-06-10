@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useState, useCallback,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -88,8 +87,7 @@ const getLagringSideeffekter = (toggleFatterVedtakModal, toggleKlageModal, toggl
   };
 };
 
-const KlageProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const KlageProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -114,7 +112,7 @@ const KlageProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, intl, valgtProsessSteg);
+    dataTilUtledingAvFpPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, data.vilkar, false, valgtProsessSteg);
 
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
   const [visModalKlageBehandling, toggleKlageModal] = useState(false);
@@ -157,4 +155,4 @@ const KlageProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   );
 };
 
-export default injectIntl(KlageProsess);
+export default KlageProsess;

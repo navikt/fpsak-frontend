@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
-import { omit } from '@fpsak-frontend/utils';
 import { Behandling } from '@fpsak-frontend/types';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import {
   ProsessStegPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal, ProsessStegContainer,
 } from '@fpsak-frontend/behandling-felles';
@@ -87,9 +86,8 @@ describe('<SvangerskapspengerProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -111,46 +109,45 @@ describe('<SvangerskapspengerProsess>', () => {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Opplysningsplikt',
+      labelId: 'Behandlingspunkt.Opplysningsplikt',
       type: 'default',
     }, {
       isActive: true,
       isDisabled: false,
       isFinished: false,
-      label: 'Inngangsvilkår',
+      labelId: 'Behandlingspunkt.Inngangsvilkar',
       type: 'warning',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Beregning',
+      labelId: 'Behandlingspunkt.Beregning',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Tilkjent ytelse',
+      labelId: 'Behandlingspunkt.TilkjentYtelse',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Simulering',
+      labelId: 'Behandlingspunkt.Avregning',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Vedtak',
+      labelId: 'Behandlingspunkt.Vedtak',
       type: 'default',
     }]);
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -179,9 +176,8 @@ describe('<SvangerskapspengerProsess>', () => {
   });
 
   it('skal vise prosesspanel for inngangsvilkår siden det er et åpent aksjonspunkt for svangerskap', () => {
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -198,37 +194,12 @@ describe('<SvangerskapspengerProsess>', () => {
       />,
     );
 
-    const panelData = {
-      code: 'SVANGERSKAP',
-      endpoints: [],
-      aksjonspunkter,
-      isAksjonspunktOpen: true,
-      aksjonspunktHelpTextCodes: ['SvangerskapVilkarForm.FyllerVilkår'],
-      isReadOnly: false,
-      status: vilkarUtfallType.IKKE_VURDERT,
-      komponentData: {
-        status: vilkarUtfallType.IKKE_VURDERT,
-        isReadOnly: false,
-        readOnlySubmitButton: false,
-        aksjonspunkter,
-        vilkar,
-        isAksjonspunktOpen: true,
-      },
-    };
-
-    const data = {
-      urlCode: 'inngangsvilkar',
-      erStegBehandlet: true,
-      prosessStegTittelKode: 'Behandlingspunkt.Inngangsvilkar',
-      isAksjonspunktOpen: true,
-      isReadOnly: false,
-      aksjonspunkter,
-      status: vilkarUtfallType.IKKE_VURDERT,
-    };
-
     const panel = wrapper.find(ProsessStegPanel);
-    expect(omit(panel.prop('valgtProsessSteg').panelData[0], 'renderComponent')).is.eql(panelData);
-    expect(omit(panel.prop('valgtProsessSteg'), 'panelData')).is.eql(data);
+    const utledetPanel = panel.prop('valgtProsessSteg');
+    expect(utledetPanel.getUrlKode()).is.eql('inngangsvilkar');
+    expect(utledetPanel.getErAksjonspunktOpen()).is.true;
+    expect(utledetPanel.getErReadOnly()).is.false;
+    expect(utledetPanel.getStatus()).is.eql(vilkarUtfallType.IKKE_VURDERT);
   });
 
   it('skal vise fatter vedtak modal etter lagring når aksjonspunkt er FORESLA_VEDTAK og så lukke denne og gå til søkeside', () => {
@@ -251,9 +222,8 @@ describe('<SvangerskapspengerProsess>', () => {
       soknad,
     };
 
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={vedtakBehandling as Behandling}
@@ -301,9 +271,8 @@ describe('<SvangerskapspengerProsess>', () => {
       soknad,
     };
 
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -351,9 +320,8 @@ describe('<SvangerskapspengerProsess>', () => {
       soknad,
     };
 
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedDataLocal as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -379,9 +347,8 @@ describe('<SvangerskapspengerProsess>', () => {
 
   it('skal gå til neste panel i prosess etter løst aksjonspunkt', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -410,9 +377,8 @@ describe('<SvangerskapspengerProsess>', () => {
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til vedtak', () => {
     const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -430,8 +396,8 @@ describe('<SvangerskapspengerProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('vedtak');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewCallback;
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('vedtak');
+    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });
@@ -441,9 +407,8 @@ describe('<SvangerskapspengerProsess>', () => {
 
   it('skal legge til forhåndsvisningsfunksjon i prosess-steget til simulering', () => {
     const dispatch = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <SvangerskapspengerProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <SvangerskapspengerProsess
         data={fetchedData as FetchedData}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -461,8 +426,8 @@ describe('<SvangerskapspengerProsess>', () => {
     );
 
     const panel = wrapper.find(ProsessStegPanel);
-    expect(panel.prop('valgtProsessSteg').urlCode).is.eql('simulering');
-    const forhandsvisCallback = panel.prop('valgtProsessSteg').panelData[0].komponentData.previewFptilbakeCallback;
+    expect(panel.prop('valgtProsessSteg').getUrlKode()).is.eql('simulering');
+    const forhandsvisCallback = panel.prop('valgtProsessSteg').getDelPaneler()[0].getKomponentData().previewFptilbakeCallback;
     expect(forhandsvisCallback).is.not.null;
 
     forhandsvisCallback({ param: 'test' });

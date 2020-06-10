@@ -182,7 +182,7 @@ export const visVisittkortNårEnHarBegrensetMedInformasjon = () => (
     fagsak={fagsak}
     familieHendelse={familieHendelse}
     lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );
@@ -193,7 +193,7 @@ export const visVisittkortNårEnHarPersonopplysninger = () => (
     personopplysninger={personopplysningerSoker}
     familieHendelse={familieHendelse}
     lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );
@@ -207,7 +207,7 @@ export const visVisittkortNårEnHarPersonopplysningerForBeggeParter = () => (
     }}
     familieHendelse={familieHendelse}
     lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );
@@ -224,7 +224,7 @@ export const visVisittkortForAnnenPartDerAktørIdErUkjent = () => (
     }}
     familieHendelse={familieHendelse}
     lenkeTilAnnenPart="testlenke til annen part"
-    alleKodeverk={alleKodeverk}
+    alleKodeverk={alleKodeverk as any}
     sprakkode={{ kode: 'NN', kodeverk: 'SPRAK' }}
   />
 );

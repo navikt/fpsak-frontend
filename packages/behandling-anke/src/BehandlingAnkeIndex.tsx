@@ -6,8 +6,9 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, Rettigheter, DataFetcherBehandlingData, DataFetcherTriggers, SettPaVentParams, ReduxFormStateCleaner,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { Behandling, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
@@ -103,10 +104,11 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingData
+      <DataFetcher
         fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         endpoints={ankeData}
         showOldDataWhenRefetching
+        loadingPanel={<LoadingPanel />}
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />

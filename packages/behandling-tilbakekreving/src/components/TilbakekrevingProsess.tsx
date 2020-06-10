@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useState, useCallback,
 } from 'react';
-import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
 
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
@@ -52,8 +51,7 @@ const getLagringSideeffekter = (toggleFatterVedtakModal, toggleOppdatereFagsakCo
   };
 };
 
-const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
-  intl,
+const TilbakekrevingProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -75,7 +73,7 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps>
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvTilbakekrevingPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, [], hasFetchError, intl, valgtProsessSteg);
+    dataTilUtledingAvTilbakekrevingPaneler, fagsak, rettigheter, behandling, data.aksjonspunkter, [], hasFetchError, valgtProsessSteg);
 
   const [visApenRevurderingModal, toggleApenRevurderingModal] = useState(harApenRevurdering);
   const lukkApenRevurderingModal = useCallback(() => toggleApenRevurderingModal(false), []);
@@ -119,4 +117,4 @@ const TilbakekrevingProsess: FunctionComponent<OwnProps & WrappedComponentProps>
   );
 };
 
-export default injectIntl(TilbakekrevingProsess);
+export default TilbakekrevingProsess;

@@ -5,8 +5,7 @@ import sinon from 'sinon';
 import { Dispatch } from 'redux';
 
 import { Behandling } from '@fpsak-frontend/types';
-import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { prosessStegCodes as bpc } from '@fpsak-frontend/konstanter';
+import { prosessStegCodes } from '@fpsak-frontend/konstanter';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -14,14 +13,15 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { DataFetcher, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
-import DataFetcherBehandlingData from '../DataFetcherBehandlingData';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegPanel from './ProsessStegPanel';
 import MargMarkering from './MargMarkering';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
+import { ProsessStegDef, ProsessStegPanelDef } from '../util/prosessSteg/ProsessStegDef';
+import { ProsessStegUtledet, ProsessStegPanelUtledet } from '../util/prosessSteg/ProsessStegUtledet';
 
 describe('<ProsessStegPanel>', () => {
   const fagsak = {
@@ -66,43 +66,45 @@ describe('<ProsessStegPanel>', () => {
     erAktivt: true,
   }];
 
-  const fellesProsessStegData = {
-    label: 'test',
-    isAksjonspunktOpen: true,
-    isReadOnly: false,
-    aksjonspunkter: [],
-    status: vilkarUtfallType.IKKE_OPPFYLT,
-    panelData: [{
-      aksjonspunkter: [],
-      isReadOnly: false,
-      status: vilkarUtfallType.IKKE_OPPFYLT,
-      komponentData: {
-        isReadOnly: false,
-        readOnlySubmitButton: false,
-        aksjonspunkter: [],
-        vilkar: [],
-        isAksjonspunktOpen: false,
-        overrideReadOnly: false,
-        kanOverstyreAccess: false,
-        toggleOverstyring: () => {},
-      },
-    }],
+  const kanOverstyreAccess = { isEnabled: false, employeeHasAccess: false };
+
+  const isReadOnlyCheck = () => false;
+  const toggleOverstyring = () => undefined;
+
+  const lagPanelDef = (id, aksjonspunktKoder, aksjonspunktTekstKoder) => {
+    class PanelDef extends ProsessStegPanelDef {
+      getId = () => ''
+
+      getKomponent = (props) => <div {...props} />
+
+      getAksjonspunktKoder = () => aksjonspunktKoder
+
+      getAksjonspunktTekstkoder = () => aksjonspunktTekstKoder
+    }
+    return new PanelDef();
+  };
+
+  const lagStegDef = (urlKode, panelDefs) => {
+    class StegPanelDef extends ProsessStegDef {
+      getUrlKode = () => urlKode
+
+      getTekstKode = () => urlKode
+
+      getPanelDefinisjoner = () => panelDefs
+    }
+    return new StegPanelDef();
   };
 
   it('skal vise panel for henlagt behandling når valgt panel er vedtakspanelet og behandling er henlagt', () => {
-    const valgtPanel = {
-      ...fellesProsessStegData,
-      urlCode: bpc.VEDTAK,
-      erStegBehandlet: false,
-      isReadOnly: false,
-      panelData: [],
-      aksjonspunkter,
-      prosessStegTittelKode: 'TEST',
-    };
+    const vedtakPanelDef = lagPanelDef(prosessStegCodes.VEDTAK, [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['VEDTAK.TEKST']);
+    const vedtakStegDef = lagStegDef(prosessStegCodes.VEDTAK, [vedtakPanelDef]);
+    const utledetVedtakDelPanel = new ProsessStegPanelUtledet(vedtakStegDef, vedtakPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetVedtakSteg = new ProsessStegUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
+        valgtProsessSteg={utledetVedtakSteg}
         fagsak={fagsak}
         behandling={{
           ...behandling,
@@ -122,19 +124,15 @@ describe('<ProsessStegPanel>', () => {
   });
 
   it('skal vise panel for steg ikke behandlet når steget ikke er behandlet og saken ikke er henlagt', () => {
-    const valgtPanel = {
-      ...fellesProsessStegData,
-      urlCode: bpc.VEDTAK,
-      erStegBehandlet: false,
-      isReadOnly: false,
-      panelData: [],
-      aksjonspunkter,
-      prosessStegTittelKode: 'TEST',
-    };
+    const vedtakPanelDef = lagPanelDef(prosessStegCodes.VEDTAK, [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['VEDTAK.TEKST']);
+    const vedtakStegDef = lagStegDef(prosessStegCodes.VEDTAK, [vedtakPanelDef]);
+    const utledetVedtakDelPanel = new ProsessStegPanelUtledet(vedtakStegDef, vedtakPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetVedtakSteg = new ProsessStegUtledet(vedtakStegDef, [utledetVedtakDelPanel]);
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
+        valgtProsessSteg={utledetVedtakSteg}
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -151,33 +149,25 @@ describe('<ProsessStegPanel>', () => {
   });
 
   it('skal vise panel for inngangsvilkår når det er data for flere panel', () => {
-    const valgtPanel = {
-      ...fellesProsessStegData,
-      urlCode: bpc.INNGANGSVILKAR,
-      prosessStegTittelKode: 'TEST',
-      erStegBehandlet: true,
-      isReadOnly: false,
-      panelData: [{
-        ...fellesProsessStegData.panelData[0],
-        code: 'FODSEL',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }, {
-        ...fellesProsessStegData.panelData[0],
-        code: 'MEDLEMSKAP',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }],
-      aksjonspunkter,
-    };
+    const fodselAksjonspunkter = [{
+      ...aksjonspunkter[0],
+      definisjon: {
+        kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+        kodeverk: 'AKSJONSPUNKT_KODE',
+      },
+    }];
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const omsorgPanelDef = lagPanelDef('OMSORG', [], ['OMSORG.TEKST']);
+    const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef, omsorgPanelDef]);
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetOmsorgDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, omsorgPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel, utledetOmsorgDelPanel]);
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
+        valgtProsessSteg={utledetInngangsvilkarSteg}
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -193,30 +183,27 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
 
     expect(wrapper.find(InngangsvilkarPanel)).to.have.length(1);
-    expect(wrapper.find(DataFetcherBehandlingData)).to.have.length(0);
+    expect(wrapper.find(DataFetcher)).to.have.length(0);
   });
 
   it('skal vise kun vise ett panel', () => {
-    const valgtPanel = {
-      ...fellesProsessStegData,
-      urlCode: bpc.INNGANGSVILKAR,
-      erStegBehandlet: true,
-      isReadOnly: false,
-      panelData: [{
-        ...fellesProsessStegData.panelData[0],
-        code: 'FODSEL',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }],
-      aksjonspunkter,
-      prosessStegTittelKode: 'TEST',
-    };
+    const fodselAksjonspunkter = [{
+      ...aksjonspunkter[0],
+      definisjon: {
+        kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+        kodeverk: 'AKSJONSPUNKT_KODE',
+      },
+    }];
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef]);
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel]);
+
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
+        valgtProsessSteg={utledetInngangsvilkarSteg}
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -231,34 +218,26 @@ describe('<ProsessStegPanel>', () => {
     expect(wrapper.find(ProsessStegIkkeBehandletPanel)).to.have.length(0);
     expect(wrapper.find(BehandlingHenlagtPanel)).to.have.length(0);
 
-    expect(wrapper.find(DataFetcherBehandlingData)).to.have.length(1);
+    expect(wrapper.find(DataFetcher)).to.have.length(1);
     expect(wrapper.find(InngangsvilkarPanel)).to.have.length(0);
   });
 
   it('skal lagre aksjonspunkt', () => {
-    const valgtPanel = {
-      ...fellesProsessStegData,
-      urlCode: bpc.INNGANGSVILKAR,
-      erStegBehandlet: true,
-      isReadOnly: false,
-      panelData: [{
-        ...fellesProsessStegData.panelData[0],
-        code: 'FODSEL',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }, {
-        ...fellesProsessStegData.panelData[0],
-        code: 'MEDLEMSKAP',
-        renderComponent: () => undefined,
-        endpoints: [],
-        isAksjonspunktOpen: true,
-        aksjonspunktHelpTextCodes: [],
-      }],
-      aksjonspunkter,
-      prosessStegTittelKode: 'TEST',
-    };
+    const fodselAksjonspunkter = [{
+      ...aksjonspunkter[0],
+      definisjon: {
+        kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+        kodeverk: 'AKSJONSPUNKT_KODE',
+      },
+    }];
+    const fodselPanelDef = lagPanelDef('FODSEL', [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL], ['FODSEL.TEKST']);
+    const omsorgPanelDef = lagPanelDef('OMSORG', [], ['OMSORG.TEKST']);
+    const inngangsvilkarStegDef = lagStegDef(prosessStegCodes.INNGANGSVILKAR, [fodselPanelDef, omsorgPanelDef]);
+    const utledetFodselDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, fodselPanelDef, isReadOnlyCheck, fodselAksjonspunkter, [], {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetOmsorgDelPanel = new ProsessStegPanelUtledet(inngangsvilkarStegDef, omsorgPanelDef, isReadOnlyCheck, aksjonspunkter, [], {},
+      toggleOverstyring, kanOverstyreAccess, []);
+    const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel, utledetOmsorgDelPanel]);
 
     const lagringSideeffekterCallback = sinon.spy();
     const makeRestApiRequest = sinon.spy();
@@ -271,7 +250,7 @@ describe('<ProsessStegPanel>', () => {
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtProsessSteg={valgtPanel}
+        valgtProsessSteg={utledetInngangsvilkarSteg}
         fagsak={fagsak}
         behandling={behandling as Behandling}
         alleKodeverk={{}}
@@ -285,7 +264,7 @@ describe('<ProsessStegPanel>', () => {
     const panel = wrapper.find(InngangsvilkarPanel);
 
     const aksjonspunktModels = [{
-      kode: aksjonspunkter[0].definisjon.kode,
+      kode: fodselAksjonspunkter[0].definisjon.kode,
     }];
     panel.prop('submitCallback')(aksjonspunktModels);
 

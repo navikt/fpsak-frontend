@@ -10,7 +10,7 @@ export default {
 };
 
 export const visMenyUtenBeslutterGodkjenningOgTilbakesending = () => {
-  const [valgtPanelIndex, setPanelIndex] = React.useState();
+  const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
       tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
@@ -22,7 +22,7 @@ export const visMenyUtenBeslutterGodkjenningOgTilbakesending = () => {
 };
 
 export const visMenyMedBeslutterGodkjenning = () => {
-  const [valgtPanelIndex, setPanelIndex] = React.useState();
+  const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
       tilgjengeligeTabs={[supportTabs.APPROVAL, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
@@ -35,7 +35,7 @@ export const visMenyMedBeslutterGodkjenning = () => {
 
 
 export const visMenyEtterTilbakesendingFraBeslutter = () => {
-  const [valgtPanelIndex, setPanelIndex] = React.useState();
+  const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
       tilgjengeligeTabs={[supportTabs.RETURNED, supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}
@@ -47,7 +47,7 @@ export const visMenyEtterTilbakesendingFraBeslutter = () => {
 };
 
 export const visSendMeldingSomIkkeValgbar = () => {
-  const [valgtPanelIndex, setPanelIndex] = React.useState();
+  const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (
     <SupportMenySakIndex
       tilgjengeligeTabs={[supportTabs.HISTORY, supportTabs.MESSAGES, supportTabs.DOCUMENTS]}

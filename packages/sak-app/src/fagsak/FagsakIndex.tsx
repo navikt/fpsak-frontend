@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
-import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
+import { DataFetchPendingModal, requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
 } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers, getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
@@ -97,6 +96,7 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
               key={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? 0 : 1}
               endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
               showOldDataWhenRefetching
+              loadingPanel={<LoadingPanel />}
               render={(dataProps: DataProps) => (
                 <VisittkortSakIndex
                   personopplysninger={dataProps.behandlingPersonopplysninger}

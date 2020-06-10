@@ -5,13 +5,14 @@ import { destroy } from 'redux-form';
 
 import { ErrorTypes } from '@fpsak-frontend/rest-api';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
 import {
   KodeverkMedNavn, Aksjonspunkt, Behandling,
 } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import papirsoknadApi, { reduxRestApi, PapirsoknadApiKeys } from './data/papirsoknadApi';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
@@ -100,10 +101,11 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <DataFetcherBehandlingData
+      <DataFetcher
         fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
         showOldDataWhenRefetching
         endpoints={papirsoknadData}
+        loadingPanel={<LoadingPanel />}
         render={(dataProps: DataProps, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
