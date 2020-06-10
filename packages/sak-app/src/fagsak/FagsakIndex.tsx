@@ -9,11 +9,7 @@ import {
 } from '@fpsak-frontend/types';
 import { DataFetcher, DataFetcherTriggers, getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 
-<<<<<<< HEAD
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
-=======
->>>>>>> FIX div
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';

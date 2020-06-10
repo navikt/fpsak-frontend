@@ -49,16 +49,8 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
     fagsak, behandling, perioderForeldelse, beregningsresultat, feilutbetalingFakta, fpsakKodeverk,
   };
 
-<<<<<<< HEAD
-  const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvTilbakekrevingPaneler,
-<<<<<<< HEAD
-    behandling, rettigheter, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
-=======
-=======
   const [faktaPaneler, valgtPanel, sidemenyPaneler] = faktaHooks.useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvTilbakekrevingPaneler,
->>>>>>> FIX div
-    behandling, rettigheter, aksjonspunkter, 'default', intl);
->>>>>>> FIX div
+    behandling, rettigheter, aksjonspunkter, valgtFaktaSteg, intl);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, 'default', overstyringApCodes, tilbakekrevingApi, dispatch);
