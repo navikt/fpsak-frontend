@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import VurderAktiviteterPanel, { leggTilAktivitet } from './VurderAktiviteterPanel';
+import VurderAktiviteterPanel, { leggTilAktivitet, finnPlasseringIListe } from './VurderAktiviteterPanel';
 
 import {
   BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
@@ -127,7 +127,6 @@ describe('<VurderAktiviteterPanel>', () => {
 
   it('skal kunne legge til aktivitet i tom mapping', () => {
     const aktiviteterTomDatoMapping = [];
-
     leggTilAktivitet(aktiviteterTomDatoMapping, aktivitet1, '2020-02-08');
     expect(aktiviteterTomDatoMapping.length).to.equal(1);
     expect(aktiviteterTomDatoMapping[0].aktiviteter.length).to.equal(1);
@@ -146,5 +145,34 @@ describe('<VurderAktiviteterPanel>', () => {
     expect(aktiviteterTomDatoMapping[0].tom).to.equal('2019-02-08');
     expect(aktiviteterTomDatoMapping[1].tom).to.equal('2018-02-02');
     expect(aktiviteterTomDatoMapping[2].tom).to.equal('2017-02-08');
+  });
+
+
+  it('skal finne ny index i tom liste', () => {
+    const dato = '2019-02-08';
+    const liste = [];
+    const index = finnPlasseringIListe(liste, dato);
+    expect(index).to.equal(0);
+  });
+
+  it('skal finne ny index i liste med 1 element som ligger før', () => {
+    const dato = '2019-02-08';
+    const liste = [{ tom: '2019-02-09' }];
+    const index = finnPlasseringIListe(liste, dato);
+    expect(index).to.equal(1);
+  });
+
+  it('skal finne ny index i liste med 1 element som ligger etter', () => {
+    const dato = '2019-02-08';
+    const liste = [{ tom: '2019-02-07' }];
+    const index = finnPlasseringIListe(liste, dato);
+    expect(index).to.equal(0);
+  });
+
+  it('skal finne ny index i liste med 2 elementer der ny index er mellom', () => {
+    const dato = '2019-02-08';
+    const liste = [{ tom: '2019-02-09' }, { tom: '2019-02-07' }];
+    const index = finnPlasseringIListe(liste, dato);
+    expect(index).to.equal(1);
   });
 });

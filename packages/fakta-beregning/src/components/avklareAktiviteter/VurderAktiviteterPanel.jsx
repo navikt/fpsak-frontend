@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 import VurderAktiviteterTabell, { lagAktivitetFieldId } from './VurderAktiviteterTabell';
 
@@ -12,6 +13,14 @@ const harListeAktivitetSomSkalBrukes = (mapping, values) => mapping.aktiviteter
   }) !== undefined;
 
 
+export const finnPlasseringIListe = (gjeldendeTomDatoMapping, dato) => {
+  let i = 0;
+  while (i < gjeldendeTomDatoMapping.length && moment(dato).isBefore(gjeldendeTomDatoMapping[i].tom)) {
+    i += 1;
+  }
+  return i;
+};
+
 export const leggTilAktivitet = (gjeldendeTomDatoMapping, aktivitet, tomDato) => {
   // Finnes gjeldendeTomDatoMapping med tomDato ?
   const eksisterende = gjeldendeTomDatoMapping.find(({ tom }) => tom === tomDato);
@@ -20,39 +29,47 @@ export const leggTilAktivitet = (gjeldendeTomDatoMapping, aktivitet, tomDato) =>
       tom: tomDato,
       aktiviteter: [aktivitet],
     };
-    gjeldendeTomDatoMapping.push(nyTomDatoMapping);
+    const index = finnPlasseringIListe(gjeldendeTomDatoMapping, tomDato);
+    gjeldendeTomDatoMapping.splice(index, 0, nyTomDatoMapping);
   } else {
     eksisterende.aktiviteter.push(aktivitet);
   }
 };
-/*
-const lagTomDatoMapping = (values) => {
+
+export const lagTomDatoMapping = (values) => {
   const forrigeTomDatoMapping = values.avklarAktiviteter.aktiviteterTomDatoMapping;
   const gjeldendeTomDatoMapping = [];
   const stpOpptjening = values.avklarAktiviteter.skjæringstidspunktOpptjening;
 
   // Alle aktiviteter som har t.o.m dato på en dag før, eller etter, skal legges til i gjeldendeTomDatoMapping
   forrigeTomDatoMapping.flatMap(({ aktiviteter }) => aktiviteter).forEach((aktivitet) => {
-    const tomDato = aktivitet.tom;
+    const nyAktivitet = { ...aktivitet };
+    const tomDato = values[lagAktivitetFieldId(aktivitet)].tom;
+    if (tomDato !== nyAktivitet.tom) {
+      nyAktivitet.tom = tomDato;
+    }
     if (moment(tomDato).isSameOrAfter(moment(stpOpptjening).subtract(1, 'days'))) {
-      // gjeldendeTomDatoMapping.push(aktivitet);
+      leggTilAktivitet(gjeldendeTomDatoMapping, nyAktivitet, stpOpptjening);
+    } else {
+      leggTilAktivitet(gjeldendeTomDatoMapping, nyAktivitet, moment(tomDato).add(1, 'days').format('YYYY-MM-DD'));
     }
   });
   return gjeldendeTomDatoMapping;
-}; */
+};
 
 /**
  * Returnerer aktuelle aktivitetslister som skal vises frem i panelet (f.eks om man skal vise frem benyttet aktivitet,
  * eller også andre aktiviteter for overstyring)
  */
 const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values, erOverstyrt) => {
+  const nyTomDatoMapping = values ? lagTomDatoMapping(values) : aktiviteterTomDatoMapping;
   if (erOverstyrt) {
-    return aktiviteterTomDatoMapping;
+    return nyTomDatoMapping;
   }
-  if (!values || harListeAktivitetSomSkalBrukes(aktiviteterTomDatoMapping[0], values) || aktiviteterTomDatoMapping.length === 1) {
-    return [aktiviteterTomDatoMapping[0]];
+  if (!values || harListeAktivitetSomSkalBrukes(nyTomDatoMapping[0], values) || nyTomDatoMapping.length === 1) {
+    return [nyTomDatoMapping[0]];
   }
-  return [aktiviteterTomDatoMapping[0], aktiviteterTomDatoMapping[1]];
+  return [nyTomDatoMapping[0], nyTomDatoMapping[1]];
 };
 
 /**
