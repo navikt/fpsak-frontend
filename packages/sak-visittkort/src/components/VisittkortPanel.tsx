@@ -26,7 +26,7 @@ const utledKjonn = (kjonn) => {
 
 interface OwnProps {
   fagsak: Fagsak;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
   sprakkode: Kodeverk;
   personopplysninger?: Personopplysninger;
   familieHendelse?: FamilieHendelseSamling;
@@ -70,7 +70,7 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       </div>
     );
   }
-  const soker = erMor || personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
+  const soker = erMor || !personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
   const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
 
   return (
