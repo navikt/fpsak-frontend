@@ -12,7 +12,43 @@ const harListeAktivitetSomSkalBrukes = (mapping, values) => mapping.aktiviteter
   }) !== undefined;
 
 
-const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values) => {
+export const leggTilAktivitet = (gjeldendeTomDatoMapping, aktivitet, tomDato) => {
+  // Finnes gjeldendeTomDatoMapping med tomDato ?
+  const eksisterende = gjeldendeTomDatoMapping.find(({ tom }) => tom === tomDato);
+  if (eksisterende === undefined) {
+    const nyTomDatoMapping = {
+      tom: tomDato,
+      aktiviteter: [aktivitet],
+    };
+    gjeldendeTomDatoMapping.push(nyTomDatoMapping);
+  } else {
+    eksisterende.aktiviteter.push(aktivitet);
+  }
+};
+/*
+const lagTomDatoMapping = (values) => {
+  const forrigeTomDatoMapping = values.avklarAktiviteter.aktiviteterTomDatoMapping;
+  const gjeldendeTomDatoMapping = [];
+  const stpOpptjening = values.avklarAktiviteter.skjæringstidspunktOpptjening;
+
+  // Alle aktiviteter som har t.o.m dato på en dag før, eller etter, skal legges til i gjeldendeTomDatoMapping
+  forrigeTomDatoMapping.flatMap(({ aktiviteter }) => aktiviteter).forEach((aktivitet) => {
+    const tomDato = aktivitet.tom;
+    if (moment(tomDato).isSameOrAfter(moment(stpOpptjening).subtract(1, 'days'))) {
+      // gjeldendeTomDatoMapping.push(aktivitet);
+    }
+  });
+  return gjeldendeTomDatoMapping;
+}; */
+
+/**
+ * Returnerer aktuelle aktivitetslister som skal vises frem i panelet (f.eks om man skal vise frem benyttet aktivitet,
+ * eller også andre aktiviteter for overstyring)
+ */
+const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values, erOverstyrt) => {
+  if (erOverstyrt) {
+    return aktiviteterTomDatoMapping;
+  }
   if (!values || harListeAktivitetSomSkalBrukes(aktiviteterTomDatoMapping[0], values) || aktiviteterTomDatoMapping.length === 1) {
     return [aktiviteterTomDatoMapping[0]];
   }
@@ -33,7 +69,7 @@ export const VurderAktiviteterPanel = ({
   harAksjonspunkt,
   alleKodeverk,
 }) => (
-  finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values).map((aktivitetMap) => (
+  finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt).map((aktivitetMap) => (
     <VurderAktiviteterTabell
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}

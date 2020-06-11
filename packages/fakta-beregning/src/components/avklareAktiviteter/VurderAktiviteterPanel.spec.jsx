@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import VurderAktiviteterPanel from './VurderAktiviteterPanel';
+import VurderAktiviteterPanel, { leggTilAktivitet } from './VurderAktiviteterPanel';
+
 import {
   BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
 } from './AvklareAktiviteterPanel';
@@ -122,5 +123,28 @@ describe('<VurderAktiviteterPanel>', () => {
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
     const errors = VurderAktiviteterPanel.validate(values, aktiviteterTomDatoMapping);
     expect(errors[id3].skalBrukes[0].id).to.equal(isRequiredMessage()[0].id);
+  });
+
+  it('skal kunne legge til aktivitet i tom mapping', () => {
+    const aktiviteterTomDatoMapping = [];
+
+    leggTilAktivitet(aktiviteterTomDatoMapping, aktivitet1, '2020-02-08');
+    expect(aktiviteterTomDatoMapping.length).to.equal(1);
+    expect(aktiviteterTomDatoMapping[0].aktiviteter.length).to.equal(1);
+  });
+
+  it('skal kunne legge til aktivitet i mapping med eksisterende dato som er ulik gitt dato', () => {
+    const aktiviteterTomDatoMapping = [
+      { tom: '2018-02-02', aktiviteter: [aktivitet2] },
+    ];
+    leggTilAktivitet(aktiviteterTomDatoMapping, aktivitet1, '2019-02-08');
+    leggTilAktivitet(aktiviteterTomDatoMapping, aktivitet1, '2017-02-08');
+    expect(aktiviteterTomDatoMapping.length).to.equal(3);
+    expect(aktiviteterTomDatoMapping[0].aktiviteter.length).to.equal(1);
+    expect(aktiviteterTomDatoMapping[1].aktiviteter.length).to.equal(1);
+    expect(aktiviteterTomDatoMapping[2].aktiviteter.length).to.equal(1);
+    expect(aktiviteterTomDatoMapping[0].tom).to.equal('2019-02-08');
+    expect(aktiviteterTomDatoMapping[1].tom).to.equal('2018-02-02');
+    expect(aktiviteterTomDatoMapping[2].tom).to.equal('2017-02-08');
   });
 });
