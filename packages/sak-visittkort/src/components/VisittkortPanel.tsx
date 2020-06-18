@@ -90,7 +90,7 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
                   sprakkode={sprakkode}
                 />
               )}
-              renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={soker} harTilbakekrevingVerge={false} />}
+              renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={soker} />}
               isActive={erMor}
             />
           </FlexColumn>

@@ -14,13 +14,13 @@ import styles from './visittkortLabels.less';
 
 interface OwnProps {
   personopplysninger: Personopplysninger;
-  harTilbakekrevingVerge: boolean;
+  harTilbakekrevingVerge?: boolean;
 }
 
 const VisittkortLabels: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   personopplysninger,
-  harTilbakekrevingVerge,
+  harTilbakekrevingVerge = false,
 }) => {
   const erSokerUnder18 = useMemo(() => personopplysninger && moment().diff(personopplysninger.fodselsdato, 'years') < 18, [personopplysninger]);
   const harVerge = (personopplysninger ? (personopplysninger.harVerge && !personopplysninger.dodsdato)

@@ -25,7 +25,12 @@ export const updateAktoer = (aktoerId) => (dispatch) => {
   dispatch(fpsakApi.AKTOER_INFO.makeRestApiRequest()({ aktoerId }, { keepData: true }));
 };
 
-export const aktoerReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
+interface Action {
+  type: string;
+  data?: string;
+}
+
+export const aktoerReducer = (state = initialState, action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) { // NOSONAR Switch brukes som standard i reducers
     case SET_SELECTED_AKTOER_ID:
       return {

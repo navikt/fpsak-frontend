@@ -16,7 +16,7 @@ const intl = createIntl({
 interface OwnProps {
   submitCallback: (values: any) => void;
   recipients: string[];
-  templates: {
+  templates?: {
     kode: string;
     navn: string;
     tilgjengelig: boolean;
