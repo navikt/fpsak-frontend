@@ -72,7 +72,7 @@ const config = {
     '@typescript-eslint/ban-ts-ignore': OFF,
   },
   overrides: [{
-    files: ['*.spec.jsx'],
+    files: ['*.spec.jsx', '*.spec.tsx', '*.spec.ts'],
     rules: {
       'no-unused-expressions': OFF,
     },

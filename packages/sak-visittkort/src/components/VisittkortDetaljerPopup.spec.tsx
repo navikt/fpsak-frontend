@@ -69,7 +69,7 @@ describe('<VisittkortDetaljerPopup>', () => {
       intl={intlMock}
       personopplysninger={personopplysningerSoker}
       alleKodeverk={{}}
-      sprakkode={{ kode: 'NN' }}
+      sprakkode={{ kode: 'NN', kodeverk: '' }}
     />);
 
     expect(wrapper.find(EtikettInfo)).has.length(4);
@@ -86,7 +86,7 @@ describe('<VisittkortDetaljerPopup>', () => {
       intl={intlMock}
       personopplysninger={personopplysningerSoker}
       alleKodeverk={{}}
-      sprakkode={{ kode: 'NN' }}
+      sprakkode={{ kode: 'NN', kodeverk: '' }}
     />);
 
     const rader = wrapper.find(FlexRow);

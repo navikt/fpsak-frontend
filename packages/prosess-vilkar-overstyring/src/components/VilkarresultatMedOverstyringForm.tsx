@@ -263,5 +263,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   };
 };
 
-const form = behandlingForm({ form: 'VilkarresultatMedOverstyringForm', enableReinitialize: true })(VilkarresultatMedOverstyringForm);
+// @ts-ignore Kan ikkje senda med formnavn her sidan det er dynamisk. Må fikse på ein annan måte
+const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringForm);
 export default connect(mapStateToPropsFactory)(form);
