@@ -11893,7 +11893,7 @@ loader-runner@^2.3.1, loader-runner@^2.4.0:
   version "2.4.0"
   resolved "https://registry.npmjs.org/loader-runner/-/loader-runner-2.4.0.tgz#ed47066bfe534d7e84c4c7b9998c2a75607d9357"
 
-loader-utils@1.2.3, loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.3:
+loader-utils@1.2.3:
   version "1.2.3"
   resolved "https://registry.npmjs.org/loader-utils/-/loader-utils-1.2.3.tgz#1ff5dc6911c9f0a062531a4c04b609406108c2c7"
   dependencies:
@@ -11901,7 +11901,7 @@ loader-utils@1.2.3, loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.
     emojis-list "^2.0.0"
     json5 "^1.0.1"
 
-loader-utils@^1.4.0:
+loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.2.3, loader-utils@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
   integrity sha512-qH0WSMBtn/oHuwjy/NucEgbx5dbxxnxup9s4PVXJUDHZBQY+s0NWA9rJf53RBnQZxfch7euUui7hpoAPvALZdA==
@@ -12706,10 +12706,10 @@ mocha@^7.1.2:
     yargs-parser "13.1.2"
     yargs-unparser "1.6.0"
 
-mochapack@^1.1.15:
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/mochapack/-/mochapack-1.1.15.tgz#426c793b871ed006c781172da2b15f612f11f2dc"
-  integrity sha512-/gOsgJk3CWlNiOdef7hrNhp37VpatB9IiWzSCxS2p8pG21R7NAKJBBsU5T0eUWT9oz1NQhyubXdQgh51U7oVZA==
+mochapack@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/mochapack/-/mochapack-2.0.0.tgz#0e0a19b0d4c499a4524a7ec97b2e99116c418b8f"
+  integrity sha512-wlER3hG+qKAi0EDXEWMtXrhpyJIP7kA4BTbA6s/hAelixc4jeIJsyUdH1mKS3Za5rTmO55H+IC9r8HKExZNIqg==
   dependencies:
     "@babel/runtime-corejs2" "^7.0.0"
     chalk "^2.4.2"
@@ -19237,7 +19237,7 @@ yargs@13.2.4:
     y18n "^4.0.0"
     yargs-parser "^13.1.0"
 
-yargs@13.3.2, yargs@^13.3.2:
+yargs@13.3.2, yargs@^13.2.2, yargs@^13.3.0, yargs@^13.3.2:
   version "13.3.2"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.2.tgz#ad7ffefec1aa59565ac915f82dccb38a9c31a2dd"
   integrity sha512-AX3Zw5iPruN5ie6xGRIDgqkT+ZhnRlZMLMHAs8tg7nRruy2Nb+i5o9bwghAogtM08q1dpr2LVoS8KSTMYpWXUw==
@@ -19304,21 +19304,6 @@ yargs@^11.0.0:
     which-module "^2.0.0"
     y18n "^3.2.1"
     yargs-parser "^9.0.2"
-
-yargs@^13.2.2, yargs@^13.3.0:
-  version "13.3.0"
-  resolved "https://registry.npmjs.org/yargs/-/yargs-13.3.0.tgz#4c657a55e07e5f2cf947f8a366567c04a0dedc83"
-  dependencies:
-    cliui "^5.0.0"
-    find-up "^3.0.0"
-    get-caller-file "^2.0.1"
-    require-directory "^2.1.1"
-    require-main-filename "^2.0.0"
-    set-blocking "^2.0.0"
-    string-width "^3.0.0"
-    which-module "^2.0.0"
-    y18n "^4.0.0"
-    yargs-parser "^13.1.1"
 
 yargs@^14.2.2:
   version "14.2.2"
