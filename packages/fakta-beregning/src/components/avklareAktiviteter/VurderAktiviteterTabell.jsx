@@ -33,24 +33,27 @@ export const lagAktivitetFieldId = (aktivitet) => {
   return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
 };
 
-export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt) => {
+export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt, skjaeringstidspunkt) => {
   if (!skalOverstyre && !harAksjonspunkt) {
     return false;
   }
   if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
     return false;
   }
-  return true;
+  if (skalOverstyre && (moment(skjaeringstidspunkt).subtract(1, 'days')).isSameOrBefore(aktivitet.tom)) {
+    return true;
+  }
+  return false;
 };
 
-const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt) => (
+const lagTableRow = (readOnly, isAksjonspunktClosed, aktiviteter, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt, skjaeringstidspunkt) => (
   <TableRow key={lagAktivitetFieldId(aktivitet)}>
     <TableColumn>
       <Normaltekst>
         {createVisningsnavnForAktivitet(aktivitet, alleKodeverk)}
       </Normaltekst>
     </TableColumn>
-    <TableColumn>
+    <TableColumn className={styles.rowalign}>
       {!erOverstyrt
       && (
       <Normaltekst>
@@ -67,12 +70,13 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, er
             readOnly={readOnly}
           />
         </>
+
       )}
     </TableColumn>
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, skjaeringstidspunkt)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
       </RadioGroupField>
@@ -80,7 +84,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, er
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, skjaeringstidspunkt)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
       </RadioGroupField>
@@ -113,6 +117,7 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
     );
   }
   const harAAP = aktiviteter.some((aktivitet) => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP);
+
   const harVentelonnVartpenger = aktiviteter.some((aktivitet) => aktivitet.arbeidsforholdType
     && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.VENTELØNN_VARTPENGER);
   if (harAAP) {
@@ -154,7 +159,7 @@ export const VurderAktiviteterTabell = ({
     </Element>
     <Table headerTextCodes={getHeaderTextCodes()} noHover>
       {aktiviteter.map((aktivitet) => (
-        lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt)
+        lagTableRow(readOnly, isAksjonspunktClosed, aktiviteter, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt, skjaeringstidspunkt)
       ))}
     </Table>
   </>

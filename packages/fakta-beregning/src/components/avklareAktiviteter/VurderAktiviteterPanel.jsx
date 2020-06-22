@@ -12,7 +12,6 @@ const harListeAktivitetSomSkalBrukes = (mapping, values) => mapping.aktiviteter
     return skalBrukes;
   }) !== undefined;
 
-
 export const finnPlasseringIListe = (gjeldendeTomDatoMapping, dato) => {
   let i = 0;
   while (i < gjeldendeTomDatoMapping.length && moment(dato).isBefore(gjeldendeTomDatoMapping[i].tom)) {
@@ -73,6 +72,36 @@ const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values, erOverstyr
 };
 
 /**
+ *  Utleder "gjeldende" skjæringstidspunkt (s.t.p) av lister med aktiviteter inndelt i skjæringstidspunkt.
+ *  Disse inndelingene antas sortert i rekkefølge med seneste s.t.p først. Det sjekkes derfor  i rekkefølge om
+ *  en aktivitet skal brukes (skalBrukes), og s.t.p for inndelingen til den første aktiviteten som
+ *  skal brukes blir brukt.
+ *
+ *  Det antas altså at et s.t.p for en aktivitet er angitt i listeSomSkalVurderes[k].tom, der
+ *  listeSomSkalVurderes[k].aktiviteter er en samling aktiviteter for s.t.p inndeling 'k'.
+ *  (Liste med lister av aktiviteter).
+ *
+ * @param {*} values - Verdier fra nåværende form values
+ * @param {*} listeSomSkalVurderes - Liste med aktiviteter delt inn i "bøtter" for skjæringstidspunkt
+ * @returns seneste skjæringstidspunkt for en aktivitet som er satt til "skalBrukes". Undefined hvis
+ * noen av argumentene er undefined.
+ */
+const utledGjeldendeSkjæringstidspunkt = (values, listeSomSkalVurderes) => {
+  if (values === undefined || listeSomSkalVurderes === undefined) {
+    return undefined;
+  }
+  for (let k = 0; k < listeSomSkalVurderes.length; k += 1) {
+    const { aktiviteter } = listeSomSkalVurderes[k];
+    for (let i = 0; i < aktiviteter.length; i += 1) {
+      const tempaktivitet = values[lagAktivitetFieldId(aktiviteter[i])];
+      if (tempaktivitet.skalBrukes) {
+        return listeSomSkalVurderes[k].tom;
+      }
+    }
+  }
+  return undefined;
+};
+/**
  * VurderAktiviteterPanel
  *
  * Presentasjonskomponent.. Inneholder tabeller for avklaring av skjæringstidspunkt
@@ -85,19 +114,22 @@ export const VurderAktiviteterPanel = ({
   erOverstyrt,
   harAksjonspunkt,
   alleKodeverk,
-}) => (
-  finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt).map((aktivitetMap) => (
+}) => {
+  const listeSomSkalVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt);
+  const skjaeringstidspunkt = utledGjeldendeSkjæringstidspunkt(values, listeSomSkalVurderes);
+  // const gjeldendeSkjæringstidspunkt = '2000-20-20';
+  return listeSomSkalVurderes.map((aktivitetMap) => (
     <VurderAktiviteterTabell
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
       aktiviteter={aktivitetMap.aktiviteter}
-      skjaeringstidspunkt={aktivitetMap.tom}
+      skjaeringstidspunkt={skjaeringstidspunkt}
       erOverstyrt={erOverstyrt}
       harAksjonspunkt={harAksjonspunkt}
       alleKodeverk={alleKodeverk}
     />
-  ))
-);
+  ));
+};
 
 VurderAktiviteterPanel.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
