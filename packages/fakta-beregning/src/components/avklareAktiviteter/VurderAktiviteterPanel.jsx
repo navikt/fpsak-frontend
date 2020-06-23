@@ -116,17 +116,18 @@ export const VurderAktiviteterPanel = ({
   alleKodeverk,
 }) => {
   const listeSomSkalVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt);
-  const skjaeringstidspunkt = utledGjeldendeSkjæringstidspunkt(values, listeSomSkalVurderes);
-  // const gjeldendeSkjæringstidspunkt = '2000-20-20';
+  const gjeldendeSkjæringstidspunkt = utledGjeldendeSkjæringstidspunkt(values, listeSomSkalVurderes);
+
   return listeSomSkalVurderes.map((aktivitetMap) => (
     <VurderAktiviteterTabell
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
       aktiviteter={aktivitetMap.aktiviteter}
-      skjaeringstidspunkt={skjaeringstidspunkt}
+      skjaeringstidspunkt={aktivitetMap.tom}
       erOverstyrt={erOverstyrt}
       harAksjonspunkt={harAksjonspunkt}
       alleKodeverk={alleKodeverk}
+      gjeldendeSkjæringstidspunkt={gjeldendeSkjæringstidspunkt}
     />
   ));
 };
