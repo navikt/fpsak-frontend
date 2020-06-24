@@ -123,11 +123,12 @@ export const VurderAktiviteterPanel = ({
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
       aktiviteter={aktivitetMap.aktiviteter}
-      skjaeringstidspunkt={aktivitetMap.tom}
       erOverstyrt={erOverstyrt}
       harAksjonspunkt={harAksjonspunkt}
       alleKodeverk={alleKodeverk}
-      gjeldendeSkjæringstidspunkt={gjeldendeSkjæringstidspunkt}
+      skjæringstidspunkt={aktivitetMap.tom}
+      erGjeldendeSkjæringstidspunkt={aktivitetMap.tom === gjeldendeSkjæringstidspunkt}
+      ingenAktiviterErBrukt={gjeldendeSkjæringstidspunkt === undefined}
     />
   ));
 };

@@ -33,20 +33,30 @@ export const lagAktivitetFieldId = (aktivitet) => {
   return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
 };
 
-export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt, skjaeringstidspunkt) => {
+export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt, erGjeldendeSkjæringstidspunkt, ingenAktiviterErBrukt) => {
   if (!skalOverstyre && !harAksjonspunkt) {
     return false;
   }
   if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
     return false;
   }
-  if (skalOverstyre && (moment(skjaeringstidspunkt).subtract(1, 'days')).isSameOrBefore(aktivitet.tom)) {
+  if (skalOverstyre && (erGjeldendeSkjæringstidspunkt || ingenAktiviterErBrukt)) {
     return true;
   }
   return false;
 };
 
-const lagTableRow = (readOnly, isAksjonspunktClosed, aktiviteter, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt, gjeldendeSkjæringstidspunkt) => (
+const lagTableRow = (
+  readOnly,
+  isAksjonspunktClosed,
+  aktivitet,
+  alleKodeverk,
+  erOverstyrt,
+  harAksjonspunkt,
+  erGjeldendeSkjæringstidspunkt,
+  ingenAktiviterErBrukt,
+) => (
+
   <TableRow key={lagAktivitetFieldId(aktivitet)}>
     <TableColumn>
       <Normaltekst>
@@ -76,7 +86,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktiviteter, aktivitet, all
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, gjeldendeSkjæringstidspunkt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, erGjeldendeSkjæringstidspunkt, ingenAktiviterErBrukt)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
       </RadioGroupField>
@@ -84,7 +94,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktiviteter, aktivitet, all
     <TableColumn className={styles.radioMiddle}>
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
-        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, gjeldendeSkjæringstidspunkt)}
+        readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, erGjeldendeSkjæringstidspunkt, ingenAktiviterErBrukt)}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
       </RadioGroupField>
@@ -92,7 +102,7 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktiviteter, aktivitet, all
     {isAksjonspunktClosed && readOnly
       && (
       <TableColumn>
-        {skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, gjeldendeSkjæringstidspunkt)
+        {skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt, erGjeldendeSkjæringstidspunkt, ingenAktiviterErBrukt)
           && <EditedIcon />}
       </TableColumn>
       )}
@@ -149,19 +159,20 @@ export const VurderAktiviteterTabell = ({
   readOnly,
   isAksjonspunktClosed,
   aktiviteter,
-  skjaeringstidspunkt,
   alleKodeverk,
   erOverstyrt,
   harAksjonspunkt,
-  gjeldendeSkjæringstidspunkt,
+  skjæringstidspunkt,
+  erGjeldendeSkjæringstidspunkt,
+  ingenAktiviterErBrukt,
 }) => (
   <>
     <Element>
-      {finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}
+      {finnHeading(aktiviteter, erOverstyrt, skjæringstidspunkt)}
     </Element>
     <Table headerTextCodes={getHeaderTextCodes()} noHover>
       {aktiviteter.map((aktivitet) => (
-        lagTableRow(readOnly, isAksjonspunktClosed, aktiviteter, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt, gjeldendeSkjæringstidspunkt)
+        lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, erOverstyrt, harAksjonspunkt, erGjeldendeSkjæringstidspunkt, ingenAktiviterErBrukt)
       ))}
     </Table>
   </>
@@ -171,11 +182,12 @@ VurderAktiviteterTabell.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   aktiviteter: PropTypes.arrayOf(beregningAktivitetPropType).isRequired,
-  skjaeringstidspunkt: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
   harAksjonspunkt: PropTypes.bool.isRequired,
-  gjeldendeSkjæringstidspunkt: PropTypes.bool.isRequired,
+  skjæringstidspunkt: PropTypes.string.isRequired,
+  erGjeldendeSkjæringstidspunkt: PropTypes.bool.isRequired,
+  ingenAktiviterErBrukt: PropTypes.bool.isRequired,
 };
 
 
