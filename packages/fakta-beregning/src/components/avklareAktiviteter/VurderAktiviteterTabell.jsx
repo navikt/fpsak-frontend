@@ -33,6 +33,16 @@ export const lagAktivitetFieldId = (aktivitet) => {
   return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
 };
 
+/**
+ * Denne metoden avgjør om en aktivitet skal kunne vurderes - eller ikke. Dvs om det skal kunne velges 
+ * om den kan benyttes eller ikke (brukes for å avgjøre om radiobuttons for en aktivitet er synlig) 
+ * 
+ * @param {*} aktivitet - aktivitet som skal vurderes brukt
+ * @param {*} skalOverstyre - om overstyring er aktivert 
+ * @param {*} harAksjonspunkt - om behandlingen har et aksjonspunkt for avklaringen av aktiviteter
+ * @param {*} erGjeldendeSkjæringstidspunkt - om et gjeldende 
+ * @param {*} ingenAktiviterErBrukt - true hvis alle aktiviteter er satt til "Ikke benytt"
+ */
 export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt, erGjeldendeSkjæringstidspunkt, ingenAktiviterErBrukt) => {
   if (!skalOverstyre && !harAksjonspunkt) {
     return false;
