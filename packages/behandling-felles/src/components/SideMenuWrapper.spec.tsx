@@ -6,13 +6,13 @@ import SideMenu from '@navikt/nap-side-menu';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import FaktaPanel from './FaktaPanel';
+import SideMenuWrapper from './SideMenuWrapper';
 
-describe('<FaktaPanel>', () => {
+describe('<SideMenuWrapper>', () => {
   it('skal rendre komponent med sidemeny med ett menyinnslag med aktivt aksjonspunkt', () => {
     const velgPanelCallback = sinon.spy();
     const wrapper = shallowWithIntl(
-      <FaktaPanel.WrappedComponent
+      <SideMenuWrapper.WrappedComponent
         intl={intlMock}
         paneler={[{
           tekst: 'test',
@@ -22,7 +22,7 @@ describe('<FaktaPanel>', () => {
         onClick={velgPanelCallback}
       >
         <div>test</div>
-      </FaktaPanel.WrappedComponent>,
+      </SideMenuWrapper.WrappedComponent>,
     );
 
     const meny = wrapper.find(SideMenu);
@@ -39,7 +39,7 @@ describe('<FaktaPanel>', () => {
   it('skal rendre komponent med sidemeny med ett menyinnslag med inaktivt aksjonspunkt', () => {
     const velgPanelCallback = sinon.spy();
     const wrapper = shallowWithIntl(
-      <FaktaPanel.WrappedComponent
+      <SideMenuWrapper.WrappedComponent
         intl={intlMock}
         paneler={[{
           tekst: 'test',
@@ -49,7 +49,7 @@ describe('<FaktaPanel>', () => {
         onClick={velgPanelCallback}
       >
         <div>test</div>
-      </FaktaPanel.WrappedComponent>,
+      </SideMenuWrapper.WrappedComponent>,
     );
 
     const meny = wrapper.find(SideMenu);

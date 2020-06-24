@@ -36,7 +36,7 @@ export const ReadOnlyField: FunctionComponent<ReadOnlyFieldProps> = ({
       <div className={type === 'textarea' ? styles.textarea : ''}>
         <Normaltekst className={alignRightCenterOnReadOnly ? styles.readOnlyContentCenter : styles.readOnlyContent}>
           {input.value}
-          {isEdited && <EditedIcon />}
+          {isEdited && <EditedIcon className={styles.space} />}
         </Normaltekst>
       </div>
     </div>

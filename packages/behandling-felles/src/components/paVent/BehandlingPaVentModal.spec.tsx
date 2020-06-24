@@ -165,28 +165,28 @@ describe('<BehandlingPaVentModal>', () => {
     expect(button).to.have.length(1);
     expect(button.childAt(0).text()).to.eql('Lukk');
   });
-});
 
-it('skal vise fristen tekst for tilbakekreving behandling venter på kravgrunnlag og fristen er utløpt', () => {
-  const wrapper = shallowWithIntl(<BehandlingPaVentModal
-    intl={intlMock}
-    cancelEvent={sinon.spy()}
-    frist="2015-10-10"
-    ventearsaker={[{
-      kode: 'VENT_PÅ_TILBAKEKREVINGSGRUNNLAG',
-      kodeverk: 'VENT_AARSAK',
-      navn: 'Venter på kravgrunnlag',
-    }]}
-    ventearsak="VENT_PÅ_TILBAKEKREVINGSGRUNNLAG"
-    hasManualPaVent={false}
-    erTilbakekreving
-    {...reduxFormPropsMock}
-  />);
+  it('skal vise fristen tekst for tilbakekreving behandling venter på kravgrunnlag og fristen er utløpt', () => {
+    const wrapper = shallowWithIntl(<BehandlingPaVentModal
+      intl={intlMock}
+      cancelEvent={sinon.spy()}
+      frist="2015-10-10"
+      ventearsaker={[{
+        kode: 'VENT_PÅ_TILBAKEKREVINGSGRUNNLAG',
+        kodeverk: 'VENT_AARSAK',
+        navn: 'Venter på kravgrunnlag',
+      }]}
+      ventearsak="VENT_PÅ_TILBAKEKREVINGSGRUNNLAG"
+      hasManualPaVent={false}
+      erTilbakekreving
+      {...reduxFormPropsMock}
+    />);
 
-  expect(wrapper.find(SelectField).prop('readOnly')).is.true;
-  const label = wrapper.find(Normaltekst);
-  expect(label).to.have.length(2);
-  expect(label.first().childAt(0).prop('id')).is.eql('SettBehandlingPaVentModal.ErPaVent');
-  expect(label.at(1).childAt(0).prop('id')).is.eql('BehandlingErPaVentModal.UtløptFrist');
-  expect(label.at(1).childAt(2).prop('id')).is.eql('BehandlingErPaVentModal.HenleggeSaken');
+    expect(wrapper.find(SelectField).prop('readOnly')).is.true;
+    const label = wrapper.find(Normaltekst);
+    expect(label).to.have.length(2);
+    expect(label.first().childAt(0).prop('id')).is.eql('SettBehandlingPaVentModal.ErPaVent');
+    expect(label.at(1).childAt(0).prop('id')).is.eql('BehandlingErPaVentModal.UtløptFrist');
+    expect(label.at(1).childAt(2).prop('id')).is.eql('BehandlingErPaVentModal.HenleggeSaken');
+  });
 });

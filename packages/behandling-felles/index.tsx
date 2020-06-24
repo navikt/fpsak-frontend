@@ -1,7 +1,7 @@
 export { default as BehandlingPaVent } from './src/components/paVent/BehandlingPaVent';
 export { default as ProsessStegContainer } from './src/components/ProsessStegContainer';
 export { default as MargMarkering } from './src/components/MargMarkering';
-export { default as FaktaPanel } from './src/components/FaktaPanel';
+export { default as SideMenuWrapper } from './src/components/SideMenuWrapper';
 export { default as BehandlingHenlagtPanel } from './src/components/BehandlingHenlagtPanel';
 export { default as ProsessStegPanel } from './src/components/ProsessStegPanel';
 export { default as ReduxFormStateCleaner } from './src/components/ReduxFormStateCleaner';
