@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, Rettigheter, FaktaPanel, faktaHooks,
+  FagsakInfo, Rettigheter, SideMenuWrapper, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
@@ -62,7 +62,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
 
   if (sidemenyPaneler.length > 0) {
     return (
-      <FaktaPanel paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
+      <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && (
           <DataFetcher
             key={valgtPanel.getUrlKode()}
@@ -78,7 +78,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
             })}
           />
         )}
-      </FaktaPanel>
+      </SideMenuWrapper>
     );
   }
   return null;

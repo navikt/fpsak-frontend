@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { FaktaPanel } from '@fpsak-frontend/behandling-felles';
+import { SideMenuWrapper } from '@fpsak-frontend/behandling-felles';
 import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -119,7 +119,7 @@ describe('<TilbakekrevingFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(FaktaPanel);
+    const panel = wrapper.find(SideMenuWrapper);
     expect(panel.prop('paneler')).is.eql([{
       erAktiv: true,
       harAksjonspunkt: true,
@@ -146,7 +146,7 @@ describe('<TilbakekrevingFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(FaktaPanel);
+    const panel = wrapper.find(SideMenuWrapper);
 
     panel.prop('onClick')(0);
 

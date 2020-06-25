@@ -1,7 +1,7 @@
 {
   "name": "@fpsak-frontend/behandling-innsyn",
   "version": "1.0.0",
-  "module": "index.jsx",
+  "module": "index.ts",
   "license": "MIT",
   "private": true,
   "dependencies": {

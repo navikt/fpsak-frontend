@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, FaktaPanel, faktaHooks, Rettigheter,
+  FagsakInfo, SideMenuWrapper, faktaHooks, Rettigheter,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
@@ -63,7 +63,7 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
 
   if (sidemenyPaneler.length > 0) {
     return (
-      <FaktaPanel paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
+      <SideMenuWrapper paneler={sidemenyPaneler} onClick={velgFaktaPanelCallback}>
         {valgtPanel && (
           <DataFetcher
             key={valgtPanel.getUrlKode()}
@@ -79,7 +79,7 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
             })}
           />
         )}
-      </FaktaPanel>
+      </SideMenuWrapper>
     );
   }
   return null;

@@ -9,7 +9,7 @@ import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
 import FaktaPanelMenyRad from '../types/faktaPanelMenyRadTsType';
 
-import styles from './faktaPanel.less';
+import styles from './sideMenuWrapper.less';
 
 interface OwnProps {
   paneler: FaktaPanelMenyRad[];
@@ -17,7 +17,7 @@ interface OwnProps {
   children?: ReactNode;
 }
 
-const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+const SideMenuWrapper: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   paneler,
   onClick,
@@ -46,4 +46,4 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   </div>
 );
 
-export default injectIntl(FaktaPanel);
+export default injectIntl(SideMenuWrapper);
