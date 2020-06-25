@@ -59,7 +59,7 @@ const MedlemskapInfoPanel = ({
   medlemskap,
   fagsakPerson,
   behandlingPaaVent,
-  readOnlyBehandling,
+  readOnlyForStartdatoForForeldrepenger,
 }) => {
   const avklarStartdatoAksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   const avklarStartdatoOverstyring = aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
@@ -85,7 +85,7 @@ const MedlemskapInfoPanel = ({
               aksjonspunkter={aksjonspunkter}
               soknad={soknad}
               inntektArbeidYtelse={inntektArbeidYtelse}
-              readOnlyBehandling={readOnlyBehandling}
+              readOnlyForStartdatoForForeldrepenger={readOnlyForStartdatoForForeldrepenger}
             />
             <VerticalSpacer twentyPx />
           </>
@@ -131,7 +131,7 @@ MedlemskapInfoPanel.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   medlemskap: medlemskapMedlemskaPropType.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
-  readOnlyBehandling: PropTypes.bool.isRequired,
+  readOnlyForStartdatoForForeldrepenger: PropTypes.bool.isRequired,
 };
 
 MedlemskapInfoPanel.defaultProps = {

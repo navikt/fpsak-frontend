@@ -36,7 +36,6 @@ export const StartdatoForForeldrepengerperiodenForm = ({
   hasOpenMedlemskapAksjonspunkter,
   submittable,
   overstyringDisabled,
-  readOnly,
   alleMerknaderFraBeslutter,
   behandlingId,
   behandlingVersjon,
@@ -60,7 +59,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
             label={<FormattedMessage id="StartdatoForForeldrepengerperiodenForm.Vurdering" />}
             validate={[required, minLength3, maxLength1500, hasValidText]}
             maxLength={1500}
-            readOnly={readOnly && overstyringDisabled}
+            readOnly={overstyringDisabled}
           />
         </div>
         <VerticalSpacer sixteenPx />
@@ -71,7 +70,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
               isEdited={hasAksjonspunkt && !hasOpenAksjonspunkt}
               label={{ id: 'StartdatoForForeldrepengerperiodenForm.Startdato' }}
               validate={[required, hasValidDate]}
-              readOnly={readOnly && overstyringDisabled}
+              readOnly={overstyringDisabled}
             />
           </Column>
           {/* do not touch this xs-value. react-collapse in chrome 90% update error */}
@@ -90,7 +89,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
         isSubmittable={submittable}
-        isReadOnly={readOnly && overstyringDisabled}
+        isReadOnly={overstyringDisabled}
         hasOpenAksjonspunkter={hasOpenAksjonspunkt}
       />
     </form>
@@ -99,7 +98,6 @@ export const StartdatoForForeldrepengerperiodenForm = ({
 
 StartdatoForForeldrepengerperiodenForm.propTypes = {
   intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
   hasOpenAksjonspunkt: PropTypes.bool.isRequired,
   hasOpenMedlemskapAksjonspunkter: PropTypes.bool.isRequired,
@@ -146,7 +144,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
     onSubmit,
-    overstyringDisabled: ownProps.readOnlyBehandling || ownProps.behandlingStatus.kode !== behandlingStatus.BEHANDLING_UTREDES,
+    overstyringDisabled: ownProps.readOnlyForStartdatoForForeldrepenger || ownProps.behandlingStatus.kode !== behandlingStatus.BEHANDLING_UTREDES,
     initialValues: buildInitialValues(ownProps),
   });
 };

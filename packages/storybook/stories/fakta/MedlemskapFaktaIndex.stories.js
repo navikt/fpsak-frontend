@@ -258,7 +258,7 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = (
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
-    readOnlyBehandling={boolean('readOnly', false)}
+    readOnlyForStartdatoForForeldrepenger={boolean('readOnly', false)}
     harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submittable={boolean('submittable', true)}
   />
@@ -322,7 +322,7 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
     }}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
-    readOnlyBehandling={boolean('readOnly', false)}
+    readOnlyForStartdatoForForeldrepenger={boolean('readOnly', false)}
     harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submittable={boolean('submittable', true)}
   />

@@ -19,7 +19,7 @@ describe('<StartdatoForForeldrepengerperiodenForm>', () => {
       hasOpenAksjonspunkt
       hasOpenMedlemskapAksjonspunkter
       submittable
-      readOnly={false}
+      overstyringDisabled={false}
       alleMerknaderFraBeslutter={{}}
       behandlingId={1}
       behandlingVersjon={1}
