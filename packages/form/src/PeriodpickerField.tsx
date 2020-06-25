@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Fields } from 'redux-form';
 import moment from 'moment';
 import { injectIntl, IntlShape } from 'react-intl';
@@ -114,18 +114,23 @@ const parseValue = (parse: (value: string) => string, names: string[]) => (value
 
 const PeriodpickerField = ({
   names, label, readOnly, format, parse, isEdited, hideLabel, ...otherProps
-}) => (
-  <Fields
-    names={names}
-    component={readOnly ? renderReadOnly() : renderPeriodpicker(hideLabel)}
-    label={label}
-    {...otherProps}
-    format={formatValue(format)}
-    parse={parseValue(parse, names)}
-    readOnly={readOnly}
-    isEdited={isEdited}
-  />
-);
+}) => {
+  const memoReadOnly = useMemo(() => renderReadOnly(), []);
+  const memoPeriodpicker = useMemo(() => renderPeriodpicker(hideLabel), [hideLabel]);
+
+  return (
+    <Fields
+      names={names}
+      component={readOnly ? memoReadOnly : memoPeriodpicker}
+      label={label}
+      {...otherProps}
+      format={formatValue(format)}
+      parse={parseValue(parse, names)}
+      readOnly={readOnly}
+      isEdited={isEdited}
+    />
+  );
+};
 
 PeriodpickerField.defaultProps = {
   label: '',
