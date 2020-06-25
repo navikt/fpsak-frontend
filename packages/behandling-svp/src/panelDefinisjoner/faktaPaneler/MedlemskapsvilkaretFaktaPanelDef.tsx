@@ -29,14 +29,17 @@ class MedlemskapsvilkaretFaktaPanelDef extends FaktaPanelDef {
   getOverstyrVisningAvKomponent = ({ personopplysninger, soknad }) => personopplysninger && soknad
 
   getData = ({
-    fagsak, behandling, hasFetchError, personopplysninger, soknad, inntektArbeidYtelse,
+    fagsak, behandling, hasFetchError, personopplysninger, soknad, inntektArbeidYtelse, rettigheter,
   }) => ({
     personopplysninger,
     soknad,
     inntektArbeidYtelse,
     isForeldrepengerFagsak: false,
     fagsakPerson: fagsak.fagsakPerson,
-    readOnlyBehandling: hasFetchError || readOnlyUtils.harBehandlingReadOnlyStatus(behandling),
+    readOnlyForStartdatoForForeldrepenger: !rettigheter.writeAccess.isEnabled
+      || hasFetchError
+      || behandling.behandlingPaaVent
+      || readOnlyUtils.harBehandlingReadOnlyStatus(behandling),
   })
 }
 

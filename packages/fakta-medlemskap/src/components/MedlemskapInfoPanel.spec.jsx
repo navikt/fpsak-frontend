@@ -53,7 +53,7 @@ describe('<MedlemskapInfoPanel>', () => {
       medlemskap={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
+      readOnlyForStartdatoForForeldrepenger={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
@@ -100,7 +100,7 @@ describe('<MedlemskapInfoPanel>', () => {
       medlemskap={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
+      readOnlyForStartdatoForForeldrepenger={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
@@ -147,7 +147,7 @@ describe('<MedlemskapInfoPanel>', () => {
       medlemskap={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
+      readOnlyForStartdatoForForeldrepenger={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
@@ -178,7 +178,7 @@ describe('<MedlemskapInfoPanel>', () => {
       medlemskap={{}}
       fagsakPerson={{}}
       behandlingPaaVent={false}
-      readOnlyBehandling={false}
+      readOnlyForStartdatoForForeldrepenger={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
