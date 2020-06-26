@@ -17,7 +17,7 @@ interface OwnProps {
   names: string[];
   label?: ReactNode;
   placeholder?: string;
-  feil?: { feilmelding?: string };
+  feil?: string;
   disabled?: boolean;
   disabledDays?: {};
   hideLabel?: boolean;
