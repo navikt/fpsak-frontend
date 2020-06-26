@@ -14,10 +14,10 @@
     "moment": "^2.25.3",
     "nav-frontend-etiketter": "1.0.31",
     "nav-frontend-etiketter-style": "0.3.20",
-    "nav-frontend-typografi": "2.0.18",
-    "nav-frontend-typografi-style": "1.0.19",
+    "nav-frontend-typografi": "2.0.21",
+    "nav-frontend-typografi-style": "1.0.22",
     "react": "^16.13.1",
-    "react-intl": "^4.5.3"
+    "react-intl": "^4.7.2"
   },
   "devDependencies": {}
 }

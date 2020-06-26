@@ -19,13 +19,13 @@
     "nav-frontend-knapper": "2.0.1",
     "nav-frontend-modal": "1.0.34",
     "nav-frontend-modal-style": "0.3.33",
-    "nav-frontend-typografi": "2.0.18",
+    "nav-frontend-typografi": "2.0.21",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-intl": "^4.5.3",
+    "react-intl": "^4.7.2",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.5",
+    "redux-form": "^8.3.6",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
