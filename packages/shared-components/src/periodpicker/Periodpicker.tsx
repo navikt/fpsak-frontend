@@ -19,7 +19,10 @@ interface OwnProps {
   placeholder?: string;
   feil?: string;
   disabled?: boolean;
-  disabledDays?: {};
+  disabledDays: {
+    before: Date;
+    after?: Date;
+  };
   hideLabel?: boolean;
 }
 
