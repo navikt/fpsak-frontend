@@ -6,7 +6,7 @@
   "private": true,
   "dependencies": {
     "@fpsak-frontend/kodeverk": "1.0.0",
-    "nav-frontend-grid": "1.0.27",
+    "nav-frontend-grid": "1.0.29",
     "nav-frontend-grid-style": "0.2.20",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
