@@ -10,7 +10,7 @@
     "@navikt/boxed-list-with-selection": "1.0.1",
     "@navikt/nap-popover": "1.0.6",
     "nav-frontend-knapper": "2.0.4",
-    "nav-frontend-knapper-style": "0.3.35",
+    "nav-frontend-knapper-style": "0.3.38",
     "react": "^16.13.1",
     "react-intl": "^4.7.2"
   },
