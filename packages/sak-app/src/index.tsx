@@ -47,7 +47,9 @@ init({
   },
 });
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({
+  basename: '/fpsak/',
+});
 const store = configureStore(history);
 
 reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
