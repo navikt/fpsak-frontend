@@ -11,7 +11,7 @@
     "classnames": "^2.2.6",
     "lodash.throttle": "^4.1.1",
     "moment": "^2.27.0",
-    "nav-frontend-core": "4.0.12",
+    "nav-frontend-core": "5.0.1",
     "nav-frontend-etiketter": "1.0.31",
     "nav-frontend-etiketter-style": "0.3.20",
     "nav-frontend-js-utils": "1.0.8",
