@@ -11,7 +11,6 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
-
 /* global VERSION:true */
 /* eslint no-undef: "error" */
 // @ts-ignore
@@ -48,9 +47,7 @@ init({
   },
 });
 
-const history = createBrowserHistory({
-  basename: '/fpsak/',
-});
+const history = createBrowserHistory();
 const store = configureStore(history);
 
 reducerRegistry.register(errorHandler.getErrorReducerName(), errorHandler.getErrorReducer());
