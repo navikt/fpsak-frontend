@@ -52,5 +52,4 @@ const CheckboxField: FunctionComponent<CheckboxFieldProps> = ({
   />
 );
 
-
 export default CheckboxField;

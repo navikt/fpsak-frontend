@@ -36,7 +36,6 @@ export const MANUELL_OVERSTYRING_FIELD = 'manuellOverstyringBeregningAktiviteter
 const findAksjonspunktMedBegrunnelse = (aksjonspunkter, kode) => aksjonspunkter
   .filter((ap) => ap.definisjon.kode === kode && ap.begrunnelse !== null)[0];
 
-
 const getAvklarAktiviteter = createSelector(
   [(ownProps) => ownProps.beregningsgrunnlag.faktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.avklarAktiviteter : undefined),
 );
@@ -97,7 +96,6 @@ const hasOpenAksjonspunkt = (kode, aksjonspunkter) => aksjonspunkter.some((ap) =
 
 const hasOpenAvklarAksjonspunkter = (aksjonspunkter) => hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
 || hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
-
 
 /**
  * AvklareAktiviteterPanel

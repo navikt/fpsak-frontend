@@ -6,14 +6,12 @@ import React from 'react';
 import { shallow } from 'enzyme/build';
 import TempsaveKlageButton from './TempsaveKlageButton';
 
-
 describe('<TempsaveKlageButton>', () => {
   const formValuesWithEmptyStrings = {
     klageVurdering: klageVurderingType.STADFESTE_YTELSESVEDTAK,
     fritekstTilBrev: '',
     begrunnelse: '',
   };
-
 
   it('Skal rendre komponent korrekt', () => {
     const wrapper = shallow(<TempsaveKlageButton

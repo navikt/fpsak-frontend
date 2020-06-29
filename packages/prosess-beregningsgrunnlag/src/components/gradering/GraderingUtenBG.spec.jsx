@@ -122,7 +122,6 @@ describe('<GraderingUtenBG>', () => {
     expect(element).to.have.length(1);
   });
 
-
   it('skal teste at komponent bygger korrekte initial values dersom aksjonspunktet ikke finnes', () => {
     const expectedInitialValues = undefined;
 

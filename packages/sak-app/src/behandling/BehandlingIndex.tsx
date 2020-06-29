@@ -69,13 +69,13 @@ interface OwnProps {
   erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
-  featureToggles: {};
+  featureToggles: any;
   kodeverk: {[key: string]: KodeverkMedNavn[]};
   fagsak: FagsakInfo;
   fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
   push: (location: RouteProps['location'] | string) => void;
-  visFeilmelding: (data: {}) => void;
+  visFeilmelding: (data: any) => void;
   rettigheter: {
     writeAccess: {
       employeeHasAccess: boolean;

@@ -9,7 +9,6 @@ import { Image } from '@fpsak-frontend/shared-components';
 import { UtlandPanelImpl as UtlandPanel } from './UtlandPanel';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-saken';
 
-
 describe('<UtlandPanel>', () => {
   it('skal vise komponent både før og etter editeringsmodus', () => {
     const wrapper = shallowWithIntl(

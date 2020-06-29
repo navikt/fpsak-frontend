@@ -13,7 +13,6 @@ import VurderVarigEndretEllerNyoppstartetSN, {
   varigEndringRadioname,
 } from './VurderVarigEndretEllerNyoppstartetSN';
 
-
 const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;

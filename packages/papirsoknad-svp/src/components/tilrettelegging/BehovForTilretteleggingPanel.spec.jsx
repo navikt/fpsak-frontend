@@ -16,7 +16,6 @@ describe('<BehovForTilretteleggingPanel>', () => {
       readOnly={false}
     />);
 
-
     expect(wrapper.find('[name="behovsdatoSN"]')).has.length(1);
     expect(wrapper.find('[name="behovsdatoFrilans"]')).has.length(0);
     expect(wrapper.find('[name="tilretteleggingForArbeidsgiver"]')).has.length(0);
@@ -31,7 +30,6 @@ describe('<BehovForTilretteleggingPanel>', () => {
       readOnly={false}
     />);
 
-
     expect(wrapper.find('[name="behovsdatoSN"]')).has.length(0);
     expect(wrapper.find('[name="behovsdatoFrilans"]')).has.length(1);
     expect(wrapper.find('[name="tilretteleggingForArbeidsgiver"]')).has.length(0);
@@ -45,7 +43,6 @@ describe('<BehovForTilretteleggingPanel>', () => {
       sokForArbeidsgiver
       readOnly={false}
     />);
-
 
     expect(wrapper.find('[name="behovsdatoSN"]')).has.length(0);
     expect(wrapper.find('[name="behovsdatoFrilans"]')).has.length(0);

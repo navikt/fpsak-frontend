@@ -33,7 +33,7 @@ interface Action {
   meta?: {
     options: {
       keepData: boolean;
-      cacheParams: {};
+      cacheParams: any;
     };
   };
   payload?: any;

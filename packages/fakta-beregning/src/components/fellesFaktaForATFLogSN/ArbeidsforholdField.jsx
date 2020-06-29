@@ -28,14 +28,12 @@ const fieldLabel = (index, labelId) => {
   return '';
 };
 
-
 const arbeidsgiverSelectValues = (arbeidsforholdList, alleKodeverk) => (arbeidsforholdList
   .map((arbeidsforhold) => (
     <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
       {createVisningsnavnForAktivitet(arbeidsforhold, alleKodeverk)}
     </option>
   )));
-
 
 export const ArbeidsforholdFieldImpl = ({
   fields,

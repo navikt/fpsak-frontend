@@ -16,7 +16,6 @@ import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPa
 
 export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
 
-
 const preutfyllInntektskategori = (andel) => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
 
@@ -36,7 +35,6 @@ export const setGenerellAndelsinfo = (andel) => ({
   inntektskategori: preutfyllInntektskategori(andel),
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
 });
-
 
 const listeInneholderAndel = (liste, field) => (liste ? liste.find((element) => element.andelsnr === field.andelsnr
 || element.andelsnr === field.andelsnrRef) : undefined);
@@ -143,7 +141,6 @@ const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, f
   }
   return false;
 };
-
 
 const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)) {

@@ -69,7 +69,6 @@ VurderBesteberegningPanelImpl.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
 };
 
-
 VurderBesteberegningPanelImpl.buildInitialValues = (aksjonspunkter, vurderBesteberegning, faktaOmBeregningTilfeller, erOverstyrt) => {
   if (!(faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
     || faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
@@ -136,7 +135,6 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
     },
   };
 };
-
 
 export const vurderBesteberegningTransform = (faktaOmBeregning) => (values, inntektPrAndel) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];

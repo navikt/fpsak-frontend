@@ -91,5 +91,4 @@ TimeLineTab.defaultProps = {
   aktiv: false,
 };
 
-
 export default TimeLineTab;

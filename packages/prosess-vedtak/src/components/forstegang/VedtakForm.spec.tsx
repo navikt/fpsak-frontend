@@ -72,7 +72,6 @@ describe('<VedtakForm>', () => {
       beregningErManueltFastsatt={false}
     />);
 
-
     const fellesPanel = wrapper.find(VedtakFellesPanel);
     expect(fellesPanel).to.have.length(1);
     const avslattPanel = fellesPanel.renderProp('renderPanel')(false, true, false).find(VedtakInnvilgetPanel);
@@ -119,7 +118,6 @@ describe('<VedtakForm>', () => {
       vilkar={[]}
       beregningErManueltFastsatt={false}
     />);
-
 
     const fellesPanel = wrapper.find(VedtakFellesPanel);
     expect(fellesPanel).to.have.length(1);

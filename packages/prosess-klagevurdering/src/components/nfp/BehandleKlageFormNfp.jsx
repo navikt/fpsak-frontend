@@ -132,7 +132,6 @@ export const buildInitialValues = createSelector([
   fritekstTilBrev: klageVurderingResultat ? klageVurderingResultat.fritekstTilBrev : null,
 }));
 
-
 export const transformValues = (values) => ({
   klageMedholdArsak: (values.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE
     || values.klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK) ? values.klageMedholdArsak : null,

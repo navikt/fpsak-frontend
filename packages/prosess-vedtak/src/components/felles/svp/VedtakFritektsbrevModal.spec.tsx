@@ -6,7 +6,6 @@ import Modal from 'nav-frontend-modal';
 import { VedtakFritekstbrevModal } from './VedtakFritekstbrevModal';
 import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
-
 describe('<VedtakFritekstbrevModal>', () => {
   it('skal vise modal når behandlingsresultat er AVSLATT', () => {
     const wrapper = shallowWithIntl(<VedtakFritekstbrevModal

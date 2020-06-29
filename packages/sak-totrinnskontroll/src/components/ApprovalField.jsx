@@ -71,7 +71,6 @@ export const ApprovalFieldImpl = ({
   );
 };
 
-
 ApprovalFieldImpl.propTypes = {
   aksjonspunkt: PropTypes.shape().isRequired,
   getAksjonspunktText: PropTypes.func.isRequired,

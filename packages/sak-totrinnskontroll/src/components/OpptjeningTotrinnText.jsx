@@ -2,7 +2,6 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-
 const mapAktivitetTextEndring = (arbeidsgiverNavn, orgnr, aktivitetType) => {
   if (arbeidsgiverNavn && orgnr) {
     return (
@@ -80,7 +79,6 @@ const mapAktivitetTextGodkjenning = (arbeidsgiverNavn, orgnr, aktivitetType) => 
   );
 };
 
-
 /*
  * OpptjeningTotrinnText
  *
@@ -95,7 +93,6 @@ export const OpptjeningTotrinnText = ({ aktivitet }) => {
   }
   return mapAktivitetTextUnderkjenning(aktivitet.arbeidsgiverNavn, aktivitet.orgnr, aktivitet.aktivitetType ? aktivitet.aktivitetType.toLowerCase() : null);
 };
-
 
 OpptjeningTotrinnText.propTypes = {
   aktivitet: PropTypes.shape(),

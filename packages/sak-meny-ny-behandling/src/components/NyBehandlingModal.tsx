@@ -218,7 +218,6 @@ export const getBehandlingAarsaker = createSelector([
   return [];
 });
 
-
 interface Props {
   behandlingstyper: KodeverkMedNavn[];
   hasEnabledCreateNewBehandling: boolean;

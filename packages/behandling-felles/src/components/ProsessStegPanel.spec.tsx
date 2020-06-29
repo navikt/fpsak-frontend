@@ -200,7 +200,6 @@ describe('<ProsessStegPanel>', () => {
       toggleOverstyring, kanOverstyreAccess, []);
     const utledetInngangsvilkarSteg = new ProsessStegUtledet(inngangsvilkarStegDef, [utledetFodselDelPanel]);
 
-
     const wrapper = shallow(
       <ProsessStegPanel
         valgtProsessSteg={utledetInngangsvilkarSteg}

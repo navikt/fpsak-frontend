@@ -96,6 +96,7 @@ class OpptjeningTimeLineLight extends Component {
     this.timelineRef = React.createRef();
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { opptjeningPeriods, opptjeningFomDate, opptjeningTomDate } = this.props;
     const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom) - new Date(b.fom));
@@ -137,7 +138,6 @@ class OpptjeningTimeLineLight extends Component {
       });
     }
   }
-
 
   selectNextPeriod(event) {
     const { selectedPeriod, items } = this.state;
