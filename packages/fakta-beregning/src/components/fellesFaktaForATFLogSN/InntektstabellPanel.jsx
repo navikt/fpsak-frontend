@@ -106,8 +106,9 @@ InntektstabellPanelImpl.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
 };
 
-InntektstabellPanelImpl.buildInitialValues = (aksjonspunkter) => ({
-  [MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD]: hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter),
+InntektstabellPanelImpl.buildInitialValues = (erOverstyrt) => ({
+  // I revurderinger kopieres det ikke med aksjonspunkt, og derfor er det ikke nok å kun se på aksjonspunkt her
+  [MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD]: erOverstyrt,
 });
 
 InntektstabellPanelImpl.defaultProps = {

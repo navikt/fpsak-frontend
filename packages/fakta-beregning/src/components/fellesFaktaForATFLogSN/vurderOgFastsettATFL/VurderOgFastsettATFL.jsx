@@ -182,7 +182,7 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => {
+VurderOgFastsettATFL.buildInitialValues = (faktaOmBeregning, erOverstyrt) => {
   if (!faktaOmBeregning) {
     return {};
   }
@@ -192,7 +192,7 @@ VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => 
   }
   return {
     [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler),
-    ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
+    ...InntektstabellPanel.buildInitialValues(erOverstyrt),
   };
 };
 
