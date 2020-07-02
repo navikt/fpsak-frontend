@@ -40,7 +40,7 @@ interface OwnProps {
     årsakKode: string;
     begrunnelse: string;
   }) => Promise<any>;
-  forhandsvisHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
+  forhandsvisHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   ytelseType: Kodeverk;
   behandlingType: Kodeverk;
   behandlingUuid: string;

@@ -11,7 +11,7 @@ interface OwnProps {
   utlandDokStatus?: {
     dokStatus: string;
   };
-  submitCallback: (data: {}) => void;
+  submitCallback: (data: any) => void;
   submittable: boolean;
   harApneAksjonspunkter: boolean;
   readOnly: boolean;

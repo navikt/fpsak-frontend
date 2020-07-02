@@ -77,7 +77,6 @@ export const getUniqueListOfArbeidsforholdFields = (fields) => {
   return arbeidsgiverList;
 };
 
-
 export const arbeidsforholdProptype = PropTypes.shape({
   arbeidsgiverNavn: PropTypes.string,
   arbeidsgiverId: PropTypes.string,

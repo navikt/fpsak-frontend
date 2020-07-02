@@ -1,14 +1,12 @@
 import { expect } from 'chai';
 import { AAP_ARBEIDSGIVER_KEY, lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
-
 const getKodeverknavn = (kodeverk) => {
   if (kodeverk.kode === 'AAP') {
     return 'Arbeidsavklaringspenger';
   }
   return '';
 };
-
 
 describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal lage liste for to arbeidsforhold for samme arbeidsgiver', () => {
@@ -36,7 +34,6 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
     expect(fellesGrunnlag[0].arbeidsgiverNavn).to.equal('Sopra Steria (33334444234123)');
     expect(fellesGrunnlag[0].key).to.equal('Sopra Steria (33334444234123)');
   });
-
 
   it('skal lage liste for AAP og arbeidsgiver som søker refusjon som overstiger beregningsgrunnlag', () => {
     const andeler = [

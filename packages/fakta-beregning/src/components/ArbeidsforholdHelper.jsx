@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-
 const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk) => {
@@ -13,7 +12,6 @@ export const createVisningsnavnForAktivitet = (aktivitet, alleKodeverk) => {
     ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverIdVisning})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
     : aktivitet.arbeidsgiverNavn;
 };
-
 
 export const sortArbeidsforholdList = (arbeidsforhold) => {
   const copy = arbeidsforhold.slice(0);

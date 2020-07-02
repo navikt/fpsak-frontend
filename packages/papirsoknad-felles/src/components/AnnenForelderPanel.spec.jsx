@@ -67,7 +67,6 @@ describe('<AnnenForelderPanel>', () => {
     },
   ];
 
-
   it('skal kun vise angi begrunnelse hvis kanIkkeOppgiAnnenForelder er valgt', () => {
     const wrapper = shallowWithIntl(<AnnenForelderPanelImpl
       intl={intlMock}

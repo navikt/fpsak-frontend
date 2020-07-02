@@ -11,16 +11,16 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/types": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "nav-frontend-core": "4.0.12",
-    "nav-frontend-knapper": "2.0.1",
-    "nav-frontend-knapper-style": "0.3.35",
-    "nav-frontend-typografi": "2.0.18",
-    "nav-frontend-typografi-style": "1.0.19",
+    "nav-frontend-core": "5.0.1",
+    "nav-frontend-knapper": "2.0.4",
+    "nav-frontend-knapper-style": "0.3.38",
+    "nav-frontend-typografi": "2.0.21",
+    "nav-frontend-typografi-style": "1.0.22",
     "react": "^16.13.1",
-    "react-intl": "^4.5.3",
+    "react-intl": "^4.7.6",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.5"
+    "redux-form": "^8.3.6"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

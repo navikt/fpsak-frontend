@@ -30,7 +30,6 @@ VirksomhetRelasjonPanel.propTypes = {
   readOnly: PropTypes.bool,
 };
 
-
 VirksomhetRelasjonPanel.defaultProps = {
   readOnly: true,
 };

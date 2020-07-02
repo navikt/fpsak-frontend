@@ -30,11 +30,11 @@ interface OwnProps {
   erVilkarOk?: boolean;
   customVilkarIkkeOppfyltText?: {
     id: string;
-    values?: {};
+    values?: any;
   };
   customVilkarOppfyltText?: {
     id: string;
-    values?: {};
+    values?: any;
   };
   readOnly: boolean;
   erMedlemskapsPanel?: boolean;

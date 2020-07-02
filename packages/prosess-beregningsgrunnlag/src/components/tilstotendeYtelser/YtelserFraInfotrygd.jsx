@@ -8,7 +8,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 /**
  * YtelserFraInfotrygd
  *

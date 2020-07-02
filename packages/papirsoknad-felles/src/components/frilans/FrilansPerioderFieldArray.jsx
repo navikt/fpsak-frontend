@@ -55,13 +55,11 @@ export const FrilansPerioderFieldArray = ({
   </PeriodFieldArray>
 );
 
-
 FrilansPerioderFieldArray.propTypes = {
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
-
 
 FrilansPerioderFieldArray.validate = (values) => {
   const arrayErrors = values.map(({ periodeFom, periodeTom }) => {
@@ -87,6 +85,5 @@ FrilansPerioderFieldArray.validate = (values) => {
   }
   return null;
 };
-
 
 export default FrilansPerioderFieldArray;

@@ -376,5 +376,4 @@ const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingForm({
 
 BehandleAnkeForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
 
-
 export default injectIntl(BehandleAnkeForm);

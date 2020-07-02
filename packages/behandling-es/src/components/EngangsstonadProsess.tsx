@@ -29,7 +29,7 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
+  featureToggles: any;
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string };
   dispatch: Dispatch;

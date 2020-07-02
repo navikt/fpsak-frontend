@@ -16,7 +16,6 @@ import beregningAktivitetPropType from './beregningAktivitetPropType';
 
 import styles from './vurderAktiviteterTabell.less';
 
-
 export const lagAktivitetFieldId = (aktivitet) => {
   if (aktivitet.arbeidsgiverId) {
     if (aktivitet.arbeidsforholdId) {
@@ -156,7 +155,6 @@ VurderAktiviteterTabell.propTypes = {
   harAksjonspunkt: PropTypes.bool.isRequired,
 };
 
-
 VurderAktiviteterTabell.validate = (values, aktiviteter) => {
   const errors = {};
   let harError = false;
@@ -174,7 +172,6 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
   }
   return null;
 };
-
 
 VurderAktiviteterTabell.transformValues = (values, aktiviteter) => aktiviteter
   .filter((aktivitet) => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)

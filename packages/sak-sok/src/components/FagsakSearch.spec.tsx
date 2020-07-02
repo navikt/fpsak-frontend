@@ -8,7 +8,6 @@ import FagsakList from './FagsakList';
 import SearchForm from './SearchForm';
 import PersonInfo from './person/PersonInfo';
 
-
 describe('<FagsakSearch>', () => {
   const fagsak = {
     saksnummer: 12345,

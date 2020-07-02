@@ -40,7 +40,6 @@ const mapStateToProps = (state) => ({
   selectedAktoer: getSelectedAktoer(state),
 });
 
-
 export default trackRouteParam({
   paramName: 'aktoerId',
   parse: (aktoerIdFromUrl) => Number.parseInt(aktoerIdFromUrl, 10),

@@ -106,7 +106,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(selectValuesArbeidsforhold[0].props.children).to.equal(forventetArbeidstakerString);
   });
 
-
   it('skal ikkje vise rapportert inntekt om minst en andel som tilkommer før stp ikkje har register opplysning tilgjengelig', () => {
     const andelMedRapportertInntekt = {
       nyAndel: false,
@@ -150,7 +149,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     const elements = rows.find(Element);
     expect(elements.first().props().children).to.equal('');
   });
-
 
   it('skal vise beregningsgrunnlagPrAar', () => {
     const andelMedRapportertInntekt = {
@@ -254,7 +252,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(elements.first().props().children).to.equal('30 000');
   });
 
-
   it('skal validere eksisterende andeler uten errors', () => {
     const values = [];
     const andel1 = {
@@ -273,7 +270,6 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors).to.equal(null);
   });
-
 
   it('skal returnerer ingen errors for ingen refusjonskrav når skalKunneEndreRefusjon er false', () => {
     const values = [];
@@ -361,7 +357,6 @@ describe('<RenderFordelBGFieldArray>', () => {
   };
 
   const arbeidsgiverstring = 'Test (14235235235)...4567';
-
 
   it('skal returnerer errors for refusjonskrav når det ikkje er mottatt refusjonskrav i inntektsmelding', () => {
     const values = [];
@@ -505,7 +500,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
     expect(belopKolonne.props.children.props.readOnly).to.equal(true);
   });
-
 
   it('lagBelopKolonne skal ikkje gi readOnly beløp om andel skal redigere inntekt i uten readOnly', () => {
     const belopKolonne = lagBelopKolonne('test', false, false, false);

@@ -190,7 +190,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(initialValues[fieldName1].length).to.equal(andeler1.length);
     expect(initialValues[fieldName2].length).to.equal(andeler2.length);
 
-
     const values = {};
     values[getFieldNameKey(0)] = initialValues[fieldName1];
     values[getFieldNameKey(1)] = initialValues[fieldName2];
@@ -198,7 +197,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(errors[getFieldNameKey(0)]).to.equal(null);
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
-
 
   it('skal returnere liste med en periode om kun en periode i grunnlag', () => {
     const perioder = [{
@@ -487,7 +485,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(nyePerioder[1].tom).to.equal(null);
   });
 
-
   it('skal ikkje validere om det ikkje finnes perioder', () => {
     const values = {};
     const fordelBGPerioder = [];
@@ -532,7 +529,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
-
 
   it('skal mappe andel til fastsatte verdier uten endring i refusjon', () => {
     const fastsatteVerdier = mapTilFastsatteVerdier(andel2);
@@ -610,7 +606,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[0].andeler[1].andel).to.equal('Sopra Steria AS (2342342348)');
     expect(perioder[0].andeler[1].arbeidsforholdId).to.equal('ri4j3f34rt3144');
   });
-
 
   it('skal transforme perioder for submit når perioder er slått sammen', () => {
     const bgPerioder = [{
@@ -696,7 +691,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[1].arbeidsforholdId).to.equal('ri4j3f34rt3144');
   });
 
-
   it('skal transforme perioder for submit når periode er slått sammen og inkluderer siste periode', () => {
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '2018-01-01',
@@ -781,7 +775,6 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     expect(perioder[1].andeler[1].andel).to.equal('Sopra Steria AS (2342342348)');
     expect(perioder[1].andeler[1].arbeidsforholdId).to.equal('ri4j3f34rt3144');
   });
-
 
   it('skal transforme perioder for submit når 2 perioder i midten er slått sammen, totalt 4 perioder', () => {
     const bgPerioder = [{

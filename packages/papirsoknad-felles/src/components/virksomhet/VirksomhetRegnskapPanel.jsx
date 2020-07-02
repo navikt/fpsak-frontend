@@ -65,7 +65,6 @@ VirksomhetRegnskapPanel.propTypes = {
   readOnly: PropTypes.bool,
 };
 
-
 VirksomhetRegnskapPanel.defaultProps = {
   readOnly: true,
   harRegnskapsforer: false,

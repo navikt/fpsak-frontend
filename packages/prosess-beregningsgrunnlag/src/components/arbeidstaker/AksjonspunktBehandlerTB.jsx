@@ -74,7 +74,6 @@ const createBeregnetInntektForAlleAndeler = (perioder) => {
   return mapMedInnteker;
 };
 
-
 // Dette er objektet hver key i mappen vil ha en liste med
 const createMapValueObject = () => ({
   erTidsbegrenset: true,
@@ -164,7 +163,6 @@ const createPerioderRow = (relevantePerioder) => (
     <td />
   </tr>
 
-
 );
 const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
   const rows = [];
@@ -222,13 +220,11 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
     );
   });
 
-
   rows.push(<tr key="sdeparator" className={styles.rowSpacer}><td /></tr>);
   rows.push(createSummaryTableRow(perioder));
 
   return rows;
 };
-
 
 export const AksjonspunktBehandlerTidsbegrensetImpl = ({
   readOnly,

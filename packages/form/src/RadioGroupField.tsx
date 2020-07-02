@@ -37,7 +37,6 @@ const isChecked = (radioOption, actualValueStringified) => radioOption.key === a
 const renderRadioGroupField = renderNavField(({
   label,
   columns,
-  id,
   name,
   value,
   onChange,
@@ -75,7 +74,6 @@ const renderRadioGroupField = renderNavField(({
       {label.props.input && <span className={classNames('radioGroupLabel', { readOnly })}>{label}</span>}
       <OptionGrid
         direction={direction}
-        id={id}
         isEdited={readOnly && isEdited}
         options={options}
         spaceBetween={spaceBetween}

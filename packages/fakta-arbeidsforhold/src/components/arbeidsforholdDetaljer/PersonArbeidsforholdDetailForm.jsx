@@ -190,7 +190,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-
 const validateForm = (values) => ({
   ...LeggTilArbeidsforholdFelter.validate(values),
 });

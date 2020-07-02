@@ -5,7 +5,6 @@ import ApprovalField from './ApprovalField';
 import getAksjonspunktText from './ApprovalTextUtils';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
-
 describe('<ApprovalField>', () => {
   it('skal kunne vise fleire oppjeningstekster for fleire aktiviteter', () => {
     const aksjonspunkt = {
@@ -26,7 +25,6 @@ describe('<ApprovalField>', () => {
       ],
     };
 
-
     const readOnly = false;
     const isForeldrepenger = false;
     const currentValue = { totrinnskontrollGodkjent: true };
@@ -42,7 +40,6 @@ describe('<ApprovalField>', () => {
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(4);
   });
-
 
   it('skal vise korrekt antall element', () => {
     const readOnly = false;
@@ -69,7 +66,6 @@ describe('<ApprovalField>', () => {
     const reasonsField = wrapper.find('ReasonsField');
     expect(reasonsField).to.have.length(0);
   });
-
 
   it('skal vise begrunnelsefelt om godkjent er false', () => {
     const isForeldrepenger = false;

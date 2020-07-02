@@ -90,7 +90,6 @@ const lagBeskrivelsePanel = (naringsAndel, intl) => (
   </>
 );
 
-
 const søkerHarOppgittInntekt = (naring) => naring.oppgittInntekt || naring.oppgittInntekt === 0;
 
 export const NaeringsopplysningsPanel = ({
@@ -195,6 +194,5 @@ NaeringsopplysningsPanel.propTypes = {
 NaeringsopplysningsPanel.defaultProps = {
   alleAndelerIForstePeriode: undefined,
 };
-
 
 export default injectIntl(NaeringsopplysningsPanel);

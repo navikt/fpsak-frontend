@@ -5,7 +5,6 @@ import { Element } from 'nav-frontend-typografi';
 import BorderBox from './BorderBox';
 import VerticalSpacer from './VerticalSpacer';
 
-
 interface OwnPropsWrapper {
   error: boolean;
   children: ReactNode;

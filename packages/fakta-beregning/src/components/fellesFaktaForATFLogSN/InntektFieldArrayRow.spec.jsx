@@ -15,7 +15,6 @@ import ArbeidsforholdField from './ArbeidsforholdField';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
-
 const aksjonspunkter = [
   {
     definisjon: { kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN },
@@ -75,7 +74,6 @@ const ownProps = {
 };
 const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, beregningsgrunnlag, formNameVurderFaktaBeregning, initial, initial);
 const props = mapStateToProps(state, ownProps);
-
 
 it('skal vise komponent med arbeidsperiode og refusjonskrav', () => {
   const wrapper = shallowWithIntl(<AndelRowImpl
@@ -150,7 +148,6 @@ it('skal vise komponent uten arbeidsperiode og refusjonskrav', () => {
   expect(btn.length).to.eql(0);
 });
 
-
 it('skal vise komponent med readOnly beløp', () => {
   const andelField2 = {
     nyAndel: false,
@@ -196,7 +193,6 @@ it('skal vise komponent med readOnly beløp', () => {
   const btn = columns.at(3).find('button');
   expect(btn.length).to.eql(0);
 });
-
 
 it('skal vise komponent med sletteknapp', () => {
   const andelField2 = {

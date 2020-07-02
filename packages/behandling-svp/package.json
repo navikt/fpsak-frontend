@@ -31,10 +31,10 @@
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "react": "^16.13.1",
-    "react-intl": "^4.5.3",
+    "react-intl": "^4.7.6",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.5",
+    "redux-form": "^8.3.6",
     "reselect": "^4.0.0"
   },
   "devDependencies": {

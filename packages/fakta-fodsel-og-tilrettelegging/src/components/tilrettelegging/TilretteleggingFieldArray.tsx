@@ -35,7 +35,7 @@ interface TilretteleggingDato {
 }
 
 interface OwnProps {
-  fields: {}[];
+  fields: any[];
   meta?: {
     error?: {
       id: string;

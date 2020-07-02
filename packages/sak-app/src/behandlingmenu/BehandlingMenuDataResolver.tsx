@@ -80,7 +80,6 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
   const opprettVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT
     ? opprettVerge(location, pushLocation, saksnummer, behandlingId, behandlingVersion) : undefined;
 
-
   return (
     <DataFetcher
       key={behandlingId ? 0 : 1}

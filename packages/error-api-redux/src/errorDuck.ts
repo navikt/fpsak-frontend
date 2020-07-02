@@ -60,7 +60,6 @@ export const errorReducer = (state: StateTsType = initialState, action: ActionTs
   }
 };
 
-
 /* Selectors */
 const getErrorContext = (state) => state.default[reducerName];
 
