@@ -1,4 +1,3 @@
-
 import sinon from 'sinon';
 import { expect } from 'chai';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';

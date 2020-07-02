@@ -28,7 +28,6 @@ describe('<PermisjonPanel>', () => {
     expect(fieldArray).has.length(1);
   });
 
-
   it('skal vise alle paneler ved overføring av kvoter, utsettelse og gradering', () => {
     const wrapper = shallow(<PermisjonPanel
       soknadData={new SoknadData('', '', '', [soknadTypeTillegg.OVERFORING_AV_KVOTER, soknadTypeTillegg.GRADERING, soknadTypeTillegg.UTSETTELSE])}

@@ -25,7 +25,6 @@ const HookWrapper = ({ callback }) => <div {...callback()} />;
 
 const testHook = (callback) => shallow(<HookWrapper callback={callback} />);
 
-
 describe('<faktaHooks>', () => {
   const fagsak = {
     saksnummer: 123456,

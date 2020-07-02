@@ -76,7 +76,7 @@ export const getNavAnsatt = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()
   NavAnsatt): NavAnsatt => navAnsattData || DEFAULT_NAV_ANSATT);
 export const getNavAnsattName = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.navn);
 export const getFunksjonellTid = createSelector([getNavAnsatt], (navAnsatt: NavAnsatt) => navAnsatt.funksjonellTid);
-export const getFeatureToggles = createSelector([fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData: { featureToggles: {}}) => (ftData
+export const getFeatureToggles = createSelector([fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData: { featureToggles: any }) => (ftData
   ? ftData.featureToggles : undefined));
 export const getShowDetailedErrorMessages = createSelector(
   [fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiData()], (showDetailedErrorMessages = false) => showDetailedErrorMessages,

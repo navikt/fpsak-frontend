@@ -82,5 +82,4 @@ InntektsgivendeArbeidPanel.initialValues = {
   [renderInntektsgivendeArbeidAmbassadeFieldArray]: [{}],
 };
 
-
 export default InntektsgivendeArbeidPanel;

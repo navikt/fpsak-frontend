@@ -63,7 +63,6 @@ export const FortsattMedlemskapFaktaPanelImpl = ({
   </>
 );
 
-
 FortsattMedlemskapFaktaPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   skjaringstidspunkt: PropTypes.string.isRequired,

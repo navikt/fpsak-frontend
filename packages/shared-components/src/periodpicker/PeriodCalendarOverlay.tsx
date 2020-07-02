@@ -27,7 +27,6 @@ interface OwnProps {
   };
 }
 
-
 class PeriodCalendarOverlay extends Component<OwnProps & WrappedComponentProps> {
   calendarRootRef: HTMLDivElement
 

@@ -34,14 +34,12 @@ describe('<LonnsendringForm>', () => {
     expect(transformedObject.vurdertLonnsendring.dummyField).to.equal(undefined);
   });
 
-
   it('skal ikkje submitte inntekt uten lønnsendring', () => {
     const values = { };
     values[lonnsendringField] = false;
     const transformedObject = LonnsendringForm.transformValues(values, faktaOmBeregning);
     expect(transformedObject.vurdertLonnsendring.erLønnsendringIBeregningsperioden).to.equal(false);
   });
-
 
   it('skal teste at buildInitialValues gir korrekt output med gyldig beregningsgrunnlag', () => {
     const gyldigBG = {

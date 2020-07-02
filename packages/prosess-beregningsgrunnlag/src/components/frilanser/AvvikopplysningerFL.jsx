@@ -59,7 +59,6 @@ const AvviksopplysningerFL = ({
   );
 };
 
-
 AvviksopplysningerFL.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),

@@ -7,7 +7,6 @@ import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import { getIntegrationStatusList, getShowDetailedErrorMessages } from '../duck';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 
-
 interface OwnProps {
   showIntegrationStatus?: boolean;
   integrationStatusList: {

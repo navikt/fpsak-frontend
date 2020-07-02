@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';

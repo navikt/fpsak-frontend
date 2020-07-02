@@ -1,4 +1,3 @@
-
 import { expect } from 'chai';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';

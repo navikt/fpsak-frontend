@@ -77,5 +77,4 @@ const KlagePaneler: FunctionComponent<OwnProps> = ({
   );
 };
 
-
 export default KlagePaneler;

@@ -9,21 +9,17 @@ import {
   DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
-
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
-
 import styles from './skjeringspunktOgStatusPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 export const RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN = 'dekningsgrad';
-
 
 const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
   const statusList = [];
@@ -76,7 +72,6 @@ export const SkjeringspunktOgStatusPanelImpl = ({
     </div>
   </>
 );
-
 
 SkjeringspunktOgStatusPanelImpl.propTypes = {
   skjeringstidspunktDato: PropTypes.string.isRequired,

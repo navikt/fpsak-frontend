@@ -6,7 +6,6 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
-
 describe('<DocumentListVedtakInnsyn>', () => {
   it('skal vise tekst ved tom dokumentliste', () => {
     const wrapper = shallow(<DocumentListVedtakInnsyn

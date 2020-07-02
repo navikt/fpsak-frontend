@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import LesMerToggle from './LesMerToggle';
 
-
 describe('LesMerToggle', () => {
   it('skal ikke vise lukketekst når er Aapen', () => {
     const wrapper = mountWithIntl(<LesMerToggle erApen lukkTekst="lukketekst" apneTekst="aapnetekst" onClick={() => {}} />);

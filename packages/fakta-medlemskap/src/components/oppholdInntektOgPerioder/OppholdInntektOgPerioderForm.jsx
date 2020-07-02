@@ -76,7 +76,7 @@ export class OppholdInntektOgPerioderForm extends Component {
     this.periodeResetCallback = this.periodeResetCallback.bind(this);
   }
 
-
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { initialValues } = this.props;
     const defaultPeriode = initialValues.perioder ? initialValues.perioder[0] : {};
@@ -229,7 +229,6 @@ export const transformValues = (values, aksjonspunkter) => {
     .filter((ap) => ap.erAktivt)
     .filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
 
-
   return aktiveMedlemAksjonspunkter.map((ap) => ({
     kode: ap.definisjon.kode,
     begrunnelse: '',
@@ -247,7 +246,6 @@ export const transformValues = (values, aksjonspunkter) => {
       || (periode.aksjonspunkter.length > 0 && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)),
   }));
 };
-
 
 const buildInitalValues = createSelector([
   (ownProps) => ownProps.soknad,

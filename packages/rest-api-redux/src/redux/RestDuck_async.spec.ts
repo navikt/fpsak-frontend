@@ -32,7 +32,6 @@ interface Store {
   getActions: () => Action[];
 }
 
-
 const createStore = (): Store => mockStore();
 
 describe('RestDuck (async)', () => {

@@ -2,7 +2,6 @@ import moment from 'moment';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
-
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
@@ -25,7 +24,6 @@ export const settAndelIArbeid = (andelerIArbeid) => {
 
 const finnnInntektskategorikode = (andel) => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
-
 
 const createAndelnavn = (andel, harKunYtelse, getKodeverknavn) => {
   if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {

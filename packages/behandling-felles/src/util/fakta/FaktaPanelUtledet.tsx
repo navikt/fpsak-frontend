@@ -30,7 +30,7 @@ class FaktaPanelUtledet {
 
   public getHarApneAksjonspunkter = (): boolean => this.getFiltrerteAksjonspunkter().some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses)
 
-  public getKomponentData = (rettigheter: Rettigheter, ekstraPanelData: {}, hasFetchError: boolean) => {
+  public getKomponentData = (rettigheter: Rettigheter, ekstraPanelData: any, hasFetchError: boolean) => {
     const filtrerteAksjonspunkter = this.getFiltrerteAksjonspunkter();
     return {
       aksjonspunkter: filtrerteAksjonspunkter,

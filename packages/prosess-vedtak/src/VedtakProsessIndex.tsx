@@ -31,8 +31,8 @@ interface OwnProps {
   beregningsgrunnlag?: Beregningsgrunnlag;
   sendVarselOmRevurdering?: boolean;
   beregningsresultatOriginalBehandling?: {
-    'beregningsresultat-engangsstonad'?: {};
-    'beregningsresultat-foreldrepenger'?: {};
+    'beregningsresultat-engangsstonad'?: any;
+    'beregningsresultat-foreldrepenger'?: any;
   };
   medlemskap: Medlemskap;
   vilkar: Vilkar[];

@@ -83,7 +83,6 @@ describe('BehandlingMenuIndex', () => {
       rettigheter={rettigheter}
     />);
 
-
     const meny = wrapper.find(MenySakIndex);
     expect(meny).to.have.length(1);
     const data = meny.prop('data');

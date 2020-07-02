@@ -46,7 +46,6 @@ export const PermisjonOppholdPanel = ({
   </div>
 );
 
-
 PermisjonOppholdPanel.validate = (values) => {
   if (!values || !values.length) {
     return { _error: isRequiredMessage() };

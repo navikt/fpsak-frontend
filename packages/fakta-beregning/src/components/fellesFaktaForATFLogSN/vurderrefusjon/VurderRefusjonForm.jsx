@@ -41,7 +41,6 @@ const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktCl
   );
 });
 
-
 /**
  * VurderRefusjonForm
  *

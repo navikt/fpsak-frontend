@@ -11,7 +11,6 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
-
 /* global VERSION:true */
 /* eslint no-undef: "error" */
 // @ts-ignore

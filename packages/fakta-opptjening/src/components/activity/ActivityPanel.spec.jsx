@@ -188,7 +188,6 @@ describe('<ActivityPanel>', () => {
     expect(select.prop('readOnly')).is.false;
   });
 
-
   it('skal kun vise valgt opptjeningsaktivitet når aktivitet ikke manuelt er lagt til', () => {
     const activity = {
       erManueltOpprettet: false,
@@ -241,7 +240,6 @@ describe('<ActivityPanel>', () => {
     expect(wrapper.find(Hovedknapp)).to.have.length(1);
     expect(wrapper.find(RadioGroupField)).to.have.length(1);
   });
-
 
   it('skal ikke kunne oppdatere aktivitet når den ikke er manuelt lagt til eller del av aksjonspunkt', () => {
     const activity = {

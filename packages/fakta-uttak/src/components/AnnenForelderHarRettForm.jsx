@@ -76,7 +76,6 @@ export const AnnenForelderHarRettForm = ({
   </div>
 );
 
-
 const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => ({
   kode: ap.definisjon.kode,
   begrunnelse: values.begrunnelse,

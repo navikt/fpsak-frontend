@@ -181,6 +181,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
     this.leggTilArbeidsforhold = this.leggTilArbeidsforhold.bind(this);
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { arbeidsforhold } = this.props;
     const selected = getUnresolvedArbeidsforhold(arbeidsforhold) || undefined;

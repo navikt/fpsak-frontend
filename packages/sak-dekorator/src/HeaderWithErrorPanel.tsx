@@ -21,7 +21,6 @@ const intl = createIntl({
   messages,
 }, cache);
 
-
 const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
   const wrapperRef = useRef(null);
   const handleClickOutside = useCallback((event) => {
@@ -50,11 +49,11 @@ interface OwnProps {
     url: string;
   }[];
   systemTittel: string;
-  queryStrings: {};
+  queryStrings: any;
   navAnsattName: string;
   removeErrorMessage: () => void;
   showDetailedErrorMessages?: boolean;
-  errorMessages?: {}[];
+  errorMessages?: any[];
   setSiteHeight: (height: number) => void;
 }
 

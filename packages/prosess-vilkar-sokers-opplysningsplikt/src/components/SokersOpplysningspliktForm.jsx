@@ -268,7 +268,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-
 export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(SokersOpplysningspliktFormImpl)));

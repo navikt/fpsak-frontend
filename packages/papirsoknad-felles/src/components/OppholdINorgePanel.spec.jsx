@@ -15,7 +15,6 @@ import {
 import SoknadData from '../SoknadData';
 import OppholdINorgePanel, { OppholdINorgePanelImpl } from './OppholdINorgePanel';
 
-
 describe('<OppholdINorgePanel>', () => {
   const countryCodes = [
     {

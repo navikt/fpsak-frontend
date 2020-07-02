@@ -53,7 +53,6 @@ describe('<BgFordelingUtils>', () => {
 
   const dagpengeField = mapAndelToField(dagpengerAndel);
 
-
   it('skal mappe dagpengerandel til feltverdier', () => {
     expect(dagpengeField.aktivitetStatus).to.equal('DP');
     expect(dagpengeField.andelsnr).to.equal(1);
@@ -65,7 +64,6 @@ describe('<BgFordelingUtils>', () => {
     expect(dagpengeField.belopReadOnly).to.equal('0');
     expect(dagpengeField.refusjonskrav).to.equal('');
   });
-
 
   it('skal mappe AAP-andel til feltverdier', () => {
     const AAPAndel = {
@@ -90,7 +88,6 @@ describe('<BgFordelingUtils>', () => {
     expect(aapField.belopReadOnly).to.equal('10 000');
     expect(aapField.refusjonskrav).to.equal('');
   });
-
 
   it('skal mappe AT uten inntektsmelding med FL i samme org til feltverdier', () => {
     const ATAndel = {
@@ -249,7 +246,6 @@ describe('<BgFordelingUtils>', () => {
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('2018-01-01');
   });
 
-
   const arbeidstakerAndel4 = {
     arbeidsforhold: {
       ...arbeidsgiver,
@@ -319,7 +315,6 @@ describe('<BgFordelingUtils>', () => {
     const skalRedigereInntektskategori = skalRedigereInntektskategoriForAndel(vals, beregningsgrunnlag)(andelFieldValue);
     expect(skalRedigereInntektskategori).to.equal(true);
   });
-
 
   it('skal redigere inntektskategori for kunstig arbeid', () => {
     const andelFieldValue = {

@@ -70,10 +70,8 @@ LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
   return initialValues;
 };
 
-
 export const harFieldLønnsendring = (field, faktaOmBeregning, values) => values[lonnsendringField] && faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
   .find((andel) => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef) !== undefined;
-
 
 LonnsendringForm.transformValues = (values, faktaOmBeregning) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];

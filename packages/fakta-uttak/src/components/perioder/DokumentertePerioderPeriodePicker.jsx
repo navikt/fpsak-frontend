@@ -16,6 +16,7 @@ const periode = {
 };
 
 class DokumentertePerioderPeriodePicker extends PureComponent {
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { fields, fraDato, tilDato } = this.props;
     if (fields.length === 0) {

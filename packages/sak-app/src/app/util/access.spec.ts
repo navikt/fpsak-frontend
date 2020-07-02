@@ -53,7 +53,6 @@ describe('access', () => {
     });
   });
 
-
   describe('kanOverstyreAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };

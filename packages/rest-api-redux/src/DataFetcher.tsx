@@ -41,9 +41,9 @@ export class DataFetcherTriggers {
 
 interface OwnProps {
   fetchingTriggers: DataFetcherTriggers;
-  render: (data: {}, isFinished: boolean) => any;
+  render: (data: any, isFinished: boolean) => any;
   endpoints: EndpointOperations[];
-  endpointParams?: {};
+  endpointParams?: any;
   showOldDataWhenRefetching?: boolean;
   showComponent?: boolean;
   loadingPanel: ReactNode;
@@ -138,7 +138,6 @@ const DataFetcher: FunctionComponent<OwnProps> = ({
       [endpoint.formattedName]: endpoint.data,
     }), fetchingData.data), true);
   }
-
 
   if ((!hasFinishedFetching || hasChanged) && showOldDataWhenRefetching && !isObjectEmpty(fetchingData.data)) {
     return render(fetchingData.data, false);

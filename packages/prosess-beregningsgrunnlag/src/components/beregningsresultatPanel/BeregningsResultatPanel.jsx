@@ -14,7 +14,6 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 
-
 const lagSpesialRaderRad = (visningsObjekt) => {
   if (!visningsObjekt || !visningsObjekt.verdi || visningsObjekt.display === false) return null;
   return (
@@ -156,7 +155,6 @@ const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key) => (
   </React.Fragment>
 );
 
-
 const lagPeriodeOverskrift = (header, periodeIndex) => (
   <>
     {periodeIndex > 0 && (
@@ -175,7 +173,6 @@ const lagKeyForPeriode = (dagsats, header) => {
   }
   return 'key';
 };
-
 
 const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, halvGVerdi, periodeIndex) => {
   const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);

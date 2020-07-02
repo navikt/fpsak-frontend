@@ -201,7 +201,6 @@ ErSoknadsfristVilkaretOppfyltFormImpl.defaultProps = {
   hasAksjonspunkt: false,
 };
 
-
 export const buildInitialValues = createSelector([
   (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.status],
 (aksjonspunkter, status) => ({

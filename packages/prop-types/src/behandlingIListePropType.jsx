@@ -19,7 +19,7 @@ const behandlingIListePropType = PropTypes.shape({
   links: PropTypes.arrayOf(PropTypes.shape({
     href: PropTypes.string.isRequired,
     rel: PropTypes.string.isRequired,
-    requestPayload: PropTypes.any,
+    requestPayload: PropTypes.shape(),
     type: PropTypes.string.isRequired,
   })).isRequired,
   gjeldendeVedtak: PropTypes.bool,

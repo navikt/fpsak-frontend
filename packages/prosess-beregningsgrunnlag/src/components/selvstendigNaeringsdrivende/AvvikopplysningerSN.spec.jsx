@@ -5,7 +5,6 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from './AvvikopplysningerSN';
 
-
 const sammenligningsgrunnlag = (kode) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',

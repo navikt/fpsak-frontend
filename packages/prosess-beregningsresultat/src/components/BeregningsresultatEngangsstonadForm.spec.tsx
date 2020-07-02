@@ -11,7 +11,6 @@ import { OverstyringPanel } from '@fpsak-frontend/prosess-felles';
 import { BeregningsresultatEngangsstonadFormImpl } from './BeregningsresultatEngangsstonadForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-beregningresultat';
 
-
 describe('<BeregningsresultatEngangsstonadForm>', () => {
   it('skal vise beregningsgrunnlaget når en ikke har overstyrt', () => {
     const beregningResultat = {

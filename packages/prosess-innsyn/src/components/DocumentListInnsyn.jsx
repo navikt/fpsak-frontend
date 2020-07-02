@@ -113,7 +113,6 @@ const DocumentListInnsyn = ({
   );
 };
 
-
 DocumentListInnsyn.propTypes = {
   intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,

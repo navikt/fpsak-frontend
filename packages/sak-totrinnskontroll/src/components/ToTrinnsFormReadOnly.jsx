@@ -64,7 +64,6 @@ const godkjendAksjonspunkt = (aksjonspunkt) => {
 };
 /* eslint-enable react/no-array-index-key */
 
-
 const renderAksjonspunkt = (aksjonspunkt, getAksjonspunktText) => (
   <div key={aksjonspunkt.aksjonspunktKode} className={styles.approvalItemContainer}>
     <span>{aksjonspunkt.navn}</span>

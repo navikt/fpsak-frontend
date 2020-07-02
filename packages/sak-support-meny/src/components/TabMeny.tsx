@@ -11,7 +11,7 @@ const classNames = classnames.bind(styles);
 
 interface OwnProps {
   tabs: {
-    getSvg: (isActive: boolean, isDisabled: boolean, props: {}) => React.ReactNode;
+    getSvg: (isActive: boolean, isDisabled: boolean, props: any) => React.ReactNode;
     tooltip: string;
     isActive: boolean;
     isDisabled: boolean;

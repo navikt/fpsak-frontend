@@ -12,7 +12,6 @@ import styles from './inntektFieldArray.less';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { getSkalRedigereInntekt, getSkalRedigereInntektskategori } from './BgFordelingUtils';
 
-
 export const getHeaderTextCodes = (skalVisePeriode, skalViseRefusjon) => {
   const headerCodes = [];
   headerCodes.push('BeregningInfoPanel.FordelingBG.Andel');
@@ -33,7 +32,6 @@ const inntektskategoriSelectValues = (kategorier) => kategorier.map((ik) => (
     {ik.navn}
   </option>
 ));
-
 
 /**
  *  InntektFieldArrayAndelRow
@@ -172,6 +170,5 @@ export const mapStateToProps = (state, ownProps) => {
     inntektskategoriKoder: getInntektskategorierAlfabetiskSortert(ownProps),
   };
 };
-
 
 export const AndelRow = connect(mapStateToProps)(injectIntl(AndelRowImpl));

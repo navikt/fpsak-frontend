@@ -35,7 +35,6 @@ export const resetBehandlingContext = () => ({
   type: RESET_BEHANDLING_CONTEXT,
 });
 
-
 /* Action creators */
 export const previewMessage = (erTilbakekreving, erHenleggelse, data) => (dispatch) => {
   let api;
@@ -97,7 +96,6 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
-
 
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
   (behandlinger = [], behandlingId) => behandlinger.find((b) => b.id === behandlingId));

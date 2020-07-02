@@ -47,7 +47,6 @@ const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse, p
 
 // }
 
-
 const findAllePerioderMedBortfaltNaturalytelse = (allePerioder) => allePerioder
   .filter((periode) => periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT));
 
@@ -94,7 +93,6 @@ export const createNaturalytelseTableData = (allePerioder) => {
     arbeidsforholdPeriodeMap,
   };
 };
-
 
 const createNaturalYtelseRows = (tableData) => {
   const { arbeidsforholdPeriodeMap } = tableData;

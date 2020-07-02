@@ -77,6 +77,7 @@ export class OpptjeningFaktaFormImpl extends Component {
     };
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
@@ -332,6 +333,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const OpptjeningFaktaForm = connect(mapStateToProps, mapDispatchToProps)(OpptjeningFaktaFormImpl);
-
 
 export default OpptjeningFaktaForm;

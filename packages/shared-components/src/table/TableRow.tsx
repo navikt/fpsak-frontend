@@ -33,7 +33,7 @@ const createKeyHandler = (onKeyDown, id, model) => (e) => {
 
 interface OwnProps {
   id?: number | string;
-  model?: {};
+  model?: any;
   isHeader?: boolean;
   onMouseDown?: (e: Event, id: number, model: any) => void;
   onKeyDown?: (e: Event, id: number, model: any) => void;

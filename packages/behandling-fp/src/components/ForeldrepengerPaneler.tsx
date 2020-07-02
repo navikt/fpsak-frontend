@@ -24,7 +24,7 @@ interface OwnProps {
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
   hasFetchError: boolean;
-  featureToggles: {};
+  featureToggles: any;
 }
 
 interface FaktaPanelInfo {

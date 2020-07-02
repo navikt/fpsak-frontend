@@ -184,7 +184,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   });
 };
 
-
 const Messages = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(MessagesImpl)));

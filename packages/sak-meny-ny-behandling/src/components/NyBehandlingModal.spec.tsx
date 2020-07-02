@@ -89,7 +89,6 @@ describe('<CreateNewBehandlingModal>', () => {
     expect(cancelEventCallback).to.have.property('callCount', 1);
   });
 
-
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD', kodeverk: 'BEHANDLING_TYPE' }];
     const wrapper = shallowWithIntl(<NyBehandlingModal
@@ -111,7 +110,6 @@ describe('<CreateNewBehandlingModal>', () => {
 
     expect(wrapper.find(CheckboxField)).to.have.length(1);
   });
-
 
   it('skal ikke vise checkbox for behandling etter klage når dokumentinnsyn er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN', kodeverk: 'BEHANDLING_TYPE' }];

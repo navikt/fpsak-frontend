@@ -39,12 +39,14 @@ const adjustNumberOfFields = (fields, originalFields, antallBarn) => {
  * Viser barn som er bekreftet av TPS som readonly, mens en kan endre fødselsdato for de som ikke er det
  */
 export class BarnPanel extends Component {
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const { fields, antallBarn } = this.props;
     this.originalFields = fields;
     adjustNumberOfFields(fields, fields, antallBarn);
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
     adjustNumberOfFields(nextProps.fields, this.originalFields, nextProps.antallBarn);
   }

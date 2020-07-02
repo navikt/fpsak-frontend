@@ -92,7 +92,6 @@ describe('<SoknadTypePickerForm>', () => {
     expect(familieHendelseRadioButton.prop('disabled')).is.true;
   });
 
-
   it('skal kalle submitevent', () => {
     const familieHendelseTyper = [{ kode: familieHendelseType.ADOPSJON, navn: 'Adopsjon' }];
     const fagsakYtelseTyper = [{ kode: fagsakYtelseType.FORELDREPENGER, navn: 'Endring foreldrepenger' }];
@@ -100,7 +99,6 @@ describe('<SoknadTypePickerForm>', () => {
     const selectedFagsakYtelseType = fagsakYtelseType.FORELDREPENGER;
 
     const submitEvent = sinon.spy();
-
 
     const wrapper = shallow(<SoknadTypePickerForm
       {...reduxFormPropsMock}
@@ -117,7 +115,6 @@ describe('<SoknadTypePickerForm>', () => {
 
     const radioOptionType = radioGroupFields.at(0).find(RadioOption);
     radioOptionType.simulate('click');
-
 
     const radioOptionTema = radioGroupFields.at(1).find(RadioOption);
     expect(radioOptionTema).has.length(1);

@@ -181,7 +181,6 @@ const getShowLink = createSelector([
     behandlingResultatType.HENLAGT_INNSYN_TRUKKET].includes(arsakKode);
 });
 
-
 const mapStateToProps = (state, ownProps): StateProps => ({
   årsakKode: formValueSelector('HenleggBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('HenleggBehandlingModal')(state, 'begrunnelse'),

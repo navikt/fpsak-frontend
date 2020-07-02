@@ -177,7 +177,6 @@ describe('<VisittkortPanel>', () => {
     barn: [],
   };
 
-
   it('skal vise enkelt visittkort når en ikke har personopplysninger', () => {
     const wrapper = shallowWithIntl(<VisittkortPanel.WrappedComponent
       intl={intlMock}

@@ -2,7 +2,7 @@
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
@@ -158,16 +158,18 @@ const config = {
     new webpack.DefinePlugin({
       VERSION: JSON.stringify(VERSION),
     }),
-    new CopyWebpackPlugin([
-      {
+    new CopyPlugin({
+      patterns: [{
         from: LANG_DIR,
         to: PUBLIC_PATH + 'sprak/[name].[ext]',
         force: true,
-        cache: {
-          key: '[hash]',
-        },
-      }
-    ]),
+        cacheTransform: {
+          keys: {
+            key: '[hash]',
+          }
+        }
+      }]
+    }),
     new webpack.ContextReplacementPlugin(
       /moment[\/\\]locale$/,
       /nb/,

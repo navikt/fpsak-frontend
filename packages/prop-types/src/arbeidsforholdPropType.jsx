@@ -17,7 +17,6 @@ export const arbeidsforholdBeregningProptype = PropTypes.shape({
   arbeidsforholdId: PropTypes.string,
 });
 
-
 export const arbeidsforholdPropType = PropTypes.shape({
   id: PropTypes.string,
   navn: PropTypes.string,

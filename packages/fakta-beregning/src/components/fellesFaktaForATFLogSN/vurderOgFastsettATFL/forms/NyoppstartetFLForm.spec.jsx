@@ -25,7 +25,6 @@ describe('<NyoppstartetFLForm>', () => {
     faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL }],
   };
 
-
   it('skal teste at transformValues gir korrekt output', () => {
     const values = { };
     values[erNyoppstartetFLField] = true;
@@ -53,7 +52,6 @@ describe('<NyoppstartetFLForm>', () => {
     aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
   };
 
-
   it('skal teste transform values med inntekter', () => {
     const values = { };
     values[erNyoppstartetFLField] = true;
@@ -70,7 +68,6 @@ describe('<NyoppstartetFLForm>', () => {
     expect(transformedObject.fastsettMaanedsinntektFL.maanedsinntekt).to.equal(10000);
     expect(fastsatteAndeler.length).to.equal(1);
   });
-
 
   it('skal teste at buildInitialValues gir korrekt output med gyldig beregningsgrunnlag', () => {
     const gyldigBG = {

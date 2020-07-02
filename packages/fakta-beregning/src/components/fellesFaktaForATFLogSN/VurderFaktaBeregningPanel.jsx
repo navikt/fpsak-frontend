@@ -62,7 +62,6 @@ const lagHelpTextsForFakta = () => {
 
 const hasOpenAksjonspunkt = (kode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
 
-
 /**
  * VurderFaktaBeregningPanel
  *

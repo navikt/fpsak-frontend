@@ -11,7 +11,6 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak-innsyn';
 
-
 describe('<InnsynVedtakForm>', () => {
   //  Tester for readOnly betingelse på confirm-vilkår knapp
   it('skal vise bekreft vedtak-knapp når ikke readonly', () => {
@@ -80,7 +79,6 @@ describe('<InnsynVedtakForm>', () => {
     expect(wrapper.find(FormattedMessage).last().prop('id')).is.equal('InnsynVedtakForm.VisVedtaksbrev');
   });
 
-
   // Tester for når TextAreaField skal vises
   it('skal vise TextAreaField når resultat lik AVVIST', () => {
     const wrapper = shallowWithIntl(<InnsynVedtakFormImpl
@@ -115,7 +113,6 @@ describe('<InnsynVedtakForm>', () => {
     />);
     expect(wrapper.find(TextAreaField)).to.have.length(1);
   });
-
 
   it('skal ikke vise TextAreaField når resultat lik INNVILGET', () => {
     const wrapper = shallowWithIntl(<InnsynVedtakFormImpl

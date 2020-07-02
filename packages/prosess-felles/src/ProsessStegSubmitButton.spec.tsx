@@ -94,7 +94,6 @@ describe('<ProsessStegSubmitButton>', () => {
     expect(button.prop('disabled')).to.true;
   });
 
-
   it('skal vise knapp som disabled en ikke har fylt ut alle obligatoriske felter', () => {
     const wrapper = shallow(<ProsessStegSubmitButton
       isReadOnly={false}

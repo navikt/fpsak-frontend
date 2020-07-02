@@ -35,7 +35,6 @@ const aktivitet3 = {
   arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
 };
 
-
 const aktivitetAAP = {
   arbeidsgiverNavn: null,
   arbeidsgiverId: null,
@@ -88,7 +87,6 @@ describe('<VurderAktiviteterPanel>', () => {
     const errors = VurderAktiviteterPanel.validate(values, aktiviteterTomDatoMapping);
     expect(errors).to.be.empty;
   });
-
 
   it('skal validere om ingen aktiviteter er valgt i stp nr 2', () => {
     const aktiviteterTomDatoMapping = [

@@ -46,7 +46,6 @@ describe('<OpptjeningTotrinnnText>', () => {
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringArbeidUtenNavn');
   });
 
-
   it('skal vise korrekt tekst for opptjening med endring av aktivitet', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText
       aktivitet={lagOpptjeningAktivitet('ENDRING')}
@@ -55,7 +54,6 @@ describe('<OpptjeningTotrinnnText>', () => {
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.EndringAktivitet');
   });
-
 
   it('skal vise korrekt tekst for opptjening med godkjenning av arbeid med navn', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText
@@ -75,7 +73,6 @@ describe('<OpptjeningTotrinnnText>', () => {
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningArbeidUtenNavn');
   });
 
-
   it('skal vise korrekt tekst for opptjening med godkjenning av aktivitet', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText
       aktivitet={lagOpptjeningAktivitet('GODKJENT')}
@@ -84,7 +81,6 @@ describe('<OpptjeningTotrinnnText>', () => {
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.GodkjenningAktivitet');
   });
-
 
   it('skal vise korrekt tekst for opptjening med underkjenning av arbeid med navn', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText
@@ -103,7 +99,6 @@ describe('<OpptjeningTotrinnnText>', () => {
     expect(normaltekstFields).to.have.length(1);
     expect(normaltekstFields.at(0).prop('id')).to.eql('ToTrinnsForm.Opptjening.UnderkjenningArbeidUtenNavn');
   });
-
 
   it('skal vise korrekt tekst for opptjening med underkjenning av aktivitet', () => {
     const wrapper = shallowWithIntl(<OpptjeningTotrinnText

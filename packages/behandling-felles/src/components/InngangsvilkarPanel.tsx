@@ -15,7 +15,7 @@ interface OwnProps {
   behandling: Behandling;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
   prosessStegData: ProsessStegPanelUtledet[];
-  submitCallback: (data: {}) => Promise<any>;
+  submitCallback: (data: any) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }

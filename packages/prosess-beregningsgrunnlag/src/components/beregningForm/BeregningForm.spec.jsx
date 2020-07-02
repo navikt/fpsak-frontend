@@ -309,7 +309,6 @@ describe('<BeregningForm>', () => {
     expect(beregningsResultatPanel).to.have.lengthOf(1);
   });
 
-
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5039, samt varigEndring', () => {
     const values = {
       fellesVurdering: 'bbb',

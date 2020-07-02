@@ -11,7 +11,6 @@ import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-vedtak-kl
 describe('<VedtakKlageSubmitPanel>', () => {
   const forhandsvisVedtaksbrevFunc = sinon.spy();
 
-
   it('skal returnere false om behandling ikke har medhold i klage', () => {
     const klageVurderingResultatNK = {
       klageVurdering: 'TEST',
@@ -37,7 +36,6 @@ describe('<VedtakKlageSubmitPanel>', () => {
       skalBenytteFritekstBrevmal={false}
     />);
 
-
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
     expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
@@ -45,7 +43,6 @@ describe('<VedtakKlageSubmitPanel>', () => {
     expect(a).to.have.length(1);
     expect(wrapper.find('FormattedMessage').first().prop('id')).to.eql('VedtakKlageForm.ForhandvisBrev');
   });
-
 
   it('skal rendre submit panel med medhold i klagevurdering', () => {
     const klageVurderingResultatNK = {
@@ -68,7 +65,6 @@ describe('<VedtakKlageSubmitPanel>', () => {
     const a = wrapper.find('a');
     expect(a).to.have.length(1);
   });
-
 
   it('skal rendre submit panel med behandling på vent', () => {
     const wrapper = shallowWithIntl(<VedtakKlageSubmitPanelImpl

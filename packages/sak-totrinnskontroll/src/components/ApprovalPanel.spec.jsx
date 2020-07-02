@@ -93,7 +93,6 @@ describe('<ApprovalPanel>', () => {
       createAksjonspunkt(aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)],
   });
 
-
   const getAksjonspunktOpptjening = () => ({
     skjermlenkeType: 'FAKTA_FOR_OPPTJENING',
     totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING)],
@@ -229,7 +228,6 @@ describe('<ApprovalPanel>', () => {
       .have
       .length(1);
   });
-
 
   it('skal vise approvals under godkjenning fanen', () => {
     const behandling = getBehandling();
@@ -370,7 +368,6 @@ describe('<ApprovalPanel>', () => {
       getTotrinnsaksjonspunkterOmsorg(),
       getTotrinnsaksjonspunkterForeldreansvar(),
     ];
-
 
     const wrapper = shallowWithIntl(<ApprovalPanel
       behandlingId={1}

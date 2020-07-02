@@ -10,7 +10,6 @@ import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-vedtak-kl
 
 const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjortGunst';
 
-
 describe('<VedtakKlageForm>', () => {
   it('skal vise riktige avvisningsårsaker', () => {
     const avvistArsaker = [{ kode: 'KLAGET_FOR_SENT', kodeverk: 'KLAGE_AVVIST_AARSAK' },

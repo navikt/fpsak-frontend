@@ -5,7 +5,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { transformValues, UttakFaktaForm } from './UttakFaktaForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
-
 const ap5070 = {
   aksjonspunktType: {
     kode: 'MANU',

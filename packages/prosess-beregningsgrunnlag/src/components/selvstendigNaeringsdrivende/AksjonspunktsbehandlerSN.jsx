@@ -9,7 +9,6 @@ const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
-
 const skalFastsetteSN = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.some(
   (ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
     || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,

@@ -10,7 +10,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 
-
 /**
  * MilitaerPanel
  *

@@ -9,7 +9,6 @@ import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 import { OmsorgOgForeldreansvarInfoPanelImpl } from './OmsorgOgForeldreansvarInfoPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg-og-foreldreansvar';
 
-
 describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
   const aksjonspunkt = {
     id: 1,
@@ -92,7 +91,6 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
     const begrunnelseForm = wrapper.find(FaktaBegrunnelseTextField);
     expect(begrunnelseForm.prop('isReadOnly')).is.false;
   });
-
 
   it('skal gi foreldreansvar lik true når aksjonspunkt er foreldreansvar', () => {
     const wrapper = shallowWithIntl(<OmsorgOgForeldreansvarInfoPanelImpl

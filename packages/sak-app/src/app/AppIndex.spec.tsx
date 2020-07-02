@@ -6,7 +6,6 @@ import AppIndex from './AppIndex';
 import Home from './components/Home';
 import Dekorator from './components/Dekorator';
 
-
 describe('<AppIndex>', () => {
   const locationMock = {
     pathname: 'test',

@@ -66,7 +66,6 @@ export const diff = (a, b) => {
   }
 };
 
-
 export const arrayToObject = (array, keyFunction, valueFunction) => array.reduce((acc, data) => ({
   ...acc,
   ...{ [keyFunction(data)]: valueFunction(data) },

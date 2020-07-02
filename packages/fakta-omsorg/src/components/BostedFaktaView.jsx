@@ -47,5 +47,4 @@ BostedFaktaView.defaultProps = {
   className: styles.defaultBostedFakta,
 };
 
-
 export default BostedFaktaView;

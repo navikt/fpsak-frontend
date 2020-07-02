@@ -13,7 +13,6 @@ const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
-
 const avklarAktiviteterAp = {
   id: 1,
   definisjon: {
@@ -54,7 +53,6 @@ describe('<VurderFaktaBeregningPanel>', () => {
     expect(transformed).to.be.empty;
   });
 
-
   it('skal transformValues med aksjonspunkt', () => {
     const faktaOmBeregning = {
       avklarAktiviteter: {
@@ -83,7 +81,6 @@ describe('<VurderFaktaBeregningPanel>', () => {
     const knappSkalKunneTrykkes = harIkkeEndringerIAvklarMedFlereAksjonspunkter(true, aps);
     expect(knappSkalKunneTrykkes).to.equal(false);
   });
-
 
   it('skal returnere true for ingen endring i avklar med VURDER_FAKTA_FOR_ATFL_SN', () => {
     const aps = [{ definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN } }];

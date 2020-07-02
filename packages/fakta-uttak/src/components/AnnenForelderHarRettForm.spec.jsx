@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import { FaktaSubmitButton } from '@fpsak-frontend/fakta-felles';
 import { AnnenForelderHarRettForm } from './AnnenForelderHarRettForm';
 
-
 const avklarAnnenforelderHarRettAp = [{
   aksjonspunktType: {
     kode: 'MANU',

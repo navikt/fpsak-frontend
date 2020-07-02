@@ -1,11 +1,9 @@
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
-
 export const mottarYtelseFieldPrefix = 'mottarYtelseField';
 export const frilansSuffix = '_frilans';
 export const utledArbeidsforholdFieldName = (andel) => mottarYtelseFieldPrefix + andel.andelsnr;
 export const finnFrilansFieldName = () => (mottarYtelseFieldPrefix + frilansSuffix);
-
 
 export const skalFastsetteInntektATUtenInntektsmelding = (values, vurderMottarYtelse) => {
   const atAndelerUtenIM = vurderMottarYtelse && vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];

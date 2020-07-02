@@ -121,7 +121,6 @@ SjekkFodselDokForm.defaultProps = {
   avklartBarn: [],
 };
 
-
 const addIsBarnDodt = (avklarteBarn) => {
   const avklarteBarnMedDodFlagg = [];
   avklarteBarn.forEach((barn, index) => {

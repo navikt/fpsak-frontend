@@ -248,7 +248,6 @@ export const UttakActivity = ({
   </div>
 );
 
-
 UttakActivity.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasValidationError: PropTypes.bool.isRequired,

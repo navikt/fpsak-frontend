@@ -7,7 +7,6 @@ import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import OpptjeningTimeLineLight from './OpptjeningTimeLineLight';
 
-
 /**
  * OpptjeningVilkarView
  *

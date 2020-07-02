@@ -11,7 +11,6 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { Image } from '@fpsak-frontend/shared-components';
 import styles from './addAndelButton.less';
 
-
 const defaultAndel = (aktivitetStatuser, erKunYtelse) => ({
   andel: erKunYtelse ? aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0].navn : undefined,
   fastsattBelop: '',
@@ -20,7 +19,6 @@ const defaultAndel = (aktivitetStatuser, erKunYtelse) => ({
   skalKunneEndreAktivitet: true,
   lagtTilAvSaksbehandler: true,
 });
-
 
 const onKeyDown = (fields, aktivitetStatuser, erKunYtelse) => ({ keyCode }) => {
   if (keyCode === 13) {

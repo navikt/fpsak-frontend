@@ -11,7 +11,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getKodeverknavnFn, getLanguageCodeFromSprakkode, getAddresses } from '@fpsak-frontend/utils';
 
-
 import styles from './visittkortDetaljerPopup.less';
 
 const borSokerMedBarnet = (adresser, personopplysningerForBarn = []) => personopplysningerForBarn

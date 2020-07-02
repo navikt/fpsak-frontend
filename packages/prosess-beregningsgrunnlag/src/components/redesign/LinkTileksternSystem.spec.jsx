@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 import LinkTilEksterntSystem from './LinkTilEksterntSystem';
 
-
 describe('<LinkTilEksterntSystem>', () => {
   it('skal teste at linkhandler ikke rendrer uten en  userIdent', () => {
     const wrapper = shallowWithIntl(<LinkTilEksterntSystem

@@ -49,7 +49,6 @@ describe('<MessageBehandlingPaVentModal>', () => {
       {...reduxFormPropsMock}
     />);
 
-
     const modal = wrapper.find(Modal);
     expect(modal.prop('isOpen')).is.false;
   });

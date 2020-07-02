@@ -181,7 +181,6 @@ describe('<BgFordelingUtils>', () => {
     expect(skalValidereMotBg).to.equal(false);
   });
 
-
   it('skal mappe fastsattBeløp til beløp om inntekt skal redigeres', () => {
     const andel = {
       skalRedigereInntekt: true,

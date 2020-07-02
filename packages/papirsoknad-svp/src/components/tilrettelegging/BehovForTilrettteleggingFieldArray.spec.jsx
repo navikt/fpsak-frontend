@@ -21,7 +21,6 @@ describe('<TilretteleggingForArbeidsgiverFieldArray>', () => {
       readOnly={false}
     />);
 
-
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
 

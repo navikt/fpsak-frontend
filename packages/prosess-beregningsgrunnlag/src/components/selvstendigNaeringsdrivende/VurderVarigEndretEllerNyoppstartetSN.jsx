@@ -32,7 +32,6 @@ export const varigEndringRadioname = 'erVarigEndretNaering';
 export const fastsettInntektFieldname = 'bruttoBeregningsgrunnlag';
 const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = aksjonspunktCodes;
 
-
 /**
  * VurderVarigEndretEllerNyoppstartetSN
  *
@@ -177,6 +176,5 @@ VurderVarigEndretEllerNyoppstartetSN.transformValues = (values) => ({
   erVarigEndretNaering: values[varigEndringRadioname],
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
-
 
 export default injectIntl(VurderVarigEndretEllerNyoppstartetSN);

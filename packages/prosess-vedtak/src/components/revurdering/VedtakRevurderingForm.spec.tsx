@@ -15,7 +15,6 @@ import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakFellesPanel from '../felles/VedtakFellesPanel';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
-
 const createBehandling = (behandlingResultatType) => ({
   id: 1,
   versjon: 123,
@@ -56,7 +55,6 @@ const resultatstruktur = {
 
 const createBehandlingAvslag = () => createBehandling(BehandlingResultatType.AVSLATT);
 const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPPHOR);
-
 
 describe('<VedtakRevurderingForm>', () => {
   it('skal vise result ved avslag', () => {
@@ -100,7 +98,6 @@ describe('<VedtakRevurderingForm>', () => {
     const avslattPanel = fellesPanel.renderProp('renderPanel')(false, false, true, false).find(VedtakAvslagArsakOgBegrunnelsePanel);
     expect(avslattPanel).to.have.length(1);
   });
-
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll og link for å forhåndsvise brev', () => {
     const previewCallback = sinon.spy();

@@ -20,7 +20,6 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 import Lesmerpanel from '../redesign/LesmerPanel';
 
-
 const grafFargeAT = '#99bdcd';
 const grafFargeFL = '#c1b5d0';
 const grafBorderFarge = '#0c5472';
@@ -195,7 +194,6 @@ const lagOverskrift = (andelStatus, userIdent) => (
   </>
 );
 
-
 const SammenligningsgrunnlagAOrdningen = ({
   sammenligningsGrunnlagInntekter,
   relevanteStatuser,
@@ -243,6 +241,5 @@ SammenligningsgrunnlagAOrdningen.propTypes = {
   skjeringstidspunktDato: PropTypes.string.isRequired,
   intl: PropTypes.shape().isRequired,
 };
-
 
 export default injectIntl(SammenligningsgrunnlagAOrdningen);

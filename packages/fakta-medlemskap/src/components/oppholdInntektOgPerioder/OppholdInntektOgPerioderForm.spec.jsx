@@ -59,7 +59,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-
     const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(1);
@@ -170,7 +169,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
 
-
   it('skal avklare fortsatt medlemskap når en har dette aksjonspunktet', () => {
     const fortsattMedlemskapAksjonspunkt = {
       id: 1,
@@ -204,7 +202,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
-
 
   it('skal kun avklare aksjonspunkt som er aktive', () => {
     const lovligOppholdAksjonspunkt = {

@@ -268,7 +268,6 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
     });
   });
 
-
   // TODO (TOR) Fiks test
   xit('skal sette opp barn som en kombinasjon av bekreftet data fra TPS og data fra søknad', () => {
     const soknad = {

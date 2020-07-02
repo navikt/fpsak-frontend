@@ -36,7 +36,6 @@ export const gyldigArbeidskategori = [
   arbeidskategori.FRILANSER,
 ];
 
-
 const maxValue100 = maxValue(100);
 
 const mapKvoter = (typer) => typer

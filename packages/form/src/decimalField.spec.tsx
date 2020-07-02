@@ -25,6 +25,7 @@ describe('<DecimalField>', () => {
       <DecimalField
         name="prosent"
         normalizeOnBlur={
+          // @ts-ignore Fiks
           (value) => (Number.isNaN(value)
             ? value
             // @ts-ignore Fiks
@@ -44,6 +45,7 @@ describe('<DecimalField>', () => {
       <DecimalField
         name="prosent"
         normalizeOnBlur={
+          // @ts-ignore Fiks
           (value) => (Number.isNaN(value)
             ? value
             // @ts-ignore Fiks
@@ -64,6 +66,7 @@ describe('<DecimalField>', () => {
       <DecimalField
         name="prosent"
         normalizeOnBlur={
+          // @ts-ignore Fiks
           (value) => (Number.isNaN(value)
             ? value
             // @ts-ignore Fiks

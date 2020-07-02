@@ -194,7 +194,6 @@ describe('<FagsakList>', () => {
     const tableRows = table.children();
     expect(tableRows).to.have.length(2);
 
-
     tableRows.forEach((tableRow) => {
       // @ts-ignore
       if (tableRow.key() === fagsak4.saksnummer) {

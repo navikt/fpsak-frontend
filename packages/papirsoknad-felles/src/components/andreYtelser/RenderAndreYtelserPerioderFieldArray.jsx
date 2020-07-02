@@ -55,7 +55,6 @@ export const RenderAndreYtelserPerioderFieldArray = ({
   </PeriodFieldArray>
 );
 
-
 RenderAndreYtelserPerioderFieldArray.propTypes = {
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,

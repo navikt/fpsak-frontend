@@ -30,7 +30,6 @@ FastsettFordeltBeregningsgrunnlagImpl.buildInitialValues = (fordelBGPerioder, bg
 FastsettFordeltBeregningsgrunnlagImpl.transformValues = (values, fordelBGPerioder, bgPerioder) => FordelBeregningsgrunnlagForm.transformValues(values,
   fordelBGPerioder, bgPerioder);
 
-
 FastsettFordeltBeregningsgrunnlagImpl.validate = (values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn) => (
   FordelBeregningsgrunnlagForm
     .validate(values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn));

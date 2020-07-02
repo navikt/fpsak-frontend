@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { compareAndeler, ulikeAndelerErrorMessage, validateUlikeAndeler } from './ValidateAndelerUtils';
 
-
 describe('<ValidateAndelerUtils>', () => {
   it('skal returnere 0 for lik andelsinfo og lik inntektskategori', () => {
     const andeler = [{
@@ -87,7 +86,6 @@ describe('<ValidateAndelerUtils>', () => {
     expect(compare).to.equal(1);
   });
 
-
   it('skal ikkje gi error om det er ingen andeler lagt til av saksbehandler og ingen har lik inntektskategori og andelsnr', () => {
     const andeler = [{
       andelsnr: 1, andel: 'Virksomheten 1', nyAndel: false, lagtTilAvSaksbehandler: false, aktivitetStatus: 'ARBEIDSTAKER', inntektskategori: 'ARBEIDSTAKER',
@@ -167,7 +165,6 @@ describe('<ValidateAndelerUtils>', () => {
     expect(ulikeAndelerError).to.have.length(1);
     expect(ulikeAndelerError[0].id).to.equal(ulikeAndelerErrorMessage()[0].id);
   });
-
 
   it('skal ikkje gi error om det er nye andeler der to har lik andelstype og ulik inntektskategori', () => {
     const andeler = [{

@@ -10,7 +10,6 @@ import {
 } from '@fpsak-frontend/shared-components';
 import VurderAktiviteterTabell, { lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
 
-
 const aktivitet1 = {
   arbeidsgiverNavn: 'Arbeidsgiveren',
   arbeidsgiverId: '384723894723',
@@ -46,7 +45,6 @@ const aktivitet3 = {
   arbeidsforholdType: { kode: 'ARBEID', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
 };
 
-
 const aktivitetAAP = {
   arbeidsgiverNavn: null,
   arbeidsgiverId: null,
@@ -72,7 +70,6 @@ const aktiviteter = [
   aktivitetAAP,
 ];
 
-
 const alleKodeverk = {
   [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [{
     kode: opptjeningAktivitetType.ARBEID,
@@ -91,7 +88,6 @@ const alleKodeverk = {
     navn: 'Arbeidsavklaringspenger',
   }],
 };
-
 
 describe('<VurderAktiviteterTabell>', () => {
   it('skal vise tabell', () => {
@@ -185,7 +181,6 @@ describe('<VurderAktiviteterTabell>', () => {
     const heading = wrapper.find(FormattedMessage).first();
     expect(heading.props().id).to.equal('VurderAktiviteterTabell.FullAAPKombinert.Overskrift');
 
-
     const table = wrapper.find(Table);
     expect(table).has.length(1);
     const rows = table.find(TableRow);
@@ -245,7 +240,6 @@ describe('<VurderAktiviteterTabell>', () => {
     const idArbeid = lagAktivitetFieldId(aktivitetAAP);
     expect(idArbeid).to.equal(idAAP);
   });
-
 
   it('skal bygge initial values', () => {
     const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, true);

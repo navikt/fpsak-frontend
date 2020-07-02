@@ -12,6 +12,6 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "react": "^16.13.1",
-    "react-intl": "^4.5.3"
+    "react-intl": "^4.7.6"
   }
 }

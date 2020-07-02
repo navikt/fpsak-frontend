@@ -25,7 +25,6 @@ import InntektFieldArray from '../InntektFieldArray';
 import VurderEtterlonnSluttpakkeForm from './forms/VurderEtterlonnSluttpakkeForm';
 import beregningAksjonspunkterPropType from '../../../propTypes/beregningAksjonspunkterPropType';
 
-
 const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
   || (values[lonnsendringField] !== undefined && values[lonnsendringField] !== null));
@@ -33,7 +32,6 @@ const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
 const nyoppstartetFLErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
   || (values[erNyoppstartetFLField] !== undefined && values[erNyoppstartetFLField] !== null));
-
 
 const besteberegningErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
@@ -54,7 +52,6 @@ const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => f
   .map((andel) => mapAndelToField(andel))
   .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
 
-
 export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT, harKunstigArbeid) => {
   if (harKunstigArbeid) {
     return 'BeregningInfoPanel.KunstigArbeidsforhold.FastsettKunstigArbeidsforhold';
@@ -73,7 +70,6 @@ export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsett
   }
   return ' ';
 };
-
 
 const finnInntektstabell = (readOnly, behandlingId, behandlingVersjon, beregningsgrunnlag, isAksjonspunktClosed, alleKodeverk) => (
   <FieldArray
@@ -196,7 +192,6 @@ VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => 
   };
 };
 
-
 VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag) => {
   const errors = {};
   if (harVurdert(tilfeller, values, faktaOmBeregning) && skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag)) {
@@ -212,7 +207,6 @@ const concatTilfeller = (transformed, newTransformedValues) => ({
   faktaOmBeregningTilfeller: newTransformedValues.faktaOmBeregningTilfeller
     ? transformed.faktaOmBeregningTilfeller.concat(newTransformedValues.faktaOmBeregningTilfeller) : transformed.faktaOmBeregningTilfeller,
 });
-
 
 const transformValuesForOverstyring = (values, transformed, inntektVerdier, fastsatteAndelsnr) => {
   if (erOverstyring(values)) {

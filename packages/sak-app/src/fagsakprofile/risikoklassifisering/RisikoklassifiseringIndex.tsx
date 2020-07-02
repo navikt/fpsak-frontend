@@ -25,7 +25,7 @@ import trackRouteParam from '../../app/trackRouteParam';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 
 interface OwnProps {
-  resolveAksjonspunkter: (params: {}, behandlingIdentifier: BehandlingIdentifier) => void;
+  resolveAksjonspunkter: (params: any, behandlingIdentifier: BehandlingIdentifier) => void;
   push: (location: RouteProps['location']) => void;
   location: RouteProps['location'];
   isPanelOpen: boolean;

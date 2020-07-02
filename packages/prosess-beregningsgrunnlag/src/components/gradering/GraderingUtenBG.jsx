@@ -220,7 +220,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-
 export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
   enableReinitialize: true,

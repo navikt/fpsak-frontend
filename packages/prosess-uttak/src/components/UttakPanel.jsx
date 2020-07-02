@@ -46,7 +46,6 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
     && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
     && aksjonspunkter[0].status.kode === 'UTFO';
 
-
   helptTextAksjonspunkter.forEach((ap) => {
     if (uttakPanelAksjonsPunktKoder[ap.definisjon.kode]) {
       texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
@@ -204,7 +203,6 @@ const getResult = (uttaksresultatActivity) => {
   });
   return uttakResult;
 };
-
 
 const convertToArray = (uttakResult) => Object.values(uttakResult)
   .map((u) => {

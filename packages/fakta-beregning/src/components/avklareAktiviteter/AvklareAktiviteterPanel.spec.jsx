@@ -26,7 +26,6 @@ const {
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = aksjonspunktCodes;
 
-
 const behandlingProps = {
   behandlingId: 1000051,
   behandlingVersjon: 1,
@@ -86,7 +85,6 @@ const aktivitet3 = {
   skalBrukes: false,
   arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
 };
-
 
 const aktivitetAAP = {
   arbeidsgiverNavn: null,
@@ -174,7 +172,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     expect(radio).has.length(0);
   });
 
-
   it('skal vise overstyringsknapp', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
@@ -207,7 +204,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     />);
     expect(wrapper.find(OverstyringKnapp)).has.length(1);
   });
-
 
   it('skal ikkje vise AksjonspunktHelpText ved overstyring', () => {
     const avklarAktiviteter = {
@@ -387,7 +383,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
-
 
   it('skal returnere true for endret begrunnelse og endret verdi', () => {
     const avklarAktiviteter = {

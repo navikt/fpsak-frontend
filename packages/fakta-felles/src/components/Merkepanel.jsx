@@ -20,7 +20,6 @@ const intl = createIntl({
   messages,
 }, cache);
 
-
 /**
  * MerkePanel
  *

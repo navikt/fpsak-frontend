@@ -125,7 +125,6 @@ PermisjonGraderingPanel.initialValues = {
   skalGradere: false,
 };
 
-
 const mapStateToProps = (state, ownProps) => ({
   graderingKvoter: ownProps.alleKodeverk[kodeverkTyper.UTSETTELSE_GRADERING_KVOTE],
   skalGradere: formValueSelector(ownProps.form)(state, ownProps.namePrefix).skalGradere,

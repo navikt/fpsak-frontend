@@ -66,7 +66,6 @@ const AvviksopplysningerAT = ({
   );
 };
 
-
 AvviksopplysningerAT.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,

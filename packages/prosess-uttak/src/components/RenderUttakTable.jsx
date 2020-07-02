@@ -35,7 +35,6 @@ const maxLength3 = maxLength(3);
 const minValue0 = minValue(0);
 const maxProsentValue100 = maxValue(100);
 
-
 const gyldigeUttakperioder = [
   uttakPeriodeType.FELLESPERIODE,
   uttakPeriodeType.FEDREKVOTE,

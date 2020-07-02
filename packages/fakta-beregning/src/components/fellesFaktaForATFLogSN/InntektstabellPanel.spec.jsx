@@ -11,7 +11,6 @@ const {
   OVERSTYRING_AV_BEREGNINGSGRUNNLAG,
 } = aksjonspunktCodes;
 
-
 describe('<InntektstabellPanel>', () => {
   it('skal vise checkbox for overstyring', () => {
     const wrapper = shallow(

@@ -13,7 +13,7 @@ import styles from './utlandEndretModal.less';
 
 interface OwnProps {
   visModal: boolean;
-  lagreOgLukk: (data?: {}) => void;
+  lagreOgLukk: (data?: any) => void;
 }
 
 const UtlandEndretModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({

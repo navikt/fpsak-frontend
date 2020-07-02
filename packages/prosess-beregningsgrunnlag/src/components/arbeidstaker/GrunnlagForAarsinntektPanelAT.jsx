@@ -21,7 +21,6 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 const formName = 'BeregningForm';
 
 export const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
@@ -60,7 +59,6 @@ const createArbeidsPeriodeText = (arbeidsforhold) => {
   }
   return periodeArr.join(' ');
 };
-
 
 const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   // TODO: her må stillingsnavn og stillingsprosent hentes når vi får disse dataene fra backend
@@ -265,6 +263,5 @@ GrunnlagForAarsinntektPanelAT.buildInitialValues = (alleAndeler) => {
   });
   return initialValues;
 };
-
 
 export default injectIntl(GrunnlagForAarsinntektPanelAT);

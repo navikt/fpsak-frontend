@@ -40,10 +40,12 @@ const adjustNumberOfFields = ({ fields, antallBarn }) => {
  */
 
 export class FodselsDatoFields extends Component {
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     adjustNumberOfFields(this.props);
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
     adjustNumberOfFields(nextProps);
   }

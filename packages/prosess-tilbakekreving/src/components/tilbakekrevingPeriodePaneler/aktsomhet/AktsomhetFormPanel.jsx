@@ -142,7 +142,6 @@ AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper, vurderingBegrunnel
   };
 };
 
-
 AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
   const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
   const andelSomTilbakekreves = aktsomhetInfo && aktsomhetInfo.andelTilbakekreves ? `${aktsomhetInfo.andelTilbakekreves}` : undefined;

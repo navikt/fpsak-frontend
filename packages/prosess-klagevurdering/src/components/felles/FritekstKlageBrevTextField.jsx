@@ -7,7 +7,6 @@ import { TextAreaField } from '@fpsak-frontend/form';
 
 import styles from './fritekstKlageBrevTextField.less';
 
-
 const FritekstKlageBrevTextField = ({
   sprakkode,
   readOnly,
@@ -29,7 +28,6 @@ const FritekstKlageBrevTextField = ({
     />
   </div>
 );
-
 
 FritekstKlageBrevTextField.propTypes = {
   sprakkode: PropTypes.shape().isRequired,

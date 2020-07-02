@@ -10,7 +10,6 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 import DocumentListInnsyn from './DocumentListInnsyn';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-innsyn';
 
-
 describe('<DocumentListInnsyn>', () => {
   it('skal vise tekst ved tom dokumentliste', () => {
     const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
@@ -82,7 +81,6 @@ describe('<DocumentListInnsyn>', () => {
     expect(wrapper.find(Image).prop('tooltip')).to.have.length.above(1);
   });
 
-
   it('skal inneholde document med riktig kommunikasjonsretining: Motta -> INN', () => {
     const documents = [{
       journalpostId: '1',
@@ -99,7 +97,6 @@ describe('<DocumentListInnsyn>', () => {
     />);
     expect(wrapper.find(Image).prop('tooltip')).to.have.length.above(1);
   });
-
 
   it('skal ikke inneholde dato', () => {
     const documents = [{

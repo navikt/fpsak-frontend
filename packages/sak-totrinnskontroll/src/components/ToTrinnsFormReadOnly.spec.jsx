@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import { ToTrinnsFormReadOnlyImpl } from './ToTrinnsFormReadOnly';
 import getAksjonspunktText from './ApprovalTextUtils';
 
-
 const getTotrinnsaksjonspunkterFødsel = () => (
   [
     {
@@ -33,7 +32,6 @@ const getTotrinnsaksjonspunkterFødsel = () => (
     },
   ]
 );
-
 
 const getTotrinnsaksjonspunkterOmsorg = () => (
   [
@@ -76,7 +74,6 @@ const getTotrinnsaksjonspunkterForeldreansvar = () => (
     },
   ]
 );
-
 
 describe('<ToTrinnsFormReadOnly>', () => {
   it('skal vise korrekt antall element og navn', () => {

@@ -52,7 +52,6 @@ export const PermisjonUtsettelsePanel = ({
   </div>
 );
 
-
 PermisjonUtsettelsePanel.validate = (values) => {
   if (!values || !values.length) {
     return { _error: isRequiredMessage() };

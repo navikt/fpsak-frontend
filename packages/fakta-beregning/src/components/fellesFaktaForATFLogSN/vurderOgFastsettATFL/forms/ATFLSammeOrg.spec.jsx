@@ -8,7 +8,6 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import { ATFLSammeOrgTekst, transformValuesForATFLISammeOrg } from './ATFLSammeOrg';
 
-
 describe('<ATFLSammeOrg>', () => {
   it('skal ikke vise tekst når man ikke har tilfelle', () => {
     const wrapper = shallow(<ATFLSammeOrgTekst
@@ -17,7 +16,6 @@ describe('<ATFLSammeOrg>', () => {
     />);
     expect(wrapper.find(Normaltekst).length).to.equal(0);
   });
-
 
   it('skal vise tekst når man har tilfelle uten inntektsmelding', () => {
     const beregningsgrunnlag = {
@@ -36,7 +34,6 @@ describe('<ATFLSammeOrg>', () => {
     expect(msg.props().id).to.equal('BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrgUtenIM');
   });
 
-
   it('skal vise tekst når man har tilfelle med inntektsmelding', () => {
     const beregningsgrunnlag = {
       faktaOmBeregning: {
@@ -53,7 +50,6 @@ describe('<ATFLSammeOrg>', () => {
     expect(msg.length).to.equal(1);
     expect(msg.props().id).to.equal('BeregningInfoPanel.VurderOgFastsettATFL.ATFLSammeOrg');
   });
-
 
   const arbeidsforhold = {
     arbeidsgiverNavn: 'bedrift',
@@ -110,7 +106,6 @@ describe('<ATFLSammeOrg>', () => {
     const transformed = transformValuesForATFLISammeOrg(inntektVerdier, faktaOmBeregning, []);
     expect(transformed.faktaOmBeregningTilfeller.length).to.equal(0);
   });
-
 
   it('skal transform values', () => {
     const faktaOmBeregning = {

@@ -210,7 +210,6 @@ const buildInitialValues = createSelector([
         : [],
 }));
 
-
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const { behandlingId, behandlingVersjon } = initialOwnProps;
   const formName = `foreldreAnsvarForm-${initialOwnProps.id}`;
@@ -227,7 +226,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
     form: formName,
   });
 };
-
 
 export default connect(mapStateToPropsFactory)(
   behandlingForm({

@@ -44,7 +44,6 @@ const mapAndelToSortedObject = (value, andelList) => {
 
 export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.FordelBG.Validation.UlikeAndeler' }]);
 
-
 const erAndelerLike = (andel1, andel2) => andel2.andelsinfo === andel1.andelsinfo && andel2.inntektskategori === andel1.inntektskategori;
 
 export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) => {
@@ -58,9 +57,7 @@ export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) =
   return null;
 };
 
-
 export const validateUlikeAndeler = (andelList) => validateUlikeAndelerWithGroupingFunction(andelList, mapAndelToSortedObject);
-
 
 const finnArbeidsforholdRefusjonsinfoListe = (andelList) => {
   const andelerMedArbeidsforhold = andelList.filter((andel) => andel.arbeidsforholdId !== '');
@@ -117,7 +114,6 @@ const skalIkkjeVereHogareEnn = (
   value, registerInntekt, errorMessage,
 ) => ((value > Math.round(registerInntekt)) ? errorMessage() : undefined);
 
-
 export const skalVereLikFordelingMessage = (fordeling) => (
   [{ id: 'BeregningInfoPanel.FordelBG.Validation.LikFordeling' },
     { fordeling }]);
@@ -128,14 +124,12 @@ export const kanIkkjeHaNullBeregningsgrunnlagError = () => (
 export const tomErrorMessage = () => (
   [{ id: ' ' }]);
 
-
 export const totalRefusjonMåVereLavereEnn = (seksG) => (
   [{ id: 'BeregningInfoPanel.FordelBG.Validation.TotalRefusjonSkalIkkeOverstige' }, { seksG }]);
 
 const totalRefusjonSkalVereLavereEnn = (
   value, seksG,
 ) => ((value >= Math.round(seksG)) ? totalRefusjonMåVereLavereEnn(formatCurrencyNoKr(seksG)) : undefined);
-
 
 export const totalFordelingForArbeidstakerMåVereLavereEnn = (seksG) => (
   [{ id: 'BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidstakerLavereEnn' }, { seksG }]);
@@ -146,11 +140,9 @@ export const totalFordelingForArbeidstakerOgFrilanserMåVereLavereEnn = (seksG) 
 export const totalFordelingForFrilanserMåVereLavereEnn = (seksG) => (
   [{ id: 'BeregningInfoPanel.FordelBG.Validation.TotalFordelingForFrilanserLavereEnn' }, { seksG }]);
 
-
 const totalFordelingSkalVereLavereEnn = (
   value, seksG, errorMessage,
 ) => ((value >= Math.round(seksG)) ? errorMessage(formatCurrencyNoKr(seksG)) : undefined);
-
 
 export const likFordeling = (
   value, fordeling,
@@ -210,7 +202,6 @@ export const validateFastsattBelop = (andelFieldValues, periodeDato) => {
 export const hasFieldErrors = (fieldErrors) => (fieldErrors.refusjonskrav || fieldErrors.andel
   || fieldErrors.fastsattBelop || fieldErrors.inntektskategori);
 
-
 export const validateAndelFields = (andelFieldValues, periodeDato) => {
   const {
     refusjonskrav, skalKunneEndreRefusjon,
@@ -223,7 +214,6 @@ export const validateAndelFields = (andelFieldValues, periodeDato) => {
   fieldErrors.inntektskategori = required(inntektskategori);
   return hasFieldErrors(fieldErrors) ? fieldErrors : null;
 };
-
 
 export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, periodeDato) => {
   if (!values) {

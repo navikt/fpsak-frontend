@@ -10,7 +10,6 @@ import messages from '../i18n/nb_NO.json';
 
 const TILBAKEKREVING_BEHANDLINGSTYPER = [BehandlingType.TILBAKEKREVING, BehandlingType.TILBAKEKREVING_REVURDERING];
 
-
 const cache = createIntlCache();
 
 const intl = createIntl({

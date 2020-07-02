@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import styles from './avvikopplysningerPanel.less';
 
-
 const lagFormatertetekster = (kriterie, visPanel, relevanteStatuser, isBold) => (
   <FlexColumn className={styles.colLable}>
     <Normaltekst className={isBold ? beregningStyles.semiBoldText : ''}>

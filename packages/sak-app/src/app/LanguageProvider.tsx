@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 import fpsakApi from '../data/fpsakApi';
 
 interface OwnProps {
-  nbMessages: {};
+  nbMessages: any;
   children: ReactNode;
 }
 

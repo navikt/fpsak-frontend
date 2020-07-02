@@ -86,7 +86,6 @@ describe('<ApprovalIndex>', () => {
     ],
   });
 
-
   it('skal vise lightboks når approvalReceived', () => {
     const behandling = getBehandling();
 

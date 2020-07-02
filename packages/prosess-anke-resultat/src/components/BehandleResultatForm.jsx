@@ -81,7 +81,6 @@ const hentSprakKode = (ankeOmgjoerArsak) => {
   }
 };
 
-
 const ResultatOmgjores = (resultat) => (
   <>
     <Undertekst><FormattedMessage id={hentSprakKode(resultat.ankevurderingresultat.ankeVurderingOmgjoer)} /></Undertekst>

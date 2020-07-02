@@ -164,8 +164,8 @@ interface OwnProps {
   beregningErManueltFastsatt: boolean;
   medlemskapFom?: string;
   resultatstrukturOriginalBehandling?: {
-    'beregningsresultat-engangsstonad'?: {};
-    'beregningsresultat-foreldrepenger'?: {};
+    'beregningsresultat-engangsstonad'?: any;
+    'beregningsresultat-foreldrepenger'?: any;
   };
   clearFormField: (fieldId: string) => void;
 }

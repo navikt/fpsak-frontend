@@ -22,7 +22,6 @@ const finnSnAksjonspunkt = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.
     || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 );
 
-
 /**
  * VurderOgFastsettSNImpl
  *

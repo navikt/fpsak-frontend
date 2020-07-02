@@ -218,6 +218,6 @@ describe('<PersonAksjonspunktText>', () => {
     />);
     const component = wrapper.find('FormattedMessage');
     expect(component.props().id).to.eql('PersonAksjonspunktText.SokerHarFlerePermisjoner');
-    expect(component.props().values).to.empty;
+    expect(component.props().values).is.undefined;
   });
 });

@@ -29,7 +29,6 @@ const harPermisjonOgMottattIM = (arbeidsforhold) => arbeidsforhold.permisjoner
   && arbeidsforhold.permisjoner.length === 1
   && (arbeidsforhold.mottattDatoInntektsmelding !== undefined && arbeidsforhold.mottattDatoInntektsmelding !== null);
 
-
 const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   if (!arbeidsforhold || (!arbeidsforhold.tilVurdering && !arbeidsforhold.erEndret)) {
     return undefined;

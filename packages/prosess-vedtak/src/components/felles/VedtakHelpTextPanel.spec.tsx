@@ -27,7 +27,6 @@ describe('<VedtakHelpTextPanel>', () => {
     expect(helpTexts.find(Normaltekst).childAt(0).text()).is.eql('Påvirker den åpne Gosys-oppgaven «Vurder dokument» behandlingen?');
   });
 
-
   it('skal vise hjelpetekst for vurdering av dokument og vurdering av annen ytelse når en har disse aksjonspunktetene', () => {
     const wrapper = shallowWithIntl(<VedtakHelpTextPanel.WrappedComponent
       intl={intlMock}
@@ -50,7 +49,6 @@ describe('<VedtakHelpTextPanel>', () => {
     expect(helpTexts.at(0).find(Normaltekst).childAt(0).text()).is.eql('Påvirker den åpne Gosys-oppgaven «Vurder konsekvens for ytelse» behandlingen?');
     expect(helpTexts.at(1).find(Normaltekst).childAt(0).text()).is.eql('Påvirker den åpne Gosys-oppgaven «Vurder dokument» behandlingen?');
   });
-
 
   it('skal ikke vise hjelpetekst når en ikke har gitte aksjonspunkter', () => {
     const wrapper = shallowWithIntl(<VedtakHelpTextPanel.WrappedComponent

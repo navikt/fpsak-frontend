@@ -118,7 +118,6 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
     expect(readonlyForm.prop('readOnly')).is.true;
   });
 
-
   it('skal sette opp initielle verdier for form gitt behandling og behandlingspunkt', () => {
     const behandlingsresultat = {
       avslagsarsak: {

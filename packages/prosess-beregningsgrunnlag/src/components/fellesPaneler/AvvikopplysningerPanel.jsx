@@ -111,7 +111,6 @@ const lagRelevantePaneler = (
   );
 };
 
-
 const harRelevanteStatuserSatt = (relevanteStatuser) => {
   const statuser = relevanteStatuser;
   delete statuser.skalViseBeregningsgrunnlag;
@@ -146,7 +145,6 @@ const AvviksopplysningerPanel = ({
     </Panel>
   );
 };
-
 
 AvviksopplysningerPanel.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,

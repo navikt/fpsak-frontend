@@ -38,11 +38,11 @@ interface OwnProps {
   originalErVilkarOk?: boolean;
   customVilkarIkkeOppfyltText?: {
     id: string;
-    values?: {};
+    values?: any;
   };
   customVilkarOppfyltText?: {
     id: string;
-    values?: {};
+    values?: any;
   };
   erMedlemskapsPanel: boolean;
   hasAksjonspunkt: boolean;

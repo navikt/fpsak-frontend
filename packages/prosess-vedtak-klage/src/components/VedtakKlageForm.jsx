@@ -243,7 +243,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-
 const VedtakKlageForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: VEDTAK_KLAGE_FORM_NAME,
 })(injectIntl(VedtakKlageFormImpl)));

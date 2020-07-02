@@ -8,7 +8,6 @@ import { range } from '@fpsak-frontend/utils';
 import styles from './optionGrid.less';
 
 interface OptionGridProps {
-  id?: string;
   columns?: number;
   options: React.ElementType[];
   spaceBetween?: boolean;

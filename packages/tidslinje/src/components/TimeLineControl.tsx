@@ -14,7 +14,6 @@ interface Periode {
   hoverText?: string;
 }
 
-
 interface TimeLineControlProps {
   children?: ReactNode;
   goBackwardCallback: (event: MouseEvent) => void;

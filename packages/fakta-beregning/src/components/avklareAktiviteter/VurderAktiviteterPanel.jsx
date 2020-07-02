@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 import VurderAktiviteterTabell, { lagAktivitetFieldId } from './VurderAktiviteterTabell';
 
-
 const harListeAktivitetSomSkalBrukes = (mapping, values) => mapping.aktiviteter
   .find((aktivitet) => {
     const fieldId = lagAktivitetFieldId(aktivitet);
     const { skalBrukes } = values[fieldId] !== undefined && values[fieldId] !== null ? values[fieldId] : aktivitet.skalBrukes;
     return skalBrukes;
   }) !== undefined;
-
 
 const finnListerSomSkalVurderes = (aktiviteterTomDatoMapping, values) => {
   if (!values || harListeAktivitetSomSkalBrukes(aktiviteterTomDatoMapping[0], values) || aktiviteterTomDatoMapping.length === 1) {
@@ -112,6 +110,5 @@ VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping, alleKode
   });
   return initialValues;
 };
-
 
 export default VurderAktiviteterPanel;

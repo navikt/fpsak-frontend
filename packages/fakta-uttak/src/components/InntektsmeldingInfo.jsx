@@ -182,7 +182,6 @@ export const InntektsmeldingInfo = ({
   );
 };
 
-
 InntektsmeldingInfo.propTypes = {
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,

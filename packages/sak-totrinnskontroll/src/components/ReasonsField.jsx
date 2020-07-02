@@ -86,5 +86,4 @@ ReasonsField.propTypes = {
   intl: PropTypes.shape().isRequired,
 };
 
-
 export default injectIntl(ReasonsField);

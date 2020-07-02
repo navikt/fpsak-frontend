@@ -27,7 +27,6 @@ import AksjonspunktBehandlerSN from '../selvstendigNaeringsdrivende/Aksjonspunkt
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
-
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
     return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;

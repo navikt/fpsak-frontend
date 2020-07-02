@@ -38,5 +38,4 @@ LesMerToggle.propTypes = {
   other: Proptypes.shape(),
 };
 
-
 export default LesMerToggle;

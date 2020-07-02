@@ -13,7 +13,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { buildInitialValues, ErForeldreansvarVilkaarOppfyltForm as UnwrappedForm } from './ErForeldreansvarVilkaarOppfyltForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-foreldreansvar';
 
-
 const fagsakYtelseTypeEngangsstonad = {
   kode: fagsakYtelseType.ENGANGSSTONAD,
 };
@@ -54,7 +53,6 @@ describe('<ErForeldreansvarVilkaarOppfyltForm>', () => {
       behandlingId={1}
       behandlingVersjon={1}
     />);
-
 
     const readonlyForm = wrapper.find(ProsessStegBegrunnelseTextField);
     expect(readonlyForm).to.have.length(1);

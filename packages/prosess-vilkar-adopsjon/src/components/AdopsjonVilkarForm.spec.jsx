@@ -31,7 +31,6 @@ describe('<AdopsjonVilkarForm>', () => {
       behandlingVersjon={1}
     />);
 
-
     const readonlyForm = wrapper.find(ProsessStegBegrunnelseTextField);
     expect(readonlyForm).to.have.length(1);
     expect(readonlyForm.prop('readOnly')).is.true;

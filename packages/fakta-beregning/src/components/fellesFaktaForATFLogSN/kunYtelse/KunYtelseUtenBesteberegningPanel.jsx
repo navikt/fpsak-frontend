@@ -7,7 +7,6 @@ import { BorderBox } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import BrukersAndelFieldArray from './BrukersAndelFieldArray';
 
-
 /**
  * KunYtelseUtenBesteberegningPanel
  *

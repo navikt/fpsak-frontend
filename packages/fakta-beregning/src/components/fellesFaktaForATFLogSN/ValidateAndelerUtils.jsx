@@ -35,7 +35,6 @@ const mapAndelToSortedObject = (value, andelList) => {
 
 export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.FordelBG.Validation.UlikeAndeler' }]);
 
-
 const erAndelerLike = (andel1, andel2) => andel2.andelsinfo === andel1.andelsinfo && andel2.inntektskategori === andel1.inntektskategori;
 
 export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) => {
@@ -48,6 +47,5 @@ export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) =
   }
   return null;
 };
-
 
 export const validateUlikeAndeler = (andelList) => validateUlikeAndelerWithGroupingFunction(andelList, mapAndelToSortedObject);

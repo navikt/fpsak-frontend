@@ -126,7 +126,6 @@ describe('<TerminFodselDatoPanel>', () => {
       expect(errorsValidDateToday.foedselsDato).to.be.an('array');
     });
 
-
     it('skal validere at antall barn født er et gyldig heltall større enn 0', () => {
       const errorsNoAntallBarn = validate({ erBarnetFodt: true, foedselsDato: dateStringNextYear });
       const errorsInvalidAntallBarn = validate({ erBarnetFodt: true, antallBarn: 'femti', foedselsDato: dateStringNextYear });

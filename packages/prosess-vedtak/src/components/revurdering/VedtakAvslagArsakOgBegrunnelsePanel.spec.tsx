@@ -8,7 +8,6 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import VedtakAvslagArsakOgBegrunnelsePanel from './VedtakAvslagArsakOgBegrunnelsePanel';
 
-
 describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
   it('skal rendre avslagspanel og textArea når en har ikke oppfylt søknadsfristvilkår', () => {
     const sprakkode = {

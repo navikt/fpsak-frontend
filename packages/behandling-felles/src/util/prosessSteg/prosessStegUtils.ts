@@ -18,7 +18,7 @@ const DEFAULT_PROSESS_STEG_KODE = 'default';
 
 export const utledProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
-  dataForUtledingAvPaneler: {},
+  dataForUtledingAvPaneler: any,
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
   overstyrteAksjonspunktKoder: string[],
   behandling: Behandling,
@@ -99,7 +99,7 @@ export const formaterPanelerForProsessmeny = (
 
 export const getBekreftAksjonspunktCallback = (
   dispatch: Dispatch,
-  lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
+  lagringSideEffectsCallback: (aksjonspunktModeller: any) => () => void,
   fagsak: FagsakInfo,
   behandling: Behandling,
   aksjonspunkter: Aksjonspunkt[],

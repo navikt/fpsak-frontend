@@ -10,7 +10,6 @@ import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodever
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 export const getTekstForAndelBruktIBeregning = (andel) => {
   if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';

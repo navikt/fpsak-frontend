@@ -96,7 +96,6 @@ const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
   refusjonskravFraInntektsmeldingPrAar: null,
 });
 
-
 const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
   beregnetPrAar, fordeltPrAar, andelIArbeid) => ({
   aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },

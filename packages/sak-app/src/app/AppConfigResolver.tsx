@@ -15,10 +15,10 @@ interface OwnProps {
   fetchNavAnsatt: () => void;
   fetchLanguageFile: () => void;
   fetchBehandlendeEnheter: () => void;
-  fetchAlleKodeverk: (featureToggles: {}) => void;
+  fetchAlleKodeverk: (featureToggles: any) => void;
   fetchShowDetailedErrorMessages: () => void;
   fetchFeatureToggles: () => void;
-  featureToggles: {};
+  featureToggles: any;
 }
 
 class AppConfigResolver extends Component<OwnProps> {

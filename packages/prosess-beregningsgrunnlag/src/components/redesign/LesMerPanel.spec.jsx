@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 
 import Lesmerpanel from './LesmerPanel';
 
-
 describe('Lesmerpanel', () => {
   it('skal ikke vise lukketekst når er Aapen', () => {
     const wrapper = shallow(

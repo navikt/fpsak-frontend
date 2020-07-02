@@ -16,7 +16,6 @@ import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlag
 import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
-
 const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
   if (aarsaker.length < 1) {
     return true;

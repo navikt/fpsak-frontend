@@ -17,7 +17,7 @@ interface OwnProps {
   rettigheter: Rettigheter;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
-  lagreAksjonspunkt: (params: {}) => Promise<void>;
+  lagreAksjonspunkt: (params: any) => Promise<void>;
   erAksjonspunktLagret: boolean;
 }
 

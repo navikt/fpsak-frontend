@@ -5,7 +5,6 @@ import Image from '@fpsak-frontend/shared-components/src/Image';
 // eslint-disable-next-line import/extensions
 import TimeLineSoker from './TimeLineSoker';
 
-
 describe('<TimeLineSoker>', () => {
   it('skal teste at TimeLineSoker viser korrekte bilder för korrekte soker', () => {
     const wrapper = mountWithIntl(<TimeLineSoker

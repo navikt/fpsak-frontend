@@ -5,7 +5,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
-
 import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
 import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
@@ -32,7 +31,6 @@ const {
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
 
-
 // ------------------------------------------------------------------------------------------ //
 // Methods
 // ------------------------------------------------------------------------------------------ //
@@ -48,14 +46,12 @@ const finnAksjonspunktForATFL = (gjeldendeAksjonspunkter) => gjeldendeAksjonspun
 const finnAksjonspunktForVurderDekningsgrad = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter
   && gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
 
-
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
     return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
   }
   return undefined;
 };
-
 
 const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjeldendeAksjonspunkter,
@@ -168,7 +164,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
       )}
     </div>
 );
-
 
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningsgrunnlagImpl

@@ -42,18 +42,18 @@ export const sjekkOmTilbakekrevingRevurderingKanOpprettes = (params) => (dispatc
   fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.makeRestApiRequest()(params),
 );
 
-export const hentVergeMenyvalg = (params: {}) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
+export const hentVergeMenyvalg = (params: any) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
 export const resetVergeMenyvalg = () => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.resetRestApi()());
 
-export const shelveBehandling = (params: {}) => behandlingEventHandler.henleggBehandling(params);
+export const shelveBehandling = (params: any) => behandlingEventHandler.henleggBehandling(params);
 
-export const setBehandlingOnHold = (params: {}) => behandlingEventHandler.settBehandlingPaVent(params);
+export const setBehandlingOnHold = (params: any) => behandlingEventHandler.settBehandlingPaVent(params);
 
-export const resumeBehandling = (params: {}) => behandlingEventHandler.taBehandlingAvVent(params);
+export const resumeBehandling = (params: any) => behandlingEventHandler.taBehandlingAvVent(params);
 
-export const nyBehandlendeEnhet = (params: {}) => behandlingEventHandler.endreBehandlendeEnhet(params);
+export const nyBehandlendeEnhet = (params: any) => behandlingEventHandler.endreBehandlendeEnhet(params);
 
-export const openBehandlingForChanges = (params: {}) => behandlingEventHandler.opneBehandlingForEndringer(params);
+export const openBehandlingForChanges = (params: any) => behandlingEventHandler.opneBehandlingForEndringer(params);
 
 export const opprettVerge = (location, push, saksnummer, behandlingId, versjon) => () => behandlingEventHandler.opprettVerge({
   behandlingId,

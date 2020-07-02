@@ -57,6 +57,9 @@ const config = {
     'jsx-a11y/anchor-is-valid': OFF,
     'react/jsx-props-no-spreading': OFF,
     '@typescript-eslint/no-empty-function': OFF,
+    '@typescript-eslint/no-explicit-any': OFF,
+    '@typescript-eslint/ban-ts-comment': OFF,
+    '@typescript-eslint/explicit-module-boundary-types': OFF,
 
     // TODO (TOR) Midlertidig utkommentert
     'max-classes-per-file': OFF,
@@ -68,8 +71,6 @@ const config = {
     // TODO (TOR) Midlertidig utkommentert
     '@typescript-eslint/explicit-member-accessibility': OFF,
     '@typescript-eslint/explicit-function-return-type': OFF,
-    '@typescript-eslint/no-explicit-any': OFF,
-    '@typescript-eslint/ban-ts-ignore': OFF,
   },
   overrides: [{
     files: ['*.spec.jsx', '*.spec.tsx', '*.spec.ts'],

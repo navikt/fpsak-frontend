@@ -14,5 +14,4 @@ export const sjekkArbeidsprosentOver100 = (periode) => periode.arbeidstidsprosen
 export const sjekkOverlappendePerioder = (index, nestePeriode, forrigePeriode) => index !== 0
   && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);
 
-
 export const sjekkEndretFørsteUttaksdato = (nyStartDato, førsteUttaksdato) => moment(nyStartDato).isBefore(moment(førsteUttaksdato));

@@ -21,9 +21,7 @@ const {
   FORDEL_BEREGNINGSGRUNNLAG,
 } = aksjonspunktCodes;
 
-
 const FORM_NAME_FORDEL_BEREGNING = 'fordelBeregningsgrunnlagForm';
-
 
 const findAksjonspunktMedBegrunnelse = (aksjonspunkter) => aksjonspunkter
   .find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
@@ -169,7 +167,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     };
   };
 };
-
 
 const FordelingForm = connect(mapStateToPropsFactory)(behandlingForm({ form: FORM_NAME_FORDEL_BEREGNING })(FordelingFormImpl));
 

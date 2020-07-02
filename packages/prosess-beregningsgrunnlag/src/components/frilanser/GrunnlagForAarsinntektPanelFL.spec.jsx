@@ -7,7 +7,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { GrunnlagForAarsinntektPanelFL as UnwrappedForm } from './GrunnlagForAarsinntektPanelFL';
 
-
 const periode = {
   bruttoPrAar: 300000,
   beregningsgrunnlagPrStatusOgAndel: [
@@ -25,7 +24,6 @@ const periode = {
     },
   ],
 };
-
 
 describe('<GrunnlagForAarsinntektPanelFL>', () => {
   it('Skal teste tabellen får korrekt antall rader UTEN arbeidsforhold startdato', () => {

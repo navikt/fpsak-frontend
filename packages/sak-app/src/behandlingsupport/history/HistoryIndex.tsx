@@ -75,7 +75,7 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
       showOldDataWhenRefetching
       endpoints={enabledContexts}
       loadingPanel={<LoadingPanel />}
-      render={(props: { historyFpsak: History[]; historyFptilbake?: History[] }) => sortAndTagTilbakekreving(props)
+      render={(props) => sortAndTagTilbakekreving(props)
         .map((innslag) => (
           <HistorikkSakIndex
             key={innslag.opprettetTidspunkt + innslag.type.kode}

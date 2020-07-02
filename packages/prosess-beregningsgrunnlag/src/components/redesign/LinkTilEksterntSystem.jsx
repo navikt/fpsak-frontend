@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './linkTilEksternSystem.less';
 
-
 const LinkTilEksterntSystem = ({
 
   type, linkText, userIdent,
@@ -34,7 +33,6 @@ const LinkTilEksterntSystem = ({
       {`${linkText}`}
 
     </a>
-
 
   );
 };

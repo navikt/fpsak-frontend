@@ -14,7 +14,7 @@ interface OwnProps {
   showDetailedErrorMessages: boolean;
   errorMessages: {
     message: string;
-    additionalInfo?: {};
+    additionalInfo?: any;
   }[];
   removeErrorMessage: () => void;
 }
@@ -23,7 +23,6 @@ interface StateProps {
   isModalOpen: boolean;
   selectedErrorMsgIndex?: number;
 }
-
 
 /**
  * ErrorMessagePanel

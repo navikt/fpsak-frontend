@@ -25,7 +25,6 @@ const replaceWithConfigFromAnotherKey = (configs: RequestConfig[]) => configs.ma
   return new RequestConfig(c.name, c.path, newConfig).withRel(c.rel).withRestMethod(c.restMethod);
 });
 
-
 class ReduxRestApi {
   configs: RequestConfig[];
 

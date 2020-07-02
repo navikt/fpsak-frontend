@@ -12,7 +12,6 @@ export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
     : aktivitet.arbeidsgiverNavn;
 };
 
-
 // vanlig arbeidsgivernavn (orgnr)...arbeidsforholdid
 // privatperson - KLANG...(18.08.1980)
 const formatDate = (dato) => moment(dato).format(DDMMYYYY_DATE_FORMAT);

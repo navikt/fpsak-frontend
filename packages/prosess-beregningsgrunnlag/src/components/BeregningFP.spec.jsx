@@ -10,7 +10,6 @@ import BeregningFP from './BeregningFP';
 import BeregningForm2 from './beregningForm/BeregningForm';
 import GraderingUtenBG2 from './gradering/GraderingUtenBG';
 
-
 const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, gradering) => {
   const beregningsgrunnlag = {
     halvG: 30000,

@@ -22,7 +22,6 @@ const alleKodeverk = {};
 const behandlingId = 1;
 const behandlingVersjon = 1;
 
-
 const beregningsgrunnlag = {
   faktaOmBeregning: {
     faktaOmBeregningTilfeller: [],

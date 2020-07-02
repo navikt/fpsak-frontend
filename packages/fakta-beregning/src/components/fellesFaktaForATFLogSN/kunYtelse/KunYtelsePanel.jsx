@@ -10,7 +10,6 @@ import { setGenerellAndelsinfo } from '../BgFordelingUtils';
 
 export const brukersAndelFieldArrayName = 'brukersAndelBG';
 
-
 /**
  * KunYtelsePanel
  *
@@ -122,7 +121,6 @@ KunYtelsePanel.validate = (values, aktivertePaneler, kunYtelse) => {
   }
   return errors;
 };
-
 
 const mapStateToProps = (state, ownProps) => {
   const { kunYtelse } = ownProps.faktaOmBeregning;

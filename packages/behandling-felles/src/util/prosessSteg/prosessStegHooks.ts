@@ -19,7 +19,7 @@ import { ProsessStegUtledet } from './ProsessStegUtledet';
 
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDef[],
-  panelData: {},
+  panelData: any,
   fagsak: FagsakInfo,
   rettigheter: Rettigheter,
   behandling: Behandling,
@@ -81,7 +81,7 @@ const useBekreftAksjonspunkt = (
   fagsak: FagsakInfo,
   behandling: Behandling,
   behandlingApi: {[name: string]: EndpointOperations},
-  lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
+  lagringSideEffectsCallback: (aksjonspunktModeller: any) => () => void,
   dispatch: Dispatch,
   valgtPanel?: ProsessStegUtledet,
 ) => useCallback((

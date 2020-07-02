@@ -36,7 +36,6 @@ const fourthCol = {
   inputfieldKey: 'detteErOgsåBareEnTest',
 };
 
-
 const mockTableData = {
   arbeidsforholdPeriodeMap: {
     arbeidsgiver1: [firstCol, secondCol, thirdCol, fourthCol],
@@ -57,7 +56,6 @@ const overstyrtPrAarAndelEn = 100000;
 
 const beregnetPrAarAndelTo = 100000;
 const overstyrtPrAarAndelTo = 200000;
-
 
 const beregningsgrunnlagPerioder = [
   {

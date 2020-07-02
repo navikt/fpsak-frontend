@@ -70,7 +70,6 @@ describe('<InntektFieldArray>', () => {
     expect(props.erKunYtelse).to.eql(false);
   });
 
-
   it('skal med dagpengeandel lagt til tidligere', () => {
     const faktaOmBeregning = {
       faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING }],
@@ -106,7 +105,6 @@ describe('<InntektFieldArray>', () => {
     const props = mapStateToProps(state, { ...ownProps, beregningsgrunnlag: bg });
     expect(props.erKunYtelse).to.eql(true);
   });
-
 
   const andelField = {
     nyAndel: false,
@@ -276,7 +274,6 @@ describe('<InntektFieldArray>', () => {
     expect(newfields.length).to.equal(1);
     expect(newfields[0].fastsattBelop).to.equal('10 000');
   });
-
 
   it('skal validere eksisterende andeler uten errors', () => {
     const skalRedigereInntekt = () => true;

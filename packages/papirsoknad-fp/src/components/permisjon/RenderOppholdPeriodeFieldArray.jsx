@@ -17,7 +17,6 @@ const defaultOppholdPeriode = {
   årsak: '',
 };
 
-
 const gyldigeÅrsaker = [
   oppholdArsakType.UTTAK_MØDREKVOTE_ANNEN_FORELDER,
   oppholdArsakType.UTTAK_FEDREKVOTE_ANNEN_FORELDER,

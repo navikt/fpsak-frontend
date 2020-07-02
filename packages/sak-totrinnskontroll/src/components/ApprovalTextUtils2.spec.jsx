@@ -8,7 +8,6 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 
 import getAksjonspunktText from './ApprovalTextUtils';
 
-
 const lagAksjonspunkt = (
   aksjonspunktKode, opptjeningAktiviteter, beregningDto,
   besluttersBegrunnelse, totrinnskontrollGodkjent,
@@ -33,7 +32,6 @@ const oppheveYtelsesVedtak = { klageVurdering: klageVurderingCodes.OPPHEVE_YTELS
 const avvistKlage = { klageVurdering: klageVurderingCodes.AVVIS_KLAGE };
 const behandlingStatusFVED = { kode: behandlingStatusCodes.FATTER_VEDTAK };
 const stadfesteKlage = { klageVurdering: klageVurderingCodes.STADFESTE_YTELSESVEDTAK };
-
 
 describe('<ApprovalTextUtils2>', () => {
   // Klage
@@ -162,7 +160,6 @@ describe('<ApprovalTextUtils2>', () => {
     expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.VurderBesteberegning');
     expect(message[1].props.id).to.eql('ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold');
   });
-
 
   it('skal vise korrekt tekst for aksjonspunkt 5080', () => {
     const arbeidforholdDtos = [{

@@ -67,7 +67,6 @@ const IkkeOmsorgPeriodeField = ({
   </div>
 );
 
-
 IkkeOmsorgPeriodeField.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   meta: PropTypes.shape().isRequired,

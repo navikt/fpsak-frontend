@@ -4,7 +4,6 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import { lonnsendringField } from './LonnsendringForm';
 import transformValues from './ArbeidUtenInntektsmelding';
 
-
 describe('<ArbeidUtenInntektsmelding>', () => {
   it('skal ikke transform values uten tilfelle', () => {
     const inntektVerdier = [
@@ -74,7 +73,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
     expect(fastsatteAndeler[0]).to.equal(1);
   });
 
-
   it('skal teste at transformValues gir korrekt output når lønnsendring', () => {
     const values = { };
     values[lonnsendringField] = true;
@@ -101,7 +99,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
     expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.equal(10000);
   });
 
-
   it('skal ikkje submitte inntekt uten lønnsendring', () => {
     const values = { };
     values[lonnsendringField] = false;
@@ -124,7 +121,6 @@ describe('<ArbeidUtenInntektsmelding>', () => {
     const transformedObject = transformValues(values, inntektVerdier, faktaOmBeregning, bg, []);
     expect(transformedObject).to.be.empty;
   });
-
 
   it('skal transform values når ved avsluttet arbeidsforhold dagen før skjæringstidspunktet '
   + 'og et annet løpende i samme virksomhet der det er mottatt inntektsmelding', () => {

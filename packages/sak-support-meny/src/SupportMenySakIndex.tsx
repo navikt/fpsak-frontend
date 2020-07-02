@@ -61,7 +61,7 @@ const lagTabs = (tilgjengeligeTabs, valgbareTabs, valgtIndex) => Object.keys(TAB
 interface OwnProps {
   tilgjengeligeTabs: string[];
   valgbareTabs: string[];
-  valgtIndex: number;
+  valgtIndex?: number;
   onClick: (index: number) => void;
 }
 

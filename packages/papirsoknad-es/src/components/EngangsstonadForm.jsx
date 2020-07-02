@@ -31,6 +31,7 @@ const buildInitialValues = (soknadData) => {
  * Redux-form-komponent for registrering av papirsøknad for engangsstønad.
  */
 export class EngangsstonadForm extends Component {
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { soknadData } = this.props;
     if (!isEqual(soknadData, nextProps.soknadData)) {
