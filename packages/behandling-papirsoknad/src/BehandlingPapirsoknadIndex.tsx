@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, {
+  FunctionComponent, useEffect, useRef,
+} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
@@ -55,11 +57,28 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-class BehandlingPapirsoknadIndex extends PureComponent<Props> {
-  componentDidMount = () => {
-    const {
-      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
-    } = this.props;
+const BehandlingPapirsoknadIndex: FunctionComponent<Props> = ({
+  behandlingEventHandler,
+  nyBehandlendeEnhet,
+  settBehandlingPaVent,
+  taBehandlingAvVent,
+  henleggBehandling,
+  hentBehandling,
+  behandlingId,
+  resetRestApiContext,
+  destroyReduxForm,
+  behandling,
+  kodeverk,
+  fagsak,
+  rettigheter,
+  settPaVent,
+  forrigeBehandling,
+  lagreAksjonspunkt,
+  erAksjonspunktLagret,
+}) => {
+  const forrigeVersjon = useRef<number>();
+
+  useEffect(() => {
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
         .then(() => hentBehandling({ behandlingId }, { keepData: true })),
@@ -70,62 +89,49 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
+
+    return () => {
+      behandlingEventHandler.clear();
+      resetRestApiContext();
+      setTimeout(() => {
+        destroyReduxForm(getBehandlingFormPrefix(behandlingId, forrigeVersjon.current));
+      }, 1000);
+    };
+  }, [behandlingId]);
+
+  if (!behandling) {
+    return <LoadingPanel />;
   }
 
-  componentWillUnmount = () => {
-    const {
-      behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling,
-    } = this.props;
-    behandlingEventHandler.clear();
-    resetRestApiContext();
-    setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
-  }
+  forrigeVersjon.current = behandling.versjon;
 
-  render() {
-    const {
-      kodeverk,
-      fagsak,
-      rettigheter,
-      settPaVent,
-      hentBehandling,
-      behandling,
-      forrigeBehandling,
-      lagreAksjonspunkt,
-      erAksjonspunktLagret,
-    } = this.props;
+  reduxRestApi.injectPaths(behandling.links);
 
-    if (!behandling) {
-      return <LoadingPanel />;
-    }
-
-    reduxRestApi.injectPaths(behandling.links);
-
-    return (
-      <DataFetcher
-        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-        showOldDataWhenRefetching
-        endpoints={papirsoknadData}
-        loadingPanel={<LoadingPanel />}
-        render={(dataProps: DataProps, isFinished) => (
-          <>
-            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
-            <RegistrerPapirsoknad
-              behandling={isFinished ? behandling : forrigeBehandling}
-              aksjonspunkter={dataProps.aksjonspunkter}
-              fagsak={fagsak}
-              kodeverk={kodeverk}
-              rettigheter={rettigheter}
-              settPaVent={settPaVent}
-              hentBehandling={hentBehandling}
-              lagreAksjonspunkt={lagreAksjonspunkt}
-              erAksjonspunktLagret={erAksjonspunktLagret}
-            />
-          </>
-        )}
-      />
-    );
-  }
-}
+  return (
+    <DataFetcher
+      fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+      showOldDataWhenRefetching
+      endpoints={papirsoknadData}
+      loadingPanel={<LoadingPanel />}
+      render={(dataProps: DataProps, isFinished) => (
+        <>
+          <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
+          <RegistrerPapirsoknad
+            behandling={isFinished ? behandling : forrigeBehandling}
+            aksjonspunkter={dataProps.aksjonspunkter}
+            fagsak={fagsak}
+            kodeverk={kodeverk}
+            rettigheter={rettigheter}
+            settPaVent={settPaVent}
+            hentBehandling={hentBehandling}
+            lagreAksjonspunkt={lagreAksjonspunkt}
+            erAksjonspunktLagret={erAksjonspunktLagret}
+          />
+        </>
+      )}
+    />
+  );
+};
 
 const hasAccessError = (error) => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
 

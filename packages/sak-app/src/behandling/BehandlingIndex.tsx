@@ -174,13 +174,12 @@ export class BehandlingIndex extends Component<OwnProps> {
       rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
-      key: behandlingId,
     };
 
     if (erAktivPapirsoknad) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingPapirsoknadIndex
               {...defaultProps}
             />
@@ -192,7 +191,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingInnsynIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               {...defaultProps}
@@ -205,7 +204,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
               skalBenytteFritekstBrevmal={featureToggles[featureToggle.BENYTT_FRITEKST_BREVMAL_FOR_KLAGE]}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -220,7 +219,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.ANKE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingAnkeIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
@@ -234,7 +233,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (erTilbakekreving(behandlingTypeKode)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingTilbakekrevingIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               harApenRevurdering={fagsakBehandlingerInfo
@@ -250,7 +249,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.ENGANGSSTONAD) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingEngangsstonadIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -265,7 +264,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingForeldrepengerIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -280,7 +279,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.SVANGERSKAPSPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingSvangerskapspengerIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
