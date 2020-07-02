@@ -61,7 +61,6 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-
 const BehandlingKlageIndex: FunctionComponent<Props> = ({
   behandlingEventHandler,
   nyBehandlendeEnhet,
