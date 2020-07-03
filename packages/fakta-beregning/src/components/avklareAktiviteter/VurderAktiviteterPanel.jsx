@@ -38,7 +38,7 @@ export const leggTilAktivitet = (gjeldendeTomDatoMapping, aktivitet, tomDato) =>
 export const lagTomDatoMapping = (values) => {
   const forrigeTomDatoMapping = values.avklarAktiviteter.aktiviteterTomDatoMapping;
   const gjeldendeTomDatoMapping = [];
-  const stpOpptjening = values.avklarAktiviteter.skjæringstidspunktOpptjening;
+  const stpOpptjening = values.avklarAktiviteter.skjæringstidspunkt;
 
   // Alle aktiviteter som har t.o.m dato på en dag før, eller etter, skal legges til i gjeldendeTomDatoMapping
   forrigeTomDatoMapping.flatMap(({ aktiviteter }) => aktiviteter).forEach((aktivitet) => {
@@ -101,6 +101,7 @@ const utledGjeldendeSkjæringstidspunkt = (values, listeSomSkalVurderes) => {
   }
   return undefined;
 };
+
 /**
  * VurderAktiviteterPanel
  *
@@ -114,6 +115,9 @@ export const VurderAktiviteterPanel = ({
   erOverstyrt,
   harAksjonspunkt,
   alleKodeverk,
+  formNameAvklarAktiviteter,
+  behandlingId,
+  behandlingVersjon,
 }) => {
   const listeSomSkalVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt);
   const gjeldendeSkjæringstidspunkt = utledGjeldendeSkjæringstidspunkt(values, listeSomSkalVurderes);
@@ -126,9 +130,12 @@ export const VurderAktiviteterPanel = ({
       erOverstyrt={erOverstyrt}
       harAksjonspunkt={harAksjonspunkt}
       alleKodeverk={alleKodeverk}
-      skjæringstidspunkt={aktivitetMap.tom}
-      erGjeldendeSkjæringstidspunkt={aktivitetMap.tom === gjeldendeSkjæringstidspunkt}
+      tomDatoForAktivitetGruppe={aktivitetMap.tom}
+      valgtSkjæringstidspunkt={gjeldendeSkjæringstidspunkt}
       ingenAktiviterErBrukt={gjeldendeSkjæringstidspunkt === undefined}
+      formNameAvklarAktiviteter={formNameAvklarAktiviteter}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
     />
   ));
 };
@@ -143,10 +150,13 @@ VurderAktiviteterPanel.propTypes = {
     aktiviteter: PropTypes.arrayOf(beregningAktivitetPropType),
   })).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  formNameAvklarAktiviteter: PropTypes.string.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
-VurderAktiviteterPanel.validate = (values, aktiviteterTomDatoMapping) => {
-  const listerSomVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values);
+VurderAktiviteterPanel.validate = (values, aktiviteterTomDatoMapping, erOverstyrt) => {
+  const listerSomVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt);
   let errors = VurderAktiviteterTabell.validate(values, listerSomVurderes[0].aktiviteter);
   if (errors !== null) {
     return errors;
@@ -171,10 +181,14 @@ VurderAktiviteterPanel.validate = (values, aktiviteterTomDatoMapping) => {
   return {};
 };
 
-VurderAktiviteterPanel.transformValues = (values, aktiviteterTomDatoMapping) => {
-  const listerSomVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values);
+const erLikEllerFør = (dato1, dato2) => moment(dato1).isSameOrBefore(moment(dato2));
+
+VurderAktiviteterPanel.transformValues = (values, aktiviteterTomDatoMapping, erOverstyrt) => {
+  const listerSomVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt);
+  const gjeldendeSkjæringstidspunkt = utledGjeldendeSkjæringstidspunkt(values, listerSomVurderes);
   return ({
-    beregningsaktivitetLagreDtoList: listerSomVurderes.flatMap((liste) => VurderAktiviteterTabell.transformValues(values, liste.aktiviteter)),
+    beregningsaktivitetLagreDtoList: listerSomVurderes.flatMap((liste) => 
+    VurderAktiviteterTabell.transformValues(values, liste.aktiviteter, gjeldendeSkjæringstidspunkt, liste.tom)),
   });
 };
 
@@ -186,19 +200,52 @@ VurderAktiviteterPanel.hasValueChangedFromInitial = (aktiviteterTomDatoMapping, 
   return listerSomVurderes.find((liste) => VurderAktiviteterTabell.hasValueChangedFromInitial(liste.aktiviteter, values, initialValues)) !== undefined;
 };
 
+/**
+ *  Utleder "gjeldende" skjæringstidspunkt (s.t.p) av lister med aktiviteter inndelt i skjæringstidspunkt.
+ *  Disse inndelingene antas sortert i rekkefølge med seneste s.t.p først. Det sjekkes derfor  i rekkefølge om
+ *  en aktivitet skal brukes (skalBrukes), og s.t.p for inndelingen til den første aktiviteten som
+ *  skal brukes blir brukt.
+ *
+ *  Det antas altså at et s.t.p for en aktivitet er angitt i listeSomSkalVurderes[k].tom, der
+ *  listeSomSkalVurderes[k].aktiviteter er en samling aktiviteter for s.t.p inndeling 'k'.
+ *  (Liste med lister av aktiviteter).
+ *
+ * @param {*} values - Verdier fra nåværende form values
+ * @param {*} listeSomSkalVurderes - Liste med aktiviteter delt inn i "bøtter" for skjæringstidspunkt
+ * @returns seneste skjæringstidspunkt for en aktivitet som er satt til "skalBrukes". Undefined hvis
+ * noen av argumentene er undefined.
+ */
+const utledGjeldendeSkjæringstidspunktVedPreutfylling = (aktiviteterTomDatoMapping) => {
+  if (aktiviteterTomDatoMapping === undefined) {
+    return undefined;
+  }
+  for (let k = 0; k < aktiviteterTomDatoMapping.length; k += 1) {
+    const { aktiviteter } = aktiviteterTomDatoMapping[k];
+    for (let i = 0; i < aktiviteter.length; i += 1) {
+      const skalBrukes = aktiviteter[i].skalBrukes === true || aktiviteter[i].skalBrukes === null || aktiviteter[i].skalBrukes === undefined;
+      if (skalBrukes) {
+        return aktiviteterTomDatoMapping[k].tom;
+      }
+    }
+  }
+  return undefined;
+};
+
 VurderAktiviteterPanel.buildInitialValues = (aktiviteterTomDatoMapping, alleKodeverk, erOverstyrt, harAksjonspunkt) => {
   if (!aktiviteterTomDatoMapping || aktiviteterTomDatoMapping.length === 0) {
     return {};
   }
   let initialValues = {};
+  const gjeldendeSkjæringstidspunkt = utledGjeldendeSkjæringstidspunktVedPreutfylling(aktiviteterTomDatoMapping);
+
   aktiviteterTomDatoMapping.forEach((liste) => {
     initialValues = {
       ...initialValues,
-      ...VurderAktiviteterTabell.buildInitialValues(liste.aktiviteter, alleKodeverk, erOverstyrt, harAksjonspunkt),
+      ...VurderAktiviteterTabell.buildInitialValues(liste.aktiviteter, alleKodeverk, erOverstyrt,
+        harAksjonspunkt, erLikEllerFør(gjeldendeSkjæringstidspunkt, liste.tom)),
     };
   });
   return initialValues;
 };
-
 
 export default VurderAktiviteterPanel;
