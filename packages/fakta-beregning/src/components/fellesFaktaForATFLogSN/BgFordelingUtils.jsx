@@ -154,9 +154,11 @@ const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregn
 
 // Overstyring
 
-export const erOverstyring = (values) => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
+export const erOverstyring = (values) => (!!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true);
 
-export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesForBeregning], erOverstyring);
+export const erOverstyringAvBeregningsgrunnlag = createSelector([
+  getFormValuesForBeregning,
+  (state, ownProps) => ownProps.beregningsgrunnlag], (values, beregningsgrunnlag) => erOverstyring(values) || beregningsgrunnlag.erOverstyrtInntekt);
 
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => erOverstyring(values)
 || skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)

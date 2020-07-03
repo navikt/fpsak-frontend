@@ -331,7 +331,7 @@ const buildInitialValuesForTilfeller = (props) => ({
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag, props.vurderFaktaAP),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderBesteberegningForm.buildInitialValues(props.aksjonspunkter, props.vurderBesteberegning, props.tilfeller, props.erOverstyrt),
-  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
+  ...VurderOgFastsettATFL.buildInitialValues(props.faktaOmBeregning, props.erOverstyrt),
   ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
 
