@@ -1,4 +1,4 @@
-import { RouteProps } from 'react-router';
+import { Location } from 'history';
 
 import { buildPath, formatQueryString, parseQueryString } from '@fpsak-frontend/utils';
 import { skjermlenkeCodes } from '@fpsak-frontend/konstanter';
@@ -28,24 +28,24 @@ const updateQueryParams = (queryString, nextParams) => {
   });
 };
 
-export const getLocationWithQueryParams = (location: RouteProps['location'], queryParams) => ({
+export const getLocationWithQueryParams = (location: Location, queryParams) => ({
   ...location,
   search: updateQueryParams(location.search, queryParams),
 });
 
-export const getSupportPanelLocationCreator = (location: RouteProps['location']) => (
+export const getSupportPanelLocationCreator = (location: Location) => (
   supportPanel,
 ) => getLocationWithQueryParams(location, { stotte: supportPanel });
-export const getProsessStegLocation = (location: RouteProps['location']) => (prosessSteg) => getLocationWithQueryParams(location, { punkt: prosessSteg });
-export const getFaktaLocation = (location: RouteProps['location']) => (fakta) => getLocationWithQueryParams(location, { fakta });
-export const getRiskPanelLocationCreator = (location: RouteProps['location']) => (
+export const getProsessStegLocation = (location: Location) => (prosessSteg) => getLocationWithQueryParams(location, { punkt: prosessSteg });
+export const getFaktaLocation = (location: Location) => (fakta) => getLocationWithQueryParams(location, { fakta });
+export const getRiskPanelLocationCreator = (location: Location) => (
   isRiskPanelOpen,
 ) => getLocationWithQueryParams(location, { risiko: isRiskPanelOpen });
 
 const DEFAULT_FAKTA = 'default';
 const DEFAULT_PROSESS_STEG = 'default';
 
-export const getLocationWithDefaultProsessStegAndFakta = (location: RouteProps['location']) => (
+export const getLocationWithDefaultProsessStegAndFakta = (location: Location) => (
   getLocationWithQueryParams(location, { punkt: DEFAULT_PROSESS_STEG, fakta: DEFAULT_FAKTA })
 );
 
@@ -58,3 +58,9 @@ export const createLocationForSkjermlenke = (behandlingLocation, skjermlenkeCode
   const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
   return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };
+
+// Kan gå inn på url som ser sånn ut "http://localhost:9000/fpsak/fagsak/", men
+// da vil ein automatisk redirecte til http://localhost:9000/fpsak/fagsak/behandling/*"
+export const erUrlUnderBehandling = (location) => !location.pathname.includes('behandling/');
+
+export const erBehandlingValgt = (location) => location.pathname.includes('behandling') && !location.pathname.endsWith('behandling/');

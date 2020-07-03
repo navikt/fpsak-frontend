@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { RouteProps } from 'react-router';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Location } from 'history';
 
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -69,7 +69,7 @@ interface OwnProps {
   toTrinnsBehandling?: boolean;
   push: (location: string) => void;
   resetApproval: () => void;
-  location: RouteProps['location'];
+  location: Location;
   navAnsatt: NavAnsatt;
   skjemalenkeTyper: any[];
   erTilbakekreving: boolean;

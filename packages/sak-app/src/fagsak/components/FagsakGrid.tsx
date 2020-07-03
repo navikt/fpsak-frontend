@@ -22,7 +22,7 @@ const FagsakGrid: FunctionComponent<OwnProps> = ({
   visittkortContent,
 }) => (
   <>
-    <MediaQuery maxWidth={1600}>
+    <MediaQuery maxWidth={1599}>
       {visittkortContent()}
     </MediaQuery>
     <div className={styles.gridContainer}>

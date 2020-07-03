@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { RouteProps } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
+import { Location } from 'history';
 import { captureException, configureScope, withScope } from '@sentry/browser';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
@@ -33,7 +33,7 @@ interface OwnProps {
   showCrashMessage: (message: string) => void;
   navAnsattName?: string;
   funksjonellTid?: string;
-  location: RouteProps['location'];
+  location: Location;
   showDetailedErrorMessages: boolean;
 }
 

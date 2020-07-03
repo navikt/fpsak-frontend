@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { RouteProps } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 import { push } from 'connected-react-router';
+import { Location } from 'history';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk } from '@fpsak-frontend/types';
@@ -30,7 +30,7 @@ const VERGE_MENYVALG = {
 };
 
 interface OwnProps {
-  location: RouteProps['location'];
+  location: Location;
 }
 
 interface StateProps {

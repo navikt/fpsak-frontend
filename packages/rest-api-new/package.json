@@ -1,0 +1,12 @@
+{
+  "name": "@fpsak-frontend/rest-api-new",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@sentry/browser": "^5.18.1",
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {}
+}

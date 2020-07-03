@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { createSelector } from 'reselect';
-import { RouteProps } from 'react-router';
+import { Location } from 'history';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -26,8 +26,8 @@ import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 
 interface OwnProps {
   resolveAksjonspunkter: (params: any, behandlingIdentifier: BehandlingIdentifier) => void;
-  push: (location: RouteProps['location']) => void;
-  location: RouteProps['location'];
+  push: (location: Location) => void;
+  location: Location;
   isPanelOpen: boolean;
   readOnly: boolean;
   behandlingIdentifier?: BehandlingIdentifier;

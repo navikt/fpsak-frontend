@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback } from 'react';
 import { withRouter } from 'react-router-dom';
-import { RouteProps } from 'react-router';
 import { connect } from 'react-redux';
+import { Location } from 'history';
 import { createSelector } from 'reselect';
 import moment from 'moment';
 
@@ -44,7 +44,7 @@ interface OwnProps {
   saksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
-  location: RouteProps['location'];
+  location: Location;
   alleKodeverkFpsak: {[key: string]: [KodeverkMedNavn]};
   alleKodeverkFptilbake?: {[key: string]: [KodeverkMedNavn]};
 }

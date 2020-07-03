@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useCallback } from 'react';
-import { RouteProps } from 'react-router';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Location } from 'history';
 
 import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
 
@@ -37,7 +37,7 @@ interface OwnProps {
   acccessibleSupportPanels: string[];
   enabledSupportPanels: string[];
   activeSupportPanel: string;
-  getSupportPanelLocation: (supportPanel: string) => RouteProps['location'];
+  getSupportPanelLocation: (supportPanel: string) => Location;
 }
 
 /**
