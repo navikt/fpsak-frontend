@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Route, useLocation } from 'react-router-dom';
 
-import { useRestApi, RestApiState } from '@fpsak-frontend/rest-api-hooks';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
@@ -23,7 +23,7 @@ import {
 } from '../app/paths';
 import FagsakResolver from './FagsakResolver';
 import FagsakGrid from './components/FagsakGrid';
-import { FpsakApiKeys } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApi } from '../data/fpsakApiNyUtenRedux';
 import {
   getSelectedBehandlingId,
   getBehandlingVersjon,

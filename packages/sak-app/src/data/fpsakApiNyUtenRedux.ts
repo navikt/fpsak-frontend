@@ -1,4 +1,5 @@
 import { RestApiConfigBuilder, createRequestApi } from '@fpsak-frontend/rest-api-new';
+import { getUseRestApi } from '@fpsak-frontend/rest-api-hooks';
 
 export enum FpsakApiKeys {
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
@@ -15,3 +16,5 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .build();
 
 export const requestApi = createRequestApi(endpoints);
+
+export const useRestApi = getUseRestApi(requestApi);

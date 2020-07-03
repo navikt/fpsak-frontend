@@ -1,6 +1,6 @@
 export { default as RestApiState } from './src/RestApiState';
 
-export { default as useRestApi } from './src/local-data/useRestApi';
+export { default as getUseRestApi } from './src/local-data/useRestApi';
 export { default as useRestApiRunner } from './src/local-data/useRestApiRunner';
 
 export { RestApiStateContext, RestApiProvider } from './src/RestApiContext';
