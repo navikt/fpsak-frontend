@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
-import { RouteProps } from 'react-router';
+import { Location } from 'history';
 
 import { featureToggle } from '@fpsak-frontend/konstanter';
 import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
@@ -65,7 +65,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingTypeKode: string;
   behandlingVersjon: number;
-  location: RouteProps['location'] & { query: { punkt?: string; fakta?: string } };
+  location: Location & { query: { punkt?: string; fakta?: string } };
   oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
   erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;
@@ -75,7 +75,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
-  push: (location: RouteProps['location'] | string) => void;
+  push: (location: Location | string) => void;
   visFeilmelding: (data: any) => void;
   rettigheter: {
     writeAccess: {

@@ -3,7 +3,7 @@ import NotificationMapper from './NotificationMapper';
 import RestApiRequestContext from './RestApiRequestContext';
 import RequestConfig, { RequestType } from '../RequestConfig';
 import HttpClientApi from '../HttpClientApiTsType';
-import { Link } from './LinkTsType';
+import Link from './LinkTsType';
 
 const getMethod = (httpClientApi: HttpClientApi, restMethod: string) => {
   if (restMethod === RequestType.GET) {

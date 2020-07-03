@@ -1,7 +1,8 @@
-import { useState, useCallback, useContext } from 'react';
+import { useState, useCallback } from 'react';
 
-import { REQUEST_POLLING_CANCELLED, NotificationMapper, ErrorType } from '@fpsak-frontend/rest-api-new';
-import { RestApiRequestContext } from '../RestApiContext';
+import {
+  REQUEST_POLLING_CANCELLED, NotificationMapper, ErrorType, RequestApi,
+} from '@fpsak-frontend/rest-api-new';
 import useRestApiErrorDispatcher from '../error/useRestApiErrorDispatcher';
 import RestApiState from '../RestApiState';
 
@@ -17,7 +18,7 @@ interface RestApiData<T> {
 /**
  * Hook som gir deg ein funksjon til å starte restkall, i tillegg til kallets status/resultat/feil
  */
-function useRestApiRunner<T>(key: string):RestApiData<T> {
+const getUseRestApiRunner = (requestApi: RequestApi) => function useRestApiRunner<T>(key: string):RestApiData<T> {
   const [data, setData] = useState({
     state: RestApiState.NOT_STARTED,
     data: undefined,
@@ -30,34 +31,40 @@ function useRestApiRunner<T>(key: string):RestApiData<T> {
     addErrorMessage({ ...errorData, type });
   });
 
-  const requestApi = useContext(RestApiRequestContext);
-
   const startRequest = useCallback((params: any = {}, keepData = false):Promise<T> => {
-    setData((oldState) => ({
-      state: RestApiState.LOADING,
-      data: keepData ? oldState.data : undefined,
-      error: undefined,
-    }));
+    if (requestApi.hasPath(key)) {
+      setData((oldState) => ({
+        state: RestApiState.LOADING,
+        data: keepData ? oldState.data : undefined,
+        error: undefined,
+      }));
 
-    return requestApi.startRequest(key, params, notif)
-      .then((dataRes) => {
-        if (dataRes.payload !== REQUEST_POLLING_CANCELLED) {
+      return requestApi.startRequest(key, params, notif)
+        .then((dataRes) => {
+          if (dataRes.payload !== REQUEST_POLLING_CANCELLED) {
+            setData({
+              state: RestApiState.SUCCESS,
+              data: dataRes.payload,
+              error: undefined,
+            });
+          }
+          return Promise.resolve(dataRes.payload);
+        })
+        .catch((error) => {
           setData({
-            state: RestApiState.SUCCESS,
-            data: dataRes.payload,
-            error: undefined,
+            state: RestApiState.ERROR,
+            data: undefined,
+            error,
           });
-        }
-        return Promise.resolve(dataRes.payload);
-      })
-      .catch((error) => {
-        setData({
-          state: RestApiState.ERROR,
-          data: undefined,
-          error,
+          throw error;
         });
-        throw error;
-      });
+    }
+    setData({
+      state: RestApiState.NOT_STARTED,
+      error: undefined,
+      data: undefined,
+    });
+    return undefined;
   }, []);
 
   const resetRequestData = useCallback(() => {
@@ -74,6 +81,6 @@ function useRestApiRunner<T>(key: string):RestApiData<T> {
     cancelRequest: () => requestApi.cancelRequest(key),
     ...data,
   };
-}
+};
 
-export default useRestApiRunner;
+export default getUseRestApiRunner;

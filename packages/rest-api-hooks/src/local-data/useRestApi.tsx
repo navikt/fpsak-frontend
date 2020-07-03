@@ -2,7 +2,7 @@ import {
   useState, useEffect, DependencyList,
 } from 'react';
 
-import { REQUEST_POLLING_CANCELLED, NotificationMapper } from '@fpsak-frontend/rest-api-new';
+import { REQUEST_POLLING_CANCELLED, NotificationMapper, RequestApi } from '@fpsak-frontend/rest-api-new';
 
 import useRestApiErrorDispatcher from '../error/useRestApiErrorDispatcher';
 import RestApiState from '../RestApiState';
@@ -29,7 +29,7 @@ const defaultOptions = {
   * Hook som utfører et restkall ved mount. En kan i tillegg legge ved en dependencies-liste som kan trigge ny henting når data
   * blir oppdatert. Hook returnerer rest-kallets status/resultat/feil
   */
-const getUseRestApi = (requestApi) => function useRestApi<T>(key: string, params: any = {}, options: Options = defaultOptions):RestApiData<T> {
+const getUseRestApi = (requestApi: RequestApi) => function useRestApi<T>(key: string, params: any = {}, options: Options = defaultOptions):RestApiData<T> {
   const [data, setData] = useState({
     state: RestApiState.NOT_STARTED,
     error: undefined,

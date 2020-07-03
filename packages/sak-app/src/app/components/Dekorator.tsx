@@ -71,11 +71,11 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   const allErrorMessage = useMemo(() => formaterteFeilmeldinger.concat(errorMessages), [formaterteFeilmeldinger, errorMessages]);
   const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, allErrorMessage, queryStrings), [allErrorMessage, queryStrings]);
 
-  const { removeErrorMessage } = useRestApiErrorDispatcher();
+  const { removeErrorMessages } = useRestApiErrorDispatcher();
 
   const removeErrorAllErrorMsg = useCallback(() => {
     removeErrorMsg();
-    removeErrorMessage();
+    removeErrorMessages();
   }, []);
 
   const iconLinks = useMemo(() => [{

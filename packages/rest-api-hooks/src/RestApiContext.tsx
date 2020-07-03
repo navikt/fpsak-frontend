@@ -2,8 +2,6 @@ import React, {
   createContext, useReducer, FunctionComponent, ReactNode,
 } from 'react';
 
-import { RequestApi } from '@fpsak-frontend/rest-api-new';
-
 const defaultInitialState = {};
 
 type Action = {type: 'success', key: string, data: any } | {type: 'remove', key: string}
@@ -12,7 +10,6 @@ type State = {[key: string]: any};
 
 export const RestApiStateContext = createContext<State>(defaultInitialState);
 export const RestApiDispatchContext = createContext<Dispatch | undefined>(undefined);
-export const RestApiRequestContext = createContext<RequestApi | undefined>(undefined);
 
 interface OwnProps {
   children: ReactNode;
@@ -29,7 +26,6 @@ interface OwnProps {
 export const RestApiProvider: FunctionComponent<OwnProps> = ({
   children,
   initialState,
-  requestApi,
 }): JSX.Element => {
   const [state, dispatch] = useReducer((oldState, action) => {
     switch (action.type) {
@@ -51,9 +47,7 @@ export const RestApiProvider: FunctionComponent<OwnProps> = ({
   return (
     <RestApiStateContext.Provider value={state}>
       <RestApiDispatchContext.Provider value={dispatch}>
-        <RestApiRequestContext.Provider value={requestApi}>
-          {children}
-        </RestApiRequestContext.Provider>
+        {children}
       </RestApiDispatchContext.Provider>
     </RestApiStateContext.Provider>
   );

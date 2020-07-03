@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 
-import { NotificationMapper } from '@fpsak-frontend/rest-api-new';
+import { NotificationMapper, RequestApi } from '@fpsak-frontend/rest-api-new';
 
 import useRestApiErrorDispatcher from '../error/useRestApiErrorDispatcher';
-import { RestApiDispatchContext, RestApiRequestContext } from '../RestApiContext';
+import { RestApiDispatchContext } from '../RestApiContext';
 import RestApiState from '../RestApiState';
 
 interface RestApiData<T> {
@@ -15,7 +15,7 @@ interface RestApiData<T> {
 /**
  * Hook som henter data fra backend (ved mount) og deretter lagrer i @see RestApiContext
  */
-function useGlobalStateRestApi<T>(key: string, params: any = {}):RestApiData<T> {
+const getUseGlobalStateRestApi = (requestApi: RequestApi) => function useGlobalStateRestApi<T>(key: string, params: any = {}):RestApiData<T> {
   const [data, setData] = useState({
     state: RestApiState.LOADING,
     error: undefined,
@@ -29,7 +29,6 @@ function useGlobalStateRestApi<T>(key: string, params: any = {}):RestApiData<T> 
   });
 
   const dispatch = useContext(RestApiDispatchContext);
-  const requestApi = useContext(RestApiRequestContext);
 
   useEffect(() => {
     dispatch({ type: 'remove', key });
@@ -53,6 +52,6 @@ function useGlobalStateRestApi<T>(key: string, params: any = {}):RestApiData<T> 
   }, []);
 
   return data;
-}
+};
 
-export default useGlobalStateRestApi;
+export default getUseGlobalStateRestApi;

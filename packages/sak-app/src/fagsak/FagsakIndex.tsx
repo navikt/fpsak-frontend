@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-import { Route, useLocation } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { Location } from 'history';
 
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
@@ -41,16 +42,16 @@ const erTilbakekreving = (behandlingType) => behandlingType && (BehandlingType.T
 const NO_PARAMS = undefined;
 
 interface OwnProps {
-  harValgtBehandling: boolean;
+  selectedSaksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  selectedSaksnummer: number;
   requestPendingMessage?: string;
   alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   sprakkode?: Kodeverk;
   fagsak?: Fagsak;
   harVerge: boolean;
+  location: Location;
 }
 
 interface AnnenPartBehandling {
@@ -75,8 +76,8 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
   sprakkode,
   fagsak,
   harVerge,
+  location,
 }) => {
-  const location = useLocation();
   const skalIkkeHenteData = erUrlUnderBehandling(location) || (erBehandlingValgt(location) && !behandlingId);
 
   const options = {

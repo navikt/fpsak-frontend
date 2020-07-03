@@ -3,7 +3,7 @@ import RestApiRequestContext from './RestApiRequestContext';
 import HttpClientApi from '../HttpClientApiTsType';
 import RequestConfig from '../RequestConfig';
 import NotificationMapper from './NotificationMapper';
-import { Link } from './LinkTsType';
+import Link from './LinkTsType';
 
 /**
  * RequestApi
