@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { RouteProps } from 'react-router';
+import { Location } from 'history';
 import { createSelector } from 'reselect';
 import { Redirect, withRouter } from 'react-router-dom';
 
@@ -67,7 +67,7 @@ interface OwnProps {
   alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   behandlingVersjon?: number;
   shouldRedirectToBehandlinger: boolean;
-  location: RouteProps['location'];
+  location: Location;
   dekningsgrad: number;
 }
 

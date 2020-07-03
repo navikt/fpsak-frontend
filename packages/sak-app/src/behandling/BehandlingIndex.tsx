@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
-import { RouteProps } from 'react-router';
+import { Location } from 'history';
 
 import { featureToggle } from '@fpsak-frontend/konstanter';
 import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
@@ -28,6 +28,7 @@ import {
 } from '../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
+import { requestApi } from '../data/fpsakApiNyUtenRedux';
 import {
   setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId,
   oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
@@ -64,7 +65,7 @@ interface OwnProps {
   behandlingId: number;
   behandlingTypeKode: string;
   behandlingVersjon: number;
-  location: RouteProps['location'] & { query: { punkt?: string; fakta?: string } };
+  location: Location & { query: { punkt?: string; fakta?: string } };
   oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
   erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;
@@ -74,7 +75,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
-  push: (location: RouteProps['location'] | string) => void;
+  push: (location: Location | string) => void;
   visFeilmelding: (data: any) => void;
   rettigheter: {
     writeAccess: {
@@ -105,6 +106,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     super(props);
     const { setBehandlingIdOgVersjon, behandlingVersjon } = props;
     reduxRestApi.injectPaths(props.behandlingLinks);
+    requestApi.injectPaths(props.behandlingLinks);
     setBehandlingIdOgVersjon(behandlingVersjon);
   }
 
@@ -114,6 +116,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     } = this.props;
     if (behandlingId !== prevProps.behandlingId) {
       reduxRestApi.injectPaths(behandlingLinks);
+      requestApi.injectPaths(behandlingLinks);
       setBehandlingIdOgVersjon(behandlingVersjon);
     }
   }

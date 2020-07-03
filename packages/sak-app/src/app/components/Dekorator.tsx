@@ -1,12 +1,15 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useMemo, useCallback } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
+import { useRestApiError, useRestApiErrorDispatcher } from '@fpsak-frontend/rest-api-hooks';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/konstanter';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+
+import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 
 const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
   const resolvedErrorMessages = [];
@@ -62,7 +65,18 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   showDetailedErrorMessages = false,
   hideErrorMessages = false,
 }) => {
-  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, errorMessages, queryStrings), [errorMessages, queryStrings]);
+  const errorMessagesNew = useRestApiError() || [];
+  const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessagesNew, undefined), [errorMessagesNew]);
+
+  const allErrorMessage = useMemo(() => formaterteFeilmeldinger.concat(errorMessages), [formaterteFeilmeldinger, errorMessages]);
+  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, allErrorMessage, queryStrings), [allErrorMessage, queryStrings]);
+
+  const { removeErrorMessages } = useRestApiErrorDispatcher();
+
+  const removeErrorAllErrorMsg = useCallback(() => {
+    removeErrorMsg();
+    removeErrorMessages();
+  }, []);
 
   const iconLinks = useMemo(() => [{
     url: RETTSKILDE_URL,
@@ -80,7 +94,7 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       iconLinks={iconLinks}
       queryStrings={queryStrings}
       navAnsattName={navAnsattName}
-      removeErrorMessage={removeErrorMsg}
+      removeErrorMessage={removeErrorAllErrorMsg}
       showDetailedErrorMessages={showDetailedErrorMessages}
       errorMessages={hideErrorMessages ? [] : resolvedErrorMessages}
       setSiteHeight={setSiteHeight}

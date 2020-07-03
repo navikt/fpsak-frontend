@@ -1,0 +1,17 @@
+{
+  "name": "@fpsak-frontend/rest-api-hooks",
+  "version": "1.0.0",
+  "module": "index.ts",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "moment": "^2.27.0",
+    "react": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "@fpsak-frontend/rest-api": "1.0.0"
+  },
+  "devDependencies": {}
+}
