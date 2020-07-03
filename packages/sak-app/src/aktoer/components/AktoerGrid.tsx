@@ -10,6 +10,7 @@ import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   Kodeverk, KodeverkMedNavn, Fagsak, FagsakPerson,
 } from '@fpsak-frontend/types';
+import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 
 import { getAlleFpSakKodeverk } from '../../kodeverk/duck';
 import { pathToFagsak } from '../../app/paths';
@@ -32,12 +33,15 @@ export const AktoerGrid: FunctionComponent<OwnProps> = ({
   sprakkode,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const vFagsak = data.fagsaker.length > 0 ? data.fagsaker[0] : { relasjonsRolleType: { kode: relasjonsRolleType.MOR } };
+
   return (
     <>
       <VisittkortSakIndex
         alleKodeverk={alleKodeverk}
         sprakkode={sprakkode}
         fagsak={{
+          ...vFagsak,
           person: data.person,
         } as Fagsak}
       />

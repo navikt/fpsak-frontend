@@ -114,7 +114,7 @@ const BehandlingTilbakekrevingIndex: FunctionComponent<Props> = ({
     };
   }, [behandlingId]);
 
-  if (!behandling) {
+  if (!behandling || !tilbakekrevingKodeverk) {
     return <LoadingPanel />;
   }
 
