@@ -18,7 +18,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 const countrySelectValues = (countryCodes) => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-
 /**
  * VirksomhetIdentifikasjonPanel
  *

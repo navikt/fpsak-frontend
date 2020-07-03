@@ -58,7 +58,6 @@ const sjekkOmPeriodeSkalLeggesTil = (bgPerioder) => (aggregatedPeriodList, perio
 
 export const slaaSammenPerioder = (perioder, bgPerioder) => perioder.reduce(sjekkOmPeriodeSkalLeggesTil(bgPerioder), []);
 
-
 /**
  * FordelBeregningsgrunnlagForm
  *

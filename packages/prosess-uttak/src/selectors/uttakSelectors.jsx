@@ -15,7 +15,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-
 const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
 const endretClassnavn = 'endretPeriode';
 const godkjentKlassenavn = 'godkjentPeriode';

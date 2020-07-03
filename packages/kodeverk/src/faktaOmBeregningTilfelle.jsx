@@ -20,7 +20,6 @@ const besteberegningTilfeller = [
   faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING,
   faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
 
-
 export const vurderOgFastsettATFLTilfeller = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
   faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
   faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL,
@@ -28,7 +27,6 @@ export const vurderOgFastsettATFLTilfeller = [faktaOmBeregningTilfelle.VURDER_AT
   faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING,
   faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE,
   faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING];
-
 
 export const fastsettATLIntersection = (tilfeller) => vurderOgFastsettATFLTilfeller.filter((tilfelle) => tilfeller.includes(tilfelle));
 

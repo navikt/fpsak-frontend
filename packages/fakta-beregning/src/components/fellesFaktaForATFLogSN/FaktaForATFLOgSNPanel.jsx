@@ -24,7 +24,6 @@ import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
 import { erOverstyringAvBeregningsgrunnlag } from './BgFordelingUtils';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
-
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;

@@ -66,7 +66,6 @@ describe('<AndreYtelserPanel>', () => {
     expect(errorsWithInvalidDates.andreYtelser.ETTERLONN_ARBEIDSGIVER_PERIODER).to.not.exist;
   });
 
-
   it('transformValues skal returnerer ytelser på riktig format', () => {
     const values = {
       andreYtelser: {

@@ -17,7 +17,6 @@ const faktaOmBeregningAndelPropType = PropTypes.shape({
   aktivitetStatus: kodeverkObjektPropType,
 });
 
-
 const faktaOmBeregningPropType = PropTypes.shape({
   beregningsgrunnlagArbeidsforhold: PropTypes.arrayOf(PropTypes.shape({
     ...beregningsgrunnlagArbeidsforholdProptype,

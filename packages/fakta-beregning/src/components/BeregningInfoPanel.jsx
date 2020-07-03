@@ -59,7 +59,6 @@ const createRelevantForms = (
   </div>
 );
 
-
 /**
  * BeregningInfoPanel
  *

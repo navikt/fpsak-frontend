@@ -41,7 +41,6 @@ const finnTextTilRadio2 = (erHeimevern, erNavTiltak) => {
   return erNavTiltak ? 'SykdomOgSkadePeriode.TiltakIRegiNavErIkkeDok' : 'UttakInfoPanel.SykdomSkadenIkkeDokumentert';
 };
 
-
 // TODO slå sammen ForeldreAnsvarPeriode, SykdomOgSkadePeriode og InnleggelsePeriode
 
 export const SykdomOgSkadePeriode = ({

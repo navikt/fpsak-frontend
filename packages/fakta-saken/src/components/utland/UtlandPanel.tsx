@@ -50,7 +50,7 @@ const getSakstypeId = (vurdering) => {
 interface OwnProps {
   readOnly: boolean;
   dirty: boolean;
-  handleSubmit: (data: {}) => void;
+  handleSubmit: (data: any) => void;
   reset: () => void;
   utlandSakstype?: string;
 }
@@ -153,7 +153,6 @@ export const UtlandPanelImpl: FunctionComponent<OwnProps & WrappedComponentProps
     </>
   );
 };
-
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const onSubmit = (values) => initialOwnProps.submitCallback([{

@@ -12,7 +12,6 @@ describe('<AvregningSummary>', () => {
     inntrekk: 20000,
   };
 
-
   it('skal vise AvregningSummary', () => {
     const props = {
       ...mockProps,

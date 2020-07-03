@@ -18,6 +18,7 @@ const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
 const behandlinger = [{
   id: 1,
   versjon: 2,
+  uuid: '1',
   type: {
     kode: behandlingType.FORSTEGANGSSOKNAD,
     kodeverk: BEHANDLING_TYPE_KODEVERK,
@@ -26,6 +27,11 @@ const behandlinger = [{
     kode: behandlingStatus.AVSLUTTET,
     kodeverk: BEHANDLING_STATUS_KODEVERK,
   },
+  sprakkode: {
+    kode: 'NB',
+    kodeverk: '',
+  },
+  erAktivPapirsoknad: false,
   opprettet: '2017-08-02T00:54:25.455',
   avsluttet: '2017-08-03T00:54:25.455',
   endret: '2017-08-03T00:54:25.455',
@@ -35,15 +41,19 @@ const behandlinger = [{
   gjeldendeVedtak: false,
   behandlingPaaVent: false,
   behandlingHenlagt: false,
+  behandlingKoet: false,
+  toTrinnsBehandling: false,
   behandlingsresultat: {
     type: {
       kode: 'AVSLÅTT',
       kodeverk: 'BEHANDLING_RESULTAT_TYPE',
     },
   },
+  behandlingArsaker: [],
 }, {
   id: 2,
   versjon: 2,
+  uuid: '2',
   type: {
     kode: behandlingType.DOKUMENTINNSYN,
     kodeverk: BEHANDLING_TYPE_KODEVERK,
@@ -52,6 +62,11 @@ const behandlinger = [{
     kode: behandlingStatus.OPPRETTET,
     kodeverk: BEHANDLING_STATUS_KODEVERK,
   },
+  sprakkode: {
+    kode: 'NB',
+    kodeverk: '',
+  },
+  erAktivPapirsoknad: false,
   opprettet: '2017-08-02T00:54:25.455',
   avsluttet: '2017-08-03T00:54:25.455',
   endret: '2017-08-03T00:54:25.455',
@@ -61,15 +76,19 @@ const behandlinger = [{
   gjeldendeVedtak: true,
   behandlingPaaVent: false,
   behandlingHenlagt: false,
+  behandlingKoet: false,
+  toTrinnsBehandling: false,
   behandlingsresultat: {
     type: {
       kode: 'INNVILGET',
       kodeverk: 'BEHANDLING_RESULTAT_TYPE',
     },
   },
+  behandlingArsaker: [],
 }, {
   id: 3,
   versjon: 2,
+  uuid: '3',
   type: {
     kode: behandlingType.REVURDERING,
     kodeverk: BEHANDLING_TYPE_KODEVERK,
@@ -78,6 +97,11 @@ const behandlinger = [{
     kode: behandlingStatus.OPPRETTET,
     kodeverk: BEHANDLING_STATUS_KODEVERK,
   },
+  sprakkode: {
+    kode: 'NB',
+    kodeverk: '',
+  },
+  erAktivPapirsoknad: false,
   opprettet: '2017-08-02T00:54:25.455',
   behandlendeEnhetId: '4812',
   behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
@@ -85,9 +109,13 @@ const behandlinger = [{
   gjeldendeVedtak: false,
   behandlingPaaVent: false,
   behandlingHenlagt: false,
+  behandlingKoet: false,
+  toTrinnsBehandling: false,
+  behandlingArsaker: [],
 }, {
   id: 4,
   versjon: 2,
+  uuid: '4',
   type: {
     kode: behandlingType.FORSTEGANGSSOKNAD,
     kodeverk: BEHANDLING_TYPE_KODEVERK,
@@ -96,6 +124,11 @@ const behandlinger = [{
     kode: behandlingStatus.AVSLUTTET,
     kodeverk: BEHANDLING_STATUS_KODEVERK,
   },
+  sprakkode: {
+    kode: 'NB',
+    kodeverk: '',
+  },
+  erAktivPapirsoknad: false,
   opprettet: '2017-08-02T00:54:25.455',
   avsluttet: '2017-08-03T00:54:25.455',
   endret: '2017-08-03T00:54:25.455',
@@ -105,6 +138,9 @@ const behandlinger = [{
   gjeldendeVedtak: false,
   behandlingPaaVent: false,
   behandlingHenlagt: false,
+  behandlingKoet: false,
+  toTrinnsBehandling: false,
+  behandlingArsaker: [],
   behandlingsresultat: {
     type: {
       kode: 'HENLAGT_SØKNAD_TRUKKET',

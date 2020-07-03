@@ -11,7 +11,6 @@ import DelOppPeriodeModal from './DelOppPeriodeModal';
 import UttakActivity from './UttakActivity';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-uttak';
 
-
 describe('<UttakTimeLineData>', () => {
   const selectedItem = {
     id: 1,

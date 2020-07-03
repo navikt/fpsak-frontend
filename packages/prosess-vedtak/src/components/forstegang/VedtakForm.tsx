@@ -46,7 +46,6 @@ const erArsakTypeBehandlingEtterKlage = (behandlingArsakTyper = []) => behandlin
     || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
     || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK);
 
-
 const finnVedtakstatusTekst = (behandlingsresultat, intl, ytelseTypeKode) => {
   const erInnvilget = isInnvilget(behandlingsresultat.type.kode);
   const erAvslatt = isAvslag(behandlingsresultat.type.kode);

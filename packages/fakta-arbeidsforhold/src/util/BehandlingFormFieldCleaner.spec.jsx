@@ -22,7 +22,6 @@ describe('BehandlingFormFieldCleaner', () => {
       </BehandlingFormFieldCleaner>,
     );
 
-
     expect(wrapper.find(InputField)).to.have.length(2);
     expect(changeCallback.getCalls()).has.length(0);
   });

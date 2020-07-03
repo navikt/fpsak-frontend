@@ -73,7 +73,8 @@ describe('<TabMeny>', () => {
     const kolonne = wrapper.find(FlexColumn);
     const knapp = kolonne.last().find('button');
 
-    knapp.prop('onClick')();
+    const knappFn = knapp.prop('onClick') as () => void;
+    knappFn();
 
     expect(onClick.getCalls()).has.length(1);
     const { args } = onClick.getCalls()[0];

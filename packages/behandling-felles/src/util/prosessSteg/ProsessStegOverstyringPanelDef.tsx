@@ -18,7 +18,6 @@ const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) => (vilkarTypeKod
   ? avslagsarsaker[vilkarTypeKode].filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
   : avslagsarsaker[vilkarTypeKode]);
 
-
 class ProsessStegOverstyringPanelDef extends ProsessStegPanelDef {
   overtyrtPanel: ProsessStegPanelDef
 

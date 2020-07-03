@@ -46,9 +46,9 @@ interface OwnProps {
 }
 
 interface DispatchProps {
-  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
-  submitMessage: (data: {}) => Promise<any>;
-  setBehandlingOnHold: (params: {}) => void;
+  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
+  submitMessage: (data: any) => Promise<any>;
+  setBehandlingOnHold: (params: any) => void;
   push: (param: string) => void;
   resetSubmitMessage: () => void;
 }

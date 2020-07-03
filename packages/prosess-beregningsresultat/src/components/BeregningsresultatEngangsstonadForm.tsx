@@ -8,7 +8,6 @@ import {
   Element, Undertekst, Undertittel, Normaltekst,
 } from 'nav-frontend-typografi';
 
-
 import { BeregningsresultatEs } from '@fpsak-frontend/types';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer, OverstyringKnapp,

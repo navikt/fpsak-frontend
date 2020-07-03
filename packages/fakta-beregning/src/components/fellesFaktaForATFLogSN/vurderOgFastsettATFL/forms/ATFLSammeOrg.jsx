@@ -4,7 +4,6 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-
 export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
   if (tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
@@ -16,7 +15,6 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
         andelsnr: field.andelsnr,
         arbeidsinntekt: field.fastsattBelop,
       }));
-
 
     if (faktaOmBeregning.frilansAndel && !fastsatteAndelsnr.includes(faktaOmBeregning.frilansAndel.andelsnr) && inntektVerdier) {
       const frilansVerdi = inntektVerdier.find((verdi) => verdi.andelsnr === faktaOmBeregning.frilansAndel.andelsnr);
@@ -35,7 +33,6 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
   }
   return { faktaOmBeregningTilfeller: [] };
 };
-
 
 const harRiktigTilfelle = (beregningsgrunnlag) => (
   beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller ? beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller

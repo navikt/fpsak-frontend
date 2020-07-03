@@ -177,7 +177,6 @@ OmsorgFaktaForm.transformOmsorgValues = (values) => ({
   ikkeOmsorgPerioder: values.ikkeOmsorgPerioder && values.ikkeOmsorgPerioder.length > 0 ? values.ikkeOmsorgPerioder : null,
 });
 
-
 const mapStateToProps = (state, ownProps) => ({
   aleneomsorgIsEdited: !!ownProps.ytelsefordeling.aleneOmsorgPerioder,
   omsorgIsEdited: !!ownProps.ytelsefordeling.ikkeOmsorgPerioder,

@@ -23,7 +23,6 @@ const allSelected = (formState) => formState
   .reduce((a, b) => a.concat(b.aksjonspunkter), [])
   .every((ap) => ap.totrinnskontrollGodkjent !== null);
 
-
 const harIkkeKonsekvenserForYtelsen = (behandlingResultat, ...konsekvenserForYtelsenKoder) => {
   if (!behandlingResultat) {
     return true;
@@ -64,7 +63,6 @@ export const ToTrinnsFormImpl = ({
 
   const harIkkeKonsekvensForYtelse = useMemo(() => harIkkeKonsekvenserForYtelsen(behandlingsresultat,
     konsekvensForYtelsen.ENDRING_I_FORDELING_AV_YTELSEN, konsekvensForYtelsen.INGEN_ENDRING), [behandlingsresultat]);
-
 
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>

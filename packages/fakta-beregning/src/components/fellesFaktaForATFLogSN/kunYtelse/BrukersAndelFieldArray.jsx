@@ -179,7 +179,6 @@ export const BrukersAndelFieldArrayImpl = ({
   );
 };
 
-
 BrukersAndelFieldArrayImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
@@ -193,7 +192,6 @@ BrukersAndelFieldArrayImpl.propTypes = {
 };
 
 const BrukersAndelFieldArray = injectIntl(BrukersAndelFieldArrayImpl);
-
 
 const mapBrukesAndelToSortedObject = (value) => {
   const { andel, inntektskategori } = value;
@@ -237,6 +235,5 @@ const mapStateToProps = (state, ownProps) => {
     inntektskategoriKoder: getInntektskategorierAlfabetiskSortert(ownProps),
   };
 };
-
 
 export default connect(mapStateToProps)(BrukersAndelFieldArray);

@@ -20,7 +20,6 @@ import { AndelRow, getHeaderTextCodes } from './InntektFieldArrayRow';
 import AddAndelButton from './AddAndelButton';
 import SummaryRow from './SummaryRow';
 
-
 const dagpenger = (aktivitetStatuser, beregnetPrAar) => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.DAGPENGER)[0].navn,
   aktivitetStatus: aktivitetStatus.DAGPENGER,
@@ -37,7 +36,6 @@ const getErrorMessage = (meta, intl, isBeregningFormDirty) => (meta.error && isD
 && meta.submitFailed ? intl.formatMessage(...meta.error) : null);
 
 const skalViseSletteknapp = (index, fields, readOnly) => (fields.get(index).skalKunneEndreAktivitet === true && !readOnly);
-
 
 const skalViseRefusjon = (fields) => {
   let skalVise = false;
@@ -145,7 +143,6 @@ export const leggTilDagpengerOmBesteberegning = (fields, skalHaBesteberegning, a
   }
   fields.push(dagpenger(aktivitetStatuser, dagpengeAndelLagtTilIForrige ? dagpengeAndelLagtTilIForrige.beregnetPrAar : undefined));
 };
-
 
 /**
  *  InntektFieldArray
@@ -299,6 +296,5 @@ export const mapStateToProps = (state, ownProps) => {
     erKunYtelse: tilfeller && tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE),
   };
 };
-
 
 export default connect(mapStateToProps)(InntektFieldArray);

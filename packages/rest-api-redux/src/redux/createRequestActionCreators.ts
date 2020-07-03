@@ -8,7 +8,7 @@ import { ActionTypes } from './ActionTypesTsType';
 
 interface Options {
   keepData?: boolean;
-  cacheParams?: {};
+  cacheParams?: any;
 }
 
 const getActionCreators = (actionTypes) => ({

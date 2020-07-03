@@ -14,7 +14,7 @@ export const DEFAULT_PROSESS_STEG_KODE = 'default';
 
 export const utledFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDef[],
-  ekstraPanelData: {},
+  ekstraPanelData: any,
   behandling: Behandling,
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],
