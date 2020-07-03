@@ -14,11 +14,23 @@ interface RestApiData<T> {
   data?: T;
 }
 
+interface Options {
+  updateTriggers?: DependencyList;
+  keepData?: boolean;
+  suspendRequest?: boolean;
+}
+
+const defaultOptions = {
+  updateTriggers: [],
+  keepData: false,
+  suspendRequest: false,
+};
+
 /**
   * Hook som utfører et restkall ved mount. En kan i tillegg legge ved en dependencies-liste som kan trigge ny henting når data
   * blir oppdatert. Hook returnerer rest-kallets status/resultat/feil
   */
-function useRestApi<T>(key: string, params: any = {}, keepData = false, dependencies: DependencyList = []):RestApiData<T> {
+function useRestApi<T>(key: string, params: any = {}, options: Options = defaultOptions):RestApiData<T> {
   const [data, setData] = useState({
     state: RestApiState.NOT_STARTED,
     error: undefined,
@@ -34,11 +46,11 @@ function useRestApi<T>(key: string, params: any = {}, keepData = false, dependen
   const requestApi = useContext(RestApiRequestContext);
 
   useEffect(() => {
-    if (requestApi.hasPath(key)) {
+    if (requestApi.hasPath(key) && !options.suspendRequest) {
       setData((oldState) => ({
         state: RestApiState.LOADING,
         error: undefined,
-        data: keepData ? oldState.data : undefined,
+        data: options.keepData ? oldState.data : undefined,
       }));
 
       requestApi.startRequest(key, params, notif)
@@ -65,7 +77,7 @@ function useRestApi<T>(key: string, params: any = {}, keepData = false, dependen
         data: undefined,
       });
     }
-  }, dependencies);
+  }, options.updateTriggers);
 
   return data;
 }
