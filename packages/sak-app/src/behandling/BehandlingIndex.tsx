@@ -28,6 +28,7 @@ import {
 } from '../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
+import { requestApi } from '../data/fpsakApiNyUtenRedux';
 import {
   setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId,
   oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
@@ -105,6 +106,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     super(props);
     const { setBehandlingIdOgVersjon, behandlingVersjon } = props;
     reduxRestApi.injectPaths(props.behandlingLinks);
+    requestApi.injectPaths(props.behandlingLinks);
     setBehandlingIdOgVersjon(behandlingVersjon);
   }
 
@@ -114,6 +116,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     } = this.props;
     if (behandlingId !== prevProps.behandlingId) {
       reduxRestApi.injectPaths(behandlingLinks);
+      requestApi.injectPaths(behandlingLinks);
       setBehandlingIdOgVersjon(behandlingVersjon);
     }
   }

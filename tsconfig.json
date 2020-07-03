@@ -16,7 +16,9 @@
 	},
 	"include": [
 		"packages/rest-api",
+		"packages/rest-api-new",
 		"packages/rest-api-redux",
+		"packages/rest-api-hooks",
 		"packages/error-api-redux",
 		"packages/behandling-felles",
 		"packages/behandling-innsyn",
