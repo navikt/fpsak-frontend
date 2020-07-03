@@ -5,7 +5,7 @@ import { FieldArray } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
-import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import {
   DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
   formatCurrencyNoKr,
@@ -63,7 +63,7 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
   alleKodeverk,
   behandlingType,
 }) => (
-  <EkspanderbartpanelPure
+  <EkspanderbartpanelBase
     className={readOnly ? styles.statusOk : classNames(`fordelBeregningsgrunnlagPeriode--${fom}`)}
     tittel={renderDateHeading(fom, tom)}
     apen={open}
@@ -79,7 +79,7 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
       beregningsgrunnlag={beregningsgrunnlag}
       behandlingType={behandlingType}
     />
-  </EkspanderbartpanelPure>
+  </EkspanderbartpanelBase>
 );
 
 FordelBeregningsgrunnlagPeriodePanel.propTypes = {
