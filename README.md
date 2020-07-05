@@ -1,5 +1,5 @@
 # fpsak-frontend
-Monorepo for Frontend kode for vl-foreldrepenger.
+Monorepo for Frontend kode for vl-foreldrepenger
 [![CircleCI](https://circleci.com/gh/navikt/fpsak-frontend/tree/master.svg?style=svg)](https://circleci.com/gh/navikt/fpsak-frontend/tree/master)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=navikt_fpsak-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=navikt_fpsak-frontend)
