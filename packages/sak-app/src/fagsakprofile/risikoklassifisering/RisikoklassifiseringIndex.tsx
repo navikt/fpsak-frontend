@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { FunctionComponent, useEffect, useCallback } from 'react';
 import { createSelector } from 'reselect';
 import { Location } from 'history';
 import { bindActionCreators } from 'redux';
@@ -43,31 +43,28 @@ interface OwnProps {
  * Viser en av tre komponenter avhengig av: Om ingen klassifisering er utført,
  * om klassifisering er utført og ingen faresignaler er funnet og om klassifisering er utført og faresignaler er funnet
  */
-export class RisikoklassifiseringIndexImpl extends Component<OwnProps> {
-  static defaultProps = {
-    isPanelOpen: false,
-  };
+export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
+  risikoAksjonspunkt,
+  kontrollresultat,
+  behandlingIdentifier,
+  behandlingVersjon,
+  resolveAksjonspunkter,
+  readOnly,
+  push: pushLocation,
+  location,
+  isPanelOpen = false,
+}) => {
+  const toggleRiskPanel = useCallback(() => {
+    pushLocation(getRiskPanelLocationCreator(location)(!isPanelOpen));
+  }, [location, isPanelOpen]);
 
-  componentDidMount = () => {
-    this.apnePanelVedAksjonspunkt();
-  }
-
-  apnePanelVedAksjonspunkt = () => {
-    const { risikoAksjonspunkt, isPanelOpen } = this.props;
-    if (risikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET) {
-      if (!isPanelOpen) {
-        this.toggleRiskPanel();
-      }
+  useEffect(() => {
+    if (risikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !isPanelOpen) {
+      toggleRiskPanel();
     }
-  }
+  }, [behandlingIdentifier.behandlingId, behandlingVersjon]);
 
-  submitAksjonspunkt = (aksjonspunkt) => {
-    const {
-      behandlingIdentifier,
-      behandlingVersjon,
-      resolveAksjonspunkter,
-    } = this.props;
-
+  const submitAksjonspunkt = useCallback((aksjonspunkt) => {
     const params = {
       ...behandlingIdentifier.toJson(),
       behandlingVersjon,
@@ -78,39 +75,21 @@ export class RisikoklassifiseringIndexImpl extends Component<OwnProps> {
     };
 
     return resolveAksjonspunkter(params, behandlingIdentifier);
-  }
+  }, [behandlingIdentifier, behandlingVersjon]);
 
-  toggleRiskPanel = () => {
-    const {
-      push: pushLocation, location, isPanelOpen,
-    } = this.props;
-    pushLocation(getRiskPanelLocationCreator(location)(!isPanelOpen));
-  }
-
-  render() {
-    const {
-      risikoAksjonspunkt,
-      kontrollresultat,
-      isPanelOpen,
-      readOnly,
-      behandlingIdentifier,
-      behandlingVersjon,
-    } = this.props;
-
-    return (
-      <RisikoklassifiseringSakIndex
-        behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
-        behandlingVersjon={behandlingVersjon}
-        aksjonspunkt={risikoAksjonspunkt}
-        risikoklassifisering={kontrollresultat}
-        isPanelOpen={isPanelOpen}
-        readOnly={readOnly}
-        submitAksjonspunkt={this.submitAksjonspunkt}
-        toggleRiskPanel={this.toggleRiskPanel}
-      />
-    );
-  }
-}
+  return (
+    <RisikoklassifiseringSakIndex
+      behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
+      behandlingVersjon={behandlingVersjon}
+      aksjonspunkt={risikoAksjonspunkt}
+      risikoklassifisering={kontrollresultat}
+      isPanelOpen={isPanelOpen}
+      readOnly={readOnly}
+      submitAksjonspunkt={submitAksjonspunkt}
+      toggleRiskPanel={toggleRiskPanel}
+    />
+  );
+};
 
 const getRettigheter = createSelector([
   getNavAnsatt,
