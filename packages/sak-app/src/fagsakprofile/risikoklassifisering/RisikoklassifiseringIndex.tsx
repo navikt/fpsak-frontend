@@ -58,11 +58,12 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
     pushLocation(getRiskPanelLocationCreator(location)(!isPanelOpen));
   }, [location, isPanelOpen]);
 
+  const harRisikoAksjonspunkt = !!risikoAksjonspunkt;
   useEffect(() => {
-    if (risikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !isPanelOpen) {
+    if (harRisikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !isPanelOpen) {
       toggleRiskPanel();
     }
-  }, [behandlingIdentifier.behandlingId, behandlingVersjon]);
+  }, [harRisikoAksjonspunkt, behandlingIdentifier.behandlingId, behandlingVersjon]);
 
   const submitAksjonspunkt = useCallback((aksjonspunkt) => {
     const params = {
