@@ -24,7 +24,7 @@ interface OwnProps {
   setSoknadData: (SoknadData) => void;
   soknadData: SoknadData;
   lagreUfullstendig: () => Promise<any>;
-  lagreFullstendig: (_formValues, _dispatch, values: {}) => Promise<any>;
+  lagreFullstendig: (_formValues, _dispatch, values: any) => Promise<any>;
 }
 
 const RegistrerPapirsoknadPanel: FunctionComponent<OwnProps> = ({

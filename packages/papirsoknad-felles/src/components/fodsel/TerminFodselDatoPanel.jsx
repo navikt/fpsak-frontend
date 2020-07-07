@@ -8,7 +8,6 @@ import { Undertekst, Element } from 'nav-frontend-typografi';
 import { SkjemaGruppe } from 'nav-frontend-skjema';
 import Alertstripe from 'nav-frontend-alertstriper';
 
-
 import {
   FlexColumn, FlexContainer, FlexRow, ArrowBox, BorderBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';

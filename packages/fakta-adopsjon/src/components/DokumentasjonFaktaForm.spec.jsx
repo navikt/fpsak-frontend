@@ -123,7 +123,6 @@ describe('<DokumentasjonFaktaForm>', () => {
     expect(dateField).to.have.length(0);
   });
 
-
   it('skal ikke vise datofelt for barnets ankomst til norge når foreldrepenger hvis ikke oppgitt i søknad', () => {
     const wrapper = shallowWithIntl(<DokumentasjonFaktaForm.WrappedComponent
       intl={intlMock}

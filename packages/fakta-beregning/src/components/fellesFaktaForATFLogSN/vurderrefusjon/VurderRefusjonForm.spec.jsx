@@ -8,11 +8,9 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 
 import { VurderRefusjonFormImpl, lagFieldName } from './VurderRefusjonForm';
 
-
 const {
   VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT,
 } = faktaOmBeregningTilfelle;
-
 
 describe('<VurderRefusjonForm>', () => {
   it('skal vise eitt sett med radioknapper om ein arbeidsgiver', () => {
@@ -35,7 +33,6 @@ describe('<VurderRefusjonForm>', () => {
     const buttons = radioGroup.find(RadioOption);
     expect(buttons).has.length(2);
   });
-
 
   it('skal vise to sett med radioknapper om to arbeidsgivere', () => {
     const senRefusjonkravListe = [

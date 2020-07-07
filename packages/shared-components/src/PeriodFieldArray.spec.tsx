@@ -31,7 +31,6 @@ describe('<PeriodFieldArray>', () => {
     expect(div.find(FormattedMessage)).to.have.length(1);
   });
 
-
   it('skal vise to rader der kun rad nummer to har sletteknapp', () => {
     const fields = new MockFields('perioder', 2);
 

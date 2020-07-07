@@ -112,7 +112,6 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(initialValues[finnFrilansFieldName()]).to.equal(false);
   });
 
-
   it('skal teste at initial values bygges korrekt med frilans og arbeidsforhold uten inntektsmelding', () => {
     const mottarYtelse = {
       erFrilans: true,
@@ -125,7 +124,6 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(initialValues[utledArbeidsforholdFieldName(andel2)]).to.equal(false);
     expect(initialValues[utledArbeidsforholdFieldName(andel3)]).to.equal(true);
   });
-
 
   it('skal ikkje returnere errors', () => {
     const mottarYtelse = {
@@ -196,7 +194,6 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(formattedMsg).to.have.length(1);
     expect(formattedMsg.prop('id')).to.equal(frilansMedAndreFrilanstilfeller());
   });
-
 
   it('skal vise radioknapper for AT uten inntektsmelding', () => {
     const wrapper = shallow(<VurderMottarYtelseFormImpl
@@ -311,7 +308,6 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(fastsatteTilfeller[1]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
   });
 
-
   it('skal transform values ved mottar ytelse for Frilans og arbeidstaker uten inntektsmelding', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING,
       faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE];
@@ -333,7 +329,6 @@ describe('<VurderMottarYtelseForm>', () => {
     values[utledArbeidsforholdFieldName(andel)] = true;
     values[utledArbeidsforholdFieldName(andel2)] = false;
     values[utledArbeidsforholdFieldName(andel3)] = true;
-
 
     const transformed = VurderMottarYtelseForm.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     expect(fastsatteAndelsnr.length).to.equal(3);
@@ -376,7 +371,6 @@ describe('<VurderMottarYtelseForm>', () => {
     const transformed = VurderMottarYtelseForm.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     expect(transformed.fastsattUtenInntektsmelding).to.be.equal(undefined);
   });
-
 
   it('skal ikkje transform values mottar ytelse for frilans visst inntekt allerede er lagt til', () => {
     const tilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL,

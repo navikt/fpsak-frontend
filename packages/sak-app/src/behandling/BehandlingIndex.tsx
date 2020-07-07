@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
-import { RouteProps } from 'react-router';
+import { Location } from 'history';
 
 import { featureToggle } from '@fpsak-frontend/konstanter';
 import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
@@ -28,6 +28,7 @@ import {
 } from '../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
+import { requestApi } from '../data/fpsakApiNyUtenRedux';
 import {
   setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId,
   oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
@@ -64,18 +65,18 @@ interface OwnProps {
   behandlingId: number;
   behandlingTypeKode: string;
   behandlingVersjon: number;
-  location: RouteProps['location'] & { query: { punkt?: string; fakta?: string } };
+  location: Location & { query: { punkt?: string; fakta?: string } };
   oppdaterBehandlingVersjon: (behandlingVersjon: number) => void;
   erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
-  featureToggles: {};
+  featureToggles: any;
   kodeverk: {[key: string]: KodeverkMedNavn[]};
   fagsak: FagsakInfo;
   fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
-  push: (location: RouteProps['location'] | string) => void;
-  visFeilmelding: (data: {}) => void;
+  push: (location: Location | string) => void;
+  visFeilmelding: (data: any) => void;
   rettigheter: {
     writeAccess: {
       employeeHasAccess: boolean;
@@ -105,6 +106,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     super(props);
     const { setBehandlingIdOgVersjon, behandlingVersjon } = props;
     reduxRestApi.injectPaths(props.behandlingLinks);
+    requestApi.injectPaths(props.behandlingLinks);
     setBehandlingIdOgVersjon(behandlingVersjon);
   }
 
@@ -114,6 +116,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     } = this.props;
     if (behandlingId !== prevProps.behandlingId) {
       reduxRestApi.injectPaths(behandlingLinks);
+      requestApi.injectPaths(behandlingLinks);
       setBehandlingIdOgVersjon(behandlingVersjon);
     }
   }
@@ -174,13 +177,12 @@ export class BehandlingIndex extends Component<OwnProps> {
       rettigheter,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
-      key: behandlingId,
     };
 
     if (erAktivPapirsoknad) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingPapirsoknadIndex
               {...defaultProps}
             />
@@ -192,7 +194,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.DOKUMENTINNSYN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingInnsynIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               {...defaultProps}
@@ -205,7 +207,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
               skalBenytteFritekstBrevmal={featureToggles[featureToggle.BENYTT_FRITEKST_BREVMAL_FOR_KLAGE]}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -220,7 +222,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (behandlingTypeKode === BehandlingType.ANKE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingAnkeIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               alleBehandlinger={fagsakBehandlingerInfo}
@@ -234,7 +236,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (erTilbakekreving(behandlingTypeKode)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingTilbakekrevingIndex
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               harApenRevurdering={fagsakBehandlingerInfo
@@ -250,7 +252,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.ENGANGSSTONAD) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingEngangsstonadIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -265,7 +267,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingForeldrepengerIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
@@ -280,7 +282,7 @@ export class BehandlingIndex extends Component<OwnProps> {
     if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.SVANGERSKAPSPENGER) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
             <BehandlingSvangerskapspengerIndex
               featureToggles={featureToggles}
               oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}

@@ -223,7 +223,6 @@ describe('<HenleggBehandlingModal>', () => {
     expect(cancelEventCallback.called).is.true;
   });
 
-
   it('skal vise forhåndvisningslenke når søknad om henleggelse er trukket', () => {
     const previewEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<HenleggBehandlingModalImpl

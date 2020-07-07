@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from './kodeverkPropType';
 import { arbeidsgiverUttakPropType } from './arbeidsforholdPropType';
 
-
 export const uttaksresultatAktivitetPropType = PropTypes.shape({
   arbeidsforholdId: PropTypes.string, // Hvis andel tilhører arbeidsgiver
   arbeidsgiver: arbeidsgiverUttakPropType,

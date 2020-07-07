@@ -16,7 +16,6 @@ import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPa
 
 export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
 
-
 const preutfyllInntektskategori = (andel) => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
 
@@ -36,7 +35,6 @@ export const setGenerellAndelsinfo = (andel) => ({
   inntektskategori: preutfyllInntektskategori(andel),
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
 });
-
 
 const listeInneholderAndel = (liste, field) => (liste ? liste.find((element) => element.andelsnr === field.andelsnr
 || element.andelsnr === field.andelsnrRef) : undefined);
@@ -144,7 +142,6 @@ const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, f
   return false;
 };
 
-
 const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)) {
     return true;
@@ -157,9 +154,11 @@ const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregn
 
 // Overstyring
 
-export const erOverstyring = (values) => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
+export const erOverstyring = (values) => (!!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true);
 
-export const erOverstyringAvBeregningsgrunnlag = createSelector([getFormValuesForBeregning], erOverstyring);
+export const erOverstyringAvBeregningsgrunnlag = createSelector([
+  getFormValuesForBeregning,
+  (state, ownProps) => ownProps.beregningsgrunnlag], (values, beregningsgrunnlag) => erOverstyring(values) || beregningsgrunnlag.erOverstyrtInntekt);
 
 export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => erOverstyring(values)
 || skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)

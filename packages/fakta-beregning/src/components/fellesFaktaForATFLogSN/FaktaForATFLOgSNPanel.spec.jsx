@@ -28,7 +28,6 @@ const aksjonspunkter = [{
   status: { kode: 'OPPR' },
 }];
 
-
 const showTableCallback = sinon.spy();
 
 const lagBeregningsgrunnlag = (andeler) => ({
@@ -46,7 +45,6 @@ const lagBeregningsgrunnlag = (andeler) => ({
   ],
   faktaOmBeregning: {},
 });
-
 
 describe('<FaktaForATFLOgSNPanel>', () => {
   it('skal vise TidsbegrensetArbeidsforholdForm', () => {
@@ -150,7 +148,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     expect(transformedValues.fakta.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori).is.eql('SELVSTENDIG_NÆRINGSDRIVENDE');
   });
 
-
   it('skal kunne transform values nyoppstartet fl og lønnsendring', () => {
     const aktivePaneler = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_LONNSENDRING];
     const forholdMedAtOgFl = {
@@ -179,7 +176,6 @@ describe('<FaktaForATFLOgSNPanel>', () => {
         startdato: '2018-01-01',
       },
     };
-
 
     const frilansAndel = {
       inntektskategori: {

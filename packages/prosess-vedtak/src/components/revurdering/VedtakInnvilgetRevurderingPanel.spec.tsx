@@ -33,7 +33,6 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
     expect(elementFields.last().childAt(0).text()).to.eql('1');
   });
 
-
   it('skal rendre vpanel med årsak og fritekstpanel', () => {
     const wrapper = shallow(<VedtakInnvilgetRevurderingPanel
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}

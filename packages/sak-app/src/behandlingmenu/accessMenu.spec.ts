@@ -253,7 +253,6 @@ describe('accessMenu', () => {
     });
   });
 
-
   describe('byttBehandlendeEnhetAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.UNDER_BEHANDLING];
     const validFagsakStatus = { kode: validFagsakStatuser[0] };
@@ -381,7 +380,6 @@ describe('accessMenu', () => {
       });
     });
   });
-
 
   describe('opprettNyForstegangsBehandlingAccess', () => {
     const validFagsakStatuser = [fagsakStatusCode.AVSLUTTET];

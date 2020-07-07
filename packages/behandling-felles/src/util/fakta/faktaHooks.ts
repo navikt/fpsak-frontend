@@ -15,7 +15,7 @@ import FaktaPanelUtledet from './FaktaPanelUtledet';
 
 const useFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDef[],
-  panelData: {},
+  panelData: any,
   behandling: Behandling,
   rettigheter: Rettigheter,
   aksjonspunkter: Aksjonspunkt[],

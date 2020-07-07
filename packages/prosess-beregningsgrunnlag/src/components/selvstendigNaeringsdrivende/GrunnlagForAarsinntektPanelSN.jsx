@@ -13,7 +13,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 const createHeaderRow = () => (
   <Row key="SNInntektHeader">
     <Column xs="10">
@@ -74,7 +73,6 @@ const createInntektRows = (pgiVerdier) => (
     ))}
   </>
 );
-
 
 /**
  * GrunnlagForAarsinntektPanelSN

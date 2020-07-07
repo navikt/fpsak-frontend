@@ -133,7 +133,6 @@ const getTextFromTilbakekrevingAksjonspunktkode = (aksjonspunkt) => {
   ) : null;
 };
 
-
 const getTextForForeldreansvarsvilkåretAndreLedd = (isForeldrepenger) => {
   const aksjonspunktTextId = isForeldrepenger
     ? 'ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarAndreLeddFP'
@@ -158,7 +157,6 @@ const omgjoerTekstMap = {
   GUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilGunst',
   UGUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilUgunst',
 };
-
 
 const getTextForKlageHelper = (klageVurderingResultat) => {
   let aksjonspunktTextId = '';
@@ -246,6 +244,5 @@ export const getAksjonspunktTextSelector = createSelector(
     return [getTextFromAksjonspunktkode(aksjonspunkt)];
   },
 );
-
 
 export default getAksjonspunktTextSelector;

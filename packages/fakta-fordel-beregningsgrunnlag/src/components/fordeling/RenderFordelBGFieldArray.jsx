@@ -22,7 +22,6 @@ import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregning
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 
-
 import 'core-js/features/array/flat-map';
 
 import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
@@ -51,7 +50,6 @@ const fieldLabel = (index, labelId) => {
   }
   return '';
 };
-
 
 const arbeidsgiverSelectValues = (arbeidsforholdList, getKodeverknavn) => (arbeidsforholdList
   .map((arbeidsforhold) => (

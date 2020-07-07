@@ -15,7 +15,6 @@ import createVisningsnavnForAktivitet from '../../util/visningsnavnHelper';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
-
 const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
   if (andel.overstyrtPrAar !== null && andel.overstyrtPrAar !== undefined) {
     return true;
@@ -33,7 +32,6 @@ const finnAndelerSomSkalVisesAT = (andeler) => {
     .filter((andel) => andel.skalFastsetteGrunnlag === true)
     .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
-
 
 const createRows = (relevanteAndelerAT, getKodeverknavn, readOnly) => {
   const rows = relevanteAndelerAT.map((andel, index) => (
@@ -114,6 +112,5 @@ AksjonspunktBehandlerAT.transformValuesForAT = (values, alleAndelerIForstePeriod
     });
   return inntektPrAndelList;
 };
-
 
 export default AksjonspunktBehandlerAT;

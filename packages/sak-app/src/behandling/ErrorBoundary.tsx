@@ -4,7 +4,7 @@ import { captureException, withScope } from '@sentry/browser';
 import { ErrorPage } from '@fpsak-frontend/sak-feilsider';
 
 interface OwnProps {
-  errorMessageCallback: (error: {}) => void;
+  errorMessageCallback: (error: any) => void;
   children: ReactNode;
 }
 

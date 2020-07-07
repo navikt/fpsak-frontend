@@ -1,13 +1,16 @@
 import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
+import { Location } from 'history';
 
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
-import { DataFetchPendingModal, requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
 } from '@fpsak-frontend/types';
-import { DataFetcher, DataFetcherTriggers, getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
+
+import { LoadingPanel, DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
+import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { getSelectedFagsak, getSelectedSaksnummer } from './fagsakSelectors';
@@ -16,49 +19,46 @@ import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex'
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import { setSelectedSaksnummer } from './duck';
 
-import { behandlingerPath, pathToAnnenPart } from '../app/paths';
+import {
+  erUrlUnderBehandling, erBehandlingValgt, behandlingerPath, pathToAnnenPart,
+} from '../app/paths';
 import FagsakResolver from './FagsakResolver';
 import FagsakGrid from './components/FagsakGrid';
+import { FpsakApiKeys, useRestApi } from '../data/fpsakApiNyUtenRedux';
 import {
   getSelectedBehandlingId,
   getBehandlingVersjon,
   getBehandlingSprak,
-  getUrlBehandlingId,
   getBehandlingType, finnesVerge,
 } from '../behandling/duck';
-import fpsakApi from '../data/fpsakApi';
 import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 import trackRouteParam from '../app/trackRouteParam';
 
-const endepunkter = [fpsakApi.BEHANDLING_PERSONOPPLYSNINGER, fpsakApi.BEHANDLING_FAMILIE_HENDELSE, fpsakApi.ANNEN_PART_BEHANDLING];
-const ingenEndepunkter = [];
-
 const finnLenkeTilAnnenPart = (annenPartBehandling) => pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);
+
 const erTilbakekreving = (behandlingType) => behandlingType && (BehandlingType.TILBAKEKREVING === behandlingType.kode
   || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingType.kode);
 
+const NO_PARAMS = undefined;
+
 interface OwnProps {
-  harValgtBehandling: boolean;
+  selectedSaksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  selectedSaksnummer: number;
   requestPendingMessage?: string;
   alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   sprakkode?: Kodeverk;
   fagsak?: Fagsak;
   harVerge: boolean;
+  location: Location;
 }
 
-interface DataProps {
-  behandlingPersonopplysninger?: Personopplysninger;
-  behandlingFamilieHendelse?: FamilieHendelseSamling;
-  annenPartBehandling?: {
-    saksnr: {
-      verdi: string;
-    };
-    behandlingId: number;
+interface AnnenPartBehandling {
+  saksnr: {
+    verdi: string;
   };
+  behandlingId: number;
 }
 
 /**
@@ -67,7 +67,6 @@ interface DataProps {
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 export const FagsakIndex: FunctionComponent<OwnProps> = ({
-  harValgtBehandling,
   selectedSaksnummer,
   requestPendingMessage,
   behandlingId,
@@ -77,48 +76,62 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
   sprakkode,
   fagsak,
   harVerge,
-}) => (
-  <>
-    <FagsakResolver key={selectedSaksnummer}>
-      <FagsakGrid
-        behandlingContent={<Route strict path={behandlingerPath} component={BehandlingerIndex} />}
-        profileAndNavigationContent={<FagsakProfileIndex />}
-        supportContent={<BehandlingSupportIndex />}
-        visittkortContent={() => {
-          if (harValgtBehandling && !behandlingId) {
-            return null;
-          }
+  location,
+}) => {
+  const skalIkkeHenteData = erUrlUnderBehandling(location) || (erBehandlingValgt(location) && !behandlingId);
 
-          return (
-            <DataFetcher
-              fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion: behandlingVersjon }, false)}
-              endpointParams={{ [fpsakApi.ANNEN_PART_BEHANDLING.name]: { saksnummer: selectedSaksnummer } }}
-              key={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? 0 : 1}
-              endpoints={endepunkter.every((endepunkt) => endepunkt.isEndpointEnabled()) ? endepunkter : ingenEndepunkter}
-              showOldDataWhenRefetching
-              loadingPanel={<LoadingPanel />}
-              render={(dataProps: DataProps) => (
-                <VisittkortSakIndex
-                  personopplysninger={dataProps.behandlingPersonopplysninger}
-                  familieHendelse={dataProps.behandlingFamilieHendelse}
-                  lenkeTilAnnenPart={dataProps.annenPartBehandling ? finnLenkeTilAnnenPart(dataProps.annenPartBehandling) : undefined}
-                  alleKodeverk={alleKodeverk}
-                  sprakkode={sprakkode}
-                  fagsak={fagsak}
-                  harTilbakekrevingVerge={erTilbakekreving(behandlingType) && harVerge}
-                />
-              )}
-            />
-          );
-        }}
-      />
-    </FagsakResolver>
-    {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
-  </>
-);
+  const options = {
+    updateTriggers: [behandlingId, behandlingVersjon],
+    keepData: true,
+    suspendRequest: skalIkkeHenteData,
+  };
+
+  const {
+    data: behandlingPersonopplysninger, state: personopplysningerState,
+  } = useRestApi<Personopplysninger>(FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, NO_PARAMS, options);
+  const {
+    data: behandlingFamilieHendelse, state: familieHendelseState,
+  } = useRestApi<FamilieHendelseSamling>(FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE, NO_PARAMS, options);
+  const {
+    data: annenPartBehandling, state: annenPartState,
+  } = useRestApi<AnnenPartBehandling>(FpsakApiKeys.ANNEN_PART_BEHANDLING, { saksnummer: selectedSaksnummer }, options);
+
+  return (
+    <>
+      <FagsakResolver key={selectedSaksnummer}>
+        <FagsakGrid
+          behandlingContent={<Route strict path={behandlingerPath} component={BehandlingerIndex} />}
+          profileAndNavigationContent={<FagsakProfileIndex />}
+          supportContent={<BehandlingSupportIndex />}
+          visittkortContent={() => {
+            if (skalIkkeHenteData) {
+              return null;
+            }
+
+            if (personopplysningerState === RestApiState.LOADING || familieHendelseState === RestApiState.LOADING || annenPartState === RestApiState.LOADING) {
+              return <LoadingPanel />;
+            }
+
+            return (
+              <VisittkortSakIndex
+                personopplysninger={behandlingPersonopplysninger}
+                familieHendelse={behandlingFamilieHendelse}
+                lenkeTilAnnenPart={annenPartBehandling ? finnLenkeTilAnnenPart(annenPartBehandling) : undefined}
+                alleKodeverk={alleKodeverk}
+                sprakkode={sprakkode}
+                fagsak={fagsak}
+                harTilbakekrevingVerge={erTilbakekreving(behandlingType) && harVerge}
+              />
+            );
+          }}
+        />
+      </FagsakResolver>
+      {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
+    </>
+  );
+};
 
 const mapStateToProps = (state) => ({
-  harValgtBehandling: !!getUrlBehandlingId(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
   behandlingType: getBehandlingType(state),

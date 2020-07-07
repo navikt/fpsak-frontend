@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, {
+  FunctionComponent, useEffect, useRef,
+} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
@@ -27,7 +29,7 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
-    setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
+    setHandler: (events: {[key: string]: (params: any) => Promise<any> }) => void;
     clear: () => void;
   };
   opneSokeside: () => void;
@@ -43,27 +45,52 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  nyBehandlendeEnhet: (params: {}) => Promise<void>;
-  settBehandlingPaVent: (params: {}) => Promise<void>;
-  taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
-  henleggBehandling: (params: {}) => Promise<void>;
+  nyBehandlendeEnhet: (params: any) => Promise<void>;
+  settBehandlingPaVent: (params: any) => Promise<void>;
+  taBehandlingAvVent: (params: any, { keepData: boolean }) => Promise<void>;
+  henleggBehandling: (params: any) => Promise<void>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   hentKodeverk: () => Promise<any>;
-  opprettVerge: (params: {}) => Promise<any>;
-  fjernVerge: (params: {}) => Promise<any>;
+  opprettVerge: (params: any) => Promise<any>;
+  fjernVerge: (params: any) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
   destroyReduxForm: (form: string) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
-  componentDidMount = () => {
-    const {
-      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId, hentKodeverk,
-      opprettVerge, fjernVerge,
-    } = this.props;
+const BehandlingTilbakekrevingIndex: FunctionComponent<Props> = ({
+  behandlingEventHandler,
+  nyBehandlendeEnhet,
+  settBehandlingPaVent,
+  taBehandlingAvVent,
+  henleggBehandling,
+  hentBehandling,
+  behandlingId,
+  resetRestApiContext,
+  destroyReduxForm,
+  behandling,
+  oppdaterBehandlingVersjon,
+  kodeverk: fpsakKodeverk,
+  fagsak,
+  rettigheter,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+  valgtProsessSteg,
+  settPaVent,
+  opneSokeside,
+  forrigeBehandling,
+  hentKodeverk,
+  opprettVerge,
+  fjernVerge,
+  tilbakekrevingKodeverk,
+  valgtFaktaSteg,
+  harApenRevurdering,
+  hasFetchError,
+}) => {
+  const forrigeVersjon = useRef<number>();
+
+  useEffect(() => {
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
         .then(() => hentBehandling({ behandlingId }, { keepData: true })),
@@ -77,74 +104,55 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
 
     hentBehandling({ behandlingId }, { keepData: false });
     hentKodeverk();
-  };
 
-  componentWillUnmount = () => {
-    const {
-      behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling,
-    } = this.props;
-    behandlingEventHandler.clear();
-    resetRestApiContext();
-    setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
-  };
+    return () => {
+      behandlingEventHandler.clear();
+      resetRestApiContext();
+      setTimeout(() => {
+        destroyReduxForm(getBehandlingFormPrefix(behandlingId, forrigeVersjon.current));
+      }, 1000);
+    };
+  }, [behandlingId]);
 
-  render() {
-    const {
-      behandling,
-      forrigeBehandling,
-      oppdaterBehandlingVersjon,
-      kodeverk: fpsakKodeverk,
-      tilbakekrevingKodeverk,
-      fagsak,
-      rettigheter,
-      oppdaterProsessStegOgFaktaPanelIUrl,
-      valgtProsessSteg,
-      valgtFaktaSteg,
-      settPaVent,
-      hentBehandling,
-      opneSokeside,
-      harApenRevurdering,
-      hasFetchError,
-    } = this.props;
-
-    if (!behandling || !tilbakekrevingKodeverk) {
-      return <LoadingPanel />;
-    }
-
-    reduxRestApi.injectPaths(behandling.links);
-
-    return (
-      <DataFetcher
-        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-        endpoints={tilbakekrevingData}
-        showOldDataWhenRefetching
-        loadingPanel={<LoadingPanel />}
-        render={(dataProps: FetchedData, isFinished) => (
-          <>
-            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
-            <TilbakekrevingPaneler
-              behandling={isFinished ? behandling : forrigeBehandling}
-              fetchedData={dataProps}
-              fagsak={fagsak}
-              kodeverk={tilbakekrevingKodeverk}
-              fpsakKodeverk={fpsakKodeverk}
-              rettigheter={rettigheter}
-              valgtProsessSteg={valgtProsessSteg}
-              valgtFaktaSteg={valgtFaktaSteg}
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-              settPaVent={settPaVent}
-              hentBehandling={hentBehandling}
-              opneSokeside={opneSokeside}
-              harApenRevurdering={harApenRevurdering}
-              hasFetchError={hasFetchError}
-            />
-          </>
-        )}
-      />
-    );
+  if (!behandling || !tilbakekrevingKodeverk) {
+    return <LoadingPanel />;
   }
-}
+
+  forrigeVersjon.current = behandling.versjon;
+
+  reduxRestApi.injectPaths(behandling.links);
+
+  return (
+    <DataFetcher
+      fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+      endpoints={tilbakekrevingData}
+      showOldDataWhenRefetching
+      loadingPanel={<LoadingPanel />}
+      render={(dataProps: FetchedData, isFinished) => (
+        <>
+          <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
+          <TilbakekrevingPaneler
+            behandling={isFinished ? behandling : forrigeBehandling}
+            fetchedData={dataProps}
+            fagsak={fagsak}
+            kodeverk={tilbakekrevingKodeverk}
+            fpsakKodeverk={fpsakKodeverk}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            hentBehandling={hentBehandling}
+            opneSokeside={opneSokeside}
+            harApenRevurdering={harApenRevurdering}
+            hasFetchError={hasFetchError}
+          />
+        </>
+      )}
+    />
+  );
+};
 
 const mapStateToProps = (state): StateProps => ({
   behandling: tilbakekrevingApi.BEHANDLING_TILBAKE.getRestApiData()(state),

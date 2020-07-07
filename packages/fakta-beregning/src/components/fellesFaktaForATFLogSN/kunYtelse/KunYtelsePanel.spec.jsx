@@ -3,7 +3,6 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import KunYtelsePanel, { brukersAndelFieldArrayName } from './KunYtelsePanel';
 import { besteberegningField } from './KunYtelseBesteberegningPanel';
 
-
 const faktaOmBeregningAndel1 = {
   andelsnr: 1,
   fastsattBelopPrMnd: null,
@@ -50,7 +49,6 @@ describe('<KunYtelsePanel>', () => {
     expect(transformedValues.kunYtelseFordeling.andeler[1].nyAndel).to.equal(true);
     expect(transformedValues.kunYtelseFordeling.andeler[1].lagtTilAvSaksbehandler).to.equal(true);
   });
-
 
   it('skal bygge initial values', () => {
     const andel1 = {

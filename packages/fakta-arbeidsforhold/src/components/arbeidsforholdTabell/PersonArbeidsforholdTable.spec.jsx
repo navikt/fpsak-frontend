@@ -9,7 +9,6 @@ import PersonArbeidsforholdTable, { utledNøkkel } from './PersonArbeidsforholdT
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import { mountWithIntl } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
 
-
 describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
     id: '1',

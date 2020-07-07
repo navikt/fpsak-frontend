@@ -19,16 +19,13 @@ import {
 } from './VurderMottarYtelseUtils';
 import { createVisningsnavnForAktivitet } from '../../../ArbeidsforholdHelper';
 
-
 const andreFrilansTilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-
 
 export const mottarYtelseForArbeidMsg = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid');
 
 const utledArbeidsforholdUtenIMRadioTekst = (arbeidsforhold, alleKodeverk) => (
   <FormattedMessage id={mottarYtelseForArbeidMsg()} values={{ arbeid: createVisningsnavnForAktivitet(arbeidsforhold, alleKodeverk) }} />
 );
-
 
 const mottarYtelseArbeidsforholdRadio = (andel, readOnly, isAksjonspunktClosed, alleKodeverk) => (
   <div key={utledArbeidsforholdFieldName(andel)}>
@@ -58,7 +55,6 @@ const finnFrilansTekstKode = (tilfeller) => {
   }
   return frilansUtenAndreFrilanstilfeller();
 };
-
 
 /**
  * VurderMottarYtelseForm
@@ -140,7 +136,6 @@ const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregn
   return {};
 };
 
-
 const transformValuesFrilans = (values, inntektVerdier, beregningsgrunnlag, fastsatteAndelsnr, faktaOmBeregningTilfeller) => {
   if (inntektVerdier === null) {
     return {};
@@ -194,7 +189,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const VurderMottarYtelseForm = connect(mapStateToProps)(VurderMottarYtelseFormImpl);
-
 
 VurderMottarYtelseForm.buildInitialValues = (vurderMottarYtelse) => {
   const initialValues = {};

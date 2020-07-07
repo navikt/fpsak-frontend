@@ -13,7 +13,6 @@ describe('<Table>', () => {
     'FagsakList.Sakstype',
   ];
 
-
   it('skal vise korrekt antall kolonneheadere med korrekt tekst', () => {
     const wrapper = shallow(
       <Table headerTextCodes={headerTextCodes}>
@@ -58,7 +57,6 @@ describe('<Table>', () => {
     expect(tableHeaderCols.first().childAt(0).prop('id')).to.eql('FagsakList.Saksnummer');
     expect(tableHeaderCols.last().childAt(0).prop('id')).to.eql('FagsakList.Sakstype');
   });
-
 
   it('skal vise korrekt antall rader og kolonner', () => {
     const wrapper = shallow(

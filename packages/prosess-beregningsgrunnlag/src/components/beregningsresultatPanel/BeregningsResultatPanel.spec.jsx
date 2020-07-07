@@ -8,7 +8,6 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
 import BeregningsresutatPanel from './BeregningsResultatPanel';
 
-
 const tableData = {
 
   avkortetRad: { ledetekst: 'Avkortet beregningsgrunnlag (6G=599148)', verdi: '380' },

@@ -21,7 +21,6 @@ const {
   FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING,
 } = faktaOmBeregningTilfelle;
 
-
 const behandlingId = 1;
 const behandlingVersjon = 1;
 
@@ -83,7 +82,6 @@ describe('<VurderOgFastsettATFL>', () => {
     expect(transformed.fakta.besteberegningAndeler.nyDagpengeAndel.fastsatteVerdier.fastsattBeløp).to.equal(20000);
   });
 
-
   it('skal ikkje transform inntekt for nyoppstartetFL og lønnsendring når man har besteberegning', () => {
     const values = {};
     values[besteberegningField] = true;
@@ -107,7 +105,6 @@ describe('<VurderOgFastsettATFL>', () => {
     expect(transformed.fakta.besteberegningAndeler.nyDagpengeAndel === null).to.equal(false);
     expect(transformed.fakta.faktaOmBeregningTilfeller.length).to.equal(4);
   });
-
 
   it('skal fastsette inntekt for nyoppstartetFL og arbeidstaker uten inntektsmelding med lønnendring', () => {
     const values = {};
@@ -140,7 +137,6 @@ describe('<VurderOgFastsettATFL>', () => {
     expect(transformed.faktaOmBeregningTilfeller.includes(FASTSETT_MAANEDSINNTEKT_FL)).to.equal(true);
     expect(transformed.faktaOmBeregningTilfeller.includes(FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)).to.equal(true);
   });
-
 
   it('skal vise komponent', () => {
     const tilfeller = [VURDER_BESTEBEREGNING, VURDER_LONNSENDRING,
