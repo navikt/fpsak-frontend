@@ -65,7 +65,7 @@ export const HistorikkMalTypeForeldelse = ({
             })}
             <VerticalSpacer eightPx />
             <Normaltekst>
-              {decodeHtmlEntity(begrunnelseFritekst) && decodeHtmlEntity(begrunnelseFritekst)}
+              {begrunnelseFritekst && decodeHtmlEntity(begrunnelseFritekst)}
             </Normaltekst>
             <VerticalSpacer eightPx />
           </div>
