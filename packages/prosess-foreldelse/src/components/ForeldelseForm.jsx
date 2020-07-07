@@ -7,7 +7,7 @@ import moment from 'moment';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, decodeHtmlEntity, omit } from '@fpsak-frontend/utils';
 import {
   AksjonspunktHelpTextTemp, FlexColumn, FlexRow, VerticalSpacer, FaktaGruppe,
 } from '@fpsak-frontend/shared-components';
@@ -280,6 +280,7 @@ export const buildInitialValues = (foreldelsePerioder) => ({
     ...p,
     feilutbetaling: p.belop,
     foreldet: p.foreldelseVurderingType.kode,
+    begrunnelse: decodeHtmlEntity(p.begrunnelse),
   })),
 });
 

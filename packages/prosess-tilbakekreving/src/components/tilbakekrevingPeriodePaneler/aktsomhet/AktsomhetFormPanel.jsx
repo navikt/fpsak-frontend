@@ -5,7 +5,7 @@ import { FormSection } from 'redux-form';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import { decodeHtmlEntity, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import Aktsomhet from '../../../kodeverk/aktsomhet';
@@ -153,7 +153,7 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
-      sarligGrunnerBegrunnelse: aktsomhetInfo.sarligGrunnerBegrunnelse,
+      sarligGrunnerBegrunnelse: decodeHtmlEntity(aktsomhetInfo.sarligGrunnerBegrunnelse),
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
       ...(aktsomhetInfo.sarligGrunner ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [(sg.kode ? sg.kode : sg)]: true }), {}) : {}),
     },
