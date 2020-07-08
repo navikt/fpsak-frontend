@@ -50,7 +50,7 @@ const MenySakIndex: FunctionComponent<OwnProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  });
+  }, [visMenySomApen]);
 
   return (
     <RawIntlProvider value={intl}>

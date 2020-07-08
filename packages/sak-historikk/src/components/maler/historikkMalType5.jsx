@@ -78,7 +78,6 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
   return undefined;
 };
 
-
 const HistorikkMalType5 = ({
   historikkinnslagDeler,
   behandlingLocation,
@@ -186,14 +185,11 @@ const HistorikkMalType5 = ({
             <div key={tekst}><Element>{tekst}</Element></div>
           ))}
 
-
         {lagGjeldendeFraInnslag(historikkinnslagDel)}
-
 
         {historikkinnslagDel.soeknadsperiode && lagSoeknadsperiode(historikkinnslagDel.soeknadsperiode, getKodeverknavn)}
 
         {lagTemaHeadingId(historikkinnslagDel)}
-
 
         {historikkinnslagDel.endredeFelter && historikkinnslagDel.endredeFelter.map((endretFelt, i) => (
           <div key={`endredeFelter${i + 1}`}>

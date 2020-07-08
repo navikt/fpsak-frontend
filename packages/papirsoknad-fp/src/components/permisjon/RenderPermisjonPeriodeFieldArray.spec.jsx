@@ -11,7 +11,6 @@ import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-papirsoknad-fp';
 import RenderPermisjonPeriodeFieldArray, { RenderPermisjonPeriodeFieldArray as RenderPermisjonPeriodeFieldArrayImpl } from './RenderPermisjonPeriodeFieldArray';
 
-
 const periodeTyper = [{ navn: 'FELLESPERIODE', kode: uttakPeriodeType.FELLESPERIODE },
   { navn: 'MODREKVOTE', kode: uttakPeriodeType.MODREKVOTE },
   { navn: 'FEDREKVOTE', kode: uttakPeriodeType.FEDREKVOTE },
@@ -98,7 +97,6 @@ describe('<RenderPermisjonPeriodeFieldArray>', () => {
     expect(selectFields.last().prop('disabled')).is.true;
   });
 
-
   it('skal vise felter med mors aktivitet disbaled søker er far og mødrekvote er valgt', () => {
     const wrapper = shallowWithIntl(<RenderPermisjonPeriodeFieldArrayImpl
       fields={fields}
@@ -184,7 +182,6 @@ describe('<RenderPermisjonPeriodeFieldArray>', () => {
   });
 
   const getPeriod = (periodeType, periodeFom, periodeTom) => ({ periodeType, periodeFom, periodeTom });
-
 
   it('skal validere at alle perioder har gyldige datoer', () => {
     const errorsWithInvalidDates = RenderPermisjonPeriodeFieldArray.validate([getPeriod('FELLESPERIODE', 'abc', 'xyz'),

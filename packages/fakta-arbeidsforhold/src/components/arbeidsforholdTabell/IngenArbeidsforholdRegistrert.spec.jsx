@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
 
-
 describe('<IngenArbeidsforholdRegistrert>', () => {
   const headerColumnContent = [
     <span>PersonArbeidsforholdTable.Arbeidsforhold</span>,

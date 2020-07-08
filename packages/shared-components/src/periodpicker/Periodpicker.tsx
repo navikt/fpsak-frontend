@@ -17,9 +17,13 @@ interface OwnProps {
   names: string[];
   label?: ReactNode;
   placeholder?: string;
-  feil?: { feilmelding?: string };
+  feil?: string;
   disabled?: boolean;
-  disabledDays?: {};
+  disabledDays: {
+    before: Date;
+    after?: Date;
+  };
+  hideLabel?: boolean;
 }
 
 interface StateProps {

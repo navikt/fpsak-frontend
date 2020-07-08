@@ -56,7 +56,6 @@ describe('<VurderBesteberegning>', () => {
     expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(0);
   });
 
-
   it('skal transform values om besteberegning', () => {
     const values = {};
     values[besteberegningField] = true;

@@ -10,6 +10,7 @@ import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/for
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import vergeAksjonspunkterPropType from '../propTypes/vergeAksjonspunkterPropType';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
 
@@ -93,7 +94,8 @@ RegistrereVergeInfoPanelImpl.defaultProps = {
 const buildInitialValues = createSelector([
   (ownProps) => ownProps.verge,
   (ownProps) => ownProps.aksjonspunkter], (verge, aksjonspunkter) => ({
-  ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
+  begrunnelse: verge && verge.begrunnelse ? decodeHtmlEntity(verge.begrunnelse) : FaktaBegrunnelseTextField
+    .buildInitialValues(aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]).begrunnelse,
   ...RegistrereVergeFaktaForm.buildInitialValues(verge || {}),
 }));
 

@@ -10,7 +10,6 @@ import shallowWithIntl, { mountWithIntl } from '../../../i18n/intl-enzyme-test-h
 import SammenligningsgrunnlagAOrdningen from './SammenligningsgrunnlagAOrdningen';
 import Lesmerpanel2 from '../redesign/LesmerPanel';
 
-
 const relevanteStatuser = {
   isArbeidstaker: true,
   isFrilanser: true,

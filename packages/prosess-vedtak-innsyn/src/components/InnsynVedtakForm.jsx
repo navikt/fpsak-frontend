@@ -141,7 +141,6 @@ export const InnsynVedtakFormImpl = ({
   );
 };
 
-
 InnsynVedtakFormImpl.propTypes = {
   saksNr: PropTypes.number.isRequired,
   intl: PropTypes.shape().isRequired,

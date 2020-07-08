@@ -10,7 +10,6 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag.less'
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
-
 /**
  * GrunnlagForAarsinntektPanelFL
  *

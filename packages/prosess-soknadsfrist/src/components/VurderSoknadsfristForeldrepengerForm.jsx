@@ -26,7 +26,6 @@ import {
   ProsessStegBegrunnelseTextField, ProsessStegSubmitButton,
 } from '@fpsak-frontend/prosess-felles';
 
-
 import styles from './vurderSoknadsfristForeldrepengerForm.less';
 
 const isEdited = (hasAksjonspunkt, gyldigSenFremsetting) => hasAksjonspunkt && gyldigSenFremsetting !== undefined;

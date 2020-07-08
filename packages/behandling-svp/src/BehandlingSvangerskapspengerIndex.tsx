@@ -1,14 +1,17 @@
-import React, { PureComponent } from 'react';
+import React, {
+  FunctionComponent, useEffect, useRef,
+} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/form';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner, DataFetcherTriggers, DataFetcherBehandlingData,
+  FagsakInfo, Rettigheter, SettPaVentParams, ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
 import { KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import svpBehandlingApi, { reduxRestApi, SvpBehandlingApiKeys } from './data/svpBehandlingApi';
 import SvangerskapspengerPaneler from './components/SvangerskapspengerPaneler';
@@ -27,11 +30,11 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
-    setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
+    setHandler: (events: {[key: string]: (params: any) => Promise<any> }) => void;
     clear: () => void;
   };
   opneSokeside: () => void;
-  featureToggles: {};
+  featureToggles: any;
 }
 
 interface StateProps {
@@ -42,14 +45,14 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  nyBehandlendeEnhet: (params: {}) => Promise<void>;
-  settBehandlingPaVent: (params: {}) => Promise<void>;
-  taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
-  henleggBehandling: (params: {}) => Promise<void>;
-  opneBehandlingForEndringer: (params: {}) => Promise<any>;
-  opprettVerge: (params: {}) => Promise<any>;
-  fjernVerge: (params: {}) => Promise<any>;
-  lagreRisikoklassifiseringAksjonspunkt: (params: {}) => Promise<any>;
+  nyBehandlendeEnhet: (params: any) => Promise<void>;
+  settBehandlingPaVent: (params: any) => Promise<void>;
+  taBehandlingAvVent: (params: any, { keepData: boolean }) => Promise<void>;
+  henleggBehandling: (params: any) => Promise<void>;
+  opneBehandlingForEndringer: (params: any) => Promise<any>;
+  opprettVerge: (params: any) => Promise<any>;
+  fjernVerge: (params: any) => Promise<any>;
+  lagreRisikoklassifiseringAksjonspunkt: (params: any) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
@@ -58,12 +61,37 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
-  componentDidMount = () => {
-    const {
-      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
-      opneBehandlingForEndringer, opprettVerge, fjernVerge, lagreRisikoklassifiseringAksjonspunkt,
-    } = this.props;
+const BehandlingSvangerskapspengerIndex: FunctionComponent<Props> = ({
+  opneBehandlingForEndringer,
+  opprettVerge,
+  fjernVerge,
+  lagreRisikoklassifiseringAksjonspunkt,
+  behandlingEventHandler,
+  nyBehandlendeEnhet,
+  settBehandlingPaVent,
+  taBehandlingAvVent,
+  henleggBehandling,
+  hentBehandling,
+  behandlingId,
+  resetRestApiContext,
+  destroyReduxForm,
+  behandling,
+  oppdaterBehandlingVersjon,
+  kodeverk,
+  fagsak,
+  rettigheter,
+  oppdaterProsessStegOgFaktaPanelIUrl,
+  valgtProsessSteg,
+  valgtFaktaSteg,
+  settPaVent,
+  opneSokeside,
+  forrigeBehandling,
+  hasFetchError,
+  featureToggles,
+}) => {
+  const forrigeVersjon = useRef<number>();
+
+  useEffect(() => {
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
         .then(() => hentBehandling({ behandlingId }, { keepData: true })),
@@ -78,71 +106,54 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
+
+    return () => {
+      behandlingEventHandler.clear();
+      resetRestApiContext();
+      setTimeout(() => {
+        destroyReduxForm(getBehandlingFormPrefix(behandlingId, forrigeVersjon.current));
+      }, 1000);
+    };
+  }, [behandlingId]);
+
+  if (!behandling) {
+    return <LoadingPanel />;
   }
 
-  componentWillUnmount = () => {
-    const {
-      behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling,
-    } = this.props;
-    behandlingEventHandler.clear();
-    resetRestApiContext();
-    setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
-  }
+  forrigeVersjon.current = behandling.versjon;
 
-  render() {
-    const {
-      behandling,
-      forrigeBehandling,
-      oppdaterBehandlingVersjon,
-      kodeverk,
-      fagsak,
-      rettigheter,
-      oppdaterProsessStegOgFaktaPanelIUrl,
-      valgtProsessSteg,
-      valgtFaktaSteg,
-      settPaVent,
-      hentBehandling,
-      opneSokeside,
-      hasFetchError,
-      featureToggles,
-    } = this.props;
+  reduxRestApi.injectPaths(behandling.links);
 
-    if (!behandling) {
-      return <LoadingPanel />;
-    }
-
-    reduxRestApi.injectPaths(behandling.links);
-
-    return (
-      <DataFetcherBehandlingData
-        fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
-        endpoints={svangerskapspengerData}
-        showOldDataWhenRefetching
-        render={(dataProps: FetchedData, isFinished) => (
-          <>
-            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
-            <SvangerskapspengerPaneler
-              behandling={isFinished ? behandling : forrigeBehandling}
-              fetchedData={dataProps}
-              fagsak={fagsak}
-              alleKodeverk={kodeverk}
-              rettigheter={rettigheter}
-              valgtProsessSteg={valgtProsessSteg}
-              valgtFaktaSteg={valgtFaktaSteg}
-              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-              settPaVent={settPaVent}
-              hentBehandling={hentBehandling}
-              opneSokeside={opneSokeside}
-              hasFetchError={hasFetchError}
-              featureToggles={featureToggles}
-            />
-          </>
-        )}
-      />
-    );
-  }
-}
+  return (
+    <DataFetcher
+      fetchingTriggers={new DataFetcherTriggers({ behandlingVersion: behandling.versjon }, true)}
+      endpoints={svangerskapspengerData}
+      showOldDataWhenRefetching
+      loadingPanel={<LoadingPanel />}
+      render={(dataProps: FetchedData, isFinished) => (
+        <>
+          <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
+          <SvangerskapspengerPaneler
+            behandling={isFinished ? behandling : forrigeBehandling}
+            fetchedData={dataProps}
+            fagsak={fagsak}
+            alleKodeverk={kodeverk}
+            rettigheter={rettigheter}
+            valgtProsessSteg={valgtProsessSteg}
+            valgtFaktaSteg={valgtFaktaSteg}
+            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+            settPaVent={settPaVent}
+            hentBehandling={hentBehandling}
+            opneSokeside={opneSokeside}
+            hasFetchError={hasFetchError}
+            featureToggles={featureToggles}
+          />
+        </>
+      )}
+    />
+  );
+};
 
 const mapStateToProps = (state): StateProps => ({
   behandling: svpBehandlingApi.BEHANDLING_SVP.getRestApiData()(state),

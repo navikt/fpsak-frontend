@@ -23,7 +23,6 @@ import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType'
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
 
-
 const visningForManglendeBG = () => (
   <>
     <Undertittel>
@@ -58,7 +57,6 @@ const getRelevanteStatuser = (bg) => (bg.aktivitetStatus ? ({
 }) : null);
 
 const getBGVilkar = (vilkar) => (vilkar ? vilkar.find((v) => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined);
-
 
 const getAksjonspunktForGraderingPaaAndelUtenBG = (aksjonspunkter) => (aksjonspunkter
   ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)

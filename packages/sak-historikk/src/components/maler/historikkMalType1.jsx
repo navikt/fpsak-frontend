@@ -81,7 +81,6 @@ export default HistorikkMalType1;
  <hendelse>: <resultat>
  <skjermlinke>
 
-
  +----------------------------+
  | Type 3                     |
  | SAK_RETUR                  |
@@ -90,7 +89,6 @@ export default HistorikkMalType1;
  <hendelse>
  <begrunnelsestekst>
  <dokumentLinker>
-
 
  +----------------------------+
  | Type 4                     |
@@ -101,7 +99,6 @@ export default HistorikkMalType1;
  <hendelse>
  <årsak>
  <begrunnelsestekst>
-
 
  +----------------------------+
  | Type 5                     |

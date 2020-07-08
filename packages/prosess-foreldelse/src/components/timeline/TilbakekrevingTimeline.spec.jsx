@@ -10,7 +10,6 @@ import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-foreldelse';
 
-
 describe('<TilbakekrevingTimeline>', () => {
   it('skal rendre tidslinje korrekt', () => {
     const perioder = [{

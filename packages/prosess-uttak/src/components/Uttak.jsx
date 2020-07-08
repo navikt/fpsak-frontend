@@ -39,7 +39,6 @@ const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
 const STONADSKONTOER_TEMP = 'stonadskonto';
 const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT).toDate();
 
-
 const fodselsdato = (soknadsType, endredFodselsDato, familiehendelseDate, omsorgsOvertagelseDato) => {
   if (soknadsType === soknadType.FODSEL) {
     return (endredFodselsDato ? parseDateString(endredFodselsDato) : parseDateString(familiehendelseDate));
@@ -111,6 +110,7 @@ export class UttakImpl extends Component {
     };
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     this.setSelectedDefaultPeriod();
   }

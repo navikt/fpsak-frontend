@@ -48,7 +48,6 @@ describe('<VarselOmRevurderingPaVentModal>', () => {
       ventearsaker={[]}
     />);
 
-
     const modal = wrapper.find(Modal);
     expect(modal.prop('isOpen')).is.false;
   });

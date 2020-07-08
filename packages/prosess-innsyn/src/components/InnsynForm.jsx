@@ -116,7 +116,6 @@ export const InnsynFormImpl = ({
   </form>
 );
 
-
 InnsynFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

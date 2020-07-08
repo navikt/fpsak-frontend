@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
 import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -69,9 +69,8 @@ describe('<AnkeProsess>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <AnkeProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <AnkeProsess
         data={{ aksjonspunkter, vilkar, ankeVurdering }}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -91,28 +90,27 @@ describe('<AnkeProsess>', () => {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Ankebehandling',
+      labelId: 'Behandlingspunkt.Ankebehandling',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Resultat',
+      labelId: 'Behandlingspunkt.AnkeResultat',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Merknader',
+      labelId: 'Behandlingspunkt.AnkeMerknader',
       type: 'default',
     }]);
   });
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <AnkeProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <AnkeProsess
         data={{ aksjonspunkter, vilkar, ankeVurdering }}
         fagsak={fagsak}
         behandling={behandling as Behandling}

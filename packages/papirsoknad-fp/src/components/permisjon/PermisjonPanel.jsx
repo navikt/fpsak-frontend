@@ -116,7 +116,6 @@ PermisjonPanel.defaultProps = {
   error: {},
 };
 
-
 const permisjonErrors = (values) => {
   const errors = PermisjonOverforingAvKvoterPanel.validate(values);
 
@@ -160,7 +159,6 @@ const overLappingError = (values) => {
   }
   return false;
 };
-
 
 PermisjonPanel.validate = (values) => {
   let errors = {};
@@ -227,7 +225,6 @@ PermisjonPanel.initialValues = {
     fulltUttak: false,
   },
 };
-
 
 const mapStateToProps = (state, ownProps) => {
   const visFeilMelding = !!(ownProps.error && ownProps.error.permisjonsError && ownProps.submitFailed);

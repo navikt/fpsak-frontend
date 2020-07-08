@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import BostedBarnView from './BostedBarnView';

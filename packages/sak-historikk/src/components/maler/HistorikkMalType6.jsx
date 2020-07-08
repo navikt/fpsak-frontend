@@ -40,7 +40,6 @@ const HistorikkMalType6 = ({
   );
 };
 
-
 HistorikkMalType6.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   intl: PropTypes.shape().isRequired,

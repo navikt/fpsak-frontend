@@ -13,7 +13,6 @@ import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 
 import styles from './egenVirksomhetPanel.less';
 
-
 const arrayMinLength1 = arrayMinLength(1);
 const harArbeidetIEgenVirksomhetName = 'harArbeidetIEgenVirksomhet';
 

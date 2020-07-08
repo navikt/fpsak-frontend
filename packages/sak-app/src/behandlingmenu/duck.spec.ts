@@ -61,7 +61,6 @@ describe('BehandlingMenu-reducer', () => {
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
 
-
     const store = mockStore();
 
     const push = sinon.spy();

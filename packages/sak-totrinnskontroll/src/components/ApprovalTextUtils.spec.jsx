@@ -62,7 +62,6 @@ describe('<ApprovalTextUtils>', () => {
     expect(message[0].props.id).to.eql('ToTrinnsForm.Adopsjon.VilkarOverstyrt');
   });
 
-
   it('skal vise korrekt tekst for aksjonspunkt 5008', () => {
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.OMSORGSOVERTAKELSE, undefined,
@@ -79,7 +78,6 @@ describe('<ApprovalTextUtils>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.Omsorgovertagelse.VurderVilkarForeldreansvarTredjeLedd');
   });
-
 
   it('skal vise korrekt tekst for aksjonspunkt 7002', () => {
     const aksjonspunkt = lagAksjonspunkt(
@@ -113,7 +111,6 @@ describe('<ApprovalTextUtils>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.Fødsel.VilkarOverstyrt');
   });
-
 
   it('skal vise korrekt tekst for aksjonspunkt 5014', () => {
     const aksjonspunkt = lagAksjonspunkt(
@@ -181,7 +178,6 @@ describe('<ApprovalTextUtils>', () => {
     expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.InntektFastsatt');
   });
 
-
   it('skal vise korrekt tekst for aksjonspunkt 5007', () => {
     const aksjonspunkt = lagAksjonspunkt(
       aksjonspunktCodes.SOKNADSFRISTVILKARET, undefined,
@@ -206,7 +202,6 @@ describe('<ApprovalTextUtils>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.Soknadsfrist.VilkarOverstyrt');
   });
-
 
   it('skal vise korrekt tekst for aksjonspunkt 5045', () => {
     const aksjonspunkt = lagAksjonspunkt(
@@ -283,7 +278,6 @@ describe('<ApprovalTextUtils>', () => {
     expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.IkkeVarigEndring');
   });
 
-
   it('skal vise korrekt tekst for aksjonspunkt 5070 slettet', () => {
     const uttakPeriode = {
       fom: '-',
@@ -332,7 +326,6 @@ describe('<ApprovalTextUtils>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.AvklarUttak.PeriodeSlettet');
   });
-
 
   it('skal vise korrekt tekst for aksjonspunkt 5070 lagt til', () => {
     const uttakPeriode = {
@@ -383,7 +376,6 @@ describe('<ApprovalTextUtils>', () => {
     expect(message[0].props.id).to.eql('ToTrinnsForm.AvklarUttak.PeriodeLagtTil');
   });
 
-
   it('skal vise korrekt tekst for aksjonspunkt 5070 endret', () => {
     const uttakPeriode = {
       fom: '-',
@@ -432,7 +424,6 @@ describe('<ApprovalTextUtils>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.ManueltFastsattUttak.PeriodeEndret');
   });
-
 
   it('skal vise korrekt tekst for aksjonspunkt 5070 avklart', () => {
     const uttakPeriode = {

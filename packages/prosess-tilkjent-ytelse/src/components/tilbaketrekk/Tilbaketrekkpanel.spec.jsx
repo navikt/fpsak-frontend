@@ -10,7 +10,6 @@ import { ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilkjent-ytelse';
 
-
 const lagAksjonspunktTilbaketrekk = (begrunnelse) => ({
   definisjon: {
     kode: aksjonspunktCodes.VURDER_TILBAKETREKK,

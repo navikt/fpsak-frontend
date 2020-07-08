@@ -62,10 +62,8 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
   return 'VedtakForm.ForeldrepengerIkkeInnvilget';
 };
 
-
 export const hasIkkeOppfyltSoknadsfristvilkar = (vilkar) => vilkar.some((v) => v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET
   && v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
-
 
 export const medholdIKlage = (klageVurderingResultat) => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE);
 

@@ -31,7 +31,7 @@ const MedlemskapFaktaIndex = ({
   alleKodeverk,
   submitCallback,
   readOnly,
-  readOnlyBehandling,
+  readOnlyForStartdatoForForeldrepenger,
 }) => (
   <RawIntlProvider value={intl}>
     <MedlemskapInfoPanel
@@ -52,7 +52,7 @@ const MedlemskapFaktaIndex = ({
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
       readOnly={readOnly}
-      readOnlyBehandling={readOnlyBehandling}
+      readOnlyForStartdatoForForeldrepenger={readOnlyForStartdatoForForeldrepenger}
     />
   </RawIntlProvider>
 );
@@ -71,7 +71,7 @@ MedlemskapFaktaIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   isForeldrepengerFagsak: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  readOnlyBehandling: PropTypes.bool.isRequired,
+  readOnlyForStartdatoForForeldrepenger: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
 };

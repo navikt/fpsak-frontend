@@ -6,8 +6,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
+import { Behandling } from '@fpsak-frontend/types';
 import SakenFaktaIndex from '@fpsak-frontend/fakta-saken';
+
 import withReduxProvider from '../../decorators/withRedux';
 
 const behandling = {
@@ -34,7 +35,7 @@ export default {
 
 export const visEndringAvUtland = () => (
   <SakenFaktaIndex
-    behandling={behandling}
+    behandling={behandling as Behandling}
     aksjonspunkter={[]}
     submitCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
@@ -45,7 +46,7 @@ export const visEndringAvUtland = () => (
 
 export const visApentAksjonspunktForInnhentingAvDokumentasjon = () => (
   <SakenFaktaIndex
-    behandling={behandling}
+    behandling={behandling as Behandling}
     aksjonspunkter={[{
       definisjon: {
         kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,

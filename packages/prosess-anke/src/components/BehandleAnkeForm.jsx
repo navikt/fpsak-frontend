@@ -218,6 +218,7 @@ const BehandleAnkeFormImpl = ({
                 <RadioOption name="a2" value={ankeVurderingOmgjoer.ANKE_TIL_UGUNST} label={{ id: 'Ankebehandling.VurderingOmgjoer.Ugunst' }} />
                 <RadioOption name="a3" value={ankeVurderingOmgjoer.ANKE_DELVIS_OMGJOERING_TIL_GUNST} label={{ id: 'Ankebehandling.VurderingOmgjoer.Delvis' }} />
               </RadioGroupField>
+              <VerticalSpacer fourPx />
               <SelectField
                 readOnly={readOnly}
                 name="ankeOmgjoerArsak"
@@ -374,6 +375,5 @@ const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingForm({
 })(BehandleAnkeFormImpl));
 
 BehandleAnkeForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
-
 
 export default injectIntl(BehandleAnkeForm);

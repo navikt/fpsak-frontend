@@ -6,9 +6,9 @@ import { shallow } from 'enzyme';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import Messages, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
+import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import DataFetcher from '../../app/DataFetcher';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import { MessagesIndex } from './MessagesIndex';
 
@@ -85,7 +85,7 @@ describe('<MessagesIndex>', () => {
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
     }, true).find(Messages);
-    const previewCallback = messages.prop('previewCallback') as (params: {}) => void;
+    const previewCallback = messages.prop('previewCallback') as (params: any) => void;
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
@@ -157,7 +157,7 @@ describe('<MessagesIndex>', () => {
     const messages = dataFetcher.renderProp('render')({
       brevmaler: templates,
     }, true).find(Messages);
-    const submitCallback = messages.prop('submitCallback') as (params: {}) => void;
+    const submitCallback = messages.prop('submitCallback') as (params: any) => void;
     submitCallback(message);
 
     expect(submitMessageCallback).to.have.property('callCount', 1);

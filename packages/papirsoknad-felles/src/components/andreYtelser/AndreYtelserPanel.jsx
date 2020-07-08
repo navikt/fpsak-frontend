@@ -74,7 +74,6 @@ export const AndreYtelserPanelImpl = ({
   );
 };
 
-
 AndreYtelserPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -103,7 +102,6 @@ AndreYtelserPanel.buildInitialValues = (andreYtelser) => {
   return { [ANDRE_YTELSER_FORM_NAME_PREFIX]: ytelseInitialValues };
 };
 
-
 AndreYtelserPanel.validate = (values, andreYtelser) => {
   const ytelseValues = values[ANDRE_YTELSER_FORM_NAME_PREFIX];
   const errors = {
@@ -130,6 +128,5 @@ AndreYtelserPanel.transformValues = (values, andreYtelser) => {
 
   return newValues;
 };
-
 
 export default connect(mapStateToProps)(AndreYtelserPanel);

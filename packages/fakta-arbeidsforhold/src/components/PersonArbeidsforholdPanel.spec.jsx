@@ -203,7 +203,6 @@ describe('<PersonArbeidsforholdPanel>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-
     expect(wrapper.state().selectedArbeidsforhold).is.eql(arbeidsforhold);
     const detailForm = wrapper.find(PersonArbeidsforholdDetailForm);
     expect(detailForm).has.length(1);
