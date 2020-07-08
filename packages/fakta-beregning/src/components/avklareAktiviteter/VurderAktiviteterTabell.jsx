@@ -22,22 +22,55 @@ import beregningAktivitetPropType from './beregningAktivitetPropType';
 
 import styles from './vurderAktiviteterTabell.less';
 
-
-export const lagAktivitetFieldId = (aktivitet) => {
-  if (aktivitet.arbeidsgiverId) {
-    if (aktivitet.arbeidsforholdId) {
-      return aktivitet.arbeidsgiverId + aktivitet.arbeidsforholdId + aktivitet.fom.replace('.', '');
-    }
-    return aktivitet.arbeidsgiverId + aktivitet.fom.replace('.', '');
+/**
+ * Lager en unik aktivitet-ID prefiks basert på idType for en aktivitet. Man prøver å legge på
+ * aktivitet.arbeidsforholdId, om den finnes.
+ *
+ * @param {*} aktivitet
+ * @param {*} idType er enten arbeidsgiverId eller aktørIdString for en aktivitet
+ */
+const aktivitetFieldIdPrefiks = (aktivitet, idType) => {
+  if (aktivitet.arbeidsforholdId) {
+    return idType + aktivitet.arbeidsforholdId;
   }
-  if (aktivitet.aktørIdString) {
-    if (aktivitet.arbeidsforholdId) {
-      return aktivitet.aktørIdString + aktivitet.arbeidsforholdId + aktivitet.fom.replace('.', '');
-    }
-    return aktivitet.aktørIdString + aktivitet.fom.replace('.', '');
-  }
-  return aktivitet.arbeidsforholdType.kode + aktivitet.fom.replace('.', '');
+  return idType;
 };
+
+/**
+ * Felles suffiks som legges bak prefiks ved generering av aktivitetFieldIDer
+ *
+ * @param aktivitetPrefiks
+ * @param aktivitet
+ * @returns aktivitetFieldId
+ */
+const appendAktivitetFieldIdSuffiks = (aktivitetPrefiks, aktivitet) => aktivitetPrefiks + aktivitet.fom.replace('.', '');
+
+/**
+ * Oppretter en unik ID for en aktivitet. Denne IDen brukes for å identifisere aktiviteter, slik at man f.eks kan
+ * gjøre oppslag på disse. IDen består av en prefiks som genereres ift om det finnes en arbeidsgiverId
+ * eller en aktørIdString (eller ingen).
+ *
+ * Det legges til slutt på en felles "suffiks" på alle genererte prefikser
+ *
+ * @param {*} aktivitet
+ */
+export const lagAktivitetFieldId = (aktivitet) => {
+  if (aktivitet.arbeidsgiverId || aktivitet.aktørIdString) {
+    const aktivitetPrefiks = aktivitetFieldIdPrefiks(aktivitet, aktivitet.arbeidsgiverId ? aktivitet.arbeidsgiverId : aktivitet.aktørIdString);
+    return appendAktivitetFieldIdSuffiks(aktivitetPrefiks, aktivitet);
+  }
+  return appendAktivitetFieldIdSuffiks(aktivitet.arbeidsforholdType.kode, aktivitet);
+};
+
+/**
+ * Avgjør om en en aktivitet er valgbar i forhold til skjæringstidspunkt eller ift om ingen aktiviteter er i bruk
+ * (og ingen øvrige betingelser som f.eks overstyring)
+ *
+ * @param {*} erSkjæringstidpunktLikEllerFørTom true hvis t.o.m dato for aktiviteten er lik eller etter s.t.p
+ * @param {*} ingenAktiviterErBrukt true hvis ingen aktiviteter er brukt
+ * @returns true hvis aktivitet er valgbar (uavhengig av overstyring)
+ */
+const erAktivitetValgbar = (erSkjæringstidpunktLikEllerFørTom, ingenAktiviterErBrukt) => erSkjæringstidpunktLikEllerFørTom || ingenAktiviterErBrukt;
 
 /**
  * Denne metoden avgjør om en aktivitet skal kunne vurderes - eller ikke. Dvs om det skal kunne velges
@@ -46,17 +79,17 @@ export const lagAktivitetFieldId = (aktivitet) => {
  * @param {*} aktivitet - aktivitet som skal vurderes brukt
  * @param {*} skalOverstyre - om overstyring er aktivert
  * @param {*} harAksjonspunkt - om behandlingen har et aksjonspunkt for avklaringen av aktiviteter
- * @param {*} erTomLikEllerFørSkjæringstidpunkt - om et gjeldende eller etter
+ * @param {*} erSkjæringstidpunktLikEllerFørTom - om et gjeldende skjæringstidspunkt er lik eller før t.o.m dato
  * @param {*} ingenAktiviterErBrukt - true hvis alle aktiviteter er satt til "Ikke benytt"
  */
-export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt, erTomLikEllerFørSkjæringstidpunkt, ingenAktiviterErBrukt) => {
+export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt, erSkjæringstidpunktLikEllerFørTom, ingenAktiviterErBrukt) => {
   if (!skalOverstyre && !harAksjonspunkt) {
     return false;
   }
   if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
     return false;
   }
-  if (skalOverstyre && (erTomLikEllerFørSkjæringstidpunkt || ingenAktiviterErBrukt)) {
+  if (skalOverstyre && erAktivitetValgbar(erSkjæringstidpunktLikEllerFørTom, ingenAktiviterErBrukt)) {
     return true;
   }
   return false;
@@ -187,7 +220,7 @@ export class VurderAktiviteterTabell extends Component {
     } = this.props;
 
     const erValgtSkjæringstidspunktLikEllerFørTomDato = isSameOrBefore(valgtSkjæringstidspunkt, tomDatoForAktivitetGruppe);
-    if (!(erValgtSkjæringstidspunktLikEllerFørTomDato || ingenAktiviterErBrukt)) {
+    if (!erAktivitetValgbar(erValgtSkjæringstidspunktLikEllerFørTomDato, ingenAktiviterErBrukt)) {
       aktiviteter.map((a) => `${lagAktivitetFieldId(a)}.skalBrukes`)
         .forEach((fieldName) => {
           reduxFieldChange(behandlingFormName, fieldName, true);

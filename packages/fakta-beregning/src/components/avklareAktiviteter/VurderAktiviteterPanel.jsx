@@ -187,8 +187,7 @@ VurderAktiviteterPanel.transformValues = (values, aktiviteterTomDatoMapping, erO
   const listerSomVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt);
   const gjeldendeSkjæringstidspunkt = utledGjeldendeSkjæringstidspunkt(values, listerSomVurderes);
   return ({
-    beregningsaktivitetLagreDtoList: listerSomVurderes.flatMap((liste) => 
-    VurderAktiviteterTabell.transformValues(values, liste.aktiviteter, gjeldendeSkjæringstidspunkt, liste.tom)),
+    beregningsaktivitetLagreDtoList: listerSomVurderes.flatMap((liste) => { VurderAktiviteterTabell.transformValues(values, liste.aktiviteter, gjeldendeSkjæringstidspunkt, liste.tom); }),
   });
 };
 
