@@ -14,7 +14,7 @@ const harListeAktivitetSomSkalBrukes = (mapping, values) => mapping.aktiviteter
 
 export const finnPlasseringIListe = (gjeldendeTomDatoMapping, dato) => {
   let i = 0;
-  while (i < gjeldendeTomDatoMapping.length && moment(dato).isBefore(gjeldendeTomDatoMapping[i].tom)) {
+  while (i < gjeldendeTomDatoMapping.length && moment(dato).isBefore(gjeldendeTomDatoMapping[i].tom === undefined ? null : gjeldendeTomDatoMapping[i].tom)) {
     i += 1;
   }
   return i;
@@ -187,7 +187,8 @@ VurderAktiviteterPanel.transformValues = (values, aktiviteterTomDatoMapping, erO
   const listerSomVurderes = finnListerSomSkalVurderes(aktiviteterTomDatoMapping, values, erOverstyrt);
   const gjeldendeSkjæringstidspunkt = utledGjeldendeSkjæringstidspunkt(values, listerSomVurderes);
   return ({
-    beregningsaktivitetLagreDtoList: listerSomVurderes.flatMap((liste) => { VurderAktiviteterTabell.transformValues(values, liste.aktiviteter, gjeldendeSkjæringstidspunkt, liste.tom); }),
+    beregningsaktivitetLagreDtoList: listerSomVurderes
+      .flatMap((liste) => VurderAktiviteterTabell.transformValues(values, liste.aktiviteter, gjeldendeSkjæringstidspunkt, liste.tom)),
   });
 };
 
