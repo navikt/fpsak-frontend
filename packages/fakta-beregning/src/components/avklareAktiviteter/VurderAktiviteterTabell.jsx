@@ -206,7 +206,6 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
   return null;
 };
 
-
 /**
  * VurderAktiviteterTabell
  *
@@ -227,7 +226,6 @@ export class VurderAktiviteterTabell extends Component {
         });
     }
   }
-
 
   render() {
     const {
@@ -272,7 +270,6 @@ VurderAktiviteterTabell.propTypes = {
   reduxChange: PropTypes.func.isRequired,
 };
 
-
 VurderAktiviteterTabell.validate = (values, aktiviteter) => {
   const errors = {};
   let harError = false;
@@ -290,7 +287,6 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
   }
   return null;
 };
-
 
 VurderAktiviteterTabell.transformValues = (values, aktiviteter, valgtSkjæringstidspunkt, tomDatoForAktivitetGruppe) => {
   const erValgtSkjæringstidspunktLikEllerFørTomDato = isSameOrBefore(valgtSkjæringstidspunkt, tomDatoForAktivitetGruppe);
@@ -353,11 +349,9 @@ const getCompleteFormName = createSelector(
   (formNameAvklarAktiviteter, behandlingId, versjon) => getBehandlingFormName(behandlingId, versjon, formNameAvklarAktiviteter),
 );
 
-
 const mapStateToProps = (state, ownProps) => ({
   behandlingFormName: getCompleteFormName(ownProps),
 });
-
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({

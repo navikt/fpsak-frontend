@@ -4,7 +4,6 @@ import moment from 'moment';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 import VurderAktiviteterTabell, { lagAktivitetFieldId } from './VurderAktiviteterTabell';
 
-
 const harListeAktivitetSomSkalBrukes = (mapping, values) => mapping.aktiviteter
   .find((aktivitet) => {
     const fieldId = lagAktivitetFieldId(aktivitet);
