@@ -8,7 +8,6 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { CheckboxField, NavFieldGroup, TextAreaField } from '@fpsak-frontend/form';
 import {
-  decodeHtmlEntity,
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
