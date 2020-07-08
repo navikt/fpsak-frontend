@@ -79,7 +79,14 @@ const HistorikkMalType7 = ({
                   }}
                 />
               ))}
-
+            {historikkinnslagDel.tema.navnVerdi !== undefined
+            && (
+            <Normaltekst>
+              (
+              {historikkinnslagDel.tema.navnVerdi}
+              )
+            </Normaltekst>
+            )}
             {historikkinnslagDel.aarsak && <Normaltekst>{getKodeverknavn(historikkinnslagDel.aarsak)}</Normaltekst>}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}

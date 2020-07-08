@@ -215,6 +215,9 @@ export class AvklareAktiviteterPanelImpl extends Component {
                   alleKodeverk={alleKodeverk}
                   values={formValues}
                   harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
+                  formNameAvklarAktiviteter={formNameAvklarAktiviteter}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
                 />
               )}
               <VerticalSpacer twentyPx />
@@ -316,7 +319,8 @@ const skalKunneLoseAksjonspunkt = (skalOverstyre, aksjonspunkter) => skalOversty
 const validate = (values) => {
   const { avklarAktiviteter } = values;
   if (avklarAktiviteter) {
-    return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+    const erOverstyrt = values[MANUELL_OVERSTYRING_FIELD];
+    return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping, erOverstyrt);
   }
   return {};
 };
@@ -325,7 +329,7 @@ export const transformValues = (values) => {
   const { aksjonspunkter, avklarAktiviteter } = values;
   const skalOverstyre = values[MANUELL_OVERSTYRING_FIELD];
   if (skalKunneLoseAksjonspunkt(skalOverstyre, aksjonspunkter)) {
-    const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+    const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(values, avklarAktiviteter.aktiviteterTomDatoMapping, skalOverstyre);
     const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
     return [{
       kode: skalOverstyre ? OVERSTYRING_AV_BEREGNINGSAKTIVITETER : AVKLAR_AKTIVITETER,

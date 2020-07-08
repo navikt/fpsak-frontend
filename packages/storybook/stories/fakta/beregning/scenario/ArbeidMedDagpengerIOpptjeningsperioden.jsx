@@ -72,6 +72,7 @@ export const beregningsgrunnlag = {
     besteberegningAndeler: null,
     vurderMottarYtelse: null,
     avklarAktiviteter: {
+      skjæringstidspunktOpptjening: '2020-01-13',
       aktiviteterTomDatoMapping: [{
         tom: '2020-01-13',
         aktiviteter: [{
