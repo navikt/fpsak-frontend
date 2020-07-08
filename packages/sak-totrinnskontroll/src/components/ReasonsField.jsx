@@ -74,12 +74,6 @@ const ReasonsField = ({
         name={`${fieldName}.besluttersBegrunnelse`}
         label={intl.formatMessage({ id: 'ReasonsField.Begrunnelse' })}
         validate={[required, minLength3, maxLength2000, hasValidText]}
-        format={(value) => {
-          if (value) {
-            return decodeHtmlEntity(value);
-          }
-          return '';
-        }}
       />
 
     </ArrowBox>
