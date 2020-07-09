@@ -89,10 +89,10 @@ export const skalVurdereAktivitet = (aktivitet, skalOverstyre, harAksjonspunkt, 
   if (aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP) {
     return false;
   }
-  if (skalOverstyre && erAktivitetValgbar(erSkjæringstidpunktLikEllerFørTom, ingenAktiviterErBrukt)) {
-    return true;
+  if (skalOverstyre) {
+    return erAktivitetValgbar(erSkjæringstidpunktLikEllerFørTom, ingenAktiviterErBrukt);
   }
-  return false;
+  return true;
 };
 
 const isSameOrBefore = (dato1, dato2) => moment(dato1).isSameOrBefore(moment(dato2));
