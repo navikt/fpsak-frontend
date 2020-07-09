@@ -1,6 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
+import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
@@ -8,7 +9,7 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import {
   Table, TableRow, TableColumn, EditedIcon,
 } from '@fpsak-frontend/shared-components';
-import VurderAktiviteterTabell, { lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
+import { VurderAktiviteterTabell, lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
 
 const aktivitet1 = {
   arbeidsgiverNavn: 'Arbeidsgiveren',
@@ -89,16 +90,22 @@ const alleKodeverk = {
   }],
 };
 
+const changeCallback = sinon.spy();
+
 describe('<VurderAktiviteterTabell>', () => {
   it('skal vise tabell', () => {
     const wrapper = shallow(<VurderAktiviteterTabell
       readOnly={false}
       isAksjonspunktClosed
       aktiviteter={aktiviteter}
-      skjaeringstidspunkt="2019-02-01"
       alleKodeverk={alleKodeverk}
       erOverstyrt={false}
       harAksjonspunkt
+      valgtSkjæringstidspunkt="2019-02-01"
+      ingenAktiviterErBrukt={false}
+      tomDatoForAktivitetGruppe="2019-02-01"
+      reduxChange={changeCallback}
+      behandlingFormName="formname"
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -144,10 +151,14 @@ describe('<VurderAktiviteterTabell>', () => {
       readOnly={false}
       isAksjonspunktClosed
       aktiviteter={utenAAP}
-      skjaeringstidspunkt="2019-02-01"
       alleKodeverk={alleKodeverk}
       erOverstyrt={false}
       harAksjonspunkt
+      valgtSkjæringstidspunkt="2019-02-01"
+      ingenAktiviterErBrukt={false}
+      tomDatoForAktivitetGruppe="2019-02-01"
+      reduxChange={changeCallback}
+      behandlingFormName="formname"
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -176,6 +187,11 @@ describe('<VurderAktiviteterTabell>', () => {
       alleKodeverk={alleKodeverk}
       erOverstyrt={false}
       harAksjonspunkt
+      valgtSkjæringstidspunkt="2019-02-01"
+      ingenAktiviterErBrukt={false}
+      tomDatoForAktivitetGruppe="2019-02-01"
+      reduxChange={changeCallback}
+      behandlingFormName="formname"
     />);
 
     const heading = wrapper.find(FormattedMessage).first();
@@ -242,7 +258,7 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal bygge initial values', () => {
-    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, true);
+    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, true, true);
     expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);
@@ -265,7 +281,7 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal bygge initial values for overstyrer', () => {
-    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, false);
+    const initialValues = VurderAktiviteterTabell.buildInitialValues(aktiviteter, alleKodeverk, false, false, true);
     expect(initialValues[id1].beregningAktivitetNavn).to.equal('Arbeidsgiveren (384723894723)');
     expect(initialValues[id1].fom).to.equal('2019-01-01');
     expect(initialValues[id1].tom).to.equal(null);
@@ -293,7 +309,7 @@ describe('<VurderAktiviteterTabell>', () => {
     values[id2] = { skalBrukes: false };
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: true };
-    const transformed = VurderAktiviteterTabell.transformValues(values, aktiviteter);
+    const transformed = VurderAktiviteterTabell.transformValues(values, aktiviteter, '2019-02-02', '2019-02-02');
     expect(transformed.length).to.equal(2);
     expect(transformed[0].oppdragsgiverOrg).to.equal('334534623342');
     expect(transformed[0].arbeidsforholdRef).to.equal(aktivitet2.arbeidsforholdId);
@@ -311,22 +327,22 @@ describe('<VurderAktiviteterTabell>', () => {
   });
 
   it('skal ikkje vurdere AAP for ikkje overstyring', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitetAAP, false, true);
+    const skalVurderes = skalVurdereAktivitet(aktivitetAAP, false, true, true, false);
     expect(skalVurderes).to.equal(false);
   });
 
   it('skal vurdere annen aktivitet for overstyring', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitet1, true, true);
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, true, true, true, false);
     expect(skalVurderes).to.equal(true);
   });
 
   it('skal vurdere annen aktivitet for ikkje overstyring', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitet1, false, true);
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, false, true, true, false);
     expect(skalVurderes).to.equal(true);
   });
 
   it('skal ikkje vurdere annen aktivitet for ikkje overstyring uten aksjonspunkt', () => {
-    const skalVurderes = skalVurdereAktivitet(aktivitet1, false, false);
+    const skalVurderes = skalVurdereAktivitet(aktivitet1, false, false, true, false);
     expect(skalVurderes).to.equal(false);
   });
 });
