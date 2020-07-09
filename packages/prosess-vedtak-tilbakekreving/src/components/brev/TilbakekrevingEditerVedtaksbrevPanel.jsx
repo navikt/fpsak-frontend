@@ -99,8 +99,8 @@ TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) =
       .filter((underavsnitt) => underavsnitt.fritekst)
       .reduce((underAcc, underavsnitt) => ({
         ...underAcc,
-        [underavsnitt.underavsnittstype ? decodeHtmlEntity(underavsnitt.underavsnittstype)
-          : decodeHtmlEntity(avsnitt.avsnittstype)]: decodeHtmlEntity(underavsnitt.fritekst),
+        [underavsnitt.underavsnittstype ? underavsnitt.underavsnittstype
+          : avsnitt.avsnittstype]: decodeHtmlEntity(underavsnitt.fritekst),
       }), {});
 
     const nyeFritekster = avsnitt.fom
