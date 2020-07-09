@@ -43,7 +43,7 @@ export const lagTomDatoMapping = (values) => {
   forrigeTomDatoMapping.flatMap(({ aktiviteter }) => aktiviteter).forEach((aktivitet) => {
     const nyAktivitet = { ...aktivitet };
     const tomDato = values[lagAktivitetFieldId(aktivitet)].tom;
-    if (tomDato !== nyAktivitet.tom) {
+    if (!!tomDato && tomDato !== nyAktivitet.tom) {
       nyAktivitet.tom = tomDato;
     }
     if (moment(tomDato).isSameOrAfter(moment(stpOpptjening).subtract(1, 'days'))) {

@@ -335,6 +335,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [
         { tom: '2019-02-02', aktiviteter },
       ],
+      skjæringstidspunkt: '2019-02-02',
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -342,12 +343,14 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const initial = {};
     initial[id1] = { skalBrukes: null };
     initial[id2] = { skalBrukes: true };
     initial[id3] = { skalBrukes: false };
     initial[idAAP] = { skalBrukes: null };
     initial[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = '53451221412412';
+    initial.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
@@ -362,6 +365,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [
         { tom: '2019-02-02', aktiviteter },
       ],
+      skjæringstidspunkt: '2019-02-02',
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -369,12 +373,14 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const initial = {};
     initial[id1] = { skalBrukes: null };
     initial[id2] = { skalBrukes: true };
     initial[id3] = { skalBrukes: false };
     initial[idAAP] = { skalBrukes: null };
     initial[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    initial.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
@@ -389,6 +395,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [
         { tom: '2019-02-02', aktiviteter },
       ],
+      skjæringstidspunkt: '2019-02-02',
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -396,12 +403,14 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const initial = {};
     initial[id1] = { skalBrukes: null };
     initial[id2] = { skalBrukes: true };
     initial[id3] = { skalBrukes: false };
     initial[idAAP] = { skalBrukes: null };
     initial[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = '345346123112';
+    initial.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
@@ -423,6 +432,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
