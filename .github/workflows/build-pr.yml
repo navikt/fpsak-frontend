@@ -1,0 +1,31 @@
+name: Bygg pull request
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Sjekk ut kode
+        uses: actions/checkout@v2
+      - run:  git fetch --prune --unshallow
+
+      - name: Hent tag
+        run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')-$(echo $GITHUB_SHA | cut -c1-7)"
+
+      - name: Sette opp Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Run yarn install
+        run: yarn install --ignore-optional --no-progress --frozen-lockfile
+
+      - name: Run linting and tests
+        run: yarn less:lint
+
+      - name: Build
+        run: |
+          echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
+          yarn build

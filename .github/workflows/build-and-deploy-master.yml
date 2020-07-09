@@ -5,9 +5,6 @@ on:
     branches:
       - master
 env:
-  
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  GITHUB_USERNAME: x-access-token
   APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
   CLUSTER: dev-fss
   NAMESPACE: t4
@@ -38,14 +35,19 @@ jobs:
 
       - name: Build
         run: |
-          echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
           yarn build
+          yarn test:coverage
 
       - name: Bygg, tag og push Docker image
+        if: success()
         run: |
-          docker build --tag ${IMAGE} .
-          echo  ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
-          docker push ${IMAGE_BASE}
+          docker build --pull --tag ${IMAGE_BASE}:${TAG} --tag ${IMAGE_BASE}:latest .
+          echo "$GITHUB_PASSWORD" | docker login --username "$GITHUB_USERNAME" --password-stdin https://docker.pkg.github.com
+          docker push ${IMAGE_BASE}:latest
+          docker push ${IMAGE_BASE}:${TAG}
+        env:
+          GITHUB_USERNAME: x-access-token
+          GITHUB_PASSWORD: ${{ secrets.GH_P_TOKEN }}
 
       - name: Opprett deployment issue
         if: success()
@@ -61,15 +63,11 @@ jobs:
             <tr><td>dev-fss</td><td>t4,q1</td></tr>
             <tr><td>prod-fss</td><td>default</td></tr>
             </table>
-      - name: Trigg deploy til dev-fss t4
+
+      - name: Trigg deploy til t4
         if: success()
-        uses: actions/github-script@0.3.0
+        uses: peter-evans/create-or-update-comment@v1
         with:
-          github-token: ${{secrets.NOTIFICATION}}
-          script: |
-            const issue = { owner: context.issue.owner,
-                            repo: context.issue.repo,
-                            issue_number: ${{ steps.createdeployissue.outputs.number }} }
-            github.issues.createComment({...issue,
-                                    title: 'Deploy av ${{ env.TAG }}',
-                                    body: '/promote ${{ env.TAG }} ${{ env.CLUSTER }} ${{ env.NAMESPACE }}'})
+          token: ${{ secrets.GH_P_TOKEN }}
+          issue-number: ${{ steps.createdeployissue.outputs.number }}
+          body: /promote dev-fss t4
