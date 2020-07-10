@@ -16,7 +16,7 @@ class MenyKodeverk {
     return this;
   }
 
-  medFpTilbakeKodeverk(fpTilbakeKodeverk) {
+  medFpTilbakeKodeverk(fpTilbakeKodeverk = {}) {
     this.$$fpTilbakeKodeverk = fpTilbakeKodeverk;
     return this;
   }

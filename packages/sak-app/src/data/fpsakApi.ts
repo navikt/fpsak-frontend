@@ -11,7 +11,6 @@ export enum FpsakApiKeys {
   NEW_BEHANDLING_FPTILBAKE = 'NEW_BEHANDLING_FPTILBAKE',
   ALL_DOCUMENTS = 'ALL_DOCUMENTS',
   DOCUMENT = 'DOCUMENT',
-  AKTOER_INFO = 'AKTOER_INFO',
   SAVE_TOTRINNSAKSJONSPUNKT = 'SAVE_TOTRINNSAKSJONSPUNKT',
   BREVMALER = 'BREVMALER',
   SUBMIT_MESSAGE = 'SUBMIT_MESSAGE',
@@ -57,9 +56,6 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/dokument */
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
   .withGet('/fpsak/api/dokument/hent-dokument', FpsakApiKeys.DOCUMENT)
-
-  /* /api/aktoer */
-  .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
 

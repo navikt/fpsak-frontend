@@ -10,12 +10,19 @@ const defaultConfig = {
   paramsAreEqual: (paramFromUrl, paramFromStore) => paramFromUrl === paramFromStore,
 };
 
+interface Config {
+  paramName?: string,
+  parse?: (a: any) => any,
+  isQueryParam?: boolean,
+  paramsAreEqual?: (paramFromUrl: string, paramFromStore: string) => boolean,
+}
+
 const mapMatchToParam = (match, location, trackingConfig) => {
   const params = trackingConfig.isQueryParam ? parseQueryString(location.search) : match.params;
   return trackingConfig.parse(params[trackingConfig.paramName]);
 };
 
-function useTrackRouteParam(config) {
+function useTrackRouteParam(config: Config) {
   const [selected, setSelected] = useState<string>();
 
   const trackingConfig = { ...defaultConfig, ...config };

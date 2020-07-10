@@ -1,48 +1,40 @@
 import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
+import { Normaltekst } from 'nav-frontend-typografi';
 
-import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
-import { DataFetchPendingModal, requireProps } from '@fpsak-frontend/shared-components';
 import { Fagsak, FagsakPerson } from '@fpsak-frontend/types';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
-import { getSelectedAktoer, getSelectedAktoerId } from './aktoerSelectors';
-import { setSelectedAktoerId } from './duck';
 import AktoerGrid from './components/AktoerGrid';
-import AktoerResolver from './AktoerResolver';
-import trackRouteParam from '../app/trackRouteParam';
+import useTrackRouteParam from '../app/useTrackRouteParam';
+import { useRestApi, FpsakApiKeys } from '../data/fpsakApiNyUtenRedux';
 
-interface OwnProps {
-  aktoerId: number;
-  requestPendingMessage?: string;
-  selectedAktoer?: {
-    fagsaker: Fagsak[];
-    person: FagsakPerson;
-  };
-}
+type Aktoer = {
+  fagsaker: Fagsak[];
+  person: FagsakPerson;
+};
 
 /**
  * AktoerIndex
  */
-export const AktoerIndex: FunctionComponent<OwnProps> = ({
-  aktoerId, requestPendingMessage, selectedAktoer,
-}) => (
-  <>
-    <AktoerResolver>
-      <>{selectedAktoer.person ? <AktoerGrid data={selectedAktoer} /> : `Ugyldig aktoerId: ${aktoerId}`}</>
-    </AktoerResolver>
-    {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
-  </>
-);
+const AktoerIndex: FunctionComponent = () => {
+  const { selected: selectedAktoerId } = useTrackRouteParam({
+    paramName: 'aktoerId',
+    parse: (aktoerIdFromUrl) => Number.parseInt(aktoerIdFromUrl, 10),
+    isQueryParam: true,
+  });
 
-const mapStateToProps = (state) => ({
-  aktoerId: getSelectedAktoerId(state),
-  requestPendingMessage: getRequestPollingMessage(state),
-  selectedAktoer: getSelectedAktoer(state),
-});
+  const { data, state } = useRestApi<Aktoer>(FpsakApiKeys.AKTOER_INFO, { aktoerId: selectedAktoerId }, { keepData: true });
 
-export default trackRouteParam({
-  paramName: 'aktoerId',
-  parse: (aktoerIdFromUrl) => Number.parseInt(aktoerIdFromUrl, 10),
-  storeParam: setSelectedAktoerId,
-  getParamFromStore: getSelectedAktoerId,
-})(connect(mapStateToProps)(requireProps(['aktoerId'])(AktoerIndex)));
+  if (state === RestApiState.LOADING) {
+    return <LoadingPanel />;
+  }
+
+  if (data.person) {
+    return <AktoerGrid data={data} />;
+  }
+
+  return <Normaltekst>{`Ugyldig aktoerId: ${selectedAktoerId}`}</Normaltekst>;
+};
+
+export default AktoerIndex;

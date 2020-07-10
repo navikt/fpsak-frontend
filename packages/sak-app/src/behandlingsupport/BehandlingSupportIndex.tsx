@@ -16,12 +16,11 @@ import {
 import { getSelectedFagsakStatus } from '../fagsak/fagsakSelectors';
 import { getSupportPanelLocationCreator } from '../app/paths';
 import { getSelectedSaksnummer } from '../fagsak/duck';
-import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
 import ApprovalIndex from './approval/ApprovalIndex';
-import trackRouteParam from '../app/trackRouteParam';
+import useTrackRouteParam from '../app/useTrackRouteParam';
 import allSupportPanelAccessRights from './accessSupport';
 import styles from './behandlingSupportIndex.less';
 import { FpsakApiKeys, useRestApi } from '../data/fpsakApiNyUtenRedux';
@@ -52,14 +51,12 @@ type TotrinnskontrollAksjonspunkt = {
 interface OwnProps {
   acccessibleSupportPanels: string[];
   activeSupportPanel: string;
-  getSupportPanelLocation: (supportPanel: string) => Location;
   fagsakStatus: Kodeverk;
   behandlingStatus?: Kodeverk;
   behandlingType?: Kodeverk;
   behandlingAnsvarligSaksbehandler: string;
   erPaVent: boolean;
   selectedSaksnummer: string;
-  selectedSupportPanel: string;
   behandlingId?: number;
   isInnsynBehandling: boolean;
 }
@@ -108,18 +105,22 @@ export const getEnabledSupportPanels = (accessibleSupportPanels, sendMessageIsRe
  * støttepanelkomponent ihht. gitt parameter i URL-en.
  */
 export const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
-  getSupportPanelLocation,
   fagsakStatus,
   behandlingStatus,
   behandlingType,
   behandlingAnsvarligSaksbehandler,
   erPaVent,
   selectedSaksnummer,
-  selectedSupportPanel,
   isInnsynBehandling,
   behandlingId,
 }) => {
+  const { selected: selectedSupportPanel, location } = useTrackRouteParam({
+    paramName: 'stotte',
+    isQueryParam: true,
+  });
+
   const history = useHistory();
+  const getSupportPanelLocation = getSupportPanelLocationCreator(location);
 
   const behandlingStatusKode = behandlingStatus ? behandlingStatus.kode : undefined;
   const { data: totrinnArsaker } = useRestApi<TotrinnskontrollAksjonspunkt[]>(FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER, NO_PARAMS, {
@@ -145,7 +146,7 @@ export const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
   const changeRouteCallback = useCallback((index) => {
     const supportPanel = acccessibleSupportPanels[index];
     history.push(getSupportPanelLocation(supportPanel));
-  }, [history.location, acccessibleSupportPanels]);
+  }, [location, acccessibleSupportPanels]);
 
   return (
     <>
@@ -169,7 +170,6 @@ const mapStateToProps = (state) => {
   return {
     behandlingType,
     behandlingId: getSelectedBehandlingId(state),
-    selectedSupportPanel: getSelectedSupportPanel(state),
     fagsakStatus: getSelectedFagsakStatus(state),
     behandlingStatus: getBehandlingStatus(state),
     behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
@@ -179,16 +179,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...ownProps,
-  ...dispatchProps,
-  ...stateProps,
-  getSupportPanelLocation: getSupportPanelLocationCreator(ownProps.location), // gets prop 'location' from trackRouteParam
-});
-
-export default trackRouteParam({
-  paramName: 'stotte',
-  storeParam: setSelectedSupportPanel,
-  getParamFromStore: getSelectedSupportPanel,
-  isQueryParam: true,
-})(connect(mapStateToProps, null, mergeProps)(BehandlingSupportIndex));
+export default connect(mapStateToProps)(BehandlingSupportIndex);

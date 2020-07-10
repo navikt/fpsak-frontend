@@ -21,6 +21,7 @@ export enum FpsakApiKeys {
   TOTRINNS_KLAGE_VURDERING = 'TOTRINNS_KLAGE_VURDERING',
   TOTRINNSAKSJONSPUNKT_ARSAKER = 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY = 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
+  AKTOER_INFO = 'AKTOER_INFO',
 }
 
 const CONTEXT_PATH = '';
@@ -35,6 +36,7 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .withGet('/fpsak/api/kodeverk/behandlende-enheter', FpsakApiKeys.BEHANDLENDE_ENHETER)
   .withGet('/fpsak/api/integrasjon/status/vises', FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES)
   .withGet('/fpsak/api/integrasjon/status', FpsakApiKeys.INTEGRATION_STATUS)
+  .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
   .withGet('/fpsak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
   .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
   .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)

@@ -12,8 +12,9 @@ interface OwnProps {
 
 const NO_PARAMS = {};
 
-// Må sette fptilbake til disabled når feature toggle er av eller kall har feila
-
+/**
+ * Komponent som henter backend-data som skal kunne aksesseres globalt i applikasjonen. Denne dataen blir kun hentet en gang.
+ */
 const AppConfigResolver: FunctionComponent<OwnProps> = ({
   children,
 }) => {
