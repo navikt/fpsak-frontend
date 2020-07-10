@@ -79,7 +79,7 @@ const HistorikkMalType7 = ({
                   }}
                 />
               ))}
-            {historikkinnslagDel.tema.navnVerdi !== undefined
+            {!!historikkinnslagDel.tema && historikkinnslagDel.tema.navnVerdi !== undefined
             && (
             <Normaltekst>
               (
