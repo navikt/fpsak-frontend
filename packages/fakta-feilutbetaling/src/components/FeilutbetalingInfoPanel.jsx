@@ -21,7 +21,7 @@ import {
 } from '@fpsak-frontend/form';
 import { VerticalSpacer, AksjonspunktHelpTextTemp, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import {
-  DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required, getKodeverknavnFn,
+  DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required, getKodeverknavnFn, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
 
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
@@ -310,7 +310,7 @@ const buildInitialValues = createSelector([
   (ownProps) => ownProps.feilutbetalingFakta], (feilutbetalingFakta) => {
   const { perioder, begrunnelse } = feilutbetalingFakta;
   return {
-    begrunnelse,
+    begrunnelse: decodeHtmlEntity(begrunnelse),
     // behandlePerioderSamlet: false,
     perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom))
       .map((p) => {

@@ -6,6 +6,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
@@ -64,7 +65,7 @@ export const HistorikkMalTypeForeldelse = ({
             })}
             <VerticalSpacer eightPx />
             <Normaltekst>
-              {begrunnelseFritekst && begrunnelseFritekst}
+              {begrunnelseFritekst && decodeHtmlEntity(begrunnelseFritekst)}
             </Normaltekst>
             <VerticalSpacer eightPx />
           </div>
