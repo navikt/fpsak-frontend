@@ -40,6 +40,7 @@ describe('<TilbakekrevingVedtak>', () => {
       perioder={perioder}
       isBehandlingHenlagt={false}
       behandlingId={1}
+      behandlingUuid="uuid"
       behandlingVersjon={1}
       alleKodeverk={{}}
       avsnittsliste={[]}

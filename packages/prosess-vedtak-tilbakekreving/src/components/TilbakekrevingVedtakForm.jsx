@@ -38,9 +38,9 @@ const formatVedtakData = (values) => {
   };
 };
 
-const fetchPreview = (fetchPreviewVedtaksbrev, behandlingId, formVerdier) => (e) => {
+const fetchPreview = (fetchPreviewVedtaksbrev, uuid, formVerdier) => (e) => {
   fetchPreviewVedtaksbrev({
-    behandlingId,
+    uuid,
     ...formatVedtakData(formVerdier),
   });
   e.preventDefault();
@@ -52,6 +52,7 @@ export const TilbakekrevingVedtakFormImpl = ({
   vedtaksbrevAvsnitt,
   formVerdier,
   behandlingId,
+  behandlingUuid,
   behandlingVersjon,
   perioderSomIkkeHarUtfyltObligatoriskVerdi,
   erRevurderingTilbakekrevingKlage,
@@ -90,8 +91,8 @@ export const TilbakekrevingVedtakFormImpl = ({
             <div className={styles.padding}>
               <a
                 href=""
-                onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingId, formVerdier)}
-                onKeyDown={(e) => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingId, formVerdier)(e) : null)}
+                onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)}
+                onKeyDown={(e) => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingUuid, formVerdier)(e) : null)}
                 className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
               >
                 <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
@@ -122,6 +123,7 @@ TilbakekrevingVedtakFormImpl.propTypes = {
   vedtaksbrevAvsnitt: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,
   formVerdier: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
   erRevurderingTilbakekrevingKlage: PropTypes.bool,

@@ -17,6 +17,7 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
+import { getBehandlingerUuidsMappedById } from '@fpsak-frontend/sak-app/src/behandling/selectors/behandlingerSelectors';
 import styles from './nyBehandlingModal.less';
 
 const createOptions = (bt, enabledBehandlingstyper, intl) => {
@@ -36,12 +37,13 @@ interface OwnProps {
   behandlingArsakTyper: KodeverkMedNavn[];
   enabledBehandlingstyper: KodeverkMedNavn[];
   behandlingId?: number;
+  behandlingUuid?: string;
   sjekkOmTilbakekrevingKanOpprettes: (params: {
     saksnummer: number;
     uuid: string;
   }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: {
-    behandlingId: number;
+    uuid: string;
   }) => void;
   uuid?: string;
   saksnummer: number;
@@ -62,7 +64,7 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
   behandlingType,
   behandlingArsakTyper,
   enabledBehandlingstyper,
-  behandlingId,
+  behandlingUuid,
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
   uuid,
@@ -74,8 +76,8 @@ export const NyBehandlingModal: FunctionComponent<OwnProps & WrappedComponentPro
       if (uuid !== undefined) {
         sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid });
       }
-      if (behandlingId !== undefined) {
-        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingId });
+      if (behandlingUuid !== undefined) {
+        sjekkOmTilbakekrevingRevurderingKanOpprettes({ uuid: behandlingUuid });
       }
     }
   }, []);
@@ -260,7 +262,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     behandlingTyper: getBehandlingTyper(ownProps),
     enabledBehandlingstyper: getEnabledBehandlingstyper(ownProps),
     uuid: ownProps.uuidForSistLukkede,
-    behandlingId: isTilbakekrevingEllerTilbakekrevingRevurdering(ownProps) ? ownProps.behandlingId : undefined,
+    behandlingUuid: isTilbakekrevingEllerTilbakekrevingRevurdering(ownProps) ? getBehandlingerUuidsMappedById(initialState)[ownProps.behandlingId] : undefined,
     behandlingArsakTyper: getBehandlingAarsaker(state, ownProps),
     behandlingType: formValueSelector(formName)(state, 'behandlingType'),
   });

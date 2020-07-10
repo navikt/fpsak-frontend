@@ -96,7 +96,7 @@ interface DispatchProps {
     uuid: string;
   }) => void;
   sjekkTilbakeRevurdKanOpprettes: (params: {
-    behandlingId: number;
+    uuid: string;
   }) => void;
 }
 

@@ -44,7 +44,7 @@ interface OwnProps {
     uuid: string;
   }) => void;
   sjekkOmTilbakekrevingRevurderingKanOpprettes: (params: {
-    behandlingId: number;
+    uuid: string;
   }) => void;
   lukkModal: () => void;
 }

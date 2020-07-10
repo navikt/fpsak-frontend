@@ -57,7 +57,7 @@ const endpoints = new RestApiConfigBuilder()
   /* /fptilbake/api/behandlinger */
   .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
   .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
-  .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
+  .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes-v2', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
 
   /* /api/behandling/beregningsresultat */

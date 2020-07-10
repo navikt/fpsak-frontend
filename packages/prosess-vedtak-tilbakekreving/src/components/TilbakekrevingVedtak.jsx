@@ -19,6 +19,7 @@ const TilbakekrevingVedtak = ({
   perioder,
   alleKodeverk,
   behandlingId,
+  behandlingUuid,
   behandlingVersjon,
   avsnittsliste,
   fetchPreviewVedtaksbrev,
@@ -45,6 +46,7 @@ const TilbakekrevingVedtak = ({
         submitCallback={submitCallback}
         readOnly={readOnly}
         behandlingId={behandlingId}
+        behandlingUuid={behandlingUuid}
         behandlingVersjon={behandlingVersjon}
         avsnittsliste={avsnittsliste}
         fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
@@ -62,6 +64,7 @@ TilbakekrevingVedtak.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   avsnittsliste: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
