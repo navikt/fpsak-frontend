@@ -7,7 +7,7 @@ import { init, Integrations } from '@sentry/browser';
 
 import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-import { RestApiErrorProvider } from '@fpsak-frontend/rest-api-hooks';
+import { RestApiErrorProvider, RestApiProvider } from '@fpsak-frontend/rest-api-hooks';
 
 import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
@@ -63,9 +63,11 @@ const renderFunc = (Component) => {
   render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <RestApiErrorProvider>
-          <Component />
-        </RestApiErrorProvider>
+        <RestApiProvider>
+          <RestApiErrorProvider>
+            <Component />
+          </RestApiErrorProvider>
+        </RestApiProvider>
       </ConnectedRouter>
     </Provider>,
     app,

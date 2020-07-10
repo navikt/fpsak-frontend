@@ -1,84 +1,42 @@
-import React, { Component, ReactNode } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { FunctionComponent, ReactElement } from 'react';
 
+import { featureToggle } from '@fpsak-frontend/konstanter';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
-import fpsakApi from '../data/fpsakApi';
-import {
-  fetchAlleKodeverk as fetchAlleKodeverkAC, getFeatureToggles, isFinishedLoadingData, fetchAllFeatureToggles,
-} from './duck';
+import { FpsakApiKeys, useGlobalStateRestApi } from '../data/fpsakApiNyUtenRedux';
 
 interface OwnProps {
-  finishedLoadingBlockers: boolean;
-  children: ReactNode;
-  fetchNavAnsatt: () => void;
-  fetchLanguageFile: () => void;
-  fetchBehandlendeEnheter: () => void;
-  fetchAlleKodeverk: (featureToggles: any) => void;
-  fetchShowDetailedErrorMessages: () => void;
-  fetchFeatureToggles: () => void;
-  featureToggles: any;
+  children: ReactElement,
 }
 
-class AppConfigResolver extends Component<OwnProps> {
-  static defaultProps = {
-    featureToggles: undefined,
-  };
+const NO_PARAMS = {};
 
-  constructor(props) {
-    super(props);
-    this.resolveAppConfig();
-  }
+// Må sette fptilbake til disabled når feature toggle er av eller kall har feila
 
-  componentDidUpdate(prevProps) {
-    const {
-      fetchAlleKodeverk,
-      featureToggles,
-    } = this.props;
+const AppConfigResolver: FunctionComponent<OwnProps> = ({
+  children,
+}) => {
+  const { state: navAnsattState } = useGlobalStateRestApi(FpsakApiKeys.NAV_ANSATT);
+  const { state: sprakFilState } = useGlobalStateRestApi(FpsakApiKeys.LANGUAGE_FILE);
+  const { state: behandlendeEnheterState } = useGlobalStateRestApi(FpsakApiKeys.BEHANDLENDE_ENHETER);
+  const { state: visDetaljerteFeilmeldingerState } = useGlobalStateRestApi(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES);
+  const featureToggleParams = { toggles: Object.values(featureToggle).map((ft) => ({ navn: ft })) };
+  const { data: featureToggles, state: featureToggleState } = useGlobalStateRestApi(FpsakApiKeys.FEATURE_TOGGLE, featureToggleParams);
 
-    if (featureToggles !== prevProps.featureToggles) {
-      fetchAlleKodeverk(featureToggles);
-    }
-  }
+  const { state: kodeverkFpSakStatus } = useGlobalStateRestApi(FpsakApiKeys.KODEVERK, NO_PARAMS, {
+    suspendRequest: featureToggleState !== RestApiState.SUCCESS, updateTriggers: [!!featureToggles],
+  });
+  const skalHenteFpTilbakeKodeverk = featureToggles && featureToggles[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING];
+  const { state: kodeverkFpTilbakeStatus } = useGlobalStateRestApi(FpsakApiKeys.KODEVERK_FPTILBAKE, NO_PARAMS, {
+    suspendRequest: !skalHenteFpTilbakeKodeverk, updateTriggers: [!!featureToggles],
+  });
 
-  resolveAppConfig = () => {
-    const {
-      fetchNavAnsatt,
-      fetchLanguageFile,
-      fetchBehandlendeEnheter,
-      fetchShowDetailedErrorMessages,
-      fetchFeatureToggles,
-    } = this.props;
+  const erFerdig = navAnsattState === RestApiState.SUCCESS && sprakFilState === RestApiState.SUCCESS
+    && behandlendeEnheterState === RestApiState.SUCCESS && visDetaljerteFeilmeldingerState === RestApiState.SUCCESS
+    && kodeverkFpSakStatus === RestApiState.SUCCESS && (kodeverkFpTilbakeStatus === RestApiState.SUCCESS || !skalHenteFpTilbakeKodeverk);
 
-    fetchNavAnsatt();
-    fetchLanguageFile();
-    fetchBehandlendeEnheter();
-    fetchShowDetailedErrorMessages();
-    fetchFeatureToggles();
-  }
+  return erFerdig ? children : <LoadingPanel />;
+};
 
-  render = () => {
-    const { finishedLoadingBlockers, children } = this.props;
-    if (!finishedLoadingBlockers) {
-      return <LoadingPanel />;
-    }
-    return children;
-  }
-}
-
-const mapStateToProps = (state) => ({
-  finishedLoadingBlockers: isFinishedLoadingData(state),
-  featureToggles: getFeatureToggles(state),
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchNavAnsatt: fpsakApi.NAV_ANSATT.makeRestApiRequest(),
-  fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
-  fetchBehandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.makeRestApiRequest(),
-  fetchShowDetailedErrorMessages: fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.makeRestApiRequest(),
-  fetchAlleKodeverk: fetchAlleKodeverkAC,
-  fetchFeatureToggles: fetchAllFeatureToggles,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppConfigResolver);
+export default AppConfigResolver;

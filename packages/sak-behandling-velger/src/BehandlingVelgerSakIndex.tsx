@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
 import BehandlingPicker from './components/BehandlingPicker';
 import messages from '../i18n/nb_NO.json';
@@ -20,7 +20,7 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
@@ -30,7 +30,7 @@ const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  alleKodeverk,
+  getKodeverkFn,
 }) => (
   <RawIntlProvider value={intl}>
     <BehandlingPicker
@@ -40,7 +40,7 @@ const BehandlingVelgerSakIndex: FunctionComponent<OwnProps> = ({
       behandlingId={behandlingId}
       showAll={showAll}
       toggleShowAll={toggleShowAll}
-      alleKodeverk={alleKodeverk}
+      getKodeverkFn={getKodeverkFn}
     />
   </RawIntlProvider>
 );

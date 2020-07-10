@@ -138,7 +138,6 @@ export const beregningsgrunnlag = {
   dekningsgrad: 100,
 };
 
-
 export const aksjonspunkt = [
   {
     definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },

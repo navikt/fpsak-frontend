@@ -36,7 +36,6 @@ const familiehendelse = {
   },
 };
 
-
 export default {
   title: 'prosess/prosess-vilkar-soknadsfrist',
   component: SoknadsfristVilkarProsessIndex,

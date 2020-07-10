@@ -43,7 +43,6 @@ const alleKodeverk = {
   }],
 };
 
-
 const merknaderFraBeslutter = {
   notAccepted: false,
 };

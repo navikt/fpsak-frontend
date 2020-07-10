@@ -351,7 +351,6 @@ export const visTeksterForAksjonspunkterSomSaksbehandlerMåTaStillingTil = () =>
   />
 );
 
-
 /*
  * Førstegangssøknad - Engangsstøand
  */
@@ -527,7 +526,6 @@ export const visAvslåttSvangerskapspengerOgVisModal = () => (
 /*
  * Revurdering - Foreldrepenger
  */
-
 
 export const visInnvilgetRevurderingForeldrepengerTilGodkjenningForSaksbehandlerUtenOverstyring = () => (
   <VedtakProsessIndex

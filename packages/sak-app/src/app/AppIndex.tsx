@@ -7,15 +7,16 @@ import { Location } from 'history';
 import { captureException, configureScope, withScope } from '@sentry/browser';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
+import { RestApiStateContext } from '@fpsak-frontend/rest-api-hooks';
 import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
 import { ForbiddenPage, UnauthorizedPage } from '@fpsak-frontend/sak-feilsider';
 import { parseQueryString } from '@fpsak-frontend/utils';
 
 import AppConfigResolver from './AppConfigResolver';
-import { getFunksjonellTid, getNavAnsattName, getShowDetailedErrorMessages } from './duck';
 import LanguageProvider from './LanguageProvider';
 import Home from './components/Home';
 import Dekorator from './components/Dekorator';
+import { FpsakApiKeys } from '../data/fpsakApiNyUtenRedux';
 
 import '@fpsak-frontend/assets/styles/global.less';
 
@@ -31,10 +32,7 @@ interface OwnProps {
   removeErrorMessage: () => void;
   crashMessage?: string;
   showCrashMessage: (message: string) => void;
-  navAnsattName?: string;
-  funksjonellTid?: string;
   location: Location;
-  showDetailedErrorMessages: boolean;
 }
 
 /**
@@ -46,10 +44,11 @@ interface OwnProps {
  * lagre desse i klientens state.
  */
 class AppIndex extends Component<OwnProps> {
+  static contextType = RestApiStateContext;
+
   static defaultProps = {
     crashMessage: '',
     navAnsattName: '',
-    funksjonellTid: undefined,
     errorMessages: [],
   };
 
@@ -57,9 +56,12 @@ class AppIndex extends Component<OwnProps> {
     headerHeight: 0,
   };
 
-  componentDidUpdate(prevProps) {
-    const { funksjonellTid } = this.props;
-    if (prevProps.funksjonellTid !== funksjonellTid) {
+  componentDidUpdate() {
+    const state = this.context;
+    const navAnsatt = state[FpsakApiKeys.NAV_ANSATT];
+    const funksjonellTid = navAnsatt ? navAnsatt.funksjonellTid : undefined;
+
+    if (funksjonellTid) {
       // TODO (TOR) Dette endrar jo berre moment. Kva med kode som brukar Date direkte?
       const diffInMinutes = moment()
         .diff(funksjonellTid, 'minutes');
@@ -101,9 +103,13 @@ class AppIndex extends Component<OwnProps> {
 
   render() {
     const {
-      location, crashMessage, errorMessages, navAnsattName, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
+      location, crashMessage, errorMessages, removeErrorMessage: removeErrorMsg,
     } = this.props;
     const { headerHeight } = this.state;
+
+    const state = this.context;
+    const navAnsatt = state[FpsakApiKeys.NAV_ANSATT];
+    const navAnsattName = navAnsatt ? navAnsatt.navn : undefined;
 
     // todo sjekke om dette er beste stedet å sette dette for sentry
     configureScope((scope) => {
@@ -122,10 +128,8 @@ class AppIndex extends Component<OwnProps> {
           <Dekorator
             errorMessages={errorMessages}
             hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
-            navAnsattName={navAnsattName}
             queryStrings={queryStrings}
             removeErrorMessage={removeErrorMsg}
-            showDetailedErrorMessages={showDetailedErrorMessages}
             setSiteHeight={this.setSiteHeight}
           />
           {shouldRenderHome && (<Home headerHeight={headerHeight} />)}
@@ -140,9 +144,6 @@ class AppIndex extends Component<OwnProps> {
 const mapStateToProps = (state) => ({
   errorMessages: errorHandler.getAllErrorMessages(state),
   crashMessage: errorHandler.getCrashMessage(state),
-  navAnsattName: getNavAnsattName(state),
-  funksjonellTid: getFunksjonellTid(state),
-  showDetailedErrorMessages: getShowDetailedErrorMessages(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

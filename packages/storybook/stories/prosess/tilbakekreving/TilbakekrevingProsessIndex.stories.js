@@ -121,7 +121,6 @@ const alleKodeverk = {
   }],
 };
 
-
 export default {
   title: 'prosess/tilbakekreving/prosess-tilbakekreving',
   component: TilbakekrevingProsessIndex,

@@ -153,7 +153,6 @@ const lagPeriode = (andelsliste, dagsats, fom, tom, periodeAarsaker) => ({
   andelerLagtTilManueltIForrige: [],
 });
 
-
 const lagSammenligningsGrunnlag = (kode, rapportertPrAar, avvikProsent, differanse) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
@@ -479,7 +478,6 @@ export const arbeidstakerMedAvvik = () => {
   );
 };
 
-
 export const arbeidstakerFrilansMedAvvikMedGradering = () => {
   const andeler = [lagAndel('AT', 551316, undefined, false), lagAndel('FL', 596000, undefined, false)];
   andeler[0].skalFastsetteGrunnlag = true;
@@ -532,7 +530,6 @@ export const militær = () => {
     />
   );
 };
-
 
 export const selvstendigNæringsdrivende = () => {
   const andeler = [lagAndel('SN', 300000, undefined, false, true)];
@@ -723,7 +720,6 @@ export const naturalYtelse = () => {
     />
   );
 };
-
 
 export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
   const andeler = [
@@ -1408,7 +1404,6 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktSide14 = (
   delete perioder[0].redusertPrAar;
   delete perioder[0].avkortetPrAar;
 
-
   const statuser = [lagStatus('SN')];
   const næringer = [{
     begrunnelse: 'Jeg utvidet virksomheten fra en ren frisørsalong til også å tilby hudpleie. '
@@ -1460,7 +1455,6 @@ export const SelvstendigNæringsdrivendeMedVarigEndringMedAksjonspunktUtførtSid
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].overstyrtPrAar;
   delete perioder[0].redusertPrAar;
   delete perioder[0].avkortetPrAar;
-
 
   const statuser = [lagStatus('SN')];
   const næringer = [{
@@ -1518,7 +1512,6 @@ export const SelvstendigNæringsdrivendeNyoppstartetMedAksjonspunktSide16 = () =
   delete perioder[0].redusertPrAar;
   delete perioder[0].avkortetPrAar;
 
-
   const statuser = [lagStatus('SN')];
   const næringer = [{
     begrunnelse: '',
@@ -1572,7 +1565,6 @@ export const SelvstendigNæringsdrivendeNyINæringslivetMedAksjonspunktSide17 = 
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[0].pgiSnitt;
   delete perioder[0].redusertPrAar;
   delete perioder[0].avkortetPrAar;
-
 
   const statuser = [lagStatus('SN')];
   const næringer = [{
@@ -1729,7 +1721,6 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeMedAPVarigEndringSide20 = 
 
   const perioder = [lagPeriodeMedDagsats(andeler)];
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[1].bruttoPrAar;
-
 
   const statuser = [lagStatus('AT_SN')];
   const næringer = [{
@@ -1895,7 +1886,6 @@ export const arbeidstakerFrilansOgSelvstendigNæringsdrivendeMedApOgVarigEndring
 
   const perioder = [lagPeriodeMedDagsats(andeler)];
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = andeler[1].bruttoPrAar;
-
 
   const statuser = [lagStatus('AT_FL_SN')];
   const næringer = [{
@@ -2082,7 +2072,6 @@ export const YtelseFraNavSide26 = () => {
       isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
       vilkar={object('vilkår', vilkarMedUtfall(vilkarUtfallType.OPPFYLT))}
       alleKodeverk={alleKodeverk}
-
 
     />
   );

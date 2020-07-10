@@ -1,62 +1,42 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import React, { FunctionComponent } from 'react';
 
-import fpsakApi from '../../data/fpsakApi';
+import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
+
+import { FpsakApiKeys, useRestApi } from '../../data/fpsakApiNyUtenRedux';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
-import { getIntegrationStatusList, getShowDetailedErrorMessages } from '../duck';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 
-interface OwnProps {
-  showIntegrationStatus?: boolean;
-  integrationStatusList: {
-    systemNavn?: string;
-    endepunkt?: string;
-    nedeFremTilTidspunkt?: string;
-    feilmelding?: string;
-    stackTrace?: string;
-  }[];
-  fetchIntegrationStatus: () => void;
+interface IntegrationStatus {
+  systemNavn?: string;
+  endepunkt?: string;
+  nedeFremTilTidspunkt?: string;
+  feilmelding?: string;
+  stackTrace?: string;
 }
+
+const EMPTY_ARRAY = [];
+const NO_PARAMS = {};
 
 /**
  * Dashboard
  *
  * Presentasjonskomponent. Viser statuspanelet for integrasjonsstjenester i tillegg til søkepanel.
  */
-export class Dashboard extends Component<OwnProps> {
-  static defaultProps = {
-    showIntegrationStatus: false,
-    integrationStatusList: [],
-  };
+const Dashboard: FunctionComponent = () => {
+  const showIntegrationStatus = useGlobalStateRestApiData<boolean>(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES);
 
-  componentDidMount() {
-    const { fetchIntegrationStatus, showIntegrationStatus } = this.props;
+  const { data: integrationStatusList = EMPTY_ARRAY } = useRestApi<IntegrationStatus[]>(FpsakApiKeys.INTEGRATION_STATUS, NO_PARAMS, {
+    suspendRequest: !showIntegrationStatus,
+    updateTriggers: [showIntegrationStatus],
+  });
 
-    if (showIntegrationStatus) {
-      fetchIntegrationStatus();
-    }
-  }
+  return (
+    <>
+      {showIntegrationStatus && integrationStatusList.length > 0
+        && <IntegrationStatusPanel integrationStatusList={integrationStatusList} />}
+      <FagsakSearchIndex />
+    </>
+  );
+};
 
-  render() {
-    const { integrationStatusList, showIntegrationStatus } = this.props;
-    return (
-      <>
-        {showIntegrationStatus && integrationStatusList.length > 0
-          && <IntegrationStatusPanel integrationStatusList={integrationStatusList} />}
-        <FagsakSearchIndex />
-      </>
-    );
-  }
-}
-
-const mapStateToProps = (state) => ({
-  showIntegrationStatus: getShowDetailedErrorMessages(state),
-  integrationStatusList: getIntegrationStatusList(state),
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchIntegrationStatus: fpsakApi.INTEGRATION_STATUS.makeRestApiRequest(),
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default Dashboard;

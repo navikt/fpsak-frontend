@@ -34,7 +34,7 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  featureToggles: any;
+  featureToggles: {[key: string]: boolean};
 }
 
 interface StateProps {

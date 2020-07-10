@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { Location } from 'history';
 
-import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
+import { RestApiState, useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   Kodeverk, KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
@@ -31,7 +31,6 @@ import {
   getBehandlingSprak,
   getBehandlingType, finnesVerge,
 } from '../behandling/duck';
-import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 import trackRouteParam from '../app/trackRouteParam';
 
 const finnLenkeTilAnnenPart = (annenPartBehandling) => pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);
@@ -47,7 +46,6 @@ interface OwnProps {
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
   requestPendingMessage?: string;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   sprakkode?: Kodeverk;
   fagsak?: Fagsak;
   harVerge: boolean;
@@ -72,12 +70,13 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   behandlingType,
-  alleKodeverk,
   sprakkode,
   fagsak,
   harVerge,
   location,
 }) => {
+  const alleKodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
+
   const skalIkkeHenteData = erUrlUnderBehandling(location) || (erBehandlingValgt(location) && !behandlingId);
 
   const options = {
@@ -137,7 +136,6 @@ const mapStateToProps = (state) => ({
   behandlingType: getBehandlingType(state),
   selectedSaksnummer: getSelectedSaksnummer(state),
   requestPendingMessage: getRequestPollingMessage(state),
-  alleKodeverk: getAlleFpSakKodeverk(state),
   sprakkode: getBehandlingSprak(state),
   fagsak: getSelectedFagsak(state),
   harVerge: finnesVerge(state),

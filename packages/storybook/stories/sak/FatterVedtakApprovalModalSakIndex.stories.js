@@ -8,7 +8,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 
-
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {

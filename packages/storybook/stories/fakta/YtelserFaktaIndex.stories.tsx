@@ -6,7 +6,6 @@ import YtelserFaktaIndex from '@fpsak-frontend/fakta-ytelser';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
-
 const inntektArbeidYtelse = {
   inntektsmeldinger: [{
     arbeidsgiverStartdato: '2019-02-02',

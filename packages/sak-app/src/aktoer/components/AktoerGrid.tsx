@@ -11,8 +11,9 @@ import {
   Kodeverk, KodeverkMedNavn, Fagsak, FagsakPerson,
 } from '@fpsak-frontend/types';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
+import useGlobalStateRestApiData from '@fpsak-frontend/rest-api-hooks/src/global-data/useGlobalStateRestApiError';
 
-import { getAlleFpSakKodeverk } from '../../kodeverk/duck';
+import { FpsakApiKeys } from '../../data/fpsakApiNyUtenRedux';
 import { pathToFagsak } from '../../app/paths';
 import { getBehandlingSprak } from '../../behandling/duck';
 
@@ -23,15 +24,14 @@ interface OwnProps {
     fagsaker: Fagsak[];
     person: FagsakPerson;
   };
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   sprakkode?: Kodeverk;
 }
 
 export const AktoerGrid: FunctionComponent<OwnProps> = ({
   data,
-  alleKodeverk,
   sprakkode,
 }) => {
+  const alleKodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const vFagsak = data.fagsaker.length > 0 ? data.fagsaker[0] : { relasjonsRolleType: { kode: relasjonsRolleType.MOR } };
 
@@ -68,7 +68,6 @@ export const AktoerGrid: FunctionComponent<OwnProps> = ({
 };
 
 const mapStateToProps = (state) => ({
-  alleKodeverk: getAlleFpSakKodeverk(state),
   sprakkode: getBehandlingSprak(state),
 });
 

@@ -14,7 +14,6 @@ import alleKodeverk from '../../mocks/alleKodeverk.json';
 import { beregningsgrunnlag as bgMedNaturalytelse, aksjonspunkt as apMedNaturalytelse } from './scenario/NyttArbeidOgNaturalytelse';
 import { beregningsgrunnlag as bgArbeidOgGradertNæring, aksjonspunkt as apArbeidOgGradertNæring } from './scenario/ArbeidOgGradertNæring';
 
-
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',
   component: FordelBeregningsgrunnlagFaktaIndex,
@@ -317,7 +316,6 @@ export const tilkommetArbeidMedFlyttingAvNaturalytelse = () => (
     submittable={boolean('submittable', true)}
   />
 );
-
 
 export const aapOgRefusjon = () => {
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];

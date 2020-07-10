@@ -13,7 +13,6 @@ export const RestApiDispatchContext = createContext<Dispatch | undefined>(undefi
 
 interface OwnProps {
   children: ReactNode;
-  requestApi: any;
   initialState?: {[key in string]: any};
 }
 

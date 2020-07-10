@@ -3,7 +3,7 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { Behandling, KodeverkMedNavn } from '@fpsak-frontend/types';
+import { Behandling, KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 
 import BehandlingPickerItem from './BehandlingPickerItem';
 
@@ -20,7 +20,7 @@ export const sortBehandlinger = (behandlinger) => behandlinger.sort((b1, b2) => 
   return moment(b2.opprettet).diff(moment(b1.opprettet));
 });
 
-const renderListItems = (behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, alleKodeverk) => (
+const renderListItems = (behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, getKodeverkFn) => (
   sortBehandlinger(behandlinger)
     .filter((behandling) => showAll || behandling.id === behandlingId)
     .map((behandling) => (
@@ -32,7 +32,7 @@ const renderListItems = (behandlinger, getBehandlingLocation, behandlingId, show
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
-          alleKodeverk={alleKodeverk}
+          getKodeverkFn={getKodeverkFn}
         />
       </li>
     ))
@@ -45,7 +45,7 @@ interface OwnProps {
   behandlingId?: number;
   showAll: boolean;
   toggleShowAll: () => void;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  getKodeverkFn: (kodeverk: Kodeverk, behandlingType?: Kodeverk) => KodeverkMedNavn;
 }
 
 /**
@@ -60,11 +60,11 @@ const BehandlingPicker: FunctionComponent<OwnProps> = ({
   behandlingId,
   showAll,
   toggleShowAll,
-  alleKodeverk,
+  getKodeverkFn,
 }) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && <Normaltekst><FormattedMessage id="BehandlingList.ZeroBehandlinger" /></Normaltekst>}
-    {!noExistingBehandlinger && renderListItems(behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, alleKodeverk)}
+    {!noExistingBehandlinger && renderListItems(behandlinger, getBehandlingLocation, behandlingId, showAll, toggleShowAll, getKodeverkFn)}
   </ul>
 );
 

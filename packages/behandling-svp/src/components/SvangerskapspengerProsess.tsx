@@ -31,7 +31,7 @@ interface OwnProps {
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   dispatch: Dispatch;
-  featureToggles: any;
+  featureToggles: {[key: string]: boolean};
 }
 
 const getForhandsvisCallback = (dispatch, fagsak, behandling) => (data) => {

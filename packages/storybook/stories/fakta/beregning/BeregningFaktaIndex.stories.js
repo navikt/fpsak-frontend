@@ -168,7 +168,6 @@ const standardFaktaAAPAndel = {
   lagtTilAvSaksbehandler: false,
 };
 
-
 const merknaderFraBeslutter = {
   notAccepted: false,
 };
@@ -195,7 +194,6 @@ export const ArbeidOgDagpenger = () => (
     submittable={boolean('submittable', true)}
   />
 );
-
 
 export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
   const aapAktivitet = {
@@ -241,7 +239,6 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
     />
   );
 };
-
 
 export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
   const aapAktivitet = {
@@ -398,7 +395,6 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
   );
 };
 
-
 export const DagpengerOgArbeidstakerMedVurderingAvBesteberegning = () => {
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaArbeidstakerAndel.andelsnr,
@@ -456,7 +452,6 @@ export const DagpengerOgArbeidstakerMedVurderingAvBesteberegning = () => {
     />
   );
 };
-
 
 export const KunArbeidstakerMedVurderingAvBesteberegning = () => {
   const arbeidstakerBeregningsgrunnlagAndel = {
@@ -682,7 +677,6 @@ export const VurderingAvMilitær = () => {
   );
 };
 
-
 export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: tidsbegrensetFaktaArbeidstakerAndel.andelsnr,
@@ -745,7 +739,6 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
     />
   );
 };
-
 
 export const KunTidsbegrensetArbeidsforhold = () => {
   const arbeidstakerBeregningsgrunnlagAndel = {
@@ -1133,7 +1126,6 @@ export const KombinasjonstestForFaktapanel = () => {
     />
   );
 };
-
 
 export const OverstyringAvInntekt = () => {
   const arbeidsAktivitet = {

@@ -33,7 +33,6 @@ export const visMenyMedBeslutterGodkjenning = () => {
   );
 };
 
-
 export const visMenyEtterTilbakesendingFraBeslutter = () => {
   const [valgtPanelIndex, setPanelIndex] = React.useState<number>();
   return (

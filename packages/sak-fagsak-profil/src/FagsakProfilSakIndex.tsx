@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
+import { KodeverkMedNavn } from '@fpsak-frontend/types';
 
 import FagsakProfile from './components/FagsakProfile';
 import messages from '../i18n/nb_NO.json';
@@ -15,9 +15,8 @@ const intl = createIntl({
 
 interface OwnProps {
   saksnummer: number;
-  sakstype: Kodeverk;
-  fagsakStatus: Kodeverk;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  fagsakYtelseType: KodeverkMedNavn;
+  fagsakStatus: KodeverkMedNavn;
   renderBehandlingMeny: () => ReactNode;
   renderBehandlingVelger: () => ReactNode;
   dekningsgrad?: number;
@@ -25,9 +24,8 @@ interface OwnProps {
 
 const FagsakProfilSakIndex: FunctionComponent<OwnProps> = ({
   saksnummer,
-  sakstype,
+  fagsakYtelseType,
   fagsakStatus,
-  alleKodeverk,
   renderBehandlingMeny,
   renderBehandlingVelger,
   dekningsgrad,
@@ -35,9 +33,8 @@ const FagsakProfilSakIndex: FunctionComponent<OwnProps> = ({
   <RawIntlProvider value={intl}>
     <FagsakProfile
       saksnummer={saksnummer}
-      sakstype={sakstype}
+      fagsakYtelseType={fagsakYtelseType}
       fagsakStatus={fagsakStatus}
-      alleKodeverk={alleKodeverk}
       renderBehandlingMeny={renderBehandlingMeny}
       renderBehandlingVelger={renderBehandlingVelger}
       dekningsgrad={dekningsgrad}
