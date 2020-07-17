@@ -72,6 +72,8 @@ const totrinnskontrollaksjonspunktTextCodes = {
 
   [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret',
 
+  [aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN]: 'ToTrinnsForm.Beregningsgrunnlag.Refusjonsstart',
+
 };
 
 export const totrinnsTilbakekrevingkontrollaksjonspunktTextCodes = {};

@@ -66,6 +66,15 @@
   "BeregningInfoPanel.FordelBG.Inntekt": "Inntekt",
   "BeregningInfoPanel.FordelBG.Beregningsgrunnlag": "Grunnlag",
   
+  "BeregningInfoPanel.RefusjonBG.Tittel": "Endring i refusjon",
+  "BeregningInfoPanel.RefusjonBG.Aktivitet": "Aktivitet",
+  "BeregningInfoPanel.RefusjonBG.TidligereUtb": "Tidligere utbetalinger",
+  "BeregningInfoPanel.RefusjonBG.Direkteutbetaling": "Direkteutbetaling",
+  "BeregningInfoPanel.RefusjonBG.Periode": "{fom} - {tom}",
+  "BeregningInfoPanel.RefusjonBG.Arbeidsgiver": "<b>{ag}</b> krever refusjon fra og med {dato}",
+  "BeregningInfoPanel.RefusjonBG.RefusjonFra": "Endringen i refusjon skal tre i kraft fra og med",
+  "BeregningInfoPanel.RefusjonBG.Begrunnelse": "Begrunnelse",
+
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",
@@ -105,6 +114,34 @@
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
   "ValidationMessage.MerEnNullUtaksprosent" : "Uttak av foreldrepenger i denne perioden er avslått, utbetalingsgrad kan ikke være større enn 0.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse" : "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
-  "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer."
+  "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
+
+  "Calendar.Day.0": "søndag",
+  "Calendar.Day.1": "mandag",
+  "Calendar.Day.2": "tirsdag",
+  "Calendar.Day.3": "onsdag",
+  "Calendar.Day.4": "torsdag",
+  "Calendar.Day.5": "fredag",
+  "Calendar.Day.6": "lørdag",
+  "Calendar.Day.Short.0": "søn",
+  "Calendar.Day.Short.1": "man",
+  "Calendar.Day.Short.2": "tir",
+  "Calendar.Day.Short.3": "ons",
+  "Calendar.Day.Short.4": "tor",
+  "Calendar.Day.Short.5": "fre",
+  "Calendar.Day.Short.6": "lør",
+  "Calendar.Month.0": "Januar",
+  "Calendar.Month.1": "Februar",
+  "Calendar.Month.2": "Mars",
+  "Calendar.Month.3": "April",
+  "Calendar.Month.4": "Mai",
+  "Calendar.Month.5": "Juni",
+  "Calendar.Month.6": "Juli",
+  "Calendar.Month.7": "August",
+  "Calendar.Month.8": "September",
+  "Calendar.Month.9": "Oktober",
+  "Calendar.Month.10": "November",
+  "Calendar.Month.11": "Desember"
+
 
 }

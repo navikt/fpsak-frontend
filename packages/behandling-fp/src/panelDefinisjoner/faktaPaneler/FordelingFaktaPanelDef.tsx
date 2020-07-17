@@ -10,7 +10,7 @@ class FordelingFaktaPanelDef extends FaktaPanelDef {
 
   getTekstKode = () => 'FordelBeregningsgrunnlag.Title'
 
-  getAksjonspunktKoder = () => [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]
+  getAksjonspunktKoder = () => [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG, aksjonspunktCodes.VURDER_REFUSJON_BERGRUNN]
 
   getKomponent = (props) => <FordelBeregningsgrunnlagFaktaIndex {...props} />
 

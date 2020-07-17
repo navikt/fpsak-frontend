@@ -72,6 +72,30 @@ const faktaOmFordelingPropType = PropTypes.shape({
   fordelBeregningsgrunnlag: fordelBeregningsgrunnlagPropType,
 });
 
+const tidligereUtbetalingPropType = PropTypes.shape({
+  fom: PropTypes.string,
+  tom: PropTypes.string,
+  erTildeltRefusjon: PropTypes.bool,
+});
+
+export const refusjonAndelTilVurderingPropType = PropTypes.shape({
+  aktivitetStatus: kodeverkObjektPropType,
+  nyttRefusjonskravFra: PropTypes.string,
+  fastsattNyttRefusjonskravFra: PropTypes.string,
+  arbeidsgiverId: PropTypes.shape({
+    arbeidsgiverOrgnr: PropTypes.string,
+    arbeidsgiverAktørId: PropTypes.string,
+  }),
+  arbeidsgiverNavn: PropTypes.string,
+  internArbeidsforholdRef: PropTypes.string,
+  eksternArbeidsforholdRef: PropTypes.string,
+  tidligereUtbetalinger: PropTypes.arrayOf(tidligereUtbetalingPropType),
+});
+
+const refusjonTilVurderingPropType = PropTypes.shape({
+  andeler: PropTypes.arrayOf(refusjonAndelTilVurderingPropType),
+});
+
 const beregningsgrunnlagPropType = PropTypes.shape({
   aktivitetStatus: PropTypes.arrayOf(PropTypes.shape({
     aktivitetStatus: kodeverkObjektPropType,
@@ -119,6 +143,7 @@ const beregningsgrunnlagPropType = PropTypes.shape({
   })),
   skjaeringstidspunktBeregning: PropTypes.string,
   faktaOmFordeling: faktaOmFordelingPropType,
+  refusjonTilVurdering: refusjonTilVurderingPropType,
 });
 
 export default beregningsgrunnlagPropType;

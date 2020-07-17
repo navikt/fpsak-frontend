@@ -4,20 +4,20 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelingForm from './FordelingForm';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
+import VurderEndringRefusjonForm from './refusjon/VurderEndringRefusjonForm';
 
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
+  VURDER_REFUSJON_BERGRUNN,
 } = aksjonspunktCodes;
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
-const harIkkeFordelInfo = (bg) => {
-  if (!bg) {
-    return true;
-  }
-  return bg.faktaOmFordeling ? !bg.faktaOmFordeling.fordelBeregningsgrunnlag : true;
-};
-const getFordelAksjonspunkt = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined);
+const harFordelInfo = (bg) => (bg && bg.faktaOmFordeling ? bg.faktaOmFordeling.fordelBeregningsgrunnlag : false);
+
+const harRefusjonInfo = (bg) => bg && bg.refusjonTilVurdering;
+
+const getAksjonspunkt = (aksjonspunkter, def) => (aksjonspunkter && def ? aksjonspunkter.find((ap) => ap.definisjon.kode === def) : undefined);
 
 /**
  * FordelBeregningsgrunnlagPanel
@@ -59,24 +59,42 @@ export class FordelBeregningsgrunnlagPanel extends Component {
         submitEnabled,
       },
     } = this;
-    const fordelAP = getFordelAksjonspunkt(aksjonspunkter);
-    if (harIkkeFordelInfo(beregningsgrunnlag) || !fordelAP) {
-      return null;
-    }
+    const fordelAP = getAksjonspunkt(aksjonspunkter, FORDEL_BEREGNINGSGRUNNLAG);
+    const refusjonAP = getAksjonspunkt(aksjonspunkter, VURDER_REFUSJON_BERGRUNN);
+    const skalViseFordeling = fordelAP && harFordelInfo(beregningsgrunnlag);
+    const skalViseRefusjon = refusjonAP && harRefusjonInfo(beregningsgrunnlag);
     return (
-      <FordelingForm
+      <>
+        {skalViseRefusjon
+      && (
+      <VurderEndringRefusjonForm
         submitEnabled={submitEnabled}
         submittable={submittable}
         readOnly={readOnly}
         submitCallback={submitCallback}
         behandlingId={behandlingId}
         behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
-        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         beregningsgrunnlag={beregningsgrunnlag}
-        behandlingType={behandlingType}
         aksjonspunkter={aksjonspunkter}
       />
+      )}
+        {skalViseFordeling
+        && (
+        <FordelingForm
+          submitEnabled={submitEnabled}
+          submittable={submittable}
+          readOnly={readOnly}
+          submitCallback={submitCallback}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          alleKodeverk={alleKodeverk}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+          beregningsgrunnlag={beregningsgrunnlag}
+          behandlingType={behandlingType}
+          aksjonspunkter={aksjonspunkter}
+        />
+        )}
+      </>
     );
   }
 }
