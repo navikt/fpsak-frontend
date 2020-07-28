@@ -66,6 +66,7 @@ const velgHistorikkMal = (histType) => { // NOSONAR
     case historikkinnslagType.ANKE_BEH:
       return HistorikkMalType5;
     case historikkinnslagType.NY_INFO_FRA_TPS:
+    case historikkinnslagType.NY_GRUNNLAG_MOTTATT:
       return HistorikkMalType6;
     case historikkinnslagType.OVERSTYRT:
       return HistorikkMalType7;

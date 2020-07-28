@@ -239,6 +239,11 @@
         "kode": "NY_INFO_FRA_TPS",
         "navn": "Ny info fra TPS",
         "kodeverk": "HISTORIKKINNSLAG_TYPE"
+      },
+      {
+        "kode": "NY_GRUNNLAG_MOTTATT",
+        "navn": "NY_GRUNNLAG_MOTTATT",
+        "kodeverk": "HISTORIKKINNSLAG_TYPE"
       }
     ],
     "UttakUtsettelseType": [
