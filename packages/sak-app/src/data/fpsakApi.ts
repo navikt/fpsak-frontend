@@ -9,20 +9,12 @@ export enum FpsakApiKeys {
   BEHANDLINGER_FPTILBAKE = 'BEHANDLINGER_FPTILBAKE',
   NEW_BEHANDLING_FPSAK = 'NEW_BEHANDLING_FPSAK',
   NEW_BEHANDLING_FPTILBAKE = 'NEW_BEHANDLING_FPTILBAKE',
-  ALL_DOCUMENTS = 'ALL_DOCUMENTS',
   DOCUMENT = 'DOCUMENT',
-  SAVE_TOTRINNSAKSJONSPUNKT = 'SAVE_TOTRINNSAKSJONSPUNKT',
-  BREVMALER = 'BREVMALER',
-  SUBMIT_MESSAGE = 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_TILBAKEKREVING = 'PREVIEW_MESSAGE_TILBAKEKREVING',
   PREVIEW_MESSAGE_FORMIDLING = 'PREVIEW_MESSAGE_FORMIDLING',
   PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE = 'PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE',
   KAN_TILBAKEKREVING_OPPRETTES = 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES = 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
-  VERGE_MENYVALG = 'VERGE_MENYVALG',
-  MENYHANDLING_RETTIGHETER = 'MENYHANDLING_RETTIGHETER',
-  HAR_APENT_KONTROLLER_REVURDERING_AP = 'HAR_APENT_KONTROLLER_REVURDERING_AP',
-  HAR_REVURDERING_SAMME_RESULTAT = 'HAR_REVURDERING_SAMME_RESULTAT',
 }
 
 const endpoints = new RestApiConfigBuilder()
@@ -33,29 +25,12 @@ const endpoints = new RestApiConfigBuilder()
   /* /fpsak/api/behandlinger */
   .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK)
   .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK)
-  .withRel('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
-  .withRel('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
 
   /* /fptilbake/api/behandlinger */
   .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
   .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
-
-  /* /api/behandling/beregningsresultat */
-  .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
-
-  /* Totrinnskontroll */
-  .withRel('bekreft-totrinnsaksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
-
-  /* Brev */
-  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
-  .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
-  .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
-
-  /* /api/dokument */
-  .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
-  .withGet('/fpsak/api/dokument/hent-dokument', FpsakApiKeys.DOCUMENT)
 
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
 

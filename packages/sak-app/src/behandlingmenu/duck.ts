@@ -42,9 +42,6 @@ export const sjekkOmTilbakekrevingRevurderingKanOpprettes = (params) => (dispatc
   fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.makeRestApiRequest()(params),
 );
 
-export const hentVergeMenyvalg = (params: any) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
-export const resetVergeMenyvalg = () => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.resetRestApi()());
-
 export const shelveBehandling = (params: any) => behandlingEventHandler.henleggBehandling(params);
 
 export const setBehandlingOnHold = (params: any) => behandlingEventHandler.settBehandlingPaVent(params);

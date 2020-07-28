@@ -1,15 +1,14 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { Dokument } from '@fpsak-frontend/types';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
-import fpsakApi from '../../data/fpsakApi';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
+import { FpsakApiKeys, useRestApi } from '../../data/fpsakApiNyUtenRedux';
 
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
@@ -17,9 +16,7 @@ const selectDocument = (saksNr) => (e, id, document) => {
   window.open(`/fpsak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`, '_blank');
 };
 
-const dokumentData = [fpsakApi.ALL_DOCUMENTS];
-
-const getSortedDocuments = createSelector([(allDocuments) => allDocuments], (alleDokumenter: Dokument[]) => (alleDokumenter || [])
+const hentSorterteDokumenter = (alleDokumenter: Dokument[] = []) => alleDokumenter
   .sort((a, b) => {
     if (!a.tidspunkt) {
       return +1;
@@ -29,7 +26,7 @@ const getSortedDocuments = createSelector([(allDocuments) => allDocuments], (all
       return -1;
     }
     return b.tidspunkt.localeCompare(a.tidspunkt);
-  }));
+  });
 
 interface OwnProps {
   saksNr: number;
@@ -46,22 +43,26 @@ export const DocumentIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
   saksNr,
-}) => (
-  <DataFetcher
-    fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion: behandlingVersjon }, false)}
-    endpoints={dokumentData}
-    endpointParams={{ [fpsakApi.ALL_DOCUMENTS.name]: { saksnummer: saksNr } }}
-    showOldDataWhenRefetching
-    loadingPanel={<LoadingPanel />}
-    render={(dataProps: { allDocuments: Dokument[] }) => (
-      <DokumenterSakIndex
-        documents={getSortedDocuments(dataProps.allDocuments)}
-        selectDocumentCallback={selectDocument(saksNr)}
-        behandlingId={behandlingId}
-      />
-    )}
-  />
-);
+}) => {
+  const { data: alleDokumenter, state } = useRestApi<Dokument[]>(FpsakApiKeys.ALL_DOCUMENTS, { saksnummer: saksNr }, {
+    updateTriggers: [behandlingId, behandlingVersjon],
+    keepData: true,
+  });
+
+  const sorterteDokumenter = useMemo(() => hentSorterteDokumenter(alleDokumenter), [alleDokumenter]);
+
+  if (state === RestApiState.LOADING) {
+    return <LoadingPanel />;
+  }
+
+  return (
+    <DokumenterSakIndex
+      documents={sorterteDokumenter}
+      selectDocumentCallback={selectDocument(saksNr)}
+      behandlingId={behandlingId}
+    />
+  );
+};
 
 const mapStateToProps = (state) => ({
   saksNr: getSelectedSaksnummer(state),

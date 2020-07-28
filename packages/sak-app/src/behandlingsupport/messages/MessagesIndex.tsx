@@ -9,9 +9,9 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
-
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import { Kodeverk } from '@fpsak-frontend/types';
+
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
@@ -23,14 +23,12 @@ import {
   previewMessage,
 } from '../../behandling/duck';
 import { setBehandlingOnHold } from '../../behandlingmenu/duck';
-import fpsakApi from '../../data/fpsakApi';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import {
-  resetSubmitMessageActionCreator, submitMessageActionCreator,
-} from './duck';
+  FpsakApiKeys, useRestApi, useRestApiRunner, requestApi,
+} from '../../data/fpsakApiNyUtenRedux';
 
-const revurderingData = [fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP, fpsakApi.BREVMALER];
-const meldingData = [fpsakApi.BREVMALER];
+const NO_PARAM = {};
 
 const getSubmitCallback = (setShowMessageModal, behandlingIdentifier, submitMessage, resetMessage, setShowSettPaVentModal, setSubmitCounter) => (values) => {
   const isInnhentEllerForlenget = values.brevmalkode === dokumentMalType.INNHENT_DOK
@@ -75,7 +73,6 @@ const getPreviewCallback = (behandlingTypeKode, behandlingIdentifier, behandling
 };
 
 interface OwnProps {
-  submitFinished?: boolean;
   behandlingIdentifier?: BehandlingIdentifier;
   behandlingUuid: string;
   fagsakYtelseType: Kodeverk;
@@ -87,10 +84,8 @@ interface OwnProps {
 
 interface DispatchProps {
   fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
-  submitMessage: (data: any) => Promise<any>;
   setBehandlingOnHold: (params: any) => void;
   push: (param: string) => void;
-  resetSubmitMessage: () => void;
 }
 
 interface StateProps {
@@ -99,13 +94,10 @@ interface StateProps {
   submitCounter: number;
 }
 
-interface DataProps {
-  brevmaler?: {
-    kode: string;
-    navn: string;
-    tilgjengelig: boolean;
-  }[];
-  harApentKontrollerRevurderingAp?: boolean;
+interface Brevmal {
+  kode: string;
+  navn: string;
+  tilgjengelig: boolean;
 }
 
 const EMPTY_ARRAY = [];
@@ -116,10 +108,8 @@ const EMPTY_ARRAY = [];
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
 const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
-  submitFinished = false,
   recipients = ['Søker'],
   behandlingIdentifier,
-  submitMessage,
   push: pushLocation,
   selectedBehandlingVersjon,
   setBehandlingOnHold: setOnHold,
@@ -127,7 +117,6 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
   fagsakYtelseType,
   fetchPreview,
   behandlingTypeKode,
-  resetSubmitMessage,
   selectedBehandlingSprak,
 }) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
@@ -137,8 +126,10 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
   const ventearsaker = useFpSakKodeverk(kodeverkTyper.VENT_AARSAK) || EMPTY_ARRAY;
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
 
+  const { startRequest: submitMessage, state: submitFinished, resetRequestData: resetMessageData } = useRestApiRunner(FpsakApiKeys.SUBMIT_MESSAGE);
+
   const resetMessage = () => {
-    resetSubmitMessage();
+    resetMessageData();
 
     // FIXME temp fiks for å unngå prod-feil (her skjer det ein oppdatering av behandling, så må oppdatera)
     window.location.reload();
@@ -172,34 +163,36 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
     return resetMessage();
   }, []);
 
+  const skalHenteRevAp = requestApi.hasPath(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP);
+  const { data: harApentKontrollerRevAp, state: stateRevAp } = useRestApi<boolean>(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, NO_PARAM, {
+    updateTriggers: [behandlingIdentifier.behandlingId, selectedBehandlingVersjon, submitCounter],
+    suspendRequest: !skalHenteRevAp,
+  });
+
+  const { data: brevmaler, state: stateBrevmaler } = useRestApi<Brevmal[]>(FpsakApiKeys.BREVMALER, NO_PARAM, {
+    updateTriggers: [behandlingIdentifier.behandlingId, selectedBehandlingVersjon, submitCounter],
+  });
+
+  if (stateBrevmaler === RestApiState.LOADING || (skalHenteRevAp && stateRevAp === RestApiState.LOADING)) {
+    return <LoadingPanel />;
+  }
+
   return (
     <>
       {showMessagesModal && (
         <MessagesModalSakIndex showModal={submitFinished && showMessagesModal} closeEvent={afterSubmit} />
       )}
 
-      <DataFetcher
-        fetchingTriggers={new DataFetcherTriggers({
-          behandlingId: behandlingIdentifier.behandlingId,
-          behandlingVersion: selectedBehandlingVersjon,
-          submitCounter,
-        }, true)}
-        key={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? 0 : 1}
-        endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
-        loadingPanel={<LoadingPanel />}
-        render={(props: DataProps) => (
-          <MeldingerSakIndex
-            submitCallback={submitCallback}
-            recipients={recipients}
-            sprakKode={selectedBehandlingSprak}
-            previewCallback={previewCallback}
-            behandlingId={behandlingIdentifier.behandlingId}
-            behandlingVersjon={selectedBehandlingVersjon}
-            revurderingVarslingArsak={revurderingVarslingArsak}
-            templates={props.brevmaler}
-            isKontrollerRevurderingApOpen={props.harApentKontrollerRevurderingAp}
-          />
-        )}
+      <MeldingerSakIndex
+        submitCallback={submitCallback}
+        recipients={recipients}
+        sprakKode={selectedBehandlingSprak}
+        previewCallback={previewCallback}
+        behandlingId={behandlingIdentifier.behandlingId}
+        behandlingVersjon={selectedBehandlingVersjon}
+        revurderingVarslingArsak={revurderingVarslingArsak}
+        templates={brevmaler}
+        isKontrollerRevurderingApOpen={harApentKontrollerRevAp}
       />
 
       {submitFinished && showSettPaVentModal && (
@@ -216,7 +209,6 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
 };
 
 const mapStateToProps = (state: any): OwnProps => ({
-  submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
@@ -231,8 +223,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     push,
     setBehandlingOnHold,
     fetchPreview: previewMessage,
-    submitMessage: submitMessageActionCreator,
-    resetSubmitMessage: resetSubmitMessageActionCreator,
   }, dispatch),
 });
 

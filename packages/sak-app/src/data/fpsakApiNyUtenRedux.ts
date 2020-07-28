@@ -22,6 +22,14 @@ export enum FpsakApiKeys {
   TOTRINNSAKSJONSPUNKT_ARSAKER = 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY = 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
   AKTOER_INFO = 'AKTOER_INFO',
+  ALL_DOCUMENTS = 'ALL_DOCUMENTS',
+  HAR_REVURDERING_SAMME_RESULTAT = 'HAR_REVURDERING_SAMME_RESULTAT',
+  SAVE_TOTRINNSAKSJONSPUNKT = 'SAVE_TOTRINNSAKSJONSPUNKT',
+  HAR_APENT_KONTROLLER_REVURDERING_AP = 'HAR_APENT_KONTROLLER_REVURDERING_AP',
+  BREVMALER = 'BREVMALER',
+  SUBMIT_MESSAGE = 'SUBMIT_MESSAGE',
+  MENYHANDLING_RETTIGHETER = 'MENYHANDLING_RETTIGHETER',
+  VERGE_MENYVALG = 'VERGE_MENYVALG',
 }
 
 const CONTEXT_PATH = '';
@@ -40,6 +48,7 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .withGet('/fpsak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
   .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
   .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
+  .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
   .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
   .withRel('familiehendelse-v2', FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
   .withRel('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)
@@ -47,6 +56,13 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
   .withRel('totrinnskontroll-arsaker', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
   .withRel('totrinnskontroll-arsaker-readOnly', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
+  .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
+  .withRel('bekreft-totrinnsaksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
+  .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
+  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
+  .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
+  .withRel('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
+  .withRel('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
   .build();
 
 export const requestApi = createRequestApi(endpoints);

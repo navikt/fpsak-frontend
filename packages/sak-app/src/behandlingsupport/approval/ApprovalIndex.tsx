@@ -16,12 +16,10 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { featureToggle } from '@fpsak-frontend/konstanter';
 import { NavAnsatt, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
 import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
-import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
+import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
-import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
@@ -37,8 +35,11 @@ import {
   getBehandlingsresultat,
 } from '../../behandling/duck';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
-import { FpsakApiKeys, useRestApi, requestApi } from '../../data/fpsakApiNyUtenRedux';
+import {
+  FpsakApiKeys, useRestApi, requestApi, useRestApiRunner,
+} from '../../data/fpsakApiNyUtenRedux';
 import { useFpSakKodeverk, useFpTilbakeKodeverk } from '../../data/useKodeverk';
+import BeslutterModalIndex from './BeslutterModalIndex';
 
 const getArsaker = (approval) => ([{
   code: vurderPaNyttArsakType.FEIL_FAKTA,
@@ -55,9 +56,6 @@ const getArsaker = (approval) => ([{
 }].filter((arsak) => arsak.isSet)
   .map((arsak) => arsak.code)
 );
-
-const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
-const ingenData = [];
 
 const getOnSubmit = (erTilbakekreving, behandlingIdentifier, selectedBehandlingVersjon, setAllAksjonspunktApproved,
   setShowBeslutterModal, approveAp) => (values) => {
@@ -101,7 +99,6 @@ interface TotrinnsKlageVurdering {
 interface OwnProps {
   totrinnskontrollSkjermlenkeContext?: any[];
   totrinnskontrollReadOnlySkjermlenkeContext?: any[];
-  approve: (params: any) => Promise<any>;
   previewMessage: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   behandlingIdentifier: BehandlingIdentifier;
   selectedBehandlingVersjon?: number;
@@ -114,10 +111,8 @@ interface OwnProps {
   erTilbakekreving: boolean;
   behandlingUuid: string;
   fagsakYtelseType: Kodeverk;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
   erBehandlingEtterKlage?: boolean;
   isForeldrepenger: boolean;
-  erGodkjenningFerdig?: boolean;
   behandlingsresultat?: any;
   behandlingId?: number;
   behandlingTypeKode?: string;
@@ -136,11 +131,9 @@ interface StateProps {
 const ApprovalIndex: FunctionComponent<OwnProps> = ({
   toTrinnsBehandling = false,
   erBehandlingEtterKlage = false,
-  erGodkjenningFerdig = false,
   resetApproval,
   behandlingIdentifier,
   selectedBehandlingVersjon,
-  approve: approveAp,
   erTilbakekreving,
   previewMessage: fetchPreview,
   fagsakYtelseType,
@@ -151,7 +144,6 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   behandlingStatus,
   location,
   ansvarligSaksbehandler,
-  alleKodeverk,
   isForeldrepenger,
   behandlingsresultat,
   behandlingId,
@@ -167,6 +159,9 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const { brukernavn, kanVeilede } = navAnsatt;
 
+  const alleFpSakKodeverk = useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK);
+  const alleFpTilbakeKodeverk = useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK_FPTILBAKE);
+
   const featureToggles = useGlobalStateRestApiData<{[key: string]: boolean}>(FpsakApiKeys.FEATURE_TOGGLE);
   const disableGodkjennKnapp = erTilbakekreving ? !featureToggles[featureToggle.BESLUTT_TILBAKEKREVING] : false;
 
@@ -177,6 +172,9 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
       suspendRequest: !requestApi.hasPath(FpsakApiKeys.TOTRINNS_KLAGE_VURDERING),
     },
   );
+
+  const { startRequest: godkjennBehandling, state } = useRestApiRunner(FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
+  const erGodkjenningFerdig = state === RestApiState.SUCCESS;
 
   useEffect(() => () => {
     resetApproval();
@@ -190,11 +188,8 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
     });
   }, []);
   const onSubmit = useCallback(getOnSubmit(erTilbakekreving, behandlingIdentifier, selectedBehandlingVersjon,
-    setAllAksjonspunktApproved, setShowBeslutterModal, approveAp),
+    setAllAksjonspunktApproved, setShowBeslutterModal, godkjennBehandling),
   [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
-  const goToSearchPage = useCallback(() => {
-    pushLocation('/');
-  }, []);
 
   const readOnly = brukernavn === ansvarligSaksbehandler || kanVeilede;
 
@@ -222,7 +217,7 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
         toTrinnsBehandling={toTrinnsBehandling}
         skjemalenkeTyper={skjemalenkeTyper}
         isForeldrepengerFagsak={isForeldrepenger}
-        alleKodeverk={alleKodeverk}
+        alleKodeverk={erTilbakekreving ? alleFpSakKodeverk : alleFpTilbakeKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         erBehandlingEtterKlage={erBehandlingEtterKlage}
         disableGodkjennKnapp={disableGodkjennKnapp}
@@ -230,29 +225,17 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
         createLocationForSkjermlenke={createLocationForSkjermlenke}
       />
       {showBeslutterModal && (
-        <DataFetcher
-          fetchingTriggers={new DataFetcherTriggers({
-            behandlingId: behandlingIdentifier.behandlingId,
-            behandlingVersion: selectedBehandlingVersjon,
-          }, true)}
-          key={revurderingData.some((rd) => rd.isEndpointEnabled()) ? 0 : 1}
-          endpoints={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
-          loadingPanel={<LoadingPanel />}
-          render={(modalProps: { harRevurderingSammeResultat: boolean }) => (
-            <FatterVedtakApprovalModalSakIndex
-              showModal={showBeslutterModal}
-              closeEvent={goToSearchPage}
-              allAksjonspunktApproved={allAksjonspunktApproved}
-              fagsakYtelseType={fagsakYtelseType}
-              erGodkjenningFerdig={erGodkjenningFerdig}
-              erKlageWithKA={totrinnsKlageVurdering ? !!totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
-              behandlingsresultat={behandlingsresultat}
-              behandlingId={behandlingId}
-              behandlingStatusKode={behandlingStatus.kode}
-              behandlingTypeKode={behandlingTypeKode}
-              harSammeResultatSomOriginalBehandling={modalProps.harRevurderingSammeResultat}
-            />
-          )}
+        <BeslutterModalIndex
+          erGodkjenningFerdig={erGodkjenningFerdig}
+          selectedBehandlingVersjon={selectedBehandlingVersjon}
+          fagsakYtelseType={fagsakYtelseType}
+          behandlingsresultat={behandlingsresultat}
+          behandlingId={behandlingId}
+          behandlingTypeKode={behandlingTypeKode}
+          pushLocation={pushLocation}
+          allAksjonspunktApproved={allAksjonspunktApproved}
+          behandlingStatus={behandlingStatus}
+          totrinnsKlageVurdering={totrinnsKlageVurdering}
         />
       )}
     </>
@@ -274,11 +257,9 @@ const mapStateToPropsFactory = () => (state) => {
     ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
     behandlingStatus: getBehandlingStatus(state),
     toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
-    alleKodeverk: erTilbakekreving ? fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state) : fpsakApi.KODEVERK.getRestApiData()(state),
     location: state.router.location,
     behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
     fagsakYtelseType: getFagsakYtelseType(state),
-    erGodkjenningFerdig: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.getRestApiFinished()(state),
     isForeldrepenger: isForeldrepengerFagsak(state),
     erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
     behandlingsresultat: getBehandlingsresultat(state),
@@ -292,8 +273,6 @@ const mapStateToPropsFactory = () => (state) => {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
-    approve: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.makeRestApiRequest(),
-    resetApproval: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.resetRestApi(),
     previewMessage,
   }, dispatch),
 });
