@@ -30,7 +30,6 @@ const getAxiosHttpClientApi = () => {
     put: restMethods.put,
     getBlob: restMethods.getBlob,
     postBlob: restMethods.postBlob,
-    postAndOpenBlob: restMethods.postAndOpenBlob,
     getAsync: restMethods.getAsync,
     postAsync: restMethods.postAsync,
     putAsync: restMethods.putAsync,

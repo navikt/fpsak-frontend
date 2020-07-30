@@ -19,6 +19,7 @@ import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
+import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
@@ -27,7 +28,6 @@ import {
   getBehandlingIdentifier,
   getBehandlingToTrinnsBehandling,
   getBehandlingVersjon,
-  previewMessage,
   getBehandlingStatus,
   getBehandlingType,
   getBehandlingArsaker,
@@ -99,7 +99,6 @@ interface TotrinnsKlageVurdering {
 interface OwnProps {
   totrinnskontrollSkjermlenkeContext?: any[];
   totrinnskontrollReadOnlySkjermlenkeContext?: any[];
-  previewMessage: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   behandlingIdentifier: BehandlingIdentifier;
   selectedBehandlingVersjon?: number;
   ansvarligSaksbehandler?: string;
@@ -135,7 +134,6 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   behandlingIdentifier,
   selectedBehandlingVersjon,
   erTilbakekreving,
-  previewMessage: fetchPreview,
   fagsakYtelseType,
   behandlingUuid,
   push: pushLocation,
@@ -179,6 +177,8 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   useEffect(() => () => {
     resetApproval();
   }, []);
+
+  const fetchPreview = useVisForhandsvisningAvMelding();
 
   const forhandsvisVedtaksbrev = useCallback(() => {
     fetchPreview(erTilbakekreving, false, {
@@ -273,7 +273,6 @@ const mapStateToPropsFactory = () => (state) => {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
-    previewMessage,
   }, dispatch),
 });
 

@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useCallback, useMemo } from 'react';
-import { createSelector } from 'reselect';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
@@ -21,25 +20,23 @@ import MenyApneForEndringerIndex, {
 import MenyNyBehandlingIndex, {
   skalViseIMeny as skalViseNyBehandlingIMeny,
   getMenytekst as getNyBehandlingMenytekst,
-}
-  from '@fpsak-frontend/sak-meny-ny-behandling';
+} from '@fpsak-frontend/sak-meny-ny-behandling';
 
+import useVisForhandsvisningAvMelding from '../data/useVisForhandsvisningAvMelding';
+import { FpsakApiKeys, useRestApiRunner } from '../data/fpsakApiNyUtenRedux';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import ApplicationContextPath from '../app/ApplicationContextPath';
-import { FpsakApiKeys } from '../data/fpsakApiNyUtenRedux';
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
 import {
   getSkalBehandlesAvInfotrygd, getKanRevurderingOpprettes, getSelectedFagsakStatus, getFagsakYtelseType,
 } from '../fagsak/fagsakSelectors';
 import {
-  previewMessage, erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId,
+  erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getBehandlingStatus, getBehandlingErPapirsoknad, getKanHenleggeBehandling,
 } from '../behandling/duck';
-import fpsakApi from '../data/fpsakApi';
 import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
-  sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
 import MenyKodeverk from './MenyKodeverk';
 import Rettigheter from './rettigheterTsType';
@@ -73,10 +70,6 @@ interface OwnProps {
 }
 
 interface StateProps {
-  kanTilbakekrevingOpprettes: {
-    kanBehandlingOpprettes: boolean;
-    kanRevurderingOpprettes: boolean;
-  };
   uuid?: string;
   uuidForSistLukkede?: string;
   erKoet: boolean;
@@ -93,15 +86,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  previewHenleggBehandling: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   lagNyBehandling: (saksnummer: string, behandlingId: number, behandlingVersion: number, isTilbakekreving: boolean, params: any) => void;
-  sjekkTilbakeKanOpprettes: (params: {
-    saksnummer: number;
-    uuid: string;
-  }) => void;
-  sjekkTilbakeRevurdKanOpprettes: (params: {
-    behandlingId: number;
-  }) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -120,21 +105,23 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   opprettVerge,
   behandlendeEnhetId,
   behandlendeEnhetNavn,
-  previewHenleggBehandling,
   lagNyBehandling,
-  kanTilbakekrevingOpprettes,
   uuidForSistLukkede,
-  sjekkTilbakeKanOpprettes,
-  sjekkTilbakeRevurdKanOpprettes,
   pushLocation,
   fagsakStatus,
-  kanRevurderingOpprettes,
   skalBehandlesAvInfotrygd,
   fagsakYtelseType,
   behandlingStatus,
   erPapirsoknad,
   menyhandlingRettigheter,
 }) => {
+  const {
+    startRequest: sjekkTilbakeKanOpprettes, data: kanBehandlingOpprettes = false,
+  } = useRestApiRunner<boolean>(FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES);
+  const {
+    startRequest: sjekkTilbakeRevurdKanOpprettes, data: kanRevurderingOpprettes = false,
+  } = useRestApiRunner<boolean>(FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
+
   const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo<Rettigheter>(() => allMenuAccessRights(navAnsatt, fagsakStatus, kanRevurderingOpprettes, skalBehandlesAvInfotrygd,
     fagsakYtelseType, behandlingStatus, menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false, erPapirsoknad, behandlingType),
@@ -150,6 +137,10 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
     .medFpSakKodeverk(alleFpSakKodeverk)
     .medFpTilbakeKodeverk(alleFpTilbakeKodeverk);
 
+  const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
+
+  const previewHenleggBehandling = useVisForhandsvisningAvMelding();
+
   if ((!rettigheter.settBehandlingPaVentAccess.employeeHasAccess
     && !rettigheter.henleggBehandlingAccess.employeeHasAccess
     && !rettigheter.byttBehandlendeEnhetAccess.employeeHasAccess
@@ -158,8 +149,6 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
     && !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess) || navAnsatt.kanVeilede) {
     return null;
   }
-
-  const gaaTilSokeside = useCallback(() => pushLocation('/'), [pushLocation]);
 
   return (
     <MenySakIndex
@@ -231,7 +220,10 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
               opprettNyForstegangsBehandlingEnabled={rettigheter.opprettNyForstegangsBehandlingAccess.employeeHasAccess
                   && !!rettigheter.opprettNyForstegangsBehandlingAccess.isEnabled}
               opprettRevurderingEnabled={rettigheter.opprettRevurderingAccess.employeeHasAccess && rettigheter.opprettRevurderingAccess.isEnabled}
-              kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
+              kanTilbakekrevingOpprettes={{
+                kanBehandlingOpprettes,
+                kanRevurderingOpprettes,
+              }}
               erTilbakekrevingAktivert={erTilbakekrevingAktivert}
               behandlingstyper={menyKodeverk
                 .getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE)}
@@ -257,16 +249,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   );
 };
 
-const getTilbakekrevingOpprettes = createSelector([
-  (state) => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
-  (state) => fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.getRestApiData()(state),
-], (kanBehandlingOpprettes = false, kanRevurderingOpprettes = false) => ({
-  kanBehandlingOpprettes,
-  kanRevurderingOpprettes,
-}));
-
 const mapStateToProps = (state, ownProps): StateProps => ({
-  kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
   uuid: ownProps.behandlingId ? getBehandlingerUuidsMappedById(state)[ownProps.behandlingId] : undefined,
   uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
   erKoet: erBehandlingKoet(state),
@@ -283,10 +266,7 @@ const mapStateToProps = (state, ownProps): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { location, pushLocation }): DispatchProps => bindActionCreators({
-  previewHenleggBehandling: previewMessage,
   lagNyBehandling: createNewBehandling(location, pushLocation),
-  sjekkTilbakeKanOpprettes: sjekkOmTilbakekrevingKanOpprettes,
-  sjekkTilbakeRevurdKanOpprettes: sjekkOmTilbakekrevingRevurderingKanOpprettes,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuIndex);

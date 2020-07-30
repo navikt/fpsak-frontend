@@ -35,19 +35,6 @@ export const resetBehandlingContext = () => ({
   type: RESET_BEHANDLING_CONTEXT,
 });
 
-/* Action creators */
-export const previewMessage = (erTilbakekreving, erHenleggelse, data) => (dispatch) => {
-  let api;
-  if (erTilbakekreving && erHenleggelse) {
-    api = fpsakApi.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE;
-  } else if (erTilbakekreving) {
-    api = fpsakApi.PREVIEW_MESSAGE_TILBAKEKREVING;
-  } else {
-    api = fpsakApi.PREVIEW_MESSAGE_FORMIDLING;
-  }
-  return dispatch(api.makeRestApiRequest()(data));
-};
-
 /* Reducer */
 const initialState = {
   urlBehandlingId: undefined,

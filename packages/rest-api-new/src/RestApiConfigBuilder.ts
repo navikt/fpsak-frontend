@@ -47,11 +47,6 @@ class RestApiConfigBuilder {
     return this;
   }
 
-  withPostAndOpenBlob(path: string, name: string, config?: RequestAdditionalConfig) {
-    this.endpoints.push(createConfigWithPathAndConfig(name, path, this.contextPath, config).withPostAndOpenBlob());
-    return this;
-  }
-
   withRel(rel: string, name: string, config?: RequestAdditionalConfig) {
     this.endpoints.push(createConfigWithPathAndConfig(name, undefined, undefined, config).withRel(rel));
     return this;

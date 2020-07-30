@@ -30,6 +30,11 @@ export enum FpsakApiKeys {
   SUBMIT_MESSAGE = 'SUBMIT_MESSAGE',
   MENYHANDLING_RETTIGHETER = 'MENYHANDLING_RETTIGHETER',
   VERGE_MENYVALG = 'VERGE_MENYVALG',
+  KAN_TILBAKEKREVING_OPPRETTES = 'KAN_TILBAKEKREVING_OPPRETTES',
+  KAN_TILBAKEKREVING_REVURDERING_OPPRETTES = 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
+  PREVIEW_MESSAGE_TILBAKEKREVING = 'PREVIEW_MESSAGE_TILBAKEKREVING',
+  PREVIEW_MESSAGE_FORMIDLING = 'PREVIEW_MESSAGE_FORMIDLING',
+  PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE = 'PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE',
 }
 
 const CONTEXT_PATH = '';
@@ -37,6 +42,9 @@ const CONTEXT_PATH = '';
 const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .withPost('/fpsak/api/fagsak/sok', FpsakApiKeys.SEARCH_FAGSAK)
   .withPost('/fpsak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+  .withPost('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
+  .withPost('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
+  .withPost('/fptilbake/api/dokument/forhandsvis-henleggelsesbrev', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE)
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
   .withGet('/fpsak/api/nav-ansatt', FpsakApiKeys.NAV_ANSATT)
   .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
@@ -49,6 +57,8 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
   .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
+  .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
+  .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
   .withRel('soeker-personopplysninger', FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER)
   .withRel('familiehendelse-v2', FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE)
   .withRel('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)

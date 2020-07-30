@@ -35,13 +35,6 @@ export const createNewBehandling = (location, push) => (saksnummer, behandlingId
       })));
   });
 
-export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
-  fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.makeRestApiRequest()(params),
-);
-export const sjekkOmTilbakekrevingRevurderingKanOpprettes = (params) => (dispatch) => dispatch(
-  fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.makeRestApiRequest()(params),
-);
-
 export const shelveBehandling = (params: any) => behandlingEventHandler.henleggBehandling(params);
 
 export const setBehandlingOnHold = (params: any) => behandlingEventHandler.settBehandlingPaVent(params);

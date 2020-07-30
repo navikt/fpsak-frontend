@@ -13,6 +13,7 @@ import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import { Kodeverk } from '@fpsak-frontend/types';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
+import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
 import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
@@ -20,7 +21,6 @@ import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBehandlingIdentifier,
-  previewMessage,
 } from '../../behandling/duck';
 import { setBehandlingOnHold } from '../../behandlingmenu/duck';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
@@ -115,7 +115,6 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
   setBehandlingOnHold: setOnHold,
   behandlingUuid,
   fagsakYtelseType,
-  fetchPreview,
   behandlingTypeKode,
   selectedBehandlingSprak,
 }) => {
@@ -154,6 +153,8 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
     hideSettPaVentModal();
     pushLocation('/');
   }, [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
+
+  const fetchPreview = useVisForhandsvisningAvMelding();
 
   const previewCallback = useCallback(getPreviewCallback(behandlingTypeKode, behandlingIdentifier, behandlingUuid, fagsakYtelseType, fetchPreview),
     [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
@@ -222,7 +223,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
     push,
     setBehandlingOnHold,
-    fetchPreview: previewMessage,
   }, dispatch),
 });
 

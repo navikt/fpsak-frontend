@@ -1,11 +1,3 @@
-const openPreview = (data) => {
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(data);
-  } else {
-    window.open(URL.createObjectURL(data));
-  }
-};
-
 const cancellable = (axiosInstance, config) => {
   let cancel;
   const request = axiosInstance({
@@ -64,16 +56,6 @@ const getBlob = (axiosInstance) => (url: string, params: any) => get(axiosInstan
 
 const postBlob = (axiosInstance) => (url: string, data: any) => post(axiosInstance)(url, data, 'blob');
 
-// TODO (TOR) Åpninga av dokument bør vel ikkje ligga her?
-const postAndOpenBlob = (axiosInstance) => (url: string, data: any) => postBlob(axiosInstance)(url, data)
-  .then((response) => {
-    openPreview(response.data);
-    return {
-      ...response,
-      data: 'blob opened as preview', // Don't waste memory by storing blob in state
-    };
-  });
-
 const getAsync = (axiosInstance) => (url: string, params: any) => get(axiosInstance)(url, params);
 const postAsync = (axiosInstance) => (url: string, params: any) => post(axiosInstance)(url, params);
 const putAsync = (axiosInstance) => (url: string, params: any) => put(axiosInstance)(url, params);
@@ -85,7 +67,6 @@ const initRestMethods = (axiosInstance: any) => {
     put: put(axiosInstance),
     getBlob: getBlob(axiosInstance),
     postBlob: postBlob(axiosInstance),
-    postAndOpenBlob: postAndOpenBlob(axiosInstance),
     getAsync: getAsync(axiosInstance),
     postAsync: postAsync(axiosInstance),
     putAsync: putAsync(axiosInstance),

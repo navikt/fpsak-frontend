@@ -7,7 +7,6 @@ export const RequestType = {
   POST_ASYNC: 'POST_ASYNC',
   PUT: 'PUT',
   PUT_ASYNC: 'PUT_ASYNC',
-  POST_AND_OPEN_BLOB: 'POST_AND_OPEN_BLOB',
 };
 
 /**
@@ -75,11 +74,6 @@ class RequestConfig {
 
     withPutAsyncMethod = () => {
       this.restMethod = RequestType.PUT_ASYNC;
-      return this;
-    }
-
-    withPostAndOpenBlob = () => {
-      this.restMethod = RequestType.POST_AND_OPEN_BLOB;
       return this;
     }
 
