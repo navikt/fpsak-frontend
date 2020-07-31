@@ -1,7 +1,6 @@
 import React, {
   Suspense, FunctionComponent, useEffect, useCallback, useMemo,
 } from 'react';
-import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
@@ -17,17 +16,13 @@ import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
-  FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt,
+  FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt, Fagsak,
 } from '@fpsak-frontend/types';
 
 import getAccessRights from '../app/util/access';
 import {
   getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta,
 } from '../app/paths';
-import {
-  getSelectedFagsakStatus, getFagsakPerson, getSaksnummer,
-  getFagsakYtelseType, isForeldrepengerFagsak, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
-} from '../fagsak/fagsakSelectors';
 import { reduxRestApi } from '../data/fpsakApi';
 import { FpsakApiKeys, requestApi } from '../data/fpsakApiNyUtenRedux';
 import {
@@ -93,7 +88,7 @@ interface OwnProps {
   erAktivPapirsoknad?: boolean;
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
-  fagsak: FagsakInfo;
+  fagsak: Fagsak;
   fagsakBehandlingerInfo: BehandlingerInfo[];
   behandlingLinks: Link[];
   push: (location: Location | string) => void;
@@ -139,12 +134,22 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     setBehandlingIdOgVersjon(behandlingVersjon);
   }, [behandlingId]);
 
+  const fagsakInfo = {
+    saksnummer: fagsak.saksnummer,
+    fagsakStatus: fagsak.status,
+    fagsakPerson: fagsak.person,
+    fagsakYtelseType: fagsak.sakstype,
+    kanRevurderingOpprettes: fagsak.kanRevurderingOpprettes,
+    skalBehandlesAvInfotrygd: fagsak.skalBehandlesAvInfotrygd,
+    isForeldrepengerFagsak: fagsak.sakstype.kode === FagsakYtelseType.FORELDREPENGER,
+  };
+
   const kodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
 
   const featureToggles = useGlobalStateRestApiData<{[key: string]: boolean}>(FpsakApiKeys.FEATURE_TOGGLE);
   const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
-  const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.fagsakStatus, behandlingStatus, behandlingType),
-    [fagsak.fagsakStatus, behandlingId, behandlingStatus, behandlingType]);
+  const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.status, behandlingStatus, behandlingType),
+    [fagsak.status, behandlingId, behandlingStatus, behandlingType]);
 
   const opneSokeside = useCallback(() => { pushLocation('/'); }, []);
   const oppdaterProsessStegOgFaktaPanelIUrl = useCallback(getOppdaterProsessStegOgFaktaPanelIUrl(pushLocation, location), [location]);
@@ -154,7 +159,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     oppdaterBehandlingVersjon,
     behandlingEventHandler,
     kodeverk,
-    fagsak,
+    fagsak: fagsakInfo,
     rettigheter,
     opneSokeside,
     valgtProsessSteg: location.query.punkt,
@@ -231,7 +236,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     );
   }
 
-  if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.ENGANGSSTONAD) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.ENGANGSSTONAD) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={visFeilmelding}>
@@ -246,7 +251,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     );
   }
 
-  if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.FORELDREPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={visFeilmelding}>
@@ -261,7 +266,7 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     );
   }
 
-  if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.SVANGERSKAPSPENGER) {
+  if (fagsak.sakstype.kode === FagsakYtelseType.SVANGERSKAPSPENGER) {
     return (
       <Suspense fallback={<LoadingPanel />}>
         <ErrorBoundary errorMessageCallback={visFeilmelding}>
@@ -280,19 +285,6 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   return null;
 };
 
-export const getFagsakInfo = createSelector([
-  getSaksnummer, getSelectedFagsakStatus, getFagsakPerson, getFagsakYtelseType, isForeldrepengerFagsak,
-  getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd],
-(saksnummer, fagsakStatus, fagsakPerson, fagsakYtelseType, isForeldrepenger, kanRevurderingOpprettes, skalBehandlesAvInfotrygd) => ({
-  saksnummer,
-  fagsakStatus,
-  fagsakPerson,
-  fagsakYtelseType,
-  kanRevurderingOpprettes,
-  skalBehandlesAvInfotrygd,
-  isForeldrepengerFagsak: isForeldrepenger,
-}));
-
 const mapStateToProps = (state) => {
   const behandlingId = getUrlBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
@@ -305,7 +297,6 @@ const mapStateToProps = (state) => {
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
-    fagsak: getFagsakInfo(state),
   };
 };
 

@@ -6,7 +6,7 @@ import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
-import { Kodeverk, NavAnsatt } from '@fpsak-frontend/types';
+import { Kodeverk, NavAnsatt, Fagsak } from '@fpsak-frontend/types';
 import MenyEndreBehandlendeEnhetIndex, { skalViseIMeny, getMenytekst } from '@fpsak-frontend/sak-meny-endre-enhet';
 import MenyVergeIndex, { getMenytekst as getVergeMenytekst } from '@fpsak-frontend/sak-meny-verge';
 import MenyTaAvVentIndex, { skalViseIMeny as skalViseTaAvVentIMeny, getMenytekst as getTaAvVentMenytekst } from '@fpsak-frontend/sak-meny-ta-av-vent';
@@ -27,9 +27,6 @@ import { FpsakApiKeys, useRestApiRunner } from '../data/fpsakApiNyUtenRedux';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import ApplicationContextPath from '../app/ApplicationContextPath';
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
-import {
-  getSkalBehandlesAvInfotrygd, getKanRevurderingOpprettes, getSelectedFagsakStatus, getFagsakYtelseType,
-} from '../fagsak/fagsakSelectors';
 import {
   erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getBehandlingStatus, getBehandlingErPapirsoknad, getKanHenleggeBehandling,
@@ -57,11 +54,11 @@ type BehandlendeEnheter = {
 }[];
 
 interface OwnProps {
+  fagsak: Fagsak;
   saksnummer: number;
   behandlingId?: number;
   behandlingVersion?: number;
   behandlingType: Kodeverk;
-  ytelseType: Kodeverk;
   fjernVerge: () => void;
   opprettVerge: () => void;
   erTilbakekrevingAktivert: boolean;
@@ -77,10 +74,6 @@ interface StateProps {
   behandlendeEnhetId: string;
   behandlendeEnhetNavn: string;
   kanHenlegge: boolean;
-  fagsakStatus: Kodeverk;
-  kanRevurderingOpprettes: boolean;
-  skalBehandlesAvInfotrygd: boolean;
-  fagsakYtelseType: Kodeverk;
   behandlingStatus: Kodeverk;
   erPapirsoknad: boolean;
 }
@@ -92,6 +85,7 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 export const BehandlingMenuIndex: FunctionComponent<Props> = ({
+  fagsak,
   saksnummer,
   behandlingId,
   behandlingVersion,
@@ -100,7 +94,6 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   erPaVent,
   behandlingType,
   kanHenlegge,
-  ytelseType,
   fjernVerge,
   opprettVerge,
   behandlendeEnhetId,
@@ -108,9 +101,6 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   lagNyBehandling,
   uuidForSistLukkede,
   pushLocation,
-  fagsakStatus,
-  skalBehandlesAvInfotrygd,
-  fagsakYtelseType,
   behandlingStatus,
   erPapirsoknad,
   menyhandlingRettigheter,
@@ -123,8 +113,8 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
   } = useRestApiRunner<boolean>(FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
 
   const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
-  const rettigheter = useMemo<Rettigheter>(() => allMenuAccessRights(navAnsatt, fagsakStatus, kanRevurderingOpprettes, skalBehandlesAvInfotrygd,
-    fagsakYtelseType, behandlingStatus, menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false, erPapirsoknad, behandlingType),
+  const rettigheter = useMemo<Rettigheter>(() => allMenuAccessRights(navAnsatt, fagsak.status, kanRevurderingOpprettes, fagsak.skalBehandlesAvInfotrygd,
+    fagsak.sakstype, behandlingStatus, menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false, erPapirsoknad, behandlingType),
   [behandlingId, behandlingVersion]);
 
   const behandlendeEnheter = useGlobalStateRestApiData<BehandlendeEnheter>(FpsakApiKeys.BEHANDLENDE_ENHETER);
@@ -179,7 +169,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
               behandlingVersjon={behandlingVersion}
               forhandsvisHenleggBehandling={previewHenleggBehandling}
               henleggBehandling={shelveBehandling}
-              ytelseType={ytelseType}
+              ytelseType={fagsak.sakstype}
               behandlingType={behandlingType}
               behandlingUuid={uuid}
               behandlingResultatTyper={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)}
@@ -229,7 +219,7 @@ export const BehandlingMenuIndex: FunctionComponent<Props> = ({
                 .getKodeverkForBehandlingstyper(BEHANDLINGSTYPER_SOM_SKAL_KUNNE_OPPRETTES, kodeverkTyper.BEHANDLING_TYPE)}
               tilbakekrevingRevurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(bType.TILBAKEKREVING_REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)}
               revurderingArsaker={menyKodeverk.getKodeverkForBehandlingstype(bType.REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)}
-              ytelseType={ytelseType}
+              ytelseType={fagsak.sakstype}
               lagNyBehandling={lagNyBehandling}
               sjekkOmTilbakekrevingKanOpprettes={sjekkTilbakeKanOpprettes}
               sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkTilbakeRevurdKanOpprettes}
@@ -257,10 +247,6 @@ const mapStateToProps = (state, ownProps): StateProps => ({
   behandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
   behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
   kanHenlegge: getKanHenleggeBehandling(state),
-  fagsakStatus: getSelectedFagsakStatus(state),
-  kanRevurderingOpprettes: getKanRevurderingOpprettes(state),
-  skalBehandlesAvInfotrygd: getSkalBehandlesAvInfotrygd(state),
-  fagsakYtelseType: getFagsakYtelseType(state),
   behandlingStatus: getBehandlingStatus(state),
   erPapirsoknad: getBehandlingErPapirsoknad(state),
 });

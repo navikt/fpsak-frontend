@@ -7,7 +7,6 @@ import { Dokument } from '@fpsak-frontend/types';
 
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
-import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { FpsakApiKeys, useRestApi } from '../../data/fpsakApiNyUtenRedux';
 
 // TODO (hb) lag linker, ikke callback
@@ -29,7 +28,7 @@ const hentSorterteDokumenter = (alleDokumenter: Dokument[] = []) => alleDokument
   });
 
 interface OwnProps {
-  saksNr: number;
+  saksnummer: number;
   behandlingId?: number;
   behandlingVersjon?: number;
 }
@@ -42,9 +41,9 @@ interface OwnProps {
 export const DocumentIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   behandlingVersjon,
-  saksNr,
+  saksnummer,
 }) => {
-  const { data: alleDokumenter, state } = useRestApi<Dokument[]>(FpsakApiKeys.ALL_DOCUMENTS, { saksnummer: saksNr }, {
+  const { data: alleDokumenter, state } = useRestApi<Dokument[]>(FpsakApiKeys.ALL_DOCUMENTS, { saksnummer }, {
     updateTriggers: [behandlingId, behandlingVersjon],
     keepData: true,
   });
@@ -58,16 +57,15 @@ export const DocumentIndex: FunctionComponent<OwnProps> = ({
   return (
     <DokumenterSakIndex
       documents={sorterteDokumenter}
-      selectDocumentCallback={selectDocument(saksNr)}
+      selectDocumentCallback={selectDocument(saksnummer)}
       behandlingId={behandlingId}
     />
   );
 };
 
 const mapStateToProps = (state) => ({
-  saksNr: getSelectedSaksnummer(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
 });
 
-export default connect(mapStateToProps)(requireProps(['saksNr'], <LoadingPanel />)(DocumentIndex));
+export default connect(mapStateToProps)(requireProps(['saksnummer'], <LoadingPanel />)(DocumentIndex));

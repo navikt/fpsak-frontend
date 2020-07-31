@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useRouteMatch } from 'react-router-dom';
+import { Location } from 'history';
 
 import { parseQueryString } from '@fpsak-frontend/utils';
 
@@ -22,8 +23,8 @@ const mapMatchToParam = (match, location, trackingConfig) => {
   return trackingConfig.parse(params[trackingConfig.paramName]);
 };
 
-function useTrackRouteParam(config: Config) {
-  const [selected, setSelected] = useState<string>();
+function useTrackRouteParam<T>(config: Config): { location: Location; selected: T } {
+  const [selected, setSelected] = useState<T>();
 
   const trackingConfig = { ...defaultConfig, ...config };
 

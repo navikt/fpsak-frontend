@@ -9,6 +9,7 @@ export enum FpsakApiKeys {
   BEHANDLENDE_ENHETER = 'BEHANDLENDE_ENHETER',
   FEATURE_TOGGLE = 'FEATURE_TOGGLE',
   SEARCH_FAGSAK = 'SEARCH_FAGSAK',
+  FETCH_FAGSAK = 'FETCH_FAGSAK',
   BEHANDLING_PERSONOPPLYSNINGER = 'BEHANDLING_PERSONOPPLYSNINGER',
   BEHANDLING_FAMILIE_HENDELSE = 'BEHANDLING_FAMILIE_HENDELSE',
   ANNEN_PART_BEHANDLING = 'ANNEN_PART_BEHANDLING',
@@ -45,6 +46,7 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
   .withPost('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
   .withPost('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
   .withPost('/fptilbake/api/dokument/forhandsvis-henleggelsesbrev', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE)
+  .withGet('/fpsak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
   .withGet('/fpsak/api/nav-ansatt', FpsakApiKeys.NAV_ANSATT)
   .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)

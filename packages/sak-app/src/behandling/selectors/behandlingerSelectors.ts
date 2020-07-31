@@ -5,7 +5,6 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { Behandling, Kodeverk } from '@fpsak-frontend/types';
 
 import fpsakApi from '../../data/fpsakApi';
-import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 
 const getBehandlingerData = createSelector(
   [fpsakApi.BEHANDLINGER_FPSAK.getRestApiData(), fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiData()],
@@ -23,12 +22,12 @@ interface MetaData {
 
 // TODO (TOR) Denne bør ikkje eksporterast. Bryt opp i fleire selectors
 export const getBehandlinger = createSelector(
-  [getSelectedSaksnummer, getBehandlingerData, getBehandlingerFpsakMeta, getBehandlingerTilbakeMeta],
-  (saksnummer, behandlingerData, behandlingerFpsakMeta: MetaData = { params: {} }, behandlingerTilbakeMeta: MetaData = { params: {} }) => {
+  [getBehandlingerData, getBehandlingerFpsakMeta, getBehandlingerTilbakeMeta],
+  (behandlingerData, behandlingerFpsakMeta: MetaData = { params: {} }, behandlingerTilbakeMeta: MetaData = { params: {} }) => {
     const hasRequestedBehandling = behandlingerFpsakMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer;
-    const isFpsakOk = !behandlingerFpsakMeta.params.saksnummer || behandlingerFpsakMeta.params.saksnummer === saksnummer;
-    const isTilbakeOk = !behandlingerTilbakeMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer === saksnummer;
-    return hasRequestedBehandling && isFpsakOk && isTilbakeOk ? behandlingerData : undefined;
+    // const isFpsakOk = !behandlingerFpsakMeta.params.saksnummer || behandlingerFpsakMeta.params.saksnummer === saksnummer;
+    // const isTilbakeOk = !behandlingerTilbakeMeta.params.saksnummer || behandlingerTilbakeMeta.params.saksnummer === saksnummer;
+    return hasRequestedBehandling /* && isFpsakOk && isTilbakeOk */ ? behandlingerData : undefined;
   },
 );
 

@@ -8,24 +8,25 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { Location } from 'history';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { useGlobalStateRestApiData, RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { featureToggle } from '@fpsak-frontend/konstanter';
-import { NavAnsatt, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
+import {
+  NavAnsatt, Kodeverk, KodeverkMedNavn, Fagsak,
+} from '@fpsak-frontend/types';
 import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import { createLocationForSkjermlenke } from '../../app/paths';
-import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
   getBehandlingAnsvarligSaksbehandler,
-  getBehandlingIdentifier,
   getBehandlingToTrinnsBehandling,
   getBehandlingVersjon,
   getBehandlingStatus,
@@ -34,7 +35,6 @@ import {
   getSelectedBehandlingId,
   getBehandlingsresultat,
 } from '../../behandling/duck';
-import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import {
   FpsakApiKeys, useRestApi, requestApi, useRestApiRunner,
 } from '../../data/fpsakApiNyUtenRedux';
@@ -57,7 +57,7 @@ const getArsaker = (approval) => ([{
   .map((arsak) => arsak.code)
 );
 
-const getOnSubmit = (erTilbakekreving, behandlingIdentifier, selectedBehandlingVersjon, setAllAksjonspunktApproved,
+const getOnSubmit = (erTilbakekreving, behandlingId, saksnummer, selectedBehandlingVersjon, setAllAksjonspunktApproved,
   setShowBeslutterModal, approveAp) => (values) => {
   const aksjonspunkter = values.approvals
     .map((context) => context.aksjonspunkter)
@@ -78,7 +78,8 @@ const getOnSubmit = (erTilbakekreving, behandlingIdentifier, selectedBehandlingV
     aksjonspunktGodkjenningDtos,
   };
   const params = {
-    ...behandlingIdentifier.toJson(),
+    behandlingId,
+    saksnummer,
     behandlingVersjon: selectedBehandlingVersjon,
     bekreftedeAksjonspunktDtoer: [fatterVedtakAksjonspunktDto],
   };
@@ -97,9 +98,9 @@ interface TotrinnsKlageVurdering {
 }
 
 interface OwnProps {
+  fagsak: Fagsak;
   totrinnskontrollSkjermlenkeContext?: any[];
   totrinnskontrollReadOnlySkjermlenkeContext?: any[];
-  behandlingIdentifier: BehandlingIdentifier;
   selectedBehandlingVersjon?: number;
   ansvarligSaksbehandler?: string;
   behandlingStatus: Kodeverk;
@@ -109,9 +110,7 @@ interface OwnProps {
   location: Location;
   erTilbakekreving: boolean;
   behandlingUuid: string;
-  fagsakYtelseType: Kodeverk;
   erBehandlingEtterKlage?: boolean;
-  isForeldrepenger: boolean;
   behandlingsresultat?: any;
   behandlingId?: number;
   behandlingTypeKode?: string;
@@ -128,13 +127,12 @@ interface StateProps {
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
 const ApprovalIndex: FunctionComponent<OwnProps> = ({
+  fagsak,
   toTrinnsBehandling = false,
   erBehandlingEtterKlage = false,
   resetApproval,
-  behandlingIdentifier,
   selectedBehandlingVersjon,
   erTilbakekreving,
-  fagsakYtelseType,
   behandlingUuid,
   push: pushLocation,
   totrinnskontrollSkjermlenkeContext,
@@ -142,7 +140,6 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   behandlingStatus,
   location,
   ansvarligSaksbehandler,
-  isForeldrepenger,
   behandlingsresultat,
   behandlingId,
   behandlingTypeKode,
@@ -166,7 +163,7 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   const { data: totrinnsKlageVurdering, state: totrinnsKlageVurderingState } = useRestApi<TotrinnsKlageVurdering>(
     FpsakApiKeys.TOTRINNS_KLAGE_VURDERING, NO_PARAM, {
       keepData: true,
-      updateTriggers: [behandlingIdentifier.behandlingId, selectedBehandlingVersjon],
+      updateTriggers: [behandlingId, selectedBehandlingVersjon],
       suspendRequest: !requestApi.hasPath(FpsakApiKeys.TOTRINNS_KLAGE_VURDERING),
     },
   );
@@ -183,13 +180,13 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   const forhandsvisVedtaksbrev = useCallback(() => {
     fetchPreview(erTilbakekreving, false, {
       behandlingUuid,
-      ytelseType: fagsakYtelseType,
+      ytelseType: fagsak.sakstype,
       gjelderVedtak: true,
     });
   }, []);
-  const onSubmit = useCallback(getOnSubmit(erTilbakekreving, behandlingIdentifier, selectedBehandlingVersjon,
+  const onSubmit = useCallback(getOnSubmit(erTilbakekreving, behandlingId, fagsak.saksnummer, selectedBehandlingVersjon,
     setAllAksjonspunktApproved, setShowBeslutterModal, godkjennBehandling),
-  [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
+  [behandlingId, selectedBehandlingVersjon]);
 
   const readOnly = brukernavn === ansvarligSaksbehandler || kanVeilede;
 
@@ -204,7 +201,7 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   return (
     <>
       <TotrinnskontrollSakIndex
-        behandlingId={behandlingIdentifier.behandlingId}
+        behandlingId={behandlingId}
         behandlingVersjon={selectedBehandlingVersjon}
         behandlingsresultat={behandlingsresultat}
         behandlingStatus={behandlingStatus}
@@ -216,7 +213,7 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
         forhandsvisVedtaksbrev={forhandsvisVedtaksbrev}
         toTrinnsBehandling={toTrinnsBehandling}
         skjemalenkeTyper={skjemalenkeTyper}
-        isForeldrepengerFagsak={isForeldrepenger}
+        isForeldrepengerFagsak={fagsak.sakstype.kode === fagsakYtelseType.FORELDREPENGER}
         alleKodeverk={erTilbakekreving ? alleFpSakKodeverk : alleFpTilbakeKodeverk}
         behandlingKlageVurdering={totrinnsKlageVurdering}
         erBehandlingEtterKlage={erBehandlingEtterKlage}
@@ -228,7 +225,7 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
         <BeslutterModalIndex
           erGodkjenningFerdig={erGodkjenningFerdig}
           selectedBehandlingVersjon={selectedBehandlingVersjon}
-          fagsakYtelseType={fagsakYtelseType}
+          fagsakYtelseType={fagsak.sakstype}
           behandlingsresultat={behandlingsresultat}
           behandlingId={behandlingId}
           behandlingTypeKode={behandlingTypeKode}
@@ -251,20 +248,17 @@ const mapStateToPropsFactory = () => (state) => {
   const behandlingType = getBehandlingType(state);
   const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
   const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
-  const behandlingIdentifier = getBehandlingIdentifier(state);
+  const behandlingId = getSelectedBehandlingId(state);
   return {
     selectedBehandlingVersjon: getBehandlingVersjon(state),
     ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
     behandlingStatus: getBehandlingStatus(state),
     toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
     location: state.router.location,
-    behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
-    fagsakYtelseType: getFagsakYtelseType(state),
-    isForeldrepenger: isForeldrepengerFagsak(state),
+    behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingId],
     erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
     behandlingsresultat: getBehandlingsresultat(state),
     behandlingId: getSelectedBehandlingId(state),
-    behandlingIdentifier,
     erTilbakekreving,
     behandlingTypeKode,
   };
@@ -276,5 +270,5 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const comp = requireProps(['behandlingIdentifier', 'selectedBehandlingVersjon'])(ApprovalIndex);
+const comp = requireProps(['behandlingId', 'selectedBehandlingVersjon'])(ApprovalIndex);
 export default withRouter(connect(mapStateToPropsFactory, mapDispatchToProps)(comp));

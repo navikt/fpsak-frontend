@@ -18,7 +18,7 @@ type Aktoer = {
  * AktoerIndex
  */
 const AktoerIndex: FunctionComponent = () => {
-  const { selected: selectedAktoerId } = useTrackRouteParam({
+  const { selected: selectedAktoerId } = useTrackRouteParam<string>({
     paramName: 'aktoerId',
     parse: (aktoerIdFromUrl) => Number.parseInt(aktoerIdFromUrl, 10),
     isQueryParam: true,

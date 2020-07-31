@@ -10,7 +10,9 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
-import { Kodeverk, KodeverkMedNavn, Behandling } from '@fpsak-frontend/types';
+import {
+  KodeverkMedNavn, Behandling, Fagsak,
+} from '@fpsak-frontend/types';
 import { DataFetcher, DataFetcherTriggers, EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
@@ -21,12 +23,6 @@ import {
 } from '../app/paths';
 import BehandlingMenuDataResolver from '../behandlingmenu/BehandlingMenuDataResolver';
 import fpsakApi from '../data/fpsakApi';
-import {
-  getFagsakYtelseType,
-  getSelectedFagsakStatus,
-  getSelectedSaksnummer,
-  getSelectedFagsakDekningsgrad,
-} from '../fagsak/fagsakSelectors';
 import { getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
@@ -60,36 +56,30 @@ const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
 const NO_PARAMS = {};
 
 interface OwnProps {
+  fagsak: Fagsak;
   enabledApis: EndpointOperations[];
-  saksnummer: number;
-  sakstype: Kodeverk;
-  fagsakStatus: Kodeverk;
   selectedBehandlingId?: number;
   noExistingBehandlinger: boolean;
   behandlingVersjon?: number;
   shouldRedirectToBehandlinger: boolean;
   location: Location;
-  dekningsgrad: number;
 }
 
 export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
-  sakstype,
+  fagsak,
   selectedBehandlingId,
   behandlingVersjon,
   noExistingBehandlinger,
-  fagsakStatus,
-  saksnummer,
   location,
   shouldRedirectToBehandlinger,
-  dekningsgrad,
 }) => {
   const [showAll, setShowAll] = useState(!selectedBehandlingId);
   const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
 
   const getKodeverkFn = useGetKodeverkFn();
 
-  const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsakStatus);
-  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(sakstype);
+  const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
+  const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
   const enabledApis = useMemo(() => enabledApplicationContexts.map((api) => behandlingerRestApis[api]), [enabledApplicationContexts]);
@@ -109,16 +99,16 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
 
   const getBehandlingLocation = useCallback((behandlingId) => getLocationWithDefaultProsessStegAndFakta({
     ...location,
-    pathname: pathToBehandling(saksnummer, behandlingId),
-  }), [saksnummer]);
+    pathname: pathToBehandling(fagsak.saksnummer, behandlingId),
+  }), [fagsak.saksnummer]);
 
   return (
     <div className={styles.panelPadding}>
       <DataFetcher
         fetchingTriggers={new DataFetcherTriggers({ behandlingId: selectedBehandlingId, behandlingVersion: behandlingVersjon }, false)}
         endpointParams={{
-          [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer },
-          [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer },
+          [fpsakApi.BEHANDLINGER_FPSAK.name]: { saksnummer: fagsak.saksnummer },
+          [fpsakApi.BEHANDLINGER_FPTILBAKE.name]: { saksnummer: fagsak.saksnummer },
         }}
         showOldDataWhenRefetching
         endpoints={enabledApis}
@@ -126,15 +116,15 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
         render={(dataProps) => {
           const alleBehandlinger = getAlleBehandlinger(dataProps);
           if (shouldRedirectToBehandlinger) {
-            return <Redirect to={findPathToBehandling(saksnummer, location, alleBehandlinger)} />;
+            return <Redirect to={findPathToBehandling(fagsak.saksnummer, location, alleBehandlinger)} />;
           }
           return (
             <FagsakProfilSakIndex
-              saksnummer={saksnummer}
+              saksnummer={fagsak.saksnummer}
               fagsakYtelseType={fagsakYtelseTypeMedNavn}
               fagsakStatus={fagsakStatusMedNavn}
-              dekningsgrad={dekningsgrad}
-              renderBehandlingMeny={() => <BehandlingMenuDataResolver />}
+              dekningsgrad={fagsak.dekningsgrad}
+              renderBehandlingMeny={() => <BehandlingMenuDataResolver fagsak={fagsak} />}
               renderBehandlingVelger={() => (
                 <BehandlingVelgerSakIndex
                   behandlinger={alleBehandlinger}
@@ -155,6 +145,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
       )}
       {(kontrollresultatState === RestApiState.SUCCESS && risikoAksjonspunktState === RestApiState.SUCCESS) && (
         <RisikoklassifiseringIndex
+          fagsak={fagsak}
           risikoAksjonspunkt={risikoAksjonspunkt}
           kontrollresultat={kontrollresultat}
         />
@@ -163,33 +154,15 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  saksnummer: getSelectedSaksnummer(state),
-  dekningsgrad: getSelectedFagsakDekningsgrad(state),
-  sakstype: getFagsakYtelseType(state),
-  fagsakStatus: getSelectedFagsakStatus(state),
+const mapStateToProps = (state, ownProps) => ({
   selectedBehandlingId: getSelectedBehandlingId(state),
   noExistingBehandlinger: getNoExistingBehandlinger(state),
   behandlingVersjon: getBehandlingVersjon(state),
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators(
-  {
-  },
-  dispatch,
-);
-
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...ownProps,
-  ...stateProps,
-  ...dispatchProps,
   shouldRedirectToBehandlinger: ownProps.match.isExact,
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps,
-    mergeProps,
-  )(requireProps(['saksnummer'], <LoadingPanel />)(FagsakProfileIndex)),
+  )(requireProps(['fagsak'], <LoadingPanel />)(FagsakProfileIndex)),
 );

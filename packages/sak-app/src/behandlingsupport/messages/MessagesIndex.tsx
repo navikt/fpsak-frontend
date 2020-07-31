@@ -10,17 +10,16 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
-import { Kodeverk } from '@fpsak-frontend/types';
+import { Kodeverk, Fagsak } from '@fpsak-frontend/types';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,
-  getBehandlingIdentifier,
+  getSelectedBehandlingId,
 } from '../../behandling/duck';
 import { setBehandlingOnHold } from '../../behandlingmenu/duck';
 import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
@@ -73,9 +72,12 @@ const getPreviewCallback = (behandlingTypeKode, behandlingIdentifier, behandling
 };
 
 interface OwnProps {
+  fagsak: Fagsak;
+}
+
+interface StateProps {
   behandlingIdentifier?: BehandlingIdentifier;
   behandlingUuid: string;
-  fagsakYtelseType: Kodeverk;
   selectedBehandlingVersjon?: number;
   selectedBehandlingSprak?: Kodeverk;
   recipients?: string[];
@@ -86,12 +88,6 @@ interface DispatchProps {
   fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   setBehandlingOnHold: (params: any) => void;
   push: (param: string) => void;
-}
-
-interface StateProps {
-  showSettPaVentModal: boolean;
-  showMessagesModal: boolean;
-  submitCounter: number;
 }
 
 interface Brevmal {
@@ -107,14 +103,14 @@ const EMPTY_ARRAY = [];
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
+const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
+  fagsak,
   recipients = ['Søker'],
   behandlingIdentifier,
   push: pushLocation,
   selectedBehandlingVersjon,
   setBehandlingOnHold: setOnHold,
   behandlingUuid,
-  fagsakYtelseType,
   behandlingTypeKode,
   selectedBehandlingSprak,
 }) => {
@@ -156,7 +152,7 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
 
   const fetchPreview = useVisForhandsvisningAvMelding();
 
-  const previewCallback = useCallback(getPreviewCallback(behandlingTypeKode, behandlingIdentifier, behandlingUuid, fagsakYtelseType, fetchPreview),
+  const previewCallback = useCallback(getPreviewCallback(behandlingTypeKode, behandlingIdentifier, behandlingUuid, fagsak.sakstype, fetchPreview),
     [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
 
   const afterSubmit = useCallback(() => {
@@ -209,13 +205,11 @@ const MessagesIndex: FunctionComponent<OwnProps & DispatchProps> = ({
   );
 };
 
-const mapStateToProps = (state: any): OwnProps => ({
-  behandlingIdentifier: getBehandlingIdentifier(state),
+const mapStateToProps = (state: any): StateProps => ({
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
-  behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
-  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId].kode,
-  fagsakYtelseType: getFagsakYtelseType(state),
+  behandlingUuid: getBehandlingerUuidsMappedById(state)[getSelectedBehandlingId(state)],
+  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getSelectedBehandlingId(state)].kode,
 });
 
 // @ts-ignore (Korleis fikse denne?)

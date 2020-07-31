@@ -15,7 +15,6 @@ import { FpsakApiKeys, useRestApi } from '../../data/fpsakApiNyUtenRedux';
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
 import ApplicationContextPath from '../../app/ApplicationContextPath';
 import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';
-import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 
 interface History {
@@ -89,7 +88,6 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
 };
 
 const mapStateToProps = (state) => ({
-  saksnummer: getSelectedSaksnummer(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),
 });

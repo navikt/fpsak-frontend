@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
 import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
-import { NavAnsatt, Kodeverk } from '@fpsak-frontend/types';
+import { NavAnsatt, Kodeverk, Fagsak } from '@fpsak-frontend/types';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
@@ -12,9 +12,7 @@ import {
   getBehandlingStatus, getBehandlingType, erBehandlingPaVent, getBehandlingAnsvarligSaksbehandler,
   getSelectedBehandlingId,
 } from '../behandling/duck';
-import { getSelectedFagsakStatus } from '../fagsak/fagsakSelectors';
 import { getSupportPanelLocationCreator } from '../app/paths';
-import { getSelectedSaksnummer } from '../fagsak/duck';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
@@ -24,17 +22,23 @@ import allSupportPanelAccessRights from './accessSupport';
 import styles from './behandlingSupportIndex.less';
 import { FpsakApiKeys, useRestApi } from '../data/fpsakApiNyUtenRedux';
 
-const renderSupportPanel = (supportPanel, totrinnArsaker, totrinnArsakerReadOnly) => {
+const renderSupportPanel = (supportPanel, totrinnArsaker, totrinnArsakerReadOnly, fagsak) => {
   switch (supportPanel) {
     case supportTabs.APPROVAL:
     case supportTabs.RETURNED:
-      return (<ApprovalIndex totrinnskontrollSkjermlenkeContext={totrinnArsaker} totrinnskontrollReadOnlySkjermlenkeContext={totrinnArsakerReadOnly} />);
+      return (
+        <ApprovalIndex
+          fagsak={fagsak}
+          totrinnskontrollSkjermlenkeContext={totrinnArsaker}
+          totrinnskontrollReadOnlySkjermlenkeContext={totrinnArsakerReadOnly}
+        />
+      );
     case supportTabs.HISTORY:
-      return (<HistoryIndex />);
+      return (<HistoryIndex saksnummer={fagsak.saksnummer} />);
     case supportTabs.MESSAGES:
-      return (<MessagesIndex />);
+      return (<MessagesIndex fagsak={fagsak} />);
     case supportTabs.DOCUMENTS:
-      return (<DocumentIndex />);
+      return (<DocumentIndex saksnummer={fagsak.saksnummer} />);
     default:
       return null;
   }
@@ -48,14 +52,13 @@ type TotrinnskontrollAksjonspunkt = {
 }
 
 interface OwnProps {
+  fagsak: Fagsak;
   acccessibleSupportPanels: string[];
   activeSupportPanel: string;
-  fagsakStatus: Kodeverk;
   behandlingStatus?: Kodeverk;
   behandlingType?: Kodeverk;
   behandlingAnsvarligSaksbehandler: string;
   erPaVent: boolean;
-  selectedSaksnummer: string;
   behandlingId?: number;
   isInnsynBehandling: boolean;
 }
@@ -104,16 +107,15 @@ export const getEnabledSupportPanels = (accessibleSupportPanels, sendMessageIsRe
  * støttepanelkomponent ihht. gitt parameter i URL-en.
  */
 export const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
-  fagsakStatus,
+  fagsak,
   behandlingStatus,
   behandlingType,
   behandlingAnsvarligSaksbehandler,
   erPaVent,
-  selectedSaksnummer,
   isInnsynBehandling,
   behandlingId,
 }) => {
-  const { selected: selectedSupportPanel, location } = useTrackRouteParam({
+  const { selected: selectedSupportPanel, location } = useTrackRouteParam<string>({
     paramName: 'stotte',
     isQueryParam: true,
   });
@@ -132,12 +134,12 @@ export const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
   });
 
   const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
-  const rettigheter = useMemo(() => allSupportPanelAccessRights(navAnsatt, fagsakStatus, behandlingStatus, behandlingType, behandlingAnsvarligSaksbehandler),
+  const rettigheter = useMemo(() => allSupportPanelAccessRights(navAnsatt, fagsak.status, behandlingStatus, behandlingType, behandlingAnsvarligSaksbehandler),
     []);
   const returnedIsRelevant = useMemo(() => getReturnedIsRelevant(erPaVent, totrinnArsakerReadOnly, behandlingStatus), []);
   const approvalIsRelevant = useMemo(() => !erPaVent && behandlingStatusKode === BehandlingStatus.FATTER_VEDTAK, []);
   const acccessibleSupportPanels = useMemo(() => getAccessibleSupportPanels(returnedIsRelevant, approvalIsRelevant, rettigheter), []);
-  const sendMessageIsRelevant = useMemo(() => (selectedSaksnummer && !erPaVent), []);
+  const sendMessageIsRelevant = useMemo(() => (fagsak && !erPaVent), []);
   const enabledSupportPanels = useMemo(() => getEnabledSupportPanels(acccessibleSupportPanels, sendMessageIsRelevant, rettigheter), []);
   const defaultSupportPanel = enabledSupportPanels.find(() => true) || supportTabs.HISTORY;
   const activeSupportPanel = enabledSupportPanels.includes(selectedSupportPanel) ? selectedSupportPanel : defaultSupportPanel;
@@ -158,7 +160,7 @@ export const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
         />
       </div>
       <div className={(activeSupportPanel === supportTabs.HISTORY ? styles.containerHistorikk : styles.container)}>
-        {renderSupportPanel(activeSupportPanel, totrinnArsaker, totrinnArsakerReadOnly)}
+        {renderSupportPanel(activeSupportPanel, totrinnArsaker, totrinnArsakerReadOnly, fagsak)}
       </div>
     </>
   );
@@ -169,11 +171,9 @@ const mapStateToProps = (state) => {
   return {
     behandlingType,
     behandlingId: getSelectedBehandlingId(state),
-    fagsakStatus: getSelectedFagsakStatus(state),
     behandlingStatus: getBehandlingStatus(state),
     behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
     erPaVent: erBehandlingPaVent(state),
-    selectedSaksnummer: getSelectedSaksnummer(state),
     isInnsynBehandling: !!behandlingType && behandlingType.kode === BehandlingType.DOKUMENTINNSYN,
   };
 };
