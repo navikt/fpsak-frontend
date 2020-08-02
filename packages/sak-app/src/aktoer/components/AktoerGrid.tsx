@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 
@@ -8,14 +7,13 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/utils';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
-  Kodeverk, KodeverkMedNavn, Fagsak, FagsakPerson,
+  KodeverkMedNavn, Fagsak, FagsakPerson,
 } from '@fpsak-frontend/types';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import useGlobalStateRestApiData from '@fpsak-frontend/rest-api-hooks/src/global-data/useGlobalStateRestApiError';
 
 import { FpsakApiKeys } from '../../data/fpsakApiNyUtenRedux';
 import { pathToFagsak } from '../../app/paths';
-import { getBehandlingSprak } from '../../behandling/duck';
 
 import styles from './aktoerGrid.less';
 
@@ -24,12 +22,10 @@ interface OwnProps {
     fagsaker: Fagsak[];
     person: FagsakPerson;
   };
-  sprakkode?: Kodeverk;
 }
 
 export const AktoerGrid: FunctionComponent<OwnProps> = ({
   data,
-  sprakkode,
 }) => {
   const alleKodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
@@ -39,7 +35,6 @@ export const AktoerGrid: FunctionComponent<OwnProps> = ({
     <>
       <VisittkortSakIndex
         alleKodeverk={alleKodeverk}
-        sprakkode={sprakkode}
         fagsak={{
           ...vFagsak,
           person: data.person,
@@ -67,8 +62,4 @@ export const AktoerGrid: FunctionComponent<OwnProps> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  sprakkode: getBehandlingSprak(state),
-});
-
-export default connect(mapStateToProps)(AktoerGrid);
+export default AktoerGrid;

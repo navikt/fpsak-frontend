@@ -26,7 +26,7 @@ const findPersonStatus = (personopplysning) => {
 interface OwnProps {
   personopplysninger: Personopplysninger;
   alleKodeverk: {[key: string]: [KodeverkMedNavn]};
-  sprakkode: Kodeverk;
+  sprakkode?: Kodeverk;
 }
 
 const VisittkortDetaljerPopup: FunctionComponent<OwnProps & WrappedComponentProps> = ({

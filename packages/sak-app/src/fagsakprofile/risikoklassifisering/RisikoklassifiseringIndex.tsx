@@ -16,18 +16,16 @@ import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 
 import { FpsakApiKeys } from '../../data/fpsakApiNyUtenRedux';
 import { getRiskPanelLocationCreator } from '../../app/paths';
-import { getBehandlingerErPaaVentStatusMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import getAccessRights from '../../app/util/access';
 import {
-  getBehandlingVersjon, getSelectedBehandlingId, getBehandlingStatus, getBehandlingType,
+  getBehandlingVersjon, getSelectedBehandlingId,
 } from '../../behandling/duck';
 import {
   isRiskPanelOpen, resolveAksjonspunkter as resolveAp, setRiskPanelOpen,
 } from './duck';
 import trackRouteParam from '../../app/trackRouteParam';
 
-const getReadOnly = (navAnsatt: NavAnsatt, rettigheter, erPaaVentMap: boolean, selectedBehandlingId: number) => {
-  const erPaaVent = erPaaVentMap && getSelectedBehandlingId ? erPaaVentMap[selectedBehandlingId] : false;
+const getReadOnly = (navAnsatt: NavAnsatt, rettigheter, erPaaVent: boolean) => {
   if (erPaaVent) {
     return true;
   }
@@ -59,6 +57,7 @@ interface OwnProps {
  */
 export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
   fagsak,
+  alleBehandlinger,
   risikoAksjonspunkt,
   kontrollresultat,
   behandlingVersjon,
@@ -66,16 +65,18 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
   push: pushLocation,
   location,
   isPanelOpen = false,
-  erPaaVentMap,
   behandlingId,
-  behandlingStatus,
-  behandlingType,
 }) => {
+  const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
+  const erPaaVent = behandling ? behandling.behandlingPaaVent : false;
+  const behandlingStatus = behandling?.status;
+  const behandlingType = behandling?.type;
+
   const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.status, behandlingStatus, behandlingType),
     [fagsak.status, behandlingStatus, behandlingType]);
-  const readOnly = useMemo(() => getReadOnly(navAnsatt, rettigheter, erPaaVentMap, behandlingId),
-    [rettigheter, erPaaVentMap, behandlingId]);
+  const readOnly = useMemo(() => getReadOnly(navAnsatt, rettigheter, erPaaVent),
+    [rettigheter, erPaaVent]);
 
   const toggleRiskPanel = useCallback(() => {
     pushLocation(getRiskPanelLocationCreator(location)(!isPanelOpen));
@@ -120,10 +121,7 @@ const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingVersjon: getBehandlingVersjon(state),
   isPanelOpen: isRiskPanelOpen(state),
-  erPaaVentMap: getBehandlingerErPaaVentStatusMappedById(state),
   behandlingId: getSelectedBehandlingId(state),
-  behandlingStatus: getBehandlingStatus(state),
-  behandlingType: getBehandlingType(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

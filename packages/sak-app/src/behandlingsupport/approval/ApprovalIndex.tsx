@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useState, useEffect, useCallback,
+  FunctionComponent, useState, useEffect, useCallback, useMemo,
 } from 'react';
 import { withRouter } from 'react-router-dom';
 import { push } from 'connected-react-router';
@@ -24,16 +24,9 @@ import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArs
 
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import { createLocationForSkjermlenke } from '../../app/paths';
-import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
-  getBehandlingAnsvarligSaksbehandler,
-  getBehandlingToTrinnsBehandling,
   getBehandlingVersjon,
-  getBehandlingStatus,
-  getBehandlingType,
-  getBehandlingArsaker,
   getSelectedBehandlingId,
-  getBehandlingsresultat,
 } from '../../behandling/duck';
 import {
   FpsakApiKeys, useRestApi, requestApi, useRestApiRunner,
@@ -102,18 +95,13 @@ interface OwnProps {
   totrinnskontrollSkjermlenkeContext?: any[];
   totrinnskontrollReadOnlySkjermlenkeContext?: any[];
   selectedBehandlingVersjon?: number;
-  ansvarligSaksbehandler?: string;
-  behandlingStatus: Kodeverk;
   toTrinnsBehandling?: boolean;
   push: (location: string) => void;
   resetApproval: () => void;
   location: Location;
-  erTilbakekreving: boolean;
   behandlingUuid: string;
   erBehandlingEtterKlage?: boolean;
-  behandlingsresultat?: any;
   behandlingId?: number;
-  behandlingTypeKode?: string;
 }
 
 interface StateProps {
@@ -128,24 +116,29 @@ interface StateProps {
  */
 const ApprovalIndex: FunctionComponent<OwnProps> = ({
   fagsak,
-  toTrinnsBehandling = false,
-  erBehandlingEtterKlage = false,
+  alleBehandlinger,
   resetApproval,
   selectedBehandlingVersjon,
-  erTilbakekreving,
-  behandlingUuid,
   push: pushLocation,
   totrinnskontrollSkjermlenkeContext,
   totrinnskontrollReadOnlySkjermlenkeContext,
-  behandlingStatus,
   location,
-  ansvarligSaksbehandler,
-  behandlingsresultat,
   behandlingId,
-  behandlingTypeKode,
 }) => {
+  const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
+
+  const behandlingTypeKode = behandling ? behandling.type.kode : undefined;
+  const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
+
+  const erBehandlingEtterKlage = useMemo(() => (behandling ? behandling.behandlingArsaker
+    .map(({ behandlingArsakType }) => behandlingArsakType)
+    .some((bt: Kodeverk) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK) : false), [behandling]);
+
   const [showBeslutterModal, setShowBeslutterModal] = useState(false);
   const [allAksjonspunktApproved, setAllAksjonspunktApproved] = useState(false);
+
+  const behandlingUuid = alleBehandlinger.find((b) => b.id === behandlingId).uuid;
 
   const skjermlenkeTyperFpsak = useFpSakKodeverk(kodeverkTyper.SKJERMLENKE_TYPE);
   const skjermlenkeTyperFptilbake = useFpTilbakeKodeverk(kodeverkTyper.SKJERMLENKE_TYPE);
@@ -188,7 +181,7 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
     setAllAksjonspunktApproved, setShowBeslutterModal, godkjennBehandling),
   [behandlingId, selectedBehandlingVersjon]);
 
-  const readOnly = brukernavn === ansvarligSaksbehandler || kanVeilede;
+  const readOnly = brukernavn === behandling?.ansvarligSaksbehandler || kanVeilede;
 
   if (!totrinnskontrollSkjermlenkeContext && !totrinnskontrollReadOnlySkjermlenkeContext) {
     return null;
@@ -203,15 +196,15 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
       <TotrinnskontrollSakIndex
         behandlingId={behandlingId}
         behandlingVersjon={selectedBehandlingVersjon}
-        behandlingsresultat={behandlingsresultat}
-        behandlingStatus={behandlingStatus}
+        behandlingsresultat={behandling?.behandlingsresultat}
+        behandlingStatus={behandling?.status}
         totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
         totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
         location={location}
         readOnly={readOnly}
         onSubmit={onSubmit}
         forhandsvisVedtaksbrev={forhandsvisVedtaksbrev}
-        toTrinnsBehandling={toTrinnsBehandling}
+        toTrinnsBehandling={behandling ? behandling.toTrinnsBehandling : false}
         skjemalenkeTyper={skjemalenkeTyper}
         isForeldrepengerFagsak={fagsak.sakstype.kode === fagsakYtelseType.FORELDREPENGER}
         alleKodeverk={erTilbakekreving ? alleFpSakKodeverk : alleFpTilbakeKodeverk}
@@ -226,12 +219,12 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
           erGodkjenningFerdig={erGodkjenningFerdig}
           selectedBehandlingVersjon={selectedBehandlingVersjon}
           fagsakYtelseType={fagsak.sakstype}
-          behandlingsresultat={behandlingsresultat}
+          behandlingsresultat={behandling?.behandlingsresultat}
           behandlingId={behandlingId}
           behandlingTypeKode={behandlingTypeKode}
           pushLocation={pushLocation}
           allAksjonspunktApproved={allAksjonspunktApproved}
-          behandlingStatus={behandlingStatus}
+          behandlingStatus={behandling?.status}
           totrinnsKlageVurdering={totrinnsKlageVurdering}
         />
       )}
@@ -239,30 +232,11 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   );
 };
 
-const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsaker], (behandlingArsaker: { behandlingArsakType: Kodeverk}[] = []) => behandlingArsaker
-  .map(({ behandlingArsakType }) => behandlingArsakType)
-  .some((bt: Kodeverk) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
-    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
-
-const mapStateToPropsFactory = () => (state) => {
-  const behandlingType = getBehandlingType(state);
-  const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
-  const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
-  const behandlingId = getSelectedBehandlingId(state);
-  return {
-    selectedBehandlingVersjon: getBehandlingVersjon(state),
-    ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
-    behandlingStatus: getBehandlingStatus(state),
-    toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
-    location: state.router.location,
-    behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingId],
-    erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
-    behandlingsresultat: getBehandlingsresultat(state),
-    behandlingId: getSelectedBehandlingId(state),
-    erTilbakekreving,
-    behandlingTypeKode,
-  };
-};
+const mapStateToPropsFactory = () => (state) => ({
+  selectedBehandlingVersjon: getBehandlingVersjon(state),
+  location: state.router.location,
+  behandlingId: getSelectedBehandlingId(state),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({

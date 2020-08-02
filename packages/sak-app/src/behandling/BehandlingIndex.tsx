@@ -26,13 +26,9 @@ import {
 import { reduxRestApi } from '../data/fpsakApi';
 import { FpsakApiKeys, requestApi } from '../data/fpsakApiNyUtenRedux';
 import {
-  setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getUrlBehandlingId,
+  setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getUrlBehandlingId,
   oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
-import {
-  getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo, getBehandlingerLinksMappedById, getBehandlingerTypesMappedById,
-  getBehandlingerStatusMappedById, BehandlingerInfo,
-} from './selectors/behandlingerSelectors';
 import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
 import trackRouteParam from '../app/trackRouteParam';
@@ -89,7 +85,7 @@ interface OwnProps {
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
   fagsak: Fagsak;
-  fagsakBehandlingerInfo: BehandlingerInfo[];
+  alleBehandlinger: {}[];
   behandlingLinks: Link[];
   push: (location: Location | string) => void;
   visFeilmelding: (data: any) => void;
@@ -117,7 +113,6 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   behandlingId,
   erAktivPapirsoknad = false,
   setBehandlingIdOgVersjon,
-  behandlingVersjon,
   behandlingLinks,
   push: pushLocation,
   location,
@@ -125,9 +120,12 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   behandlingStatus,
   oppdaterBehandlingVersjon,
   fagsak,
-  fagsakBehandlingerInfo,
+  alleBehandlinger,
   visFeilmelding,
 }) => {
+  const behandlingVersjon = alleBehandlinger.some((b) => b.id === behandlingId)
+    ? alleBehandlinger.find((b) => b.id === behandlingId).versjon : undefined;
+
   useEffect(() => {
     reduxRestApi.injectPaths(behandlingLinks);
     requestApi.injectPaths(behandlingLinks);
@@ -190,6 +188,16 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
       </Suspense>
     );
   }
+
+  const fagsakBehandlingerInfo = alleBehandlinger
+    .map((behandling) => ({
+      id: behandling.id,
+      uuid: behandling.uuid,
+      type: behandling.type,
+      status: behandling.status,
+      opprettet: behandling.opprettet,
+      avsluttet: behandling.avsluttet,
+    }));
 
   if (behandlingTypeKode === BehandlingType.KLAGE) {
     return (
@@ -285,18 +293,17 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
   return null;
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const { alleBehandlinger } = ownProps;
   const behandlingId = getUrlBehandlingId(state);
-  const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
+  const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
   return {
     behandlingId,
-    behandlingType,
-    behandlingStatus: getBehandlingerStatusMappedById[behandlingId],
-    behandlingVersjon: getTempBehandlingVersjon(state),
+    behandlingType: behandling?.type,
+    behandlingStatus: behandling?.status,
     location: state.router.location,
-    erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
-    fagsakBehandlingerInfo: getBehandlingerInfo(state),
-    behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
+    erAktivPapirsoknad: behandling?.erAktivPapirsoknad,
+    behandlingLinks: behandling?.links,
   };
 };
 

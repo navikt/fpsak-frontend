@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 import { Fagsak } from '@fpsak-frontend/types';
@@ -7,27 +6,22 @@ import { Fagsak } from '@fpsak-frontend/types';
 import { behandlingPath } from '../app/paths';
 import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';
-import { getNumBehandlinger } from './selectors/behandlingerSelectors';
 
 interface OwnProps {
   fagsak: Fagsak;
-  numBehandlinger: number;
+  alleBehandlinger: {}[];
 }
 
 export const BehandlingerIndex: FunctionComponent<OwnProps> = ({
   fagsak,
-  numBehandlinger,
+  alleBehandlinger,
 }) => (
   <Switch>
-    <Route strict path={behandlingPath} render={(props) => <BehandlingIndex {...props} fagsak={fagsak} />} />
+    <Route strict path={behandlingPath} render={(props) => <BehandlingIndex {...props} fagsak={fagsak} alleBehandlinger={alleBehandlinger} />} />
     <Route>
-      <NoSelectedBehandling numBehandlinger={numBehandlinger} />
+      <NoSelectedBehandling numBehandlinger={alleBehandlinger.length} />
     </Route>
   </Switch>
 );
 
-const mapStateToProps = (state) => ({
-  numBehandlinger: getNumBehandlinger(state),
-});
-
-export default connect(mapStateToProps)(BehandlingerIndex);
+export default BehandlingerIndex;

@@ -10,26 +10,23 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
-import { Kodeverk, Fagsak } from '@fpsak-frontend/types';
+import { Fagsak } from '@fpsak-frontend/types';
 
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
-  getBehandlingSprak,
   getBehandlingVersjon,
   getSelectedBehandlingId,
 } from '../../behandling/duck';
 import { setBehandlingOnHold } from '../../behandlingmenu/duck';
-import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import {
   FpsakApiKeys, useRestApi, useRestApiRunner, requestApi,
 } from '../../data/fpsakApiNyUtenRedux';
 
 const NO_PARAM = {};
 
-const getSubmitCallback = (setShowMessageModal, behandlingIdentifier, submitMessage, resetMessage, setShowSettPaVentModal, setSubmitCounter) => (values) => {
+const getSubmitCallback = (setShowMessageModal, behandlingId, submitMessage, resetMessage, setShowSettPaVentModal, setSubmitCounter) => (values) => {
   const isInnhentEllerForlenget = values.brevmalkode === dokumentMalType.INNHENT_DOK
     || values.brevmalkode === dokumentMalType.FORLENGET_DOK
     || values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
@@ -37,7 +34,7 @@ const getSubmitCallback = (setShowMessageModal, behandlingIdentifier, submitMess
   setShowMessageModal(!isInnhentEllerForlenget);
 
   const data = {
-    behandlingId: behandlingIdentifier.behandlingId,
+    behandlingId,
     mottaker: values.mottaker,
     brevmalkode: values.brevmalkode,
     fritekst: values.fritekst,
@@ -52,12 +49,12 @@ const getSubmitCallback = (setShowMessageModal, behandlingIdentifier, submitMess
     });
 };
 
-const getPreviewCallback = (behandlingTypeKode, behandlingIdentifier, behandlingUuid, fagsakYtelseType, fetchPreview) => (
+const getPreviewCallback = (behandlingTypeKode, behandlingId, behandlingUuid, fagsakYtelseType, fetchPreview) => (
   mottaker, dokumentMal, fritekst, aarsakskode,
 ) => {
   const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
   const data = erTilbakekreving ? {
-    behandlingId: behandlingIdentifier.behandlingId,
+    behandlingId,
     fritekst: fritekst || ' ',
     brevmalkode: dokumentMal,
   } : {
@@ -73,15 +70,12 @@ const getPreviewCallback = (behandlingTypeKode, behandlingIdentifier, behandling
 
 interface OwnProps {
   fagsak: Fagsak;
+  alleBehandlinger: {}[];
 }
 
 interface StateProps {
-  behandlingIdentifier?: BehandlingIdentifier;
-  behandlingUuid: string;
+  selectedBehandlingId: number;
   selectedBehandlingVersjon?: number;
-  selectedBehandlingSprak?: Kodeverk;
-  recipients?: string[];
-  behandlingTypeKode: string;
 }
 
 interface DispatchProps {
@@ -97,6 +91,7 @@ interface Brevmal {
 }
 
 const EMPTY_ARRAY = [];
+const RECIPIENTS = ['Søker'];
 
 /**
  * MessagesIndex
@@ -105,18 +100,18 @@ const EMPTY_ARRAY = [];
  */
 const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
   fagsak,
-  recipients = ['Søker'],
-  behandlingIdentifier,
+  alleBehandlinger,
+  selectedBehandlingId,
   push: pushLocation,
   selectedBehandlingVersjon,
   setBehandlingOnHold: setOnHold,
-  behandlingUuid,
-  behandlingTypeKode,
-  selectedBehandlingSprak,
 }) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);
   const [showMessagesModal, setShowMessageModal] = useState(false);
   const [submitCounter, setSubmitCounter] = useState(0);
+
+  const behandling = alleBehandlinger.find((b) => b.id === selectedBehandlingId);
+  const behandlingId = behandling.id;
 
   const ventearsaker = useFpSakKodeverk(kodeverkTyper.VENT_AARSAK) || EMPTY_ARRAY;
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
@@ -130,9 +125,9 @@ const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = 
     window.location.reload();
   };
 
-  const submitCallback = useCallback(getSubmitCallback(setShowMessageModal, behandlingIdentifier, submitMessage,
+  const submitCallback = useCallback(getSubmitCallback(setShowMessageModal, behandlingId, submitMessage,
     resetMessage, setShowSettPaVentModal, setSubmitCounter),
-  [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
+  [behandlingId, selectedBehandlingVersjon]);
 
   const hideSettPaVentModal = useCallback(() => {
     setShowSettPaVentModal(false);
@@ -140,7 +135,7 @@ const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = 
 
   const handleSubmitFromModal = useCallback((formValues) => {
     const values = {
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingId,
       behandlingVersjon: selectedBehandlingVersjon,
       frist: formValues.frist,
       ventearsak: formValues.ventearsak,
@@ -148,12 +143,12 @@ const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = 
     setOnHold(values);
     hideSettPaVentModal();
     pushLocation('/');
-  }, [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
+  }, [behandlingId, selectedBehandlingVersjon]);
 
   const fetchPreview = useVisForhandsvisningAvMelding();
 
-  const previewCallback = useCallback(getPreviewCallback(behandlingTypeKode, behandlingIdentifier, behandlingUuid, fagsak.sakstype, fetchPreview),
-    [behandlingIdentifier.behandlingId, selectedBehandlingVersjon]);
+  const previewCallback = useCallback(getPreviewCallback(behandling.type.kode, behandlingId, behandling.uuid, fagsak.sakstype, fetchPreview),
+    [behandlingId, selectedBehandlingVersjon]);
 
   const afterSubmit = useCallback(() => {
     setShowMessageModal(false);
@@ -162,12 +157,12 @@ const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = 
 
   const skalHenteRevAp = requestApi.hasPath(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP);
   const { data: harApentKontrollerRevAp, state: stateRevAp } = useRestApi<boolean>(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, NO_PARAM, {
-    updateTriggers: [behandlingIdentifier.behandlingId, selectedBehandlingVersjon, submitCounter],
+    updateTriggers: [behandlingId, selectedBehandlingVersjon, submitCounter],
     suspendRequest: !skalHenteRevAp,
   });
 
   const { data: brevmaler, state: stateBrevmaler } = useRestApi<Brevmal[]>(FpsakApiKeys.BREVMALER, NO_PARAM, {
-    updateTriggers: [behandlingIdentifier.behandlingId, selectedBehandlingVersjon, submitCounter],
+    updateTriggers: [behandlingId, selectedBehandlingVersjon, submitCounter],
   });
 
   if (stateBrevmaler === RestApiState.LOADING || (skalHenteRevAp && stateRevAp === RestApiState.LOADING)) {
@@ -182,10 +177,10 @@ const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = 
 
       <MeldingerSakIndex
         submitCallback={submitCallback}
-        recipients={recipients}
-        sprakKode={selectedBehandlingSprak}
+        recipients={RECIPIENTS}
+        sprakKode={behandling?.sprakkode}
         previewCallback={previewCallback}
-        behandlingId={behandlingIdentifier.behandlingId}
+        behandlingId={behandlingId}
         behandlingVersjon={selectedBehandlingVersjon}
         revurderingVarslingArsak={revurderingVarslingArsak}
         templates={brevmaler}
@@ -206,10 +201,8 @@ const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = 
 };
 
 const mapStateToProps = (state: any): StateProps => ({
+  selectedBehandlingId: getSelectedBehandlingId(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
-  selectedBehandlingSprak: getBehandlingSprak(state),
-  behandlingUuid: getBehandlingerUuidsMappedById(state)[getSelectedBehandlingId(state)],
-  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getSelectedBehandlingId(state)].kode,
 });
 
 // @ts-ignore (Korleis fikse denne?)

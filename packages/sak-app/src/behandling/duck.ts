@@ -2,8 +2,6 @@ import { createSelector } from 'reselect';
 
 import { reducerRegistry } from '@fpsak-frontend/rest-api-redux';
 
-import { getBehandlinger } from './selectors/behandlingerSelectors';
-
 const reducerName = 'behandling';
 
 /* Action types */
@@ -75,26 +73,4 @@ reducerRegistry.register(reducerName, behandlingReducer);
 const getBehandlingContext = (state) => state.default[reducerName];
 export const getUrlBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.urlBehandlingId);
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingId);
-
-const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
-  (behandlinger = [], behandlingId) => behandlinger.find((b) => b.id === behandlingId));
-
-export const getTempBehandlingVersjon = createSelector([getBehandlinger, getUrlBehandlingId],
-  (behandlinger = [], behandlingId) => (behandlinger.some((b) => b.id === behandlingId) ? behandlinger.find((b) => b.id === behandlingId).versjon : undefined));
 export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
-
-export const getBehandlingStatus = createSelector([getBehandling], (behandling) => (behandling ? behandling.status : undefined));
-export const getBehandlingType = createSelector([getBehandling], (behandling) => (behandling ? behandling.type : undefined));
-export const getBehandlingBehandlendeEnhetId = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlendeEnhetId : undefined));
-export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlendeEnhetNavn : undefined));
-export const getBehandlingSprak = createSelector([getBehandling], (behandling) => (behandling ? behandling.sprakkode : undefined));
-export const erBehandlingPaVent = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingPaaVent : false));
-export const erBehandlingKoet = createSelector([getBehandling], (behandling) => (behandling ? behandling.behandlingKoet : false));
-export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling], (behandling) => (behandling
-  ? behandling.ansvarligSaksbehandler : undefined));
-export const getBehandlingToTrinnsBehandling = createSelector([getBehandling], (behandling) => behandling.toTrinnsBehandling);
-export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behandling) => (!!behandling && !!behandling.erAktivPapirsoknad));
-export const getBehandlingsresultat = createSelector([getBehandling], (behandling) => behandling.behandlingsresultat);
-export const getBehandlingArsaker = createSelector([getBehandling], (behandling) => behandling.behandlingArsaker);
-export const getKanHenleggeBehandling = createSelector([getBehandling], (behandling) => (behandling ? behandling.kanHenleggeBehandling : false));
-export const finnesVerge = createSelector([getBehandling], (behandling) => (behandling ? behandling.harVerge : false));

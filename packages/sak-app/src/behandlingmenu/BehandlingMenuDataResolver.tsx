@@ -6,11 +6,11 @@ import { push } from 'connected-react-router';
 import { Location } from 'history';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { Kodeverk, Fagsak } from '@fpsak-frontend/types';
+import { Fagsak } from '@fpsak-frontend/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
-import { getBehandlingVersjon, getBehandlingType, getSelectedBehandlingId } from '../behandling/duck';
+import { getBehandlingVersjon, getSelectedBehandlingId } from '../behandling/duck';
 import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
 import { fjernVerge, opprettVerge } from './duck';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
@@ -34,7 +34,6 @@ interface OwnProps {
 interface StateProps {
   behandlingId?: number;
   behandlingVersion?: number;
-  behandlingType?: Kodeverk;
 }
 
 interface DispatchProps {
@@ -43,13 +42,13 @@ interface DispatchProps {
 
 const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
   fagsak,
+  behandling,
   behandlingId,
   behandlingVersion,
-  behandlingType,
   location,
   pushLocation,
 }) => {
-  const skalHenteVergeMenyvalg = behandlingId && behandlingType && YTELSE_BEHANDLINGTYPER.includes(behandlingType.kode);
+  const skalHenteVergeMenyvalg = behandlingId && behandling && YTELSE_BEHANDLINGTYPER.includes(behandling.type.kode);
   const { data: vergeMenyvalgData, state: stateVerge } = useRestApi<{ vergeBehandlingsmeny: string }>(
     FpsakApiKeys.VERGE_MENYVALG, new BehandlingIdentifier(fagsak.saksnummer, behandlingId).toJson(), {
       updateTriggers: [behandlingId, behandlingVersion],
@@ -78,10 +77,11 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
   return (
     <BehandlingMenuIndex
       fagsak={fagsak}
+      behandling={behandling}
       saksnummer={fagsak.saksnummer}
       behandlingId={behandlingId}
       behandlingVersion={behandlingVersion}
-      behandlingType={behandlingType}
+      behandlingType={behandling?.type}
       menyhandlingRettigheter={menyhandlingRettigheter}
       fjernVerge={fjernVergeFn}
       opprettVerge={opprettVergeFn}
@@ -94,7 +94,6 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
 const mapStateToProps = (state): StateProps => ({
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersion: getBehandlingVersjon(state),
-  behandlingType: getBehandlingType(state),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => bindActionCreators({
