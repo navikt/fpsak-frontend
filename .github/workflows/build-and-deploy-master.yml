@@ -59,8 +59,8 @@ jobs:
           docker -v
           docker pull nginx:1.17.8-alpine
           docker build --pull --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
-          echo  ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
-          docker push ${IMAGE_BASE}:latest
+          echo  ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_USERNAME} --password-stdin
+          ## docker push ${IMAGE_BASE}:latest
           docker push $IMAGE
 
       - name: Opprett deployment issue
