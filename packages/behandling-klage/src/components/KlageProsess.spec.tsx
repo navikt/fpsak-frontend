@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ProsessStegContainer } from '@fpsak-frontend/behandling-felles';
 import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -82,9 +82,8 @@ describe('<KlageProsess.>', () => {
   };
 
   it('skal vise alle aktuelle prosessSteg i meny', () => {
-    const wrapper = shallowWithIntl(
-      <KlageProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <KlageProsess
         data={{ aksjonspunkter, vilkar, klageVurdering }}
         fagsak={fagsak}
         behandling={behandling as Behandling}
@@ -105,32 +104,32 @@ describe('<KlageProsess.>', () => {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Formkrav Vedtaksinstans',
+      labelId: 'Behandlingspunkt.FormkravKlageNFP',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Behandling Vedtaksinstans',
+      labelId: 'Behandlingspunkt.CheckKlageNFP',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Formkrav Klageinstans',
+      labelId: 'Behandlingspunkt.FormkravKlageKA',
       type: 'default',
     }, {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Behandling Klageinstans',
+      labelId: 'Behandlingspunkt.CheckKlageNK',
       type: 'default',
     },
     {
       isActive: false,
       isDisabled: false,
       isFinished: false,
-      label: 'Resultat',
+      labelId: 'Behandlingspunkt.ResultatKlage',
       type: 'default',
     },
     ]);
@@ -138,9 +137,8 @@ describe('<KlageProsess.>', () => {
 
   it('skal sette nytt valgt prosessSteg ved trykk i meny', () => {
     const oppdaterProsessStegOgFaktaPanelIUrl = sinon.spy();
-    const wrapper = shallowWithIntl(
-      <KlageProsess.WrappedComponent
-        intl={intlMock}
+    const wrapper = shallow(
+      <KlageProsess
         data={{ aksjonspunkter, vilkar, klageVurdering }}
         fagsak={fagsak}
         behandling={behandling as Behandling}

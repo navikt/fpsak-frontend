@@ -23,7 +23,6 @@ aktivitetstatusTilAndeltypeMap[aktivitetStatus.BRUKERS_ANDEL] = beregningsgrunnl
 aktivitetstatusTilAndeltypeMap[aktivitetStatus.FRILANSER] = beregningsgrunnlagAndeltyper.FRILANS;
 aktivitetstatusTilAndeltypeMap[aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE] = beregningsgrunnlagAndeltyper.EGEN_NÆRING;
 
-
 const statuserSomStotterFrilanser = [aktivitetStatus.FRILANSER, aktivitetStatus.KOMBINERT_AT_FL,
   aktivitetStatus.KOMBINERT_AT_FL_SN, aktivitetStatus.KOMBINERT_FL_SN];
 const statuserSomStotterArbeidstaker = [aktivitetStatus.ARBEIDSTAKER, aktivitetStatus.KOMBINERT_AT_FL,

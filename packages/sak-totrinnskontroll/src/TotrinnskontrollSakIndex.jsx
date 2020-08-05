@@ -15,6 +15,7 @@ const intl = createIntl({
 const TotrinnskontrollSakIndex = ({
   behandlingId,
   behandlingVersjon,
+  behandlingsresultat,
   totrinnskontrollSkjermlenkeContext,
   totrinnskontrollReadOnlySkjermlenkeContext,
   behandlingStatus,
@@ -36,6 +37,7 @@ const TotrinnskontrollSakIndex = ({
     <ApprovalPanel
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      behandlingsresultat={behandlingsresultat}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
       behandlingStatus={behandlingStatus}
@@ -59,6 +61,7 @@ const TotrinnskontrollSakIndex = ({
 TotrinnskontrollSakIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  behandlingsresultat: PropTypes.shape(),
   totrinnskontrollSkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollReadOnlySkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   behandlingStatus: PropTypes.shape().isRequired,
@@ -83,6 +86,7 @@ TotrinnskontrollSakIndex.propTypes = {
 };
 
 TotrinnskontrollSakIndex.defaultProps = {
+  behandlingsresultat: undefined,
   behandlingKlageVurdering: undefined,
   erTilbakekreving: false,
 };

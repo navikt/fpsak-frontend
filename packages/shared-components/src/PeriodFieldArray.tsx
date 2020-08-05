@@ -37,8 +37,8 @@ const getRemoveButton = (index: number, fields) => (className) => {
 const showErrorMessage = (meta) => meta && meta.error && (meta.dirty || meta.submitFailed);
 
 interface OwnProps {
-  children: (id: {}, index: number, removeButtonElmt?: ReactNode) => ReactNode;
-  fields: {}[];
+  children: (id: any, index: number, removeButtonElmt?: ReactNode) => ReactNode;
+  fields: any[];
   meta?: {
     error?: {
       id: string;
@@ -50,7 +50,7 @@ interface OwnProps {
   readOnly?: boolean;
   titleTextCode?: string;
   textCode?: string;
-  emptyPeriodTemplate?: {};
+  emptyPeriodTemplate?: any;
   shouldShowAddButton?: boolean;
   createAddButtonInsteadOfImageLink?: boolean;
 }

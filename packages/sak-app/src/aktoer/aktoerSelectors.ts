@@ -5,7 +5,6 @@ import fpsakApi from '../data/fpsakApi';
 export const getAktoerContext = (state) => state.default.aktoer;
 export const getSelectedAktoerId = (state) => getAktoerContext(state).selectedAktoerId;
 
-
 const AktoerInfoDataResult = fpsakApi.AKTOER_INFO.getRestApiData();
 
 export const getSelectedAktoer = createSelector(

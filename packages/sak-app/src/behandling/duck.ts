@@ -35,7 +35,6 @@ export const resetBehandlingContext = () => ({
   type: RESET_BEHANDLING_CONTEXT,
 });
 
-
 /* Action creators */
 export const previewMessage = (erTilbakekreving, erHenleggelse, data) => (dispatch) => {
   let api;
@@ -98,7 +97,6 @@ export const getBehandlingIdentifier = createSelector(
   ),
 );
 
-
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
   (behandlinger = [], behandlingId) => behandlinger.find((b) => b.id === behandlingId));
 
@@ -120,3 +118,4 @@ export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behan
 export const getBehandlingsresultat = createSelector([getBehandling], (behandling) => behandling.behandlingsresultat);
 export const getBehandlingArsaker = createSelector([getBehandling], (behandling) => behandling.behandlingArsaker);
 export const getKanHenleggeBehandling = createSelector([getBehandling], (behandling) => (behandling ? behandling.kanHenleggeBehandling : false));
+export const finnesVerge = createSelector([getBehandling], (behandling) => (behandling ? behandling.harVerge : false));

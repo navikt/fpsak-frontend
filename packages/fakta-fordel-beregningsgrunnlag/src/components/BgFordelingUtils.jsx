@@ -2,7 +2,6 @@ import moment from 'moment';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
-
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
@@ -26,7 +25,6 @@ export const settAndelIArbeid = (andelerIArbeid) => {
 const finnnInntektskategorikode = (andel) => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
 
-
 const createAndelnavn = (andel, harKunYtelse, getKodeverknavn) => {
   if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
     return '';
@@ -40,22 +38,15 @@ const createAndelnavn = (andel, harKunYtelse, getKodeverknavn) => {
   return getKodeverknavn(andel.aktivitetStatus);
 };
 
-export const finnFastsattPrAar = (fordeltPrAar,
-  fastsattForrigePrAar) => {
-  if (!nullOrUndefined(fordeltPrAar)) {
-    return fordeltPrAar;
-  }
-  return nullOrUndefined(fastsattForrigePrAar) ? null : fastsattForrigePrAar;
-};
+export const finnFastsattPrAar = (fordeltPrAar) => (nullOrUndefined(fordeltPrAar) ? null : fordeltPrAar);
 
-export const settFastsattBelop = (fordeltPrAar,
-  fastsattForrigePrAar) => {
-  const fastsatt = finnFastsattPrAar(fordeltPrAar,
-    fastsattForrigePrAar);
+export const settFastsattBelop = (fordeltPrAar, bruttoPrAar,
+  skalPreutfyllesMedBeregningsgrunnlag) => {
+  const fastsatt = finnFastsattPrAar(fordeltPrAar);
   if (fastsatt !== null) {
     return formatCurrencyNoKr(fastsatt);
   }
-  return '';
+  return skalPreutfyllesMedBeregningsgrunnlag && !nullOrUndefined(bruttoPrAar) ? formatCurrencyNoKr(bruttoPrAar) : '';
 };
 
 const finnArbeidsgiverId = (arbeidsforhold) => {
@@ -137,7 +128,7 @@ export const skalValidereMotBeregningsgrunnlag = (beregningsgrunnlag) => (andel)
 
 export const mapToBelop = (andel) => {
   const { fastsattBelop, readOnlyBelop } = andel;
-  if (andel.harPeriodeAarsakGraderingEllerRefusjon) {
+  if (andel.skalRedigereInntekt) {
     return fastsattBelop ? removeSpacesFromNumber(fastsattBelop) : 0;
   }
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;

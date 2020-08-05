@@ -48,6 +48,7 @@ const TilretteleggingUtbetalingsgrad: FunctionComponent<OwnProps & WrappedCompon
           label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Utbetalingsgrad' })}
           readOnly={erReadOnly}
           validate={[required, minValue1, maxValue100, hasValidDecimal]}
+          // @ts-ignore TODO Fiks denne!
           normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           alignRightCenterOnReadOnly
         />

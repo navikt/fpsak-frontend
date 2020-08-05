@@ -226,7 +226,6 @@ describe('<ValidateAndelerUtils>', () => {
     expect(compare).to.equal(1);
   });
 
-
   it('skal ikkje gi error om det er ingen andeler lagt til av saksbehandler og ingen har lik inntektskategori og andelsnr', () => {
     const andeler = [{
       andelsnr: 1,
@@ -372,7 +371,6 @@ describe('<ValidateAndelerUtils>', () => {
     expect(ulikeAndelerError).to.have.length(1);
     expect(ulikeAndelerError[0].id).to.equal(ulikeAndelerErrorMessage()[0].id);
   });
-
 
   it('skal ikkje gi error om det er nye andeler der to har lik andelstype og ulik inntektskategori', () => {
     const andeler = [{
@@ -558,19 +556,19 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal ikkje gi error om fastsatt beløp er lik oppgitt sum', () => {
     const values = [{
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '20 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
     },
     ];
@@ -581,24 +579,24 @@ describe('<ValidateAndelerUtils>', () => {
   it('skal ikkje gi error om fastsatt beløp og read only beløp er lik sum', () => {
     const values = [{
       andelsnr: 1,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       fastsattBelop: '10 000',
       readOnlyBelop: '50 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       andelsnr: 2,
       fastsattBelop: '20 000',
       readOnlyBelop: '100 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
       andelsnr: 3,
       fastsattBelop: '40 000',
       readOnlyBelop: '10 000',
     },
     {
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
       andelsnr: 4,
       fastsattBelop: '15 000',
       readOnlyBelop: '10 000',
@@ -659,7 +657,6 @@ describe('<ValidateAndelerUtils>', () => {
     const fastsattError = validateFastsattBelop(andelValue, inntektList, skalValidereMotRapportert);
     expect(fastsattError[0].id).to.equal(isRequiredMessage()[0].id);
   });
-
 
   it('skal returnere error om det er satt 0 i beregningsgrunnlag for andel med gradering og arbeidsforhold ikke opphørt', () => {
     const andelValue = {

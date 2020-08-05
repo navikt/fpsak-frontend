@@ -44,7 +44,6 @@ describe('<ToTrinnsForm>', () => {
     ]
   );
 
-
   const getTotrinnsaksjonspunkterOmsorg = () => (
     [
       {
@@ -90,7 +89,6 @@ describe('<ToTrinnsForm>', () => {
       },
     ]
   );
-
 
   const getBehandling = () => ({
     id: 1234,
@@ -186,12 +184,10 @@ describe('<ToTrinnsForm>', () => {
     expect(mes.prop('id')).equal('ToTrinnsForm.ForhandvisBrev');
   });
 
-
   it('skal rendre form om approvals i formstate er lik lengde som approvals frå resttjeneste', () => {
     const aksjonspunkterFoedsel = getTotrinnsaksjonspunkterFoedsel();
     const aksjonspunkterOmsorg = getTotrinnsaksjonspunkterOmsorg();
     const aksjonspunkterForeldreansvar = getTotrinnsaksjonspunkterForeldreansvar();
-
 
     const formState = [{
       contextCode: 'test',

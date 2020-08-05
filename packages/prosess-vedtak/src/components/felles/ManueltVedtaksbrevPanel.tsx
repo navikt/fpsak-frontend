@@ -35,30 +35,35 @@ const ManueltVedtaksbrevPanel: FunctionComponent<OwnProps> = ({
   skalViseLink,
 }) => (
   <>
+    <VerticalSpacer thirtyTwoPx />
     <AvsnittSkiller />
-    <VerticalSpacer twentyPx />
-    <Row>
-      <Column xs="3">
-        <Element>
-          <FormattedMessage id="FritekstBrevPanel.ManueltVedtaksbrev" />
-        </Element>
-      </Column>
-      <Column xs="2">
-        <EtikettLiten>
-          <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
-        </EtikettLiten>
-      </Column>
-      <Column xs="5">
-        {!readOnly && skalViseLink && (
+    <VerticalSpacer thirtyTwoPx />
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn className={styles.space}>
+          <Element className={styles.avsnittOverskrift}>
+            <FormattedMessage id="FritekstBrevPanel.ManueltVedtaksbrev" />
+          </Element>
+        </FlexColumn>
+        <FlexColumn className={styles.space}>
+          <EtikettLiten>
+            <FormattedMessage id={getLanguageCodeFromSprakkode(sprakkode)} />
+          </EtikettLiten>
+        </FlexColumn>
+        <FlexColumn>
+          {!readOnly && skalViseLink && (
           <>
             <Lenke href="#" onClick={previewOverstyrtBrev}>
-              <FormattedMessage id="FritekstBrevPanel.ForhandsvisManueltVedtaksbrev" />
+              <span>
+                <FormattedMessage id="FritekstBrevPanel.ForhandsvisManueltVedtaksbrev" />
+              </span>
+              <Image src={popOutPilSvg} className={styles.pil} />
             </Lenke>
-            <Image src={popOutPilSvg} className={styles.pil} />
           </>
-        )}
-      </Column>
-    </Row>
+          )}
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
     <hr className={styles.line} />
     <VerticalSpacer twentyPx />
     {!readOnly && (
@@ -76,9 +81,8 @@ const ManueltVedtaksbrevPanel: FunctionComponent<OwnProps> = ({
           label={{ id: 'VedtakForm.Overskrift' }}
           validate={[required, minLength3, maxLength200, hasValidText]}
           maxLength={200}
-          rows={1}
           readOnly={readOnly}
-          className={styles.smallTextArea}
+          textareaClass={styles.smallTextArea}
         />
       </Column>
     </Row>

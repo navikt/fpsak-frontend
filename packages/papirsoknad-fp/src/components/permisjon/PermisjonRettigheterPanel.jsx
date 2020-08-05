@@ -47,7 +47,6 @@ export const PermisjonRettigheterPanel = ({
   </>
 );
 
-
 PermisjonRettigheterPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,

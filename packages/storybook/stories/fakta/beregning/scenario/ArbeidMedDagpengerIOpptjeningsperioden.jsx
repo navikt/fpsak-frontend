@@ -19,7 +19,6 @@ export const beregningsgrunnlag = {
       beregningsperiodeFom: '2019-10-01',
       beregningsperiodeTom: '2019-12-31',
       beregnetPrAar: null,
-      fastsattForrigePrAar: null,
       overstyrtPrAar: null,
       bruttoPrAar: null,
       avkortetPrAar: null,
@@ -73,6 +72,7 @@ export const beregningsgrunnlag = {
     besteberegningAndeler: null,
     vurderMottarYtelse: null,
     avklarAktiviteter: {
+      skjæringstidspunktOpptjening: '2020-01-13',
       aktiviteterTomDatoMapping: [{
         tom: '2020-01-13',
         aktiviteter: [{
@@ -139,35 +139,20 @@ export const beregningsgrunnlag = {
 };
 
 
-export const aksjonspunkt = [{
-  definisjon: { kode: '7003', kodeverk: 'AKSJONSPUNKT_DEF' },
-  status: { kode: 'UTFO', kodeverk: 'AKSJONSPUNKT_STATUS' },
-  begrunnelse: null,
-  vilkarType: null,
-  toTrinnsBehandling: false,
-  toTrinnsBehandlingGodkjent: null,
-  vurderPaNyttArsaker: null,
-  besluttersBegrunnelse: null,
-  aksjonspunktType: { kode: 'AUTO', kodeverk: 'AKSJONSPUNKT_TYPE' },
-  kanLoses: false,
-  erAktivt: true,
-  fristTid: '2020-02-10T00:00:00',
-  endretTidspunkt: '2020-02-03T12:19:52.486',
-  endretAv: 'im-just-a-fake-code',
-},
-{
-  definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },
-  status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
-  begrunnelse: null,
-  vilkarType: null,
-  toTrinnsBehandling: true,
-  toTrinnsBehandlingGodkjent: null,
-  vurderPaNyttArsaker: null,
-  besluttersBegrunnelse: null,
-  aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
-  kanLoses: true,
-  erAktivt: true,
-  fristTid: null,
-  endretTidspunkt: null,
-  endretAv: null,
-}];
+export const aksjonspunkt = [
+  {
+    definisjon: { kode: '5058', kodeverk: 'AKSJONSPUNKT_DEF' },
+    status: { kode: 'OPPR', kodeverk: 'AKSJONSPUNKT_STATUS' },
+    begrunnelse: null,
+    vilkarType: null,
+    toTrinnsBehandling: true,
+    toTrinnsBehandlingGodkjent: null,
+    vurderPaNyttArsaker: null,
+    besluttersBegrunnelse: null,
+    aksjonspunktType: { kode: 'MANU', kodeverk: 'AKSJONSPUNKT_TYPE' },
+    kanLoses: true,
+    erAktivt: true,
+    fristTid: null,
+    endretTidspunkt: null,
+    endretAv: null,
+  }];

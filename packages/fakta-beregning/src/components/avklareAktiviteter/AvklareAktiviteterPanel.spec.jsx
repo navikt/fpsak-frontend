@@ -26,7 +26,6 @@ const {
   OVERSTYRING_AV_BEREGNINGSAKTIVITETER,
 } = aksjonspunktCodes;
 
-
 const behandlingProps = {
   behandlingId: 1000051,
   behandlingVersjon: 1,
@@ -86,7 +85,6 @@ const aktivitet3 = {
   skalBrukes: false,
   arbeidsforholdType: { kode: 'ARBEID', navn: 'Arbeid', kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
 };
-
 
 const aktivitetAAP = {
   arbeidsgiverNavn: null,
@@ -174,7 +172,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     expect(radio).has.length(0);
   });
 
-
   it('skal vise overstyringsknapp', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
@@ -207,7 +204,6 @@ describe('<AvklareAktiviteterPanel>', () => {
     />);
     expect(wrapper.find(OverstyringKnapp)).has.length(1);
   });
-
 
   it('skal ikkje vise AksjonspunktHelpText ved overstyring', () => {
     const avklarAktiviteter = {
@@ -339,6 +335,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [
         { tom: '2019-02-02', aktiviteter },
       ],
+      skjæringstidspunkt: '2019-02-02',
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -346,12 +343,14 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const initial = {};
     initial[id1] = { skalBrukes: null };
     initial[id2] = { skalBrukes: true };
     initial[id3] = { skalBrukes: false };
     initial[idAAP] = { skalBrukes: null };
     initial[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = '53451221412412';
+    initial.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
@@ -366,6 +365,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       aktiviteterTomDatoMapping: [
         { tom: '2019-02-02', aktiviteter },
       ],
+      skjæringstidspunkt: '2019-02-02',
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -373,12 +373,14 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const initial = {};
     initial[id1] = { skalBrukes: null };
     initial[id2] = { skalBrukes: true };
     initial[id3] = { skalBrukes: false };
     initial[idAAP] = { skalBrukes: null };
     initial[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    initial.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
@@ -388,12 +390,12 @@ describe('<AvklareAktiviteterPanel>', () => {
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
 
-
   it('skal returnere true for endret begrunnelse og endret verdi', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
         { tom: '2019-02-02', aktiviteter },
       ],
+      skjæringstidspunkt: '2019-02-02',
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -401,12 +403,14 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const initial = {};
     initial[id1] = { skalBrukes: null };
     initial[id2] = { skalBrukes: true };
     initial[id3] = { skalBrukes: false };
     initial[idAAP] = { skalBrukes: null };
     initial[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = '345346123112';
+    initial.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, initial);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
@@ -428,6 +432,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     values[id3] = { skalBrukes: false };
     values[idAAP] = { skalBrukes: null };
     values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME] = 'sefiojsiejfise';
+    values.avklarAktiviteter = avklarAktiviteter;
     const state = lagStateMedAvklarAktitiveter(avklarAktiviteter, values, values);
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,

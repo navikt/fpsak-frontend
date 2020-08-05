@@ -22,6 +22,7 @@ interface OwnProps {
   personopplysninger?: Personopplysninger;
   familieHendelse?: FamilieHendelseSamling;
   lenkeTilAnnenPart?: string;
+  harTilbakekrevingVerge?: boolean;
 }
 
 const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
@@ -31,6 +32,7 @@ const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
   personopplysninger,
   familieHendelse,
   lenkeTilAnnenPart,
+  harTilbakekrevingVerge,
 }) => (
   <RawIntlProvider value={intl}>
     <VisittkortPanel
@@ -40,6 +42,7 @@ const VisittkortSakIndex: FunctionComponent<OwnProps> = ({
       fagsak={fagsak}
       alleKodeverk={alleKodeverk}
       sprakkode={sprakkode}
+      harTilbakekrevingVerge={harTilbakekrevingVerge}
     />
   </RawIntlProvider>
 );

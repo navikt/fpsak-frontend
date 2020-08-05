@@ -62,7 +62,6 @@ describe('<VedtakForm>', () => {
       readOnly={false}
       aksjonspunkter={aksjonspunkter}
       previewCallback={previewCallback}
-      kanOverstyre
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
       resultatstruktur={{
         antallBarn: 2,
@@ -72,7 +71,6 @@ describe('<VedtakForm>', () => {
       vilkar={[]}
       beregningErManueltFastsatt={false}
     />);
-
 
     const fellesPanel = wrapper.find(VedtakFellesPanel);
     expect(fellesPanel).to.have.length(1);
@@ -111,7 +109,6 @@ describe('<VedtakForm>', () => {
       readOnly={false}
       aksjonspunkter={aksjonspunkter}
       previewCallback={previewCallback}
-      kanOverstyre
       ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
       resultatstruktur={{
         antallBarn: 2,
@@ -121,7 +118,6 @@ describe('<VedtakForm>', () => {
       vilkar={[]}
       beregningErManueltFastsatt={false}
     />);
-
 
     const fellesPanel = wrapper.find(VedtakFellesPanel);
     expect(fellesPanel).to.have.length(1);

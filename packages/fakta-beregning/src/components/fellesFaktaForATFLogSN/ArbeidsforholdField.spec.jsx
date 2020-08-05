@@ -8,7 +8,6 @@ import { InputField, SelectField } from '@fpsak-frontend/form';
 import { getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
 import { ArbeidsforholdFieldImpl } from './ArbeidsforholdField';
 
-
 const arbeidsforhold1 = {
   arbeidsgiverNavn: 'Sopra Steria AS',
   arbeidsgiverId: '233647823',
@@ -60,7 +59,6 @@ describe('<ArbeidsforholdField>', () => {
     />);
     expect(wrapper.find(InputField).length).to.eql(1);
   });
-
 
   it('skal render ArbeidsforholdField med selectField', () => {
     const copyAndel = { ...andelField, skalKunneEndreAktivitet: true };

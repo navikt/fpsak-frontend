@@ -1,15 +1,13 @@
 import React, {
-  FunctionComponent, useState, useCallback, ReactNode, MouseEvent,
+  FunctionComponent, useMemo, useState, useCallback, ReactNode, MouseEvent,
 } from 'react';
 import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Element, Undertittel, Normaltekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 import Lenke from 'nav-frontend-lenker';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import popOutPilSvg from '@fpsak-frontend/assets/images/pop-out-pil.svg';
 import endreSvg from '@fpsak-frontend/assets/images/endre.svg';
@@ -32,22 +30,28 @@ export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlin
 
 const kanSendesTilGodkjenning = (behandlingStatusKode) => behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
-const finnKnappetekstkode = (behandlingType, skalBrukeManueltBrev, aksjonspunkter) => {
-  if (behandlingType.kode === BehandlingType.REVURDERING && !skalBrukeManueltBrev) {
-    return aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true && ap.toTrinnsBehandling === true)
-      ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak';
+const finnKnappetekstkode = (behandlingType, aksjonspunkter) => {
+  if (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt && ap.toTrinnsBehandling)) {
+    return 'VedtakForm.TilGodkjenning';
   }
 
-  if (!skalBrukeManueltBrev && aksjonspunkter && aksjonspunkter.some((a) => a.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL)) {
-    return 'VedtakForm.FattVedtak';
+  return 'VedtakForm.FattVedtak';
+};
+
+const harIkkeKonsekvenserForYtelsen = (behandlingResultat, ...konsekvenserForYtelsenKoder) => {
+  if (!behandlingResultat) {
+    return true;
   }
-  return 'VedtakForm.TilGodkjenning';
+  const { konsekvenserForYtelsen } = behandlingResultat;
+  if (!Array.isArray(konsekvenserForYtelsen) || konsekvenserForYtelsen.length !== 1) {
+    return true;
+  }
+  return !konsekvenserForYtelsenKoder.some((kode) => kode === konsekvenserForYtelsen[0].kode);
 };
 
 interface OwnProps {
   behandling: Behandling;
   readOnly: boolean;
-  kanOverstyre: boolean;
   erBehandlingEtterKlage: boolean;
   aksjonspunkter: Aksjonspunkt[];
   renderPanel: (skalBrukeManueltBrev: boolean, erInnvilget: boolean, erAvslatt: boolean, erOpphor: boolean) => ReactNode;
@@ -66,7 +70,6 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
   aksjonspunkter,
   readOnly,
   renderPanel,
-  kanOverstyre,
   previewAutomatiskBrev,
   previewOverstyrtBrev,
   tilbakekrevingtekst,
@@ -99,6 +102,9 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
   const skalViseLink = !behandlingsresultat.avslagsarsak
     || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
 
+  const harIkkeKonsekvensForYtelse = useMemo(() => harIkkeKonsekvenserForYtelsen(behandlingsresultat,
+    konsekvensForYtelsen.ENDRING_I_FORDELING_AV_YTELSEN, konsekvensForYtelsen.INGEN_ENDRING), [behandlingsresultat]);
+
   return (
     <>
       <OkAvbrytModal
@@ -121,46 +127,50 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
         </FlexRow>
       </FlexContainer>
       <VerticalSpacer eightPx />
-      <Row>
-        <Column xs="3">
-          <Element>
-            {vedtakstatusTekst}
-            {tilbakekrevingtekst && (
-              `. ${intl.formatMessage({ id: tilbakekrevingtekst })}`
-            )}
-          </Element>
-        </Column>
-        <Column xs="3">
-          {skalViseLink && !erBehandlingEtterKlage && (
-            <>
-              <Lenke href="#" onClick={previewAutomatiskBrev}>
-                <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
-              </Lenke>
-              <Image src={popOutPilSvg} className={styles.pil} />
-            </>
-          )}
-        </Column>
-        {(kanOverstyre) && (
-          <Column xs="3">
-            {!readOnly && !skalBrukeManueltBrev && (
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn className={styles.space}>
+            <Element>
+              {vedtakstatusTekst}
+              {tilbakekrevingtekst && (
+                `. ${intl.formatMessage({ id: tilbakekrevingtekst })}`
+              )}
+            </Element>
+          </FlexColumn>
+          <FlexColumn className={styles.space}>
+            {skalViseLink && !erBehandlingEtterKlage && harIkkeKonsekvensForYtelse && (
               <>
-                <Image src={endreSvg} className={styles.blyant} />
-                <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
-                  <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+                <Lenke href="#" onClick={previewAutomatiskBrev}>
+                  <span>
+                    <FormattedMessage id="VedtakFellesPanel.AutomatiskVedtaksbrev" />
+                  </span>
+                  <Image src={popOutPilSvg} className={styles.pil} />
                 </Lenke>
               </>
             )}
-            {(readOnly || skalBrukeManueltBrev) && (
-              <>
-                <Image src={endreDisabletSvg} className={styles.blyant} />
-                <Normaltekst className={styles.disabletLink}>
+          </FlexColumn>
+          <FlexColumn>
+            {!readOnly && !skalBrukeManueltBrev && (
+            <>
+              <Lenke href="#" onClick={onToggleOverstyring} className={skalBrukeManueltBrev && styles.test}>
+                <Image src={endreSvg} className={styles.blyant} />
+                <span>
                   <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
-                </Normaltekst>
-              </>
+                </span>
+              </Lenke>
+            </>
             )}
-          </Column>
-        )}
-      </Row>
+            {(readOnly || skalBrukeManueltBrev) && (
+            <>
+              <Image src={endreDisabletSvg} className={styles.blyant} />
+              <Normaltekst className={styles.disabletLink}>
+                <FormattedMessage id="VedtakFellesPanel.RedigerVedtaksbrev" />
+              </Normaltekst>
+            </>
+            )}
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
       <VedtakHelpTextPanel aksjonspunkter={aksjonspunkter} readOnly={readOnly} />
       <VerticalSpacer twentyPx />
       {renderPanel(skalBrukeManueltBrev, erInnvilget, erAvslatt, erOpphor)}
@@ -185,7 +195,7 @@ const VedtakFellesPanel: FunctionComponent<OwnProps & WrappedComponentProps> = (
                     disabled={behandlingPaaVent || submitting}
                     spinner={submitting}
                   >
-                    <FormattedMessage id={finnKnappetekstkode(type, skalBrukeManueltBrev, aksjonspunkter)} />
+                    <FormattedMessage id={finnKnappetekstkode(type, aksjonspunkter)} />
                   </Hovedknapp>
                 )}
               </FlexColumn>

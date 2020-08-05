@@ -46,7 +46,6 @@ const erArsakTypeBehandlingEtterKlage = (behandlingArsakTyper = []) => behandlin
     || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
     || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK);
 
-
 const finnVedtakstatusTekst = (behandlingsresultat, intl, ytelseTypeKode) => {
   const erInnvilget = isInnvilget(behandlingsresultat.type.kode);
   const erAvslatt = isAvslag(behandlingsresultat.type.kode);
@@ -68,7 +67,6 @@ interface OwnProps {
   begrunnelse?: string;
   brødtekst?: string;
   overskrift?: string;
-  kanOverstyre?: boolean;
   ytelseTypeKode: string;
   resultatstruktur?: BeregningsresultatFp | BeregningsresultatEs;
   alleKodeverk: {[key: string]: KodeverkMedNavn[]};
@@ -90,7 +88,6 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
   begrunnelse,
   brødtekst,
   overskrift,
-  kanOverstyre,
   ytelseTypeKode,
   resultatstruktur,
   alleKodeverk,
@@ -126,7 +123,6 @@ export const VedtakForm: FunctionComponent<OwnProps & InjectedFormProps & Wrappe
         vedtakstatusTekst={vedtakstatusTekst}
         aksjonspunkter={aksjonspunkter}
         readOnly={readOnly}
-        kanOverstyre={kanOverstyre}
         previewAutomatiskBrev={previewDefaultBrev}
         previewOverstyrtBrev={previewOverstyrtBrev}
         tilbakekrevingtekst={tilbakekrevingtekst}

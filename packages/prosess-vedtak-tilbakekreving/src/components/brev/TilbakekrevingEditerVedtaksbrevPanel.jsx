@@ -6,6 +6,7 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 import vedtaksbrevAvsnittPropType from '../../propTypes/vedtaksbrevAvsnittPropType';
 import underavsnittType from '../../kodeverk/avsnittType';
@@ -98,7 +99,8 @@ TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) =
       .filter((underavsnitt) => underavsnitt.fritekst)
       .reduce((underAcc, underavsnitt) => ({
         ...underAcc,
-        [underavsnitt.underavsnittstype ? underavsnitt.underavsnittstype : avsnitt.avsnittstype]: underavsnitt.fritekst,
+        [underavsnitt.underavsnittstype ? underavsnitt.underavsnittstype
+          : avsnitt.avsnittstype]: decodeHtmlEntity(underavsnitt.fritekst),
       }), {});
 
     const nyeFritekster = avsnitt.fom

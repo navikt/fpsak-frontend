@@ -50,7 +50,7 @@ const getSakstypeId = (vurdering) => {
 interface OwnProps {
   readOnly: boolean;
   dirty: boolean;
-  handleSubmit: (data: {}) => void;
+  handleSubmit: (data: any) => void;
   reset: () => void;
   utlandSakstype?: string;
 }
@@ -154,7 +154,6 @@ export const UtlandPanelImpl: FunctionComponent<OwnProps & WrappedComponentProps
   );
 };
 
-
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const onSubmit = (values) => initialOwnProps.submitCallback([{
     kode: MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
@@ -172,6 +171,5 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: 'UtlandPanel',
-})(injectIntl(UtlandPanelImpl)));
+// @ts-ignore TODO Fiks
+export default connect(mapStateToPropsFactory)(behandlingForm({ form: 'UtlandPanel' })(injectIntl(UtlandPanelImpl)));

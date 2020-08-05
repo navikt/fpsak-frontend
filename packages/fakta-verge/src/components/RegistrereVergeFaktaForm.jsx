@@ -6,9 +6,11 @@ import {
   hasValidDate, hasValidFodselsnummer, hasValidName, required,
 } from '@fpsak-frontend/utils';
 import {
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer, FaktaGruppe,
+} from '@fpsak-frontend/shared-components';
+import {
   DatepickerField, InputField, SelectField,
 } from '@fpsak-frontend/form';
-import { VerticalSpacer, FaktaGruppe } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import vergeType from '../kodeverk/vergeType';
@@ -41,6 +43,7 @@ export const RegistrereVergeFaktaForm = ({
       </Row>
       {valgtVergeType && (
         <>
+          <VerticalSpacer eightPx />
           <Row>
             <Column xs="3">
               <InputField
@@ -73,24 +76,26 @@ export const RegistrereVergeFaktaForm = ({
             </Column>
           </Row>
           <VerticalSpacer eightPx />
-          <Row>
-            <Column xs="2">
-              <DatepickerField
-                name="gyldigFom"
-                label={{ id: 'Verge.PeriodeFOM' }}
-                validate={[required, hasValidDate]}
-                readOnly={readOnly}
-              />
-            </Column>
-            <Column xs="2">
-              <DatepickerField
-                name="gyldigTom"
-                label={{ id: 'Verge.PeriodeTOM' }}
-                validate={[hasValidDate]}
-                readOnly={readOnly}
-              />
-            </Column>
-          </Row>
+          <FlexContainer>
+            <FlexRow>
+              <FlexColumn>
+                <DatepickerField
+                  name="gyldigFom"
+                  label={{ id: 'Verge.PeriodeFOM' }}
+                  validate={[required, hasValidDate]}
+                  readOnly={readOnly}
+                />
+              </FlexColumn>
+              <FlexColumn>
+                <DatepickerField
+                  name="gyldigTom"
+                  label={{ id: 'Verge.PeriodeTOM' }}
+                  validate={[hasValidDate]}
+                  readOnly={readOnly}
+                />
+              </FlexColumn>
+            </FlexRow>
+          </FlexContainer>
         </>
       )}
     </div>

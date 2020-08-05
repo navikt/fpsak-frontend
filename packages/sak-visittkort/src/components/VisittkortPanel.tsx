@@ -26,11 +26,12 @@ const utledKjonn = (kjonn) => {
 
 interface OwnProps {
   fagsak: Fagsak;
-  alleKodeverk: {[key: string]: [KodeverkMedNavn]};
+  alleKodeverk: { [key: string]: [KodeverkMedNavn] };
   sprakkode: Kodeverk;
   personopplysninger?: Personopplysninger;
   familieHendelse?: FamilieHendelseSamling;
   lenkeTilAnnenPart?: string;
+  harTilbakekrevingVerge?: boolean;
 }
 
 const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -41,8 +42,10 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   lenkeTilAnnenPart,
   alleKodeverk,
   sprakkode,
+  harTilbakekrevingVerge,
 }) => {
-  if (!personopplysninger) {
+  const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
+  if (!personopplysninger && !harTilbakekrevingVerge) {
     const { person } = fagsak;
     return (
       <div className={styles.container}>
@@ -54,9 +57,19 @@ const VisittkortPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
       </div>
     );
   }
-
-  const erMor = fagsak.relasjonsRolleType.kode === relasjonsRolleType.MOR;
-
+  if (harTilbakekrevingVerge) {
+    const { person } = fagsak;
+    return (
+      <div className={styles.container}>
+        <PersonCard
+          name={person.navn}
+          fodselsnummer={person.personnummer}
+          gender={person.erKvinne ? Gender.female : Gender.male}
+          renderLabelContent={(): JSX.Element => <VisittkortLabels personopplysninger={personopplysninger} harTilbakekrevingVerge={harTilbakekrevingVerge} />}
+        />
+      </div>
+    );
+  }
   const soker = erMor || !personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
   const annenPart = !erMor && personopplysninger.annenPart ? personopplysninger : personopplysninger.annenPart;
 

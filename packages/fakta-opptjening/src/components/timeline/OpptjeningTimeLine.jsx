@@ -116,6 +116,7 @@ class OpptjeningTimeLine extends Component {
     this.timelineRef = React.createRef();
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillMount() {
     const {
       opptjeningAktivitetTypes, opptjeningPeriods, opptjeningFomDato, opptjeningTomDato,
@@ -137,6 +138,7 @@ class OpptjeningTimeLine extends Component {
     }
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { opptjeningPeriods } = this.props;
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {

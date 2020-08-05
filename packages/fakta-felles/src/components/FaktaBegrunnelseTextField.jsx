@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  createIntl, createIntlCache, RawIntlProvider,
-} from 'react-intl';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import {
   decodeHtmlEntity, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -37,16 +35,16 @@ const FaktaBegrunnelseTextField = ({
   return (
     <RawIntlProvider value={intl}>
       {(isSubmittable || hasBegrunnelse) && (
-      <div className={styles.begrunnelseTextField}>
-        <TextAreaField
-          name={name}
-          label={isReadOnly ? '' : textAreaLabel}
-          validate={[required, minLength3, maxLength1500, hasValidText]}
-          textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
-          maxLength={1500}
-          readOnly={isReadOnly}
-        />
-      </div>
+        <div className={styles.begrunnelseTextField}>
+          <TextAreaField
+            name={name}
+            label={isReadOnly ? '' : textAreaLabel}
+            validate={[required, minLength3, maxLength1500, hasValidText]}
+            textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
+            maxLength={1500}
+            readOnly={isReadOnly}
+          />
+        </div>
       )}
     </RawIntlProvider>
   );

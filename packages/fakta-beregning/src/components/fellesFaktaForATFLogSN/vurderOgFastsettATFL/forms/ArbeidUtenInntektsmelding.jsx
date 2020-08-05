@@ -4,7 +4,6 @@ import erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse fr
 import { harFieldKunstigArbeidsforhold } from './KunstigArbeidsforhold';
 import { harFieldLønnsendring } from './LonnsendringForm';
 
-
 const transformValuesArbeidUtenInntektsmelding = (values, inntektVerdier, faktaOmBeregning, bg, fastsatteAndelsnr) => {
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
 

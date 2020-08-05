@@ -57,7 +57,6 @@ describe('<Uttak>', () => {
     stonadskontoer: {},
   };
 
-
   it('skal rendre uttak, uten selected timeline', () => {
     const wrapper = shallow(<Uttak
       readOnly={false}

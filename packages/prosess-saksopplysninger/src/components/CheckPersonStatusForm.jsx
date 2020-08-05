@@ -21,7 +21,6 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ProsessStegBegrunnelseTextField, ProsessStegSubmitButton } from '@fpsak-frontend/prosess-felles';
 
-
 import styles from './checkPersonStatusForm.less';
 
 /**

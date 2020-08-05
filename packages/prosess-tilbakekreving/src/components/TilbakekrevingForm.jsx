@@ -303,7 +303,6 @@ const erIkkeLagret = (periode, lagredePerioder) => lagredePerioder
     return !isOverlapping;
   });
 
-
 export const slaSammenOriginaleOgLagredePeriode = createSelector([
   (state, ownProps) => ownProps.perioder,
   (state, ownProps) => ownProps.vilkarvurdering,

@@ -15,7 +15,7 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   dokStatus?: string;
   harApneAksjonspunkter: boolean;
-  submitCallback: (data: {}) => void;
+  submitCallback: (data: any) => void;
   readOnly: boolean;
   submittable: boolean;
 }

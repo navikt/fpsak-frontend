@@ -9,30 +9,34 @@ on:
     branches:
       - master
 env:
+  
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_USERNAME: x-access-token
+  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+  CLUSTER: dev-fss
+  NAMESPACE: t4
   IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/fpsak-frontend
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
-      - name: Hente kode
+      - name: Sjekk ut kode
         uses: actions/checkout@v2
       - run:  git fetch --prune --unshallow
 
       - name: Hent tag
         run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad' --date=format:'%Y.%m.%d.%H%M%S')-$(echo $GITHUB_SHA | cut -c1-7)"
-
       - name: Sette opp Node
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-
+          
       - name: Get yarn cache
         id: yarn-cache
         run: |
           echo "::set-output name=dir::$(yarn cache dir)"
-
+          
       - name: Cache node modules
         uses: actions/cache@v1.1.0
         with:
@@ -45,21 +49,16 @@ jobs:
       - name: Run linting and tests
         run: yarn test && yarn less:lint && yarn ts-check
 
-      - name: Build dist
+      - name: Build
         run: |
           echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
           yarn build
 
       - name: Bygg, tag og push Docker image
         run: |
-          docker -v
-          docker pull nginx:1.17.8-alpine
-          docker build --pull -t $IMAGE -t ${IMAGE_BASE}:latest .
-          echo "$GITHUB_TOKEN" | docker login -u "x-access-token" --password-stdin https://docker.pkg.github.com
-          docker push ${IMAGE_BASE}:latest
-          docker push ${IMAGE}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          docker build --tag ${IMAGE} .
+          echo  ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
+          docker push ${IMAGE_BASE}
 
       - name: Opprett deployment issue
         if: success()
@@ -72,7 +71,7 @@ jobs:
             Kommenter med <b>/promote cluster namespace</b>, hvor <b>cluster</b> er et gyldig clusternavn og <b>namespace</b> et eksisterende namespace i det clusteret.
             <table>
             <tr><th>Cluster</th><th>Namespace</th></tr>
-            <tr><td>dev-fss</td><td>t4, q1, q0</td></tr>
+            <tr><td>dev-fss</td><td>t4, q1</td></tr>
             <tr><td>prod-fss</td><td>default</td></tr>
             </table>
 

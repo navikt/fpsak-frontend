@@ -21,8 +21,8 @@ import VurderEtterlonnSluttpakkeForm from './vurderOgFastsettATFL/forms/VurderEt
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
+import { erOverstyringAvBeregningsgrunnlag } from './BgFordelingUtils';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
-
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -330,23 +330,24 @@ const buildInitialValuesForTilfeller = (props) => ({
   ...buildInitialValuesKunYtelse(props.kunYtelse, props.tilfeller, props.faktaOmBeregning.andelerForFaktaOmBeregning),
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag, props.vurderFaktaAP),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
-  ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
-  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
+  ...VurderBesteberegningForm.buildInitialValues(props.aksjonspunkter, props.vurderBesteberegning, props.tilfeller, props.erOverstyrt),
+  ...VurderOgFastsettATFL.buildInitialValues(props.faktaOmBeregning, props.erOverstyrt),
   ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
-  beregningsgrunnlag: (ownProps) => ownProps.beregningsgrunnlag,
-  kortvarigeArbeidsforhold: getKortvarigeArbeidsforhold,
-  vurderFaktaAP: getVurderFaktaAksjonspunkt,
-  kunYtelse: getKunYtelse,
-  tilfeller: getFaktaOmBeregningTilfellerKoder,
-  vurderMottarYtelse: getVurderMottarYtelse,
-  vurderBesteberegning: getVurderBesteberegning,
-  alleKodeverk: (ownProps) => ownProps.alleKodeverk,
-  aksjonspunkter: (ownProps) => ownProps.aksjonspunkter,
-  faktaOmBeregning: getFaktaOmBeregning,
-  refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
+  beregningsgrunnlag: (state, ownProps) => ownProps.beregningsgrunnlag,
+  kortvarigeArbeidsforhold: (state, ownProps) => getKortvarigeArbeidsforhold(ownProps),
+  vurderFaktaAP: (state, ownProps) => getVurderFaktaAksjonspunkt(ownProps),
+  kunYtelse: (state, ownProps) => getKunYtelse(ownProps),
+  tilfeller: (state, ownProps) => getFaktaOmBeregningTilfellerKoder(ownProps),
+  vurderMottarYtelse: (state, ownProps) => getVurderMottarYtelse(ownProps),
+  vurderBesteberegning: (state, ownProps) => getVurderBesteberegning(ownProps),
+  alleKodeverk: (state, ownProps) => ownProps.alleKodeverk,
+  aksjonspunkter: (state, ownProps) => ownProps.aksjonspunkter,
+  faktaOmBeregning: (state, ownProps) => getFaktaOmBeregning(ownProps),
+  refusjonskravSomKommerForSentListe: (state, ownProps) => getArbeidsgiverInfoForRefusjonskravSomKommerForSent(ownProps),
+  erOverstyrt: erOverstyringAvBeregningsgrunnlag,
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(

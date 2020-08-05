@@ -46,7 +46,7 @@ const createRelevantForms = (
     />
     <VerticalSpacer thirtyTwoPx />
     <VurderFaktaBeregningPanel
-      readOnly={readOnly || (hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) && !erOverstyrer)}
+      readOnly={readOnly || ((hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || beregningsgrunnlag.erOverstyrtInntekt) && !erOverstyrer)}
       submitCallback={submitCallback}
       submittable={submittable}
       aksjonspunkter={aksjonspunkter}
@@ -58,7 +58,6 @@ const createRelevantForms = (
     />
   </div>
 );
-
 
 /**
  * BeregningInfoPanel

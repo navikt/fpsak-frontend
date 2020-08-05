@@ -36,7 +36,6 @@ export const MANUELL_OVERSTYRING_FIELD = 'manuellOverstyringBeregningAktiviteter
 const findAksjonspunktMedBegrunnelse = (aksjonspunkter, kode) => aksjonspunkter
   .filter((ap) => ap.definisjon.kode === kode && ap.begrunnelse !== null)[0];
 
-
 const getAvklarAktiviteter = createSelector(
   [(ownProps) => ownProps.beregningsgrunnlag.faktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.avklarAktiviteter : undefined),
 );
@@ -97,7 +96,6 @@ const hasOpenAksjonspunkt = (kode, aksjonspunkter) => aksjonspunkter.some((ap) =
 
 const hasOpenAvklarAksjonspunkter = (aksjonspunkter) => hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
 || hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter);
-
 
 /**
  * AvklareAktiviteterPanel
@@ -217,6 +215,9 @@ export class AvklareAktiviteterPanelImpl extends Component {
                   alleKodeverk={alleKodeverk}
                   values={formValues}
                   harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
+                  formNameAvklarAktiviteter={formNameAvklarAktiviteter}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
                 />
               )}
               <VerticalSpacer twentyPx />
@@ -318,7 +319,8 @@ const skalKunneLoseAksjonspunkt = (skalOverstyre, aksjonspunkter) => skalOversty
 const validate = (values) => {
   const { avklarAktiviteter } = values;
   if (avklarAktiviteter) {
-    return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+    const erOverstyrt = values[MANUELL_OVERSTYRING_FIELD];
+    return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping, erOverstyrt);
   }
   return {};
 };
@@ -327,7 +329,7 @@ export const transformValues = (values) => {
   const { aksjonspunkter, avklarAktiviteter } = values;
   const skalOverstyre = values[MANUELL_OVERSTYRING_FIELD];
   if (skalKunneLoseAksjonspunkt(skalOverstyre, aksjonspunkter)) {
-    const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+    const vurderAktiviteterTransformed = VurderAktiviteterPanel.transformValues(values, avklarAktiviteter.aktiviteterTomDatoMapping, skalOverstyre);
     const beg = values[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME];
     return [{
       kode: skalOverstyre ? OVERSTYRING_AV_BEREGNINGSAKTIVITETER : AVKLAR_AKTIVITETER,

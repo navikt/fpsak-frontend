@@ -8,7 +8,6 @@ import { FormkravKlageFormKa } from './FormkravKlageFormKa';
 import FormkravKlageForm from './FormkravKlageForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-formkrav';
 
-
 describe('<FormkravKlageFormKa>', () => {
   it('skal initiere form', () => {
     const wrapper = shallowWithIntl(<FormkravKlageFormKa

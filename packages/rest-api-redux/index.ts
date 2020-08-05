@@ -8,3 +8,4 @@ export {
   setRequestPollingMessage,
   getRequestPollingMessage,
 } from './src/pollingMessageDuck';
+export { default as DataFetcher, DataFetcherTriggers } from './src/DataFetcher';

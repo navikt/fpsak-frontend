@@ -5,7 +5,7 @@ import { FieldArray } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Element } from 'nav-frontend-typografi';
-import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
+import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import {
   DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
   formatCurrencyNoKr,
@@ -55,7 +55,7 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
   fordelBGFieldArrayName,
   fom,
   tom,
-  harPeriodeAarsakGraderingEllerRefusjon,
+  skalRedigereInntekt,
   isAksjonspunktClosed,
   open,
   showPanel,
@@ -63,7 +63,7 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
   alleKodeverk,
   behandlingType,
 }) => (
-  <EkspanderbartpanelPure
+  <EkspanderbartpanelBase
     className={readOnly ? styles.statusOk : classNames(`fordelBeregningsgrunnlagPeriode--${fom}`)}
     tittel={renderDateHeading(fom, tom)}
     apen={open}
@@ -73,13 +73,13 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
       name={fordelBGFieldArrayName}
       component={RenderFordelBGFieldArray}
       readOnly={readOnly}
-      periodeUtenAarsak={!harPeriodeAarsakGraderingEllerRefusjon}
+      periodeUtenAarsak={!skalRedigereInntekt}
       isAksjonspunktClosed={isAksjonspunktClosed}
       alleKodeverk={alleKodeverk}
       beregningsgrunnlag={beregningsgrunnlag}
       behandlingType={behandlingType}
     />
-  </EkspanderbartpanelPure>
+  </EkspanderbartpanelBase>
 );
 
 FordelBeregningsgrunnlagPeriodePanel.propTypes = {
@@ -88,7 +88,7 @@ FordelBeregningsgrunnlagPeriodePanel.propTypes = {
   fom: PropTypes.string.isRequired,
   tom: PropTypes.string,
   open: PropTypes.bool,
-  harPeriodeAarsakGraderingEllerRefusjon: PropTypes.bool.isRequired,
+  skalRedigereInntekt: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   showPanel: PropTypes.func.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
@@ -111,11 +111,13 @@ const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   if (!bgAndel) {
     return null;
   }
+  const bortfaltNaturalytelse = bgAndel.bortfaltNaturalytelse === null || bgAndel.bortfaltNaturalytelse === undefined ? 0 : bgAndel.bortfaltNaturalytelse;
+  const tilkommetNaturalytelse = bgAndel.tilkommetNaturalytelse === null || bgAndel.tilkommetNaturalytelse === undefined ? 0 : bgAndel.tilkommetNaturalytelse;
   if (bgAndel.overstyrtPrAar || bgAndel.overstyrtPrAar === 0) {
-    return formatCurrencyNoKr(bgAndel.overstyrtPrAar);
+    return formatCurrencyNoKr(bgAndel.overstyrtPrAar + bortfaltNaturalytelse - tilkommetNaturalytelse);
   }
   if (bgAndel.beregnetPrAar || bgAndel.beregnetPrAar === 0) {
-    return formatCurrencyNoKr(bgAndel.beregnetPrAar);
+    return formatCurrencyNoKr(bgAndel.beregnetPrAar + bortfaltNaturalytelse - tilkommetNaturalytelse);
   }
   return null;
 };
@@ -134,18 +136,18 @@ FordelBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, s
           andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
           fordelingForrigeBehandling: andel.fordelingForrigeBehandlingPrAar || andel.fordelingForrigeBehandlingPrAar === 0
             ? formatCurrencyNoKr(andel.fordelingForrigeBehandlingPrAar) : '',
-          fastsattBelop: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
+          fastsattBelop: settFastsattBelop(andel.fordeltPrAar, bgAndel.bruttoPrAar, periode.skalPreutfyllesMedBeregningsgrunnlag),
           readOnlyBelop: finnBeregningsgrunnlagPrAar(bgAndel),
           refusjonskrav: andel.refusjonskravPrAar !== null && andel.refusjonskravPrAar !== undefined ? formatCurrencyNoKr(andel.refusjonskravPrAar) : '',
           skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
       && andel.refusjonskravFraInntektsmeldingPrAar ? periode.skalKunneEndreRefusjon : false,
           belopFraInntektsmelding: andel.belopFraInntektsmeldingPrAar,
-          harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
+          skalRedigereInntekt: periode.skalRedigereInntekt,
           refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmeldingPrAar,
           nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
           beregningsgrunnlagPrAar: finnBeregningsgrunnlagPrAar(bgAndel),
           forrigeRefusjonPrAar: andel.refusjonskravPrAar,
-          forrigeArbeidsinntektPrAar: finnFastsattPrAar(andel.fordeltPrAar, andel.fastsattForrigePrAar),
+          forrigeArbeidsinntektPrAar: finnFastsattPrAar(andel.fordeltPrAar, periode.skalPreutfyllesMedBeregningsgrunnlag),
           beregningsperiodeFom: bgAndel.beregningsperiodeFom,
           beregningsperiodeTom: bgAndel.beregningsperiodeTom,
         });

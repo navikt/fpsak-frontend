@@ -11,6 +11,10 @@ import withReduxProvider from '../../../decorators/withRedux';
 
 import alleKodeverk from '../../mocks/alleKodeverk.json';
 
+import { beregningsgrunnlag as bgMedNaturalytelse, aksjonspunkt as apMedNaturalytelse } from './scenario/NyttArbeidOgNaturalytelse';
+import { beregningsgrunnlag as bgArbeidOgGradertNæring, aksjonspunkt as apArbeidOgGradertNæring } from './scenario/ArbeidOgGradertNæring';
+
+
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',
   component: FordelBeregningsgrunnlagFaktaIndex,
@@ -24,7 +28,6 @@ const behandling = {
     kode: 'BT-003',
   },
 };
-
 
 const merknaderFraBeslutter = {
   notAccepted: false,
@@ -52,7 +55,6 @@ const lagBGAndel = (andelsnr, aktivitetstatuskode, beregnet) => ({
   beregningsperiodeFom: '2019-06-01',
   beregningsperiodeTom: '2019-08-31',
   beregnetPrAar: beregnet,
-  fastsattForrigePrAar: null,
   overstyrtPrAar: null,
   bruttoPrAar: beregnet,
   andelsnr,
@@ -243,7 +245,6 @@ const lagFordelingsandel = (andelsnr, status, ref, fordelt) => ({
   },
   andelIArbeid: [0],
   belopFraInntektsmeldingPrAar: null,
-  fastsattForrigePrAar: null,
   fordelingForrigeBehandlingPrAar: null,
   fordeltPrAar: fordelt,
   inntektskategori: {
@@ -259,7 +260,8 @@ const lagFordelingsandel = (andelsnr, status, ref, fordelt) => ({
 const lagFordelPeriode = (fordelAndeler, fom, tom, graderingEllerRef, skalKunneEndreRef) => ({
   fom,
   fordelBeregningsgrunnlagAndeler: fordelAndeler,
-  harPeriodeAarsakGraderingEllerRefusjon: graderingEllerRef,
+  skalRedigereInntekt: graderingEllerRef,
+  skalPreutfyllesMedBeregningsgrunnlag: false,
   skalKunneEndreRefusjon: skalKunneEndreRef,
   tom,
 });
@@ -283,6 +285,39 @@ const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId, r
   naturalytelseBortfaltPrÅr: null,
   naturalytelseTilkommetPrÅr: null,
 });
+
+export const arbeidOgGradertNæringUtenBeregningsgrunnlag = () => (
+  <FordelBeregningsgrunnlagFaktaIndex
+    behandling={behandling}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={false}
+    beregningsgrunnlag={bgArbeidOgGradertNæring}
+    aksjonspunkter={apArbeidOgGradertNæring}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
+
+export const tilkommetArbeidMedFlyttingAvNaturalytelse = () => (
+  <FordelBeregningsgrunnlagFaktaIndex
+    behandling={behandling}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={false}
+    beregningsgrunnlag={bgMedNaturalytelse}
+    aksjonspunkter={apMedNaturalytelse}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
+
 
 export const aapOgRefusjon = () => {
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];

@@ -1,24 +1,26 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { RouteProps } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 import { push } from 'connected-react-router';
+import { Location } from 'history';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Kodeverk } from '@fpsak-frontend/types';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import { getSelectedSaksnummer, getFagsakYtelseType } from '../fagsak/fagsakSelectors';
 import { getBehandlingVersjon, getBehandlingType, getSelectedBehandlingId } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
-import DataFetcher, { DataFetcherTriggers } from '../app/DataFetcher';
 import {
   hentVergeMenyvalg, resetVergeMenyvalg, fjernVerge, opprettVerge,
 } from './duck';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
 
-const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
+const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING,
+  BehandlingType.TILBAKEKREVING, BehandlingType.TILBAKEKREVING_REVURDERING];
 const menyDataBehandlingValgt = [fpsakApi.MENYHANDLING_RETTIGHETER];
 const menyData = [];
 
@@ -28,7 +30,7 @@ const VERGE_MENYVALG = {
 };
 
 interface OwnProps {
-  location: RouteProps['location'];
+  location: Location;
 }
 
 interface StateProps {
@@ -78,13 +80,13 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
   const opprettVergeFn = vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT
     ? opprettVerge(location, pushLocation, saksnummer, behandlingId, behandlingVersion) : undefined;
 
-
   return (
     <DataFetcher
       key={behandlingId ? 0 : 1}
       endpoints={behandlingId ? menyDataBehandlingValgt : menyData}
       fetchingTriggers={new DataFetcherTriggers({ behandlingId, behandlingVersion }, false)}
       showOldDataWhenRefetching
+      loadingPanel={<LoadingPanel />}
       render={(dataProps: { menyhandlingRettigheter?: { harSoknad: boolean }}) => (
         <BehandlingMenuIndex
           saksnummer={saksnummer}

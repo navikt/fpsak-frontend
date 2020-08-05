@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { RouteProps } from 'react-router';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Location } from 'history';
 
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -12,12 +12,12 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { featureToggle } from '@fpsak-frontend/konstanter';
 import { NavAnsatt, Kodeverk, KodeverkMedNavn } from '@fpsak-frontend/types';
-import { requireProps } from '@fpsak-frontend/shared-components';
+import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { DataFetcher, DataFetcherTriggers } from '@fpsak-frontend/rest-api-redux';
 
 import { createLocationForSkjermlenke } from '../../app/paths';
-import DataFetcher, { DataFetcherTriggers } from '../../app/DataFetcher';
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../../app/duck';
@@ -58,10 +58,10 @@ const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
 const ingenData = [];
 
 interface OwnProps {
-  totrinnskontrollSkjermlenkeContext?: {}[];
-  totrinnskontrollReadOnlySkjermlenkeContext?: {}[];
-  approve: (params: {}) => Promise<any>;
-  previewMessage: (erTilbakekreving: boolean, erHenleggelse: boolean, data: {}) => void;
+  totrinnskontrollSkjermlenkeContext?: any[];
+  totrinnskontrollReadOnlySkjermlenkeContext?: any[];
+  approve: (params: any) => Promise<any>;
+  previewMessage: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   behandlingIdentifier: BehandlingIdentifier;
   selectedBehandlingVersjon?: number;
   ansvarligSaksbehandler?: string;
@@ -69,9 +69,9 @@ interface OwnProps {
   toTrinnsBehandling?: boolean;
   push: (location: string) => void;
   resetApproval: () => void;
-  location: RouteProps['location'];
+  location: Location;
   navAnsatt: NavAnsatt;
-  skjemalenkeTyper: {}[];
+  skjemalenkeTyper: any[];
   erTilbakekreving: boolean;
   behandlingUuid: string;
   fagsakYtelseType: Kodeverk;
@@ -80,7 +80,7 @@ interface OwnProps {
   isForeldrepenger: boolean;
   disableGodkjennKnapp: boolean;
   erGodkjenningFerdig?: boolean;
-  behandlingsresultat?: {};
+  behandlingsresultat?: any;
   behandlingId?: number;
   behandlingTypeKode?: string;
 }
@@ -200,18 +200,20 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
         fetchingTriggers={new DataFetcherTriggers({ behandlingId: behandlingIdentifier.behandlingId, behandlingVersion: selectedBehandlingVersjon }, true)}
         key={harKlageEndepunkter ? 0 : 1}
         endpoints={harKlageEndepunkter ? klageData : ingenData}
+        loadingPanel={<LoadingPanel />}
         render={(props: {
           totrinnsKlageVurdering?: {
             klageVurdering?: string;
             klageVurderingOmgjoer?: string;
-            klageVurderingResultatNFP?: {};
-            klageVurderingResultatNK?: {};
+            klageVurderingResultatNFP?: any;
+            klageVurderingResultatNK?: any;
           };
         }) => (
           <>
             <TotrinnskontrollSakIndex
               behandlingId={behandlingIdentifier.behandlingId}
               behandlingVersjon={selectedBehandlingVersjon}
+              behandlingsresultat={behandlingsresultat}
               behandlingStatus={behandlingStatus}
               totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
               totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
@@ -237,6 +239,7 @@ export class ApprovalIndex extends Component<OwnProps, StateProps> {
                 }, true)}
                 key={revurderingData.some((rd) => rd.isEndpointEnabled()) ? 0 : 1}
                 endpoints={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
+                loadingPanel={<LoadingPanel />}
                 render={(modalProps: { harRevurderingSammeResultat: boolean }) => (
                   <FatterVedtakApprovalModalSakIndex
                     showModal={showBeslutterModal}

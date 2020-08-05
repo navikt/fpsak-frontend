@@ -6,6 +6,7 @@ import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared
 import { skjermlenkeCodes } from '@fpsak-frontend/konstanter';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 
@@ -24,6 +25,11 @@ const sorterTilbakekrevingContext = (approvals) => (
     .filter((s) => s)
 );
 
+const håndterSpeiselleTegn = (aksjonspunkter) => aksjonspunkter.map((aksjonspunkt) => ({
+  ...aksjonspunkt,
+  besluttersBegrunnelse: decodeHtmlEntity(aksjonspunkt.besluttersBegrunnelse),
+}));
+
 export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, createLocationForSkjermlenke) => {
   if (toTrinnsBehandling) {
     let skjermlenkeContext;
@@ -40,7 +46,7 @@ export const mapPropsToContext = (toTrinnsBehandling, props, skjemalenkeTyper, c
           contextCode: context.skjermlenkeType,
           skjermlenke: createLocationForSkjermlenke(props.location, context.skjermlenkeType),
           skjermlenkeNavn: skjermlenkeTypeKodeverk.navn,
-          aksjonspunkter: context.totrinnskontrollAksjonspunkter,
+          aksjonspunkter: håndterSpeiselleTegn(context.totrinnskontrollAksjonspunkter),
         };
       });
       if (props.erTilbakekreving) {
@@ -76,6 +82,7 @@ export class ApprovalPanel extends Component {
     }
   }
 
+  // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.totrinnskontrollSkjermlenkeContext || nextProps.totrinnskontrollReadOnlySkjermlenkeContext) {
       this.setState({
@@ -98,6 +105,7 @@ export class ApprovalPanel extends Component {
     const {
       behandlingId,
       behandlingVersjon,
+      behandlingsresultat,
       behandlingStatus,
       location,
       readOnly,
@@ -130,6 +138,7 @@ export class ApprovalPanel extends Component {
                     <ToTrinnsForm
                       behandlingId={behandlingId}
                       behandlingVersjon={behandlingVersjon}
+                      behandlingsresultat={behandlingsresultat}
                       totrinnskontrollContext={approvals}
                       initialValues={{ approvals }}
                       onSubmit={onSubmit}
@@ -194,6 +203,7 @@ ApprovalPanel.propTypes = {
     klageVurderingOmgjoer: PropTypes.string,
   }),
   alleKodeverk: PropTypes.shape().isRequired,
+  behandlingsresultat: PropTypes.shape(),
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
   createLocationForSkjermlenke: PropTypes.func.isRequired,
@@ -205,6 +215,7 @@ ApprovalPanel.defaultProps = {
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
   behandlingKlageVurdering: undefined,
   erTilbakekreving: false,
+  behandlingsresultat: undefined,
 };
 
 export default ApprovalPanel;

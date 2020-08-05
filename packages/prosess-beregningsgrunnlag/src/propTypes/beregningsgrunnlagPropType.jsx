@@ -17,7 +17,6 @@ const faktaOmBeregningAndelPropType = PropTypes.shape({
   aktivitetStatus: kodeverkObjektPropType,
 });
 
-
 const faktaOmBeregningPropType = PropTypes.shape({
   beregningsgrunnlagArbeidsforhold: PropTypes.arrayOf(PropTypes.shape({
     ...beregningsgrunnlagArbeidsforholdProptype,
@@ -62,7 +61,6 @@ const fordelBeregningsgrunnlagAndelPropType = PropTypes.shape({
   arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
   arbeidsforholdType: kodeverkObjektPropType,
   belopFraInntektsmeldingPrAar: PropTypes.number,
-  fastsattForrigePrAar: PropTypes.number,
   fordelingForrigeBehandlingPrAar: PropTypes.number,
   fordeltPrAar: PropTypes.number,
   inntektskategori: kodeverkObjektPropType,
@@ -75,7 +73,8 @@ const fordelBeregningsgrunnlagAndelPropType = PropTypes.shape({
 const fordelBeregningsgrunnlagPeriodePropType = PropTypes.shape({
   fom: PropTypes.string,
   fordelBeregningsgrunnlagAndeler: PropTypes.arrayOf(fordelBeregningsgrunnlagAndelPropType),
-  harPeriodeAarsakGraderingEllerRefusjon: PropTypes.bool,
+  skalRedigereInntekt: PropTypes.bool,
+  skalPreutfyllesMedBeregningsgrunnlag: PropTypes.bool,
   skalKunneEndreRefusjon: PropTypes.bool,
   tom: PropTypes.string,
 });

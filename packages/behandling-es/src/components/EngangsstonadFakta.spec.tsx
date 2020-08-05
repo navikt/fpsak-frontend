@@ -4,7 +4,8 @@ import sinon from 'sinon';
 
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { FaktaPanel, DataFetcherBehandlingData } from '@fpsak-frontend/behandling-felles';
+import { SideMenuWrapper } from '@fpsak-frontend/behandling-felles';
+import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 import { Behandling } from '@fpsak-frontend/types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -88,7 +89,7 @@ describe('<EngangsstonadFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(FaktaPanel);
+    const panel = wrapper.find(SideMenuWrapper);
     expect(panel.prop('paneler')).is.eql([{
       erAktiv: false,
       harAksjonspunkt: false,
@@ -119,7 +120,7 @@ describe('<EngangsstonadFakta>', () => {
       />,
     );
 
-    const panel = wrapper.find(FaktaPanel);
+    const panel = wrapper.find(SideMenuWrapper);
 
     panel.prop('onClick')(0);
 
@@ -155,7 +156,7 @@ describe('<EngangsstonadFakta>', () => {
       />,
     );
 
-    const dataFetcher = wrapper.find(DataFetcherBehandlingData);
+    const dataFetcher = wrapper.find(DataFetcher);
     expect(dataFetcher.prop('fetchingTriggers').triggers.behandlingVersion).is.eql(behandling.versjon);
     expect(dataFetcher.prop('endpoints')).is.eql([]);
 

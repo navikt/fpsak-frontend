@@ -104,7 +104,6 @@ FrilansOppdragForFamilieFieldArray.validate = (values) => {
       }
     }
 
-
     return null;
   });
 
@@ -113,6 +112,5 @@ FrilansOppdragForFamilieFieldArray.validate = (values) => {
   }
   return null;
 };
-
 
 export default FrilansOppdragForFamilieFieldArray;

@@ -35,7 +35,7 @@ const andel = {
   lagtTilAvSaksbehandler: true,
   refusjonskravFraInntektsmelding: 0,
   belopFraInntektsmelding: null,
-  harPeriodeAarsakGraderingEllerRefusjon: true,
+  skalRedigereInntekt: true,
 };
 const fields = new MockFieldsWithContent('endringPeriode0', [andel]);
 const arbeidstakerNavn = 'Hansens bil og brems AS';
@@ -106,7 +106,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(selectValuesArbeidsforhold[0].props.children).to.equal(forventetArbeidstakerString);
   });
 
-
   it('skal ikkje vise rapportert inntekt om minst en andel som tilkommer før stp ikkje har register opplysning tilgjengelig', () => {
     const andelMedRapportertInntekt = {
       nyAndel: false,
@@ -115,7 +114,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       lagtTilAvSaksbehandler: true,
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       registerInntekt: '10 000',
       arbeidsperiodeFom: '2016-01-01',
     };
@@ -126,7 +125,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       lagtTilAvSaksbehandler: true,
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       registerInntekt: '',
       arbeidsperiodeFom: '2016-01-01',
     };
@@ -151,7 +150,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(elements.first().props().children).to.equal('');
   });
 
-
   it('skal vise beregningsgrunnlagPrAar', () => {
     const andelMedRapportertInntekt = {
       nyAndel: false,
@@ -160,7 +158,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       lagtTilAvSaksbehandler: true,
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       beregningsgrunnlagPrAar: '10 000',
       arbeidsperiodeFom: '2016-01-01',
     };
@@ -171,7 +169,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       lagtTilAvSaksbehandler: true,
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       beregningsgrunnlagPrAar: '20 000',
       arbeidsperiodeFom: '2016-01-01',
     };
@@ -204,7 +202,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       lagtTilAvSaksbehandler: true,
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       beregningsgrunnlagPrAar: '10 000',
       arbeidsperiodeFom: '2016-01-01',
     };
@@ -215,7 +213,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       lagtTilAvSaksbehandler: true,
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       beregningsgrunnlagPrAar: '20 000',
       arbeidsperiodeFom: '2016-01-01',
     };
@@ -227,7 +225,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       lagtTilAvSaksbehandler: true,
       refusjonskravFraInntektsmelding: 0,
       belopFraInntektsmelding: null,
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       beregningsgrunnlagPrAar: '',
       arbeidsperiodeFom: '2016-01-01',
     };
@@ -254,7 +252,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(elements.first().props().children).to.equal('30 000');
   });
 
-
   it('skal validere eksisterende andeler uten errors', () => {
     const values = [];
     const andel1 = {
@@ -264,7 +261,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
     };
@@ -273,7 +270,6 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors).to.equal(null);
   });
-
 
   it('skal returnerer ingen errors for ingen refusjonskrav når skalKunneEndreRefusjon er false', () => {
     const values = [];
@@ -284,7 +280,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
     };
@@ -303,7 +299,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: false,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
     };
@@ -322,7 +318,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
     };
@@ -342,7 +338,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: null,
     };
@@ -362,7 +358,6 @@ describe('<RenderFordelBGFieldArray>', () => {
 
   const arbeidsgiverstring = 'Test (14235235235)...4567';
 
-
   it('skal returnerer errors for refusjonskrav når det ikkje er mottatt refusjonskrav i inntektsmelding', () => {
     const values = [];
     const andel1 = {
@@ -373,7 +368,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: null,
     };
@@ -396,7 +391,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 0,
     };
@@ -418,7 +413,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: 'ARBEIDSTAKER',
       refusjonskravFraInntektsmelding: 10000,
       nyttArbeidsforhold: false,
@@ -439,7 +434,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: 'Visningsnavn for virksomhet',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
     };
@@ -459,7 +454,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: '',
-      harPeriodeAarsakGraderingEllerRefusjon: true,
+      skalRedigereInntekt: true,
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
       nyAndel: true,
@@ -480,7 +475,7 @@ describe('<RenderFordelBGFieldArray>', () => {
       skalKunneEndreRefusjon: true,
       aktivitetstatus: 'ARBEIDSTAKER',
       andel: '',
-      harPeriodeAarsakGraderingEllerRefusjon: false,
+      skalRedigereInntekt: false,
       inntektskategori: '',
       refusjonskravFraInntektsmelding: 10000,
       nyAndel: true,
@@ -505,7 +500,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(belopKolonne.props.children.props.isEdited).to.equal(false);
     expect(belopKolonne.props.children.props.readOnly).to.equal(true);
   });
-
 
   it('lagBelopKolonne skal ikkje gi readOnly beløp om andel skal redigere inntekt i uten readOnly', () => {
     const belopKolonne = lagBelopKolonne('test', false, false, false);

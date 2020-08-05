@@ -17,13 +17,13 @@ import transformValuesArbeidUtenInntektsmelding from './forms/ArbeidUtenInntekts
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 import {
-  skalRedigereInntektForAndel, mapAndelToField, erOverstyring, getSkalRedigereInntekt, INNTEKT_FIELD_ARRAY_NAME, skalFastsetteInntektForSN,
+  skalRedigereInntektForAndel, mapAndelToField, erOverstyring, erOverstyringAvBeregningsgrunnlag,
+  getSkalRedigereInntekt, INNTEKT_FIELD_ARRAY_NAME, skalFastsetteInntektForSN,
 } from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import InntektFieldArray from '../InntektFieldArray';
 import VurderEtterlonnSluttpakkeForm from './forms/VurderEtterlonnSluttpakkeForm';
 import beregningAksjonspunkterPropType from '../../../propTypes/beregningAksjonspunkterPropType';
-
 
 const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
@@ -32,7 +32,6 @@ const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
 const nyoppstartetFLErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
   || (values[erNyoppstartetFLField] !== undefined && values[erNyoppstartetFLField] !== null));
-
 
 const besteberegningErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
   !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
@@ -53,7 +52,6 @@ const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag) => f
   .map((andel) => mapAndelToField(andel))
   .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
 
-
 export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT, harKunstigArbeid) => {
   if (harKunstigArbeid) {
     return 'BeregningInfoPanel.KunstigArbeidsforhold.FastsettKunstigArbeidsforhold';
@@ -72,7 +70,6 @@ export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsett
   }
   return ' ';
 };
-
 
 const finnInntektstabell = (readOnly, behandlingId, behandlingVersjon, beregningsgrunnlag, isAksjonspunktClosed, alleKodeverk) => (
   <FieldArray
@@ -113,6 +110,7 @@ const VurderOgFastsettATFL = ({
   aksjonspunkter,
   alleKodeverk,
   erOverstyrer,
+  erOverstyrt,
 }) => (
   <div>
     <InntektstabellPanel
@@ -173,13 +171,14 @@ const VurderOgFastsettATFL = ({
           isAksjonspunktClosed={isAksjonspunktClosed}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          erOverstyrt={erOverstyrt}
         />
       )}
     </InntektstabellPanel>
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => {
+VurderOgFastsettATFL.buildInitialValues = (faktaOmBeregning, erOverstyrt) => {
   if (!faktaOmBeregning) {
     return {};
   }
@@ -189,10 +188,9 @@ VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => 
   }
   return {
     [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler),
-    ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
+    ...InntektstabellPanel.buildInitialValues(erOverstyrt),
   };
 };
-
 
 VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag) => {
   const errors = {};
@@ -209,7 +207,6 @@ const concatTilfeller = (transformed, newTransformedValues) => ({
   faktaOmBeregningTilfeller: newTransformedValues.faktaOmBeregningTilfeller
     ? transformed.faktaOmBeregningTilfeller.concat(newTransformedValues.faktaOmBeregningTilfeller) : transformed.faktaOmBeregningTilfeller,
 });
-
 
 const transformValuesForOverstyring = (values, transformed, inntektVerdier, fastsatteAndelsnr) => {
   if (erOverstyring(values)) {
@@ -285,6 +282,7 @@ VurderOgFastsettATFL.propTypes = {
   erOverstyrer: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
+  erOverstyrt: PropTypes.bool.isRequired,
 };
 
 export const skalFastsettInntektForArbeidstaker = createSelector([
@@ -330,6 +328,7 @@ const getSkalViseTabell = createSelector([
 });
 
 const mapStateToProps = (state, ownProps) => ({
+  erOverstyrt: erOverstyringAvBeregningsgrunnlag(state, ownProps),
   skalFastsetteAT: skalFastsettInntektForArbeidstaker(state, ownProps),
   skalFastsetteFL: skalFastsettInntektForFrilans(state, ownProps),
   skalHaBesteberegning: getFormValuesForBeregning(state, ownProps)[besteberegningField] === true,

@@ -12,7 +12,7 @@ import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  hasValidDecimal, maxValue, minValue, required,
+  hasValidDecimal, maxValue, minValue, required, hasValidDate,
 } from '@fpsak-frontend/utils';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import { Kodeverk } from '@fpsak-frontend/types';
@@ -35,7 +35,7 @@ interface TilretteleggingDato {
 }
 
 interface OwnProps {
-  fields: {}[];
+  fields: any[];
   meta?: {
     error?: {
       id: string;
@@ -138,9 +138,8 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                   <DatepickerField
                     readOnly={readOnly}
                     name={`${fieldId}.fom`}
-                    defaultValue={null}
                     label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Dato' })}
-                    validate={[required]}
+                    validate={[hasValidDate, required]}
                   />
                 </FlexColumn>
                 {tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING && (
@@ -152,6 +151,7 @@ export const TilretteleggingFieldArray: FunctionComponent<OwnProps & WrappedComp
                         name={`${fieldId}.stillingsprosent`}
                         label={intl.formatMessage({ id: 'TilretteleggingFieldArray.Stillingsprosent' })}
                         validate={[required, minValue0, maxValue100, hasValidDecimal]}
+                        // @ts-ignore TODO Fiks denne!
                         normalizeOnBlur={(value) => (new RegExp(/^-?\d+\.?\d*$/).test(value) ? parseFloat(value).toFixed(2) : value)}
                         onChange={(_elmt, value) => {
                           const utbetalingsgrad = finnUtbetalingsgradForDelvisTilrettelegging(stillingsprosentArbeidsforhold, value);

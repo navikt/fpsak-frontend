@@ -196,7 +196,6 @@ describe('<UttakPanel>', () => {
     expect(reduxFormPropsMock.handleSubmit.called).is.true;
   });
 
-
   it('transformValues gir korrekt trekkdager og aksjonspunkt 5071', () => {
     const aksjonspunkter = [{
       id: 1,

@@ -38,11 +38,11 @@ interface OwnProps {
   originalErVilkarOk?: boolean;
   customVilkarIkkeOppfyltText?: {
     id: string;
-    values?: {};
+    values?: any;
   };
   customVilkarOppfyltText?: {
     id: string;
-    values?: {};
+    values?: any;
   };
   erMedlemskapsPanel: boolean;
   hasAksjonspunkt: boolean;
@@ -263,5 +263,6 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   };
 };
 
+// @ts-ignore Kan ikkje senda med formnavn her sidan det er dynamisk. Må fikse på ein annan måte
 const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringForm);
 export default connect(mapStateToPropsFactory)(form);

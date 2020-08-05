@@ -23,7 +23,6 @@ describe('<VedtakHelper>', () => {
     expect(hasIkkeOppfylt).to.eql(true);
   });
 
-
   it('hasKlageVurderingSomIkkeErAvvist skal returnere true når klage ikke er avvist', () => {
     const klageVurderingResultatNK = { klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK };
     const klageVurderingResultatNFP = { klageVurdering: klageVurdering.STADFESTE_YTELSESVEDTAK };

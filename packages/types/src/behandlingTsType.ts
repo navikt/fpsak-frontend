@@ -35,6 +35,7 @@ type Behandling = Readonly<{
   }[];
   ansvarligSaksbehandler?: string;
   kanHenleggeBehandling?: boolean;
+  harVerge?: boolean;
 }>
 
 export default Behandling;

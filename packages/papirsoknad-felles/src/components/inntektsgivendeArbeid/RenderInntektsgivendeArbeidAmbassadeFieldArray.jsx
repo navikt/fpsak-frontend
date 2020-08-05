@@ -81,7 +81,6 @@ export const RenderInntektsgivendeArbeidAmbassadeFieldArray = ({
   </PeriodFieldArray>
 );
 
-
 RenderInntektsgivendeArbeidAmbassadeFieldArray.validate = (values) => {
   if (!values) {
     return null;

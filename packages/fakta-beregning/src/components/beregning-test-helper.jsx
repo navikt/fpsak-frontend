@@ -1,7 +1,6 @@
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper';
 
-
 const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
 
 const fagsak = {
@@ -26,7 +25,6 @@ const behandlingFormName = 'behandling_1000051_v1';
 
 export const getBehandlingFormName = () => behandlingFormName;
 
-
 const kodeverk = {};
 kodeverk[kodeverkTyper.AKTIVITET_STATUS] = [
   { kode: 'AT', navn: 'Arbeidstaker', kodeverk: kodeverkTyper.AKTIVITET_STATUS },
@@ -48,7 +46,6 @@ kodeverk[kodeverkTyper.INNTEKTSKATEGORI] = [
   { kode: 'ARBEIDSTAKER', navn: 'Arbeidstaker', kodeverk: kodeverkTyper.INNTEKTSKATEGORI },
   { kode: 'FRILANSER', navn: 'Frilanser', kodeverk: kodeverkTyper.INNTEKTSKATEGORI },
 ];
-
 
 export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, beregningsgrunnlag, formName = 'test', values = {}, initial = {}) => {
   const data = {

@@ -8,6 +8,7 @@ const vergeVergePropType = PropTypes.shape({
   gyldigTom: PropTypes.string,
   fnr: PropTypes.string,
   vergeType: kodeverkObjektPropType,
+  begrunnelse: PropTypes.string,
 });
 
 export default vergeVergePropType;

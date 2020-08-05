@@ -9,7 +9,6 @@ import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntek
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
 
-
 import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
 import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import MilitaerPanel from '../militær/MilitaerPanel';
