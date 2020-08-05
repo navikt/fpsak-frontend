@@ -10,7 +10,7 @@ import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import { NavAnsatt } from '@fpsak-frontend/types';
-import { FpsakApiKeys } from '../../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys } from '../../data/fpsakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 
 const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {

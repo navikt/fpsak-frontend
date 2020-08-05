@@ -7,7 +7,7 @@ import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
 import AktoerGrid from './components/AktoerGrid';
 import useTrackRouteParam from '../app/useTrackRouteParam';
-import { useRestApi, FpsakApiKeys } from '../data/fpsakApiNyUtenRedux';
+import { useRestApi, FpsakApiKeys } from '../data/fpsakApi';
 
 type Aktoer = {
   fagsaker: Fagsak[];

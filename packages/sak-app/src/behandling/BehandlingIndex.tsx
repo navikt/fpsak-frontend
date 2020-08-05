@@ -19,12 +19,12 @@ import {
   FagsakPerson, KodeverkMedNavn, Kodeverk, NavAnsatt, Fagsak,
 } from '@fpsak-frontend/types';
 
+import BehandlingAppKontekst from './behandlingAppKontekstTsType';
 import getAccessRights from '../app/util/access';
 import {
   getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta,
 } from '../app/paths';
-import { reduxRestApi } from '../data/fpsakApi';
-import { FpsakApiKeys, requestApi } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, requestApi } from '../data/fpsakApi';
 import {
   setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getUrlBehandlingId,
   oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
@@ -85,7 +85,7 @@ interface OwnProps {
   resetBehandlingContext: () => void;
   setBehandlingIdOgVersjon: (behandlingVersjon: number) => void;
   fagsak: Fagsak;
-  alleBehandlinger: {}[];
+  alleBehandlinger: BehandlingAppKontekst[];
   behandlingLinks: Link[];
   push: (location: Location | string) => void;
   visFeilmelding: (data: any) => void;
@@ -127,7 +127,6 @@ const BehandlingIndex: FunctionComponent<OwnProps> = ({
     ? alleBehandlinger.find((b) => b.id === behandlingId).versjon : undefined;
 
   useEffect(() => {
-    reduxRestApi.injectPaths(behandlingLinks);
     requestApi.injectPaths(behandlingLinks);
     setBehandlingIdOgVersjon(behandlingVersjon);
   }, [behandlingId]);

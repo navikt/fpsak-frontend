@@ -3,7 +3,7 @@ import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import { FpsakApiKeys } from './fpsakApiNyUtenRedux';
+import { FpsakApiKeys } from './fpsakApi';
 
 /**
  * Hook som henter et gitt kodeverk fra respons som allerede er hentet fra backend. For å kunne bruke denne

@@ -2,20 +2,19 @@ import React, {
   FunctionComponent, useCallback, useMemo,
 } from 'react';
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Location } from 'history';
 import moment from 'moment';
 
 import { useGlobalStateRestApiData, RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 
-import { FpsakApiKeys, useRestApi } from '../../data/fpsakApiNyUtenRedux';
+import useBehandlingEndret from '../../behandling/useBehandligEndret';
+import { FpsakApiKeys, useRestApi } from '../../data/fpsakApi';
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
 import ApplicationContextPath from '../../app/ApplicationContextPath';
 import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';
-import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 
 interface History {
   opprettetTidspunkt: string;
@@ -60,13 +59,17 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
   }), [location]);
 
   const skalBrukeFpTilbakeHistorikk = enabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE);
+  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
+  const forrigeSaksnummer = usePrevious(saksnummer);
+  const erBehandlingEndret = forrigeSaksnummer && erBehandlingEndretFraUndefined;
 
   const { data: historikkFpSak, state: historikkFpSakState } = useRestApi<History[]>(FpsakApiKeys.HISTORY_FPSAK, { saksnummer }, {
     updateTriggers: [behandlingId, behandlingVersjon],
+    suspendRequest: erBehandlingEndret,
   });
   const { data: historikkFpTilbake, state: historikkFpTilbakeState } = useRestApi<History[]>(FpsakApiKeys.HISTORY_FPTILBAKE, { saksnummer }, {
     updateTriggers: [behandlingId, behandlingVersjon],
-    suspendRequest: !skalBrukeFpTilbakeHistorikk,
+    suspendRequest: !skalBrukeFpTilbakeHistorikk || erBehandlingEndret,
   });
 
   const historikkInnslag = useMemo(() => sortAndTagTilbakekreving(historikkFpSak, historikkFpTilbake), [historikkFpSak, historikkFpTilbake]);
@@ -87,9 +90,4 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
   ));
 };
 
-const mapStateToProps = (state) => ({
-  behandlingId: getSelectedBehandlingId(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-});
-
-export default withRouter(connect(mapStateToProps)(HistoryIndex));
+export default withRouter(HistoryIndex);

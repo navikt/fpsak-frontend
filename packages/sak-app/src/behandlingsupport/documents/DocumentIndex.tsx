@@ -1,13 +1,14 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { connect } from 'react-redux';
 
-import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
+import { LoadingPanel, requireProps, usePrevious } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 import { Dokument } from '@fpsak-frontend/types';
-
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
+
+import useBehandlingEndret from '../../behandling/useBehandligEndret';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
-import { FpsakApiKeys, useRestApi } from '../../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApi } from '../../data/fpsakApi';
 
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
@@ -43,8 +44,11 @@ export const DocumentIndex: FunctionComponent<OwnProps> = ({
   behandlingVersjon,
   saksnummer,
 }) => {
+  const forrigeSaksnummer = usePrevious(saksnummer);
+  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
   const { data: alleDokumenter, state } = useRestApi<Dokument[]>(FpsakApiKeys.ALL_DOCUMENTS, { saksnummer }, {
     updateTriggers: [behandlingId, behandlingVersjon],
+    suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
     keepData: true,
   });
 

@@ -27,7 +27,7 @@ interface OwnProps {
   behandlingId?: number;
   behandlingVersjon?: number;
   behandlingType?: Kodeverk;
-  lagNyBehandling: (saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data) => void;
+  lagNyBehandling: (isTilbakekreving, data) => void;
   behandlingstyper: KodeverkMedNavn[];
   tilbakekrevingRevurderingArsaker: KodeverkMedNavn[];
   revurderingArsaker: KodeverkMedNavn[];
@@ -71,13 +71,13 @@ const MenyNyBehandlingIndex: FunctionComponent<OwnProps> = ({
   const submit = useCallback((formValues) => {
     const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
     const tilbakekrevingBehandlingId = behandlingId && isTilbakekreving ? { behandlingId } : {};
-    const data = {
+    const params = {
       saksnummer: saksnummer.toString(),
       ...tilbakekrevingBehandlingId,
       ...formValues,
     };
 
-    lagNyBehandling(saksnummer, behandlingId, behandlingVersjon, isTilbakekreving, data);
+    lagNyBehandling(isTilbakekreving, params);
 
     lukkModal();
   }, [behandlingId, behandlingVersjon]);

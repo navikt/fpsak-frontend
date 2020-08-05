@@ -1,7 +1,7 @@
 import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 import { featureToggle } from '@fpsak-frontend/konstanter';
 
-import { FpsakApiKeys } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys } from '../data/fpsakApi';
 import ApplicationContextPath from './ApplicationContextPath';
 
 const useGetEnabledApplikasjonContext = (): ApplicationContextPath[] => {

@@ -4,7 +4,7 @@ import { featureToggle } from '@fpsak-frontend/konstanter';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
-import { FpsakApiKeys, useGlobalStateRestApi } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useGlobalStateRestApi } from '../data/fpsakApi';
 
 interface OwnProps {
   children: ReactElement,

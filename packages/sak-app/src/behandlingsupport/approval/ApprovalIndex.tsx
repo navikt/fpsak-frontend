@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { Location } from 'history';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -22,6 +21,7 @@ import { requireProps, LoadingPanel } from '@fpsak-frontend/shared-components';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
+import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import { createLocationForSkjermlenke } from '../../app/paths';
 import {
@@ -30,7 +30,7 @@ import {
 } from '../../behandling/duck';
 import {
   FpsakApiKeys, useRestApi, requestApi, useRestApiRunner,
-} from '../../data/fpsakApiNyUtenRedux';
+} from '../../data/fpsakApi';
 import { useFpSakKodeverk, useFpTilbakeKodeverk } from '../../data/useKodeverk';
 import BeslutterModalIndex from './BeslutterModalIndex';
 
@@ -92,6 +92,7 @@ interface TotrinnsKlageVurdering {
 
 interface OwnProps {
   fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
   totrinnskontrollSkjermlenkeContext?: any[];
   totrinnskontrollReadOnlySkjermlenkeContext?: any[];
   selectedBehandlingVersjon?: number;

@@ -1,4 +1,6 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, {
+  FunctionComponent, useMemo, useState, useCallback,
+} from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { Location } from 'history';
@@ -13,8 +15,9 @@ import { LoadingPanel, DataFetchPendingModal } from '@fpsak-frontend/shared-comp
 import { getRequestPollingMessage } from '@fpsak-frontend/rest-api-redux';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingerIndex from '../behandling/BehandlingerIndex';
+import useBehandlingEndret from '../behandling/useBehandligEndret';
+import useTrackRouteParam from '../app/useTrackRouteParam';
 import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import ApplicationContextPath from '../app/ApplicationContextPath';
@@ -23,7 +26,7 @@ import {
   pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerPath, pathToAnnenPart,
 } from '../app/paths';
 import FagsakGrid from './components/FagsakGrid';
-import { FpsakApiKeys, useRestApi } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApi } from '../data/fpsakApi';
 import {
   getSelectedBehandlingId,
   getBehandlingVersjon,
@@ -61,6 +64,9 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
   behandlingVersjon,
   location,
 }) => {
+  const [behandlingerTeller, setBehandlingTeller] = useState(0);
+  const oppfriskBehandlinger = useCallback(() => setBehandlingTeller(behandlingerTeller + 1), [behandlingerTeller]);
+
   const { selected: selectedSaksnummer } = useTrackRouteParam<number>({
     paramName: 'saksnummer',
     parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
@@ -68,22 +74,25 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
 
   const alleKodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
 
+  const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
+
   const { data: fagsak, state: fagsakState } = useRestApi<Fagsak>(FpsakApiKeys.FETCH_FAGSAK, { saksnummer: selectedSaksnummer }, {
     updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon],
-    suspendRequest: !selectedSaksnummer,
+    suspendRequest: !selectedSaksnummer || erBehandlingEndretFraUndefined,
     keepData: true,
   });
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
 
   const { data: behandlingerFpSak, state: behandlingerFpSakState } = useRestApi(FpsakApiKeys.BEHANDLINGER_FPSAK, { saksnummer: selectedSaksnummer }, {
-    updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon],
-    suspendRequest: !selectedSaksnummer,
+    updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
+    suspendRequest: !selectedSaksnummer || erBehandlingEndretFraUndefined,
     keepData: true,
   });
   const { data: behandlingerFpTilbake } = useRestApi(FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { saksnummer: selectedSaksnummer }, {
-    updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon],
-    suspendRequest: !selectedSaksnummer || !enabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE),
+    updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
+    suspendRequest: !selectedSaksnummer || !enabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE)
+      || erBehandlingEndretFraUndefined,
     keepData: true,
   });
 
@@ -128,7 +137,14 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
         behandlingContent={
           <Route strict path={behandlingerPath} render={(props) => <BehandlingerIndex {...props} fagsak={fagsak} alleBehandlinger={alleBehandlinger} />} />
         }
-        profileAndNavigationContent={<FagsakProfileIndex fagsak={fagsak} alleBehandlinger={alleBehandlinger} harHentetBehandlinger={harHentetBehandlinger} />}
+        profileAndNavigationContent={(
+          <FagsakProfileIndex
+            fagsak={fagsak}
+            alleBehandlinger={alleBehandlinger}
+            harHentetBehandlinger={harHentetBehandlinger}
+            oppfriskOgVelgNyBehandling={oppfriskBehandlinger}
+          />
+        )}
         supportContent={<BehandlingSupportIndex fagsak={fagsak} alleBehandlinger={alleBehandlinger} />}
         visittkortContent={() => {
           if (skalIkkeHenteData) {

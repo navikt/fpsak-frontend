@@ -1,4 +1,4 @@
-import { FpsakApiKeys, useRestApiRunner } from './fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApiRunner } from './fpsakApi';
 
 const forhandsvis = (data) => {
   if (window.navigator.msSaveOrOpenBlob) {

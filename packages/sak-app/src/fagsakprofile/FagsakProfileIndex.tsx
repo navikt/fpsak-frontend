@@ -21,10 +21,11 @@ import {
 import BehandlingMenuDataResolver from '../behandlingmenu/BehandlingMenuDataResolver';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
-import { FpsakApiKeys, useRestApi, requestApi } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApi, requestApi } from '../data/fpsakApi';
 import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
 
 import styles from './fagsakProfileIndex.less';
+import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 
 const findPathToBehandling = (saksnummer, location, alleBehandlinger) => {
   if (alleBehandlinger.length === 1) {
@@ -40,10 +41,12 @@ const NO_PARAMS = {};
 
 interface OwnProps {
   fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
   selectedBehandlingId?: number;
   behandlingVersjon?: number;
   shouldRedirectToBehandlinger: boolean;
   location: Location;
+  harHentetBehandlinger: boolean;
 }
 
 export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
@@ -54,6 +57,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   behandlingVersjon,
   location,
   shouldRedirectToBehandlinger,
+  oppfriskOgVelgNyBehandling,
 }) => {
   const [showAll, setShowAll] = useState(!selectedBehandlingId);
   const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
@@ -81,8 +85,6 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
     pathname: pathToBehandling(fagsak.saksnummer, behandlingId),
   }), [fagsak.saksnummer]);
 
-  const behandling = alleBehandlinger.find((b) => b.id === selectedBehandlingId);
-
   return (
     <div className={styles.panelPadding}>
       {!harHentetBehandlinger && (
@@ -97,12 +99,18 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
           fagsakYtelseType={fagsakYtelseTypeMedNavn}
           fagsakStatus={fagsakStatusMedNavn}
           dekningsgrad={fagsak.dekningsgrad}
-          renderBehandlingMeny={() => <BehandlingMenuDataResolver fagsak={fagsak} behandling={behandling} />}
+          renderBehandlingMeny={() => (
+            <BehandlingMenuDataResolver
+              fagsak={fagsak}
+              alleBehandlinger={alleBehandlinger}
+              oppfriskOgVelgNyBehandling={oppfriskOgVelgNyBehandling}
+            />
+          )}
           renderBehandlingVelger={() => (
             <BehandlingVelgerSakIndex
               behandlinger={alleBehandlinger}
               getBehandlingLocation={getBehandlingLocation}
-              noExistingBehandlinger={alleBehandlinger === 0}
+              noExistingBehandlinger={alleBehandlinger.length === 0}
               behandlingId={selectedBehandlingId}
               showAll={showAll}
               toggleShowAll={toggleShowAll}

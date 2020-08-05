@@ -11,7 +11,7 @@ import { RestApiState, useGlobalStateRestApiData } from '@fpsak-frontend/rest-ap
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import { pathToFagsak } from '../app/paths';
-import { FpsakApiKeys, useRestApiRunner } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApiRunner } from '../data/fpsakApi';
 
 interface OwnProps {
   push: (string) => void;

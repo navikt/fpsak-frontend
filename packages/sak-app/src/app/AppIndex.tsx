@@ -16,7 +16,7 @@ import AppConfigResolver from './AppConfigResolver';
 import LanguageProvider from './LanguageProvider';
 import Home from './components/Home';
 import Dekorator from './components/Dekorator';
-import { FpsakApiKeys } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys } from '../data/fpsakApi';
 
 import '@fpsak-frontend/assets/styles/global.less';
 

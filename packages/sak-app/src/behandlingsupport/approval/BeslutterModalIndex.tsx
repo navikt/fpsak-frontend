@@ -7,7 +7,7 @@ import { Kodeverk } from '@fpsak-frontend/types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 
-import { FpsakApiKeys, useRestApi, requestApi } from '../../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApi, requestApi } from '../../data/fpsakApi';
 
 const NO_PARAM = {};
 

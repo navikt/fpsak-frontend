@@ -8,22 +8,21 @@ import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
 import {
-  Aksjonspunkt, NavAnsatt, Risikoklassifisering, Kodeverk, Fagsak,
+  Aksjonspunkt, NavAnsatt, Risikoklassifisering, Fagsak,
 } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 
-import { FpsakApiKeys } from '../../data/fpsakApiNyUtenRedux';
+import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
+import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
+import useTrackRouteParam from '../../app/useTrackRouteParam';
+import { FpsakApiKeys } from '../../data/fpsakApi';
 import { getRiskPanelLocationCreator } from '../../app/paths';
 import getAccessRights from '../../app/util/access';
 import {
   getBehandlingVersjon, getSelectedBehandlingId,
 } from '../../behandling/duck';
-import {
-  isRiskPanelOpen, resolveAksjonspunkter as resolveAp, setRiskPanelOpen,
-} from './duck';
-import trackRouteParam from '../../app/trackRouteParam';
 
 const getReadOnly = (navAnsatt: NavAnsatt, rettigheter, erPaaVent: boolean) => {
   if (erPaaVent) {
@@ -35,17 +34,14 @@ const getReadOnly = (navAnsatt: NavAnsatt, rettigheter, erPaaVent: boolean) => {
 
 interface OwnProps {
   fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
   resolveAksjonspunkter: (params: any) => void;
   push: (location: Location) => void;
   location: Location;
-  isPanelOpen: boolean;
   behandlingVersjon?: number;
   kontrollresultat?: Risikoklassifisering;
   risikoAksjonspunkt?: Aksjonspunkt;
-  erPaaVentMap: any;
   behandlingId: number;
-  behandlingStatus: Kodeverk;
-  behandlingType: Kodeverk;
 }
 
 /**
@@ -61,16 +57,20 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
   risikoAksjonspunkt,
   kontrollresultat,
   behandlingVersjon,
-  resolveAksjonspunkter,
   push: pushLocation,
   location,
-  isPanelOpen = false,
   behandlingId,
 }) => {
   const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
   const erPaaVent = behandling ? behandling.behandlingPaaVent : false;
   const behandlingStatus = behandling?.status;
   const behandlingType = behandling?.type;
+
+  const { selected: isRiskPanelOpen = false } = useTrackRouteParam<boolean>({
+    paramName: 'risiko',
+    parse: (isOpen) => isOpen === 'true',
+    isQueryParam: true,
+  });
 
   const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.status, behandlingStatus, behandlingType),
@@ -79,12 +79,12 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
     [rettigheter, erPaaVent]);
 
   const toggleRiskPanel = useCallback(() => {
-    pushLocation(getRiskPanelLocationCreator(location)(!isPanelOpen));
-  }, [location, isPanelOpen]);
+    pushLocation(getRiskPanelLocationCreator(location)(!isRiskPanelOpen));
+  }, [location, isRiskPanelOpen]);
 
   const harRisikoAksjonspunkt = !!risikoAksjonspunkt;
   useEffect(() => {
-    if (harRisikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !isPanelOpen) {
+    if (harRisikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !isRiskPanelOpen) {
       toggleRiskPanel();
     }
   }, [harRisikoAksjonspunkt, behandlingId, behandlingVersjon]);
@@ -100,7 +100,7 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
       }],
     };
 
-    return resolveAksjonspunkter(params);
+    return behandlingEventHandler.lagreRisikoklassifiseringAksjonspunkt(params);
   }, [behandlingId, behandlingVersjon]);
 
   return (
@@ -109,7 +109,7 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
       behandlingVersjon={behandlingVersjon}
       aksjonspunkt={risikoAksjonspunkt}
       risikoklassifisering={kontrollresultat}
-      isPanelOpen={isPanelOpen}
+      isPanelOpen={isRiskPanelOpen}
       readOnly={readOnly}
       submitAksjonspunkt={submitAksjonspunkt}
       toggleRiskPanel={toggleRiskPanel}
@@ -120,7 +120,6 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
 const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingVersjon: getBehandlingVersjon(state),
-  isPanelOpen: isRiskPanelOpen(state),
   behandlingId: getSelectedBehandlingId(state),
 });
 
@@ -128,15 +127,7 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
     dispatchSubmitFailed,
-    setRiskPanelOpen,
-    resolveAksjonspunkter: resolveAp,
   }, dispatch),
 });
 
-export default trackRouteParam({
-  paramName: 'risiko',
-  parse: (isOpen) => isOpen === 'true',
-  storeParam: setRiskPanelOpen,
-  getParamFromStore: isRiskPanelOpen,
-  isQueryParam: true,
-})(connect(mapStateToProps, mapDispatchToProps)(RisikoklassifiseringIndexImpl));
+export default connect(mapStateToProps, mapDispatchToProps)(RisikoklassifiseringIndexImpl);

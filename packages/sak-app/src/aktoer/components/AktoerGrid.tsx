@@ -12,7 +12,7 @@ import {
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 import useGlobalStateRestApiData from '@fpsak-frontend/rest-api-hooks/src/global-data/useGlobalStateRestApiError';
 
-import { FpsakApiKeys } from '../../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys } from '../../data/fpsakApi';
 import { pathToFagsak } from '../../app/paths';
 
 import styles from './aktoerGrid.less';

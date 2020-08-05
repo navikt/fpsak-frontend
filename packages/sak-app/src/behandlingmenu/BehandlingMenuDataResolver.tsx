@@ -12,9 +12,10 @@ import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
 import { getBehandlingVersjon, getSelectedBehandlingId } from '../behandling/duck';
 import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
-import { fjernVerge, opprettVerge } from './duck';
+import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
+import { fjernVerge, opprettVerge } from './behandlingMenuOperations';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
-import { FpsakApiKeys, useRestApi } from '../data/fpsakApiNyUtenRedux';
+import { FpsakApiKeys, useRestApi } from '../data/fpsakApi';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING,
   BehandlingType.TILBAKEKREVING, BehandlingType.TILBAKEKREVING_REVURDERING];
@@ -28,6 +29,7 @@ const VERGE_MENYVALG = {
 
 interface OwnProps {
   fagsak: Fagsak;
+  alleBehandlinger: BehandlingAppKontekst[];
   location: Location;
 }
 
@@ -42,12 +44,14 @@ interface DispatchProps {
 
 const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
   fagsak,
-  behandling,
+  alleBehandlinger,
   behandlingId,
   behandlingVersion,
   location,
   pushLocation,
+  oppfriskOgVelgNyBehandling,
 }) => {
+  const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
   const skalHenteVergeMenyvalg = behandlingId && behandling && YTELSE_BEHANDLINGTYPER.includes(behandling.type.kode);
   const { data: vergeMenyvalgData, state: stateVerge } = useRestApi<{ vergeBehandlingsmeny: string }>(
     FpsakApiKeys.VERGE_MENYVALG, new BehandlingIdentifier(fagsak.saksnummer, behandlingId).toJson(), {
@@ -77,16 +81,16 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
   return (
     <BehandlingMenuIndex
       fagsak={fagsak}
-      behandling={behandling}
+      alleBehandlinger={alleBehandlinger}
       saksnummer={fagsak.saksnummer}
       behandlingId={behandlingId}
       behandlingVersion={behandlingVersion}
-      behandlingType={behandling?.type}
-      menyhandlingRettigheter={menyhandlingRettigheter}
       fjernVerge={fjernVergeFn}
       opprettVerge={opprettVergeFn}
-      location={location}
       pushLocation={pushLocation}
+      location={location}
+      menyhandlingRettigheter={menyhandlingRettigheter}
+      oppfriskBehandlinger={oppfriskOgVelgNyBehandling}
     />
   );
 };

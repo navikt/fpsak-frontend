@@ -67,14 +67,14 @@ const getUseRestApi = (requestApi: RequestApi) => function useRestApi<T>(key: st
             error,
           });
         });
-    } else {
+    } else if (!requestApi.hasPath(key)) {
       setData({
         state: RestApiState.NOT_STARTED,
         error: undefined,
         data: undefined,
       });
     }
-  }, options.updateTriggers);
+  }, [...options.updateTriggers]);
 
   return data;
 };

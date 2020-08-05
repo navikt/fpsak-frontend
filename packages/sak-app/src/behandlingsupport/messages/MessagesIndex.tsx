@@ -12,6 +12,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import { Fagsak } from '@fpsak-frontend/types';
 
+import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
 import { useFpSakKodeverk } from '../../data/useKodeverk';
 import useVisForhandsvisningAvMelding from '../../data/useVisForhandsvisningAvMelding';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
@@ -19,10 +20,10 @@ import {
   getBehandlingVersjon,
   getSelectedBehandlingId,
 } from '../../behandling/duck';
-import { setBehandlingOnHold } from '../../behandlingmenu/duck';
+import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import {
   FpsakApiKeys, useRestApi, useRestApiRunner, requestApi,
-} from '../../data/fpsakApiNyUtenRedux';
+} from '../../data/fpsakApi';
 
 const NO_PARAM = {};
 
@@ -70,7 +71,7 @@ const getPreviewCallback = (behandlingTypeKode, behandlingId, behandlingUuid, fa
 
 interface OwnProps {
   fagsak: Fagsak;
-  alleBehandlinger: {}[];
+  alleBehandlinger: BehandlingAppKontekst[];
 }
 
 interface StateProps {
