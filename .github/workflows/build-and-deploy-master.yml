@@ -56,6 +56,8 @@ jobs:
 
       - name: Bygg, tag og push Docker image
         run: |
+          docker -v
+          docker pull nginx:1.17.8-alpine
           docker build --tag ${IMAGE} .
           echo  ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
           docker push ${IMAGE_BASE}
