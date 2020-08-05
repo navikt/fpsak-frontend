@@ -26,7 +26,7 @@ jobs:
       - run:  git fetch --prune --unshallow
 
       - name: Hent tag
-        run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad' --date=format:'%Y.%m.%d.%H%M%S')-$(echo $GITHUB_SHA | cut -c1-7)"
+        run: echo "::set-env name=TAG::1.1_$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')_$(echo $GITHUB_SHA | cut -c1-7)"
       - name: Sette opp Node
         uses: actions/setup-node@v1
         with:
