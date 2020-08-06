@@ -37,9 +37,16 @@ const renderSupportPanel = (
         />
       );
     case supportTabs.HISTORY:
-      return (<HistoryIndex saksnummer={fagsak.saksnummer} behandlingId={behandlingId} behandlingVersjon={behandlingVersjon} />);
+      return (
+        <HistoryIndex
+          saksnummer={fagsak.saksnummer}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+        />
+      );
     case supportTabs.MESSAGES:
-      return (<MessagesIndex fagsak={fagsak} alleBehandlinger={alleBehandlinger} />);
+      return (
+        <MessagesIndex fagsak={fagsak} alleBehandlinger={alleBehandlinger} />);
     case supportTabs.DOCUMENTS:
       return (<DocumentIndex saksnummer={fagsak.saksnummer} />);
     default:

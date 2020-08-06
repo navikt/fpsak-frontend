@@ -35,7 +35,6 @@ const getReadOnly = (navAnsatt: NavAnsatt, rettigheter, erPaaVent: boolean) => {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
-  resolveAksjonspunkter: (params: any) => void;
   push: (location: Location) => void;
   location: Location;
   behandlingVersjon?: number;

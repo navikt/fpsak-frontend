@@ -11,7 +11,6 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
 import { getBehandlingVersjon, getSelectedBehandlingId } from '../behandling/duck';
-import BehandlingIdentifier from '../behandling/BehandlingIdentifier';
 import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 import { fjernVerge, opprettVerge } from './behandlingMenuOperations';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
@@ -30,6 +29,7 @@ const VERGE_MENYVALG = {
 interface OwnProps {
   fagsak: Fagsak;
   alleBehandlinger: BehandlingAppKontekst[];
+  oppfriskBehandlinger: () => void;
   location: Location;
 }
 
@@ -45,22 +45,22 @@ interface DispatchProps {
 const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
   fagsak,
   alleBehandlinger,
+  oppfriskBehandlinger,
+  location,
   behandlingId,
   behandlingVersion,
-  location,
   pushLocation,
-  oppfriskOgVelgNyBehandling,
 }) => {
   const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
-  const skalHenteVergeMenyvalg = behandlingId && behandling && YTELSE_BEHANDLINGTYPER.includes(behandling.type.kode);
+  const skalHenteVergeMenyvalg = behandling && YTELSE_BEHANDLINGTYPER.includes(behandling.type.kode);
   const { data: vergeMenyvalgData, state: stateVerge } = useRestApi<{ vergeBehandlingsmeny: string }>(
-    FpsakApiKeys.VERGE_MENYVALG, new BehandlingIdentifier(fagsak.saksnummer, behandlingId).toJson(), {
+    FpsakApiKeys.VERGE_MENYVALG, { saksnummer: fagsak.saksnummer, behandlingId }, {
       updateTriggers: [behandlingId, behandlingVersion],
       suspendRequest: !skalHenteVergeMenyvalg,
     },
   );
 
-  const { data: menyhandlingRettigheter, state } = useRestApi<{ menyhandlingRettigheter?: { harSoknad: boolean }}>(
+  const { data: menyhandlingRettigheter, state } = useRestApi<{ harSoknad: boolean }>(
     FpsakApiKeys.MENYHANDLING_RETTIGHETER, NO_PARAMS, {
       updateTriggers: [behandlingId, behandlingVersion],
       suspendRequest: !behandlingId,
@@ -90,7 +90,7 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
       pushLocation={pushLocation}
       location={location}
       menyhandlingRettigheter={menyhandlingRettigheter}
-      oppfriskBehandlinger={oppfriskOgVelgNyBehandling}
+      oppfriskBehandlinger={oppfriskBehandlinger}
     />
   );
 };
@@ -104,4 +104,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => bindActionCrea
   pushLocation: push,
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuDataResolver));
+export default withRouter<any, FunctionComponent<OwnProps & StateProps & DispatchProps>>(connect(
+  mapStateToProps, mapDispatchToProps,
+)(BehandlingMenuDataResolver));

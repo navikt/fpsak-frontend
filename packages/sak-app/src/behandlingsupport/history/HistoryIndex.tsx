@@ -42,6 +42,7 @@ interface OwnProps {
  *
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
+// @ts-ignore
 export const HistoryIndex: FunctionComponent<OwnProps> = ({
   saksnummer,
   behandlingId,
@@ -90,4 +91,4 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
   ));
 };
 
-export default withRouter(HistoryIndex);
+export default withRouter<any, FunctionComponent<OwnProps>>(HistoryIndex);

@@ -9,7 +9,7 @@ import { LoadingPanel, requireProps } from '@fpsak-frontend/shared-components';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import {
-  KodeverkMedNavn, Fagsak,
+  KodeverkMedNavn, Fagsak, Aksjonspunkt, Risikoklassifisering,
 } from '@fpsak-frontend/types';
 import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
@@ -47,6 +47,7 @@ interface OwnProps {
   shouldRedirectToBehandlinger: boolean;
   location: Location;
   harHentetBehandlinger: boolean;
+  oppfriskBehandlinger: () => void;
 }
 
 export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
@@ -57,7 +58,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   behandlingVersjon,
   location,
   shouldRedirectToBehandlinger,
-  oppfriskOgVelgNyBehandling,
+  oppfriskBehandlinger,
 }) => {
   const [showAll, setShowAll] = useState(!selectedBehandlingId);
   const toggleShowAll = useCallback(() => setShowAll(!showAll), [showAll]);
@@ -67,11 +68,11 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
   const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
 
-  const { data: risikoAksjonspunkt, state: risikoAksjonspunktState } = useRestApi(FpsakApiKeys.RISIKO_AKSJONSPUNKT, NO_PARAMS, {
+  const { data: risikoAksjonspunkt, state: risikoAksjonspunktState } = useRestApi<Aksjonspunkt>(FpsakApiKeys.RISIKO_AKSJONSPUNKT, NO_PARAMS, {
     updateTriggers: [selectedBehandlingId, behandlingVersjon],
     suspendRequest: !requestApi.hasPath(FpsakApiKeys.RISIKO_AKSJONSPUNKT),
   });
-  const { data: kontrollresultat, state: kontrollresultatState } = useRestApi(FpsakApiKeys.KONTROLLRESULTAT, NO_PARAMS, {
+  const { data: kontrollresultat, state: kontrollresultatState } = useRestApi<Risikoklassifisering>(FpsakApiKeys.KONTROLLRESULTAT, NO_PARAMS, {
     updateTriggers: [selectedBehandlingId, behandlingVersjon],
     suspendRequest: !requestApi.hasPath(FpsakApiKeys.KONTROLLRESULTAT),
   });
@@ -103,7 +104,7 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
             <BehandlingMenuDataResolver
               fagsak={fagsak}
               alleBehandlinger={alleBehandlinger}
-              oppfriskOgVelgNyBehandling={oppfriskOgVelgNyBehandling}
+              oppfriskBehandlinger={oppfriskBehandlinger}
             />
           )}
           renderBehandlingVelger={() => (

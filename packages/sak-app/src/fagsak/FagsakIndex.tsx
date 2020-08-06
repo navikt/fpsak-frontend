@@ -31,6 +31,7 @@ import {
   getSelectedBehandlingId,
   getBehandlingVersjon,
 } from '../behandling/duck';
+import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 
 const finnLenkeTilAnnenPart = (annenPartBehandling) => pathToAnnenPart(annenPartBehandling.saksnr.verdi, annenPartBehandling.behandlingId);
 
@@ -84,26 +85,26 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
 
-  const { data: behandlingerFpSak, state: behandlingerFpSakState } = useRestApi(FpsakApiKeys.BEHANDLINGER_FPSAK, { saksnummer: selectedSaksnummer }, {
-    updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
-    suspendRequest: !selectedSaksnummer || erBehandlingEndretFraUndefined,
-    keepData: true,
-  });
-  const { data: behandlingerFpTilbake } = useRestApi(FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { saksnummer: selectedSaksnummer }, {
-    updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
-    suspendRequest: !selectedSaksnummer || !enabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE)
+  const { data: behandlingerFpSak, state: behandlingerFpSakState } = useRestApi<BehandlingAppKontekst[]>(
+    FpsakApiKeys.BEHANDLINGER_FPSAK, { saksnummer: selectedSaksnummer }, {
+      updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
+      suspendRequest: !selectedSaksnummer || erBehandlingEndretFraUndefined,
+      keepData: true,
+    },
+  );
+  const { data: behandlingerFpTilbake } = useRestApi<BehandlingAppKontekst[]>(
+    FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { saksnummer: selectedSaksnummer }, {
+      updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
+      suspendRequest: !selectedSaksnummer || !enabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE)
       || erBehandlingEndretFraUndefined,
-    keepData: true,
-  });
+      keepData: true,
+    },
+  );
 
-  const harHentetBehandlinger = !!behandlingerFpSak || behandlingerFpSakState === RestApiState.SUCCESS;
   const alleBehandlinger = useMemo(() => [...(behandlingerFpSak || []), ...(behandlingerFpTilbake || [])],
     [behandlingerFpSak, behandlingerFpTilbake]);
 
   const skalIkkeHenteData = !selectedSaksnummer || erUrlUnderBehandling(location) || (erBehandlingValgt(location) && !behandlingId);
-
-  const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
-  const harVerge = behandling ? behandling.harVerge : false;
 
   const options = {
     updateTriggers: [skalIkkeHenteData, behandlingId, behandlingVersjon],
@@ -131,6 +132,9 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
     return <Redirect to={pathToMissingPage()} />;
   }
 
+  const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
+  const harVerge = behandling ? behandling.harVerge : false;
+
   return (
     <>
       <FagsakGrid
@@ -141,8 +145,8 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
           <FagsakProfileIndex
             fagsak={fagsak}
             alleBehandlinger={alleBehandlinger}
-            harHentetBehandlinger={harHentetBehandlinger}
-            oppfriskOgVelgNyBehandling={oppfriskBehandlinger}
+            harHentetBehandlinger={!!behandlingerFpSak || behandlingerFpSakState === RestApiState.SUCCESS}
+            oppfriskBehandlinger={oppfriskBehandlinger}
           />
         )}
         supportContent={<BehandlingSupportIndex fagsak={fagsak} alleBehandlinger={alleBehandlinger} />}

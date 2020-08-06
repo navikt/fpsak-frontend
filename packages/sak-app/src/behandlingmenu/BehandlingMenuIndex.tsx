@@ -74,7 +74,7 @@ interface OwnProps {
   behandlingVersion?: number;
   fjernVerge: () => void;
   opprettVerge: () => void;
-  pushLocation: (location: string) => void;
+  pushLocation: (location: Location | string) => void;
   location: Location;
   menyhandlingRettigheter?: { harSoknad: boolean }
   oppfriskBehandlinger: () => void;
@@ -89,27 +89,22 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
   fjernVerge,
   opprettVerge,
   pushLocation,
+  location,
   menyhandlingRettigheter,
   oppfriskBehandlinger,
 }) => {
   const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
-  const uuid = behandling?.uuid;
-  const uuidForSistLukkede = getUuidForSisteLukkedeForsteEllerRevurd(alleBehandlinger);
 
   const ref = useRef<number>();
   useEffect(() => {
-    if (ref.current) {
+    // Når antallet har endret seg er det laget en ny behandling og denne må da velges
+    if (ref.current > 0) {
       const pathname = pathToBehandling(saksnummer, findNewBehandlingId(alleBehandlinger));
       pushLocation(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
     }
 
     ref.current = alleBehandlinger.length;
   }, [alleBehandlinger.length]);
-
-  const erPapirsoknad = behandling?.erAktivPapirsoknad;
-  const kanHenlegge = behandling ? behandling.kanHenleggeBehandling : false;
-  const erKoet = behandling ? behandling.behandlingKoet : false;
-  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
 
   const {
     startRequest: sjekkTilbakeKanOpprettes, data: kanBehandlingOpprettes = false,
@@ -127,7 +122,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
     fagsak.sakstype,
     behandling?.status,
     menyhandlingRettigheter ? menyhandlingRettigheter.harSoknad : false,
-    erPapirsoknad,
+    behandling?.erAktivPapirsoknad,
     behandling?.type,
   ), [behandlingId, behandlingVersion]);
 
@@ -150,6 +145,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
     lagNy(params).then(() => oppfriskBehandlinger());
   }, []);
 
+  const uuidForSistLukkede = useMemo(() => getUuidForSisteLukkedeForsteEllerRevurd(alleBehandlinger), [alleBehandlinger]);
   const previewHenleggBehandling = useVisForhandsvisningAvMelding();
 
   if ((!rettigheter.settBehandlingPaVentAccess.employeeHasAccess
@@ -160,6 +156,10 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
     && !rettigheter.gjenopptaBehandlingAccess.employeeHasAccess) || navAnsatt.kanVeilede) {
     return null;
   }
+
+  const kanHenlegge = behandling ? behandling.kanHenleggeBehandling : false;
+  const erKoet = behandling ? behandling.behandlingKoet : false;
+  const erPaVent = behandling ? behandling.behandlingPaaVent : false;
 
   return (
     <MenySakIndex
@@ -192,7 +192,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
               henleggBehandling={shelveBehandling}
               ytelseType={fagsak.sakstype}
               behandlingType={behandling?.type}
-              behandlingUuid={uuid}
+              behandlingUuid={behandling?.uuid}
               behandlingResultatTyper={menyKodeverk.getKodeverkForValgtBehandling(kodeverkTyper.BEHANDLING_RESULTAT_TYPE)}
               lukkModal={lukkModal}
               gaaTilSokeside={gaaTilSokeside}
