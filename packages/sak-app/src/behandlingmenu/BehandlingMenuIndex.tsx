@@ -98,7 +98,7 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
 
   const ref = useRef<number>();
   useEffect(() => {
-    if (ref.current > 0) {
+    if (ref.current) {
       const pathname = pathToBehandling(saksnummer, findNewBehandlingId(alleBehandlinger));
       pushLocation(getLocationWithDefaultProsessStegAndFakta({ ...location, pathname }));
     }
