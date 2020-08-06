@@ -15,7 +15,7 @@ env:
   APIKEY: ${{ secrets.DEPLOY_KEY }}
   CLUSTER: dev-fss
   NAMESPACE: t4
-  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/fpsak-frontend
+  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/fp-sak-frontend
 
 jobs:
   build:
