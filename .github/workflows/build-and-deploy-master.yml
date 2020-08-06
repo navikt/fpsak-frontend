@@ -80,7 +80,7 @@ jobs:
 
       - name: Trigg deploy til dev-fss t4
         if: success()
-        uses: actions/github-script@0.3.0
+        uses: actions/github-script@v2
         with:
           github-token: ${{secrets.GH_P_TOKEN}}
           script: |
@@ -93,7 +93,7 @@ jobs:
 
       - name: Trigg deploy til dev-fss q1
         if: success()
-        uses: actions/github-script@0.3.0
+        uses: actions/github-script@v2
         with:
           github-token: ${{secrets.GH_P_TOKEN}}
           script: |
