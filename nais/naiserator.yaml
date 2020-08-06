@@ -1,0 +1,53 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: fpsak-frontend
+  namespace: {{namespace}}
+  labels:
+    team: teamforeldrepenger
+spec:
+  image: {{image}}
+  port: 443
+  ingresses:
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
+  sessionAffinity: ClientIP
+  team: teamforeldrepenger
+  liveness:
+    path: /fpsak/health/is-alive
+    initialDelay: 20
+    timeout: 1
+    periodSeconds: 5
+    failureThreshold: 10
+  readiness:
+    path: /fpsak/health/is-ready
+    initialDelay: 20
+    timeout: 1
+  prometheus:
+    enabled: false
+    path: /fpsak/prometheus
+  replicas:
+    min: {{minReplicas}}
+    max: {{maxReplicas}}
+    cpuThresholdPercentage: 50
+  resources:
+    limits:
+      cpu: 500m
+      memory: 64Mi
+    requests:
+      cpu: 200m
+      memory: 32Mi
+  vault:
+    enabled: true
+  env:
+    - name: APP_VERSION
+      value: "{{version}}"
+    - name: APP_NAME
+      value: fpsak-frontend
+    - name: REDIS_HOST
+      value: "fpsak-redis.default.svc.nais.local"
+    - name: REDIS_PORT
+      value: "80"
+    - name: APP_URL_FPSAK
+      value: "http://fpsak"

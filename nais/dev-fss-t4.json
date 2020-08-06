@@ -1,0 +1,8 @@
+{
+  "namespace": "t4",
+  "minReplicas": "1",
+  "maxReplicas": "2",
+  "ingresses": [
+    "https://app-t4.adeo.no/fpsak"
+  ]
+}

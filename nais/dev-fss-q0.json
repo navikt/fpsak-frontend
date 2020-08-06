@@ -1,0 +1,8 @@
+{
+  "namespace": "q0",
+  "minReplicas": "1",
+  "maxReplicas": "2",
+  "ingresses": [
+    "https://app-q0.adeo.no/fpsak"
+  ]
+}
