@@ -2,39 +2,52 @@ name: Build, push and deploy Fpsak-frontend
 
 on:
   push:
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+      - 'CODEOWNERS'
     branches:
       - master
 env:
   
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_USERNAME: x-access-token
-  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+  APIKEY: ${{ secrets.DEPLOY_KEY }}
   CLUSTER: dev-fss
   NAMESPACE: t4
-  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/fpsak-frontend
+  IMAGE_BASE: docker.pkg.github.com/${{ github.repository }}/fp-sak-frontend
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Sjekk ut kode
         uses: actions/checkout@v2
       - run:  git fetch --prune --unshallow
 
       - name: Hent tag
-        run: echo "::set-env name=TAG::$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')-$(echo $GITHUB_SHA | cut -c1-7)"
-
+        run: echo "::set-env name=TAG::1.1_$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')_$(echo $GITHUB_SHA | cut -c1-7)"
       - name: Sette opp Node
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+          
+      - name: Get yarn cache
+        id: yarn-cache
+        run: |
+          echo "::set-output name=dir::$(yarn cache dir)"
+          
+      - name: Cache node modules
+        uses: actions/cache@v1.1.0
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Run yarn install
         run: yarn install --ignore-optional --no-progress --frozen-lockfile
 
       - name: Run linting and tests
-        run: yarn less:lint
+        run: yarn test && yarn less:lint && yarn ts-check
 
       - name: Build
         run: |
@@ -43,9 +56,12 @@ jobs:
 
       - name: Bygg, tag og push Docker image
         run: |
-          docker build --tag ${IMAGE} .
-          echo  ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
-          docker push ${IMAGE_BASE}
+          ## docker -v
+          ## docker pull nginx:1.17.8-alpine
+          docker build --pull --tag ${IMAGE} --tag ${IMAGE_BASE}:latest .
+          echo  ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_USERNAME} --password-stdin
+          docker push ${IMAGE_BASE}:latest
+          docker push $IMAGE
 
       - name: Opprett deployment issue
         if: success()
@@ -55,21 +71,35 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Bygg av ${{ env.TAG }}
           body: |
-            Kommenter med <b>/promote ${{ env.TAG }} cluster namespace</b>, hvor <b>cluster</b> er et gyldig clusternavn og <b>namespace</b> et eksisterende namespace i det clusteret.
+            Kommenter med <b>/promote cluster namespace</b>, hvor <b>cluster</b> er et gyldig clusternavn og <b>namespace</b> et eksisterende namespace i det clusteret.
             <table>
             <tr><th>Cluster</th><th>Namespace</th></tr>
-            <tr><td>dev-fss</td><td>t4,q1</td></tr>
+            <tr><td>dev-fss</td><td>t4, q1</td></tr>
             <tr><td>prod-fss</td><td>default</td></tr>
             </table>
+
       - name: Trigg deploy til dev-fss t4
         if: success()
         uses: actions/github-script@0.3.0
         with:
-          github-token: ${{secrets.NOTIFICATION}}
+          github-token: ${{secrets.GH_P_TOKEN}}
           script: |
             const issue = { owner: context.issue.owner,
                             repo: context.issue.repo,
                             issue_number: ${{ steps.createdeployissue.outputs.number }} }
             github.issues.createComment({...issue,
                                     title: 'Deploy av ${{ env.TAG }}',
-                                    body: '/promote ${{ env.TAG }} ${{ env.CLUSTER }} ${{ env.NAMESPACE }}'})
+                                    body: '/promote dev-fss t4'})
+
+      - name: Trigg deploy til dev-fss q1
+        if: success()
+        uses: actions/github-script@0.3.0
+        with:
+          github-token: ${{secrets.GH_P_TOKEN}}
+          script: |
+            const issue = { owner: context.issue.owner,
+                            repo: context.issue.repo,
+                            issue_number: ${{ steps.createdeployissue.outputs.number }} }
+            github.issues.createComment({...issue,
+                                    title: 'Deploy av ${{ env.TAG }}',
+                                    body: '/promote dev-fss q1'})
