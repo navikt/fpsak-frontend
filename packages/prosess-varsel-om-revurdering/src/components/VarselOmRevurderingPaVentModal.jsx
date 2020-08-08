@@ -13,9 +13,23 @@ import {
   ariaCheck, dateAfterOrEqualToToday, hasValidDate, required,
 } from '@fpsak-frontend/utils';
 
+import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import styles from './varselOmRevurderingPaVentModal.less';
 
 const isButtonDisabled = (frist) => hasValidDate(frist) !== null || dateAfterOrEqualToToday(frist) !== null;
+
+const manuelleVenteArsaker = [
+  venteArsakType.AVV_DOK,
+  venteArsakType.AVV_FODSEL,
+  venteArsakType.UTV_FRIST,
+  venteArsakType.AVV_RESPONS_REVURDERING,
+  venteArsakType.FOR_TIDLIG_SOKNAD,
+  venteArsakType.VENT_PÅ_SISTE_AAP_ELLER_DP_MELDEKORT,
+  venteArsakType.ANKE_VENTER_PAA_MERKNADER_FRA_BRUKER,
+  venteArsakType.ANKE_OVERSENDT_TIL_TRYGDERETTEN,
+  venteArsakType.VENT_OPDT_INNTEKTSMELDING,
+  venteArsakType.VENT_OPPTJENING_OPPLYSNINGER,
+];
 
 /**
  * VarselOmRevurderingPaVentModal
@@ -71,7 +85,8 @@ const VarselOmRevurderingPaVentModal = ({
               label={intl.formatMessage({ id: 'SettBehandlingPaVentModal.Arsak' })}
               placeholder={intl.formatMessage({ id: 'SettBehandlingPaVentModal.SelectPlaceholder' })}
               validate={[required]}
-              selectValues={ventearsaker.sort((v1, v2) => v1.navn.localeCompare(v2.navn))
+              selectValues={ventearsaker.filter((va) => manuelleVenteArsaker.indexOf(va.kode) > -1)
+                .sort((v1, v2) => v1.navn.localeCompare(v2.navn))
                 .map((ventearsak) => <option key={ventearsak.kode} value={ventearsak.kode}>{ventearsak.navn}</option>)}
               bredde="xxl"
             />
