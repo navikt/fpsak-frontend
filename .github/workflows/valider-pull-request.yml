@@ -1,0 +1,30 @@
+name: Valider pull request
+on: [pull_request]
+jobs:
+  valid-pull-request:
+    name: Valider pull request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hente kode
+        uses: actions/checkout@v1
+      - name: Sette opp Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache node modules
+        uses: actions/cache@v1.1.0
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Installere dependencies
+        run: yarn install --ignore-optional --no-progress --frozen-lockfile
+      - name: Tester og linting
+        run: yarn test && yarn less:lint && yarn ts-check
+
+      - name: Run test and coverage
+        run: yarn test:coverage
