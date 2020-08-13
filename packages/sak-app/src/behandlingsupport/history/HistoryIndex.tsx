@@ -5,13 +5,13 @@ import { withRouter } from 'react-router-dom';
 import { Location } from 'history';
 import moment from 'moment';
 
-import { useGlobalStateRestApiData, RestApiState } from '@fpsak-frontend/rest-api-hooks';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 
 import useBehandlingEndret from '../../behandling/useBehandligEndret';
-import { FpsakApiKeys, useRestApi } from '../../data/fpsakApi';
+import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../../data/fpsakApi';
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
 import ApplicationContextPath from '../../app/ApplicationContextPath';
 import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';

@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
-
-import { FpsakApiKeys, useRestApi } from '../../data/fpsakApi';
+import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../../data/fpsakApi';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 

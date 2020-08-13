@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { Location } from 'history';
 
-import { RestApiState, useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import VisittkortSakIndex from '@fpsak-frontend/sak-visittkort';
 import {
   KodeverkMedNavn, Personopplysninger, FamilieHendelseSamling, Fagsak,
@@ -26,7 +26,7 @@ import {
   pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerPath, pathToAnnenPart,
 } from '../app/paths';
 import FagsakGrid from './components/FagsakGrid';
-import { FpsakApiKeys, useRestApi } from '../data/fpsakApi';
+import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../data/fpsakApi';
 import {
   getSelectedBehandlingId,
   getBehandlingVersjon,

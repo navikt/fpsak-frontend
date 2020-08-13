@@ -3,14 +3,14 @@ import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
 import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
-import { useGlobalStateRestApiData, useRestApiError, useRestApiErrorDispatcher } from '@fpsak-frontend/rest-api-hooks';
+import { useRestApiError, useRestApiErrorDispatcher } from '@fpsak-frontend/rest-api-hooks';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/konstanter';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import { NavAnsatt } from '@fpsak-frontend/types';
-import { FpsakApiKeys } from '../../data/fpsakApi';
+import { FpsakApiKeys, useGlobalStateRestApiData } from '../../data/fpsakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 
 const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {

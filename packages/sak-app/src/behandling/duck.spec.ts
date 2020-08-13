@@ -1,9 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import { reduxRestApi } from '../data/fpsakApi';
 import {
   behandlingReducer, setUrlBehandlingId,
 } from './duck';
@@ -12,21 +10,6 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 describe('Behandling-reducer', () => {
-  let mockAxios;
-
-  before(() => {
-    // @ts-ignore
-    mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
-  });
-
-  afterEach(() => {
-    mockAxios.reset();
-  });
-
-  after(() => {
-    mockAxios.restore();
-  });
-
   it('skal returnere initial state', () => {
     expect(behandlingReducer(undefined, { type: '' })).to.eql({
       behandlingId: undefined,

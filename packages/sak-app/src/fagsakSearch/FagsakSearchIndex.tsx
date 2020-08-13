@@ -7,11 +7,11 @@ import {
   errorOfType, ErrorTypes, getErrorResponseData,
 } from '@fpsak-frontend/rest-api';
 import { Fagsak, KodeverkMedNavn } from '@fpsak-frontend/types';
-import { RestApiState, useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import { pathToFagsak } from '../app/paths';
-import { FpsakApiKeys, useRestApiRunner } from '../data/fpsakApi';
+import { FpsakApiKeys, useRestApiRunner, useGlobalStateRestApiData } from '../data/fpsakApi';
 
 interface OwnProps {
   push: (string) => void;

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import SupportMenySakIndex, { supportTabs } from '@fpsak-frontend/sak-support-meny';
-import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 import { NavAnsatt, Fagsak } from '@fpsak-frontend/types';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -20,7 +19,7 @@ import ApprovalIndex from './approval/ApprovalIndex';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import allSupportPanelAccessRights from './accessSupport';
 import styles from './behandlingSupportIndex.less';
-import { FpsakApiKeys, useRestApi } from '../data/fpsakApi';
+import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../data/fpsakApi';
 
 const renderSupportPanel = (
   supportPanel, totrinnArsaker, totrinnArsakerReadOnly, fagsak, alleBehandlinger, behandlingId, behandlingVersjon,

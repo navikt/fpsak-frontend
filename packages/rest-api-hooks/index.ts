@@ -5,7 +5,7 @@ export { default as getUseRestApiRunner } from './src/local-data/useRestApiRunne
 
 export { RestApiStateContext, RestApiProvider } from './src/RestApiContext';
 export { default as getUseGlobalStateRestApi } from './src/global-data/useGlobalStateRestApi';
-export { default as useGlobalStateRestApiData } from './src/global-data/useGlobalStateRestApiData';
+export { default as getUseGlobalStateRestApiData } from './src/global-data/useGlobalStateRestApiData';
 
 export { RestApiErrorProvider } from './src/error/RestApiErrorContext';
 export { default as useRestApiError } from './src/error/useRestApiError';

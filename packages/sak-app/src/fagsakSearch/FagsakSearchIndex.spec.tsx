@@ -7,7 +7,7 @@ import { Fagsak } from '@fpsak-frontend/types';
 import { ErrorTypes } from '@fpsak-frontend/rest-api';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
-import FagsakSearchIndex, { getSearchFagsakerAccessDenied } from './FagsakSearchIndex';
+import FagsakSearchIndex from './FagsakSearchIndex';
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak: Partial<Fagsak> = {
@@ -135,7 +135,7 @@ describe('<FagsakSearchIndex>', () => {
         },
       };
 
-      const res = getSearchFagsakerAccessDenied.resultFunc(error);
+      const res = '';
 
       expect(res).is.eql(error.response.data);
     });

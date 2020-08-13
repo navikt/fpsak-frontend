@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { Location } from 'history';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { useGlobalStateRestApiData, RestApiState } from '@fpsak-frontend/rest-api-hooks';
+import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -29,7 +29,7 @@ import {
   getSelectedBehandlingId,
 } from '../../behandling/duck';
 import {
-  FpsakApiKeys, useRestApi, requestApi, useRestApiRunner,
+  FpsakApiKeys, useRestApi, requestApi, useRestApiRunner, useGlobalStateRestApiData,
 } from '../../data/fpsakApi';
 import { useFpSakKodeverk, useFpTilbakeKodeverk } from '../../data/useKodeverk';
 import BeslutterModalIndex from './BeslutterModalIndex';

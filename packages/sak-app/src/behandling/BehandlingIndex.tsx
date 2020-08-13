@@ -6,7 +6,6 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 import { Location } from 'history';
 
-import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 import { featureToggle } from '@fpsak-frontend/konstanter';
 import { Link } from '@fpsak-frontend/rest-api/src/requestApi/LinkTsType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -24,7 +23,7 @@ import getAccessRights from '../app/util/access';
 import {
   getProsessStegLocation, getFaktaLocation, getLocationWithDefaultProsessStegAndFakta,
 } from '../app/paths';
-import { FpsakApiKeys, requestApi } from '../data/fpsakApi';
+import { FpsakApiKeys, requestApi, useGlobalStateRestApiData } from '../data/fpsakApi';
 import {
   setUrlBehandlingId, setSelectedBehandlingIdOgVersjon, getUrlBehandlingId,
   oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,

@@ -80,7 +80,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  fetchPreview: (erTilbakekreving: boolean, erHenleggelse: boolean, data: any) => void;
   setBehandlingOnHold: (params: any) => void;
   push: (param: string) => void;
 }
@@ -99,12 +98,12 @@ const RECIPIENTS = ['Søker'];
  *
  * Container komponent. Har ansvar for å hente mottakere og brevmaler fra serveren.
  */
-const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
+export const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchProps> = ({
   fagsak,
   alleBehandlinger,
   selectedBehandlingId,
-  push: pushLocation,
   selectedBehandlingVersjon,
+  push: pushLocation,
   setBehandlingOnHold: setOnHold,
 }) => {
   const [showSettPaVentModal, setShowSettPaVentModal] = useState(false);

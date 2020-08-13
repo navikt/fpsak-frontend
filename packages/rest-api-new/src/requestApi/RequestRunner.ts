@@ -21,10 +21,7 @@ const getMethod = (httpClientApi: HttpClientApi, restMethod: string) => {
   if (restMethod === RequestType.PUT) {
     return httpClientApi.put;
   }
-  if (restMethod === RequestType.PUT_ASYNC) {
-    return httpClientApi.putAsync;
-  }
-  return httpClientApi.postAndOpenBlob;
+  return httpClientApi.putAsync;
 };
 
 /**

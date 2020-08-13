@@ -3,67 +3,74 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import MeldingerSakIndex, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import Messages, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
+import { Fagsak } from '@fpsak-frontend/types';
 
+import { requestApi, FpsakApiKeys } from '../../data/fpsakApi';
+import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
 import MessageBehandlingPaVentModal from './MessageBehandlingPaVentModal';
-import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
 import { MessagesIndex } from './MessagesIndex';
 
 describe('<MessagesIndex>', () => {
-  const recipients = ['Søker', 'Annen person'];
+  const recipients = ['Søker'];
   const templates = [
     { kode: 'Mal1', navn: 'Mal 1', tilgjengelig: true },
   ];
-  const behandlingIdentifier = new BehandlingIdentifier(1234, 1);
   const sprak = {
     kode: 'NB',
     kodeverk: 'SPRAK',
   };
 
+  const fagsak = {
+    saksnummer: 123456,
+  };
+
+  const alleBehandlinger = [{
+    id: 1,
+    uuid: '1212',
+    type: {
+      kode: BehandlingType.FORSTEGANGSSOKNAD,
+      kodeverk: '',
+    },
+  }];
+
+  const kodeverk = {
+    [kodeverkTyper.VENT_AARSAK]: [],
+  };
+
+  const templates2 = [
+    { kode: 'Mal1', navn: 'Mal 1', tilgjengelig: true },
+    { kode: 'Mal2', navn: 'Mal 2', tilgjengelig: true },
+    { kode: 'Mal3', navn: 'Mal 3', tilgjengelig: true },
+  ];
+
   it('skal vise messages når mottakere og brevmaler har blitt hentet fra server', () => {
-    const templates2 = [
-      { kode: 'Mal1', navn: 'Mal 1', tilgjengelig: true },
-      { kode: 'Mal2', navn: 'Mal 2', tilgjengelig: true },
-      { kode: 'Mal3', navn: 'Mal 3', tilgjengelig: true },
-    ];
+    requestApi.mock(FpsakApiKeys.KODEVERK, kodeverk);
+    requestApi.mock(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
+    requestApi.mock(FpsakApiKeys.BREVMALER, templates2);
 
     const wrapper = shallow(<MessagesIndex
-      submitFinished={false}
-      behandlingIdentifier={behandlingIdentifier}
-      selectedBehandlingVersjon={123}
-      selectedBehandlingSprak={sprak}
-      recipients={recipients}
-      fetchPreview={sinon.spy()}
-      submitMessage={sinon.spy()}
-      setBehandlingOnHold={sinon.spy()}
-      resetSubmitMessage={sinon.spy()}
+      fagsak={fagsak as Fagsak}
+      alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+      selectedBehandlingId={1}
       push={sinon.spy()}
-      fagsakYtelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: 'FAGSAK_YTELSE_TYPE',
-      }}
-      behandlingUuid="123"
-      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      revurderingVarslingArsak={[]}
+      selectedBehandlingVersjon={123}
+      setBehandlingOnHold={sinon.spy()}
     />);
 
-    const dataFetcher = wrapper.find(DataFetcher);
-    const messages = dataFetcher.renderProp('render')({
-      brevmaler: templates2,
-    }, true).find(Messages);
-    expect(messages).to.have.length(1);
-    expect(messages.prop('recipients')).to.eql(recipients);
-    expect(messages.prop('templates')).to.eql(templates2);
+    const index = wrapper.find(MeldingerSakIndex);
+    expect(index.prop('recipients')).to.eql(recipients);
+    expect(index.prop('templates')).to.eql(templates2);
   });
 
   it('skal sette default tom streng ved forhåndsvisning dersom fritekst ikke er fylt ut', () => {
     const fetchPreviewFunction = sinon.spy();
     const wrapper = shallow(<MessagesIndex
       submitFinished={false}
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}
@@ -96,7 +103,6 @@ describe('<MessagesIndex>', () => {
     const resetSubmitMessageFunction = sinon.spy();
     const wrapper = shallow(<MessagesIndex
       submitFinished
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}
@@ -128,7 +134,6 @@ describe('<MessagesIndex>', () => {
     const submitMessageCallback = sinon.stub().returns(Promise.resolve());
     const wrapper = shallow(<MessagesIndex
       submitFinished
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}
@@ -176,7 +181,6 @@ describe('<MessagesIndex>', () => {
     const submitMessageCallback = sinon.stub().returns(Promise.resolve());
     const wrapper = shallow(<MessagesIndex
       submitFinished
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}
@@ -228,7 +232,6 @@ describe('<MessagesIndex>', () => {
     const submitMessageCallback = sinon.stub().returns(Promise.resolve());
     const wrapper = shallow(<MessagesIndex
       submitFinished
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}
@@ -280,7 +283,6 @@ describe('<MessagesIndex>', () => {
     const submitMessageCallback = sinon.stub().returns(Promise.resolve());
     const wrapper = shallow(<MessagesIndex
       submitFinished
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}
@@ -332,7 +334,6 @@ describe('<MessagesIndex>', () => {
     const submitMessageCallback = sinon.stub().returns(Promise.resolve());
     const wrapper = shallow(<MessagesIndex
       submitFinished
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}
@@ -385,7 +386,6 @@ describe('<MessagesIndex>', () => {
     const pushCallback = sinon.spy();
     const wrapper = shallow(<MessagesIndex
       submitFinished
-      behandlingIdentifier={behandlingIdentifier}
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={sprak}
       recipients={recipients}

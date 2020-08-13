@@ -4,12 +4,17 @@ import { FormattedMessage } from 'react-intl';
 
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import { LanguageProvider } from './LanguageProvider';
+import { FpsakApiKeys, requestApi } from '../data/fpsakApi';
+import LanguageProvider from './LanguageProvider';
 
 describe('<LanguageProvider>', () => {
   it('skal sette opp react-intl', () => {
+    requestApi.mock(FpsakApiKeys.LANGUAGE_FILE, {
+      'Header.Foreldrepenger': 'Foreldrepenger',
+    });
+
     const wrapper = mountWithIntl((
-      <LanguageProvider nbMessages={{ 'Header.Foreldrepenger': 'Foreldrepenger' }}>
+      <LanguageProvider>
         <FormattedMessage id="Header.Foreldrepenger" tagName="span" />
       </LanguageProvider>
     ));

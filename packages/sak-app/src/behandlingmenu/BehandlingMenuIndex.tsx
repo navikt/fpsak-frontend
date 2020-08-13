@@ -6,7 +6,6 @@ import moment from 'moment';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import MenySakIndex, { MenyData } from '@fpsak-frontend/sak-meny';
 import { NavAnsatt, Fagsak } from '@fpsak-frontend/types';
@@ -27,7 +26,7 @@ import MenyNyBehandlingIndex, {
 import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import useVisForhandsvisningAvMelding from '../data/useVisForhandsvisningAvMelding';
-import { FpsakApiKeys, useRestApiRunner } from '../data/fpsakApi';
+import { FpsakApiKeys, useRestApiRunner, useGlobalStateRestApiData } from '../data/fpsakApi';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import ApplicationContextPath from '../app/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';

@@ -12,12 +12,11 @@ import {
 } from '@fpsak-frontend/types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
-import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
 
 import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
 import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
 import useTrackRouteParam from '../../app/useTrackRouteParam';
-import { FpsakApiKeys } from '../../data/fpsakApi';
+import { FpsakApiKeys, useGlobalStateRestApiData } from '../../data/fpsakApi';
 import { getRiskPanelLocationCreator } from '../../app/paths';
 import getAccessRights from '../../app/util/access';
 import {

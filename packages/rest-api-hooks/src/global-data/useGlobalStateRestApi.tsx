@@ -2,7 +2,7 @@ import {
   useState, useEffect, useContext, DependencyList,
 } from 'react';
 
-import { NotificationMapper, RequestApi } from '@fpsak-frontend/rest-api-new';
+import { NotificationMapper, AbstractRequestApi } from '@fpsak-frontend/rest-api-new';
 
 import useRestApiErrorDispatcher from '../error/useRestApiErrorDispatcher';
 import { RestApiDispatchContext } from '../RestApiContext';
@@ -27,7 +27,7 @@ const defaultOptions = {
 /**
  * Hook som henter data fra backend (ved mount) og deretter lagrer i @see RestApiContext
  */
-const getUseGlobalStateRestApi = (requestApi: RequestApi) => function useGlobalStateRestApi<T>(
+const getUseGlobalStateRestApi = (requestApi: AbstractRequestApi) => function useGlobalStateRestApi<T>(
   key: string, params: any = {}, options: Options = defaultOptions,
 ):RestApiData<T> {
   const [data, setData] = useState({

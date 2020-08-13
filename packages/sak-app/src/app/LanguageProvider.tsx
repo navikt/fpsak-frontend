@@ -1,9 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { IntlProvider } from 'react-intl';
 
-import { useGlobalStateRestApiData } from '@fpsak-frontend/rest-api-hooks';
-
-import { FpsakApiKeys } from '../data/fpsakApi';
+import { FpsakApiKeys, useGlobalStateRestApiData } from '../data/fpsakApi';
 
 interface OwnProps {
   children: ReactNode;

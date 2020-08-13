@@ -9,8 +9,7 @@ import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnsk
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 
-import BehandlingIdentifier from '../../behandling/BehandlingIdentifier';
-import { ApprovalIndex } from './ApprovalIndex';
+import ApprovalIndex from './ApprovalIndex';
 
 describe('<ApprovalIndex>', () => {
   const getBehandling = () => ({
@@ -96,8 +95,8 @@ describe('<ApprovalIndex>', () => {
     ];
 
     const wrapper = shallow(<ApprovalIndex
+      behandlingId={behandling.id}
       approve={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(12345, behandling.id)}
       selectedBehandlingVersjon={behandling.versjon}
       ansvarligSaksbehandler={behandling.ansvarligSaksbehandler}
       behandlingStatus={behandling.status}
@@ -119,7 +118,6 @@ describe('<ApprovalIndex>', () => {
       isForeldrepenger
       disableGodkjennKnapp={false}
       behandlingsresultat={{}}
-      behandlingId={1}
       behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
     />);
 
@@ -136,7 +134,6 @@ describe('<ApprovalIndex>', () => {
     const behandling = getBehandling();
     const wrapper = shallow(<ApprovalIndex
       approve={sinon.spy()}
-      behandlingIdentifier={new BehandlingIdentifier(12345, behandling.id)}
       selectedBehandlingVersjon={behandling.versjon}
       ansvarligSaksbehandler={behandling.ansvarligSaksbehandler}
       behandlingStatus={behandling.status}
