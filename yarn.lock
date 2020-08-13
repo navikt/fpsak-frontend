@@ -13670,9 +13670,10 @@ nav-frontend-chevron-style@0.3.5, nav-frontend-chevron-style@^0.3.5:
   version "0.3.5"
   resolved "https://registry.npmjs.org/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.5.tgz#778d814ccf98825da744b7fb95a6e7dfb3ff7f4e"
 
-nav-frontend-chevron@1.0.10, nav-frontend-chevron@^1.0.10:
-  version "1.0.10"
-  resolved "https://registry.npmjs.org/nav-frontend-chevron/-/nav-frontend-chevron-1.0.10.tgz#6d38caa5231c3bb164005c7f95c4c39979d86fe4"
+nav-frontend-chevron@1.0.13, nav-frontend-chevron@^1.0.10:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/nav-frontend-chevron/-/nav-frontend-chevron-1.0.13.tgz#38efff6b1c84e0d45dd0899c1a0dcc04da2f07a4"
+  integrity sha512-hYn0tTDUEaJafzT6cw/ZTvipVpg7xA9GJrp32Ymo47zRf6XXzfNeycC0q+IqtPrlECUfZXaDne3cSaU+CqOYRg==
 
 nav-frontend-core@5.0.1, nav-frontend-core@^5.0.1:
   version "5.0.1"

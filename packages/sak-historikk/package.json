@@ -9,7 +9,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "classnames": "^2.2.6",
-    "nav-frontend-chevron": "1.0.10",
+    "nav-frontend-chevron": "1.0.13",
     "nav-frontend-chevron-style": "0.3.5",
     "nav-frontend-core": "5.0.1",
     "nav-frontend-paneler": "2.0.5",
