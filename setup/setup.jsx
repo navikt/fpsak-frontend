@@ -19,6 +19,10 @@ sinon.stub(console, 'error')
 const dom = new JSDOM('<html><body></body></html><div id="app" />', {
   url: 'http://localhost/fpsak',
 });
+
+delete dom.window.location;
+dom.window.location = { reload: () => undefined };
+
 global.document = dom.window.document;
 global.window = document.window;
 global.DOMParser = dom.window.DOMParser;

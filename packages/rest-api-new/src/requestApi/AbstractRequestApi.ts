@@ -18,7 +18,9 @@ abstract class AbstractRequestApi {
 
   public abstract isMock(): boolean;
 
-  public abstract mock(endpointName: string, data: any): void;
+  public abstract mock(endpointName: string, data?: any): void;
+
+  public abstract getRequestMockData(endpointName: string): { params: any }[];
 
   public abstract clearAllMockData(): void;
 }

@@ -12,6 +12,7 @@ const useGetEnabledApplikasjonContext = (): ApplicationContextPath[] => {
   if (featureToggles[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING] && !!kodeverkFpTilbake) {
     enabledApplicationContexts.push(ApplicationContextPath.FPTILBAKE);
   }
+
   return enabledApplicationContexts;
 };
 

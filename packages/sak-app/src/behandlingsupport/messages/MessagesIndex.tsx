@@ -41,7 +41,6 @@ const getSubmitCallback = (setShowMessageModal, behandlingId, submitMessage, res
     fritekst: values.fritekst,
     arsakskode: values.arsakskode,
   };
-
   return submitMessage(data)
     .then(() => resetMessage())
     .then(() => {
@@ -116,11 +115,9 @@ export const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchPr
   const ventearsaker = useFpSakKodeverk(kodeverkTyper.VENT_AARSAK) || EMPTY_ARRAY;
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
 
-  const { startRequest: submitMessage, state: submitFinished, resetRequestData: resetMessageData } = restApiHooks.useRestApiRunner(FpsakApiKeys.SUBMIT_MESSAGE);
+  const { startRequest: submitMessage, state: submitState } = restApiHooks.useRestApiRunner(FpsakApiKeys.SUBMIT_MESSAGE);
 
   const resetMessage = () => {
-    resetMessageData();
-
     // FIXME temp fiks for å unngå prod-feil (her skjer det ein oppdatering av behandling, så må oppdatera)
     window.location.reload();
   };
@@ -146,7 +143,7 @@ export const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchPr
   }, [behandlingId, selectedBehandlingVersjon]);
 
   const fetchPreview = useVisForhandsvisningAvMelding();
-  console.log(fetchPreview);
+
   const previewCallback = useCallback(getPreviewCallback(behandling.type.kode, behandlingId, behandling.uuid, fagsak.sakstype, fetchPreview),
     [behandlingId, selectedBehandlingVersjon]);
 
@@ -169,6 +166,7 @@ export const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchPr
     return <LoadingPanel />;
   }
 
+  const submitFinished = submitState === RestApiState.SUCCESS;
   return (
     <>
       {showMessagesModal && (

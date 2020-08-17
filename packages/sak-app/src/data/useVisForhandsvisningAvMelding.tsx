@@ -3,7 +3,7 @@ import { FpsakApiKeys, restApiHooks } from './fpsakApi';
 const forhandsvis = (data) => {
   if (window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveOrOpenBlob(data);
-  } else {
+  } else if (URL.createObjectURL) {
     window.open(URL.createObjectURL(data));
   }
 };

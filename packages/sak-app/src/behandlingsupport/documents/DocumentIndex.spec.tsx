@@ -3,8 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
-import { DataFetcher } from '@fpsak-frontend/rest-api-redux';
 
+import { requestApi, FpsakApiKeys } from '../../data/fpsakApi';
 import { DocumentIndex } from './DocumentIndex';
 
 describe('<DocumentIndex>', () => {
@@ -14,17 +14,36 @@ describe('<DocumentIndex>', () => {
     tittel: 'dok',
     tidspunkt: '10.10.2017 10:23',
     kommunikasjonsretning: 'Inn',
+  }, {
+    journalpostId: '2',
+    dokumentId: '2',
+    tittel: 'dok1',
+    tidspunkt: '10.10.2019 10:23',
+    kommunikasjonsretning: 'Inn',
+  }, {
+    journalpostId: '3',
+    dokumentId: '3',
+    tittel: 'dok2',
+    tidspunkt: '10.10.2018 10:23',
+    kommunikasjonsretning: 'Inn',
   }];
 
-  it('skal vise documentList med dokumenter', () => {
-    const wrapper = shallow(<DocumentIndex behandlingId={1} saksNr={123} />);
+  it('skal vise liste med sorterte dokumenter', () => {
+    requestApi.mock(FpsakApiKeys.ALL_DOCUMENTS, documents);
 
-    const dataFetcher = wrapper.find(DataFetcher);
-    const documentList = dataFetcher.renderProp('render')({
-      allDocuments: documents,
-    }, true).find(DokumenterSakIndex);
-    expect(documentList).to.have.length(1);
-    expect(documentList.prop('documents')).to.eql(documents);
-    expect(documentList.prop('selectDocumentCallback')).is.not.null;
+    const wrapper = shallow(<DocumentIndex
+      behandlingId={1}
+      behandlingVersjon={2}
+      saksnummer={123}
+    />);
+
+    const index = wrapper.find(DokumenterSakIndex);
+    expect(index).to.have.length(1);
+
+    const dokumenter = index.prop('documents');
+
+    expect(dokumenter[0].journalpostId).to.eql('2');
+    expect(dokumenter[1].journalpostId).to.eql('3');
+    expect(dokumenter[2].journalpostId).to.eql('1');
   });
 });

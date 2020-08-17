@@ -10,11 +10,17 @@ import AbstractRequestApi from './AbstractRequestApi';
 class RequestApiMock extends AbstractRequestApi {
   mockdata: {[key: string]: RequestRunner} = {};
 
-  public startRequest = (endpointName: string) => {
+  execData: { endpointName: string; params: any }[] = [];
+
+  public startRequest = (endpointName: string, params: any) => {
     const data = this.mockdata[endpointName];
     if (!data) {
       throw new Error(`Det er ikke satt opp mock-data for endepunkt ${endpointName}`);
     }
+    this.execData.push({
+      endpointName,
+      params,
+    });
     return data;
   }
 
@@ -26,14 +32,24 @@ class RequestApiMock extends AbstractRequestApi {
 
   public isMock = () => true;
 
-  public mock = (endpointName: string, data: any): void => {
+  public mock = (endpointName: string, data?: any): void => {
+    if (Object.keys(this.mockdata).includes(endpointName)) {
+      throw new Error(`Det er satt opp mock-data for endepunkt ${endpointName} allerede`);
+    }
+
     this.mockdata = {
       ...this.mockdata,
-      [endpointName]: data,
+      [endpointName]: data || {},
     };
   };
 
-  public clearAllMockData = () => { this.mockdata = {}; };
+  public getRequestMockData = (endpointName: string) => this.execData
+    .filter((d) => d.endpointName === endpointName)
+    .map((d) => ({
+      params: d.params,
+    }));
+
+  public clearAllMockData = () => { this.mockdata = {}; this.execData = []; };
 }
 
 export default RequestApiMock;

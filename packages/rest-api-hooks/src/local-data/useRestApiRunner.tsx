@@ -25,13 +25,13 @@ export const getUseRestApiRunnerMock = (requestApi: AbstractRequestApi) => funct
     error: undefined,
   });
 
-  const startRequest = ():Promise<T> => {
+  const startRequest = (params: any = {}):Promise<T> => {
     setData({
       state: RestApiState.SUCCESS,
-      data: requestApi.startRequest(key, {}),
+      data: requestApi.startRequest(key, params),
       error: undefined,
     });
-    return Promise.resolve(data);
+    return Promise.resolve(data, params);
   };
 
   return {

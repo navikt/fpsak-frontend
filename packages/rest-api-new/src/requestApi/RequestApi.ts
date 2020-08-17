@@ -48,6 +48,8 @@ class RequestApi extends AbstractRequestApi {
 
   public mock = () => undefined;
 
+  public getRequestMockData = () => undefined;
+
   public clearAllMockData = () => undefined;
 }
 
