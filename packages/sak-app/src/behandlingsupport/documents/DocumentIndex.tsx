@@ -8,7 +8,7 @@ import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
 import useBehandlingEndret from '../../behandling/useBehandligEndret';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
-import { FpsakApiKeys, useRestApi } from '../../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
@@ -46,7 +46,7 @@ export const DocumentIndex: FunctionComponent<OwnProps> = ({
 }) => {
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
-  const { data: alleDokumenter, state } = useRestApi<Dokument[]>(FpsakApiKeys.ALL_DOCUMENTS, { saksnummer }, {
+  const { data: alleDokumenter, state } = restApiHooks.useRestApi<Dokument[]>(FpsakApiKeys.ALL_DOCUMENTS, { saksnummer }, {
     updateTriggers: [behandlingId, behandlingVersjon],
     suspendRequest: forrigeSaksnummer && erBehandlingEndretFraUndefined,
     keepData: true,

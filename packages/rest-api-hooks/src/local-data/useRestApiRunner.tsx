@@ -16,6 +16,33 @@ interface RestApiData<T> {
 }
 
 /**
+ * For mocking i unit-test
+ */
+export const getUseRestApiRunnerMock = (requestApi: AbstractRequestApi) => function useRestApiRunner<T>(key: string):RestApiData<T> {
+  const [data, setData] = useState({
+    state: RestApiState.NOT_STARTED,
+    data: undefined,
+    error: undefined,
+  });
+
+  const startRequest = ():Promise<T> => {
+    setData({
+      state: RestApiState.SUCCESS,
+      data: requestApi.startRequest(key, {}),
+      error: undefined,
+    });
+    return Promise.resolve(data);
+  };
+
+  return {
+    startRequest,
+    resetRequestData: () => undefined,
+    cancelRequest: () => undefined,
+    ...data,
+  };
+};
+
+/**
  * Hook som gir deg ein funksjon til å starte restkall, i tillegg til kallets status/resultat/feil
  */
 const getUseRestApiRunner = (requestApi: AbstractRequestApi) => function useRestApiRunner<T>(key: string):RestApiData<T> {

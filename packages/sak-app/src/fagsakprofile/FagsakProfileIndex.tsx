@@ -21,7 +21,7 @@ import {
 import BehandlingMenuDataResolver from '../behandlingmenu/BehandlingMenuDataResolver';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
-import { FpsakApiKeys, useRestApi, requestApi } from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks, requestApi } from '../data/fpsakApi';
 import { useFpSakKodeverkMedNavn, useGetKodeverkFn } from '../data/useKodeverk';
 
 import styles from './fagsakProfileIndex.less';
@@ -68,11 +68,11 @@ export const FagsakProfileIndex: FunctionComponent<OwnProps> = ({
   const fagsakStatusMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.status);
   const fagsakYtelseTypeMedNavn = useFpSakKodeverkMedNavn<KodeverkMedNavn>(fagsak.sakstype);
 
-  const { data: risikoAksjonspunkt, state: risikoAksjonspunktState } = useRestApi<Aksjonspunkt>(FpsakApiKeys.RISIKO_AKSJONSPUNKT, NO_PARAMS, {
+  const { data: risikoAksjonspunkt, state: risikoAksjonspunktState } = restApiHooks.useRestApi<Aksjonspunkt>(FpsakApiKeys.RISIKO_AKSJONSPUNKT, NO_PARAMS, {
     updateTriggers: [selectedBehandlingId, behandlingVersjon],
     suspendRequest: !requestApi.hasPath(FpsakApiKeys.RISIKO_AKSJONSPUNKT),
   });
-  const { data: kontrollresultat, state: kontrollresultatState } = useRestApi<Risikoklassifisering>(FpsakApiKeys.KONTROLLRESULTAT, NO_PARAMS, {
+  const { data: kontrollresultat, state: kontrollresultatState } = restApiHooks.useRestApi<Risikoklassifisering>(FpsakApiKeys.KONTROLLRESULTAT, NO_PARAMS, {
     updateTriggers: [selectedBehandlingId, behandlingVersjon],
     suspendRequest: !requestApi.hasPath(FpsakApiKeys.KONTROLLRESULTAT),
   });

@@ -22,7 +22,7 @@ import {
 } from '../../behandling/duck';
 import { setBehandlingOnHold } from '../../behandlingmenu/behandlingMenuOperations';
 import {
-  FpsakApiKeys, useRestApi, useRestApiRunner, requestApi,
+  FpsakApiKeys, restApiHooks, requestApi,
 } from '../../data/fpsakApi';
 
 const NO_PARAM = {};
@@ -116,7 +116,7 @@ export const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchPr
   const ventearsaker = useFpSakKodeverk(kodeverkTyper.VENT_AARSAK) || EMPTY_ARRAY;
   const revurderingVarslingArsak = useFpSakKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK);
 
-  const { startRequest: submitMessage, state: submitFinished, resetRequestData: resetMessageData } = useRestApiRunner(FpsakApiKeys.SUBMIT_MESSAGE);
+  const { startRequest: submitMessage, state: submitFinished, resetRequestData: resetMessageData } = restApiHooks.useRestApiRunner(FpsakApiKeys.SUBMIT_MESSAGE);
 
   const resetMessage = () => {
     resetMessageData();
@@ -146,7 +146,7 @@ export const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchPr
   }, [behandlingId, selectedBehandlingVersjon]);
 
   const fetchPreview = useVisForhandsvisningAvMelding();
-
+  console.log(fetchPreview);
   const previewCallback = useCallback(getPreviewCallback(behandling.type.kode, behandlingId, behandling.uuid, fagsak.sakstype, fetchPreview),
     [behandlingId, selectedBehandlingVersjon]);
 
@@ -156,12 +156,12 @@ export const MessagesIndex: FunctionComponent<OwnProps & StateProps & DispatchPr
   }, []);
 
   const skalHenteRevAp = requestApi.hasPath(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP);
-  const { data: harApentKontrollerRevAp, state: stateRevAp } = useRestApi<boolean>(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, NO_PARAM, {
+  const { data: harApentKontrollerRevAp, state: stateRevAp } = restApiHooks.useRestApi<boolean>(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, NO_PARAM, {
     updateTriggers: [behandlingId, selectedBehandlingVersjon, submitCounter],
     suspendRequest: !skalHenteRevAp,
   });
 
-  const { data: brevmaler, state: stateBrevmaler } = useRestApi<Brevmal[]>(FpsakApiKeys.BREVMALER, NO_PARAM, {
+  const { data: brevmaler, state: stateBrevmaler } = restApiHooks.useRestApi<Brevmal[]>(FpsakApiKeys.BREVMALER, NO_PARAM, {
     updateTriggers: [behandlingId, selectedBehandlingVersjon, submitCounter],
   });
 

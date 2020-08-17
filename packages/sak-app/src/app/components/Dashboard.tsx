@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
-import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 
@@ -21,9 +21,9 @@ const NO_PARAMS = {};
  * Presentasjonskomponent. Viser statuspanelet for integrasjonsstjenester i tillegg til søkepanel.
  */
 const Dashboard: FunctionComponent = () => {
-  const showIntegrationStatus = useGlobalStateRestApiData<boolean>(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES);
+  const showIntegrationStatus = restApiHooks.useGlobalStateRestApiData<boolean>(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES);
 
-  const { data: integrationStatusList = EMPTY_ARRAY } = useRestApi<IntegrationStatus[]>(FpsakApiKeys.INTEGRATION_STATUS, NO_PARAMS, {
+  const { data: integrationStatusList = EMPTY_ARRAY } = restApiHooks.useRestApi<IntegrationStatus[]>(FpsakApiKeys.INTEGRATION_STATUS, NO_PARAMS, {
     suspendRequest: !showIntegrationStatus,
     updateTriggers: [showIntegrationStatus],
   });

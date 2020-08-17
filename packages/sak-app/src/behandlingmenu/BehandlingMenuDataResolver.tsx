@@ -14,7 +14,7 @@ import { getBehandlingVersjon, getSelectedBehandlingId } from '../behandling/duc
 import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 import { fjernVerge, opprettVerge } from './behandlingMenuOperations';
 import BehandlingMenuIndex from './BehandlingMenuIndex';
-import { FpsakApiKeys, useRestApi } from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING,
   BehandlingType.TILBAKEKREVING, BehandlingType.TILBAKEKREVING_REVURDERING];
@@ -53,14 +53,14 @@ const BehandlingMenuDataResolver: FunctionComponent<OwnProps & StateProps & Disp
 }) => {
   const behandling = alleBehandlinger.find((b) => b.id === behandlingId);
   const skalHenteVergeMenyvalg = behandling && YTELSE_BEHANDLINGTYPER.includes(behandling.type.kode);
-  const { data: vergeMenyvalgData, state: stateVerge } = useRestApi<{ vergeBehandlingsmeny: string }>(
+  const { data: vergeMenyvalgData, state: stateVerge } = restApiHooks.useRestApi<{ vergeBehandlingsmeny: string }>(
     FpsakApiKeys.VERGE_MENYVALG, { saksnummer: fagsak.saksnummer, behandlingId }, {
       updateTriggers: [behandlingId, behandlingVersion],
       suspendRequest: !skalHenteVergeMenyvalg,
     },
   );
 
-  const { data: menyhandlingRettigheter, state } = useRestApi<{ harSoknad: boolean }>(
+  const { data: menyhandlingRettigheter, state } = restApiHooks.useRestApi<{ harSoknad: boolean }>(
     FpsakApiKeys.MENYHANDLING_RETTIGHETER, NO_PARAMS, {
       updateTriggers: [behandlingId, behandlingVersion],
       suspendRequest: !behandlingId,

@@ -26,7 +26,7 @@ import {
   pathToMissingPage, erUrlUnderBehandling, erBehandlingValgt, behandlingerPath, pathToAnnenPart,
 } from '../app/paths';
 import FagsakGrid from './components/FagsakGrid';
-import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 import {
   getSelectedBehandlingId,
   getBehandlingVersjon,
@@ -73,11 +73,11 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
     parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
   });
 
-  const alleKodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
+  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
 
   const erBehandlingEndretFraUndefined = useBehandlingEndret(behandlingId, behandlingVersjon);
 
-  const { data: fagsak, state: fagsakState } = useRestApi<Fagsak>(FpsakApiKeys.FETCH_FAGSAK, { saksnummer: selectedSaksnummer }, {
+  const { data: fagsak, state: fagsakState } = restApiHooks.useRestApi<Fagsak>(FpsakApiKeys.FETCH_FAGSAK, { saksnummer: selectedSaksnummer }, {
     updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon],
     suspendRequest: !selectedSaksnummer || erBehandlingEndretFraUndefined,
     keepData: true,
@@ -85,14 +85,14 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
 
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
 
-  const { data: behandlingerFpSak, state: behandlingerFpSakState } = useRestApi<BehandlingAppKontekst[]>(
+  const { data: behandlingerFpSak, state: behandlingerFpSakState } = restApiHooks.useRestApi<BehandlingAppKontekst[]>(
     FpsakApiKeys.BEHANDLINGER_FPSAK, { saksnummer: selectedSaksnummer }, {
       updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
       suspendRequest: !selectedSaksnummer || erBehandlingEndretFraUndefined,
       keepData: true,
     },
   );
-  const { data: behandlingerFpTilbake } = useRestApi<BehandlingAppKontekst[]>(
+  const { data: behandlingerFpTilbake } = restApiHooks.useRestApi<BehandlingAppKontekst[]>(
     FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { saksnummer: selectedSaksnummer }, {
       updateTriggers: [selectedSaksnummer, behandlingId, behandlingVersjon, behandlingerTeller],
       suspendRequest: !selectedSaksnummer || !enabledApplicationContexts.includes(ApplicationContextPath.FPTILBAKE)
@@ -114,13 +114,13 @@ export const FagsakIndex: FunctionComponent<OwnProps> = ({
 
   const {
     data: behandlingPersonopplysninger, state: personopplysningerState,
-  } = useRestApi<Personopplysninger>(FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, NO_PARAMS, options);
+  } = restApiHooks.useRestApi<Personopplysninger>(FpsakApiKeys.BEHANDLING_PERSONOPPLYSNINGER, NO_PARAMS, options);
   const {
     data: behandlingFamilieHendelse, state: familieHendelseState,
-  } = useRestApi<FamilieHendelseSamling>(FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE, NO_PARAMS, options);
+  } = restApiHooks.useRestApi<FamilieHendelseSamling>(FpsakApiKeys.BEHANDLING_FAMILIE_HENDELSE, NO_PARAMS, options);
   const {
     data: annenPartBehandling, state: annenPartState,
-  } = useRestApi<AnnenPartBehandling>(FpsakApiKeys.ANNEN_PART_BEHANDLING, { saksnummer: selectedSaksnummer }, options);
+  } = restApiHooks.useRestApi<AnnenPartBehandling>(FpsakApiKeys.ANNEN_PART_BEHANDLING, { saksnummer: selectedSaksnummer }, options);
 
   if (!fagsak) {
     if (fagsakState === RestApiState.NOT_STARTED || fagsakState === RestApiState.LOADING) {

@@ -16,6 +16,8 @@ abstract class AbstractRequestApi {
 
   public abstract injectPaths(links: Link[]);
 
+  public abstract isMock(): boolean;
+
   public abstract mock(endpointName: string, data: any): void;
 
   public abstract clearAllMockData(): void;

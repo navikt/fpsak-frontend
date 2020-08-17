@@ -7,7 +7,7 @@ import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 
 import AktoerGrid from './components/AktoerGrid';
 import useTrackRouteParam from '../app/useTrackRouteParam';
-import { useRestApi, FpsakApiKeys } from '../data/fpsakApi';
+import { restApiHooks, FpsakApiKeys } from '../data/fpsakApi';
 
 type Aktoer = {
   fagsaker: Fagsak[];
@@ -24,7 +24,7 @@ const AktoerIndex: FunctionComponent = () => {
     isQueryParam: true,
   });
 
-  const { data, state } = useRestApi<Aktoer>(FpsakApiKeys.AKTOER_INFO, { aktoerId: selectedAktoerId }, { keepData: true });
+  const { data, state } = restApiHooks.useRestApi<Aktoer>(FpsakApiKeys.AKTOER_INFO, { aktoerId: selectedAktoerId }, { keepData: true });
 
   if (state === RestApiState.LOADING) {
     return <LoadingPanel />;

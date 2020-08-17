@@ -22,8 +22,9 @@ class RequestApiMock extends AbstractRequestApi {
 
   public hasPath = () => true;
 
-  public injectPaths = () => {
-  }
+  public injectPaths = () => {}
+
+  public isMock = () => true;
 
   public mock = (endpointName: string, data: any): void => {
     this.mockdata = {

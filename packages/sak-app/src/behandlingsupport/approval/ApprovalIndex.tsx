@@ -29,7 +29,7 @@ import {
   getSelectedBehandlingId,
 } from '../../behandling/duck';
 import {
-  FpsakApiKeys, useRestApi, requestApi, useRestApiRunner, useGlobalStateRestApiData,
+  FpsakApiKeys, requestApi, restApiHooks,
 } from '../../data/fpsakApi';
 import { useFpSakKodeverk, useFpTilbakeKodeverk } from '../../data/useKodeverk';
 import BeslutterModalIndex from './BeslutterModalIndex';
@@ -133,16 +133,16 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
   const skjermlenkeTyperFptilbake = useFpTilbakeKodeverk(kodeverkTyper.SKJERMLENKE_TYPE);
   const skjemalenkeTyper = erTilbakekreving ? skjermlenkeTyperFptilbake : skjermlenkeTyperFpsak;
 
-  const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const { brukernavn, kanVeilede } = navAnsatt;
 
-  const alleFpSakKodeverk = useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK);
-  const alleFpTilbakeKodeverk = useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK_FPTILBAKE);
+  const alleFpSakKodeverk = restApiHooks.useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK);
+  const alleFpTilbakeKodeverk = restApiHooks.useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK_FPTILBAKE);
 
-  const featureToggles = useGlobalStateRestApiData<{[key: string]: boolean}>(FpsakApiKeys.FEATURE_TOGGLE);
+  const featureToggles = restApiHooks.useGlobalStateRestApiData<{[key: string]: boolean}>(FpsakApiKeys.FEATURE_TOGGLE);
   const disableGodkjennKnapp = erTilbakekreving ? !featureToggles[featureToggle.BESLUTT_TILBAKEKREVING] : false;
 
-  const { data: totrinnsKlageVurdering, state: totrinnsKlageVurderingState } = useRestApi<TotrinnsKlageVurdering>(
+  const { data: totrinnsKlageVurdering, state: totrinnsKlageVurderingState } = restApiHooks.useRestApi<TotrinnsKlageVurdering>(
     FpsakApiKeys.TOTRINNS_KLAGE_VURDERING, NO_PARAM, {
       keepData: true,
       updateTriggers: [behandlingId, selectedBehandlingVersjon],
@@ -150,7 +150,7 @@ const ApprovalIndex: FunctionComponent<OwnProps> = ({
     },
   );
 
-  const { startRequest: godkjennBehandling, state: stateGodkjennBehandling } = useRestApiRunner(FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
+  const { startRequest: godkjennBehandling, state: stateGodkjennBehandling } = restApiHooks.useRestApiRunner(FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT);
 
   const fetchPreview = useVisForhandsvisningAvMelding();
 

@@ -26,7 +26,7 @@ import MenyNyBehandlingIndex, {
 import BehandlingAppKontekst from '../behandling/behandlingAppKontekstTsType';
 import { getLocationWithDefaultProsessStegAndFakta, pathToBehandling } from '../app/paths';
 import useVisForhandsvisningAvMelding from '../data/useVisForhandsvisningAvMelding';
-import { FpsakApiKeys, useRestApiRunner, useGlobalStateRestApiData } from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 import useGetEnabledApplikasjonContext from '../app/useGetEnabledApplikasjonContext';
 import ApplicationContextPath from '../app/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
@@ -107,12 +107,12 @@ export const BehandlingMenuIndex: FunctionComponent<OwnProps> = ({
 
   const {
     startRequest: sjekkTilbakeKanOpprettes, data: kanBehandlingOpprettes = false,
-  } = useRestApiRunner<boolean>(FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES);
+  } = restApiHooks.useRestApiRunner<boolean>(FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES);
   const {
     startRequest: sjekkTilbakeRevurdKanOpprettes, data: kanRevurderingOpprettes = false,
-  } = useRestApiRunner<boolean>(FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
+  } = restApiHooks.useRestApiRunner<boolean>(FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES);
 
-  const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo<Rettigheter>(() => allMenuAccessRights(
     navAnsatt,
     fagsak.status,

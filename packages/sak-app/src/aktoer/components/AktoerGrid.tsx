@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/types';
 import relasjonsRolleType from '@fpsak-frontend/kodeverk/src/relasjonsRolleType';
 
-import { FpsakApiKeys, useGlobalStateRestApiData } from '../../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 import { pathToFagsak } from '../../app/paths';
 
 import styles from './aktoerGrid.less';
@@ -26,7 +26,7 @@ interface OwnProps {
 export const AktoerGrid: FunctionComponent<OwnProps> = ({
   data,
 }) => {
-  const alleKodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
+  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const vFagsak = data.fagsaker.length > 0 ? data.fagsaker[0] : { relasjonsRolleType: { kode: relasjonsRolleType.MOR } };
 

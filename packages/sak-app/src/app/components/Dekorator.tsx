@@ -10,7 +10,7 @@ import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import { NavAnsatt } from '@fpsak-frontend/types';
-import { FpsakApiKeys, useGlobalStateRestApiData } from '../../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 import ErrorFormatter from '../feilhandtering/ErrorFormatter';
 
 const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
@@ -63,8 +63,8 @@ const Dekorator: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   removeErrorMessage: removeErrorMsg,
   hideErrorMessages = false,
 }) => {
-  const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
-  const showDetailedErrorMessages = useGlobalStateRestApiData<boolean>(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES);
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
+  const showDetailedErrorMessages = restApiHooks.useGlobalStateRestApiData<boolean>(FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES);
 
   const errorMessagesNew = useRestApiError() || [];
   const formaterteFeilmeldinger = useMemo(() => new ErrorFormatter().format(errorMessagesNew, undefined), [errorMessagesNew]);

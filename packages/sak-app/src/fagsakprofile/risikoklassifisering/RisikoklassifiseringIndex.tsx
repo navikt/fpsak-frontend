@@ -16,7 +16,7 @@ import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifiseri
 import BehandlingAppKontekst from '../../behandling/behandlingAppKontekstTsType';
 import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
 import useTrackRouteParam from '../../app/useTrackRouteParam';
-import { FpsakApiKeys, useGlobalStateRestApiData } from '../../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 import { getRiskPanelLocationCreator } from '../../app/paths';
 import getAccessRights from '../../app/util/access';
 import {
@@ -70,7 +70,7 @@ export const RisikoklassifiseringIndexImpl: FunctionComponent<OwnProps> = ({
     isQueryParam: true,
   });
 
-  const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(() => getAccessRights(navAnsatt, fagsak.status, behandlingStatus, behandlingType),
     [fagsak.status, behandlingStatus, behandlingType]);
   const readOnly = useMemo(() => getReadOnly(navAnsatt, rettigheter, erPaaVent),

@@ -25,6 +25,19 @@ const defaultOptions = {
 };
 
 /**
+ * For mocking i unit-test
+ */
+export const getUseGlobalStateRestApiMock = (requestApi: AbstractRequestApi) => function useGlobalStateRestApi<T>(
+  key: string, params: any = {},
+):RestApiData<T> {
+  return {
+    state: RestApiState.SUCCESS,
+    error: undefined,
+    data: requestApi.startRequest(key, params),
+  };
+};
+
+/**
  * Hook som henter data fra backend (ved mount) og deretter lagrer i @see RestApiContext
  */
 const getUseGlobalStateRestApi = (requestApi: AbstractRequestApi) => function useGlobalStateRestApi<T>(

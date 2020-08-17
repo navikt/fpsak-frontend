@@ -11,7 +11,7 @@ import { KodeverkMedNavn, Kodeverk } from '@fpsak-frontend/types';
 import { LoadingPanel, usePrevious } from '@fpsak-frontend/shared-components';
 
 import useBehandlingEndret from '../../behandling/useBehandligEndret';
-import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../../data/fpsakApi';
 import { pathToBehandling, createLocationForSkjermlenke } from '../../app/paths';
 import ApplicationContextPath from '../../app/ApplicationContextPath';
 import useGetEnabledApplikasjonContext from '../../app/useGetEnabledApplikasjonContext';
@@ -51,8 +51,8 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
 }) => {
   const enabledApplicationContexts = useGetEnabledApplikasjonContext();
 
-  const alleKodeverkFpSak = useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK);
-  const alleKodeverkFpTilbake = useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK_FPTILBAKE);
+  const alleKodeverkFpSak = restApiHooks.useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK);
+  const alleKodeverkFpTilbake = restApiHooks.useGlobalStateRestApiData<{[key: string]: KodeverkMedNavn[]}>(FpsakApiKeys.KODEVERK_FPTILBAKE);
 
   const getBehandlingLocation = useCallback((bId) => ({
     ...location,
@@ -64,11 +64,11 @@ export const HistoryIndex: FunctionComponent<OwnProps> = ({
   const forrigeSaksnummer = usePrevious(saksnummer);
   const erBehandlingEndret = forrigeSaksnummer && erBehandlingEndretFraUndefined;
 
-  const { data: historikkFpSak, state: historikkFpSakState } = useRestApi<History[]>(FpsakApiKeys.HISTORY_FPSAK, { saksnummer }, {
+  const { data: historikkFpSak, state: historikkFpSakState } = restApiHooks.useRestApi<History[]>(FpsakApiKeys.HISTORY_FPSAK, { saksnummer }, {
     updateTriggers: [behandlingId, behandlingVersjon],
     suspendRequest: erBehandlingEndret,
   });
-  const { data: historikkFpTilbake, state: historikkFpTilbakeState } = useRestApi<History[]>(FpsakApiKeys.HISTORY_FPTILBAKE, { saksnummer }, {
+  const { data: historikkFpTilbake, state: historikkFpTilbakeState } = restApiHooks.useRestApi<History[]>(FpsakApiKeys.HISTORY_FPTILBAKE, { saksnummer }, {
     updateTriggers: [behandlingId, behandlingVersjon],
     suspendRequest: !skalBrukeFpTilbakeHistorikk || erBehandlingEndret,
   });

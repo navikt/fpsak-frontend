@@ -1,7 +1,5 @@
 import { RestApiConfigBuilder, createRequestApi } from '@fpsak-frontend/rest-api-new';
-import {
-  getUseRestApi, getUseRestApiRunner, getUseGlobalStateRestApi, getUseGlobalStateRestApiData,
-} from '@fpsak-frontend/rest-api-hooks';
+import { RestApiHooks } from '@fpsak-frontend/rest-api-hooks';
 
 export enum FpsakApiKeys {
   KODEVERK = 'KODEVERK',
@@ -89,7 +87,4 @@ const endpoints = new RestApiConfigBuilder(CONTEXT_PATH)
 
 export const requestApi = createRequestApi(endpoints);
 
-export const useRestApi = getUseRestApi(requestApi);
-export const useRestApiRunner = getUseRestApiRunner(requestApi);
-export const useGlobalStateRestApi = getUseGlobalStateRestApi(requestApi);
-export const useGlobalStateRestApiData = getUseGlobalStateRestApiData(requestApi);
+export const restApiHooks = RestApiHooks.initHooks(requestApi);

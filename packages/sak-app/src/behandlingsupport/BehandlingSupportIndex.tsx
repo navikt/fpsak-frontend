@@ -19,7 +19,7 @@ import ApprovalIndex from './approval/ApprovalIndex';
 import useTrackRouteParam from '../app/useTrackRouteParam';
 import allSupportPanelAccessRights from './accessSupport';
 import styles from './behandlingSupportIndex.less';
-import { FpsakApiKeys, useRestApi, useGlobalStateRestApiData } from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 
 const renderSupportPanel = (
   supportPanel, totrinnArsaker, totrinnArsakerReadOnly, fagsak, alleBehandlinger, behandlingId, behandlingVersjon,
@@ -130,16 +130,18 @@ export const BehandlingSupportIndex: FunctionComponent<OwnProps> = ({
   const getSupportPanelLocation = getSupportPanelLocationCreator(location);
 
   const behandlingStatusKode = behandling ? behandling.status.kode : undefined;
-  const { data: totrinnArsaker } = useRestApi<TotrinnskontrollAksjonspunkt[]>(FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER, NO_PARAMS, {
+  const { data: totrinnArsaker } = restApiHooks.useRestApi<TotrinnskontrollAksjonspunkt[]>(FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER, NO_PARAMS, {
     updateTriggers: [behandlingId, behandlingStatusKode],
     suspendRequest: isInnsynBehandling || behandlingStatusKode !== BehandlingStatus.FATTER_VEDTAK,
   });
-  const { data: totrinnArsakerReadOnly } = useRestApi<TotrinnskontrollAksjonspunkt[]>(FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY, NO_PARAMS, {
-    updateTriggers: [behandlingId, behandlingStatusKode],
-    suspendRequest: isInnsynBehandling || behandlingStatusKode !== BehandlingStatus.BEHANDLING_UTREDES,
-  });
+  const { data: totrinnArsakerReadOnly } = restApiHooks.useRestApi<TotrinnskontrollAksjonspunkt[]>(
+    FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY, NO_PARAMS, {
+      updateTriggers: [behandlingId, behandlingStatusKode],
+      suspendRequest: isInnsynBehandling || behandlingStatusKode !== BehandlingStatus.BEHANDLING_UTREDES,
+    },
+  );
 
-  const navAnsatt = useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
+  const navAnsatt = restApiHooks.useGlobalStateRestApiData<NavAnsatt>(FpsakApiKeys.NAV_ANSATT);
   const rettigheter = useMemo(() => allSupportPanelAccessRights(navAnsatt, fagsak.status, behandling?.status,
     behandling?.type, behandling?.ansvarligSaksbehandler), []);
   const returnedIsRelevant = useMemo(() => getReturnedIsRelevant(erPaVent, totrinnArsakerReadOnly, behandling?.status), []);

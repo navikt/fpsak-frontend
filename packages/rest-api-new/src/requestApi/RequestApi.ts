@@ -44,6 +44,8 @@ class RequestApi extends AbstractRequestApi {
     });
   }
 
+  public isMock = () => false;
+
   public mock = () => undefined;
 
   public clearAllMockData = () => undefined;

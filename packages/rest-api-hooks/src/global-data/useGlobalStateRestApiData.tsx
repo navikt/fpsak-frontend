@@ -1,24 +1,25 @@
 import { useContext } from 'react';
 
-import { RequestApi, AbstractRequestApi } from '@fpsak-frontend/rest-api-new';
+import { AbstractRequestApi } from '@fpsak-frontend/rest-api-new';
 
 import { RestApiStateContext } from '../RestApiContext';
+
+/**
+ * For mocking i unit-test
+ */
+export const useGlobalStateRestApiDataMock = (requestApi: AbstractRequestApi) => function useGlobalStateRestApiDataa<T>(
+  key: string,
+): T {
+  return requestApi.startRequest(key, {});
+};
 
 /**
  * Hook som bruker respons som allerede er hentet fra backend. For å kunne bruke denne
  * må @see useGlobalStateRestApi først brukes for å hente data fra backend
  */
-const getUseGlobalStateRestApiData = (requestApi: AbstractRequestApi) => {
-  if (requestApi instanceof RequestApi) {
-    return function useGlobalStateRestApiData<T>(key: string): T {
-      const state = useContext(RestApiStateContext);
-      return state[key];
-    };
-  }
-  // For mocking testdata
-  return function useGlobalStateRestApiData<T>(key: string): T {
-    return requestApi.startRequest(key, {});
-  };
-};
+function useGlobalStateRestApiData<T>(key: string): T {
+  const state = useContext(RestApiStateContext);
+  return state[key];
+}
 
-export default getUseGlobalStateRestApiData;
+export default useGlobalStateRestApiData;

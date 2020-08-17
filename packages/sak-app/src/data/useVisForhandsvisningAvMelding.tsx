@@ -1,4 +1,4 @@
-import { FpsakApiKeys, useRestApiRunner } from './fpsakApi';
+import { FpsakApiKeys, restApiHooks } from './fpsakApi';
 
 const forhandsvis = (data) => {
   if (window.navigator.msSaveOrOpenBlob) {
@@ -9,9 +9,9 @@ const forhandsvis = (data) => {
 };
 
 const useVisForhandsvisningAvMelding = () => {
-  const { startRequest: forhandsvisTilbakekrevingHenleggelse } = useRestApiRunner(FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE);
-  const { startRequest: forhandsvisTilbakekreving } = useRestApiRunner(FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING);
-  const { startRequest: forhandsvisMelding } = useRestApiRunner(FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
+  const { startRequest: forhandsvisTilbakekrevingHenleggelse } = restApiHooks.useRestApiRunner(FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE);
+  const { startRequest: forhandsvisTilbakekreving } = restApiHooks.useRestApiRunner(FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING);
+  const { startRequest: forhandsvisMelding } = restApiHooks.useRestApiRunner(FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING);
 
   return (erTilbakekreving, erHenleggelse, data) => {
     if (erTilbakekreving && erHenleggelse) {

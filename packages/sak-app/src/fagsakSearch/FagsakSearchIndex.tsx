@@ -11,7 +11,7 @@ import { RestApiState } from '@fpsak-frontend/rest-api-hooks';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import { pathToFagsak } from '../app/paths';
-import { FpsakApiKeys, useRestApiRunner, useGlobalStateRestApiData } from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 
 interface OwnProps {
   push: (string) => void;
@@ -28,7 +28,7 @@ const EMPTY_ARRAY = [];
 const FagsakSearchIndex: FunctionComponent<OwnProps> = ({
   push: pushLocation,
 }) => {
-  const alleKodeverk = useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
+  const alleKodeverk = restApiHooks.useGlobalStateRestApiData<{[key: string]: [KodeverkMedNavn]}>(FpsakApiKeys.KODEVERK);
 
   const goToFagsak = (saksnummer) => {
     pushLocation(pathToFagsak(saksnummer));
@@ -36,7 +36,7 @@ const FagsakSearchIndex: FunctionComponent<OwnProps> = ({
 
   const {
     startRequest: searchFagsaker, data: fagsaker = EMPTY_ARRAY, state: sokeStatus, error,
-  } = useRestApiRunner<Fagsak[]>(FpsakApiKeys.SEARCH_FAGSAK);
+  } = restApiHooks.useRestApiRunner<Fagsak[]>(FpsakApiKeys.SEARCH_FAGSAK);
 
   const searchResultAccessDenied = useMemo(() => (errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL)
     ? getErrorResponseData(error)

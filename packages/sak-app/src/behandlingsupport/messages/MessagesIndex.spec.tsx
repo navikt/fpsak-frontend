@@ -68,31 +68,23 @@ describe('<MessagesIndex>', () => {
   });
 
   it('skal sette default tom streng ved forhåndsvisning dersom fritekst ikke er fylt ut', () => {
+    requestApi.mock(FpsakApiKeys.KODEVERK, kodeverk);
+    requestApi.mock(FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP, true);
+    requestApi.mock(FpsakApiKeys.BREVMALER, templates2);
+    requestApi.mock(FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING, templates2);
+
     const fetchPreviewFunction = sinon.spy();
     const wrapper = shallow(<MessagesIndex
-      submitFinished={false}
-      selectedBehandlingVersjon={123}
-      selectedBehandlingSprak={sprak}
-      recipients={recipients}
-      fetchPreview={fetchPreviewFunction}
-      submitMessage={sinon.spy()}
-      setBehandlingOnHold={sinon.spy()}
-      resetSubmitMessage={sinon.spy()}
+      fagsak={fagsak as Fagsak}
+      alleBehandlinger={alleBehandlinger as BehandlingAppKontekst[]}
+      selectedBehandlingId={1}
       push={sinon.spy()}
-      fagsakYtelseType={{
-        kode: fagsakYtelseType.FORELDREPENGER,
-        kodeverk: 'FAGSAK_YTELSE_TYPE',
-      }}
-      behandlingUuid="123"
-      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      revurderingVarslingArsak={[]}
+      selectedBehandlingVersjon={123}
+      setBehandlingOnHold={sinon.spy()}
     />);
 
-    const dataFetcher = wrapper.find(DataFetcher);
-    const messages = dataFetcher.renderProp('render')({
-      brevmaler: templates,
-    }, true).find(Messages);
-    const previewCallback = messages.prop('previewCallback') as (params: any) => void;
+    const index = wrapper.find(MeldingerSakIndex);
+    const previewCallback = index.prop('previewCallback') as (params: any) => void;
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);

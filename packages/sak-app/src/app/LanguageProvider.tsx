@@ -1,7 +1,7 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { IntlProvider } from 'react-intl';
 
-import { FpsakApiKeys, useGlobalStateRestApiData } from '../data/fpsakApi';
+import { FpsakApiKeys, restApiHooks } from '../data/fpsakApi';
 
 interface OwnProps {
   children: ReactNode;
@@ -15,7 +15,7 @@ interface OwnProps {
 const LanguageProvider: FunctionComponent<OwnProps> = ({
   children,
 }) => {
-  const nbMessages = useGlobalStateRestApiData<any>(FpsakApiKeys.LANGUAGE_FILE);
+  const nbMessages = restApiHooks.useGlobalStateRestApiData<any>(FpsakApiKeys.LANGUAGE_FILE);
 
   return (
     <IntlProvider locale="nb-NO" messages={nbMessages}>
