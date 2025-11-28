@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Sjekk ut kode
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
       - run:  git fetch --prune --unshallow
 
       - name: Hent tag
